@@ -1048,11 +1048,15 @@ const Screens = {
 
       function paint(idx) {
         const side = shuffled[idx].side;
+        const node = grid.children[idx];
+        // Ignore taps during the ~380ms flip animation so a quick
+        // double-tap doesn't queue two state changes.
+        if (node && node.classList.contains('is-flipping')) return;
 
         // tapping an already-tagged card clears it
         if (tagOf[idx] !== null) {
           tagOf[idx] = null;
-          repaint();
+          flipReveal(node, () => repaint());
           SFX.tap();
           return;
         }
@@ -1089,8 +1093,20 @@ const Screens = {
         if (assignTag === null) return;   // all 4 colours fully booked
 
         tagOf[idx] = assignTag;
-        repaint();
+        flipReveal(node, () => repaint());
         SFX.tap();
+      }
+
+      // Run a 380ms Y-axis card flip on `node`.  The DOM update (which
+      // adds/removes the .tag-N classes) is fired at ~50% of the flip
+      // — exactly when the card is edge-on — so the new face appears
+      // AS the card rotates back to face.  Without the mid-flip swap
+      // the reveal would just be a static cross-fade.
+      function flipReveal(node, updateNow) {
+        if (!node) { updateNow(); return; }
+        node.classList.add('is-flipping');
+        setTimeout(updateNow, 180);
+        setTimeout(() => node.classList.remove('is-flipping'), 380);
       }
 
       function submit() {
