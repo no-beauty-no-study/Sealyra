@@ -4356,8 +4356,8 @@ body { background: transparent !important; }
                     rgba(232, 200, 130, 0.035) 50%,
                     transparent 65%),
     linear-gradient(160deg,
-                    rgba(34, 22, 56, 0.94) 0%,
-                    rgba(20, 12, 38, 0.97) 100%) !important;
+                    rgba(46, 32, 70, 0.94) 0%,
+                    rgba(28, 18, 50, 0.97) 100%) !important;
   /* Paper depth: top sheen + bottom shadow + center vignette + drop. */
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.10),
@@ -4461,13 +4461,22 @@ body { background: transparent !important; }
 /* (we just inline it because CSS custom properties can't carry
    gradient lists.) */
 
-/* tag-0 → ♥ smoke rose
-   Body is DARK warm cardstock (same family as result-correct, NOT
-   a pair-tinted UI block).  Pair colour lives in 3 places only:
-   the outer border, the corner suits, and the static halo glow.
-   The "revealed" feel comes from the warm dark body itself —
-   different in temperature from the default cold-purple unrevealed
-   card.  No edge vignette, no center wash, no neon.                */
+/* ============================================================
+   Tagged cards — velvet, not neon.
+   ------------------------------------------------------------
+   Body  : DARK velvet with a hint of the pair colour, not pure
+           black.  The lifted purple of the default card sits
+           noticeably lighter, so flipping a card visibly "settles"
+           it into its dyed velvet.
+   Border: dusty pair colour at α 0.85 — clearly the answer
+           confirmation, but not LED-bright.
+   Suit  : same pair family but quieter — α 0.72, slightly grayer.
+           Border carries the "确认感"; suit carries the "高雅感".
+   Halo  : REMOVED in game stage.  Reserved for the result page
+           (where it pulses gold to say "this was the right answer").
+   ============================================================ */
+
+/* tag-0 → ♥ smoke rose / plum velvet */
 .card.card--match.tag-0 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4476,26 +4485,22 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(28, 18, 20, 0.96) 0%,
-                    rgba(12, 6, 8, 0.98) 100%) !important;
-  border-color: rgba(220, 150, 170, 0.88) !important;
+                    rgba(38, 22, 34, 0.94) 0%,
+                    rgba(20, 10, 18, 0.97) 100%) !important;
+  border-color: rgba(204, 136, 168, 0.85) !important;
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.10),
     inset 0 -1px 0 rgba(0, 0, 0, 0.40),
     inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 0 12px rgba(208, 140, 160, 0.38),
     0 1px 3px rgba(0, 0, 0, 0.50) !important;
 }
 .card.card--match.tag-0::before,
 .card.card--match.tag-0::after {
   content: '\2665';   /* ♥ */
-  color: rgba(232, 168, 188, 0.95);
+  color: rgba(220, 168, 188, 0.72);
 }
 
-/* tag-1 → ♦ smoky sapphire (Ravenclaw deep blue) — replaces the
-   earlier cinnamon-gold which clashed with the gold skeleton and
-   the default-card palette.  Body is now a cool indigo-black so
-   it's clearly distinct from ♠ violet (which is purple-leaning). */
+/* tag-1 → ♦ Ravenclaw indigo velvet */
 .card.card--match.tag-1 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4504,23 +4509,23 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(14, 18, 30, 0.96) 0%,
-                    rgba(6, 8, 14, 0.98) 100%) !important;
-  border-color: rgba(124, 156, 208, 0.88) !important;
+                    rgba(20, 26, 44, 0.94) 0%,
+                    rgba(10, 14, 26, 0.97) 100%) !important;
+  border-color: rgba(112, 144, 192, 0.85) !important;
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.10),
     inset 0 -1px 0 rgba(0, 0, 0, 0.40),
     inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 0 12px rgba(108, 144, 200, 0.38),
     0 1px 3px rgba(0, 0, 0, 0.50) !important;
 }
 .card.card--match.tag-1::before,
 .card.card--match.tag-1::after {
-  content: '\2666';   /* ♦ — a blue diamond, sapphire-ish */
-  color: rgba(148, 184, 224, 0.95);
+  content: '\2666';   /* ♦ */
+  color: rgba(140, 168, 204, 0.72);
 }
 
-/* tag-2 → ♠ violet ink */
+/* tag-2 → ♠ wine / burgundy velvet (replaces amethyst — purple
+   competed with the page's purple atmosphere) */
 .card.card--match.tag-2 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4529,23 +4534,22 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(20, 16, 28, 0.96) 0%,
-                    rgba(8, 6, 14, 0.98) 100%) !important;
-  border-color: rgba(190, 162, 232, 0.88) !important;
+                    rgba(40, 16, 20, 0.94) 0%,
+                    rgba(22, 8, 12, 0.97) 100%) !important;
+  border-color: rgba(180, 88, 104, 0.85) !important;
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.10),
     inset 0 -1px 0 rgba(0, 0, 0, 0.40),
     inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 0 12px rgba(170, 140, 220, 0.38),
     0 1px 3px rgba(0, 0, 0, 0.50) !important;
 }
 .card.card--match.tag-2::before,
 .card.card--match.tag-2::after {
   content: '\2660';   /* ♠ */
-  color: rgba(204, 178, 240, 0.95);
+  color: rgba(204, 132, 144, 0.72);
 }
 
-/* tag-3 → ♣ deep moss */
+/* tag-3 → ♣ velvet emerald (the user's favourite — preserved) */
 .card.card--match.tag-3 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4554,20 +4558,19 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(14, 22, 18, 0.96) 0%,
-                    rgba(6, 12, 8, 0.98) 100%) !important;
-  border-color: rgba(160, 208, 188, 0.88) !important;
+                    rgba(18, 36, 28, 0.94) 0%,
+                    rgba(8, 20, 14, 0.97) 100%) !important;
+  border-color: rgba(132, 174, 152, 0.85) !important;
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.10),
     inset 0 -1px 0 rgba(0, 0, 0, 0.40),
     inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 0 12px rgba(124, 174, 156, 0.38),
     0 1px 3px rgba(0, 0, 0, 0.50) !important;
 }
 .card.card--match.tag-3::before,
 .card.card--match.tag-3::after {
   content: '\2663';   /* ♣ */
-  color: rgba(168, 218, 196, 0.95);
+  color: rgba(160, 196, 178, 0.72);
 }
 
 /* (the old `match-halo` breathing keyframes lived here.  killed —
@@ -4575,12 +4578,15 @@ body { background: transparent !important; }
    even though they shared the same tag.  every tagged card now
    carries its halo baked statically into its box-shadow.)         */
 
-/* ============= CORRECT — old-book embossed, not a gold LED =============
-   Body stays DARK (warm brown, not bright gold).  Gilt lives only in:
-   bead chain (champagne), corner suits (antique gold), thin inset
-   warm glow.  Outer border keeps the pair color so the user still
-   reads which pair this was.  No outer halo ring — that was the
-   "VIP card" tell.                                                   */
+/* ============= CORRECT — old book gilded + breathing gold glow ====
+   Body stays dark warm brown.  Gilt sits in the bead chain (chamapgne)
+   + thin inset warm glow.  Outer border keeps the pair colour so the
+   user still reads which pair this was.
+
+   And — only on the result page, only on the correct cards — a slow
+   3.5s gold halo BREATHES underneath.  The user wanted "黄光 呼吸",
+   a magic-confirmation feeling: "this card is approved".  Game-stage
+   tagged cards stay halo-less so the breathing reads as new info.   */
 .card.card--match.is-correct {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(220, 197, 139, 0.16), transparent 100%),
@@ -4592,12 +4598,29 @@ body { background: transparent !important; }
                     rgba(31, 24, 19, 0.96) 0%,
                     rgba(14, 9, 8, 0.98) 100%) !important;
   color: #e8dcb8 !important;
-  box-shadow:
-    inset 0 1px 0 rgba(220, 197, 139, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    inset 0 0 14px rgba(196, 152, 88, 0.16),
-    0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  animation: correct-breathe 3.5s ease-in-out infinite;
   /* outer border-color stays from .tag-N — pair info preserved */
+}
+/* Breathing keyframe — only the outer gold halo changes.  Inset
+   shadows stay constant so the body doesn't shimmer.  Peak halo
+   is ~16px @ α 0.34 — a magical confirmation glow, not a strobe. */
+@keyframes correct-breathe {
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(220, 197, 139, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.40),
+      inset 0 0 14px rgba(196, 152, 88, 0.16),
+      0 0 4px rgba(220, 170, 100, 0.16),
+      0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(220, 197, 139, 0.22),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.40),
+      inset 0 0 14px rgba(196, 152, 88, 0.22),
+      0 0 16px rgba(220, 170, 100, 0.34),
+      0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  }
 }
 .card.card--match.is-correct .mc-frame {
   /* re-stamp the bead chain in champagne gold (brighter, warmer) */
@@ -4648,9 +4671,10 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.05), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.06), transparent 100%),
     linear-gradient(160deg,
-                    rgba(34, 22, 56, 0.86) 0%,
-                    rgba(20, 12, 38, 0.90) 100%) !important;
+                    rgba(46, 32, 70, 0.86) 0%,
+                    rgba(28, 18, 50, 0.90) 100%) !important;
   border-color: rgba(218, 188, 124, 0.22) !important;
+  animation: none;
   color: rgba(220, 204, 174, 0.72) !important;
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.04),
