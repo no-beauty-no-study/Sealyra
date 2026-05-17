@@ -307,19 +307,15 @@ body.cover-pending .cover-stage > * { visibility: hidden; }
 body.cover-pending .cover-gate     { visibility: visible; }
 
 /* fade-to-black overlay used during cover→game transition.
-   A radial gold burst sits in front of the deep purple so the
-   moment of "entering the chapter" reads as ceremonial rather
-   than as a load screen.                                         */
+   The previous version had an explicit radial gold burst that
+   read as gaudy; pulled back to a plain deep-purple fade — the
+   tap-title's own engage animation now carries the ceremony.   */
 .fade-out {
   position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 38%,
-                    rgba(232, 200, 130, 0.22) 0%,
-                    rgba(40, 24, 56, 0.55) 30%,
-                    var(--bg-deep) 70%);
+  background: var(--bg-deep);
   opacity: 0; pointer-events: none;
   z-index: 9000;
-  transition: opacity 1s ease;
+  transition: opacity 0.7s ease;
 }
 .fade-out.show { opacity: 1; pointer-events: all; }
 
@@ -1319,7 +1315,8 @@ body {
 
 /* The moon-corner sits below the banner, not on top of it */
 .moon-corner {
-  top: calc(100vw * 821 / 1916 + 10px);
+  /* track new banner aspect 426/1600, sit just under it */
+  top: calc(100vw * 426 / 1600 + 4px);
   z-index: 80;
 }
 
@@ -1350,15 +1347,22 @@ body {
 .next-door .nd-key:first-child::before { transform: rotate(-12deg); }
 .next-door .nd-key:last-child::before  { transform: rotate( 12deg); }
 
-/* Moon-corner uses the ornate moon PNG */
+/* The "back to cover" corner button uses the 8-point star PNG.
+   The previous moon icon read as decorative rather than navigation,
+   so the user asked for a single star instead.                    */
 .moon-corner { color: transparent; }
-.moon-corner svg { display: none; }
+.moon-corner svg, .moon-corner .mc-bar { display: none; }
 .moon-corner::before {
   content: "";
   display: block;
   width: 100%; height: 100%;
-  background: url("assets/icon-moon.png?v=25") center/contain no-repeat;
-  filter: drop-shadow(0 0 5px rgba(218,168,104,.45));
+  background: url("assets/icon-star8.png?v=29") center/contain no-repeat;
+  filter: drop-shadow(0 0 5px rgba(218,168,104,.55));
+  transition: filter 0.25s, transform 0.25s;
+}
+.moon-corner:hover::before {
+  filter: drop-shadow(0 0 9px rgba(232,196,138,.85));
+  transform: scale(1.06);
 }
 
 /* Stage header bow divider — appears below Chapter · Stage title */
@@ -2929,11 +2933,8 @@ body { background: transparent !important; }
   padding: 6px 6px 10px !important;
 }
 .tap-title.is-engaged {
-  animation: none;
+  animation: tap-title-engage 0.7s ease-out forwards;
   color: #ffe5b0 !important;
-  text-shadow:
-    0 0 8px rgba(255, 232, 186, 0.85),
-    0 0 18px rgba(232, 196, 138, 0.55);
 }
 @keyframes tap-title-breathe {
   0%, 100% {
@@ -2942,6 +2943,15 @@ body { background: transparent !important; }
   50% {
     filter: drop-shadow(0 0 10px rgba(232, 196, 138, 0.48));
   }
+}
+/* Click ceremony: text scales up briefly while a warm gold halo
+   blooms behind it.  Replaces the previous "freeze gold" engage
+   state which had no movement.                                      */
+@keyframes tap-title-engage {
+  0%   { transform: scale(1.00); text-shadow: 0 0 6px rgba(232,196,138,.40), 0 0 12px rgba(218,168,104,.20); }
+  30%  { transform: scale(1.10); text-shadow: 0 0 12px rgba(255,232,186,.90), 0 0 32px rgba(232,196,138,.55), 0 0 60px rgba(218,168,104,.30); }
+  60%  { transform: scale(1.04); text-shadow: 0 0 10px rgba(255,232,186,.85), 0 0 28px rgba(232,196,138,.50); }
+  100% { transform: scale(1.00); text-shadow: 0 0 8px rgba(255,232,186,.85), 0 0 18px rgba(232,196,138,.45); }
 }
 
 /* ---------- D. Whisper pill ---------- */
@@ -3063,28 +3073,25 @@ body { background: transparent !important; }
   z-index: 1000 !important;
 }
 #modal.modal-veil.show { display: flex !important; }
+/* The modal now wears the decorative 0511DE6F nav-card frame as its
+   background — same asset the index page uses for its title plaque
+   wrapper.  The dashed pink rectangle + corner crosses are gone;
+   the frame's painted gold scrollwork carries the decoration. */
 .modal-card {
   position: relative;
-  width: min(86vw, 340px) !important;
-  background: rgba(6,3,15,.94) !important;
-  border: 1px dashed rgba(244,181,200,.55) !important;
-  border-radius: 14px !important;
-  padding: 28px 26px 22px !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,.55) !important;
-}
-.modal-card::before,
-.modal-card::after {
-  content: '';
-  position: absolute;
-  width: 14px;
-  height: 14px;
+  width: min(92vw, 380px) !important;
+  aspect-ratio: 951 / 597;
   background:
-    linear-gradient(180deg, transparent 42%, rgba(237,184,158,.85) 47%, rgba(237,184,158,.85) 53%, transparent 58%),
-    linear-gradient(90deg,  transparent 42%, rgba(237,184,158,.85) 47%, rgba(237,184,158,.85) 53%, transparent 58%);
-  opacity: .9;
+    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=29")
+    center/100% 100% no-repeat !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 14% 14% 14% !important;     /* matches the frame's inner safe-zone */
+  box-shadow: 0 12px 40px rgba(0,0,0,.55) !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
 }
-.modal-card::before { top: 8px;    left: 8px;    }
-.modal-card::after  { bottom: 8px; right: 8px;   }
 .modal-title {
   display: block;
   margin: 0 auto 8px;
@@ -3548,9 +3555,9 @@ body { background: transparent !important; }
      as the index page's title plaque (the user's reference).      */
   width: min(76vw, 420px);
   aspect-ratio: 1500 / 500;
-  /* tightened to sit closer to the banner, matching the index page's
-     "highest visible content" line at the user's request.            */
-  margin: 2px auto 4px;
+  /* hug the banner — negative margin closes the last ~10 px of gap
+     that the user still flagged as "too far".                       */
+  margin: -8px auto 4px;
   background:
     url("assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=27")
     center/contain no-repeat;
