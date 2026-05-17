@@ -397,7 +397,7 @@ body.cover-pending .cover-gate     { visibility: visible; }
   font-size: 10px;
   letter-spacing: .32em;
   color: var(--muted);
-  margin: 14px 0 18px;
+  margin: 6px 0 10px;
   text-transform: lowercase;
 }
 
@@ -1266,6 +1266,12 @@ body:not(.cover-pending) .cover-stage > * { visibility: visible; animation: cove
 #screen-stage1.active,
 #screen-stage2.active,
 #screen-stage3.active       { background-image: url("assets/bg-stage.png?v=25"); }
+/* Game stages share a tight top — chapter plaque hugs the banner,
+   no extra screen padding above it.  Matches the index page's
+   "highest content" line.                                          */
+#screen-stage1, #screen-stage2, #screen-stage3 {
+  padding-top: 6px;
+}
 #screen-stage1-result.active,
 #screen-stage2-result.active,
 #screen-stage3-result.active{ background-image: url("assets/bg-result.png?v=25"); }
@@ -1767,7 +1773,10 @@ body { background: transparent !important; }
 .match-actions {
   display: flex;
   justify-content: center;
-  margin: 22px 0 14px;
+  /* Confirm sits between the chapter plaque and the grid.
+     14px-ish gaps each side — matches the "index nav → first row"
+     gap on the index page (the user's reference).                  */
+  margin: 14px 0 10px;
 }
 
 
@@ -3534,7 +3543,9 @@ body { background: transparent !important; }
   position: relative;
   width: min(92vw, 540px);
   aspect-ratio: 1500 / 500;
-  margin: 12px auto 4px;
+  /* tightened to sit closer to the banner, matching the index page's
+     "highest visible content" line at the user's request.            */
+  margin: 2px auto 4px;
   background:
     url("assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=27")
     center/contain no-repeat;
@@ -4353,13 +4364,13 @@ body { background: transparent !important; }
 .match-result-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 12px;
   /* extra horizontal padding so the ❦ pair-mark (positioned just
      outside each card's outer edge) has visible breathing room and
      doesn't get clipped against the viewport edge.                  */
-  padding: 4px 38px;
+  padding: 2px 38px;
   max-width: 460px;
-  margin: 14px auto;
+  margin: 6px auto;
   width: 100%;
   box-sizing: border-box;
   perspective: 800px;
@@ -4719,21 +4730,37 @@ body { background: transparent !important; }
 /* The "pair flourish" — JS emits a <span class="pair-mark">❦</span>
    inside each correct result tile.  Positioned ABSOLUTE just past
    the card's outer edge (left of L cards, right of R cards) so a
-   matched pair reads as bracketed by twin marks.  Soft champagne
-   gold; subtle, decorative.  Wrong cards don't get a mark.        */
+   matched pair reads as bracketed by twin marks.  Slow gold glow
+   breathes around it (3.5 s) — synced with the under-card pool so
+   the whole correct tile feels like one magical confirmation.    */
 .card.card--match .pair-mark {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 18px;
-  color: rgba(220, 197, 139, 0.72);
+  font-size: 22px;
+  color: rgba(240, 210, 138, 0.96);
   pointer-events: none;
-  text-shadow: 0 0 6px rgba(220, 170, 100, 0.30);
+  animation: pair-mark-glow 3.5s ease-in-out infinite;
 }
-.card.card--match.is-left  .pair-mark { left:  -22px; }
-.card.card--match.is-right .pair-mark { right: -22px; }
+.card.card--match.is-left  .pair-mark { left:  -26px; }
+.card.card--match.is-right .pair-mark { right: -26px; }
+/* matches the under-card correct-breathe rhythm so the two pieces
+   pulse together — flourish + pool = one approval gesture.        */
+@keyframes pair-mark-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 6px rgba(232, 200, 132, 0.55),
+      0 0 14px rgba(220, 170, 100, 0.32);
+  }
+  50% {
+    text-shadow:
+      0 0 8px rgba(255, 220, 158, 0.95),
+      0 0 18px rgba(232, 188, 120, 0.70),
+      0 0 32px rgba(220, 170, 100, 0.42);
+  }
+}
 /* tile-mark from earlier passes — kept as a no-op selector in case
    future stages need an on-card mark.  Wrong + correct alike emit
    no .tile-mark span any more.                                    */

@@ -1028,7 +1028,10 @@ const Screens = {
         <div class="match-grid"></div>
       `;
 
-      el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
+      // top-left moon is the "back to cover" affordance; the right
+      // X was removed at the user's request — it crowded the right
+      // column visually and felt redundant.
+      el.prepend(moonCorner());
 
       const grid = $('.match-grid', el);
       shuffled.forEach((c, idx) => {
@@ -1212,7 +1215,9 @@ const Screens = {
         // Correct tiles get a ❦ flourish just outside their outer
         // edge — paired correct halves end up "bracketed" by twin
         // marks.  Wrong tiles get nothing; their dimmed state speaks.
-        const flourish = r.correct ? '<span class="pair-mark">❦</span>' : '';
+        // ⚜ U+269C fleur-de-lis — classical heraldic flourish, more
+        // visible than the floral-heart ❦ at small sizes.
+        const flourish = r.correct ? '<span class="pair-mark">⚜</span>' : '';
         tile.className = `card card--match ${sideClass} tag-${r.tag} ${state}`;
         tile.innerHTML = `
           <span class="mc-frame"></span>
@@ -1237,7 +1242,10 @@ const Screens = {
         <div class="oracle-stage" id="oracle-stage"></div>
       `;
 
-      el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
+      // top-left moon is the "back to cover" affordance; the right
+      // X was removed at the user's request — it crowded the right
+      // column visually and felt redundant.
+      el.prepend(moonCorner());
       drawQ();
 
       function drawQ() {
@@ -1347,7 +1355,10 @@ const Screens = {
         <div class="dict-stage" id="dict-stage"></div>
       `;
 
-      el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
+      // top-left moon is the "back to cover" affordance; the right
+      // X was removed at the user's request — it crowded the right
+      // column visually and felt redundant.
+      el.prepend(moonCorner());
       drawQ();
 
       function drawQ() {
