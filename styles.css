@@ -4888,15 +4888,15 @@ body { background: transparent !important; }
   position: fixed;
   inset: 0;
   z-index: 800;
-  background: rgba(18, 10, 32, 0.32);     /* lighter than before */
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  background: rgba(18, 10, 32, 0.48);     /* darker again — popup feel */
+  -webkit-backdrop-filter: blur(2px);     /* light blur — bg still visible */
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px;
   cursor: pointer;
-  perspective: 1200px;                    /* enables card-flip */
+  perspective: 1200px;
   animation: parch-veil-in 0.32s ease-out;
 }
 .parchment-veil.is-leaving { animation: parch-veil-out 0.24s ease-in forwards; }
@@ -4906,16 +4906,19 @@ body { background: transparent !important; }
 .parchment-card {
   position: relative;
   width:  min(96vw, 460px);
-  height: min(144vw, 690px);              /* 96vw × 1350/900 = 144vw */
+  height: min(144vw, 690px);
   background:
     url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=29")
     center/100% 100% no-repeat;
-  /* SAFE-ZONE PADDING (15/16/17/16 of the parchment art) so text
-     never touches the decorative scroll-rolls + flora.            */
-  padding: 15% 16% 16% 17%;
+  /* SAFE-ZONE PADDING — measured from the E993B660 art so text
+     never crosses the scroll-rolls / flora.  Slightly inset from
+     15-16 % to 17-18 % to keep recent dense content from kissing
+     the decorative edge.                                          */
+  padding: 17% 18% 18% 18%;
   box-sizing: border-box;
   cursor: default;
   transform-style: preserve-3d;
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,0.55));   /* elevation = popup feel */
   animation: parch-flip-in 0.55s cubic-bezier(.2,.7,.2,1);
 }
 .parchment-veil.is-leaving .parchment-card {
@@ -4931,41 +4934,47 @@ body { background: transparent !important; }
   100% { opacity: 0; transform: rotateY( 36deg) scale(0.92); }
 }
 
-/* The ONLY place children render — sized exactly to the safe zone,
-   internal scroll if content overflows.                            */
 .parchment-inner {
   position: relative;
   width: 100%;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  color: #3e2812;                          /* dark sepia on cream */
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-size: 14px;
-  line-height: 1.45;
+  display: flex;
+  flex-direction: column;
+  color: #3e2812;
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, 'Times New Roman', serif;
+  font-size: 12px;
+  line-height: 1.42;
   scrollbar-width: none;
 }
 .parchment-inner::-webkit-scrollbar { display: none; }
 
-/* close button — top-right corner, antique italic "fold this page" */
-.parchment-inner .pc-close {
+/* close button — top-right, antique italic "fold this page" */
+.pc-close {
   position: absolute;
-  top: -4px;
+  top: -6px;
   right: -2px;
   background: none;
   border: none;
   color: #6a3d12;
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .12em;
   cursor: pointer;
-  opacity: 0.78;
+  opacity: 0.72;
   z-index: 2;
 }
-.parchment-inner .pc-close:hover { opacity: 1; color: #4a2a0e; }
+.pc-close:hover { opacity: 1; color: #4a2a0e; }
 
-/* Each item reveals left-to-right with inline animation-delay. */
+.pc-stack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .pc-item {
   opacity: 0;
   transform: translateX(-10px);
@@ -4981,46 +4990,50 @@ body { background: transparent !important; }
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 6px 10px;
-  padding-bottom: 6px;
-  margin-bottom: 6px;
-  border-bottom: 1px dashed rgba(110, 63, 18, 0.36);
+  gap: 4px 8px;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1px dashed rgba(110, 63, 18, 0.32);
   cursor: pointer;
 }
 .pc-head .pc-play {
   background: none;
   border: 0;
   color: #6a3d12;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   padding: 0;
   line-height: 1;
+  flex-shrink: 0;
 }
 .pc-word {
   font-family: 'Pinyon Script', 'Snell Roundhand', 'Italianno',
                'Apple Chancery', 'Cormorant Garamond', serif;
-  font-size: 32px;
+  font-style: normal;
+  font-size: 26px;
   font-weight: 400;
   color: #4a2a0e;
   text-shadow: 0 1px 0 rgba(255,238,210,.4);
+  letter-spacing: .01em;
   line-height: 1;
 }
 .pc-pos {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 12px;
+  font-size: 10px;
   color: #876239;
 }
+/* zh chinese — right-aligned, italic, small (per spec: 居右 + 小 + 斜)*/
 .pc-head .pc-zh {
-  flex-basis: 100%;
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 12px;
+  font-size: 10px;
   color: #6a4626;
-  margin-top: 2px;
+  margin-left: auto;
+  text-align: right;
 }
 
-/* === ZONE 2: rules + section labels === */
+/* === rules + section labels === */
 .pc-rule {
   border: 0;
   height: 1px;
@@ -5029,48 +5042,49 @@ body { background: transparent !important; }
     rgba(110, 63, 18, 0.34) 18%,
     rgba(110, 63, 18, 0.34) 82%,
     transparent 100%);
-  margin: 6px 0;
+  margin: 4px 0;
 }
 .pc-section-label {
-  font-family: 'Cinzel', 'EB Garamond', Georgia, serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.26em;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #876239;
-  margin: 4px 0 4px;
+  margin: 2px 0 2px;
 }
 
-/* === ZONE 3: family blocks (heading + ♪ row) === */
-.pc-fam-block { margin: 4px 0 6px; }
+/* === family blocks (heading + ♪ row) === */
+.pc-fam-block { margin: 2px 0 4px; }
 .pc-fam-head {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 1px;
 }
 .pc-fam-word {
-  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
   font-style: italic;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   color: #3e2812;
 }
 .pc-fam-pos-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 11px;
+  font-size: 9.5px;
   color: #876239;
+  margin-left: auto;
+  text-align: right;        /* zh right-aligned per spec */
 }
 
-/* === ♪ play rows — collocations + family phrases + example === */
+/* === ♪ play rows === */
 .pc-play-row {
   display: flex;
   align-items: baseline;
-  gap: 6px;
-  padding: 3px 4px 3px 0;
-  margin: 1px 0;
+  gap: 5px;
+  padding: 2px 4px 2px 0;
+  margin: 0;
   cursor: pointer;
   border-radius: 3px;
   transition: background 0.2s;
@@ -5081,7 +5095,7 @@ body { background: transparent !important; }
   background: none;
   border: 0;
   color: #6a3d12;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
   padding: 0 2px 0 0;
   line-height: 1;
@@ -5089,28 +5103,64 @@ body { background: transparent !important; }
 }
 .pc-play-row.is-playing .pc-play { color: #b07a28; }
 .pc-play-phrase {
-  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
   font-style: italic;
   font-weight: 500;
-  font-size: 12.5px;
+  font-size: 11.5px;
   color: #3e2812;
 }
+/* zh chinese — right-aligned, italic, small */
 .pc-play-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 11px;
+  font-size: 9.5px;
   color: #6a4626;
+  margin-left: auto;
+  text-align: right;
 }
 .pc-ex-row .pc-ex-en {
   font-style: italic;
-  font-size: 12px;
+  font-size: 11px;
   color: #4a2f15;
 }
 .pc-ex-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 11px;
+  font-size: 9.5px;
   color: #6a4626;
-  padding-left: 18px;
-  margin: -2px 0 4px;
+  text-align: right;
+  margin: 0 0 2px;
+}
+
+/* === COPY LINE at the bottom — "signed ─── ✦" === */
+.pc-copy {
+  margin-top: 6px;
+  padding-top: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.pc-copy-label {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: #876239;
+  white-space: nowrap;
+}
+.pc-copy-rule {
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(110, 63, 18, 0.5) 20%,
+    rgba(110, 63, 18, 0.5) 80%,
+    transparent 100%);
+}
+.pc-copy-mark {
+  color: #8a5a18;
+  font-size: 10px;
+  opacity: 0.85;
 }

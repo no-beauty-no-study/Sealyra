@@ -458,22 +458,16 @@ function showParchment(word) {
       <div class="parchment-inner">
         <button class="pc-close" aria-label="fold this page">fold this page</button>
         <div class="pc-stack"></div>
+        <div class="pc-copy">
+          <span class="pc-copy-label">signed</span>
+          <span class="pc-copy-rule"></span>
+          <span class="pc-copy-mark">✦</span>
+        </div>
       </div>
     </div>
   `;
   const stack = veil.querySelector('.pc-stack');
 
-  // Build content as a sequence of items so each can be revealed with
-  // a small left-to-right "writing in" delay.  Order locked by spec:
-  //   1. headword + pos + zh    (with ♪ that says the word)
-  //   2. rule
-  //   3. "her family" header
-  //   4. each family entry: heading row (word + pos.zh)
-  //                       + ♪ phrase row (collocation)
-  //   5. rule
-  //   6. "her friend" header
-  //   7. each colloc row (♪ phrase + zh)
-  //   8. example: ♪ english sentence + zh translation below
   const items = [];
 
   items.push(`
@@ -481,7 +475,7 @@ function showParchment(word) {
       <button class="pc-play" aria-label="play">♪</button>
       <span class="pc-word">${escapeHtml(c.h)}</span>
       <span class="pc-pos">${escapeHtml((c.pos || '').slice(0, 4))}.</span>
-      <div class="pc-zh">${escapeHtml(c.zh || '')}</div>
+      <span class="pc-zh">${escapeHtml(c.zh || '')}</span>
     </div>`);
 
   if (c.family && c.family.length) {
@@ -524,8 +518,6 @@ function showParchment(word) {
     }
   }
 
-  // Stagger reveal: each item gets a delayed CSS animation via inline
-  // animation-delay.  ~70 ms between items reads as "writing in".
   items.forEach((html, i) => {
     const node = document.createElement('div');
     node.className = 'pc-item';
@@ -534,14 +526,11 @@ function showParchment(word) {
     stack.appendChild(node);
   });
 
-  // Linear ♪ playback: clicking any ♪ stops the previous one,
-  // speaks the new one, and marks the row as "now playing".
   function wirePlay(row) {
     const sp = row.getAttribute('data-sp');
     if (!sp) return;
     row.addEventListener('click', e => {
       e.stopPropagation();
-      // unmark previous
       veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
       row.classList.add('is-playing');
       SFX.tap();
@@ -554,11 +543,9 @@ function showParchment(word) {
     e.stopPropagation();
     closeParchment();
   });
-  // tap the veil (anywhere OUTSIDE the parchment) closes it
   veil.addEventListener('click', e => {
     if (e.target === veil) closeParchment();
   });
-  // ESC also closes
   document.addEventListener('keydown', _onParchEsc);
 
   document.body.appendChild(veil);
