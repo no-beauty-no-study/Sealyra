@@ -1663,33 +1663,73 @@ body { background: transparent !important; }
    Result pages now put the score and the next-stage button at the
    top, so the user can move forward without scrolling past their
    review.  Below them comes the cards/tiles for studying.           */
-.score-block {
-  text-align: center;
-  margin: 6px 0 14px;
+/* ============================================================
+   v=30 — score card: index-style "frame within frame"
+   ============================================================
+   Outer .score-card wears the 0511DE6F nav-card frame.  Inside,
+   the small 3C68C8E6 title plaque labels the score ("your hand")
+   and the big calligraphic value sits beneath it.  Same idiom
+   as the index page's nav-card → title-plaque hierarchy.
+   ------------------------------------------------------------ */
+.score-card {
+  position: relative;
+  width: min(86vw, 460px);
+  aspect-ratio: 951 / 597;
+  margin: 4px auto 6px;
+  background:
+    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=29")
+    center/100% 100% no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14% 18% 16%;
+  box-sizing: border-box;
 }
-.score-label {
-  font-family: var(--f-italic);
+.score-plaque {
+  position: relative;
+  width: 62%;
+  aspect-ratio: 864 / 312;
+  background:
+    url("assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=29")
+    center/100% 100% no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.score-plaque-text {
+  position: relative;
+  top: 6%;
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 12px;
-  letter-spacing: .22em;
-  color: var(--soft);
-  text-transform: lowercase;
+  font-size: clamp(11px, 2.8vw, 14px);
+  letter-spacing: .14em;
+  color: #d6a464;
+  text-shadow:
+    0 0 4px rgba(232,196,138,.40),
+    0 0 9px rgba(218,168,104,.22),
+    0 1px 0 rgba(80,40,10,.40);
 }
 .score-value {
-  font-family: var(--f-display);
-  font-style: italic;
-  font-size: 44px;
-  color: var(--rose);
-  text-shadow: var(--rose-glow);
-  line-height: 1.1;
-  margin-top: 4px;
+  font-family: 'Pinyon Script', 'Snell Roundhand', 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-size: clamp(38px, 11vw, 60px);
+  line-height: 1;
+  color: #e6c084;
+  text-shadow:
+    0 0 6px rgba(255,232,170,.55),
+    0 0 18px rgba(232,196,138,.40),
+    0 1px 0 rgba(80,40,10,.45);
 }
 .score-value small {
-  font-size: 18px;
-  color: var(--soft);
-  margin-left: 6px;
-  letter-spacing: 0;
-  text-shadow: none;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(14px, 3.8vw, 20px);
+  color: #b8945c;
+  margin-left: 4px;
+  letter-spacing: .02em;
+  vertical-align: 0.18em;
+  text-shadow: 0 0 4px rgba(218,168,104,.30);
 }
 
 /* The next-stage button row sits right below the score */

@@ -1223,10 +1223,15 @@ const Screens = {
       const result = state.session.matchResult || [];
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
 
+      // Index-style framing: an outer nav-card frame contains a small
+      // title plaque ("your hand") + the score value.  Mirrors the
+      // index page's 大框套小框 idiom per the user.
       el.innerHTML = `
         ${stageHeader(1, 'The Matching')}
-        <div class="score-block">
-          <div class="score-label">your hand</div>
+        <div class="score-card">
+          <div class="score-plaque">
+            <span class="score-plaque-text">your hand</span>
+          </div>
           <div class="score-value">${correctPairs}<small> / 4</small></div>
         </div>
         <div class="stage-actions"></div>
@@ -1234,8 +1239,8 @@ const Screens = {
         <div class="match-result-hint">— touch any word to read its page —</div>
       `;
 
+      // top-left star only — no top-right X (consistent with game stages)
       el.prepend(moonCorner());
-      el.appendChild(closeCorner());
 
       // Next-stage button sits right below the score so it's a single
       // glance from "how did I do?" to "let me move on".
