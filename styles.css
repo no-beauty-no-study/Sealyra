@@ -4866,18 +4866,37 @@ body { background: transparent !important; }
    Those become the .parchment-card padding so text never lands
    on the top scroll roll / bottom quill / side decorations.
    ============================================================ */
+/* ============================================================
+   PARCHMENT POPUP — single-word study (v=30)
+   ============================================================
+   Floats above the page as a scroll-shaped popup, NOT a full
+   screen.  Surroundings are slightly dimmed + blurred.
+
+   Pixel-measured safe text zone of E993B660 (900×1350):
+     top:    15 %    bottom: 16 %
+     left:   17 %    right:  16 %
+   Those become the .parchment-card padding so text never lands
+   on the top scroll roll / bottom quill / side decorations.
+
+   Behaviour (per spec):
+     · open  → page-flip-in (3D rotateY); veil blurs the bg slightly
+     · content reveals one row at a time, ~70 ms stagger
+     · ♪ on any row plays audio + marks .is-playing
+     · close → "fold this page" button + reverse flip
+   ============================================================ */
 .parchment-veil {
   position: fixed;
   inset: 0;
   z-index: 800;
-  background: rgba(18, 10, 32, 0.55);     /* dim, NOT black */
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: rgba(18, 10, 32, 0.32);     /* lighter than before */
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px;
   cursor: pointer;
+  perspective: 1200px;                    /* enables card-flip */
   animation: parch-veil-in 0.32s ease-out;
 }
 .parchment-veil.is-leaving { animation: parch-veil-out 0.24s ease-in forwards; }
@@ -4886,182 +4905,212 @@ body { background: transparent !important; }
 
 .parchment-card {
   position: relative;
-  /* Larger again per design owner */
-  width:  min(98vw, 500px);
-  height: min(147vw, 750px);              /* 98vw × 1350/900 = 147vw */
+  width:  min(96vw, 460px);
+  height: min(144vw, 690px);              /* 96vw × 1350/900 = 144vw */
   background:
-    url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=27")
+    url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=29")
     center/100% 100% no-repeat;
-  padding: 24% 19% 22% 19%;
+  /* SAFE-ZONE PADDING (15/16/17/16 of the parchment art) so text
+     never touches the decorative scroll-rolls + flora.            */
+  padding: 15% 16% 16% 17%;
   box-sizing: border-box;
   cursor: default;
-  animation: parch-card-in 0.42s cubic-bezier(.2,.7,.2,1);
+  transform-style: preserve-3d;
+  animation: parch-flip-in 0.55s cubic-bezier(.2,.7,.2,1);
 }
 .parchment-veil.is-leaving .parchment-card {
-  animation: parch-card-out 0.24s ease-in forwards;
+  animation: parch-flip-out 0.32s ease-in forwards;
 }
-@keyframes parch-card-in {
-  0%   { opacity: 0; transform: scale(.92) translateY(8px); }
-  100% { opacity: 1; transform: scale(1)   translateY(0); }
+@keyframes parch-flip-in {
+  0%   { opacity: 0; transform: rotateY(-30deg) scale(0.88); }
+  60%  { opacity: 1; transform: rotateY(  8deg) scale(1.02); }
+  100% { opacity: 1; transform: rotateY(  0deg) scale(1.00); }
 }
-@keyframes parch-card-out {
-  0%   { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(.96); }
+@keyframes parch-flip-out {
+  0%   { opacity: 1; transform: rotateY(  0deg) scale(1.00); }
+  100% { opacity: 0; transform: rotateY( 36deg) scale(0.92); }
 }
 
-/* The ONLY place children can render — sized exactly to the
-   safe zone, with internal scroll if content exceeds.         */
+/* The ONLY place children render — sized exactly to the safe zone,
+   internal scroll if content overflows.                            */
 .parchment-inner {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   color: #3e2812;                          /* dark sepia on cream */
   font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-size: 13px;
-  line-height: 1.4;
-  /* Hide the scrollbar visually but keep scroll behaviour. */
+  font-size: 14px;
+  line-height: 1.45;
   scrollbar-width: none;
 }
 .parchment-inner::-webkit-scrollbar { display: none; }
 
-/* === ZONE 1: word header — sticky at top of inner area === */
-.parchment-inner .pc-head {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed rgba(110, 63, 18, 0.32);
+/* close button — top-right corner, antique italic "fold this page" */
+.parchment-inner .pc-close {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  background: none;
+  border: none;
+  color: #6a3d12;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: .12em;
+  cursor: pointer;
+  opacity: 0.78;
+  z-index: 2;
 }
-.parchment-inner .pc-speak {
+.parchment-inner .pc-close:hover { opacity: 1; color: #4a2a0e; }
+
+/* Each item reveals left-to-right with inline animation-delay. */
+.pc-item {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: pc-reveal 0.42s ease-out forwards;
+}
+@keyframes pc-reveal {
+  0%   { opacity: 0; transform: translateX(-12px); }
+  100% { opacity: 1; transform: translateX(0);    }
+}
+
+/* === ZONE 1: word header === */
+.pc-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px dashed rgba(110, 63, 18, 0.36);
+  cursor: pointer;
+}
+.pc-head .pc-play {
   background: none;
   border: 0;
   color: #6a3d12;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   padding: 0;
+  line-height: 1;
 }
-.parchment-inner .pc-word {
-  /* Calligraphic / handwritten — readability sacrificed for
-     the antique-signature feel the user asked for.  Pinyon
-     Script falls back to Snell Roundhand (iOS) and Italianno. */
+.pc-word {
   font-family: 'Pinyon Script', 'Snell Roundhand', 'Italianno',
                'Apple Chancery', 'Cormorant Garamond', serif;
-  font-style: normal;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 400;
   color: #4a2a0e;
   text-shadow: 0 1px 0 rgba(255,238,210,.4);
-  letter-spacing: .01em;
   line-height: 1;
 }
-.parchment-inner .pc-pos {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+.pc-pos {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: #876239;
+}
+.pc-head .pc-zh {
+  flex-basis: 100%;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: #6a4626;
+  margin-top: 2px;
+}
+
+/* === ZONE 2: rules + section labels === */
+.pc-rule {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(110, 63, 18, 0.34) 18%,
+    rgba(110, 63, 18, 0.34) 82%,
+    transparent 100%);
+  margin: 6px 0;
+}
+.pc-section-label {
+  font-family: 'Cinzel', 'EB Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #876239;
+  margin: 4px 0 4px;
+}
+
+/* === ZONE 3: family blocks (heading + ♪ row) === */
+.pc-fam-block { margin: 4px 0 6px; }
+.pc-fam-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 1px;
+}
+.pc-fam-word {
+  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3e2812;
+}
+.pc-fam-pos-zh {
+  font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
   font-size: 11px;
   color: #876239;
 }
-.parchment-inner .pc-zh {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-style: italic;
-  font-size: 10px;                         /* smaller — was hitting flora */
-  color: #6a4626;
-  margin-left: auto;
-  text-align: right;
-  white-space: nowrap;
-}
 
-/* === ZONE 2: section labels (HER FAMILY / FRIEND / NEIGHBOR) === */
-.parchment-inner .pc-section-label {
-  font-family: 'EB Garamond', Georgia, serif;
-  font-style: italic;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #876239;
-  margin-top: 4px;
-}
-
-/* === ZONE 3: word rows inside sections === */
-.parchment-inner .pc-row {
+/* === ♪ play rows — collocations + family phrases + example === */
+.pc-play-row {
   display: flex;
   align-items: baseline;
   gap: 6px;
-  flex-wrap: wrap;
+  padding: 3px 4px 3px 0;
+  margin: 1px 0;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.2s;
 }
-.parchment-inner .pc-row-word {
-  /* Georgia (system, readable) + Caslon-style fallback chain. */
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, 'Times New Roman', serif;
-  font-style: italic;
+.pc-play-row:hover { background: rgba(110, 63, 18, 0.06); }
+.pc-play-row.is-playing { background: rgba(196, 152, 88, 0.18); }
+.pc-play-row .pc-play {
+  background: none;
+  border: 0;
+  color: #6a3d12;
   font-size: 13px;
+  cursor: pointer;
+  padding: 0 2px 0 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.pc-play-row.is-playing .pc-play { color: #b07a28; }
+.pc-play-phrase {
+  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+  font-style: italic;
   font-weight: 500;
+  font-size: 12.5px;
   color: #3e2812;
-  letter-spacing: .01em;
 }
-.parchment-inner .pc-row-pos {
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
+.pc-play-zh {
+  font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 9.5px;
-  color: #876239;
-}
-.parchment-inner .pc-row-zh {
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
-  font-style: italic;
-  font-size: 10px;
+  font-size: 11px;
   color: #6a4626;
 }
-.parchment-inner .pc-row-ex .pc-row-word {
-  font-size: 12px;
+.pc-ex-row .pc-ex-en {
   font-style: italic;
+  font-size: 12px;
   color: #4a2f15;
 }
-.parchment-inner .pc-row-ex-zh .pc-row-zh {
-  font-size: 10px;
-  margin-left: 12px;
-}
-
-/* === ZONE 4: copy line at the bottom === */
-.parchment-inner .pc-copy {
-  margin-top: auto;
-  padding-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.parchment-inner .pc-copy {
-  margin-top: auto;
-  padding-top: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-.parchment-inner .pc-copy-label {
-  font-family: 'EB Garamond', 'Libre Caslon Text', Georgia, serif;
+.pc-ex-zh {
+  font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: lowercase;
-  color: #876239;
-  white-space: nowrap;
-}
-.parchment-inner .pc-copy-rule {
-  /* short hairline, tapered to transparent at BOTH ends
-     so it doesn't reach the side flora.                  */
-  width: 45%;
-  height: 1px;
-  background: linear-gradient(to right,
-    transparent 0%,
-    rgba(110, 63, 18, 0.5) 20%,
-    rgba(110, 63, 18, 0.5) 80%,
-    transparent 100%);
-  border: 0;
-}
-.parchment-inner .pc-copy-mark {
-  color: #8a5a18;
   font-size: 11px;
-  opacity: 0.8;
+  color: #6a4626;
+  padding-left: 18px;
+  margin: -2px 0 4px;
 }

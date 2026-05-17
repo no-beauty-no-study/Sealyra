@@ -456,52 +456,103 @@ function showParchment(word) {
   veil.innerHTML = `
     <div class="parchment-card">
       <div class="parchment-inner">
-        <div class="pc-head">
-          <button class="pc-speak" data-sp="${escapeAttr(c.h)}" aria-label="play">♪</button>
-          <span class="pc-word">${escapeHtml(c.h)}</span>
-          <span class="pc-pos">${escapeHtml((c.pos || '').slice(0, 3))}.</span>
-          <span class="pc-zh">${escapeHtml(c.zh || '')}</span>
-        </div>
-        <div class="pc-body"></div>
-        <div class="pc-copy">
-          <span class="pc-copy-label">signed</span>
-          <span class="pc-copy-rule"></span>
-          <span class="pc-copy-mark">✦</span>
-        </div>
+        <button class="pc-close" aria-label="fold this page">fold this page</button>
+        <div class="pc-stack"></div>
       </div>
     </div>
   `;
-  const body = veil.querySelector('.pc-body');
+  const stack = veil.querySelector('.pc-stack');
+
+  // Build content as a sequence of items so each can be revealed with
+  // a small left-to-right "writing in" delay.  Order locked by spec:
+  //   1. headword + pos + zh    (with ♪ that says the word)
+  //   2. rule
+  //   3. "her family" header
+  //   4. each family entry: heading row (word + pos.zh)
+  //                       + ♪ phrase row (collocation)
+  //   5. rule
+  //   6. "her friend" header
+  //   7. each colloc row (♪ phrase + zh)
+  //   8. example: ♪ english sentence + zh translation below
+  const items = [];
+
+  items.push(`
+    <div class="pc-head" data-sp="${escapeAttr(c.h)}">
+      <button class="pc-play" aria-label="play">♪</button>
+      <span class="pc-word">${escapeHtml(c.h)}</span>
+      <span class="pc-pos">${escapeHtml((c.pos || '').slice(0, 4))}.</span>
+      <div class="pc-zh">${escapeHtml(c.zh || '')}</div>
+    </div>`);
+
   if (c.family && c.family.length) {
-    body.insertAdjacentHTML('beforeend', `<div class="pc-section-label">her family</div>`);
+    items.push(`<hr class="pc-rule">`);
+    items.push(`<div class="pc-section-label">her family</div>`);
     c.family.forEach(line => {
-      const [w, pos] = line.split('|').map(s => s.trim());
-      body.insertAdjacentHTML('beforeend',
-        `<div class="pc-row"><span class="pc-row-word">${escapeHtml(w)}</span> <span class="pc-row-pos">${escapeHtml(pos)}</span></div>`);
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      let html = `<div class="pc-fam-head">
+        <span class="pc-fam-word">${escapeHtml(w)}</span>
+        <span class="pc-fam-pos-zh">${escapeHtml(posZh || '')}</span>
+      </div>`;
+      if (phrase) {
+        html += `<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
+          <span class="pc-play-zh">${escapeHtml(phraseZh || '')}</span>
+        </div>`;
+      }
+      items.push(`<div class="pc-fam-block">${html}</div>`);
     });
   }
-  if (c.colloc && c.colloc.length) {
-    body.insertAdjacentHTML('beforeend', `<div class="pc-section-label">her friend</div>`);
-    c.colloc.forEach(line => {
+
+  if ((c.colloc && c.colloc.length) || c.example) {
+    items.push(`<hr class="pc-rule">`);
+    items.push(`<div class="pc-section-label">her friend</div>`);
+    (c.colloc || []).forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
-      body.insertAdjacentHTML('beforeend',
-        `<div class="pc-row"><span class="pc-row-word">${escapeHtml(phrase)}</span> <span class="pc-row-zh">${escapeHtml(zh || '')}</span></div>`);
+      items.push(`<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
+        <span class="pc-play-zh">${escapeHtml(zh || '')}</span>
+      </div>`);
     });
-  }
-  if (c.example) {
-    body.insertAdjacentHTML('beforeend', `<div class="pc-section-label">her sentence</div>`);
-    body.insertAdjacentHTML('beforeend',
-      `<div class="pc-row pc-row-ex"><span class="pc-row-word">${escapeHtml(c.example)}</span></div>`);
-    if (c.example_zh) {
-      body.insertAdjacentHTML('beforeend',
-        `<div class="pc-row pc-row-ex-zh"><span class="pc-row-zh">${escapeHtml(c.example_zh)}</span></div>`);
+    if (c.example) {
+      items.push(`<div class="pc-play-row pc-ex-row" data-sp="${escapeAttr(c.example)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-play-phrase pc-ex-en">${escapeHtml(c.example)}</span>
+      </div>
+      ${c.example_zh ? `<div class="pc-ex-zh">${escapeHtml(c.example_zh)}</div>` : ''}`);
     }
   }
-  // tap the speak button → play audio
-  veil.querySelector('.pc-speak').addEventListener('click', e => {
+
+  // Stagger reveal: each item gets a delayed CSS animation via inline
+  // animation-delay.  ~70 ms between items reads as "writing in".
+  items.forEach((html, i) => {
+    const node = document.createElement('div');
+    node.className = 'pc-item';
+    node.style.animationDelay = (i * 70) + 'ms';
+    node.innerHTML = html;
+    stack.appendChild(node);
+  });
+
+  // Linear ♪ playback: clicking any ♪ stops the previous one,
+  // speaks the new one, and marks the row as "now playing".
+  function wirePlay(row) {
+    const sp = row.getAttribute('data-sp');
+    if (!sp) return;
+    row.addEventListener('click', e => {
+      e.stopPropagation();
+      // unmark previous
+      veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+      row.classList.add('is-playing');
+      SFX.tap();
+      speak(sp);
+    });
+  }
+  veil.querySelectorAll('[data-sp]').forEach(wirePlay);
+
+  veil.querySelector('.pc-close').addEventListener('click', e => {
     e.stopPropagation();
-    SFX.tap();
-    speak(c.h);
+    closeParchment();
   });
   // tap the veil (anywhere OUTSIDE the parchment) closes it
   veil.addEventListener('click', e => {
