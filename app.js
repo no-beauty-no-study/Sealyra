@@ -881,7 +881,11 @@ function buildOracleQuestion(word) {
   const sentence = c.example || c.h;
   // Cloze: keep the first letter, blank the rest.  "abrupt" → "a______"
   const first  = c.h[0];
-  const blanks = '_'.repeat(Math.max(5, c.h.length - 1));
+  // Use non-breaking spaces, not literal underscores — the CSS
+  // border-bottom on .q-blank draws the single clean line.  The
+  // old version emitted "a______" which clashed with the
+  // border-bottom and read as two stacked underlines.
+  const blanks = ' '.repeat(Math.max(5, c.h.length - 1));
   const blanked = `${first}${blanks}`;
   const sentenceHL = sentence.replace(
     new RegExp(`\\b${c.h}\\b`, 'i'),
@@ -1290,8 +1294,14 @@ const Screens = {
         const opts = $('.oracle-options', stage);
         q.options.forEach((opt, oi) => {
           const b = document.createElement('button');
+          // Same cardstock structure as the match-card so the two
+          // stages speak one visual language.  ❦ flanks the text,
+          // .mc-frame draws the dotted inner gold rule.
           b.className = 'card card--option';
-          b.textContent = opt;
+          b.innerHTML = `
+            <span class="mc-frame"></span>
+            <span class="mc-text">${escapeHtml(opt)}</span>
+          `;
           b.addEventListener('click', () => pick(oi, b));
           opts.appendChild(b);
         });
