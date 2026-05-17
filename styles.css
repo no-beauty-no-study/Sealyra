@@ -2829,10 +2829,14 @@ body { background: transparent !important; }
   text-align: center;
   letter-spacing: .02em !important;
   cursor: pointer;
+  /* No !important on box-shadow here — earlier passes had it and it
+     was permanently beating the .is-correct breathing animation on
+     the result page.  Specificity alone now lets the .card--match
+     descendant rules win.                                          */
   box-shadow:
     inset 0 1px 0 rgba(244,181,200,.14),
     inset 0 0 18px rgba(199,122,149,.10),
-    0 4px 16px rgba(0,0,0,.35) !important;
+    0 4px 16px rgba(0,0,0,.35);
   transition: transform .15s, box-shadow .25s, border-color .2s, color .2s;
   -webkit-tap-highlight-color: transparent;
 }
@@ -4484,7 +4488,7 @@ body { background: transparent !important; }
   font-size: 17px;
   font-style: normal;
   font-family: 'Cormorant Garamond', serif;
-  color: rgba(190, 158, 100, 0.58);
+  color: rgba(168, 138, 84, 0.52);
   pointer-events: none;
   line-height: 1;
   transition: color 0.3s, opacity 0.3s;
@@ -4493,13 +4497,13 @@ body { background: transparent !important; }
 .card.card--match.is-left::after   { bottom: 6px; right: 8px; transform: rotate(-90deg) scaleY(1.25); }
 .card.card--match.is-right::before { top: 6px;    right: 8px; transform: rotate(-90deg) scaleY(1.25); }
 .card.card--match.is-right::after  { bottom: 6px; left: 8px;  transform: rotate( 90deg) scaleY(1.25); }
-/* tagged → suits hold deeper antique gold (decorative only, not the
-   pair signal).  Pair info lives in word colour + body tint.       */
+/* tagged → suits a touch brighter brass; still NOT a luminous
+   yellow point.  Match the antique brass of the index title.    */
 .card.card--match.tag-0::before, .card.card--match.tag-0::after,
 .card.card--match.tag-1::before, .card.card--match.tag-1::after,
 .card.card--match.tag-2::before, .card.card--match.tag-2::after,
 .card.card--match.tag-3::before, .card.card--match.tag-3::after {
-  color: rgba(208, 172, 110, 0.85);
+  color: rgba(186, 152, 94, 0.78);
 }
 
 /* ============= SELECTED — pair color shows in 3 spots =============
@@ -4558,9 +4562,10 @@ body { background: transparent !important; }
     0 1px 3px rgba(0, 0, 0, 0.50);
 }
 
-/* tag-0 → ♥ smoke sepia (replaces rose pink — competed too closely
-   with ♠ wine in the red family.  Sepia is classical, sun-faded
-   parchment, completely separate hue.)                              */
+/* tag-0 → ♥ persimmon / terracotta — WARM orange-leaning red.
+   Pairs the "red" family with ♠ wine on a temperature axis instead
+   of a brightness axis: ♥ = orange-warm, ♠ = violet-cool.  Sepia
+   brown from v=27.3 was too close to gold and not pretty.         */
 .card.card--match.tag-0 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4569,14 +4574,12 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(40, 28, 22, 0.94) 0%,
-                    rgba(20, 14, 12, 0.97) 100%) !important;
-  color: rgba(216, 184, 144, 0.96) !important;   /* pale sepia word */
-  /* subtle pair-tinted "ink bleed" — gives the word weight without
-     a font-weight bump (no jumpy bold).  ~0.5–1px blur in pair hue. */
+                    rgba(40, 22, 16, 0.94) 0%,
+                    rgba(22, 12, 8, 0.97) 100%) !important;
+  color: rgba(224, 158, 124, 0.96) !important;   /* persimmon word */
   text-shadow:
-    0 0 0.5px rgba(216, 184, 144, 0.60),
-    0 0 6px rgba(180, 140, 96, 0.30) !important;
+    0 0 0.5px rgba(224, 158, 124, 0.60),
+    0 0 6px rgba(192, 110, 76, 0.32) !important;
 }
 .card.card--match.tag-0::before,
 .card.card--match.tag-0::after {
@@ -4604,7 +4607,10 @@ body { background: transparent !important; }
   content: '\2666';   /* ♦ — stays gold */
 }
 
-/* tag-2 → ♠ wine / burgundy velvet */
+/* tag-2 → ♠ wine — COOL violet-leaning red.  Paired with ♥
+   persimmon on the temperature axis: ♥ orange-warm, ♠ cool-violet
+   so the two "reds" read as a clear pair of opposites instead of
+   competing.                                                       */
 .card.card--match.tag-2 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4613,12 +4619,12 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(40, 16, 22, 0.94) 0%,
-                    rgba(22, 8, 12, 0.97) 100%) !important;
-  color: rgba(220, 156, 168, 0.96) !important;   /* dusty wine word */
+                    rgba(36, 14, 32, 0.94) 0%,
+                    rgba(20, 8, 18, 0.97) 100%) !important;
+  color: rgba(212, 152, 184, 0.96) !important;   /* violet-wine word */
   text-shadow:
-    0 0 0.5px rgba(220, 156, 168, 0.60),
-    0 0 6px rgba(180, 88, 104, 0.30) !important;
+    0 0 0.5px rgba(212, 152, 184, 0.60),
+    0 0 6px rgba(160, 84, 132, 0.32) !important;
 }
 .card.card--match.tag-2::before,
 .card.card--match.tag-2::after {

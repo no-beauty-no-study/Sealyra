@@ -1186,14 +1186,12 @@ const Screens = {
         const tile = document.createElement('button');
         const sideClass = r.side === 'L' ? 'is-left' : 'is-right';
         const state = r.correct ? 'is-correct' : 'is-wrong';
-        // ❦ (U+2766) — floral heart bullet, a book-marginalia
-        // "approved" flourish.  Wrong tiles get no mark — the dim
-        // recedence already says everything.
-        const mark = r.correct ? '❦' : '';
+        // No marker on the card itself — correct tiles speak with
+        // the under-card gold breathing pool; wrong ones with their
+        // muted state.  Cleaner than a UI checkmark.
         tile.className = `card card--match ${sideClass} tag-${r.tag} ${state}`;
         tile.innerHTML = `
           <span class="mc-frame"></span>
-          <span class="tile-mark">${mark}</span>
           <span class="mc-text">${escapeHtml(r.text)}</span>
         `;
         tile.addEventListener('click', () => flipToCard(tile, r.text, 'stage1-result'));
