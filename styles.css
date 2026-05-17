@@ -1461,7 +1461,6 @@ body.no-scroll {
    was what sent the modal sliding to the bottom of the document.   */
 #app          { position: relative; z-index: 1; }
 #banner-top   { z-index: 200; }
-.drawer       { z-index: 500; }
 .modal-veil   { z-index: 700; }
 body.bg-cover  #bg-layer { background-image: url("assets/bg-cover.png?v=25"); }
 body.bg-stage  #bg-layer { background-image: url("assets/bg-stage.png?v=25"); }
@@ -1515,123 +1514,9 @@ body.bg-note   #bg-layer { background-image: url("assets/bg-note.png?v=25"); }
    Slides in from the left with a soft veil over the rest of the
    page.  Holds the awakened-counter, a search input, and a live
    list of the words you haven't learned yet.                        */
-.drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-.drawer.open { pointer-events: auto; opacity: 1; }
-
-.drawer-veil {
-  position: absolute;
-  inset: 0;
-  background: rgba(8,4,18,.62);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-}
-.drawer-panel {
-  position: absolute;
-  top: 0; bottom: 0; left: 0;
-  width: min(86%, 360px);
-  background: linear-gradient(180deg, #1E1638 0%, #14102A 100%);
-  border-right: 1px solid rgba(244,181,200,.22);
-  box-shadow: 4px 0 28px rgba(0,0,0,.55);
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform .28s cubic-bezier(.2,.7,.2,1);
-  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-}
-.drawer.open .drawer-panel { transform: translateX(0); }
-
-.drawer-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 24px 22px 14px;
-}
-.drawer-title {
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 22px;
-  color: var(--pink-soft);
-  letter-spacing: .04em;
-}
-.drawer-title em { font-style: italic; }
-.drawer-count {
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 11px;
-  color: var(--soft);
-  letter-spacing: .18em;
-  margin-top: 4px;
-}
-.drawer-close {
-  background: transparent;
-  border: none;
-  color: var(--gold-deep);
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 6px;
-}
-.drawer-close:hover { color: var(--rose); }
-
-.drawer-search-wrap {
-  padding: 4px 22px 12px;
-}
-.drawer-search {
-  width: 100%;
-  background: rgba(6,3,15,.45);
-  border: 1px solid rgba(244,181,200,.22);
-  border-radius: 999px;
-  padding: 10px 16px;
-  color: var(--cream);
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 13px;
-  letter-spacing: .04em;
-  outline: none;
-  transition: border-color .2s, box-shadow .2s;
-}
-.drawer-search::placeholder { color: var(--muted); }
-.drawer-search:focus { border-color: rgba(244,181,200,.55); box-shadow: 0 0 12px rgba(244,181,200,.22); }
-
-.drawer-list-label {
-  padding: 14px 22px 8px;
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 11px;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--pink-deep);
-}
-
-.drawer-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 22px 28px;
-  -webkit-overflow-scrolling: touch;
-}
-.drawer-word {
-  display: block;
-  width: 100%;
-  background: transparent;
-  border: none;
-  text-align: left;
-  padding: 7px 0;
-  color: var(--cream);
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 16px;
-  letter-spacing: .02em;
-  cursor: pointer;
-  transition: color .15s, transform .15s;
-}
-.drawer-word:hover { color: var(--rose); transform: translateX(4px); }
+/* The .drawer / sidebar block lived here.  Removed — the moon-corner
+   button now navigates back to the cover and the drawer's stale
+   word-count display is gone.                                       */
 
 
 /* ============================================================

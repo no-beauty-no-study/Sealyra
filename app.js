@@ -337,11 +337,19 @@ function closeCorner({ confirm = false, to = 'cover', label = 'close the page' }
 function moonCorner() {
   const b = document.createElement('button');
   b.className = 'moon-corner corner-pin';
-  b.setAttribute('aria-label', 'open her words');
+  b.setAttribute('aria-label', 'back to cover');
   // Three-bar menu drawn in CSS via .mc-bar + two box-shadows — no
   // PNG, no unicode glyph that might tofu on iOS.
   b.innerHTML = '<span class="mc-bar"></span>';
-  b.addEventListener('click', () => { SFX.tap(); openSidebar(); });
+  b.addEventListener('click', () => {
+    SFX.tap();
+    // From a game stage, stop game music; from the cover side, the
+    // continuous home pool keeps playing thanks to LanBGM's
+    // same-pool short-circuit.
+    const inGame = /^stage\d/.test(state.screen || '');
+    if (inGame) LanBGM.stop();
+    transitionTo('cover');
+  });
   return b;
 }
 
@@ -351,71 +359,10 @@ function moonCorner() {
      - a live-filter search input
      - the "still waking" list (everything not yet learned)
    Tapping any word closes the drawer and jumps to that word's card.   */
-function _buildSidebar() {
-  let drawer = document.getElementById('drawer');
-  if (drawer) return drawer;
-  drawer = document.createElement('aside');
-  drawer.id = 'drawer';
-  drawer.className = 'drawer';
-  drawer.innerHTML = `
-    <div class="drawer-veil"></div>
-    <div class="drawer-panel">
-      <div class="drawer-head">
-        <div>
-          <div class="drawer-title"><em>her words</em></div>
-          <div class="drawer-count">…</div>
-        </div>
-        <button class="drawer-close" aria-label="close">×</button>
-      </div>
-      <div class="drawer-search-wrap">
-        <input class="drawer-search" type="text" placeholder="search words…" autocomplete="off" spellcheck="false" autocapitalize="off">
-      </div>
-      <div class="drawer-list-label">…</div>
-      <div class="drawer-list"></div>
-    </div>
-  `;
-  document.body.appendChild(drawer);
-  drawer.querySelector('.drawer-veil').addEventListener('click', closeSidebar);
-  drawer.querySelector('.drawer-close').addEventListener('click', closeSidebar);
-  drawer.querySelector('.drawer-search').addEventListener('input', refreshSidebarList);
-  return drawer;
-}
-function openSidebar() {
-  const drawer = _buildSidebar();
-  refreshSidebarList();
-  drawer.classList.add('open');
-}
-function closeSidebar() {
-  const d = document.getElementById('drawer');
-  if (d) d.classList.remove('open');
-}
-function refreshSidebarList() {
-  const drawer = document.getElementById('drawer');
-  if (!drawer) return;
-  const all = Object.keys(CARDS).sort();
-  const waking  = all.filter(w => !saved.learned[w]);
-  const learned = all.filter(w =>  saved.learned[w]);
-  const q = (drawer.querySelector('.drawer-search').value || '').toLowerCase().trim();
-  drawer.querySelector('.drawer-count').textContent =
-    `${learned.length} / ${all.length} awakened`;
-  drawer.querySelector('.drawer-list-label').textContent =
-    `still waking · ${waking.length}`;
-  const list = drawer.querySelector('.drawer-list');
-  list.innerHTML = '';
-  waking
-    .filter(w => !q || w.toLowerCase().includes(q))
-    .forEach(w => {
-      const a = document.createElement('button');
-      a.className = 'drawer-word';
-      a.textContent = w;
-      a.addEventListener('click', () => {
-        closeSidebar();
-        SFX.pageTurn();
-        go('card', { word: w, from: state.screen === 'card' ? (state._cardFrom || 'cover') : state.screen });
-      });
-      list.appendChild(a);
-    });
-}
+/* The sidebar drawer is gone — the user said it was ugly, the
+   counter inside was stale (50 vs the real 300+ words), and they
+   preferred deleting over rebuilding it.  The moon corner button
+   now does what the user wanted: back to cover.                  */
 // "Are you sure?" — close-the-book confirmation, shown when the user
 // tries to exit a stage mid-way.  Closing forfeits the current page.
 function confirmLeave(onLeave) {
