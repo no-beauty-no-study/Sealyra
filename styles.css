@@ -2862,35 +2862,70 @@ body { background: transparent !important; }
 
 
 /* ---------- C. Chapter-rule button (next-door) ---------- */
+/* ---------- .next-door — confirm / submit chapter button ----------
+   Redesigned: no more flanking ── confirm ── side lines.  Instead,
+   a full-width gold underline that fades at both edges, plus a
+   slow breathing glow on the text + line.  This is THE "clickable"
+   hint language for the game — reuse it for any primary CTA.    */
 .next-door {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 16px !important;
+  position: relative !important;
+  display: inline-block !important;
   background: transparent !important;
   border: none !important;
-  padding: 10px 0 !important;
+  padding: 6px 28px 12px !important;
   color: var(--cream) !important;
   font-family: var(--f-italic) !important;
   font-style: italic !important;
   font-size: 18px !important;
-  letter-spacing: .04em !important;
+  letter-spacing: .05em !important;
   cursor: pointer;
-  box-shadow: none !important;
+  animation: clickable-hint 3.0s ease-in-out infinite;
 }
-.next-door::before, .next-door::after {
+/* kill the old side-line ::before — we don't want it any more */
+.next-door::before { content: none !important; display: none !important; }
+/* the underline lives in ::after — fades to transparent on both ends */
+.next-door::after {
   content: '' !important;
-  display: inline-block;
-  width: 42px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(232,200,130,.85)) !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: auto !important;
+  height: 1px !important;
+  display: block !important;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(232, 200, 130, 0) 6%,
+    rgba(232, 200, 130, 0.82) 38%,
+    rgba(232, 200, 130, 0.82) 62%,
+    rgba(232, 200, 130, 0) 94%,
+    transparent 100%) !important;
 }
-.next-door::after { background: linear-gradient(90deg, rgba(232,200,130,.85), transparent) !important; }
-.next-door:hover            { color: var(--rose) !important; text-shadow: 0 0 16px rgba(237,184,158,.55); }
-.next-door:hover::before    { background: linear-gradient(90deg, transparent, var(--rose)) !important; }
-.next-door:hover::after     { background: linear-gradient(90deg, var(--rose), transparent) !important; }
-.next-door.is-engaged       { color: var(--rose) !important; text-shadow: 0 0 22px rgba(237,184,158,.95) !important; }
-.next-door.is-engaged::before { background: linear-gradient(90deg, transparent, var(--rose)) !important; }
-.next-door.is-engaged::after  { background: linear-gradient(90deg, var(--rose), transparent) !important; }
+.next-door:hover {
+  color: var(--rose) !important;
+  animation: none;
+  text-shadow: 0 0 16px rgba(237, 184, 158, .55) !important;
+}
+.next-door:hover::after {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(237, 184, 158, 0) 6%,
+    var(--rose) 38%,
+    var(--rose) 62%,
+    rgba(237, 184, 158, 0) 94%,
+    transparent 100%) !important;
+}
+/* the universal "tap me" pulse — also used by other primary CTAs */
+@keyframes clickable-hint {
+  0%, 100% {
+    text-shadow: 0 0 6px rgba(232, 200, 130, 0.28);
+    filter: drop-shadow(0 0 4px rgba(232, 200, 130, 0.18));
+  }
+  50% {
+    text-shadow: 0 0 14px rgba(232, 200, 130, 0.62);
+    filter: drop-shadow(0 0 10px rgba(232, 200, 130, 0.42));
+  }
+}
 
 
 /* ---------- D. Whisper pill ---------- */
@@ -4333,9 +4368,9 @@ body { background: transparent !important; }
   align-items: center;
   justify-content: center;
   width: 100% !important;
-  height: 60px !important;
-  padding: 0 30px !important;          /* room for the corner suits */
-  border: 1px solid rgba(218, 188, 124, 0.40) !important;
+  height: 48px !important;
+  padding: 0 22px !important;          /* room for the corner suits */
+  border: 1px solid rgba(218, 188, 124, 0.42) !important;
   border-radius: 5px !important;
   /* Dark purple cardstock.  Three layers, in this order:
      1. subtle "fiber" dots — tiny low-alpha gold flecks scattered
@@ -4358,17 +4393,20 @@ body { background: transparent !important; }
     linear-gradient(160deg,
                     rgba(46, 32, 70, 0.94) 0%,
                     rgba(28, 18, 50, 0.97) 100%) !important;
-  /* Paper depth: top sheen + bottom shadow + center vignette + drop. */
+  /* Paper depth: top sheen + bottom shadow + center vignette + drop.
+     No !important — @keyframes box-shadow inside .is-correct needs
+     to win, and CSS spec says !important inside keyframes is dropped.
+     Tag-N rules below explicitly set box-shadow so they still win.   */
   box-shadow:
     inset 0 1px 0 rgba(232, 200, 130, 0.10),
     inset 0 -1px 0 rgba(0, 0, 0, 0.36),
     inset 0 0 16px rgba(0, 0, 0, 0.24),
-    0 1px 3px rgba(0, 0, 0, 0.45) !important;
+    0 1px 3px rgba(0, 0, 0, 0.45);
   color: #efdbb4 !important;
   font-family: 'Cormorant Garamond', 'EB Garamond', serif !important;
   font-style: italic !important;
   font-weight: 500 !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   letter-spacing: 0.03em !important;
   text-align: center;
   cursor: pointer;
@@ -4431,7 +4469,7 @@ body { background: transparent !important; }
 .card.card--match::after {
   content: '✦';
   position: absolute;
-  font-size: 20px;
+  font-size: 16px;
   font-style: normal;
   font-family: 'Cormorant Garamond', serif;
   color: rgba(228, 196, 132, 0.62);
@@ -4439,11 +4477,18 @@ body { background: transparent !important; }
   line-height: 1;
   transition: color 0.3s, opacity 0.3s;
 }
-/* default (not yet tagged) — left card / right card mirrored */
-.card.card--match.is-left::before  { top: 8px;    left: 11px;  transform: rotate( 90deg); }
-.card.card--match.is-left::after   { bottom: 8px; right: 11px; transform: rotate(-90deg); }
-.card.card--match.is-right::before { top: 8px;    right: 11px; transform: rotate(-90deg); }
-.card.card--match.is-right::after  { bottom: 8px; left: 11px;  transform: rotate( 90deg); }
+.card.card--match.is-left::before  { top: 6px;    left: 8px;  transform: rotate( 90deg); }
+.card.card--match.is-left::after   { bottom: 6px; right: 8px; transform: rotate(-90deg); }
+.card.card--match.is-right::before { top: 6px;    right: 8px; transform: rotate(-90deg); }
+.card.card--match.is-right::after  { bottom: 6px; left: 8px;  transform: rotate( 90deg); }
+/* tagged → suits brighten slightly, still gold (no pair colour).
+   Border + suit are universal; pair info lives in word + body.   */
+.card.card--match.tag-0::before, .card.card--match.tag-0::after,
+.card.card--match.tag-1::before, .card.card--match.tag-1::after,
+.card.card--match.tag-2::before, .card.card--match.tag-2::after,
+.card.card--match.tag-3::before, .card.card--match.tag-3::after {
+  color: rgba(238, 206, 138, 0.88);
+}
 
 /* ============= SELECTED — pair color shows in 3 spots =============
    1. the OUTER border picks up the pair color (strong, α 0.88)
@@ -4476,7 +4521,32 @@ body { background: transparent !important; }
            (where it pulses gold to say "this was the right answer").
    ============================================================ */
 
-/* tag-0 → ♥ smoke rose / plum velvet */
+/* All tag-N states share:
+     · gold border (slightly brighter α than default) — universal
+     · gold suit ♥♦♠♣ — universal
+     · DARK pair-tinted velvet body
+     · pair-coloured WORD TEXT — the actual identification signal
+
+   Pair info lives in word colour + body tint.  Border & suit stay
+   in the gold family so the cards keep their classical "card edge"
+   feel instead of broadcasting like neon tags.                       */
+
+.card.card--match.tag-0,
+.card.card--match.tag-1,
+.card.card--match.tag-2,
+.card.card--match.tag-3 {
+  border-color: rgba(232, 200, 132, 0.70) !important;  /* gold, brighter than default */
+  /* No !important — lets .is-correct keyframes win on result page. */
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
+    inset 0 0 16px rgba(0, 0, 0, 0.32),
+    0 1px 3px rgba(0, 0, 0, 0.50);
+}
+
+/* tag-0 → ♥ smoke sepia (replaces rose pink — competed too closely
+   with ♠ wine in the red family.  Sepia is classical, sun-faded
+   parchment, completely separate hue.)                              */
 .card.card--match.tag-0 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4485,19 +4555,13 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(38, 22, 34, 0.94) 0%,
-                    rgba(20, 10, 18, 0.97) 100%) !important;
-  border-color: rgba(204, 136, 168, 0.85) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 1px 3px rgba(0, 0, 0, 0.50) !important;
+                    rgba(40, 28, 22, 0.94) 0%,
+                    rgba(20, 14, 12, 0.97) 100%) !important;
+  color: rgba(216, 184, 144, 0.96) !important;   /* pale sepia word */
 }
 .card.card--match.tag-0::before,
 .card.card--match.tag-0::after {
-  content: '\2665';   /* ♥ */
-  color: rgba(220, 168, 188, 0.72);
+  content: '\2665';   /* ♥ — stays gold */
 }
 
 /* tag-1 → ♦ Ravenclaw indigo velvet */
@@ -4511,21 +4575,14 @@ body { background: transparent !important; }
     linear-gradient(160deg,
                     rgba(20, 26, 44, 0.94) 0%,
                     rgba(10, 14, 26, 0.97) 100%) !important;
-  border-color: rgba(112, 144, 192, 0.85) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 1px 3px rgba(0, 0, 0, 0.50) !important;
+  color: rgba(172, 196, 224, 0.96) !important;   /* pale sapphire word */
 }
 .card.card--match.tag-1::before,
 .card.card--match.tag-1::after {
-  content: '\2666';   /* ♦ */
-  color: rgba(140, 168, 204, 0.72);
+  content: '\2666';   /* ♦ — stays gold */
 }
 
-/* tag-2 → ♠ wine / burgundy velvet (replaces amethyst — purple
-   competed with the page's purple atmosphere) */
+/* tag-2 → ♠ wine / burgundy velvet */
 .card.card--match.tag-2 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4534,22 +4591,16 @@ body { background: transparent !important; }
     radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
     radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
     linear-gradient(160deg,
-                    rgba(40, 16, 20, 0.94) 0%,
+                    rgba(40, 16, 22, 0.94) 0%,
                     rgba(22, 8, 12, 0.97) 100%) !important;
-  border-color: rgba(180, 88, 104, 0.85) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 1px 3px rgba(0, 0, 0, 0.50) !important;
+  color: rgba(220, 156, 168, 0.96) !important;   /* dusty wine word */
 }
 .card.card--match.tag-2::before,
 .card.card--match.tag-2::after {
-  content: '\2660';   /* ♠ */
-  color: rgba(204, 132, 144, 0.72);
+  content: '\2660';   /* ♠ — stays gold */
 }
 
-/* tag-3 → ♣ velvet emerald (the user's favourite — preserved) */
+/* tag-3 → ♣ velvet emerald */
 .card.card--match.tag-3 {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
@@ -4560,17 +4611,11 @@ body { background: transparent !important; }
     linear-gradient(160deg,
                     rgba(18, 36, 28, 0.94) 0%,
                     rgba(8, 20, 14, 0.97) 100%) !important;
-  border-color: rgba(132, 174, 152, 0.85) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    inset 0 0 16px rgba(0, 0, 0, 0.32),
-    0 1px 3px rgba(0, 0, 0, 0.50) !important;
+  color: rgba(176, 212, 192, 0.96) !important;   /* pale emerald word */
 }
 .card.card--match.tag-3::before,
 .card.card--match.tag-3::after {
-  content: '\2663';   /* ♣ */
-  color: rgba(160, 196, 178, 0.72);
+  content: '\2663';   /* ♣ — stays gold */
 }
 
 /* (the old `match-halo` breathing keyframes lived here.  killed —
@@ -4610,16 +4655,17 @@ body { background: transparent !important; }
       inset 0 1px 0 rgba(220, 197, 139, 0.18),
       inset 0 -1px 0 rgba(0, 0, 0, 0.40),
       inset 0 0 14px rgba(196, 152, 88, 0.16),
-      0 0 4px rgba(220, 170, 100, 0.16),
-      0 1px 3px rgba(0, 0, 0, 0.45) !important;
+      0 0 8px rgba(220, 170, 100, 0.28),
+      0 1px 3px rgba(0, 0, 0, 0.45);
   }
   50% {
     box-shadow:
-      inset 0 1px 0 rgba(220, 197, 139, 0.22),
+      inset 0 1px 0 rgba(220, 197, 139, 0.26),
       inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-      inset 0 0 14px rgba(196, 152, 88, 0.22),
-      0 0 16px rgba(220, 170, 100, 0.34),
-      0 1px 3px rgba(0, 0, 0, 0.45) !important;
+      inset 0 0 14px rgba(196, 152, 88, 0.28),
+      0 0 22px rgba(220, 170, 100, 0.55),
+      0 0 38px rgba(220, 170, 100, 0.22),
+      0 1px 3px rgba(0, 0, 0, 0.45);
   }
 }
 .card.card--match.is-correct .mc-frame {

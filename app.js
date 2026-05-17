@@ -1016,11 +1016,16 @@ const Screens = {
       // (No "currentTag" — each click picks its tag fresh from the
       // actual board state so undo + re-pick can't strand orphans.)
 
+      // Layout order:
+      //   chapter title  →  confirm CTA (reachable, glowing)
+      //                  →  hint line   →  4×2 grid
+      // Putting the confirm button up top means thumb can reach it
+      // on a mobile browser without scrolling past the URL bar.
       el.innerHTML = `
         ${stageHeader(1, 'the matching')}
+        <div class="match-actions"></div>
         <div class="q-progress">tap one on the left, one on the right · four pairs</div>
         <div class="match-grid"></div>
-        <div class="match-actions"></div>
       `;
 
       el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
