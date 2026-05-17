@@ -306,15 +306,41 @@ button { font-family: inherit; color: inherit; }
 body.cover-pending .cover-stage > * { visibility: hidden; }
 body.cover-pending .cover-gate     { visibility: visible; }
 
-/* fade-to-black overlay used during cover→game transition */
+/* fade-to-black overlay used during cover→game transition.
+   A radial gold burst sits in front of the deep purple so the
+   moment of "entering the chapter" reads as ceremonial rather
+   than as a load screen.                                         */
 .fade-out {
   position: fixed; inset: 0;
-  background: var(--bg-deep);
+  background:
+    radial-gradient(ellipse at 50% 38%,
+                    rgba(232, 200, 130, 0.22) 0%,
+                    rgba(40, 24, 56, 0.55) 30%,
+                    var(--bg-deep) 70%);
   opacity: 0; pointer-events: none;
   z-index: 9000;
   transition: opacity 1s ease;
 }
 .fade-out.show { opacity: 1; pointer-events: all; }
+
+/* page-veil — light-touch transition used between cover ↔ note /
+   index.  Slower than a snap, faster than the chapter fade.  The
+   gold edge-vignette is the SAME idiom as fade-out but darker and
+   smaller in scale; it reads as a "page settles".                */
+.page-veil {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%,
+                    rgba(232, 200, 130, 0.10) 0%,
+                    transparent 35%),
+    radial-gradient(ellipse at 50% 50%,
+                    transparent 30%,
+                    rgba(8, 4, 18, 0.88) 100%);
+  opacity: 0; pointer-events: none;
+  z-index: 9000;
+  transition: opacity 0.28s ease;
+}
+.page-veil.show { opacity: 1; pointer-events: all; }
 
 /* ---------- 5. Default button (.btn) — pink pill ---------- */
 .btn {

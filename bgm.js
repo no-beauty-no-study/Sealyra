@@ -42,6 +42,7 @@ window.LanBGM = (() => {
   let playing = false;
   let currentTrack = null;
   let currentTrackId = null;
+  let currentPool = null;     // which pool the current track came from
   let volumeValue = 0.42;
 
   const N = {
@@ -428,6 +429,11 @@ window.LanBGM = (() => {
   }
 
   async function playRandom(poolName, options = {}) {
+    // CONTINUOUS-POOL rule: if we're already playing a track from
+    // this pool, leave it alone.  Cover / index / note all share
+    // the "home" pool, so navigating between them keeps the music
+    // running uninterrupted (the user's request).
+    if (currentPool === poolName && playing) return currentTrackId;
     const pool = pools[poolName] || pools.home;
     let id = pool[Math.floor(Math.random() * pool.length)];
     if (options.avoidRepeat !== false && currentTrackId && pool.length > 1) {
@@ -437,6 +443,7 @@ window.LanBGM = (() => {
         guard++;
       }
     }
+    currentPool = poolName;
     await play(id, options);
     return id;
   }
@@ -447,6 +454,7 @@ window.LanBGM = (() => {
 
   function stop() {
     playing = false;
+    currentPool = null;
     if (timer) clearTimeout(timer);
     timer = null;
   }

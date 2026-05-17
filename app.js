@@ -221,6 +221,28 @@ function backToCover(label = '← close the book') {
   b.addEventListener('click', () => { SFX.tap(); LanBGM.stop(); go('cover'); });
   return b;
 }
+
+/* transitionTo — gentle "page veil" navigation for cover ↔ note / index
+   etc.  Drops a fixed gold-darkening veil in front of the page for ~280
+   ms, swaps the screen at the midpoint, then lifts the veil.  Visually
+   hides the bg-* PNG swap (each background is 2–3 MB and slow on phones)
+   and gives a small ceremony to every cross-screen move.  For the more
+   dramatic cover → game transition we keep the existing full fade-out. */
+function transitionTo(screenId, opts = {}) {
+  const dur  = opts.duration || 280;
+  const veil = document.createElement('div');
+  veil.className = 'page-veil';
+  document.body.appendChild(veil);
+  // double rAF so the browser sees the initial opacity:0 before we
+  // transition to opacity:1.
+  requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('show')));
+  setTimeout(() => {
+    go(screenId, opts);
+    requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.remove('show')));
+    setTimeout(() => veil.remove(), dur + 30);
+  }, dur);
+}
+
 function lilGhost(label, onClick) {
   const b = document.createElement('button');
   b.className = 'lil-ghost';
@@ -984,8 +1006,37 @@ const Screens = {
           fade.classList.remove('show');
         }, 1000);
       }));
-      $('#cover-links', el).appendChild(lilGhost('her note',  () => { LanBGM.unlock(); LanBGM.playHomeRandom({ volume: 0.42 }); go('note'); }));
-      $('#cover-links', el).appendChild(lilGhost('the index', () => { LanBGM.unlock(); LanBGM.playHomeRandom({ volume: 0.42 }); go('index'); }));
+      // her note / the index sit in the cover's "home" pool.  The
+      // smart-play inside LanBGM no-ops when the same pool is already
+      // running, so the music continues uninterrupted as the user
+      // hops between cover ↔ note ↔ index.
+      $('#cover-links', el).appendChild(lilGhost('her note',  () => {
+        LanBGM.unlock();
+        LanBGM.playHomeRandom({ volume: 0.42 });
+        transitionTo('note');
+      }));
+      $('#cover-links', el).appendChild(lilGhost('the index', () => {
+        LanBGM.unlock();
+        LanBGM.playHomeRandom({ volume: 0.42 });
+        transitionTo('index');
+      }));
+
+      // Try to start the home-pool BGM the moment the cover renders.
+      // Most browsers gate audio until a user gesture; LanBGM.unlock()
+      // here is a no-op without one.  Fall back to a one-shot listener
+      // that arms the next click/touch to unlock + play.  The cover's
+      // mainCTA already does its own unlock, so the listener mostly
+      // catches users who tap the page background or a cover-link
+      // first.
+      LanBGM.playHomeRandom({ volume: 0.42 });
+      const armUnlock = () => {
+        LanBGM.unlock();
+        LanBGM.playHomeRandom({ volume: 0.42 });
+        document.removeEventListener('click',    armUnlock, true);
+        document.removeEventListener('touchend', armUnlock, true);
+      };
+      document.addEventListener('click',    armUnlock, { capture: true, once: true });
+      document.addEventListener('touchend', armUnlock, { capture: true, once: true });
     }
   },
 
