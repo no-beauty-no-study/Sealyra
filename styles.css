@@ -4368,10 +4368,10 @@ body { background: transparent !important; }
   align-items: center;
   justify-content: center;
   width: 100% !important;
-  height: 48px !important;
-  padding: 0 22px !important;          /* room for the corner suits */
-  border: 1px solid rgba(218, 188, 124, 0.42) !important;
-  border-radius: 5px !important;
+  height: 52px !important;
+  padding: 0 26px !important;          /* room for the corner suits */
+  border: 1px solid rgba(190, 158, 100, 0.45) !important;
+  border-radius: 3px !important;
   /* Dark purple cardstock.  Three layers, in this order:
      1. subtle "fiber" dots — tiny low-alpha gold flecks scattered
         across the face (high-quality cardstock grain, not grunge)
@@ -4406,7 +4406,7 @@ body { background: transparent !important; }
   font-family: 'Cormorant Garamond', 'EB Garamond', serif !important;
   font-style: italic !important;
   font-weight: 500 !important;
-  font-size: 14px !important;
+  font-size: 17px !important;
   letter-spacing: 0.03em !important;
   text-align: center;
   cursor: pointer;
@@ -4430,8 +4430,8 @@ body { background: transparent !important; }
    beads pressed into the paper, classic card-deck inlay.            */
 .card.card--match .mc-frame {
   position: absolute;
-  inset: 4px;
-  border-radius: 3px;
+  inset: 3px;
+  border-radius: 2px;
   pointer-events: none;
   /* top edge | bottom edge | left edge | right edge — gold beads */
   background:
@@ -4465,29 +4465,41 @@ body { background: transparent !important; }
    When a pair sits side-by-side, the suit marks form a symmetric
    "wreath" pattern around the matched headwords.  Color = pair color
    so identification is unmistakable; same shape on both halves.     */
+/* Suit colour pass:
+   Aimed for "antique gold leaf", not "bright yellow plastic".
+   The old rgba(228, 196, 132) was a fairly light/luminous yellow —
+   the user said it read pale and cheap.  Shifted to rgba(190, 158,
+   100) family: deeper, more bronze, less radiant.  Tagged suits are
+   slightly brighter than default but still in the muted gold band.
+
+   ScaleY(1.25) on the rotated suit stretches the original vertical
+   axis — since the glyph is then rotated 90°, the stretch becomes
+   HORIZONTAL on screen.  Net effect: ♥ ♦ ♠ ♣ read elongated like
+   the suits on an actual Western playing card, not the squarish
+   Unicode default.                                                  */
 .card.card--match::before,
 .card.card--match::after {
   content: '✦';
   position: absolute;
-  font-size: 16px;
+  font-size: 17px;
   font-style: normal;
   font-family: 'Cormorant Garamond', serif;
-  color: rgba(228, 196, 132, 0.62);
+  color: rgba(190, 158, 100, 0.58);
   pointer-events: none;
   line-height: 1;
   transition: color 0.3s, opacity 0.3s;
 }
-.card.card--match.is-left::before  { top: 6px;    left: 8px;  transform: rotate( 90deg); }
-.card.card--match.is-left::after   { bottom: 6px; right: 8px; transform: rotate(-90deg); }
-.card.card--match.is-right::before { top: 6px;    right: 8px; transform: rotate(-90deg); }
-.card.card--match.is-right::after  { bottom: 6px; left: 8px;  transform: rotate( 90deg); }
-/* tagged → suits brighten slightly, still gold (no pair colour).
-   Border + suit are universal; pair info lives in word + body.   */
+.card.card--match.is-left::before  { top: 6px;    left: 8px;  transform: rotate( 90deg) scaleY(1.25); }
+.card.card--match.is-left::after   { bottom: 6px; right: 8px; transform: rotate(-90deg) scaleY(1.25); }
+.card.card--match.is-right::before { top: 6px;    right: 8px; transform: rotate(-90deg) scaleY(1.25); }
+.card.card--match.is-right::after  { bottom: 6px; left: 8px;  transform: rotate( 90deg) scaleY(1.25); }
+/* tagged → suits hold deeper antique gold (decorative only, not the
+   pair signal).  Pair info lives in word colour + body tint.       */
 .card.card--match.tag-0::before, .card.card--match.tag-0::after,
 .card.card--match.tag-1::before, .card.card--match.tag-1::after,
 .card.card--match.tag-2::before, .card.card--match.tag-2::after,
 .card.card--match.tag-3::before, .card.card--match.tag-3::after {
-  color: rgba(238, 206, 138, 0.88);
+  color: rgba(208, 172, 110, 0.85);
 }
 
 /* ============= SELECTED — pair color shows in 3 spots =============
@@ -4535,10 +4547,12 @@ body { background: transparent !important; }
 .card.card--match.tag-1,
 .card.card--match.tag-2,
 .card.card--match.tag-3 {
-  border-color: rgba(232, 200, 132, 0.70) !important;  /* gold, brighter than default */
+  /* Tagged border is deeper antique gold — slightly more solid than
+     default but NOT the bright yellow that made it read neon.       */
+  border-color: rgba(190, 158, 100, 0.62) !important;
   /* No !important — lets .is-correct keyframes win on result page. */
   box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.12),
+    inset 0 1px 0 rgba(190, 158, 100, 0.12),
     inset 0 -1px 0 rgba(0, 0, 0, 0.40),
     inset 0 0 16px rgba(0, 0, 0, 0.32),
     0 1px 3px rgba(0, 0, 0, 0.50);
@@ -4558,6 +4572,11 @@ body { background: transparent !important; }
                     rgba(40, 28, 22, 0.94) 0%,
                     rgba(20, 14, 12, 0.97) 100%) !important;
   color: rgba(216, 184, 144, 0.96) !important;   /* pale sepia word */
+  /* subtle pair-tinted "ink bleed" — gives the word weight without
+     a font-weight bump (no jumpy bold).  ~0.5–1px blur in pair hue. */
+  text-shadow:
+    0 0 0.5px rgba(216, 184, 144, 0.60),
+    0 0 6px rgba(180, 140, 96, 0.30) !important;
 }
 .card.card--match.tag-0::before,
 .card.card--match.tag-0::after {
@@ -4576,6 +4595,9 @@ body { background: transparent !important; }
                     rgba(20, 26, 44, 0.94) 0%,
                     rgba(10, 14, 26, 0.97) 100%) !important;
   color: rgba(172, 196, 224, 0.96) !important;   /* pale sapphire word */
+  text-shadow:
+    0 0 0.5px rgba(172, 196, 224, 0.60),
+    0 0 6px rgba(108, 144, 200, 0.30) !important;
 }
 .card.card--match.tag-1::before,
 .card.card--match.tag-1::after {
@@ -4594,6 +4616,9 @@ body { background: transparent !important; }
                     rgba(40, 16, 22, 0.94) 0%,
                     rgba(22, 8, 12, 0.97) 100%) !important;
   color: rgba(220, 156, 168, 0.96) !important;   /* dusty wine word */
+  text-shadow:
+    0 0 0.5px rgba(220, 156, 168, 0.60),
+    0 0 6px rgba(180, 88, 104, 0.30) !important;
 }
 .card.card--match.tag-2::before,
 .card.card--match.tag-2::after {
@@ -4612,6 +4637,9 @@ body { background: transparent !important; }
                     rgba(18, 36, 28, 0.94) 0%,
                     rgba(8, 20, 14, 0.97) 100%) !important;
   color: rgba(176, 212, 192, 0.96) !important;   /* pale emerald word */
+  text-shadow:
+    0 0 0.5px rgba(176, 212, 192, 0.60),
+    0 0 6px rgba(124, 174, 156, 0.30) !important;
 }
 .card.card--match.tag-3::before,
 .card.card--match.tag-3::after {
@@ -4649,13 +4677,18 @@ body { background: transparent !important; }
 /* Breathing keyframe — only the outer gold halo changes.  Inset
    shadows stay constant so the body doesn't shimmer.  Peak halo
    is ~16px @ α 0.34 — a magical confirmation glow, not a strobe. */
+/* "Magic pool under the card" — the glow is OFFSET DOWN (positive
+   Y) so it reads as warm light spilling onto the surface below the
+   card, not as a halo wrapped around the card.  User's note:
+   under-card magical glow, not a glow-border.                      */
 @keyframes correct-breathe {
   0%, 100% {
     box-shadow:
       inset 0 1px 0 rgba(220, 197, 139, 0.18),
       inset 0 -1px 0 rgba(0, 0, 0, 0.40),
       inset 0 0 14px rgba(196, 152, 88, 0.16),
-      0 0 8px rgba(220, 170, 100, 0.28),
+      0 6px 14px rgba(220, 170, 100, 0.30),
+      0 12px 22px rgba(220, 170, 100, 0.12),
       0 1px 3px rgba(0, 0, 0, 0.45);
   }
   50% {
@@ -4663,8 +4696,8 @@ body { background: transparent !important; }
       inset 0 1px 0 rgba(220, 197, 139, 0.26),
       inset 0 -1px 0 rgba(0, 0, 0, 0.40),
       inset 0 0 14px rgba(196, 152, 88, 0.28),
-      0 0 22px rgba(220, 170, 100, 0.55),
-      0 0 38px rgba(220, 170, 100, 0.22),
+      0 10px 26px rgba(220, 170, 100, 0.58),
+      0 20px 42px rgba(220, 170, 100, 0.24),
       0 1px 3px rgba(0, 0, 0, 0.45);
   }
 }
