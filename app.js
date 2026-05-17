@@ -1374,8 +1374,10 @@ const Screens = {
       const right = state.session.words.filter(w => state.results[w].oracle).length;
       el.innerHTML = `
         ${stageHeader(2, 'The Reading')}
-        <div class="score-block">
-          <div class="score-label">her reading</div>
+        <div class="score-card">
+          <div class="score-plaque">
+            <span class="score-plaque-text">her reading</span>
+          </div>
           <div class="score-value">${right}<small> / 8</small></div>
         </div>
         <div class="stage-actions"></div>
@@ -1499,8 +1501,10 @@ const Screens = {
       }, 0);
       el.innerHTML = `
         ${stageHeader(3, 'The Inscription')}
-        <div class="score-block">
-          <div class="score-label">tonight's chapter</div>
+        <div class="score-card">
+          <div class="score-plaque">
+            <span class="score-plaque-text">tonight's chapter</span>
+          </div>
           <div class="score-value">${totalCorrect}<small> / 24</small></div>
         </div>
         <div class="stage-actions"></div>
