@@ -1097,16 +1097,15 @@ const Screens = {
         SFX.tap();
       }
 
-      // Run a 380ms Y-axis card flip on `node`.  The DOM update (which
-      // adds/removes the .tag-N classes) is fired at ~50% of the flip
-      // — exactly when the card is edge-on — so the new face appears
-      // AS the card rotates back to face.  Without the mid-flip swap
-      // the reveal would just be a static cross-fade.
+      // Run a 320ms Y-axis card flip on `node`.  The DOM update
+      // (adds/removes .tag-N classes) fires at the 50% midpoint —
+      // exactly when rotateY is at 90° and the card is edge-on,
+      // invisible — so the new face emerges as the card rotates back.
       function flipReveal(node, updateNow) {
         if (!node) { updateNow(); return; }
         node.classList.add('is-flipping');
-        setTimeout(updateNow, 180);
-        setTimeout(() => node.classList.remove('is-flipping'), 380);
+        setTimeout(updateNow, 160);
+        setTimeout(() => node.classList.remove('is-flipping'), 320);
       }
 
       function submit() {
@@ -1135,7 +1134,7 @@ const Screens = {
         // we want to replay each card in the same colour the user dyed
         // it, with a ✓ / ✗ on whether its pair was correct.
         state.session.matchResult = shuffled.map((c, i) => ({
-          text: c.text, pairId: c.pairId, tag: tagOf[i], correct: cardResult[i]
+          text: c.text, pairId: c.pairId, tag: tagOf[i], correct: cardResult[i], side: c.side
         }));
         showModal({
           title: 'pages flipped',
@@ -1180,10 +1179,16 @@ const Screens = {
       const grid = $('.match-result-grid', el);
       result.forEach(r => {
         const tile = document.createElement('button');
-        tile.className = `card card--match tag-${r.tag} ${r.correct ? 'is-correct' : 'is-wrong'}`;
+        const sideClass = r.side === 'L' ? 'is-left' : 'is-right';
+        const state = r.correct ? 'is-correct' : 'is-wrong';
+        // ❦ (U+2766) — floral heart bullet, a book-marginalia
+        // "approved" flourish.  Wrong tiles get no mark — the dim
+        // recedence already says everything.
+        const mark = r.correct ? '❦' : '';
+        tile.className = `card card--match ${sideClass} tag-${r.tag} ${state}`;
         tile.innerHTML = `
           <span class="mc-frame"></span>
-          <span class="tile-mark">${r.correct ? '✓' : '✗'}</span>
+          <span class="tile-mark">${mark}</span>
           <span class="mc-text">${escapeHtml(r.text)}</span>
         `;
         tile.addEventListener('click', () => flipToCard(tile, r.text, 'stage1-result'));
