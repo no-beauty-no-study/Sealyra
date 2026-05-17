@@ -244,37 +244,28 @@ function transitionTo(screenId, opts = {}) {
 }
 
 function lilGhost(label, onClick) {
+  // Cover-side link: rendered with the unified tap-title look —
+  // ❦ flanking the text + a tight gold underline + soft breath.
+  // The old pink "lil-ghost" pill design is retired.
   const b = document.createElement('button');
-  b.className = 'lil-ghost';
-  b.innerHTML = `<span>${escapeHtml(label)}</span>`;
+  b.className = 'tap-title';
+  b.innerHTML = `
+    <span class="tt-glyph">❦</span>
+    <span class="tt-text">${escapeHtml(label)}</span>
+    <span class="tt-glyph">❦</span>
+  `;
   b.addEventListener('click', () => { SFX.tap(); onClick && onClick(); });
   return b;
 }
-// 🗝 key icon (gold-stroke SVG) — used to flank "Tonight's Reading" and
-// "next chapter / next stage" buttons.  Always opens the next door.
-function keyIconHtml() {
-  return `<svg class="ico-key" viewBox="0 0 28 80" aria-hidden="true">
-    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="14" cy="14" r="7"/>
-      <circle cx="14" cy="14" r="3" fill="currentColor" opacity=".55"/>
-      <path d="M14 21 L14 64"/>
-      <path d="M14 58 L20 58 M14 64 L18 64"/>
-      <path d="M14 70 L14 74"/>
-    </g>
-  </svg>`;
-}
+// 🗝 retired — the cover CTA no longer flanks itself with keys; the
+// unified tap-title design carries the visual cue instead.
 function mainCTA(label, onClick) {
   const a = document.createElement('button');
-  a.className = 'main-cta';
-  // Keys come back as <img> tags this time — iOS Safari renders the
-  // PNG alpha cleanly for img elements but tofu-tiled it when we
-  // tried the same png via a ::before background.
+  a.className = 'main-cta tap-title is-cta';
   a.innerHTML = `
-    <span class="cta-inner">
-      <img class="cta-key cta-key-l" src="assets/icon-key.png?v=25" alt="">
-      <span class="cta-text">${escapeHtml(label)}</span>
-      <img class="cta-key cta-key-r" src="assets/icon-key.png?v=25" alt="">
-    </span>
+    <span class="tt-glyph">❦</span>
+    <span class="tt-text cta-text">${escapeHtml(label)}</span>
+    <span class="tt-glyph">❦</span>
   `;
   a.addEventListener('click', () => {
     if (a.classList.contains('is-engaged')) return;
@@ -1213,9 +1204,10 @@ const Screens = {
         // Correct tiles get a ❦ flourish just outside their outer
         // edge — paired correct halves end up "bracketed" by twin
         // marks.  Wrong tiles get nothing; their dimmed state speaks.
-        // ⚜ U+269C fleur-de-lis — classical heraldic flourish, more
-        // visible than the floral-heart ❦ at small sizes.
-        const flourish = r.correct ? '<span class="pair-mark">⚜</span>' : '';
+        // ❦ U+2766 floral heart bullet — Sealyra's text logo.  The
+        // same glyph flanks tap-titles throughout, so the result
+        // page's "you got these right" mark stays in family.
+        const flourish = r.correct ? '<span class="pair-mark">❦</span>' : '';
         tile.className = `card card--match ${sideClass} tag-${r.tag} ${state}`;
         tile.innerHTML = `
           <span class="mc-frame"></span>

@@ -2858,6 +2858,92 @@ body { background: transparent !important; }
 }
 
 
+/* ---------- .tap-title — the unified "clickable title" idiom ----------
+   Used for the cover's main CTA, the her-note / the-index cover links,
+   the chapter plaque text, and the result-page heading.  Visual rules:
+     · ❦ glyph flanks each side (Sealyra's text logo).
+     · a tight gold underline sits CLOSE to the text (not a separate
+       line like .next-door's flanking dashes).
+     · soft breathing glow on text + underline + glyphs together.
+   ---------------------------------------------------------------------- */
+.tap-title {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 4px 4px 8px !important;
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: clamp(15px, 4vw, 22px);
+  letter-spacing: 0.04em !important;
+  color: #d6a464 !important;
+  text-shadow:
+    0 0 4px rgba(232, 196, 138, 0.40),
+    0 0 9px rgba(218, 168, 104, 0.22),
+    0 1px 0 rgba(80, 40, 10, 0.40);
+  cursor: pointer;
+  animation: tap-title-breathe 3.0s ease-in-out infinite;
+}
+.tap-title .tt-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+.tap-title .tt-glyph {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.92em;
+  opacity: 0.92;
+}
+/* tight underline directly under the text — only spans the text +
+   glyph row, fading at both ends.  Closer than .next-door's line.   */
+.tap-title::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 8% !important;
+  right: 8% !important;
+  bottom: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(218, 168, 104, 0) 10%,
+    rgba(232, 196, 138, 0.78) 35%,
+    rgba(232, 196, 138, 0.78) 65%,
+    rgba(218, 168, 104, 0) 90%,
+    transparent 100%) !important;
+}
+.tap-title:hover {
+  color: #e6c084 !important;
+  animation: none;
+  text-shadow:
+    0 0 6px rgba(255, 220, 158, 0.65),
+    0 0 14px rgba(232, 196, 138, 0.45);
+}
+.tap-title.is-cta {
+  font-size: clamp(22px, 5.6vw, 32px);
+  letter-spacing: 0.05em !important;
+  gap: 18px !important;
+  padding: 6px 6px 10px !important;
+}
+.tap-title.is-engaged {
+  animation: none;
+  color: #ffe5b0 !important;
+  text-shadow:
+    0 0 8px rgba(255, 232, 186, 0.85),
+    0 0 18px rgba(232, 196, 138, 0.55);
+}
+@keyframes tap-title-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(232, 196, 138, 0.18));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(232, 196, 138, 0.48));
+  }
+}
+
 /* ---------- D. Whisper pill ---------- */
 .whisper-pill,
 .btn,
@@ -3477,23 +3563,32 @@ body { background: transparent !important; }
   text-align: center;
   line-height: 1.05;
 }
+/* Chapter plaque text now uses the same gold antique-brass family
+   as the index page's title (font + colour + 3-layer text-shadow).
+   The chapter is a LABEL, not a tappable title — so it gets the
+   unified type voice but no ❦ flanking and no underline.        */
 .frame-chapter .fc-num {
   display: block;
-  font-family: var(--f-italic);
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: clamp(9px, 2.2vw, 11px);
   letter-spacing: .22em;
-  color: var(--gold-warm);
+  color: #c19a5c;
   text-transform: lowercase;
   opacity: .85;
 }
 .frame-chapter .fc-name {
   display: block;
-  font-family: var(--f-display);
-  font-style: italic;
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-weight: 500;
   font-size: clamp(14px, 3.6vw, 18px);
-  color: var(--cream);
-  text-shadow: 0 0 10px rgba(237,184,158,.40);
+  color: #d6a464;
+  text-shadow:
+    0 0 4px rgba(232,196,138,.40),
+    0 0 9px rgba(218,168,104,.22),
+    0 1px 0 rgba(80,40,10,.40);
+  letter-spacing: 0.04em;
   margin-top: 2px;
   white-space: nowrap;
 }
@@ -4693,7 +4788,9 @@ body { background: transparent !important; }
 .card.card--match.is-wrong {
   animation: none;
   opacity: 0.52;
-  pointer-events: none;
+  /* clickable — the user wants to tap a wrong tile and study the
+     word on its parchment.  Previously pointer-events: none
+     blocked the click handler entirely.                          */
 }
 
 /* ============= FLIP — the reveal ceremony =============
