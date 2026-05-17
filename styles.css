@@ -150,10 +150,17 @@ button { font-family: inherit; color: inherit; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* push Tonight's Reading down so it lands ON the bg-cover moon
+     (which sits at ~y=50 % of viewport).  We measure top-padding
+     in vh against the cover-mid zone — 22vh on a 844 px screen is
+     ~186 px of drop from where it used to sit.                    */
+  padding-top: 22vh;
   width: 100%;
 }
 .cover-bottom {
-  padding-bottom: 18px;
+  /* lift the her-note / the-index row up from the page bottom so
+     it sits in the lower-third, not at the very edge.            */
+  padding-bottom: 12vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -2237,20 +2244,23 @@ body { background: transparent !important; }
 }
 #modal.modal-veil.show { display: flex !important; }
 
-/* Pull cover-mid's content up next to the banner — the previous
-   center-justify left a ~60% empty band before the CTA appeared.   */
+/* Cover layout: TR sits OVER the bg-cover moon (~50 % viewport),
+   the her-note / the-index pair lifts off the page bottom into
+   the lower-third.  The previous "pull cover-mid up" override
+   forced flex: 0 0 auto which broke the centring; replaced.    */
 .cover-stage {
   justify-content: flex-start !important;
   padding-top: 26px !important;
 }
 .cover-mid {
-  flex: 0 0 auto !important;
-  justify-content: flex-start !important;
-  padding-top: 40px !important;
-  gap: 16px !important;
+  flex: 1 1 auto !important;
+  justify-content: center !important;
+  padding-top: 16vh !important;       /* drops TR onto the moon */
+  gap: 14px !important;
 }
 .cover-bottom {
-  margin-top: auto !important;       /* sits at the bottom on its own */
+  margin-top: 0 !important;
+  padding-bottom: 14vh !important;    /* lifts buttons off the very bottom */
 }
 
 /* Stage headers were sitting in the lower half too — the flex
@@ -3571,7 +3581,6 @@ body { background: transparent !important; }
   font-size: clamp(9px, 2.2vw, 11px);
   letter-spacing: .22em;
   color: #c19a5c;
-  text-transform: lowercase;
   opacity: .85;
 }
 .frame-chapter .fc-name {
@@ -3869,16 +3878,19 @@ body { background: transparent !important; }
   /* Cropped 951×597 — width + height locked explicitly so Safari
      can't break aspect with absolute+transform.
      Pinned to NEW banner aspect (426/1600) so nav-card hugs the
-     banner bottom; old formula used 821/1916 and left ~70 px gap.  */
+     banner bottom; old formula used 821/1916 and left ~70 px gap.
+     Bumped width from 76vw→88vw and height proportionally — the
+     short new banner left enough room to make the frame bigger
+     without crowding.                                              */
   position: fixed;
   top: calc(100vw * 426 / 1600 + 2px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
-  width:  min(76vw, 460px);
-  height: min(47.7vw, 289px);
+  width:  min(88vw, 540px);
+  height: min(55.2vw, 339px);
   background:
-    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=27")
+    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=29")
     center/100% 100% no-repeat;
 }
 .nav-shield {
@@ -4009,7 +4021,7 @@ body { background: transparent !important; }
                'Bodoni 72', 'Didot', Georgia, serif;
   font-style: normal;
   font-weight: 400;                       /* NOT bold per user */
-  font-size: clamp(15px, 4vw, 22px);
+  font-size: clamp(17px, 4.6vw, 26px);    /* bumped — bigger frame, bigger title */
   line-height: 1.0;
   letter-spacing: .04em;
   color: #d6a464;

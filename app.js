@@ -262,9 +262,13 @@ function lilGhost(label, onClick) {
 function mainCTA(label, onClick) {
   const a = document.createElement('button');
   a.className = 'main-cta tap-title is-cta';
+  // No .cta-text class on the inner span — there are several legacy
+  // .main-cta .cta-text rules in the stylesheet that force italic
+  // EB-Garamond + their own colour.  The unified .tap-title look
+  // requires the span to stay plain .tt-text.
   a.innerHTML = `
     <span class="tt-glyph">❦</span>
-    <span class="tt-text cta-text">${escapeHtml(label)}</span>
+    <span class="tt-text">${escapeHtml(label)}</span>
     <span class="tt-glyph">❦</span>
   `;
   a.addEventListener('click', () => {
@@ -401,7 +405,7 @@ function stageHeader(chapterN, name) {
   return `
     <div class="frame-chapter">
       <div class="frame-chapter-text">
-        <span class="fc-num">chapter · ${chapterN}</span>
+        <span class="fc-num">Chapter · ${chapterN}</span>
         <span class="fc-name">${escapeHtml(name)}</span>
       </div>
     </div>
@@ -948,12 +952,12 @@ const Screens = {
       // smart-play inside LanBGM no-ops when the same pool is already
       // running, so the music continues uninterrupted as the user
       // hops between cover ↔ note ↔ index.
-      $('#cover-links', el).appendChild(lilGhost('her note',  () => {
+      $('#cover-links', el).appendChild(lilGhost('Her Note',  () => {
         LanBGM.unlock();
         LanBGM.playHomeRandom({ volume: 0.42 });
         transitionTo('note');
       }));
-      $('#cover-links', el).appendChild(lilGhost('the index', () => {
+      $('#cover-links', el).appendChild(lilGhost('The Index', () => {
         LanBGM.unlock();
         LanBGM.playHomeRandom({ volume: 0.42 });
         transitionTo('index');
@@ -1011,7 +1015,7 @@ const Screens = {
       // Putting the confirm button up top means thumb can reach it
       // on a mobile browser without scrolling past the URL bar.
       el.innerHTML = `
-        ${stageHeader(1, 'the matching')}
+        ${stageHeader(1, 'The Matching')}
         <div class="match-actions"></div>
         <div class="q-progress">tap one on the left, one on the right · four pairs</div>
         <div class="match-grid"></div>
@@ -1179,7 +1183,7 @@ const Screens = {
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
 
       el.innerHTML = `
-        ${stageHeader(1, 'the matching')}
+        ${stageHeader(1, 'The Matching')}
         <div class="score-block">
           <div class="score-label">your hand</div>
           <div class="score-value">${correctPairs}<small> / 4</small></div>
@@ -1228,7 +1232,7 @@ const Screens = {
       state.oracleQs  = state.session.words.map(w => buildOracleQuestion(w));
       state.oracleIdx = 0;
       el.innerHTML = `
-        ${stageHeader(2, 'the reading')}
+        ${stageHeader(2, 'The Reading')}
         <div class="oracle-stage" id="oracle-stage"></div>
       `;
 
@@ -1317,7 +1321,7 @@ const Screens = {
       const el = $('#screen-stage2-result');
       const right = state.session.words.filter(w => state.results[w].oracle).length;
       el.innerHTML = `
-        ${stageHeader(2, 'the reading')}
+        ${stageHeader(2, 'The Reading')}
         <div class="score-block">
           <div class="score-label">her reading</div>
           <div class="score-value">${right}<small> / 8</small></div>
@@ -1341,7 +1345,7 @@ const Screens = {
       const el = $('#screen-stage3');
       state.dictIdx = 0;
       el.innerHTML = `
-        ${stageHeader(3, 'the inscription')}
+        ${stageHeader(3, 'The Inscription')}
         <div class="dict-stage" id="dict-stage"></div>
       `;
 
@@ -1442,7 +1446,7 @@ const Screens = {
         return acc + (r.match ? 1 : 0) + (r.oracle ? 1 : 0) + (r.dict ? 1 : 0);
       }, 0);
       el.innerHTML = `
-        ${stageHeader(3, 'the inscription')}
+        ${stageHeader(3, 'The Inscription')}
         <div class="score-block">
           <div class="score-label">tonight's chapter</div>
           <div class="score-value">${totalCorrect}<small> / 24</small></div>
