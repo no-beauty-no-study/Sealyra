@@ -1428,7 +1428,7 @@ const Screens = {
         `;
         const input = $('#dict-input', stage);
         const actions = $('#dict-actions', stage);
-        actions.appendChild(btn('write', () => check()));
+        actions.appendChild(nextDoor('write', () => check()));
         input.focus();
         input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
       }
