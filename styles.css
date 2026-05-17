@@ -1271,7 +1271,11 @@ body:not(.cover-pending) .cover-stage > * { visibility: visible; animation: cove
    ratio is 1916:821 (≈ 0.428 of width) so we mirror that with a
    spacer that grows with the viewport. */
 #app {
-  padding-top: calc(100vw * 821 / 1916);
+  /* Banner aspect = 1600 × 426 (new side-profile cutout).  Padding
+     must match the banner's rendered height exactly, otherwise the
+     content sits below a phantom 60-ish-px gap that the old, taller
+     banner used to fill.                                            */
+  padding-top: calc(100vw * 426 / 1600);
   position: relative;
   z-index: 1;
 }
@@ -1281,7 +1285,9 @@ body:not(.cover-pending) .cover-stage > * { visibility: visible; animation: cove
    the bottom-half of the image (where most of the illustration
    sits) so the upper part can blend behind the banner. */
 .screen.active {
-  min-height: calc(100vh - (100vw * 821 / 1916));
+  /* min-height tracks the leftover viewport once the banner takes its
+     1600 × 426 share at the top.                                     */
+  min-height: calc(100vh - (100vw * 426 / 1600));
   background-color: var(--bg-deep);
   background-size: cover;
   background-position: top center;
