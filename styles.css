@@ -2609,6 +2609,15 @@ body { background: transparent !important; }
   max-width: 540px;
   margin: 0 auto;
 }
+/* same single-line blank shared by stage 3 dictation prompts */
+.dict-prompt .q-blank-mask {
+  display: inline-block;
+  font-style: italic;
+  color: var(--rose);
+  letter-spacing: .05em;
+  border-bottom: 1px solid rgba(237, 184, 158, .55);
+  padding: 0 4px 1px;
+}
 .q-sentence .q-blank {
   font-style: italic;
   color: var(--rose);

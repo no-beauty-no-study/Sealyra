@@ -1412,14 +1412,19 @@ const Screens = {
       function drawQ() {
         const stage = $('#dict-stage', el);
         const q = state.session.dict[state.dictIdx];
-        // "(p)_______ goods" — keep the answer's first letter visible inside
-        // parens, blank the rest, leave the surrounding phrase intact.
+        // "(p)     goods" — keep the answer's first letter visible inside
+        // parens, blank the rest with non-breaking spaces.  CSS draws
+        // a single underline via border-bottom on .q-blank-mask, no more
+        // literal-underscore + border-bottom double-stacked line.
         const first = q.answer[0];
-        const rest  = '_'.repeat(Math.max(5, q.answer.length - 1));
-        const masked = q.prompt.replace(new RegExp(q.answer, 'i'), `(${first})${rest}`);
+        const rest  = ' '.repeat(Math.max(5, q.answer.length - 1));
+        const masked = q.prompt.replace(
+          new RegExp(q.answer, 'i'),
+          `<span class="q-blank-mask">(${first})${rest}</span>`
+        );
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="dict-prompt">${escapeHtml(masked)}</div>
+          <div class="dict-prompt">${masked}</div>
           <div class="dict-prompt-zh">${escapeHtml(q.prompt_zh)}</div>
           <div class="dict-input-row">
             <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}…">
