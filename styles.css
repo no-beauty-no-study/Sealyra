@@ -306,16 +306,16 @@ button { font-family: inherit; color: inherit; }
 body.cover-pending .cover-stage > * { visibility: hidden; }
 body.cover-pending .cover-gate     { visibility: visible; }
 
-/* fade-to-black overlay used during cover→game transition.
-   The previous version had an explicit radial gold burst that
-   read as gaudy; pulled back to a plain deep-purple fade — the
-   tap-title's own engage animation now carries the ceremony.   */
+/* Cover → game transition: a plain black curtain fading in then
+   out.  No gradient, no glow.  The tap-title engage animation on
+   the CTA itself carries the ceremony; the curtain just covers
+   the cross-screen handoff cleanly.                                */
 .fade-out {
   position: fixed; inset: 0;
-  background: var(--bg-deep);
+  background: #000;
   opacity: 0; pointer-events: none;
   z-index: 9000;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.6s ease;
 }
 .fade-out.show { opacity: 1; pointer-events: all; }
 
@@ -2072,17 +2072,13 @@ body { background: transparent !important; }
 }
 
 /* B. Main CTA "Tonight's Reading" — italic display + gradient gold rule */
+/* (the old .main-cta column flex rules that lived here forced the
+   children into a vertical stack — useful for the original keys-
+   above-text design but it broke the new .tap-title row layout.
+   Killed.  .tap-title's inline-flex carries layout now.)            */
 .main-cta {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 6px !important;
-  width: 100% !important;
-  max-width: 360px;
-  margin: 0 auto !important;
   background: transparent !important;
   border: none !important;
-  padding: 18px 24px !important;
   cursor: pointer;
 }
 .main-cta .cta-text {
@@ -2519,16 +2515,9 @@ body { background: transparent !important; }
 /* Tonight's Reading — keys flanking the italic gold text, gradient
    gold line underneath.  Keys rendered as proper <img> tags so iOS
    handles the alpha transparency natively.                          */
-.main-cta {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 8px !important;
-  background: transparent !important;
-  border: none !important;
-  padding: 16px 24px !important;
-  cursor: pointer;
-}
+/* (another .main-cta column flex block lived here from the
+   earlier keys-above-text iteration.  Killed — .tap-title
+   layout owns the CTA now.)                                  */
 .main-cta .cta-inner {
   display: inline-flex;
   align-items: center;
@@ -2873,6 +2862,7 @@ body { background: transparent !important; }
 .tap-title {
   position: relative !important;
   display: inline-flex !important;
+  flex-direction: row !important;     /* belt-and-braces against legacy column rules */
   align-items: center !important;
   gap: 14px !important;
   background: transparent !important;
@@ -3878,9 +3868,10 @@ body { background: transparent !important; }
 .nav-card {
   /* Cropped 951×597 — width + height locked explicitly so Safari
      can't break aspect with absolute+transform.
-     top:banner+8 px gives a clean breath between banner and frame.  */
+     Pinned to NEW banner aspect (426/1600) so nav-card hugs the
+     banner bottom; old formula used 821/1916 and left ~70 px gap.  */
   position: fixed;
-  top: calc(100vw * 821 / 1916 + 8px);
+  top: calc(100vw * 426 / 1600 + 2px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
