@@ -1050,18 +1050,37 @@ const Screens = {
           if (tagOf[i] !== null) node.classList.add('tag-' + tagOf[i]);
         });
       }
+      // Paint every card EXCEPT the one being flipped — useful when
+      // the click also cleared orphan cards on the other side, since
+      // we want their visual state to update INSTANTLY (not wait the
+      // 160 ms until the flip midpoint).  Without this, the orphan
+      // looks like it's still selected for 160 ms after every click. */
+      function repaintExcept(skipIdx) {
+        $$('.card--match', grid).forEach((node, i) => {
+          if (i === skipIdx) return;
+          for (let k = 0; k < 4; k++) node.classList.remove('tag-' + k);
+          if (tagOf[i] !== null) node.classList.add('tag-' + tagOf[i]);
+        });
+      }
+      function paintSingle(node, i) {
+        for (let k = 0; k < 4; k++) node.classList.remove('tag-' + k);
+        if (tagOf[i] !== null) node.classList.add('tag-' + tagOf[i]);
+      }
 
       function paint(idx) {
         const side = shuffled[idx].side;
         const node = grid.children[idx];
-        // Ignore taps during the ~380ms flip animation so a quick
+        // Ignore taps during the ~320ms flip animation so a quick
         // double-tap doesn't queue two state changes.
         if (node && node.classList.contains('is-flipping')) return;
 
         // tapping an already-tagged card clears it
         if (tagOf[idx] !== null) {
           tagOf[idx] = null;
-          flipReveal(node, () => repaint());
+          // orphan on the other side now has no partner — but we don't
+          // auto-clear it here.  user might want to repair.  the next
+          // same-side click will sweep orphans away (see below).
+          flipReveal(node, () => paintSingle(node, idx));
           SFX.tap();
           return;
         }
@@ -1098,7 +1117,11 @@ const Screens = {
         if (assignTag === null) return;   // all 4 colours fully booked
 
         tagOf[idx] = assignTag;
-        flipReveal(node, () => repaint());
+        // Repaint OTHER cards instantly (so orphan cleanup is visible
+        // immediately), then flip the clicked card and update its own
+        // class at the flip midpoint.
+        repaintExcept(idx);
+        flipReveal(node, () => paintSingle(node, idx));
         SFX.tap();
       }
 
@@ -1186,13 +1209,15 @@ const Screens = {
         const tile = document.createElement('button');
         const sideClass = r.side === 'L' ? 'is-left' : 'is-right';
         const state = r.correct ? 'is-correct' : 'is-wrong';
-        // No marker on the card itself — correct tiles speak with
-        // the under-card gold breathing pool; wrong ones with their
-        // muted state.  Cleaner than a UI checkmark.
+        // Correct tiles get a ❦ flourish just outside their outer
+        // edge — paired correct halves end up "bracketed" by twin
+        // marks.  Wrong tiles get nothing; their dimmed state speaks.
+        const flourish = r.correct ? '<span class="pair-mark">❦</span>' : '';
         tile.className = `card card--match ${sideClass} tag-${r.tag} ${state}`;
         tile.innerHTML = `
           <span class="mc-frame"></span>
           <span class="mc-text">${escapeHtml(r.text)}</span>
+          ${flourish}
         `;
         tile.addEventListener('click', () => flipToCard(tile, r.text, 'stage1-result'));
         grid.appendChild(tile);

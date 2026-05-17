@@ -4354,7 +4354,10 @@ body { background: transparent !important; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  padding: 4px 18px;
+  /* extra horizontal padding so the ❦ pair-mark (positioned just
+     outside each card's outer edge) has visible breathing room and
+     doesn't get clipped against the viewport edge.                  */
+  padding: 4px 38px;
   max-width: 460px;
   margin: 14px auto;
   width: 100%;
@@ -4577,9 +4580,6 @@ body { background: transparent !important; }
                     rgba(40, 22, 16, 0.94) 0%,
                     rgba(22, 12, 8, 0.97) 100%) !important;
   color: rgba(224, 158, 124, 0.96) !important;   /* persimmon word */
-  text-shadow:
-    0 0 0.5px rgba(224, 158, 124, 0.60),
-    0 0 6px rgba(192, 110, 76, 0.32) !important;
 }
 .card.card--match.tag-0::before,
 .card.card--match.tag-0::after {
@@ -4598,9 +4598,6 @@ body { background: transparent !important; }
                     rgba(20, 26, 44, 0.94) 0%,
                     rgba(10, 14, 26, 0.97) 100%) !important;
   color: rgba(172, 196, 224, 0.96) !important;   /* pale sapphire word */
-  text-shadow:
-    0 0 0.5px rgba(172, 196, 224, 0.60),
-    0 0 6px rgba(108, 144, 200, 0.30) !important;
 }
 .card.card--match.tag-1::before,
 .card.card--match.tag-1::after {
@@ -4622,9 +4619,6 @@ body { background: transparent !important; }
                     rgba(36, 14, 32, 0.94) 0%,
                     rgba(20, 8, 18, 0.97) 100%) !important;
   color: rgba(212, 152, 184, 0.96) !important;   /* violet-wine word */
-  text-shadow:
-    0 0 0.5px rgba(212, 152, 184, 0.60),
-    0 0 6px rgba(160, 84, 132, 0.32) !important;
 }
 .card.card--match.tag-2::before,
 .card.card--match.tag-2::after {
@@ -4643,9 +4637,6 @@ body { background: transparent !important; }
                     rgba(18, 36, 28, 0.94) 0%,
                     rgba(8, 20, 14, 0.97) 100%) !important;
   color: rgba(176, 212, 192, 0.96) !important;   /* pale emerald word */
-  text-shadow:
-    0 0 0.5px rgba(176, 212, 192, 0.60),
-    0 0 6px rgba(124, 174, 156, 0.30) !important;
 }
 .card.card--match.tag-3::before,
 .card.card--match.tag-3::after {
@@ -4666,19 +4657,16 @@ body { background: transparent !important; }
    3.5s gold halo BREATHES underneath.  The user wanted "黄光 呼吸",
    a magic-confirmation feeling: "this card is approved".  Game-stage
    tagged cards stay halo-less so the breathing reads as new info.   */
+/* Correct on the result page: card keeps the FULL "tagged" palette
+   (body + word + suit + border all inherited from .tag-N).  The
+   "you got this right" signal comes from the UNDER-CARD GOLD POOL
+   (correct-breathe keyframe) and the small ❦ flourish that sits
+   just outside the card's outer edge.
+   Why keep the tagged colours?  So the user can scan the wrong
+   tiles and read "the right answer for the rose pair was these
+   two".  Without the colour, that pairing info is lost.            */
 .card.card--match.is-correct {
-  background:
-    radial-gradient(circle 0.6px at 14% 28%, rgba(220, 197, 139, 0.16), transparent 100%),
-    radial-gradient(circle 0.6px at 78% 18%, rgba(220, 197, 139, 0.14), transparent 100%),
-    radial-gradient(circle 0.6px at 42% 62%, rgba(220, 197, 139, 0.16), transparent 100%),
-    radial-gradient(circle 0.6px at 22% 82%, rgba(220, 197, 139, 0.14), transparent 100%),
-    radial-gradient(circle 0.6px at 88% 78%, rgba(220, 197, 139, 0.16), transparent 100%),
-    linear-gradient(160deg,
-                    rgba(31, 24, 19, 0.96) 0%,
-                    rgba(14, 9, 8, 0.98) 100%) !important;
-  color: #e8dcb8 !important;
   animation: correct-breathe 3.5s ease-in-out infinite;
-  /* outer border-color stays from .tag-N — pair info preserved */
 }
 /* Breathing keyframe — only the outer gold halo changes.  Inset
    shadows stay constant so the body doesn't shimmer.  Peak halo
@@ -4728,56 +4716,38 @@ body { background: transparent !important; }
    from the bead chain + border + body, not the suit color.       */
 /* tiny floral flourish in place of a UI checkmark — book-marginalia
    "approved" mark.  JS emits ❦ (U+2766, floral heart bullet).      */
-.card.card--match .tile-mark {
+/* The "pair flourish" — JS emits a <span class="pair-mark">❦</span>
+   inside each correct result tile.  Positioned ABSOLUTE just past
+   the card's outer edge (left of L cards, right of R cards) so a
+   matched pair reads as bracketed by twin marks.  Soft champagne
+   gold; subtle, decorative.  Wrong cards don't get a mark.        */
+.card.card--match .pair-mark {
   position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Cormorant Garamond', serif;
-  font-style: normal;
-  font-size: 13px;
-  letter-spacing: 0;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(220, 197, 139, 0.72);
   pointer-events: none;
+  text-shadow: 0 0 6px rgba(220, 170, 100, 0.30);
 }
-.card.card--match.is-correct .tile-mark {
-  color: rgba(220, 197, 139, 0.92);   /* champagne gold */
-}
+.card.card--match.is-left  .pair-mark { left:  -22px; }
+.card.card--match.is-right .pair-mark { right: -22px; }
+/* tile-mark from earlier passes — kept as a no-op selector in case
+   future stages need an on-card mark.  Wrong + correct alike emit
+   no .tile-mark span any more.                                    */
+.card.card--match .tile-mark { display: none; }
 
-/* ============= WRONG — old unselected card, not a broken block =====
-   Same body palette as the default card (not darker).  No filter
-   trick, no scolding shadow.  Just lower opacity on the suits and
-   text so the card recedes politely.  No ✗ marker — the dim state
-   is the message.                                                    */
+/* Wrong on the result page: card keeps the tagged palette TOO (so
+   the user can still see which pair the wrong choice belonged to),
+   but the whole card is dropped to 0.52 opacity so it visibly
+   recedes against the correct cards.  No marker, no halo, just a
+   quiet "this one didn't make it".  Pair info preserved.           */
 .card.card--match.is-wrong {
-  background:
-    radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.06), transparent 100%),
-    radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.05), transparent 100%),
-    radial-gradient(circle 0.6px at 42% 62%, rgba(232, 200, 130, 0.06), transparent 100%),
-    radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.05), transparent 100%),
-    radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.06), transparent 100%),
-    linear-gradient(160deg,
-                    rgba(46, 32, 70, 0.86) 0%,
-                    rgba(28, 18, 50, 0.90) 100%) !important;
-  border-color: rgba(218, 188, 124, 0.22) !important;
   animation: none;
-  color: rgba(220, 204, 174, 0.72) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.04),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.30),
-    inset 0 0 12px rgba(0, 0, 0, 0.22),
-    0 1px 3px rgba(0, 0, 0, 0.30) !important;
+  opacity: 0.52;
   pointer-events: none;
-}
-.card.card--match.is-wrong .mc-frame {
-  opacity: 0.42;
-}
-.card.card--match.is-wrong::before,
-.card.card--match.is-wrong::after {
-  opacity: 0.45;
-}
-/* No tile-mark for wrong cards — the dim recedence speaks. */
-.card.card--match.is-wrong .tile-mark {
-  display: none;
 }
 
 /* ============= FLIP — the reveal ceremony =============
