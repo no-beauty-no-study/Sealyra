@@ -930,8 +930,7 @@ const Screens = {
         </div>
       `;
       el.appendChild(stage);
-
-      el.appendChild(moonCorner());
+      // cover IS the home — no back-to-cover star button here.
 
       // Tonight's Reading — unlocks audio on the way into stage 1.
       $('#cover-cta-slot', el).appendChild(mainCTA(`Tonight's Reading`, () => {

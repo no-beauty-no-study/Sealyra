@@ -1445,13 +1445,14 @@ body.cover-pending .cover-stage > * { visibility: hidden !important; }
   background-position: center bottom;
   background-repeat: no-repeat;
   pointer-events: none;
-  /* Soft fade at the BOTTOM of the bg image so the (unavoidable)
-     dark band of the iOS safe-area / URL-bar zone underneath
-     blends into the scene instead of forming a hard edge.        */
+  /* Soft fade at the BOTTOM of the bg image — bumped from 90 % to
+     78 % so the URL-bar / safe-area dark band blends over a much
+     wider span and the "purple horizontal band" the user kept
+     seeing dissolves into the scene.                              */
   -webkit-mask-image: linear-gradient(180deg,
-    #000 0%, #000 90%, transparent 100%);
+    #000 0%, #000 78%, transparent 100%);
           mask-image: linear-gradient(180deg,
-    #000 0%, #000 90%, transparent 100%);
+    #000 0%, #000 78%, transparent 100%);
 }
 /* Match dark body colour for the slivers iOS overscroll exposes. */
 html, body { background-color: #2a1f3a; }
@@ -2255,12 +2256,12 @@ body { background: transparent !important; }
 .cover-mid {
   flex: 1 1 auto !important;
   justify-content: center !important;
-  padding-top: 16vh !important;       /* drops TR onto the moon */
+  padding-top: 8vh !important;        /* drops TR to land near (not over) the moon */
   gap: 14px !important;
 }
 .cover-bottom {
   margin-top: 0 !important;
-  padding-bottom: 14vh !important;    /* lifts buttons off the very bottom */
+  padding-bottom: 12vh !important;
 }
 
 /* Stage headers were sitting in the lower half too — the flex
@@ -2884,10 +2885,17 @@ body { background: transparent !important; }
   font-size: clamp(15px, 4vw, 22px);
   letter-spacing: 0.04em !important;
   color: #d6a464 !important;
+  /* tight dark outline (8-direction shadow stack) + soft gold glow.
+     The dark outline makes the gold lettering "印" cleanly onto the
+     dark background — what the user called 描边, matching the banner.
+     Glow layers come after so the outline reads first.              */
   text-shadow:
-    0 0 4px rgba(232, 196, 138, 0.40),
-    0 0 9px rgba(218, 168, 104, 0.22),
-    0 1px 0 rgba(80, 40, 10, 0.40);
+    -1px 0 0 rgba(40, 20, 8, 0.85), 1px 0 0 rgba(40, 20, 8, 0.85),
+    0 -1px 0 rgba(40, 20, 8, 0.85), 0 1px 0 rgba(40, 20, 8, 0.85),
+    -1px -1px 0 rgba(40, 20, 8, 0.65), 1px 1px 0 rgba(40, 20, 8, 0.65),
+    1px -1px 0 rgba(40, 20, 8, 0.65), -1px 1px 0 rgba(40, 20, 8, 0.65),
+    0 0 6px rgba(232, 196, 138, 0.45),
+    0 0 12px rgba(218, 168, 104, 0.28);
   cursor: pointer;
   animation: tap-title-breathe 3.0s ease-in-out infinite;
 }
@@ -2927,9 +2935,11 @@ body { background: transparent !important; }
     0 0 14px rgba(232, 196, 138, 0.45);
 }
 .tap-title.is-cta {
-  font-size: clamp(22px, 5.6vw, 32px);
+  /* CTA scaled slightly down at user's request — still bigger than
+     a regular tap-title, but not "too big".                        */
+  font-size: clamp(19px, 4.8vw, 26px);
   letter-spacing: 0.05em !important;
-  gap: 18px !important;
+  gap: 16px !important;
   padding: 6px 6px 10px !important;
 }
 .tap-title.is-engaged {
