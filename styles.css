@@ -3541,7 +3541,9 @@ body { background: transparent !important; }
    on top, the stage name below.                                */
 .frame-chapter {
   position: relative;
-  width: min(92vw, 540px);
+  /* shrunk so the chapter plaque sits at the same visual weight
+     as the index page's title plaque (the user's reference).      */
+  width: min(76vw, 420px);
   aspect-ratio: 1500 / 500;
   /* tightened to sit closer to the banner, matching the index page's
      "highest visible content" line at the user's request.            */
@@ -3562,7 +3564,7 @@ body { background: transparent !important; }
   display: block;
   font-family: var(--f-italic);
   font-style: italic;
-  font-size: clamp(11px, 2.6vw, 13px);
+  font-size: clamp(9px, 2.2vw, 11px);
   letter-spacing: .22em;
   color: var(--gold-warm);
   text-transform: lowercase;
@@ -3572,9 +3574,9 @@ body { background: transparent !important; }
   display: block;
   font-family: var(--f-display);
   font-style: italic;
-  font-size: clamp(18px, 4.6vw, 24px);
+  font-size: clamp(14px, 3.6vw, 18px);
   color: var(--cream);
-  text-shadow: 0 0 12px rgba(237,184,158,.45);
+  text-shadow: 0 0 10px rgba(237,184,158,.40);
   margin-top: 2px;
   white-space: nowrap;
 }
