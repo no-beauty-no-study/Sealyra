@@ -1223,15 +1223,11 @@ const Screens = {
       const result = state.session.matchResult || [];
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
 
-      // Index-style framing: an outer nav-card frame contains a small
-      // title plaque ("your hand") + the score value.  Mirrors the
-      // index page's 大框套小框 idiom per the user.
+      // The DCE4B4FE frame is decorative enough to be the only
+      // header on the result page — chapter band dropped.
       el.innerHTML = `
-        ${stageHeader(1, 'The Matching')}
         <div class="score-card">
-          <div class="score-plaque">
-            <span class="score-plaque-text">your hand</span>
-          </div>
+          <div class="score-card-label">your hand</div>
           <div class="score-value">${correctPairs}<small> / 4</small></div>
         </div>
         <div class="stage-actions"></div>
@@ -1373,11 +1369,8 @@ const Screens = {
       const el = $('#screen-stage2-result');
       const right = state.session.words.filter(w => state.results[w].oracle).length;
       el.innerHTML = `
-        ${stageHeader(2, 'The Reading')}
         <div class="score-card">
-          <div class="score-plaque">
-            <span class="score-plaque-text">her reading</span>
-          </div>
+          <div class="score-card-label">her reading</div>
           <div class="score-value">${right}<small> / 8</small></div>
         </div>
         <div class="stage-actions"></div>
@@ -1505,11 +1498,8 @@ const Screens = {
         return acc + (r.match ? 1 : 0) + (r.oracle ? 1 : 0) + (r.dict ? 1 : 0);
       }, 0);
       el.innerHTML = `
-        ${stageHeader(3, 'The Inscription')}
         <div class="score-card">
-          <div class="score-plaque">
-            <span class="score-plaque-text">tonight's chapter</span>
-          </div>
+          <div class="score-card-label">tonight's chapter</div>
           <div class="score-value">${totalCorrect}<small> / 24</small></div>
         </div>
         <div class="stage-actions"></div>

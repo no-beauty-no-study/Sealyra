@@ -1322,9 +1322,11 @@ body {
 
 /* The moon-corner sits below the banner, not on top of it */
 .moon-corner {
-  /* track new banner aspect 426/1600, sit just under it */
-  top: calc(100vw * 426 / 1600 + 4px);
-  z-index: 80;
+  /* 居顶 per user — float above the banner illustration in the
+     safe-area-top zone.  z-index lifted to clear #banner-top
+     (z-index 200).                                              */
+  top: max(env(safe-area-inset-top, 0px), 8px);
+  z-index: 250;
 }
 
 
@@ -1363,7 +1365,7 @@ body {
   content: "";
   display: block;
   width: 100%; height: 100%;
-  background: url("assets/icon-star8.png?v=30") center/contain no-repeat;
+  background: url("assets/icon-star8.png?v=31") center/contain no-repeat;
   filter: drop-shadow(0 0 5px rgba(218,168,104,.55));
   transition: filter 0.25s, transform 0.25s;
 }
@@ -1664,57 +1666,46 @@ body { background: transparent !important; }
    top, so the user can move forward without scrolling past their
    review.  Below them comes the cards/tiles for studying.           */
 /* ============================================================
-   v=30 — score card: index-style "frame within frame"
+   v=31 — score card with the DCE4B4FE bow + moon + key frame
    ============================================================
-   Outer .score-card wears the 0511DE6F nav-card frame.  Inside,
-   the small 3C68C8E6 title plaque labels the score ("your hand")
-   and the big calligraphic value sits beneath it.  Same idiom
-   as the index page's nav-card → title-plaque hierarchy.
-   ------------------------------------------------------------ */
+   The result page's only header element.  Aspect 1448/1086 ≈
+   1.334.  Inner safe-zone (measured from the art):
+     top    ~26 %  (clear of the bow + moon ornament)
+     bottom ~24 %  (clear of the gold key at the base)
+     sides  ~12 %  (clear of the flora trails)
+   ============================================================ */
 .score-card {
   position: relative;
-  width: min(86vw, 460px);
-  aspect-ratio: 951 / 597;
-  margin: 4px auto 6px;
+  width: min(92vw, 460px);
+  aspect-ratio: 1448 / 1086;
+  margin: 6px auto 10px;
   background:
-    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=30")
+    url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=31")
     center/100% 100% no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 14% 18% 16%;
+  gap: 2px;
+  padding: 26% 14% 24%;
   box-sizing: border-box;
 }
-.score-plaque {
-  position: relative;
-  width: 62%;
-  aspect-ratio: 864 / 312;
-  background:
-    url("assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=30")
-    center/100% 100% no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.score-plaque-text {
-  position: relative;
-  top: 6%;
-  font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
+.score-card-label {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: clamp(11px, 2.8vw, 14px);
-  letter-spacing: .14em;
-  color: #d6a464;
+  font-size: clamp(10px, 2.6vw, 13px);
+  letter-spacing: .26em;
+  text-transform: lowercase;
+  color: #c19a5c;
   text-shadow:
-    0 0 4px rgba(232,196,138,.40),
-    0 0 9px rgba(218,168,104,.22),
+    0 0 4px rgba(232,196,138,.32),
     0 1px 0 rgba(80,40,10,.40);
+  margin-bottom: 2px;
 }
 .score-value {
   font-family: 'Pinyon Script', 'Snell Roundhand', 'Cormorant Garamond', serif;
   font-style: normal;
-  font-size: clamp(38px, 11vw, 60px);
+  font-size: clamp(44px, 12vw, 68px);
   line-height: 1;
   color: #e6c084;
   text-shadow:
@@ -1724,7 +1715,7 @@ body { background: transparent !important; }
 }
 .score-value small {
   font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(14px, 3.8vw, 20px);
+  font-size: clamp(16px, 4.2vw, 22px);
   color: #b8945c;
   margin-left: 4px;
   letter-spacing: .02em;
@@ -2203,9 +2194,11 @@ body { background: transparent !important; }
   /* filter: none was killing the breathing-halo animation — removed */
 }
 .moon-corner:hover { border-color: var(--rose) !important; color: var(--rose) !important; }
-.moon-corner::before { content: none !important; }   /* kill the old png pseudo */
-.moon-corner svg     { display: none !important; }   /* kill the old svg moon  */
-.moon-corner .mc-bar {
+/* the v=31 star-icon ::before owns the visual; old png pseudo
+   killers + three-bar CSS-drawn icon both removed.            */
+.moon-corner svg     { display: none !important; }
+.moon-corner .mc-bar { display: none !important; }
+.moon-corner .__legacy-mc-bar {
   display: block;
   width: 16px;
   height: 1.5px;
@@ -2653,9 +2646,10 @@ body { background: transparent !important; }
    under the banner no matter how far the user scrolls.            */
 .moon-corner {
   position: fixed !important;
-  top: calc(100vw * 821 / 1916 + 12px) !important;
+  /* 居顶 — float at the very top, above the banner.            */
+  top: max(env(safe-area-inset-top, 0px), 10px) !important;
   left: 14px !important;
-  z-index: 100 !important;
+  z-index: 250 !important;
 }
 .close-corner {
   position: fixed !important;
@@ -3211,7 +3205,11 @@ body { background: transparent !important; }
 .moon-corner,
 .close-corner {
   position: fixed !important;
-  top: calc(100vw * 821 / 1916 + 12px) !important;
+  /* "居顶" per user — float in the top safe-area zone, above the
+     banner (z-index lifted below).  Old formula tied this to the
+     long-gone 1916×821 banner; new layout puts it at the very top. */
+  top: max(env(safe-area-inset-top, 0px), 10px) !important;
+  z-index: 250 !important;
   width: 36px !important;
   height: 36px !important;
   padding: 0 !important;
@@ -3239,14 +3237,11 @@ body { background: transparent !important; }
   color: var(--rose) !important;
   box-shadow: 0 0 12px rgba(237,184,158,.42) !important;
 }
-.moon-corner .mc-bar {
-  display: block;
-  width: 16px;
-  height: 1.5px;
-  background: currentColor;
-  box-shadow: 0 -5px 0 currentColor, 0 5px 0 currentColor;
-}
-.moon-corner::before { content: none !important; }
+/* corner button uses the 8-point star icon (icon-star8.png) — the
+   ::before rule earlier in the file owns the visual now.  Hide
+   the leftover three-bar .mc-bar and SVG fallbacks here, but DO
+   NOT kill ::before (the star asset lives there).               */
+.moon-corner .mc-bar { display: none !important; }
 .moon-corner svg     { display: none !important; }
 .close-corner .cp-x {
   position: relative;
@@ -3290,7 +3285,7 @@ body { background: transparent !important; }
   width: min(92vw, 380px) !important;
   aspect-ratio: 951 / 597;
   background:
-    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=30")
+    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=31")
     center/100% 100% no-repeat !important;
   border: none !important;
   border-radius: 0 !important;
@@ -4098,7 +4093,7 @@ body { background: transparent !important; }
   width:  min(88vw, 540px);
   height: min(55.2vw, 339px);
   background:
-    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=30")
+    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=31")
     center/100% 100% no-repeat;
 }
 .nav-shield {
@@ -4125,18 +4120,18 @@ body { background: transparent !important; }
   margin-top: calc(min(57vw, 345px) + 6px) !important;
 }
 
-/* --- 47.2  corner buttons — Moon (left) + Star (right) icons,
-   pinned right under the banner on EVERY screen.  Same position,
-   same size, same icons everywhere so the user always knows where
-   they are.  Soft breathing halo hints they're tappable.        */
+/* --- 47.2  corner buttons — STAR icon at top-left (was moon).
+   "居顶" per user: top:env(safe-area-inset-top, 10px) so the icon
+   floats at the very top edge above the banner.  The right-side
+   close-corner is no longer used by any screen.                  */
 .moon-corner,
 .close-corner {
   position: fixed !important;
-  top: calc(100vw * 821 / 1916 + 8px) !important;
+  top: max(env(safe-area-inset-top, 0px), 10px) !important;
   width: 44px !important;
   height: 44px !important;
   bottom: auto !important;
-  z-index: 60;
+  z-index: 250 !important;
   background: transparent !important;
   border: 0 !important;
   -webkit-backdrop-filter: none !important;
@@ -4150,21 +4145,21 @@ body { background: transparent !important; }
   left: 10px !important;
   right: auto !important;
   background:
-    url("assets/icon-moon.png?v=27")
+    url("assets/icon-star8.png?v=31")
     center/contain no-repeat !important;
+  /* warm the cream star to gilded gold so it doesn't shout
+     against the dark scene.                                  */
+  filter: brightness(0.85) sepia(0.45) saturate(1.3) hue-rotate(-10deg);
 }
 .close-corner {
   right: 10px !important;
   left: auto !important;
-  width: 52px !important;                       /* bigger per user */
+  width: 52px !important;
   height: 52px !important;
   background:
-    url("assets/icon-star8.png?v=27")
+    url("assets/icon-star8.png?v=31")
     center/contain no-repeat !important;
   transform: none !important;
-  /* Dim the bright cream star to a warmer gilded gold so it
-     doesn't pop against the dark scene.  Done with a colour
-     filter — no asset swap needed.                            */
   filter: brightness(0.7) sepia(0.5) saturate(1.4) hue-rotate(-12deg);
 }
 /* Kill any leftover CSS-drawn icons inside the buttons */
@@ -5106,7 +5101,7 @@ body { background: transparent !important; }
   width:  min(96vw, 460px);
   height: min(144vw, 690px);
   background:
-    url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=30")
+    url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=31")
     center/100% 100% no-repeat;
   /* SAFE-ZONE PADDING — top bumped 17 → 20 % so the Pinyon
      Script headword's tall ascenders clear the moon decoration
