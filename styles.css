@@ -4275,29 +4275,38 @@ body { background: transparent !important; }
    ============================================================ */
 
 /* ============================================================
-   v=26.46 — playing-card matching button (the canonical block)
+   v=26.47 — playing-card matching button (the canonical block)
    ============================================================
-   Goal: a slim "night-color playing card", not a glowing acrylic
-   block.  Mantra: 轻骨架 + 有主体感 (light skeleton + body presence).
+   v=26.46 read as a neon-sign / glowing acrylic tag.  This pass
+   trades all the "light from inside" for "ink on paper":
 
-   Layered structure (matters!):
-     1. outer 1px gold border           ← the card edge
-     2. inner 1px gold border (.mc-frame, inset 3px)   ← the inner rule
-     3. mirrored corner ornaments       ← left + right end, NOT corners
-        default = ✦ (neutral)
-        tagged  = ♥ ♦ ♠ ♣ for pairs 0..3 (matches selection colors)
-     4. body: subtle center radial highlight + soft vignette edges
-        (paper/velvet feel, NOT a flat purple slab)
+     - color belongs to the EDGES + the suit + the border,
+       not a center wash that lights up the whole body
+     - dark purple base stays mostly visible in every tag state
+     - suits move to true playing-card corners (top-left upright,
+       bottom-right rotated 180°) and grow ~1.7x
+     - halos shrink dramatically (peak ~6px, not 24px)
+     - inner gold rule reads as part of the card's skeleton
 
-   Four states (visually distinct, no overlap):
-     default    — quiet, double gold rule, dark body, mirrored ✦
-     selected   — a wash of pair-color fog through the body, brighter
-                  inner rule, mirrored suit (♥♦♠♣), breathing halo
-     correct    — body lights gold + inner rule glows gold + corner
-                  suits turn warm gold, but the OUTER border keeps the
-                  pair color so we still see which pair was the answer
-     wrong      — sunk: halo gone, body dimmed, gold dulled, suit fade
-                  (no red cross — keyword: 失效, not 挨骂)              */
+   Layered structure:
+     1. outer 1px gold border         ← the card edge
+     2. inner 1px gold rule (.mc-frame, inset 3px)
+     3. CORNER suits (top-left + bottom-right rotated 180°)
+        default = ✦ (neutral flourish, in pale gold)
+        tagged  = ♥ ♦ ♠ ♣ for pairs 0..3 (in pair color)
+     4. body: flat dark-purple gradient, subtle top sheen + bottom
+        shadow (paper depth), no center glow
+
+   Four states (visually distinct):
+     default    — dark, double gold rule, quiet ✦ corners
+     selected   — pair color shows at EDGE vignette + border + suits,
+                  base stays dark purple; very soft breathing halo
+     correct    — pair-color border preserved (so user sees which
+                  pair this was), body gets a quiet warm-gold dye
+                  layer, inner rule brightens, suit warms to gold
+                  (think embossed / gilded, not neon)
+     wrong      — sunk: halo gone, body dimmed but text readable,
+                  gold dulled, suit faded                            */
 
 /* ---------- the grid that holds 8 cards (game + result both) -------- */
 .match-grid,
@@ -4313,48 +4322,42 @@ body { background: transparent !important; }
 }
 
 /* ---------- the card itself ----------------------------------------- */
-/* !important on the paint properties — earlier .card base in this file
-   stamps every card with !important background/border/color, and we
-   need to win cleanly without spraying specificity hacks. */
+/* !important on paint properties — an earlier .card base stamps every
+   card with !important background/border/color and we need to win
+   cleanly without specificity hacks. */
 .card.card--match {
   position: relative;
   display: flex !important;
   align-items: center;
   justify-content: center;
   width: 100% !important;
-  height: 56px !important;
-  padding: 0 26px !important;
-  border: 1px solid rgba(232, 200, 130, 0.42) !important;
+  height: 60px !important;
+  padding: 0 30px !important;          /* room for the corner suits */
+  border: 1px solid rgba(218, 188, 124, 0.40) !important;
   border-radius: 5px !important;
-  background:
-    radial-gradient(ellipse 110% 80% at 50% 50%,
-                    rgba(232, 200, 130, 0.045) 0%,
-                    rgba(232, 200, 130, 0.012) 38%,
-                    transparent 72%),
-    linear-gradient(155deg,
-                    rgba(38, 24, 60, 0.92) 0%,
-                    rgba(22, 13, 40, 0.96) 100%) !important;
+  /* dark purple paper — flat gradient, no center glow */
+  background: linear-gradient(160deg,
+                              rgba(34, 22, 56, 0.94) 0%,
+                              rgba(20, 12, 38, 0.97) 100%) !important;
+  /* paper depth: top sheen + bottom shadow + soft outer drop  */
   box-shadow:
-    inset 0 0 14px rgba(232, 200, 130, 0.05),
-    inset 0 0 22px rgba(0, 0, 0, 0.30),
-    0 2px 6px rgba(0, 0, 0, 0.40) !important;
-  color: #ecd6b0 !important;
+    inset 0 1px 0 rgba(232, 200, 130, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 14px rgba(0, 0, 0, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  color: #efdbb4 !important;
   font-family: 'Cormorant Garamond', 'EB Garamond', serif !important;
   font-style: italic !important;
   font-weight: 500 !important;
   font-size: 16px !important;
-  letter-spacing: 0.025em !important;
+  letter-spacing: 0.03em !important;
   text-align: center;
   cursor: pointer;
   transition: transform 0.18s, border-color 0.3s, box-shadow 0.3s, color 0.25s !important;
   -webkit-tap-highlight-color: transparent;
 }
 .card.card--match:hover:not(.is-correct):not(.is-wrong) {
-  border-color: rgba(232, 200, 130, 0.62) !important;
-  box-shadow:
-    inset 0 0 16px rgba(232, 200, 130, 0.07),
-    inset 0 0 22px rgba(0, 0, 0, 0.30),
-    0 2px 6px rgba(0, 0, 0, 0.40) !important;
+  border-color: rgba(232, 200, 130, 0.58) !important;
 }
 .card.card--match:active:not(.is-correct):not(.is-wrong) {
   transform: translateY(1px);
@@ -4363,8 +4366,8 @@ body { background: transparent !important; }
 /* ---------- inner gold rule (the double-frame) ---------------------- */
 .card.card--match .mc-frame {
   position: absolute;
-  inset: 3px;
-  border: 1px solid rgba(232, 200, 130, 0.22);
+  inset: 4px;
+  border: 1px solid rgba(218, 188, 124, 0.22);
   border-radius: 3px;
   pointer-events: none;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -4374,200 +4377,199 @@ body { background: transparent !important; }
   z-index: 1;
 }
 
-/* ---------- mirrored corner ornaments (left end + right end) -------- */
+/* ---------- corner suits — top-left upright + bottom-right rotated. */
+/* Classic playing-card corner logic.  Sized so they read clearly as
+   "this card's suit" but not so big they swallow the word.            */
 .card.card--match::before,
 .card.card--match::after {
   content: '✦';
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 10px;
+  font-size: 16px;
   font-style: normal;
-  font-family: serif;
-  color: rgba(232, 200, 130, 0.55);
+  font-family: 'Cormorant Garamond', serif;
+  color: rgba(218, 188, 124, 0.55);
   pointer-events: none;
   line-height: 1;
-  transition: color 0.3s, text-shadow 0.3s;
+  transition: color 0.3s, text-shadow 0.3s, transform 0.3s;
 }
-.card.card--match::before { left: 11px; }
-.card.card--match::after  { right: 11px; }
+.card.card--match::before { top: 8px;    left: 11px; }
+.card.card--match::after  { bottom: 8px; right: 11px; transform: rotate(180deg); }
 
-/* ============= SELECTED — wash of pair color ============= */
+/* ============= SELECTED — pair color shows in 3 spots only =============
+   1. the OUTER border picks up the pair color
+   2. the CORNER SUITS swap to ♥♦♠♣ in pair color
+   3. an EDGE vignette tints the card edges (NOT the center)
+   The dark purple paper base stays mostly visible.  Soft 4–6px
+   breathing halo at the outside, no inner glow.                          */
 .card.card--match.tag-0,
 .card.card--match.tag-1,
 .card.card--match.tag-2,
 .card.card--match.tag-3 {
-  animation: match-halo 2.6s ease-in-out infinite;
+  animation: match-halo 2.8s ease-in-out infinite;
 }
 .card.card--match.tag-0 .mc-frame,
 .card.card--match.tag-1 .mc-frame,
 .card.card--match.tag-2 .mc-frame,
 .card.card--match.tag-3 .mc-frame {
-  border-color: rgba(255, 235, 180, 0.55);
+  border-color: rgba(232, 200, 130, 0.38);
 }
 
-/* tag-0 → ♥ on rose */
+/* tag-0 → ♥ rose (dusty rose, not magenta) */
 .card.card--match.tag-0 {
-  --halo:      rgba(199, 122, 149, 0.62);
-  --halo-deep: rgba(199, 122, 149, 0.36);
+  --halo:      rgba(176, 110, 132, 0.40);
+  --halo-deep: rgba(176, 110, 132, 0.22);
   background:
-    radial-gradient(ellipse 110% 85% at 50% 50%,
-                    rgba(220, 145, 170, 0.40) 0%,
-                    rgba(199, 122, 149, 0.18) 50%,
-                    rgba(199, 122, 149, 0.04) 90%),
-    linear-gradient(155deg,
-                    rgba(58, 30, 50, 0.92) 0%,
-                    rgba(32, 14, 28, 0.96) 100%) !important;
-  border-color: rgba(230, 158, 180, 0.90) !important;
-  color: #fadce4 !important;
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    transparent 40%,
+                    rgba(176, 110, 132, 0.16) 78%,
+                    rgba(176, 110, 132, 0.28) 100%),
+    linear-gradient(160deg,
+                    rgba(38, 22, 50, 0.94) 0%,
+                    rgba(22, 12, 34, 0.97) 100%) !important;
+  border-color: rgba(212, 156, 174, 0.62) !important;
 }
 .card.card--match.tag-0::before,
 .card.card--match.tag-0::after {
   content: '\2665';   /* ♥ */
-  color: rgba(252, 208, 222, 0.95);
-  text-shadow: 0 0 5px rgba(220, 145, 170, 0.65);
+  color: rgba(228, 168, 188, 0.92);
 }
 
-/* tag-1 → ♦ on cinnamon gold */
+/* tag-1 → ♦ cinnamon gold (dusty, not neon) */
 .card.card--match.tag-1 {
-  --halo:      rgba(214, 165, 100, 0.62);
-  --halo-deep: rgba(214, 165, 100, 0.36);
+  --halo:      rgba(186, 144, 92, 0.40);
+  --halo-deep: rgba(186, 144, 92, 0.22);
   background:
-    radial-gradient(ellipse 110% 85% at 50% 50%,
-                    rgba(232, 188, 120, 0.40) 0%,
-                    rgba(214, 165, 100, 0.18) 50%,
-                    rgba(214, 165, 100, 0.04) 90%),
-    linear-gradient(155deg,
-                    rgba(62, 38, 28, 0.92) 0%,
-                    rgba(32, 18, 14, 0.96) 100%) !important;
-  border-color: rgba(238, 196, 128, 0.92) !important;
-  color: #fae6c2 !important;
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    transparent 40%,
+                    rgba(186, 144, 92, 0.16) 78%,
+                    rgba(186, 144, 92, 0.28) 100%),
+    linear-gradient(160deg,
+                    rgba(38, 26, 38, 0.94) 0%,
+                    rgba(22, 14, 24, 0.97) 100%) !important;
+  border-color: rgba(218, 178, 124, 0.62) !important;
 }
 .card.card--match.tag-1::before,
 .card.card--match.tag-1::after {
   content: '\2666';   /* ♦ */
-  color: rgba(250, 212, 150, 0.95);
-  text-shadow: 0 0 5px rgba(214, 165, 100, 0.65);
+  color: rgba(228, 192, 144, 0.92);
 }
 
-/* tag-2 → ♠ on amethyst */
+/* tag-2 → ♠ amethyst (dusty lavender) */
 .card.card--match.tag-2 {
-  --halo:      rgba(170, 145, 220, 0.62);
-  --halo-deep: rgba(170, 145, 220, 0.36);
+  --halo:      rgba(146, 124, 184, 0.40);
+  --halo-deep: rgba(146, 124, 184, 0.22);
   background:
-    radial-gradient(ellipse 110% 85% at 50% 50%,
-                    rgba(188, 168, 232, 0.40) 0%,
-                    rgba(170, 145, 220, 0.18) 50%,
-                    rgba(170, 145, 220, 0.04) 90%),
-    linear-gradient(155deg,
-                    rgba(46, 32, 78, 0.92) 0%,
-                    rgba(22, 14, 48, 0.96) 100%) !important;
-  border-color: rgba(200, 178, 240, 0.90) !important;
-  color: #e2d8f8 !important;
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    transparent 40%,
+                    rgba(146, 124, 184, 0.16) 78%,
+                    rgba(146, 124, 184, 0.28) 100%),
+    linear-gradient(160deg,
+                    rgba(34, 24, 58, 0.94) 0%,
+                    rgba(20, 12, 38, 0.97) 100%) !important;
+  border-color: rgba(184, 162, 220, 0.62) !important;
 }
 .card.card--match.tag-2::before,
 .card.card--match.tag-2::after {
   content: '\2660';   /* ♠ */
-  color: rgba(220, 208, 244, 0.95);
-  text-shadow: 0 0 5px rgba(170, 145, 220, 0.65);
+  color: rgba(196, 180, 226, 0.92);
 }
 
-/* tag-3 → ♣ on celadon */
+/* tag-3 → ♣ celadon (dusty teal-green) */
 .card.card--match.tag-3 {
-  --halo:      rgba(140, 192, 175, 0.62);
-  --halo-deep: rgba(140, 192, 175, 0.36);
+  --halo:      rgba(116, 158, 144, 0.40);
+  --halo-deep: rgba(116, 158, 144, 0.22);
   background:
-    radial-gradient(ellipse 110% 85% at 50% 50%,
-                    rgba(160, 215, 195, 0.40) 0%,
-                    rgba(140, 192, 175, 0.18) 50%,
-                    rgba(140, 192, 175, 0.04) 90%),
-    linear-gradient(155deg,
-                    rgba(28, 52, 58, 0.92) 0%,
-                    rgba(12, 28, 32, 0.96) 100%) !important;
-  border-color: rgba(176, 224, 204, 0.90) !important;
-  color: #d8eee2 !important;
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    transparent 40%,
+                    rgba(116, 158, 144, 0.16) 78%,
+                    rgba(116, 158, 144, 0.28) 100%),
+    linear-gradient(160deg,
+                    rgba(26, 36, 42, 0.94) 0%,
+                    rgba(14, 22, 26, 0.97) 100%) !important;
+  border-color: rgba(160, 198, 184, 0.62) !important;
 }
 .card.card--match.tag-3::before,
 .card.card--match.tag-3::after {
   content: '\2663';   /* ♣ */
-  color: rgba(204, 236, 220, 0.95);
-  text-shadow: 0 0 5px rgba(140, 192, 175, 0.65);
+  color: rgba(184, 214, 200, 0.92);
 }
 
-/* the breathing halo for selected cards (soft, not a strobe).
-   !important on each frame because the .card base in this file is
-   already stamping a box-shadow with !important — without it, the
-   animation never paints. */
+/* breathing halo — soft, peak ~6px outer glow, no inner glow */
 @keyframes match-halo {
   0%, 100% {
     box-shadow:
-      inset 0 0 14px rgba(232, 200, 130, 0.06),
-      inset 0 0 22px rgba(0, 0, 0, 0.30),
-      0 0 8px var(--halo-deep),
-      0 2px 6px rgba(0, 0, 0, 0.4) !important;
+      inset 0 1px 0 rgba(232, 200, 130, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+      inset 0 0 14px rgba(0, 0, 0, 0.22),
+      0 0 0 0 var(--halo-deep),
+      0 1px 3px rgba(0, 0, 0, 0.45) !important;
   }
   50% {
     box-shadow:
-      inset 0 0 16px rgba(232, 200, 130, 0.08),
-      inset 0 0 22px rgba(0, 0, 0, 0.30),
-      0 0 14px var(--halo),
-      0 0 24px var(--halo-deep),
-      0 2px 6px rgba(0, 0, 0, 0.4) !important;
+      inset 0 1px 0 rgba(232, 200, 130, 0.10),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+      inset 0 0 14px rgba(0, 0, 0, 0.22),
+      0 0 7px var(--halo-deep),
+      0 1px 3px rgba(0, 0, 0, 0.45) !important;
   }
 }
 
-/* ============= CORRECT — gold body, pair-color border kept ============= */
+/* ============= CORRECT — embossed/gilded, NOT glowing =============
+   Subtle warm-gold dye over the base + brighter inner gold rule +
+   suits warm to gold.  OUTER border keeps the pair color so the
+   user still sees which pair this was.                              */
 .card.card--match.is-correct {
   animation: none;
   background:
-    radial-gradient(ellipse 105% 80% at 50% 50%,
-                    rgba(255, 222, 165, 0.42) 0%,
-                    rgba(232, 188, 120, 0.22) 50%,
-                    rgba(196, 152, 88, 0.10) 100%),
-    linear-gradient(155deg,
-                    rgba(86, 56, 36, 0.78) 0%,
-                    rgba(56, 32, 18, 0.88) 100%) !important;
-  color: #fff1d0 !important;
-  text-shadow: 0 0 6px rgba(255, 232, 186, 0.45);
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    transparent 35%,
+                    rgba(196, 152, 88, 0.18) 78%,
+                    rgba(196, 152, 88, 0.28) 100%),
+    linear-gradient(160deg,
+                    rgba(48, 34, 20, 0.92) 0%,
+                    rgba(28, 18, 10, 0.96) 100%) !important;
+  color: #f6e2b4 !important;
   box-shadow:
-    inset 0 0 18px rgba(255, 232, 170, 0.32),
-    inset 0 0 26px rgba(0, 0, 0, 0.18),
-    0 0 14px rgba(232, 188, 120, 0.50),
-    0 2px 6px rgba(0, 0, 0, 0.4) !important;
+    inset 0 1px 0 rgba(255, 232, 170, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 14px rgba(0, 0, 0, 0.22),
+    0 0 5px rgba(196, 152, 88, 0.35),
+    0 1px 3px rgba(0, 0, 0, 0.45) !important;
   /* outer border-color stays from .tag-N — pair info preserved */
 }
 .card.card--match.is-correct .mc-frame {
-  border-color: rgba(255, 232, 170, 0.65);
-  box-shadow: inset 0 0 6px rgba(255, 232, 170, 0.18);
+  border-color: rgba(232, 200, 130, 0.55);
 }
 .card.card--match.is-correct::before,
 .card.card--match.is-correct::after {
-  color: rgba(255, 232, 170, 0.92);
-  text-shadow: 0 0 5px rgba(255, 232, 170, 0.55);
+  color: rgba(240, 210, 138, 0.92);
 }
 
-/* ============= WRONG — sunk, dim, dulled (no scolding) ============= */
+/* ============= WRONG — sunk, dulled (no scolding) =============
+   Color is removed (no edge vignette).  Body slightly darker, gold
+   border dulled.  Text still readable — failed, not punished.      */
 .card.card--match.is-wrong {
   animation: none;
-  background: linear-gradient(155deg,
+  background: linear-gradient(160deg,
                               rgba(24, 16, 38, 0.92) 0%,
                               rgba(14, 10, 24, 0.95) 100%) !important;
-  border-color: rgba(232, 200, 130, 0.22) !important;
-  color: rgba(212, 195, 168, 0.72) !important;
+  border-color: rgba(218, 188, 124, 0.20) !important;
+  color: rgba(208, 192, 162, 0.62) !important;
   box-shadow:
-    inset 0 0 10px rgba(0, 0, 0, 0.40),
-    0 2px 4px rgba(0, 0, 0, 0.30) !important;
-  opacity: 0.88;
-  filter: saturate(0.5);
+    inset 0 1px 0 rgba(232, 200, 130, 0.03),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 10px rgba(0, 0, 0, 0.30),
+    0 1px 3px rgba(0, 0, 0, 0.30) !important;
+  opacity: 0.85;
+  filter: saturate(0.55);
   pointer-events: none;
 }
 .card.card--match.is-wrong .mc-frame {
-  border-color: rgba(232, 200, 130, 0.14);
+  border-color: rgba(218, 188, 124, 0.12);
 }
 .card.card--match.is-wrong::before,
 .card.card--match.is-wrong::after {
-  color: rgba(200, 180, 140, 0.42);
-  text-shadow: none;
+  color: rgba(196, 178, 138, 0.38);
 }
 
 /* result-page ✓ / ✗ — small, tucked above the headword */

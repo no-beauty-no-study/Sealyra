@@ -1013,7 +1013,8 @@ const Screens = {
         shuffled.push(rightCol[r]);
       }
       const tagOf = new Array(shuffled.length).fill(null);
-      let currentTag = 0;
+      // (No "currentTag" — each click picks its tag fresh from the
+      // actual board state so undo + re-pick can't strand orphans.)
 
       el.innerHTML = `
         ${stageHeader(1, 'the matching')}
@@ -1056,20 +1057,38 @@ const Screens = {
           return;
         }
 
-        // the current pair already has a card on this same side?
-        // clear it — only one left + one right may share a colour.
-        const sameSideIdx = tagOf.findIndex((t, i) => t === currentTag && shuffled[i].side === side);
-        if (sameSideIdx >= 0) tagOf[sameSideIdx] = null;
+        // Before we tag anything new, clear any ORPHAN selection on this
+        // same side — a card tagged with a colour whose partner on the
+        // other side hasn't been chosen yet.  This enforces the rule
+        // "each side may hold at most one in-progress selection."  Cards
+        // that are already paired (their tag exists on the other side)
+        // are left alone.
+        for (let i = 0; i < tagOf.length; i++) {
+          if (i === idx || tagOf[i] === null) continue;
+          if (shuffled[i].side !== side) continue;
+          const hasPartner = tagOf.some((v, j) =>
+            j !== i && v === tagOf[i] && shuffled[j].side !== side);
+          if (!hasPartner) tagOf[i] = null;
+        }
 
-        // tag this card and bump the current colour when the pair is full
-        tagOf[idx] = currentTag;
-        if (tagOf.filter(t => t === currentTag).length >= 2) {
-          // pick the next colour that still has room
-          for (let inc = 1; inc <= 4; inc++) {
-            const cand = (currentTag + inc) % 4;
-            if (tagOf.filter(t => t === cand).length < 2) { currentTag = cand; break; }
+        // Pick the colour for THIS click:
+        //  · if a lonely card on the other side is waiting for a partner,
+        //    finish that pair (use its tag)
+        //  · otherwise start a new pair with the lowest unused colour.
+        let assignTag = null;
+        for (let t = 0; t < 4; t++) {
+          const sameSide  = tagOf.filter((v, i) => v === t && shuffled[i].side === side).length;
+          const otherSide = tagOf.filter((v, i) => v === t && shuffled[i].side !== side).length;
+          if (sameSide === 0 && otherSide === 1) { assignTag = t; break; }
+        }
+        if (assignTag === null) {
+          for (let t = 0; t < 4; t++) {
+            if (tagOf.filter(v => v === t).length === 0) { assignTag = t; break; }
           }
         }
+        if (assignTag === null) return;   // all 4 colours fully booked
+
+        tagOf[idx] = assignTag;
         repaint();
         SFX.tap();
       }
