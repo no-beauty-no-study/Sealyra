@@ -350,12 +350,20 @@ function nextDoor(label, onClick, { confirm = false } = {}) {
   });
   return a;
 }
-// Top-right "close the page" pill — the universal way home.  Visible on
-// every screen except the cover itself.  On in-game screens we pop the
-// leave-confirm modal first so the user doesn't kill their stage by accident.
+// Top-right "close the page" star — the universal way home.  Visible
+// on every screen except the cover itself.  On in-game screens we pop
+// the leave-confirm modal first so the user doesn't kill their stage
+// by accident.
+//
+// MOUNTING: position:fixed escapes the parent's layout box but NOT its
+// stacking context.  #app is z-index:1 + position:relative, which
+// traps any z-index inside it below #banner-top (z:200).  So this
+// function mounts the star directly to <body> and returns a sentinel
+// DocumentFragment — callers can still do `el.appendChild(closeCorner(...))`
+// without disturbing the body-mounted star.
 function closeCorner({ confirm = false, to = 'cover', label = 'close the page' } = {}) {
   const b = document.createElement('button');
-  b.className = 'close-corner corner-pin';
+  b.className = 'close-corner corner-pin is-corner-floater';
   b.setAttribute('aria-label', label);
   b.innerHTML = '<span class="cp-x"></span>';
   b.addEventListener('click', () => {
@@ -364,7 +372,12 @@ function closeCorner({ confirm = false, to = 'cover', label = 'close the page' }
     if (confirm) confirmLeave(exit);
     else exit();
   });
-  return b;
+  // Sweep any leftover star from the previous screen, then mount on body.
+  document.querySelectorAll('.is-corner-floater').forEach(n => n.remove());
+  document.body.appendChild(b);
+  // Sentinel: callers do `el.appendChild(closeCorner(...))`; returning
+  // an empty fragment makes that a no-op without breaking the pattern.
+  return document.createDocumentFragment();
 }
 // Top-left moon button — opens the side-drawer of "her words".
 // The drawer is an OVERLAY (not navigation), so no leave-confirm
@@ -726,8 +739,9 @@ function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'in
       ${words.length ? '' : `<div class="note-empty">no words yet · the page is still pristine</div>`}
     </div>
   `;
-  // Corner buttons hang right under the banner (NOT inside nav-card).
-  el.appendChild(moonCorner());
+  // Top-right star — the universal "back to cover" affordance.  We
+  // used to also stamp a top-left moon-corner here, but the user
+  // wants ONLY the right-corner star (one anchor per page).
   el.appendChild(closeCorner({ to: backTo }));
 
   $$('.alpha-bar a', el).forEach(a => {
@@ -1486,6 +1500,21 @@ const Screens = {
             recordMistake(q.word);
             SFX.wrong();
           }
+          // The correct card is now a doorway to that word's parchment —
+          // tap it to read the page, tap anywhere else to advance.  We
+          // clone the card to drop its original pick() listener (which
+          // would otherwise re-trigger the whole ceremony on each tap),
+          // then attach the parchment-open handler on the fresh node.
+          const oldCorrect = all[q.correctIdx];
+          const correctCard = oldCorrect.cloneNode(true);
+          correctCard.disabled = false;
+          correctCard.classList.add('is-readable');
+          oldCorrect.replaceWith(correctCard);
+          correctCard.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+            showParchment(q.word);
+          });
           // Speak the full example sentence so the user hears the word
           // in context.  Then arm a one-shot tap-anywhere listener: the
           // user controls when to move on.
@@ -1494,17 +1523,24 @@ const Screens = {
         }, 280);
 
         function armAdvance() {
-          // a hint that the page is waiting for them
-          let hint = $('.q-tap-hint', stage);
-          if (!hint) {
+          // a hint that the page is waiting for them.  `stage` is local
+          // to drawQ(); pick() is a sibling, so we re-query the DOM.
+          const stageHost = $('#oracle-stage');
+          let hint = stageHost && $('.q-tap-hint', stageHost);
+          if (!hint && stageHost) {
             hint = document.createElement('div');
             hint.className = 'q-tap-hint';
-            hint.textContent = '— tap anywhere to turn the page —';
-            stage.appendChild(hint);
+            hint.textContent = '— tap her page to read · tap anywhere else to turn —';
+            stageHost.appendChild(hint);
           }
           const advance = (ev) => {
-            // ignore taps on the moon / close pills
-            if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner')) return;
+            // Skip taps that belong to the page rather than the "advance"
+            // gesture: corner star, the readable correct-card (those open
+            // the parchment), and anything inside an open parchment.
+            if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .card--option.is-readable, .parchment-veil')) return;
+            // If a parchment is currently open, swallow the tap — the
+            // user is reading, not advancing.
+            if (document.querySelector('.parchment-veil')) return;
             document.removeEventListener('click', advance, true);
             state.oracleIdx++;
             if (state.oracleIdx >= state.oracleQs.length) go('stage2-result');
@@ -1720,8 +1756,7 @@ const Screens = {
           </div>
         </div>
       `;
-      // Corner buttons hang right under the banner (NOT inside nav-card).
-      el.appendChild(moonCorner());
+      // Top-right star — single corner anchor per page.
       el.appendChild(closeCorner());
 
       $$('.bucket-card', el).forEach(b => b.addEventListener('click', () => {
@@ -1772,7 +1807,6 @@ const Screens = {
       const from = opts.from || 'cover';
       state._cardFrom = from;
       el.innerHTML = `<div class="card-host"></div>`;
-      el.prepend(moonCorner());
       el.appendChild(closeCorner({ to: from }));
       const card = renderExCard(word, null, { withControls: true });
       card.classList.add('is-parchment', 'is-entering');

@@ -1770,70 +1770,64 @@ body { background: transparent !important; }
 
 /* v=32 — Stage-1 result reuses stage-1's exact layout, swapping
    the "tap one on the left, one on the right" hint line for an
-   inline score row that sits in the same vertical slot.  Same
-   chapter band above, same .match-actions row holding the
-   doorway button, same grid below — so the page doesn't visibly
-   re-flow between game and result.  The cards stay put; only the
-   hint line above changes its costume.
+   inline score line that sits in the same vertical slot AT THE
+   SAME HEIGHT as the game's .q-progress (so the button above and
+   the grid below don't shift between game ↔ result — feels like
+   one page in two costumes).
 
-   Layout:    label  ── ✦ 03 / 4 ✦ ──  helper-line
-   The rules are 1px gold gradients, the score sits in the middle
-   in Pinyon Script (same family as the old score-card), and the
-   helper text replaces the old "match-result-hint" block under
-   the grid.                                                         */
+   Layout (one line):    your hand  ·  3 / 4  ·  touch a word
+   Same italic-small typography as .q-progress; only the score
+   value is allowed to grow slightly via Pinyon Script.            */
 .match-result-score {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
   gap: 8px;
-  margin: 6px auto 10px;
-  max-width: 460px;
-  padding: 0 28px;
-  flex-wrap: wrap;
+  margin: 6px 0 10px;
+  text-align: center;
+  flex-wrap: nowrap;
+  font-family: var(--f-body, 'EB Garamond', Georgia, serif);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  line-height: 1.2;
 }
 .match-result-score .mrs-label,
 .match-result-score .mrs-hint {
-  font-family: var(--f-italic, 'EB Garamond', Georgia, serif);
-  font-style: italic;
-  font-size: 10px;
-  letter-spacing: 0.26em;
-  text-transform: lowercase;
   color: #c19a5c;
   text-shadow: 0 0 4px rgba(232, 196, 138, 0.20);
   white-space: nowrap;
 }
 .match-result-score .mrs-hint {
-  letter-spacing: 0.10em;
   color: rgba(193, 154, 92, 0.74);
 }
 .match-result-score .mrs-rule {
-  flex: 1 1 24px;
-  min-width: 18px;
-  max-width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(218, 168, 104, 0.55) 40%,
-    rgba(218, 168, 104, 0.55) 60%,
-    transparent 100%);
+  /* the dot separator between label · value · hint */
+  display: inline-block;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(218, 168, 104, 0.6);
+  align-self: center;
 }
 .match-result-score .mrs-value {
   font-family: 'Pinyon Script', 'Snell Roundhand', 'Cormorant Garamond', serif;
-  font-size: clamp(26px, 6vw, 34px);
+  font-style: normal;
+  font-size: clamp(18px, 4.6vw, 22px);
+  letter-spacing: 0.02em;
   line-height: 1;
   color: #e6c084;
   text-shadow:
-    0 0 6px rgba(255, 232, 170, 0.50),
-    0 0 14px rgba(232, 196, 138, 0.32),
-    0 1px 0 rgba(80, 40, 10, 0.45);
+    0 0 6px rgba(255, 232, 170, 0.45),
+    0 0 12px rgba(232, 196, 138, 0.28);
 }
 .match-result-score .mrs-value small {
   font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(12px, 3vw, 15px);
+  font-size: 0.55em;
   color: #b8945c;
-  margin-left: 2px;
+  margin-left: 1px;
   letter-spacing: 0.02em;
-  vertical-align: 0.20em;
 }
 
 /* The "touch any word" hint sits under the grid, faded italic */
@@ -2800,6 +2794,17 @@ body { background: transparent !important; }
 }
 .card--option.reveal-right .mc-frame {
   filter: brightness(1.5) saturate(1.1);
+}
+
+/* is-readable — the correct card after the ceremony is a doorway to
+   that word's parchment.  Cursor + slight tap-down feedback; the
+   reveal-right gold halo carries the real affordance.                */
+.card--option.is-readable {
+  cursor: pointer;
+}
+.card--option.is-readable:active {
+  transform: scale(0.97);
+  transition: transform 0.12s;
 }
 
 
@@ -4474,7 +4479,9 @@ body { background: transparent !important; }
     url("assets/icon-star8.png?v=31")
     center/contain no-repeat !important;
   transform: none !important;
-  filter: brightness(0.7) sepia(0.5) saturate(1.4) hue-rotate(-12deg);
+  /* Same cream-gold brightness as the left star (was buried in sepia
+     so the user couldn't see it at all on the dark banner).        */
+  filter: drop-shadow(0 0 8px rgba(232, 196, 138, 0.55));
 }
 /* Kill any leftover CSS-drawn icons inside the buttons */
 .moon-corner .mc-bar,
@@ -4494,15 +4501,16 @@ body { background: transparent !important; }
                      drop-shadow(0 0 12px rgba(232,196,138,.7))
                      drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
 }
-/* The .close-corner has its own colour filter (sepia) — its
-   halo needs to layer ON TOP via a separate animation that
-   doesn't replace the base sepia filter.                      */
+/* v=33 — close-corner used to wear a heavy sepia filter that buried
+   the star against the dark banner.  User couldn't see it.  Match
+   the moon-corner brightness instead — same cream-gold drop-shadow
+   halo, breathing.                                                  */
 @keyframes corner-breathe-star {
-  0%, 100% { filter: brightness(0.7) sepia(0.5) saturate(1.4) hue-rotate(-12deg)
-                     drop-shadow(0 0 2px rgba(255,232,170,.5)); }
-  50%      { filter: brightness(0.85) sepia(0.4) saturate(1.6) hue-rotate(-12deg)
-                     drop-shadow(0 0 6px rgba(255,232,170,1))
-                     drop-shadow(0 0 12px rgba(232,196,138,.7)); }
+  0%, 100% { filter: drop-shadow(0 0 2px  rgba(255,232,170,.5))
+                     drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
+  50%      { filter: drop-shadow(0 0 6px  rgba(255,232,170,1))
+                     drop-shadow(0 0 12px rgba(232,196,138,.7))
+                     drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
 }
 .close-corner { animation-name: corner-breathe-star; }
 .moon-corner:hover, .close-corner:hover {
