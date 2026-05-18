@@ -481,6 +481,35 @@ function stageHeader(chapterN, name) {
     </div>
   `;
 }
+
+// scoreBlock — the user-designed "two-piece" combo for result pages:
+// chapter band on top, painted score frame underneath (same asset as
+// the storybook modal, used inline).  The frame already paints the
+// crescent moon + bow garland; CSS positions the score inside its
+// safe-zone.
+function scoreBlock(chapterN, name, value, total, message) {
+  return `
+    ${stageHeader(chapterN, name)}
+    <div class="score-frame">
+      <div class="score-frame-inner">
+        <div class="sf-label">Score</div>
+        <div class="sf-value">${value}<small> / ${total}</small></div>
+        <div class="sf-message">${escapeHtml(message || '')}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Encouragement copy keyed to the percentage — keeps the storybook
+// voice (lowercase italics, gentle).  Never punishing on low scores.
+function encouragement(pct) {
+  if (pct >= 0.99) return 'every page sang back ♡';
+  if (pct >= 0.75) return 'beautifully read';
+  if (pct >= 0.50) return 'not bad at all ~ ♡';
+  if (pct >= 0.25) return 'a softer page next time';
+  return 'her book waits patiently';
+}
+
 // Title plaque-only fragment.  The text lives inside an inner span
 // that we position absolutely so it lands in the dome's purple band
 // regardless of how tall the plaque rectangle is.
@@ -1397,29 +1426,20 @@ const Screens = {
       const result = state.session.matchResult || [];
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
 
-      // Page layout MIRRORS stage1 so it feels like the same page with
-      // a different costume.  Same chapter band, same .match-actions
-      // slot for the next-stage button, same .match-grid for the
-      // tiles — only the helper line above the grid changes from
-      // "tap one ..." to the score line.
+      // v=39 result-page layout per user sketch — chapter band as a
+      // small sash on top, then the painted score frame (same asset
+      // as the modal so the storybook keeps speaking one voice),
+      // then the doorway button, then the grid.  scoreBlock() builds
+      // the reusable chapter+frame combo so the three result pages
+      // (and any future "two-piece" pages) share one component.
       el.innerHTML = `
-        ${stageHeader(1, 'The Matching')}
+        ${scoreBlock(1, 'The Matching', correctPairs, 4, encouragement(correctPairs / 4))}
         <div class="match-actions"></div>
-        <div class="match-result-score">
-          <span class="mrs-label">your hand</span>
-          <span class="mrs-rule"></span>
-          <span class="mrs-value">${correctPairs}<small> / 4</small></span>
-          <span class="mrs-rule"></span>
-          <span class="mrs-hint">touch any word to read its page</span>
-        </div>
+        <div class="match-result-hint">— touch any word to read its page —</div>
         <div class="match-result-grid"></div>
       `;
 
-      // top-left star only — no top-right X (consistent with game stages)
       el.appendChild(closeCorner({ to: 'cover' }));
-
-      // Same slot as the "confirm" button in stage1, so the doorway
-      // doesn't move between game + result — feels like one page.
       $('.match-actions', el).appendChild(nextDoor('the reading', () => go('stage2'), { confirm: true }));
 
       const grid = $('.match-result-grid', el);
@@ -1599,15 +1619,9 @@ const Screens = {
       const el = $('#screen-stage2-result');
       const right = state.session.words.filter(w => state.results[w].oracle).length;
       el.innerHTML = `
-        ${stageHeader(2, 'The Reading')}
+        ${scoreBlock(2, 'The Reading', right, 8, encouragement(right / 8))}
         <div class="match-actions"></div>
-        <div class="match-result-score">
-          <span class="mrs-label">her reading</span>
-          <span class="mrs-rule"></span>
-          <span class="mrs-value">${right}<small> / 8</small></span>
-          <span class="mrs-rule"></span>
-          <span class="mrs-hint">copy each word once</span>
-        </div>
+        <div class="match-result-hint">— copy each word once —</div>
         <div class="result-grid"></div>
       `;
 
@@ -1739,15 +1753,9 @@ const Screens = {
         return acc + (r.match ? 1 : 0) + (r.oracle ? 1 : 0) + (r.dict ? 1 : 0);
       }, 0);
       el.innerHTML = `
-        ${stageHeader(3, 'The Inscription')}
+        ${scoreBlock(3, 'The Inscription', totalCorrect, 24, encouragement(totalCorrect / 24))}
         <div class="match-actions"></div>
-        <div class="match-result-score">
-          <span class="mrs-label">tonight's chapter</span>
-          <span class="mrs-rule"></span>
-          <span class="mrs-value">${totalCorrect}<small> / 24</small></span>
-          <span class="mrs-rule"></span>
-          <span class="mrs-hint">three stages, eight words</span>
-        </div>
+        <div class="match-result-hint">— three stages, eight words —</div>
         <div class="summary-list" id="summary"></div>
         <div class="result-grid"></div>
       `;

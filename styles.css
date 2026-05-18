@@ -1653,25 +1653,8 @@ body.bg-note   #bg-layer { background-image: url("assets/bg-note.png?v=25"); }
    ============================================================
    The universal exit on every non-cover screen.  Pinned just below
    the banner so the user can always find their way home.            */
-.close-corner {
-  position: absolute;
-  top: calc(100vw * 821 / 1916 + 12px);
-  right: 14px;
-  z-index: 60;
-  background: rgba(6,3,15,.55);
-  border: 1px solid rgba(244,181,200,.42);
-  color: var(--pink-soft);
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 11px;
-  letter-spacing: .18em;
-  padding: 7px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  transition: box-shadow .2s, border-color .2s;
-}
+/* (Old absolute-positioned 1916/821 close-corner block retired
+   in v=38 — the active rules live in the v=38 unified block.)   */
 .close-corner:hover  { box-shadow: 0 0 14px rgba(244,181,200,.40); border-color: rgba(244,181,200,.7); }
 .close-corner:active { transform: translateY(1px); }
 
@@ -1769,16 +1752,81 @@ body { background: transparent !important; }
 /* (Stage-1 result tile block — class was renamed to .card.card--match
    in JS.  Layout + colours live in the v=26.46 block at the bottom.) */
 
-/* v=32 — Stage-1 result reuses stage-1's exact layout, swapping
-   the "tap one on the left, one on the right" hint line for an
-   inline score line that sits in the same vertical slot AT THE
-   SAME HEIGHT as the game's .q-progress (so the button above and
-   the grid below don't shift between game ↔ result — feels like
-   one page in two costumes).
+/* v=39 — SCORE FRAME, the user-designed "two-piece" combo for the
+   three result pages (and any future "needs two contents" page).
+   Layout (top → bottom):
+     · chapter band (.frame-chapter)  — unchanged
+     · painted score frame using modal-frame.png with moon + bow
+       baked in; inside it the Score label, big number, and a
+       gentle one-liner ("not bad ~ ♡")
+     · doorway button (.match-actions)
+     · helper hint line
+     · grid / summary
 
-   Layout (one line):    your hand  ·  3 / 4  ·  touch a word
-   Same italic-small typography as .q-progress; only the score
-   value is allowed to grow slightly via Pinyon Script.            */
+   The frame is the SAME asset as .modal-card, just inline.  Pinning
+   one component across result pages means the storybook voice stays
+   identical: chapter → painted frame → content list.               */
+.score-frame {
+  position: relative;
+  width: min(64vw, 260px);
+  aspect-ratio: 600 / 786;
+  margin: -2px auto 6px;
+  background:
+    url("assets/modal-frame.png?v=37")
+    center/100% 100% no-repeat;
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.50));
+}
+.score-frame .score-frame-inner {
+  position: absolute;
+  inset: 16% 12% 24% 12%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.score-frame .sf-label {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(10px, 2.6vw, 12px);
+  letter-spacing: 0.26em;
+  text-transform: lowercase;
+  color: #c19a5c;
+  text-shadow:
+    0 0 4px rgba(232, 196, 138, 0.32),
+    0 1px 0 rgba(80, 40, 10, 0.40);
+}
+.score-frame .sf-value {
+  font-family: 'Pinyon Script', 'Snell Roundhand', 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-size: clamp(34px, 9vw, 48px);
+  line-height: 1;
+  color: #e6c084;
+  text-shadow:
+    0 0 6px rgba(255, 232, 170, 0.55),
+    0 0 18px rgba(232, 196, 138, 0.40),
+    0 1px 0 rgba(80, 40, 10, 0.45);
+}
+.score-frame .sf-value small {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.40em;
+  color: #b8945c;
+  margin-left: 2px;
+  letter-spacing: 0.04em;
+  vertical-align: 0.22em;
+}
+.score-frame .sf-message {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(11px, 2.8vw, 13px);
+  letter-spacing: 0.04em;
+  color: rgba(232, 200, 158, 0.88);
+  white-space: nowrap;
+  text-shadow: 0 0 4px rgba(232, 196, 138, 0.22);
+}
+
+/* (Old .match-result-score one-liner retired in v=39 — the painted
+   score frame above carries the result header now.)               */
 .match-result-score {
   display: flex;
   align-items: baseline;
@@ -1864,8 +1912,9 @@ body { background: transparent !important; }
    the banner height: those buttons live INSIDE .screen, which is
    already pushed below the banner by #app's padding-top.  So they
    just need a small margin from the screen's top edge.              */
-.close-corner { top: 12px; }
-.moon-corner  { top: 10px; left: 14px; }
+/* (Old "12px from top" close/moon-corner positioning retired in
+   v=38 — the unified positioning below now pins both BELOW the
+   banner bottom edge.)                                            */
 
 /* The "black bottom gap" was the html fallback colour bleeding
    through.  We paint html itself with the deep violet so any
@@ -2921,12 +2970,9 @@ body { background: transparent !important; }
   left: 14px !important;
   z-index: 250 !important;
 }
-.close-corner {
-  position: fixed !important;
-  top: calc(100vw * 821 / 1916 + 12px) !important;
-  right: 14px !important;
-  z-index: 100 !important;
-}
+/* (Old 1916/821-aspect close-corner positioning retired in v=38
+   — banner aspect is 1100/292 now.  Final positioning lives in
+   the v=38 block far below.)                                     */
 
 
 /* ============================================================
@@ -3560,7 +3606,9 @@ body { background: transparent !important; }
 */
 .modal-card {
   position: relative;
-  width: min(82vw, 340px) !important;
+  /* v=39 shrunk per user — the previous 82vw / 340px was eating
+     too much of the screen on the "pages flipped" submit modal. */
+  width: min(70vw, 280px) !important;
   aspect-ratio: 600 / 786;
   background:
     url("assets/modal-frame.png?v=37")
@@ -3683,14 +3731,17 @@ body { background: transparent !important; }
   position: relative;
   cursor: pointer;
 }
+.modal-card .btn {
+  white-space: nowrap;
+}
 .modal-card .btn::before,
 .modal-card .btn::after {
   content: '';
   display: inline-block;
-  width: 32px;
+  width: 18px;
   height: 1px;
   vertical-align: middle;
-  margin: 0 8px;
+  margin: 0 6px;
   background: linear-gradient(90deg,
     transparent 0%,
     rgba(218, 168, 104, 0.55) 30%,
