@@ -528,17 +528,22 @@ body.cover-pending .cover-gate     { visibility: visible; }
 
 /* ---------- 9. Dictation stage ---------- */
 /* ============================================================
-   v=31.6 — dictation card: one cohesive system
+   v=31.7 — dictation page: clean blank + search-pill input
    ============================================================
-   Three pieces (zh hint, masked prompt, input + quill) now sit
-   inside one .dict-card so they read as one ritual instead of
-   three strangers at a table.
+   Layout, top-down inside the .dict-card:
+     · zh hint    (small italic gold)
+     · prompt     (one line: phrase with answer = clean underline,
+                   first letter visible, NO ✦ stars)
+     · foot row   (search-pill input + quill submit)
+     · feedback
+   The input mimics the index page's search field but in pill
+   form — the user's reference: "搜索框替代当前的输入框".
    ------------------------------------------------------------ */
 .dict-card {
   position: relative;
-  width: min(86vw, 420px);
+  width: min(90vw, 460px);
   margin: 22px auto 0;
-  padding: 22px 24px 22px;
+  padding: 22px 22px 18px;
   background: rgba(8, 4, 18, 0.18);
   border: 1px solid rgba(214, 164, 100, 0.18);
   border-radius: 4px;
@@ -550,52 +555,119 @@ body.cover-pending .cover-gate     { visibility: visible; }
   font-size: 12px;
   color: rgba(232, 196, 138, 0.72);
   letter-spacing: .18em;
-  margin-bottom: 12px;
-}
-/* Mask block: first letter + ✦ glyphs for missing letters, with
-   a single gold underline.  Replaces the ugly "(p)____" syntax. */
-.dict-mask {
-  display: inline-block;
-  border-bottom: 1.5px solid rgba(232, 196, 138, 0.60);
-  padding: 0 6px 2px;
-  font-style: italic;
-  color: #efdbb4;
-  letter-spacing: 0;
-  margin: 0 2px;
-}
-.dict-letter {
-  font-weight: 500;
-  font-size: 1em;
-  color: #f0d8a8;
-}
-.dict-star {
-  color: rgba(232, 196, 138, 0.55);
-  font-size: 0.78em;
-  margin: 0 2px;
-  letter-spacing: 0;
-  vertical-align: 0.06em;
-}
-/* When the answer is revealed (after a wrong guess), show the
-   real letters in the mask in warm cream so the user can copy.  */
-.dict-mask.is-revealed {
-  color: #f0d8a8;
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: .02em;
-  border-bottom-color: rgba(232, 196, 138, 0.78);
+  margin-bottom: 14px;
 }
 .dict-prompt {
-  position: relative;
   font-family: 'Cormorant Garamond', 'EB Garamond', serif;
   font-style: italic;
-  font-size: 20px;
+  font-size: 22px;
   color: #e6c084;
   letter-spacing: .03em;
   text-align: center;
-  padding: 4px 0 8px;
-  margin: 0 auto 16px;
-  max-width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+  margin: 0 auto 18px;
+  padding: 4px 0 6px;
 }
+/* clean underline blank inside the sentence — first letter +
+   trailing rule.  No ✦, no "(a)____".                          */
+.dict-blank {
+  display: inline-block;
+  position: relative;
+  font-style: italic;
+  color: #f0d8a8;
+  letter-spacing: .04em;
+  margin: 0 4px;
+  padding: 0 2px 1px;
+}
+.dict-blank-first {
+  display: inline-block;
+  font-weight: 500;
+}
+.dict-blank-tail {
+  display: inline-block;
+  width: 3.2em;
+  height: 1.2em;
+  border-bottom: 1.5px solid rgba(232, 196, 138, 0.62);
+  margin-left: 2px;
+  vertical-align: -0.2em;
+}
+.dict-blank.is-revealed {
+  color: #ffeac0;
+  border-bottom: 1.5px solid rgba(232, 196, 138, 0.88);
+  font-weight: 500;
+  padding: 0 4px 1px;
+}
+
+/* search-pill input — the SAME visual language as the index nav-
+   card's search box (subtle dark fill + thin antique-gold border
+   + focus pulses gold glow).                                      */
+.dict-slot {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 18px;
+  background: rgba(8, 4, 18, 0.40);
+  border: 1px solid rgba(214, 164, 100, 0.55);
+  border-radius: 999px;
+  color: #fff1d0;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: .08em;
+  text-align: center;
+  outline: none;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+.dict-slot::placeholder {
+  color: rgba(214, 164, 100, 0.55);
+  font-style: italic;
+  letter-spacing: .12em;
+  text-transform: lowercase;
+}
+.dict-slot:focus {
+  border-color: rgba(232, 196, 138, 0.95);
+  box-shadow:
+    0 0 12px rgba(232, 196, 138, 0.40),
+    inset 0 0 6px rgba(232, 196, 138, 0.10);
+}
+.dict-slot.is-right {
+  border-color: rgba(232, 196, 138, 0.90);
+  color: #ffe5b0;
+  box-shadow: 0 0 14px rgba(232, 196, 138, 0.55);
+}
+.dict-slot.is-wrong {
+  border-color: rgba(196, 110, 110, 0.78);
+  animation: dict-shake 0.34s ease-in-out;
+}
+@keyframes dict-shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+/* Foot row: search-pill input + quill submit, on one line. */
+.dict-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.dict-foot .dict-quill {
+  flex-shrink: 0;
+  width: 56px !important;
+  height: 84px !important;
+}
+.dict-feedback {
+  text-align: center;
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(232, 196, 138, 0.78);
+  min-height: 18px;
+  margin-top: 10px;
+}
+.dict-feedback.is-wrong { color: rgba(220, 156, 168, 0.85); }
 /* (the old ::before / ::after tapered rules around .dict-prompt
    are gone — the .dict-card border owns the framing now.)        */
 .dict-prompt-zh {

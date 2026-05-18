@@ -1497,19 +1497,19 @@ const Screens = {
       function drawQ() {
         const stage = $('#dict-stage', el);
         const q = state.session.dict[state.dictIdx];
-        // Build answer mask: first letter visible + small ✦ glyphs
-        // for every remaining letter, all underlined as one block.
-        const first = q.answer[0];
-        const stars = '<span class="dict-star">✦</span>'.repeat(Math.max(1, q.answer.length - 1));
-        const maskedAnswer = `<span class="dict-mask"><span class="dict-letter">${escapeHtml(first)}</span>${stars}</span>`;
-        const masked = q.prompt.replace(new RegExp(q.answer, 'i'), maskedAnswer);
+        // The answer slot inside the sentence is a clean underline
+        // (a span with border-bottom).  No ✦ stars, no "(a)____".
+        const slot = `<span class="dict-blank"><span class="dict-blank-first">${escapeHtml(q.answer[0])}</span><span class="dict-blank-tail"></span></span>`;
+        const masked = q.prompt.replace(new RegExp(q.answer, 'i'), slot);
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
           <div class="dict-card">
             <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
             <div class="dict-prompt">${masked}</div>
-            <div class="dict-input-row">
-              <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="">
+            <div class="dict-foot">
+              <input class="dict-slot" id="dict-input"
+                     autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                     placeholder="trace the inscription\u2026">
               <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
                 <img src="assets/icon-quill.png?v=25" alt="">
               </button>
@@ -1520,7 +1520,7 @@ const Screens = {
         const input = $('#dict-input', stage);
         $('#dict-quill', stage).addEventListener('click', () => check());
         input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
-        input.focus();
+        setTimeout(() => input.focus(), 50);
       }
 
       function advance() {
@@ -1537,30 +1537,32 @@ const Screens = {
         const guess = (input.value || '').trim().toLowerCase();
         if (!guess) return;
         if (guess === q.answer.toLowerCase()) {
-          // first-try right → record + advance immediately
+          // right on the first try → record + advance
           state.results[q.head].dict = true;
           input.disabled = true;
+          input.classList.add('is-right');
           SFX.right();
           speak(q.answer).then(() => setTimeout(advance, 450));
         } else {
-          // wrong → reveal the answer inside the prompt mask, clear
-          // the input, make the user copy it before advancing.  Score
-          // still counts as wrong (recordMistake fires).
+          // wrong — reveal the answer in the blank, clear input,
+          // ask user to copy it.  Score still counts as wrong.
           state.results[q.head].dict = false;
           recordMistake(q.head);
           SFX.wrong();
           input.value = '';
           input.classList.add('is-wrong');
-          const revealMask = `<span class="dict-mask is-revealed">${escapeHtml(q.answer)}</span>`;
-          const revealed = q.prompt.replace(new RegExp(q.answer, 'i'), revealMask);
+          // Replace the blank inside the prompt with the real letters
+          const reveal = `<span class="dict-blank is-revealed">${escapeHtml(q.answer)}</span>`;
+          const revealed = q.prompt.replace(new RegExp(q.answer, 'i'), reveal);
           stage.querySelector('.dict-prompt').innerHTML = revealed;
-          feedback.innerHTML = `<em>write it once more</em>`;
+          feedback.innerHTML = '<em>write it once more</em>';
           feedback.className = 'dict-feedback is-wrong';
           input.focus();
           input.addEventListener('input', () => {
             input.classList.remove('is-wrong');
             if (input.value.trim().toLowerCase() === q.answer.toLowerCase()) {
               input.disabled = true;
+              input.classList.add('is-right');
               feedback.textContent = '';
               SFX.right();
               speak(q.answer).then(() => setTimeout(advance, 350));
