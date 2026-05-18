@@ -132,18 +132,46 @@ function buildSession() {
   // aren't 8 fresh words left.  The old "slice from progress" build
   // gave the user the same 8 words every reload, AND the learned-
   // word filter wasn't applied — fixed both here.
+  //
+  // Partner-collision guard: some heads share the same partner in
+  // GROUPS (e.g. both `investigate` and `scrutinize` point to
+  // `examine`).  If the matching board draws both, the right column
+  // shows `examine` twice and pairing becomes ambiguous.  We pick the
+  // 4 match-heads with a dedupe-by-partner pass.
   const learned = saved.learned || {};
+  const pickMatchPairs = (pool) => {
+    const used = new Set();      // partners already on the board
+    const usedHeads = new Set(); // heads already on the board
+    const pairs = [];
+    for (const h of pool) {
+      const p = GROUP_MAP.get(h);
+      if (!p || used.has(p) || usedHeads.has(p) || used.has(h)) continue;
+      pairs.push({ head: h, partner: p });
+      used.add(p); used.add(h);
+      usedHeads.add(h);
+      if (pairs.length === 4) break;
+    }
+    return pairs;
+  };
+
   const fresh   = shuffle(ALL_HEADS.filter(h => !learned[h]));
-  let heads = fresh.slice(0, 8);
-  if (heads.length < 8) {
-    const review = shuffle(ALL_HEADS.filter(h => learned[h]));
-    heads = [...heads, ...review].slice(0, 8);
-  }
-  if (heads.length < 8) return null;
+  const review  = shuffle(ALL_HEADS.filter(h =>  learned[h]));
+  const fullPool = [...fresh, ...review];
+
+  // 4 match pairs first (dedupe by partner), then fill 8 total session
+  // words from whatever's left.
+  const pairs = pickMatchPairs(fullPool);
+  if (pairs.length < 4) return null;
+
+  const matchHeads = pairs.map(p => p.head);
+  const remaining = fullPool.filter(h => !matchHeads.includes(h));
+  const words = [...matchHeads, ...remaining].slice(0, 8);
+  if (words.length < 8) return null;
+
   return {
-    words: heads,
-    pairs: heads.slice(0, 4).map(h => ({ head: h, partner: GROUP_MAP.get(h) })),
-    dict:  heads.map(h => DICT_MAP.get(h))
+    words,
+    pairs,
+    dict: words.map(h => DICT_MAP.get(h))
   };
 }
 
@@ -535,6 +563,14 @@ function showParchment(word) {
     }
   }
 
+  if (c.partner) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her neighbor</div>` });
+    items.push({ kind: 'neighbor', html: `<div class="pc-neighbor-row">
+      <button class="pc-neighbor-link" data-partner="${escapeAttr(c.partner)}">${escapeHtml(c.partner)}</button>
+    </div>` });
+  }
+
   // Stage every item.  The headword reveals after the flip-in.
   // Section labels + rules reveal automatically with the next
   // content item so the user doesn't waste taps on dividers.
@@ -568,7 +604,7 @@ function showParchment(word) {
       const it = items[revealIdx];
       nodes[revealIdx].classList.remove('is-staged');
       nodes[revealIdx].classList.add('is-revealed');
-      const isContent = it.kind === 'fam' || it.kind === 'colloc' || it.kind === 'example';
+      const isContent = it.kind === 'fam' || it.kind === 'colloc' || it.kind === 'example' || it.kind === 'neighbor';
       revealIdx++;
       if (isContent) break;
     }
@@ -589,7 +625,13 @@ function showParchment(word) {
     SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
     // Hide the "tap the page" hint once the user starts tapping.
     veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
-    // If we're past the last item, hide hint forever.
+    // Auto-scroll the newly-revealed row into view — content past
+    // the parchment safe-zone (long families + neighbor) should
+    // never need a manual scroll.
+    const justRevealed = nodes[revealIdx - 1];
+    if (justRevealed) {
+      requestAnimationFrame(() => justRevealed.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+    }
     return revealIdx < nodes.length;
   }
   veil.querySelector('.parchment-card').addEventListener('click', e => {
@@ -615,6 +657,21 @@ function showParchment(word) {
     });
   }
   veil.querySelectorAll('.pc-play-row[data-sp], .pc-head[data-sp]').forEach(wirePlay);
+
+  // Neighbor link — same-word jump.  Closes this parchment + opens the
+  // partner's parchment in its place.
+  veil.querySelectorAll('.pc-neighbor-link').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const partner = btn.getAttribute('data-partner');
+      if (!partner) return;
+      SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+      closeParchment();
+      // Wait for the fold-out animation to clear before flipping in the
+      // next parchment — feels like turning to a new page.
+      setTimeout(() => showParchment(partner), 280);
+    });
+  });
 
   veil.querySelector('.pc-close').addEventListener('click', e => {
     e.stopPropagation();
@@ -1300,24 +1357,30 @@ const Screens = {
       const result = state.session.matchResult || [];
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
 
-      // The DCE4B4FE frame is decorative enough to be the only
-      // header on the result page — chapter band dropped.
+      // Page layout MIRRORS stage1 so it feels like the same page with
+      // a different costume.  Same chapter band, same .match-actions
+      // slot for the next-stage button, same .match-grid for the
+      // tiles — only the helper line above the grid changes from
+      // "tap one ..." to the score line.
       el.innerHTML = `
-        <div class="score-card">
-          <div class="score-card-label">your hand</div>
-          <div class="score-value">${correctPairs}<small> / 4</small></div>
+        ${stageHeader(1, 'The Matching')}
+        <div class="match-actions"></div>
+        <div class="match-result-score">
+          <span class="mrs-label">your hand</span>
+          <span class="mrs-rule"></span>
+          <span class="mrs-value">${correctPairs}<small> / 4</small></span>
+          <span class="mrs-rule"></span>
+          <span class="mrs-hint">touch any word to read its page</span>
         </div>
-        <div class="stage-actions"></div>
         <div class="match-result-grid"></div>
-        <div class="match-result-hint">— touch any word to read its page —</div>
       `;
 
       // top-left star only — no top-right X (consistent with game stages)
       el.appendChild(closeCorner({ to: 'cover' }));
 
-      // Next-stage button sits right below the score so it's a single
-      // glance from "how did I do?" to "let me move on".
-      $('.stage-actions', el).appendChild(nextDoor('the reading', () => go('stage2'), { confirm: true }));
+      // Same slot as the "confirm" button in stage1, so the doorway
+      // doesn't move between game + result — feels like one page.
+      $('.match-actions', el).appendChild(nextDoor('the reading', () => go('stage2'), { confirm: true }));
 
       const grid = $('.match-result-grid', el);
       result.forEach(r => {
@@ -1461,17 +1524,20 @@ const Screens = {
       const el = $('#screen-stage2-result');
       const right = state.session.words.filter(w => state.results[w].oracle).length;
       el.innerHTML = `
-        <div class="score-card">
-          <div class="score-card-label">her reading</div>
-          <div class="score-value">${right}<small> / 8</small></div>
+        ${stageHeader(2, 'The Reading')}
+        <div class="match-actions"></div>
+        <div class="match-result-score">
+          <span class="mrs-label">her reading</span>
+          <span class="mrs-rule"></span>
+          <span class="mrs-value">${right}<small> / 8</small></span>
+          <span class="mrs-rule"></span>
+          <span class="mrs-hint">copy each word once</span>
         </div>
-        <div class="stage-actions"></div>
         <div class="result-grid"></div>
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
-      el.appendChild(closeCorner());
-      $('.stage-actions', el).appendChild(nextDoor('the writing hand', () => go('stage3'), { confirm: true }));
+      $('.match-actions', el).appendChild(nextDoor('the writing hand', () => go('stage3'), { confirm: true }));
       const grid = $('.result-grid', el);
       state.session.words.forEach(w => grid.appendChild(renderExCard(w, state.results[w].oracle, { rewrite: true, withControls: false })));
     }
@@ -1591,19 +1657,22 @@ const Screens = {
         return acc + (r.match ? 1 : 0) + (r.oracle ? 1 : 0) + (r.dict ? 1 : 0);
       }, 0);
       el.innerHTML = `
-        <div class="score-card">
-          <div class="score-card-label">tonight's chapter</div>
-          <div class="score-value">${totalCorrect}<small> / 24</small></div>
+        ${stageHeader(3, 'The Inscription')}
+        <div class="match-actions"></div>
+        <div class="match-result-score">
+          <span class="mrs-label">tonight's chapter</span>
+          <span class="mrs-rule"></span>
+          <span class="mrs-value">${totalCorrect}<small> / 24</small></span>
+          <span class="mrs-rule"></span>
+          <span class="mrs-hint">three stages, eight words</span>
         </div>
-        <div class="stage-actions"></div>
         <div class="summary-list" id="summary"></div>
         <div class="result-grid"></div>
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
-      el.appendChild(closeCorner());
 
-      $('.stage-actions', el).appendChild(nextDoor('the next chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
+      $('.match-actions', el).appendChild(nextDoor('the next chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
 
       const tickHtml = v =>
         v === null ? `<div class="tick">—</div>`
