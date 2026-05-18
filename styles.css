@@ -612,13 +612,17 @@ body.cover-pending .cover-gate     { visibility: visible; }
   border-radius: 4px;
   text-align: center;
 }
+/* v=48 — dict zh-hint now sits BELOW the English prompt inside
+   the q-card.  English on top (the question), 中文 underneath
+   (the cue). Same arrangement as a flashcard.                    */
 .dict-zh-hint {
   font-family: 'EB Garamond', 'Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 12px;
-  color: rgba(232, 196, 138, 0.72);
-  letter-spacing: .18em;
-  margin-bottom: 14px;
+  font-size: 13px;
+  color: rgba(232, 196, 138, 0.78);
+  letter-spacing: .14em;
+  margin-top: 6px;
+  margin-bottom: 0;
 }
 .dict-prompt {
   font-family: 'Cormorant Garamond', 'EB Garamond', serif;
@@ -708,7 +712,79 @@ body.cover-pending .cover-gate     { visibility: visible; }
   75%      { transform: translateX(4px); }
 }
 
-/* Foot row: search-pill input + quill submit, on one line. */
+/* v=48 — SEPARATE answer card.  User wanted the "where you write
+   your answer" area to live in its own gold-edged frame below the
+   question card, not mashed into the same q-card.  Sketch:
+     [ ✦  q-card with English + 中文     ✦ ]
+                       🎀  (big bow)
+     [ ✦  gold-edge answer card                ✦ ]
+       [ inscription input slot ]  [ big quill ]
+   Click into the input → glows; quill bigger; one continuous
+   "ink-and-parchment" feel.                                       */
+.dict-answer-card {
+  position: relative;
+  max-width: 460px;
+  margin: 8px auto 0;
+  padding: 18px 22px 14px;
+  background:
+    linear-gradient(180deg,
+                    rgba(28, 18, 50, 0.45) 0%,
+                    rgba(18, 8, 36, 0.55) 100%);
+  border: 1px solid rgba(218, 168, 104, 0.55);
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.12),
+    inset 0 0 16px rgba(0, 0, 0, 0.32),
+    0 4px 14px rgba(0, 0, 0, 0.40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+/* Focus glow — when the user taps into the input, the WHOLE answer
+   card breathes gold so it reads as a tappable / active area.    */
+.dict-answer-card:focus-within {
+  border-color: rgba(232, 196, 138, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.20),
+    inset 0 0 18px rgba(232, 196, 138, 0.10),
+    0 0 22px rgba(232, 196, 138, 0.32),
+    0 4px 14px rgba(0, 0, 0, 0.40);
+}
+/* tiny ✦ florals at the four corners — same family as the q-card
+   ❦ corners but a smaller "this is for writing" mark.            */
+.dac-corner {
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  color: rgba(218, 168, 104, 0.72);
+  text-shadow:
+    0 0 5px rgba(232, 196, 138, 0.45),
+    0 1px 0 rgba(60, 30, 10, 0.55);
+  pointer-events: none;
+}
+.dac-corner-tl { top: 4px;    left: 8px; }
+.dac-corner-tr { top: 4px;    right: 8px; }
+.dac-corner-bl { bottom: 4px; left: 8px; }
+.dac-corner-br { bottom: 4px; right: 8px; }
+.dict-answer-card .dict-slot { flex: 1; min-width: 0; }
+.dict-answer-card .dict-quill {
+  flex-shrink: 0;
+  width: 80px !important;
+  height: 130px !important;
+}
+.dict-answer-card .dict-feedback {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -22px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* (Old .dict-foot row retired in v=48 — input + quill now live
+   directly inside .dict-answer-card.)                            */
 .dict-foot {
   display: flex;
   align-items: center;
@@ -1636,28 +1712,44 @@ body.cover-pending .cover-stage > * { visibility: hidden !important; }
    and we just swap its image via a body class.  Content scrolls
    over a steady artwork — what the brief actually asks for.       */
 #bg-layer {
-  /* large-viewport units (lvh) cover the iOS small-viewport area
-     when the URL bar hides — without pushing the scene below the
-     visible bottom (the bug that hid the bunny).                  */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 100lvh;                   /* large viewport: never shrinks */
+  height: 100lvh;
   z-index: 0;
-  background-color: #2a1f3a;
+  background-color: #1a0e2a;
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
   pointer-events: none;
-  /* Soft fade at the BOTTOM of the bg image — bumped from 90 % to
-     78 % so the URL-bar / safe-area dark band blends over a much
-     wider span and the "purple horizontal band" the user kept
-     seeing dissolves into the scene.                              */
+  /* v=48 — no more "black bar at bottom".  Mask retired so the
+     image fills the whole layer; a soft blurred backdrop sits
+     UNDERNEATH (see #bg-bottom-blur) to dissolve any hard
+     bottom edge into the dark.                                    */
+}
+/* v=48 — frosted bottom strip: a blurred copy of the bg image
+   anchored to the viewport bottom that fades from the image's
+   own bottom-edge colour to the deep velvet body, so the join
+   reads as a soft haze rather than a sharp cutoff.               */
+#bg-layer::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18vh;
+  background: inherit;
+  background-position: center bottom;
+  background-size: cover;
+  filter: blur(14px) saturate(1.05);
   -webkit-mask-image: linear-gradient(180deg,
-    #000 0%, #000 78%, transparent 100%);
+    transparent 0%, #000 35%, #000 100%);
           mask-image: linear-gradient(180deg,
-    #000 0%, #000 78%, transparent 100%);
+    transparent 0%, #000 35%, #000 100%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
 }
 /* Match dark body colour for the slivers iOS overscroll exposes. */
 html, body { background-color: #2a1f3a; }
@@ -2986,38 +3078,27 @@ body { background: transparent !important; }
 .q-card {
   position: relative;
   max-width: 460px;
-  margin: 36px auto 8px;     /* top margin gives the bow room to peek above */
-  padding: 26px 22px 16px;   /* extra top padding under the bow seal */
+  margin: 18px auto 0;
+  padding: 22px 22px 18px;
   background:
-    radial-gradient(ellipse 80% 70% at 50% 50%,
-                    rgba(232, 196, 138, 0.04) 0%,
+    radial-gradient(ellipse 90% 70% at 50% 40%,
+                    rgba(232, 196, 138, 0.06) 0%,
                     transparent 80%),
-    rgba(20, 12, 36, 0.32);
-  border: 1px solid rgba(214, 164, 100, 0.34);
+    linear-gradient(180deg,
+                    rgba(28, 16, 48, 0.38) 0%,
+                    rgba(18, 8, 36, 0.42) 100%);
+  /* v=48 — single antique-gold hairline border, NO internal rules.
+     User saw 4 lines (border + 2 ::before/::after rules) and laughed.
+     The clean single border + ❦ corners are enough framing.        */
+  border: 1px solid rgba(218, 168, 104, 0.42);
   border-radius: 4px;
   box-sizing: border-box;
   box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.08),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
-    inset 0 0 14px rgba(0, 0, 0, 0.18);
+    inset 0 1px 0 rgba(232, 200, 130, 0.10),
+    inset 0 0 18px rgba(0, 0, 0, 0.32),
+    0 6px 22px rgba(0, 0, 0, 0.42);
   text-align: center;
 }
-.q-card::before,
-.q-card::after {
-  content: '';
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(232, 196, 138, 0.55) 22%,
-    rgba(232, 196, 138, 0.55) 78%,
-    transparent 100%);
-  pointer-events: none;
-}
-.q-card::before { top: 7px; }
-.q-card::after  { bottom: 7px; }
 .q-corner {
   position: absolute;
   font-family: 'Cormorant Garamond', serif;
@@ -3050,20 +3131,25 @@ body { background: transparent !important; }
   z-index: 2;
 }
 
-/* v=46 — LARGE bow that sits BETWEEN the question card and the
-   option buttons on stage 2.  Used to be 80 px nested at the top
-   of the card; per user "拉大 放在问题和选项的中间".  Static at
-   140 px wide, hangs in its own row so it breaks the visual line
-   between question and answers — adds breathing room.            */
+/* v=48 — LARGE bow that PIN-SEALS the q-card to the options below.
+   Negative top margin pulls the bow UP so it overlaps the q-card's
+   bottom edge ("黏在框上 假装是一整个组件啦").  Bow becomes the
+   visual stitch between question and answers.  Options below get
+   pulled up with a small negative margin too.                     */
 .q-bow.q-bow-large {
   display: block;
   width: 140px;
   height: auto;
   object-fit: contain;
-  margin: 14px auto 6px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.50));
+  margin: -34px auto -28px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
   pointer-events: none;
+  position: relative;
+  z-index: 2;
 }
+/* Pull the option grid up so it nests just under the bow's lower
+   ribbon tails — reads as one continuous stamp + answer panel.   */
+#screen-stage2 .oracle-options { margin-top: 0; }
 
 /* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
    the inner text element; the gold rules are now on the card.    */
@@ -4367,16 +4453,14 @@ body { background: transparent !important; }
   display: block;
 }
 .frame-chapter .frame-chapter-text {
-  /* v=44 — title floats ABSOLUTELY at the band's vertical centre
-     with z-index 3 so it renders ON TOP of the score frame even
-     when the score frame's painted top-bow nests deep into the
-     chapter band's bottom-bow zone.  Bows can finally merge for
-     real ("两个蝴蝶结叠起来连体") without sacrificing the title.   */
+  /* v=48 — title nudged up so it sits in the band's upper-middle,
+     above the painted bottom-bow zone but visibly below the
+     floral crown ornament.  Was 50 % + -58 % which leaned too low.  */
   position: absolute;
-  top: 50%;
+  top: 38%;
   left: 18%;
   right: 18%;
-  transform: translateY(-58%);   /* nudge slightly upward of pure-centre */
+  transform: translateY(-50%);
   text-align: center;
   line-height: 1.0;
   white-space: nowrap;

@@ -1736,22 +1736,26 @@ const Screens = {
         const masked = q.prompt.replace(new RegExp(q.answer, 'i'), slot);
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="dict-card q-card">
+          <div class="q-card">
             <span class="q-corner q-corner-tl">❦</span>
             <span class="q-corner q-corner-tr">❦</span>
             <span class="q-corner q-corner-bl">❦</span>
             <span class="q-corner q-corner-br">❦</span>
-            <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
             <div class="dict-prompt">${masked}</div>
-            <img class="q-bow" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
-            <div class="dict-foot">
-              <input class="dict-slot" id="dict-input"
-                     autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
-                     placeholder="trace the inscription\u2026">
-              <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
-                <img src="assets/icon-quill.png?v=25" alt="">
-              </button>
-            </div>
+            <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
+          </div>
+          <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
+          <div class="dict-answer-card">
+            <span class="dac-corner dac-corner-tl">✦</span>
+            <span class="dac-corner dac-corner-tr">✦</span>
+            <span class="dac-corner dac-corner-bl">✦</span>
+            <span class="dac-corner dac-corner-br">✦</span>
+            <input class="dict-slot" id="dict-input"
+                   autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                   placeholder="trace the inscription\u2026">
+            <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
+              <img src="assets/icon-quill.png?v=25" alt="">
+            </button>
             <div class="dict-feedback" id="dict-feedback"></div>
           </div>
         `;
