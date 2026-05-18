@@ -527,6 +527,63 @@ body.cover-pending .cover-gate     { visibility: visible; }
 .tap-hint.show { opacity: 1; }
 
 /* ---------- 9. Dictation stage ---------- */
+/* ============================================================
+   v=31.6 — dictation card: one cohesive system
+   ============================================================
+   Three pieces (zh hint, masked prompt, input + quill) now sit
+   inside one .dict-card so they read as one ritual instead of
+   three strangers at a table.
+   ------------------------------------------------------------ */
+.dict-card {
+  position: relative;
+  width: min(86vw, 420px);
+  margin: 22px auto 0;
+  padding: 22px 24px 22px;
+  background: rgba(8, 4, 18, 0.18);
+  border: 1px solid rgba(214, 164, 100, 0.18);
+  border-radius: 4px;
+  text-align: center;
+}
+.dict-zh-hint {
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(232, 196, 138, 0.72);
+  letter-spacing: .18em;
+  margin-bottom: 12px;
+}
+/* Mask block: first letter + ✦ glyphs for missing letters, with
+   a single gold underline.  Replaces the ugly "(p)____" syntax. */
+.dict-mask {
+  display: inline-block;
+  border-bottom: 1.5px solid rgba(232, 196, 138, 0.60);
+  padding: 0 6px 2px;
+  font-style: italic;
+  color: #efdbb4;
+  letter-spacing: 0;
+  margin: 0 2px;
+}
+.dict-letter {
+  font-weight: 500;
+  font-size: 1em;
+  color: #f0d8a8;
+}
+.dict-star {
+  color: rgba(232, 196, 138, 0.55);
+  font-size: 0.78em;
+  margin: 0 2px;
+  letter-spacing: 0;
+  vertical-align: 0.06em;
+}
+/* When the answer is revealed (after a wrong guess), show the
+   real letters in the mask in warm cream so the user can copy.  */
+.dict-mask.is-revealed {
+  color: #f0d8a8;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: .02em;
+  border-bottom-color: rgba(232, 196, 138, 0.78);
+}
 .dict-prompt {
   position: relative;
   font-family: 'Cormorant Garamond', 'EB Garamond', serif;
@@ -535,27 +592,12 @@ body.cover-pending .cover-gate     { visibility: visible; }
   color: #e6c084;
   letter-spacing: .03em;
   text-align: center;
-  padding: 16px 22px;
-  margin: 4px auto 6px;
-  max-width: 88%;
+  padding: 4px 0 8px;
+  margin: 0 auto 16px;
+  max-width: 100%;
 }
-/* tapered gold rules above + below the prompt — fade to transparent
-   at both ends so the eye reads "scroll fragment", not a UI bar. */
-.dict-prompt::before,
-.dict-prompt::after {
-  content: '';
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(232, 196, 138, 0.50) 22%,
-    rgba(232, 196, 138, 0.50) 78%,
-    transparent 100%);
-}
-.dict-prompt::before { top: 0; }
-.dict-prompt::after  { bottom: 0; }
+/* (the old ::before / ::after tapered rules around .dict-prompt
+   are gone — the .dict-card border owns the framing now.)        */
 .dict-prompt-zh {
   font-family: var(--f-zh);
   font-style: italic;
@@ -574,41 +616,39 @@ body.cover-pending .cover-gate     { visibility: visible; }
   color: var(--gold-deep);
   margin-bottom: 8px;
 }
+/* dict input — uses the index page's search-field language
+   (subtle dark fill, thin gold border, focus pulses).         */
 .dict-input {
-  width: 100%;
-  padding: 14px 18px;
-  background:
-    radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
-    radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
-    radial-gradient(circle 0.6px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
-    radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
-    radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
-    linear-gradient(160deg, rgba(34, 22, 56, 0.94) 0%, rgba(20, 12, 38, 0.97) 100%);
-  border: 1px solid rgba(190, 158, 100, 0.45);
-  border-radius: 3px;
-  color: #efdbb4;
-  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+  flex: 1;
+  width: auto;
+  padding: 10px 14px;
+  background: rgba(8, 4, 18, 0.40);
+  border: 1px solid rgba(214, 164, 100, 0.45);
+  border-radius: 2px;
+  color: var(--cream);
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 17px;
+  font-size: 18px;
   letter-spacing: .04em;
   text-align: center;
   outline: none;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.36),
-    inset 0 0 16px rgba(0, 0, 0, 0.24),
-    0 1px 3px rgba(0, 0, 0, 0.45);
-  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color .25s, box-shadow .25s;
 }
-.dict-input::placeholder { color: rgba(232, 200, 130, 0.42); font-style: italic; }
+.dict-input::placeholder { color: rgba(214, 164, 100, 0.5); }
 .dict-input:focus {
-  border-color: rgba(232, 200, 130, 0.85);
+  border-color: rgba(232, 196, 138, 0.92);
   box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.16),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    inset 0 0 16px rgba(0, 0, 0, 0.24),
-    0 0 14px rgba(232, 196, 138, 0.32),
-    0 1px 3px rgba(0, 0, 0, 0.45);
+    0 0 14px rgba(232, 196, 138, 0.40),
+    inset 0 0 8px rgba(232, 196, 138, 0.10);
+}
+.dict-input.is-wrong {
+  border-color: rgba(196, 124, 96, 0.78);
+  animation: dict-shake 0.4s ease-in-out;
+}
+@keyframes dict-shake {
+  0%, 100% { transform: translateX(0);  }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px);  }
 }
 .dict-input.is-wrong { border-color: var(--pink-deep); color: var(--pink-deep); }
 .dict-feedback {
@@ -5446,11 +5486,10 @@ body { background: transparent !important; }
   transition: background 0.2s;
 }
 .pc-play-row:hover { background: rgba(110, 63, 18, 0.06); }
-.pc-play-row.is-playing { background: rgba(196, 152, 88, 0.18); }
 /* writing-reveal — when a ♪ row goes is-playing, the phrase text
    re-draws left → right via a clip-path inset animation.  Result:
-   text appears as if being written in ink.  clip-path on text is
-   supported on iOS Safari + Chrome, no transparent-text trick. */
+   text appears as if being written in ink.  No highlight bar bg
+   (user said that didn't feel like writing).                     */
 .pc-play-row.is-playing .pc-play-phrase,
 .pc-play-row.is-playing .pc-play-zh,
 .pc-play-row.is-playing .pc-ex-en {

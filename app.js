@@ -1497,46 +1497,36 @@ const Screens = {
       function drawQ() {
         const stage = $('#dict-stage', el);
         const q = state.session.dict[state.dictIdx];
-        // "(p)     goods" — keep the answer's first letter visible inside
-        // parens, blank the rest with non-breaking spaces.  CSS draws
-        // a single underline via border-bottom on .q-blank-mask, no more
-        // literal-underscore + border-bottom double-stacked line.
+        // Build answer mask: first letter visible + small ✦ glyphs
+        // for every remaining letter, all underlined as one block.
         const first = q.answer[0];
-        const rest  = ' '.repeat(Math.max(5, q.answer.length - 1));
-        const masked = q.prompt.replace(
-          new RegExp(q.answer, 'i'),
-          `<span class="q-blank-mask">(${first})${rest}</span>`
-        );
+        const stars = '<span class="dict-star">✦</span>'.repeat(Math.max(1, q.answer.length - 1));
+        const maskedAnswer = `<span class="dict-mask"><span class="dict-letter">${escapeHtml(first)}</span>${stars}</span>`;
+        const masked = q.prompt.replace(new RegExp(q.answer, 'i'), maskedAnswer);
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="q-sentence-wrap">
-            <span class="q-glyph q-glyph-l">❦</span>
+          <div class="dict-card">
+            <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
             <div class="dict-prompt">${masked}</div>
-            <span class="q-glyph q-glyph-r">❦</span>
+            <div class="dict-input-row">
+              <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="">
+              <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
+                <img src="assets/icon-quill.png?v=25" alt="">
+              </button>
+            </div>
+            <div class="dict-feedback" id="dict-feedback"></div>
           </div>
-          <div class="dict-prompt-zh">${escapeHtml(q.prompt_zh)}</div>
-          <div class="dict-input-row">
-            <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}… (write here)">
-            <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
-              <img src="assets/icon-quill.png?v=25" alt="">
-            </button>
-          </div>
-          <div class="dict-feedback" id="dict-feedback"></div>
-          <div class="dict-actions" id="dict-actions"></div>
         `;
         const input = $('#dict-input', stage);
-        // The quill IS the submit affordance — parchment signed-line idiom.
         $('#dict-quill', stage).addEventListener('click', () => check());
-        // Keyboard users still get Enter-to-submit.
         input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
         input.focus();
-        input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
       }
 
       function advance() {
         state.dictIdx++;
         if (state.dictIdx >= state.session.dict.length) go('stage3-result');
-        else $('#dict-stage').querySelector ? drawQ() : drawQ();
+        else drawQ();
       }
 
       function check() {
@@ -1547,39 +1537,40 @@ const Screens = {
         const guess = (input.value || '').trim().toLowerCase();
         if (!guess) return;
         if (guess === q.answer.toLowerCase()) {
+          // first-try right → record + advance immediately
           state.results[q.head].dict = true;
           input.disabled = true;
-          feedback.textContent = q.prompt;
-          feedback.className = 'dict-feedback is-correct';
-          $('#dict-actions', stage).innerHTML = '';
           SFX.right();
-          speak(q.prompt).then(() => setTimeout(advance, 700));
+          speak(q.answer).then(() => setTimeout(advance, 450));
         } else {
+          // wrong → reveal the answer inside the prompt mask, clear
+          // the input, make the user copy it before advancing.  Score
+          // still counts as wrong (recordMistake fires).
           state.results[q.head].dict = false;
           recordMistake(q.head);
-          // wipe the wrong attempt, keep the SAME input field, ask for a
-          // re-inscription.  on correct match we auto-advance.
+          SFX.wrong();
           input.value = '';
           input.classList.add('is-wrong');
-          feedback.innerHTML = `correct · <em>${escapeHtml(q.answer)}</em> · write it once more`;
+          const revealMask = `<span class="dict-mask is-revealed">${escapeHtml(q.answer)}</span>`;
+          const revealed = q.prompt.replace(new RegExp(q.answer, 'i'), revealMask);
+          stage.querySelector('.dict-prompt').innerHTML = revealed;
+          feedback.innerHTML = `<em>write it once more</em>`;
           feedback.className = 'dict-feedback is-wrong';
-          $('#dict-actions', stage).innerHTML = '';
-          SFX.wrong();
-          const rew = input;
-          rew.focus();
-          rew.addEventListener('input', () => {
-            if (rew.value.trim().toLowerCase() === q.answer.toLowerCase()) {
-              rew.disabled = true;
-              feedback.textContent = q.prompt;
-              feedback.className = 'dict-feedback is-correct';
+          input.focus();
+          input.addEventListener('input', () => {
+            input.classList.remove('is-wrong');
+            if (input.value.trim().toLowerCase() === q.answer.toLowerCase()) {
+              input.disabled = true;
+              feedback.textContent = '';
               SFX.right();
-              speak(q.prompt).then(() => setTimeout(advance, 700));
+              speak(q.answer).then(() => setTimeout(advance, 350));
             }
           });
         }
       }
     }
   },
+
 
   /* ---------- STAGE 3 RESULT  +  SUMMARY (end of session) ---------- */
   'stage3-result': {
