@@ -1745,19 +1745,15 @@ const Screens = {
             <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
           </div>
           <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
-          <div class="dict-answer-card">
-            <span class="dac-corner dac-corner-tl">✦</span>
-            <span class="dac-corner dac-corner-tr">✦</span>
-            <span class="dac-corner dac-corner-bl">✦</span>
-            <span class="dac-corner dac-corner-br">✦</span>
+          <div class="dict-answer">
             <input class="dict-slot" id="dict-input"
                    autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
                    placeholder="trace the inscription\u2026">
             <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
               <img src="assets/icon-quill.png?v=25" alt="">
             </button>
-            <div class="dict-feedback" id="dict-feedback"></div>
           </div>
+          <div class="dict-feedback" id="dict-feedback"></div>
         `;
         const input = $('#dict-input', stage);
         $('#dict-quill', stage).addEventListener('click', () => check());
