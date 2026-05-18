@@ -1084,30 +1084,18 @@ function buildOracleQuestion(word) {
 function showModal({ title, body = '', score = null, actions = [], variant = '' }) {
   const veil = $('#modal');
   const cls = 'modal-card' + (variant ? ` is-${variant}` : '');
-  // v=35 modal — fairytale storybook frame.  Moon + four-point star at
-  // the top, pink bow with garland at the bottom, gold corner florals.
-  // Layout inside the frame:
-  //   moon · star ornament
-  //   title (italic cream)
-  //   score (Pinyon Script big number) — optional
-  //   long gold rule + first action — laid out as "─── see results"
-  //   bow + floral garland
+  // v=37 modal — uses the painted PNG frame (modal-frame.png).  The
+  // moon ornament + pink bow + gold floral borders are all baked
+  // into the asset, so the markup is just the text content +
+  // actions; the CSS sizes the container to the frame's aspect.
   veil.innerHTML = `
     <div class="${cls}">
-      <span class="m-corner m-corner-tl">❦</span>
-      <span class="m-corner m-corner-tr">❦</span>
-      <span class="m-corner m-corner-bl">❦</span>
-      <span class="m-corner m-corner-br">❦</span>
-      <div class="m-top-orn">
-        <span class="m-orn-star">✦</span>
-        <img class="m-moon" src="assets/icon-moon.png?v=31" alt="">
-        <span class="m-orn-star">✦</span>
+      <div class="modal-inner">
+        <div class="modal-title">${escapeHtml(title)}</div>
+        ${body  ? `<div class="modal-body">${escapeHtml(body)}</div>` : ''}
+        ${score ? `<div class="modal-score">${score.value}<small> / ${score.total}</small></div>` : ''}
+        <div class="modal-actions"></div>
       </div>
-      <div class="modal-title">${escapeHtml(title)}</div>
-      ${body  ? `<div class="modal-body">${escapeHtml(body)}</div>` : ''}
-      ${score ? `<div class="modal-score">${score.value}<small> / ${score.total}</small></div>` : ''}
-      <div class="modal-actions"></div>
-      <img class="m-bow" src="assets/icon-bow.png?v=31" alt="">
     </div>
   `;
   const ar = $('.modal-actions', veil);
@@ -1491,6 +1479,7 @@ const Screens = {
             <span class="q-corner q-corner-bl">❦</span>
             <span class="q-corner q-corner-br">❦</span>
             <div class="q-sentence">${q.sentenceHL}</div>
+            <img class="q-bow" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
           <div class="oracle-options"></div>
         `;
@@ -1662,6 +1651,7 @@ const Screens = {
             <span class="q-corner q-corner-br">❦</span>
             <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
             <div class="dict-prompt">${masked}</div>
+            <img class="q-bow" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
             <div class="dict-foot">
               <input class="dict-slot" id="dict-input"
                      autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"

@@ -2788,13 +2788,16 @@ body { background: transparent !important; }
      · hairline antique-gold border + faint velvet wash
      · thin gold rules JUST INSIDE the top + bottom edges
      · ❦ ornaments tucked into the 4 corners
+     · pink-bow seal at the top, riding the border like a
+       letterpress wax seal (added in v=37 — user wanted
+       the bow that lives on the modal to repeat here too)
    Same idiom as the storybook modal so the question reads as a
    page torn from her notebook.                                    */
 .q-card {
   position: relative;
   max-width: 460px;
-  margin: 14px auto 8px;
-  padding: 18px 22px 16px;
+  margin: 36px auto 8px;     /* top margin gives the bow room to peek above */
+  padding: 26px 22px 16px;   /* extra top padding under the bow seal */
   background:
     radial-gradient(ellipse 80% 70% at 50% 50%,
                     rgba(232, 196, 138, 0.04) 0%,
@@ -2840,6 +2843,22 @@ body { background: transparent !important; }
 .q-corner-tr { top: 4px; right: 8px; }
 .q-corner-bl { bottom: 4px; left: 8px; }
 .q-corner-br { bottom: 4px; right: 8px; }
+
+/* The painted pink-bow seal — sits at the top centre, half above
+   half below the border, like wax pressed onto a letter.  Same
+   icon-bow.png the modal uses, smaller here so it doesn't shout. */
+.q-card .q-bow {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+  z-index: 2;
+}
 
 /* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
    the inner text element; the gold rules are now on the card.    */
@@ -3528,44 +3547,30 @@ body { background: transparent !important; }
   z-index: 1000 !important;
 }
 #modal.modal-veil.show { display: flex !important; }
-/* v=35 — STORYBOOK MODAL.  Square purple velvet frame with gold
-   hairline border, ❦ corner florals, crescent-moon + 4-point-star
-   ornament at top, painted pink-bow garland at bottom.  Designed
-   from the reference screenshot the user shared.  Lives in the
-   same "fairytale" language as the match cards + parchment so the
-   storybook keeps speaking one voice across screens.              */
+/* v=37 — STORYBOOK MODAL.  The whole frame (purple velvet body,
+   gold floral border, crescent-moon ornament at top, pink-bow
+   garland at bottom) lives in a single painted PNG asset —
+   modal-frame.png — so the markup stays clean and the painted
+   ornaments stay pixel-perfect.
+
+   Frame aspect: 600/786 ≈ 0.763 (portrait).
+   Inner safe-zone (measured from the painted border):
+     top    ~16 %  (clear of the moon + floral top scrollwork)
+     bottom ~24 %  (clear of the bow + garland)
+     sides  ~12 %  (clear of the side flora)
+*/
 .modal-card {
   position: relative;
-  width: min(80vw, 320px) !important;
-  /* slightly portrait — gives room for moon · title · score ·
-     action · bow without the bow crushing the score line.        */
-  aspect-ratio: 1 / 1.08;
-  /* Same cardstock palette as the match cards (purple velvet + faint
-     gold fibre flecks), unified through the storybook.            */
+  width: min(82vw, 340px) !important;
+  aspect-ratio: 600 / 786;
   background:
-    radial-gradient(circle 0.7px at 14% 18%, rgba(232, 200, 130, 0.10), transparent 100%),
-    radial-gradient(circle 0.7px at 78% 28%, rgba(232, 200, 130, 0.08), transparent 100%),
-    radial-gradient(circle 0.7px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
-    radial-gradient(circle 0.7px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
-    radial-gradient(circle 0.7px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
-    radial-gradient(circle 0.7px at 58% 42%, rgba(232, 200, 130, 0.08), transparent 100%),
-    radial-gradient(ellipse 70% 60% at 50% 0%,
-                    rgba(232, 200, 130, 0.10) 0%,
-                    transparent 70%),
-    linear-gradient(160deg, rgba(46, 32, 70, 0.96), rgba(28, 18, 50, 0.98)) !important;
-  border: 1px solid rgba(218, 168, 104, 0.55) !important;
-  border-radius: 14px !important;
-  padding: 56px 24px 78px !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.42),
-    inset 0 0 18px rgba(0, 0, 0, 0.32),
-    0 18px 44px rgba(0, 0, 0, 0.65),
-    0 0 60px rgba(232, 196, 138, 0.18) !important;
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+    url("assets/modal-frame.png?v=37")
+    center/100% 100% no-repeat !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65) !important;
+  display: block !important;
   text-align: center;
   /* Animated entrance — fades in, scales up, with a tiny rotate
      so the page feels like it's being placed on the desk.        */
@@ -3576,63 +3581,15 @@ body { background: transparent !important; }
   60%  { opacity: 1; transform: scale(1.02) rotate( 0.6deg); }
   100% { opacity: 1; transform: scale(1.00) rotate( 0deg); }
 }
-
-/* Corner ❦ — four small antique-gold florals tucked into the
-   border, same glyph as the cover tap-titles so the language is
-   continuous.                                                     */
-.modal-card .m-corner {
+/* The inner block lives strictly inside the painted frame's safe
+   zone — text content never lands on top of the bow / moon / flora. */
+.modal-card .modal-inner {
   position: absolute;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 18px;
-  color: rgba(218, 168, 104, 0.85);
-  text-shadow:
-    0 0 6px rgba(232, 196, 138, 0.55),
-    0 1px 0 rgba(60, 30, 10, 0.55);
-  pointer-events: none;
-}
-.modal-card .m-corner-tl { top: 10px; left: 12px; }
-.modal-card .m-corner-tr { top: 10px; right: 12px; }
-.modal-card .m-corner-bl { bottom: 10px; left: 12px; }
-.modal-card .m-corner-br { bottom: 10px; right: 12px; }
-
-/* Top crescent-moon ornament — small icon-moon centred between
-   two ✦ sparkles.  Sits just below the top border.               */
-.modal-card .m-top-orn {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+  inset: 16% 12% 24% 12%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  pointer-events: none;
-}
-.modal-card .m-moon {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 6px rgba(232, 196, 138, 0.55));
-}
-.modal-card .m-orn-star {
-  font-size: 11px;
-  color: rgba(232, 196, 138, 0.85);
-  text-shadow: 0 0 6px rgba(232, 196, 138, 0.65);
-}
-
-/* Bottom bow garland — the painted icon-bow.png anchors the bottom
-   of the frame, hanging slightly below the inner safe-zone.       */
-.modal-card .m-bow {
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 64%;
-  max-width: 220px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-  pointer-events: none;
+  justify-content: center;
 }
 
 /* Title — antique gold lettering with the same 8-direction outline
@@ -3752,17 +3709,16 @@ body { background: transparent !important; }
   color: #fff1d0 !important;
   text-shadow: 0 0 8px rgba(232, 196, 138, 0.55);
 }
-/* is-ready variant — the "stage X awaits" leave-confirm modal.
-   Has TWO actions ("i'm ready ♡" + "a little longer"), so we drop
-   the bottom bow + tighten the layout — the celebration ornament
-   doesn't belong on a decision-point modal anyway.                */
-.modal-card.is-ready {
-  aspect-ratio: auto;
-  padding: 56px 24px 28px !important;
-}
-.modal-card.is-ready .modal-title { font-size: clamp(20px, 5vw, 24px); }
-.modal-card.is-ready .m-bow { display: none; }
+/* is-ready variant — uses the same painted PNG frame as the score
+   modal; just nudges typography for the two-line action stack and
+   makes the title slightly bigger for legibility.                  */
+.modal-card.is-ready .modal-title { font-size: clamp(15px, 4vw, 18px); }
 .modal-card.is-ready .modal-actions { gap: 4px !important; }
+.modal-card.is-ready .modal-inner { inset: 16% 8% 24% 8%; }
+.modal-card.is-ready .modal-body { max-width: none; font-size: 12px; margin: 4px 0 10px; }
+.modal-card.is-ready .btn { white-space: nowrap; }
+.modal-card.is-ready .btn::before,
+.modal-card.is-ready .btn::after { width: 22px; margin: 0 6px; }
 
 
 /* ---------- G. Question field ---------- */
