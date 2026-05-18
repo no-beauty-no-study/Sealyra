@@ -1763,11 +1763,14 @@ body { background: transparent !important; }
      higher — page no longer feels top-heavy.                     */
   width: min(70vw, 300px);
   aspect-ratio: 1100 / 783;
-  /* v=43c — overlap tuned to -36 px.  Less aggressive than the
-     -70 px first pass that hid the chapter title; this leaves the
-     band's central title row clear while still nestling the score
-     bow into the chapter bow zone at the bottom of the band.       */
-  margin: -36px auto -6px;
+  /* v=44 — true bow-merge.  Chapter band bow center sits at ~75 %
+     of band height (~74 px from band top on a 99 px band).  Score
+     frame top-bow center sits at ~12 % of score height (~26 px
+     from score top on a 213 px frame).  For the two painted bows
+     to overlap at the same screen y, score frame must start at
+     chapter.top + (74 − 26) = chapter.top + 48 px, i.e. its top
+     is 51 px ABOVE chapter.bottom.  Negative margin = -52 px.   */
+  margin: -52px auto -8px;
   background:
     url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=40")
     center/100% 100% no-repeat;
@@ -1777,7 +1780,9 @@ body { background: transparent !important; }
 /* Chapter band sits BEHIND the score frame.  Per user: "the big
    frame's bow overlaps the small frame's bow" — so the score
    frame's painted TOP-CENTER bow draws OVER the chapter band's
-   painted BOTTOM-CENTER bow, making the join read as one bow.  */
+   painted BOTTOM-CENTER bow, making the join read as one bow.
+   But .frame-chapter-text is bumped to z-index: 3 above (so the
+   chapter title still reads on top of everything).               */
 .frame-chapter { z-index: 1; position: relative; }
 .score-frame .score-frame-inner {
   position: absolute;
@@ -4281,18 +4286,24 @@ body { background: transparent !important; }
   background:
     url("assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=27")
     center/contain no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
 .frame-chapter .frame-chapter-text {
-  /* Single-line title with a slight upward bias so it nests above
-     the painted bottom-bow (which the score frame's top-bow will
-     overlap).                                                       */
-  padding: 0 18% 8%;
+  /* v=44 — title floats ABSOLUTELY at the band's vertical centre
+     with z-index 3 so it renders ON TOP of the score frame even
+     when the score frame's painted top-bow nests deep into the
+     chapter band's bottom-bow zone.  Bows can finally merge for
+     real ("两个蝴蝶结叠起来连体") without sacrificing the title.   */
+  position: absolute;
+  top: 50%;
+  left: 18%;
+  right: 18%;
+  transform: translateY(-58%);   /* nudge slightly upward of pure-centre */
   text-align: center;
   line-height: 1.0;
   white-space: nowrap;
+  z-index: 3;
+  pointer-events: none;
 }
 /* Chapter plaque text now uses the same gold antique-brass family
    as the index page's title (font + colour + 3-layer text-shadow).
