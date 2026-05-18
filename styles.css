@@ -1768,22 +1768,31 @@ body { background: transparent !important; }
    identical: chapter → painted frame → content list.               */
 .score-frame {
   position: relative;
-  width: min(64vw, 260px);
-  aspect-ratio: 600 / 786;
+  /* DCE4B4FE landscape asset — 1100/783 = 1.405.  Bow + key + moon +
+     gold florals are all painted in.  The inner safe-zone (measured
+     from the painted ornaments):
+       top    ~22 %  (clear of the bow + moon + star top ornaments)
+       bottom ~22 %  (clear of the gold key at the base)
+       sides  ~16 %  (clear of the floral side trails)
+     so the score number sits centred in the open velvet field.    */
+  width: min(82vw, 360px);
+  aspect-ratio: 1100 / 783;
   margin: -2px auto 6px;
   background:
-    url("assets/modal-frame.png?v=37")
+    url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=40")
     center/100% 100% no-repeat;
   filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.50));
 }
 .score-frame .score-frame-inner {
   position: absolute;
-  inset: 16% 12% 24% 12%;
+  /* The DCE4B4FE bow extends down ~30 % from the top; key extends
+     up ~28 % from the bottom.  Inner safe-zone clears both.       */
+  inset: 32% 18% 30% 18%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 2px;
 }
 .score-frame .sf-label {
   font-family: 'Cinzel', 'Cormorant Garamond', serif;
@@ -3611,7 +3620,7 @@ body { background: transparent !important; }
   width: min(70vw, 280px) !important;
   aspect-ratio: 600 / 786;
   background:
-    url("assets/modal-frame.png?v=37")
+    url("assets/modal-frame.png?v=40")
     center/100% 100% no-repeat !important;
   border: 0 !important;
   border-radius: 0 !important;
