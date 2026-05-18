@@ -250,10 +250,41 @@ const BG_BY_SCREEN = {
 // the (fixed) bg-layer look like it's moving.
 const SCROLLABLE_SCREENS = new Set(['index', 'note-bucket']);
 function go(screenId, opts = {}) {
+  // v=46 — page-turn transition: a velvet veil with a ❦ floral and
+  // a soft golden sparkle washes IN over the current screen (220
+  // ms), the screen swaps mid-veil, then the veil fades OUT (260
+  // ms).  Cinematic dark-fairytale book pacing; not a "modern
+  // SPA crossfade".  Same-screen no-ops skip the transition.
+  // Opts may pass { instant: true } to bypass (used by drawQ etc.
+  // which re-render the same screen frame).
+  if (opts.instant || state.screen === screenId) return _goImmediate(screenId, opts);
+  // Mount the veil and start its ink-in animation.
+  let veil = document.querySelector('.scene-veil');
+  if (!veil) {
+    veil = document.createElement('div');
+    veil.className = 'scene-veil';
+    veil.innerHTML = `
+      <div class="scene-veil-glyph">❦</div>
+      <div class="scene-veil-dust"></div>
+    `;
+    document.body.appendChild(veil);
+  }
+  // double-rAF so the browser sees opacity:0 before we transition.
+  requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('is-in')));
+  // mid-veil: actually swap the screen
+  setTimeout(() => {
+    _goImmediate(screenId, opts);
+    veil.classList.remove('is-in');
+    veil.classList.add('is-out');
+    setTimeout(() => {
+      veil.classList.remove('is-out');
+    }, 260);
+  }, 220);
+}
+function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === `screen-${screenId}`));
   window.scrollTo(0, 0);
-  // swap the fixed background layer to match this screen's atmosphere.
   ['bg-cover','bg-stage','bg-result','bg-note'].forEach(c => document.body.classList.remove(c));
   document.body.classList.add(BG_BY_SCREEN[screenId] || 'bg-cover');
   document.body.classList.toggle('no-scroll', !SCROLLABLE_SCREENS.has(screenId));
@@ -615,18 +646,15 @@ function showParchment(word) {
     c.family.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
       const audioTarget = phrase || w;
-      let html = `<div class="pc-fam-head">
-        <span class="pc-fam-word">${escapeHtml(w)}</span>
-        <span class="pc-fam-pos-zh">${escapeHtml(posZh || '')}</span>
-      </div>`;
-      if (phrase) {
-        html += `<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
-          <button class="pc-play">♪</button>
-          <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
-          <span class="pc-play-zh">${escapeHtml(phraseZh || '')}</span>
-        </div>`;
-      }
-      items.push({ kind: 'fam', html: `<div class="pc-fam-block" data-sp="${escapeAttr(audioTarget)}">${html}</div>` });
+      // v=46 — ONE LINE per entry per user.  Variant word + phrase
+      // + zh sit inline, like a handwritten note row.  Each tap
+      // reveals exactly one row (was two, felt too tech).
+      items.push({ kind: 'fam', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(audioTarget)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${escapeHtml(w)}</span>
+        ${phrase ? `<span class="pc-line-phrase">${escapeHtml(phrase)}</span>` : ''}
+        <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
+      </div>` });
     });
   }
 
@@ -635,10 +663,10 @@ function showParchment(word) {
     items.push({ kind: 'label', html: `<div class="pc-section-label">her friend</div>` });
     (c.colloc || []).forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
-      items.push({ kind: 'colloc', html: `<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
+      items.push({ kind: 'colloc', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(phrase)}">
         <button class="pc-play">♪</button>
-        <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
-        <span class="pc-play-zh">${escapeHtml(zh || '')}</span>
+        <span class="pc-line-phrase">${escapeHtml(phrase)}</span>
+        <span class="pc-line-zh">${escapeHtml(zh || '')}</span>
       </div>` });
     });
     if (c.example) {
@@ -651,26 +679,19 @@ function showParchment(word) {
   }
 
   // HER KIN — words that share the same root / morpheme (v=44 per user).
-  // Each kin line is "word | pos.zh | phrase | phrase_zh", same pipe
-  // schema as .family so existing data shape stays consistent.
+  // Same one-line idiom as .family (v=46).
   if (c.kin && c.kin.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
     c.kin.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
       const audioTarget = phrase || w;
-      let html = `<div class="pc-fam-head">
-        <span class="pc-fam-word">${escapeHtml(w)}</span>
-        <span class="pc-fam-pos-zh">${escapeHtml(posZh || '')}</span>
-      </div>`;
-      if (phrase) {
-        html += `<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
-          <button class="pc-play">♪</button>
-          <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
-          <span class="pc-play-zh">${escapeHtml(phraseZh || '')}</span>
-        </div>`;
-      }
-      items.push({ kind: 'kin', html: `<div class="pc-fam-block" data-sp="${escapeAttr(audioTarget)}">${html}</div>` });
+      items.push({ kind: 'kin', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(audioTarget)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${escapeHtml(w)}</span>
+        ${phrase ? `<span class="pc-line-phrase">${escapeHtml(phrase)}</span>` : ''}
+        <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
+      </div>` });
     });
   }
 
@@ -1552,8 +1573,8 @@ const Screens = {
             <span class="q-corner q-corner-bl">❦</span>
             <span class="q-corner q-corner-br">❦</span>
             <div class="q-sentence">${q.sentenceHL}</div>
-            <img class="q-bow" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
+          <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           <div class="oracle-options"></div>
         `;
         const opts = $('.oracle-options', stage);
