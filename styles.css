@@ -2657,9 +2657,12 @@ body { background: transparent !important; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  max-width: 92%;
-  margin: 6px auto 6px;
+  gap: 12px;
+  /* narrower wrap forces the sentence to wrap to 2 lines instead
+     of 3 — feels less "split into pieces", reads as a single
+     compact passage.                                              */
+  max-width: 84%;
+  margin: 18px auto 6px;
 }
 .q-glyph {
   font-family: 'Cormorant Garamond', serif;
@@ -3497,20 +3500,17 @@ body { background: transparent !important; }
   padding: 0 22px;
 }
 .dict-quill {
-  /* button reset */
   background: none !important;
   border: 0 !important;
   padding: 0 !important;
   cursor: pointer;
   flex-shrink: 0;
-  /* big, prominent — same vertical weight as the parchment's
-     decorative side-quill.                                       */
-  width: 56px !important;
-  height: 96px !important;
+  /* even bigger per user — comparable to the parchment's side quill */
+  width: 72px !important;
+  height: 120px !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* breathing gold glow under the quill — "tap me" hint     */
   animation: dict-quill-breathe 2.4s ease-in-out infinite;
   transition: transform 0.18s;
 }
@@ -5215,9 +5215,10 @@ body { background: transparent !important; }
   position: fixed;
   inset: 0;
   z-index: 800;
-  background: rgba(18, 10, 32, 0.48);     /* darker again — popup feel */
-  -webkit-backdrop-filter: blur(2px);     /* light blur — bg still visible */
-  backdrop-filter: blur(2px);
+  /* lighter veil so the bg is still visible behind — popup feel */
+  background: rgba(18, 10, 32, 0.22);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5302,14 +5303,42 @@ body { background: transparent !important; }
   gap: 4px;
 }
 
-.pc-item {
+/* Staged items are completely collapsed.  is-revealed flips them
+   in via a left → right ink-write reveal (clip-path inset).     */
+.pc-item.is-staged {
+  height: 0;
+  margin: 0;
+  padding: 0;
   opacity: 0;
-  transform: translateX(-10px);
-  animation: pc-reveal 0.42s ease-out forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pc-item.is-revealed {
+  animation: pc-reveal 0.55s ease-out;
 }
 @keyframes pc-reveal {
-  0%   { opacity: 0; transform: translateX(-12px); }
-  100% { opacity: 1; transform: translateX(0);    }
+  0%   { opacity: 0; clip-path: inset(0 100% 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0    0 0); }
+}
+
+/* "tap the page" hint sits at the bottom of the inner area,
+   breathing softly.  Hides once the user has tapped at least
+   once.                                                         */
+.pc-tap-hint {
+  text-align: center;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: rgba(110, 63, 18, 0.55);
+  margin: 8px 0 4px;
+  animation: pc-tap-hint-breathe 2.4s ease-in-out infinite;
+  transition: opacity 0.3s;
+}
+.pc-tap-hint.is-gone { opacity: 0; pointer-events: none; }
+@keyframes pc-tap-hint-breathe {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1.0; }
 }
 
 /* === ZONE 1: word header === */

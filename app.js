@@ -470,6 +470,7 @@ function showParchment(word) {
       <div class="parchment-inner">
         <button class="pc-close" aria-label="fold this page">fold this page</button>
         <div class="pc-stack"></div>
+        <div class="pc-tap-hint">— tap the page —</div>
         <div class="pc-copy">
           <span class="pc-copy-label">signed</span>
           <span class="pc-copy-rule"></span>
@@ -480,21 +481,25 @@ function showParchment(word) {
   `;
   const stack = veil.querySelector('.pc-stack');
 
+  // Build the content as an array of HTML strings.  The headword
+  // shows immediately; every other item starts STAGED (hidden)
+  // and reveals one-by-one on tap.
   const items = [];
 
-  items.push(`
+  items.push({ kind: 'head', html: `
     <div class="pc-head" data-sp="${escapeAttr(c.h)}">
       <button class="pc-play" aria-label="play">♪</button>
       <span class="pc-word">${escapeHtml(c.h)}</span>
       <span class="pc-pos">${escapeHtml((c.pos || '').slice(0, 4))}.</span>
       <span class="pc-zh">${escapeHtml(c.zh || '')}</span>
-    </div>`);
+    </div>` });
 
   if (c.family && c.family.length) {
-    items.push(`<hr class="pc-rule">`);
-    items.push(`<div class="pc-section-label">her family</div>`);
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her family</div>` });
     c.family.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      const audioTarget = phrase || w;
       let html = `<div class="pc-fam-head">
         <span class="pc-fam-word">${escapeHtml(w)}</span>
         <span class="pc-fam-pos-zh">${escapeHtml(posZh || '')}</span>
@@ -506,42 +511,102 @@ function showParchment(word) {
           <span class="pc-play-zh">${escapeHtml(phraseZh || '')}</span>
         </div>`;
       }
-      items.push(`<div class="pc-fam-block">${html}</div>`);
+      items.push({ kind: 'fam', html: `<div class="pc-fam-block" data-sp="${escapeAttr(audioTarget)}">${html}</div>` });
     });
   }
 
   if ((c.colloc && c.colloc.length) || c.example) {
-    items.push(`<hr class="pc-rule">`);
-    items.push(`<div class="pc-section-label">her friend</div>`);
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her friend</div>` });
     (c.colloc || []).forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
-      items.push(`<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
+      items.push({ kind: 'colloc', html: `<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
         <button class="pc-play">♪</button>
         <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
         <span class="pc-play-zh">${escapeHtml(zh || '')}</span>
-      </div>`);
+      </div>` });
     });
     if (c.example) {
-      items.push(`<div class="pc-play-row pc-ex-row" data-sp="${escapeAttr(c.example)}">
+      items.push({ kind: 'example', html: `<div class="pc-play-row pc-ex-row" data-sp="${escapeAttr(c.example)}">
         <button class="pc-play">♪</button>
         <span class="pc-play-phrase pc-ex-en">${escapeHtml(c.example)}</span>
       </div>
-      ${c.example_zh ? `<div class="pc-ex-zh">${escapeHtml(c.example_zh)}</div>` : ''}`);
+      ${c.example_zh ? `<div class="pc-ex-zh">${escapeHtml(c.example_zh)}</div>` : ''}` });
     }
   }
 
-  items.forEach((html, i) => {
+  // Stage every item.  The headword reveals after the flip-in.
+  // Section labels + rules reveal automatically with the next
+  // content item so the user doesn't waste taps on dividers.
+  const nodes = items.map((it, i) => {
     const node = document.createElement('div');
-    node.className = 'pc-item';
-    node.style.animationDelay = (i * 70) + 'ms';
-    node.innerHTML = html;
+    node.className = 'pc-item is-staged pc-kind-' + it.kind;
+    node.innerHTML = it.html;
     stack.appendChild(node);
+    return node;
   });
 
+  // Reveal the headword immediately and auto-play it after the
+  // page-flip-in animation lands (≈ 0.55 s).
+  setTimeout(() => {
+    nodes[0].classList.remove('is-staged');
+    nodes[0].classList.add('is-revealed');
+    speak(c.h);
+  }, 600);
+
+  // Tap-to-advance.  Any tap on the parchment-card (except the close
+  // button) reveals the next chunk.  A "chunk" is a content row PLUS
+  // any rule + section-label that sits immediately before it, so the
+  // user doesn't have to tap empty dividers separately.
+  let revealIdx = 1;
+  function advanceReveal() {
+    if (revealIdx >= nodes.length) return false;
+    // Reveal everything from revealIdx until the next "content" kind
+    // (head/fam/colloc/example) inclusive.  Rules + labels are taken
+    // along for the ride.
+    while (revealIdx < nodes.length) {
+      const it = items[revealIdx];
+      nodes[revealIdx].classList.remove('is-staged');
+      nodes[revealIdx].classList.add('is-revealed');
+      const isContent = it.kind === 'fam' || it.kind === 'colloc' || it.kind === 'example';
+      revealIdx++;
+      if (isContent) break;
+    }
+    // Find the most recently revealed content row + play its audio.
+    const lastContent = [...nodes].slice(0, revealIdx).reverse()
+      .find(n => n.classList.contains('pc-kind-fam')
+              || n.classList.contains('pc-kind-colloc')
+              || n.classList.contains('pc-kind-example'));
+    if (lastContent) {
+      const sp = lastContent.getAttribute('data-sp')
+              || lastContent.querySelector('[data-sp]')?.getAttribute('data-sp');
+      // Mark the play row visually + play audio.
+      const playRow = lastContent.querySelector('.pc-play-row') || lastContent;
+      veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+      playRow.classList.add('is-playing');
+      if (sp) speak(sp);
+    }
+    SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+    // Hide the "tap the page" hint once the user starts tapping.
+    veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
+    // If we're past the last item, hide hint forever.
+    return revealIdx < nodes.length;
+  }
+  veil.querySelector('.parchment-card').addEventListener('click', e => {
+    // ignore taps on close button + individual ♪ play buttons
+    if (e.target.closest('.pc-close')) return;
+    if (e.target.closest('.pc-play')) return;
+    advanceReveal();
+  });
+
+  // Individual ♪ buttons still re-play their own audio without
+  // advancing the reveal sequence.
   function wirePlay(row) {
     const sp = row.getAttribute('data-sp');
     if (!sp) return;
-    row.addEventListener('click', e => {
+    const btn = row.querySelector('.pc-play');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
       e.stopPropagation();
       veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
       row.classList.add('is-playing');
@@ -549,7 +614,7 @@ function showParchment(word) {
       speak(sp);
     });
   }
-  veil.querySelectorAll('[data-sp]').forEach(wirePlay);
+  veil.querySelectorAll('.pc-play-row[data-sp], .pc-head[data-sp]').forEach(wirePlay);
 
   veil.querySelector('.pc-close').addEventListener('click', e => {
     e.stopPropagation();
@@ -1451,7 +1516,7 @@ const Screens = {
           </div>
           <div class="dict-prompt-zh">${escapeHtml(q.prompt_zh)}</div>
           <div class="dict-input-row">
-            <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}…">
+            <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}… (write here)">
             <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
               <img src="assets/icon-quill.png?v=25" alt="">
             </button>
