@@ -503,6 +503,31 @@ function scoreBlock(chapterN, name, value, total, message) {
   `;
 }
 
+// renderWordTile — compact "wine-card" tile, used on stage 2 + 3
+// result pages instead of the bulky ex-card.  Visual language is
+// borrowed from the multiple-choice picked-red option card so the
+// chapters speak one tile vocabulary.  Tap → parchment.
+function renderWordTile(word, mark) {
+  const c = CARDS[word] || { h: word };
+  const tile = document.createElement('button');
+  // .card.card--option carries the cardstock + frame; .picked-right
+  // adds the wine palette + gold halo; .is-wrong dims it so the user
+  // can scan correct vs. missed at a glance.
+  const state = mark === true ? 'picked-right reveal-right'
+              : mark === false ? 'picked-wrong'
+              : '';
+  tile.className = `card card--option word-tile ${state}`.trim();
+  tile.innerHTML = `
+    <span class="mc-frame"></span>
+    <span class="mc-text">${escapeHtml(c.h)}</span>
+  `;
+  tile.addEventListener('click', () => {
+    SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+    showParchment(word);
+  });
+  return tile;
+}
+
 // Encouragement copy keyed to the percentage — keeps the storybook
 // voice (lowercase italics, gentle).  Never punishing on low scores.
 function encouragement(pct) {
@@ -1621,17 +1646,21 @@ const Screens = {
       LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage2-result');
       const right = state.session.words.filter(w => state.results[w].oracle).length;
+      // v=42 — stage-2 result no longer uses the bulky ex-card.  The
+      // user wanted the same red wine-card UI from the multiple-
+      // choice (the .card--option.picked palette).  We render an 8-
+      // tile grid of the 8 words; tapping a tile opens its parchment.
       el.innerHTML = `
         ${scoreBlock(2, 'The Reading', right, 8, encouragement(right / 8))}
         <div class="match-actions"></div>
-        <div class="match-result-hint">— copy each word once —</div>
-        <div class="result-grid"></div>
+        <div class="match-result-hint">— touch any word to read its page —</div>
+        <div class="word-tile-grid"></div>
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
       $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
-      const grid = $('.result-grid', el);
-      state.session.words.forEach(w => grid.appendChild(renderExCard(w, state.results[w].oracle, { rewrite: true, withControls: false })));
+      const grid = $('.word-tile-grid', el);
+      state.session.words.forEach(w => grid.appendChild(renderWordTile(w, state.results[w].oracle)));
     }
   },
 
@@ -1759,27 +1788,20 @@ const Screens = {
         ${scoreBlock(3, 'The Inscription', totalCorrect, 24, encouragement(totalCorrect / 24))}
         <div class="match-actions"></div>
         <div class="match-result-hint">— three stages, eight words —</div>
-        <div class="summary-list" id="summary"></div>
-        <div class="result-grid"></div>
+        <div class="word-tile-grid"></div>
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
 
       $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
 
-      const tickHtml = v =>
-        v === null ? `<div class="tick">—</div>`
-                   : `<div class="tick ${v ? 'ok' : 'bad'}">${v ? '✓' : '✗'}</div>`;
-      const sum = $('#summary', el);
+      const grid = $('.word-tile-grid', el);
+      // mark a word as correct only if all three stages passed it.
       state.session.words.forEach(w => {
         const r = state.results[w];
-        const row = document.createElement('div');
-        row.className = 'summary-row';
-        row.innerHTML = `<div class="sum-word">${escapeHtml(w)}</div>${tickHtml(r.match)}${tickHtml(r.oracle)}${tickHtml(r.dict)}`;
-        sum.appendChild(row);
+        const allRight = r.match && r.oracle && r.dict;
+        grid.appendChild(renderWordTile(w, allRight));
       });
-      const grid = $('.result-grid', el);
-      state.session.words.forEach(w => grid.appendChild(renderExCard(w, state.results[w].dict, { withControls: false })));
     }
   },
 

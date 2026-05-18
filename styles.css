@@ -1756,24 +1756,31 @@ body { background: transparent !important; }
    identical: chapter → painted frame → content list.               */
 .score-frame {
   position: relative;
-  /* DCE4B4FE landscape asset — 1100/783.  Bow + key + moon + star +
-     gold florals all painted in.  v=41: pulled UP with a chunky
-     negative margin so the chapter band overlaps the top edge —
-     per user sketch, the chapter title reads as a "sash crossing
-     the bow".  Reduces vertical real-estate so the page packs
-     denser ("人类很懒惰 下滑太多内容会感觉累").                       */
-  width: min(82vw, 360px);
+  /* v=42 — DCE4B4FE shrunk + pulled UP so its TOP-CENTER bow
+     stacks UNDER the chapter band's BOTTOM-CENTER bow.  The two
+     painted bows end up nesting into each other, making the
+     chapter band + score frame read as one continuous storybook
+     ornament rather than two stacked cards.  Same trick reduces
+     vertical footprint so the word-tile grid below can ride
+     higher — page no longer feels top-heavy.                     */
+  width: min(70vw, 300px);
   aspect-ratio: 1100 / 783;
-  margin: -38px auto 0;
+  /* -50 px nests the score-frame's TOP-bow into the chapter band's
+     BOTTOM-bow while still leaving the chapter title fully visible
+     above the overlap (chapter title sits at ~35 % of band height;
+     overlap zone is the band's lower 50 %).                       */
+  margin: -50px auto -4px;
   background:
     url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=40")
     center/100% 100% no-repeat;
   filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.50));
-  z-index: 1;
+  z-index: 2;
 }
-/* Chapter band that precedes the score frame should sit ABOVE it
-   in z-order so the negative-margin overlap reads correctly.   */
-.frame-chapter { z-index: 2; position: relative; }
+/* Chapter band sits BEHIND the score frame.  Per user: "the big
+   frame's bow overlaps the small frame's bow" — so the score
+   frame's painted TOP-CENTER bow draws OVER the chapter band's
+   painted BOTTOM-CENTER bow, making the join read as one bow.  */
+.frame-chapter { z-index: 1; position: relative; }
 .score-frame .score-frame-inner {
   position: absolute;
   /* The DCE4B4FE bow extends down ~30 % from the top; key extends
@@ -1827,6 +1834,42 @@ body { background: transparent !important; }
 
 /* (Old .match-result-score one-liner retired in v=39 — the painted
    score frame above carries the result header now.)               */
+
+/* v=42 — WORD-TILE GRID for stage 2 + 3 result pages.  Borrowed
+   visual language from the multiple-choice picked-red option
+   card, so eight words show as a dense 2-column grid of wine
+   tiles rather than eight bulky ex-cards.  Tap → parchment.    */
+.word-tile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  padding: 0 18px;
+  max-width: 460px;
+  margin: 6px auto 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.word-tile-grid .word-tile {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 38px !important;
+  padding: 9px 14px !important;
+  cursor: pointer;
+  /* card--option base already paints velvet body + dotted frame.
+     We just want the wine palette (.picked-right / .picked-wrong)
+     to define right vs. missed, with a small breathing on right. */
+}
+.word-tile-grid .word-tile .mc-text {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14.5px;
+  letter-spacing: 0.02em;
+}
+.word-tile-grid .word-tile.reveal-right .mc-text {
+  color: #fff1d0 !important;
+  text-shadow: 0 0 6px rgba(232, 196, 138, 0.45);
+}
 .match-result-score {
   display: flex;
   align-items: baseline;
