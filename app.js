@@ -650,6 +650,30 @@ function showParchment(word) {
     }
   }
 
+  // HER KIN — words that share the same root / morpheme (v=44 per user).
+  // Each kin line is "word | pos.zh | phrase | phrase_zh", same pipe
+  // schema as .family so existing data shape stays consistent.
+  if (c.kin && c.kin.length) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
+    c.kin.forEach(line => {
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      const audioTarget = phrase || w;
+      let html = `<div class="pc-fam-head">
+        <span class="pc-fam-word">${escapeHtml(w)}</span>
+        <span class="pc-fam-pos-zh">${escapeHtml(posZh || '')}</span>
+      </div>`;
+      if (phrase) {
+        html += `<div class="pc-play-row" data-sp="${escapeAttr(phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-play-phrase">${escapeHtml(phrase)}</span>
+          <span class="pc-play-zh">${escapeHtml(phraseZh || '')}</span>
+        </div>`;
+      }
+      items.push({ kind: 'kin', html: `<div class="pc-fam-block" data-sp="${escapeAttr(audioTarget)}">${html}</div>` });
+    });
+  }
+
   if (c.partner) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her neighbor</div>` });
@@ -691,7 +715,7 @@ function showParchment(word) {
       const it = items[revealIdx];
       nodes[revealIdx].classList.remove('is-staged');
       nodes[revealIdx].classList.add('is-revealed');
-      const isContent = it.kind === 'fam' || it.kind === 'colloc' || it.kind === 'example' || it.kind === 'neighbor';
+      const isContent = it.kind === 'fam' || it.kind === 'colloc' || it.kind === 'example' || it.kind === 'kin' || it.kind === 'neighbor';
       revealIdx++;
       if (isContent) break;
     }
@@ -699,7 +723,8 @@ function showParchment(word) {
     const lastContent = [...nodes].slice(0, revealIdx).reverse()
       .find(n => n.classList.contains('pc-kind-fam')
               || n.classList.contains('pc-kind-colloc')
-              || n.classList.contains('pc-kind-example'));
+              || n.classList.contains('pc-kind-example')
+              || n.classList.contains('pc-kind-kin'));
     if (lastContent) {
       const sp = lastContent.getAttribute('data-sp')
               || lastContent.querySelector('[data-sp]')?.getAttribute('data-sp');

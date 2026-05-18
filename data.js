@@ -6696,6 +6696,11 @@ const CARDS = {
     ],
     "example": "Climate models predict future changes in rainfall patterns.",
     "example_zh": "气候模型预测降雨模式的未来变化。",
+    "kin": [
+      "dictate | v. 命令；口述 | dictate terms | 强加条件",
+      "verdict | n. 裁决；判决 | reach a verdict | 达成裁决",
+      "contradict | v. 反驳；矛盾 | contradict the statement | 反驳陈述"
+    ],
     "partner": "anticipate"
   },
   "predominant": {
