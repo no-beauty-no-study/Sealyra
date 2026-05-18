@@ -1441,12 +1441,13 @@ const Screens = {
       function drawQ() {
         const stage = $('#oracle-stage', el);
         const q = state.oracleQs[state.oracleIdx];
+        // ❦ flanks dropped per user — the sentence reads cleaner
+        // without ornamental brackets, and the gold rules above +
+        // below already frame the prompt.
         stage.innerHTML = `
           <div class="q-progress">${String(state.oracleIdx + 1).padStart(2, '0')} · 08</div>
           <div class="q-sentence-wrap">
-            <span class="q-glyph q-glyph-l">❦</span>
             <div class="q-sentence">${q.sentenceHL}</div>
-            <span class="q-glyph q-glyph-r">❦</span>
           </div>
           <div class="oracle-options"></div>
         `;
@@ -1500,20 +1501,26 @@ const Screens = {
             recordMistake(q.word);
             SFX.wrong();
           }
-          // The correct card is now a doorway to that word's parchment —
-          // tap it to read the page, tap anywhere else to advance.  We
-          // clone the card to drop its original pick() listener (which
-          // would otherwise re-trigger the whole ceremony on each tap),
-          // then attach the parchment-open handler on the fresh node.
-          const oldCorrect = all[q.correctIdx];
-          const correctCard = oldCorrect.cloneNode(true);
-          correctCard.disabled = false;
-          correctCard.classList.add('is-readable');
-          oldCorrect.replaceWith(correctCard);
-          correctCard.addEventListener('click', (ev) => {
-            ev.stopPropagation();
-            SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
-            showParchment(q.word);
+          // EVERY option card now opens its own word's parchment —
+          // not just the correct one.  User wants to be able to read
+          // the meaning of any distractor too ("错误的选项也需要跳转
+          // 到羊皮纸").  We clone each card to drop the original
+          // pick() listener (which would otherwise re-trigger the
+          // whole ceremony on the next tap), then wire the parchment-
+          // open handler on the fresh node.  Cloning preserves the
+          // state classes (picked-right / picked-wrong / reveal-right)
+          // that were just added above.
+          all.forEach((oldCard, idx) => {
+            const cloned = oldCard.cloneNode(true);
+            cloned.disabled = false;
+            cloned.classList.add('is-readable');
+            oldCard.replaceWith(cloned);
+            const word = q.options[idx];
+            cloned.addEventListener('click', (ev) => {
+              ev.stopPropagation();
+              SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+              showParchment(word);
+            });
           });
           // Speak the full example sentence so the user hears the word
           // in context.  Then arm a one-shot tap-anywhere listener: the
