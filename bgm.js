@@ -412,15 +412,28 @@ window.LanBGM = (() => {
     initAudio();
     if (ctx.state === "suspended") { try { ctx.resume(); } catch {} }
     const next = tracks[trackId] || tracks.homeBoxA;
+    const isSwitch = playing && currentTrackId && currentTrackId !== trackId;
     currentTrack = next;
     currentTrackId = trackId;
     applyTrackFX(next);
 
     if (typeof options.volume === "number") setVolume(options.volume);
 
+    // Track-switch bug (v=38): when playing was already true, the old
+    // path just nudged step=0 and relied on the running setTimeout
+    // chain to pick up the new currentTrack on its next tick.  In
+    // practice the running tick fired with old `track` captured in its
+    // closure (and on mobile, paused contexts sometimes dropped the
+    // timer entirely), so the new BGM never started.  Now we cancel
+    // the pending tick and re-arm schedule cleanly whenever the track
+    // actually changes.
     if (!playing) {
       playing = true;
       step = options.reset === false ? step : 0;
+      schedule();
+    } else if (isSwitch) {
+      if (timer) { clearTimeout(timer); timer = null; }
+      step = 0;
       schedule();
     } else {
       step = 0;

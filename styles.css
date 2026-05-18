@@ -668,6 +668,7 @@ body.cover-pending .cover-gate     { visibility: visible; }
   margin-top: 10px;
 }
 .dict-feedback.is-wrong { color: rgba(220, 156, 168, 0.85); }
+.dict-feedback.is-right { color: #e6c084; text-shadow: 0 0 8px rgba(232, 196, 138, 0.45); }
 /* (the old ::before / ::after tapered rules around .dict-prompt
    are gone — the .dict-card border owns the framing now.)        */
 .dict-prompt-zh {
@@ -2238,14 +2239,12 @@ body { background: transparent !important; }
   margin: 18px auto 6px;
 }
 .dict-input-row .dict-input { flex: 1; }
-.dict-quill {
-  width: 34px;
-  height: 88px;
-  object-fit: contain;
-  opacity: .85;
-  pointer-events: none;
-  filter: drop-shadow(0 0 6px rgba(237,184,158,.32));
-}
+/* (Old "decorative-only" .dict-quill block retired in v=38 —
+   the quill is now the dictation submit BUTTON, not a static
+   ornament.  Its pointer-events: none was silently blocking
+   every click on the submit, so the dictation couldn't be
+   submitted on stage 3.  Active styles live in the v=31.4
+   block further down.)                                          */
 
 
 /* ============================================================
@@ -4524,13 +4523,15 @@ body { background: transparent !important; }
 }
 
 /* --- 47.2  corner buttons — STAR icon at top-left (was moon).
-   "居顶" per user: top:env(safe-area-inset-top, 10px) so the icon
-   floats at the very top edge above the banner.  The right-side
-   close-corner is no longer used by any screen.                  */
+   "居顶" per user (v=38 correction): position BELOW the banner at
+   the highest spot — earlier "top: 10px" placed the star ON the
+   banner art, which looked wrong.  Banner aspect is 1100/292 ≈
+   0.265, so its bottom edge is at 100vw * 292 / 1100.  Pin the
+   star ~6 px below that line.                                    */
 .moon-corner,
 .close-corner {
   position: fixed !important;
-  top: max(env(safe-area-inset-top, 0px), 10px) !important;
+  top: calc(100vw * 292 / 1100 + 6px) !important;
   width: 44px !important;
   height: 44px !important;
   bottom: auto !important;

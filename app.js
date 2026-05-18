@@ -1683,12 +1683,14 @@ const Screens = {
         const guess = (input.value || '').trim().toLowerCase();
         if (!guess) return;
         if (guess === q.answer.toLowerCase()) {
-          // right on the first try → record + advance
+          // right on the first try → flash visible feedback, then advance.
           state.results[q.head].dict = true;
           input.disabled = true;
           input.classList.add('is-right');
+          feedback.innerHTML = '<em>✦ inscribed</em>';
+          feedback.className = 'dict-feedback is-right';
           SFX.right();
-          speak(q.answer).then(() => setTimeout(advance, 450));
+          speak(q.answer).then(() => setTimeout(advance, 700));
         } else {
           // wrong — reveal the answer in the blank, clear input,
           // ask user to copy it.  Score still counts as wrong.
