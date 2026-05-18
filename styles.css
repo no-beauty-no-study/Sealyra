@@ -1259,9 +1259,7 @@ body.cover-pending .cover-gate     { visibility: visible; }
    the same .tap-title.is-cta dress as the cover's Tonight's Reading
    so every "turn the page" doorway speaks one visual language.) */
 .next-door {
-  /* Slight bump on top spacing so the gold underline doesn't crowd
-     the score frame above.                                          */
-  margin-top: 18px;
+  margin-top: 6px;
 }
 .next-door .nd-key { color: var(--gold-deep); display: inline-flex; }
 .next-door .nd-key .ico-key { width: 10px; height: 32px; }
@@ -1765,11 +1763,11 @@ body { background: transparent !important; }
      higher — page no longer feels top-heavy.                     */
   width: min(70vw, 300px);
   aspect-ratio: 1100 / 783;
-  /* -50 px nests the score-frame's TOP-bow into the chapter band's
-     BOTTOM-bow while still leaving the chapter title fully visible
-     above the overlap (chapter title sits at ~35 % of band height;
-     overlap zone is the band's lower 50 %).                       */
-  margin: -50px auto -4px;
+  /* v=43c — overlap tuned to -36 px.  Less aggressive than the
+     -70 px first pass that hid the chapter title; this leaves the
+     band's central title row clear while still nestling the score
+     bow into the chapter bow zone at the bottom of the band.       */
+  margin: -36px auto -6px;
   background:
     url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=40")
     center/100% 100% no-repeat;
@@ -1842,10 +1840,10 @@ body { background: transparent !important; }
 .word-tile-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 9px;
+  gap: 8px;
   padding: 0 18px;
   max-width: 460px;
-  margin: 6px auto 18px;
+  margin: 2px auto 16px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -1927,11 +1925,11 @@ body { background: transparent !important; }
   text-align: center;
   font-family: var(--f-italic);
   font-style: italic;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: .04em;
   color: var(--pink-soft);
   opacity: .72;
-  margin: 18px 0 6px;
+  margin: 4px 0 4px;
 }
 .match-result-hint .hint-fleur { color: var(--gold-deep); margin: 0 6px; }
 
@@ -2042,10 +2040,10 @@ body { background: transparent !important; }
 .match-actions {
   display: flex;
   justify-content: center;
-  /* Confirm sits between the chapter plaque and the grid.
-     14px-ish gaps each side — matches the "index nav → first row"
-     gap on the index page (the user's reference).                  */
-  margin: 14px 0 10px;
+  /* v=43 — tighter top gap on the result pages.  Per user the
+     overall page was top-heavy; pulling the button up lets the
+     word tiles below ride higher.                                   */
+  margin: 4px 0 6px;
 }
 
 
@@ -4277,13 +4275,9 @@ body { background: transparent !important; }
    on top, the stage name below.                                */
 .frame-chapter {
   position: relative;
-  /* shrunk so the chapter plaque sits at the same visual weight
-     as the index page's title plaque (the user's reference).      */
   width: min(76vw, 420px);
   aspect-ratio: 1500 / 500;
-  /* hug the banner — negative margin closes the last ~10 px of gap
-     that the user still flagged as "too far".                       */
-  margin: -8px auto 4px;
+  margin: -14px auto 0;
   background:
     url("assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=27")
     center/contain no-repeat;
@@ -4292,29 +4286,37 @@ body { background: transparent !important; }
   justify-content: center;
 }
 .frame-chapter .frame-chapter-text {
-  padding: 0 16% 6%;
+  /* Single-line title with a slight upward bias so it nests above
+     the painted bottom-bow (which the score frame's top-bow will
+     overlap).                                                       */
+  padding: 0 18% 8%;
   text-align: center;
-  line-height: 1.05;
+  line-height: 1.0;
+  white-space: nowrap;
 }
 /* Chapter plaque text now uses the same gold antique-brass family
    as the index page's title (font + colour + 3-layer text-shadow).
    The chapter is a LABEL, not a tappable title — so it gets the
    unified type voice but no ❦ flanking and no underline.        */
+/* v=43 — chapter band text on ONE line (was stacked num + name)
+   so the band is half as tall and the score frame below can
+   nest higher without obscuring the title.                       */
 .frame-chapter .fc-num {
-  display: block;
+  display: inline;
   font-family: 'Cinzel', 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: clamp(9px, 2.2vw, 11px);
-  letter-spacing: .22em;
+  font-size: clamp(11px, 2.8vw, 14px);
+  letter-spacing: .16em;
   color: #c19a5c;
   opacity: .85;
+  margin-right: 8px;
 }
 .frame-chapter .fc-name {
-  display: block;
+  display: inline;
   font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
   font-style: normal;
   font-weight: 500;
-  font-size: clamp(14px, 3.6vw, 18px);
+  font-size: clamp(13px, 3.4vw, 17px);
   color: #d6a464;
   /* Same 8-direction outline + soft gold halo as .tap-title — every
      "real" title in the storybook (cover CTA, index plaque, chapter
@@ -4327,7 +4329,6 @@ body { background: transparent !important; }
     0 0 6px rgba(232, 196, 138, 0.45),
     0 0 12px rgba(218, 168, 104, 0.28);
   letter-spacing: 0.04em;
-  margin-top: 2px;
   white-space: nowrap;
 }
 
