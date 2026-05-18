@@ -126,8 +126,19 @@ const ALL_HEADS = Object.keys(CARDS).filter(h =>
 ).sort();
 const TOTAL_WORDS = Object.keys(CARDS).length;
 
-function buildSession(startIdx) {
-  const heads = ALL_HEADS.slice(startIdx, startIdx + 8);
+function buildSession() {
+  // Randomize per session: shuffle the full pool, prefer un-learned
+  // words first, fall back to mixing learned ones in only if there
+  // aren't 8 fresh words left.  The old "slice from progress" build
+  // gave the user the same 8 words every reload, AND the learned-
+  // word filter wasn't applied — fixed both here.
+  const learned = saved.learned || {};
+  const fresh   = shuffle(ALL_HEADS.filter(h => !learned[h]));
+  let heads = fresh.slice(0, 8);
+  if (heads.length < 8) {
+    const review = shuffle(ALL_HEADS.filter(h => learned[h]));
+    heads = [...heads, ...review].slice(0, 8);
+  }
   if (heads.length < 8) return null;
   return {
     words: heads,
@@ -172,7 +183,8 @@ const state = {
   dictIdx: 0
 };
 function freshSession() {
-  state.session = buildSession(saved.progress) || buildSession(0);
+  state.session = buildSession();
+  if (!state.session) state.session = { words: ALL_HEADS.slice(0, 8), pairs: [], dict: [] };
   state.results = {};
   state.session.words.forEach(w => state.results[w] = { match: null, oracle: null, dict: null });
 }
@@ -1065,7 +1077,7 @@ const Screens = {
       // top-left moon is the "back to cover" affordance; the right
       // X was removed at the user's request — it crowded the right
       // column visually and felt redundant.
-      el.prepend(moonCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
 
       const grid = $('.match-grid', el);
       shuffled.forEach((c, idx) => {
@@ -1236,7 +1248,7 @@ const Screens = {
       `;
 
       // top-left star only — no top-right X (consistent with game stages)
-      el.prepend(moonCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
 
       // Next-stage button sits right below the score so it's a single
       // glance from "how did I do?" to "let me move on".
@@ -1281,7 +1293,7 @@ const Screens = {
       // top-left moon is the "back to cover" affordance; the right
       // X was removed at the user's request — it crowded the right
       // column visually and felt redundant.
-      el.prepend(moonCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
       drawQ();
 
       function drawQ() {
@@ -1313,18 +1325,29 @@ const Screens = {
         const all = $$('.card--option');
         all.forEach(b => b.disabled = true);
 
-        // tiny "thinking" beat — the deep-pink inner glow on the chosen
-        // option before the verdict.  Without this beat the click feels
-        // too brusque.
-        button.classList.add('is-picking');
+        // Three-beat ceremony per user spec:
+        //   1) flip the tapped card (rotateY) — "I'm turning this one"
+        //   2) at the flip midpoint, the card is dyed PINK to mark
+        //      "you picked this one"; the picked card itself does NOT
+        //      glow.
+        //   3) shortly after, the CORRECT card (whether you picked it
+        //      or not) reveals with a gold halo — the user's pick is
+        //      the answer if and only if it's the same card that's
+        //      glowing.
+        button.classList.add('is-flipping', 'is-picking');
+        // mid-flip: lock in the pink "I chose this" dye
+        setTimeout(() => button.classList.remove('is-flipping'), 320);
 
         setTimeout(() => {
           button.classList.remove('is-picking');
           if (oi === q.correctIdx) {
-            button.classList.add('picked-right');
+            // user picked correctly — same card carries the gold halo
+            button.classList.add('picked-right', 'reveal-right');
             state.results[q.word].oracle = true;
             SFX.right();
           } else {
+            // user's pick stays pink-but-unglowing; the correct one
+            // breathes gold to show the "magic card" they missed.
             button.classList.add('picked-wrong');
             all[q.correctIdx].classList.add('reveal-right');
             state.results[q.word].oracle = false;
@@ -1377,7 +1400,7 @@ const Screens = {
         <div class="result-grid"></div>
       `;
 
-      el.prepend(moonCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
       el.appendChild(closeCorner());
       $('.stage-actions', el).appendChild(nextDoor('the writing hand', () => go('stage3'), { confirm: true }));
       const grid = $('.result-grid', el);
@@ -1399,7 +1422,7 @@ const Screens = {
       // top-left moon is the "back to cover" affordance; the right
       // X was removed at the user's request — it crowded the right
       // column visually and felt redundant.
-      el.prepend(moonCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
       drawQ();
 
       function drawQ() {
@@ -1507,7 +1530,7 @@ const Screens = {
         <div class="result-grid"></div>
       `;
 
-      el.prepend(moonCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
       el.appendChild(closeCorner());
 
       $('.stage-actions', el).appendChild(nextDoor('the next chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));

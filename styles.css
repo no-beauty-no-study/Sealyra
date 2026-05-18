@@ -1714,9 +1714,10 @@ body { background: transparent !important; }
    ============================================================ */
 .score-card {
   position: relative;
-  width: min(92vw, 460px);
+  /* shrunk per user — was 92vw/460, sat too low and too heavy.   */
+  width: min(76vw, 380px);
   aspect-ratio: 1448 / 1086;
-  margin: 6px auto 10px;
+  margin: -10px auto 8px;            /* pull tight to banner */
   background:
     url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=31")
     center/100% 100% no-repeat;
@@ -2505,15 +2506,30 @@ body { background: transparent !important; }
 .card--option::before { left: 11px;  }
 .card--option::after  { right: 11px; }
 
-/* picking — brief warm-amber tap feedback before the verdict */
-.card--option.is-picking {
-  border-color: rgba(232, 196, 132, 0.78) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.36),
-    inset 0 0 16px rgba(0, 0, 0, 0.24),
-    0 0 12px rgba(232, 196, 132, 0.35),
-    0 1px 3px rgba(0, 0, 0, 0.45);
+/* is-picking — pink "I chose this" dye: body picks up a rose tint,
+   border + suits brighten to rose.  No glow — glow is reserved for
+   the CORRECT card (reveal-right). */
+.card--option.is-picking,
+.card--option.picked-wrong {
+  background:
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    rgba(212, 142, 168, 0.22) 0%,
+                    rgba(178, 102, 134, 0.12) 60%,
+                    transparent 100%),
+    linear-gradient(160deg, rgba(46, 22, 36, 0.94), rgba(28, 12, 22, 0.97)) !important;
+  border-color: rgba(212, 142, 168, 0.78) !important;
+  color: #f4cfd9 !important;
+}
+.card--option.is-picking::before,
+.card--option.is-picking::after,
+.card--option.picked-wrong::before,
+.card--option.picked-wrong::after {
+  color: rgba(232, 168, 192, 0.85) !important;
+}
+
+/* flip — Y-axis rotate while picking (320 ms, matches match-card) */
+.card--option.is-flipping {
+  animation: card-flip 0.32s ease-in-out;
 }
 
 /* picked-right — warm gold body, gold underglow pool (same idiom
@@ -2552,16 +2568,17 @@ body { background: transparent !important; }
                               transparent 1.4px 4.2px) right  / 1px 100% no-repeat;
 }
 
-/* picked-wrong — sunk, dim, no halo */
+/* picked-wrong — pink "I tapped this" body, NO halo (the halo
+   lives on the .reveal-right correct card).  Earlier override
+   dimmed the card too much; the user's pick must stay clearly
+   visible so they can compare it to the glowing correct card. */
 .card--option.picked-wrong {
-  opacity: 0.55;
-  filter: saturate(0.5);
-  color: rgba(220, 204, 174, 0.62) !important;
-  border-color: rgba(190, 110, 110, 0.42) !important;   /* faint wine = "you picked this" */
+  opacity: 1;
+  filter: none;
 }
-.card--option.picked-wrong .mc-frame { opacity: 0.40; }
+.card--option.picked-wrong .mc-frame { opacity: 1; }
 .card--option.picked-wrong::before,
-.card--option.picked-wrong::after { opacity: 0.45; }
+.card--option.picked-wrong::after { opacity: 1; }
 
 /* reveal-right — THE MAGIC CARD: body stays purple, a breathing
    gold halo pulses around it.  Per user: "未被翻开的才是魔法卡牌". */
@@ -5158,10 +5175,11 @@ body { background: transparent !important; }
   background:
     url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=31")
     center/100% 100% no-repeat;
-  /* SAFE-ZONE PADDING — top bumped 17 → 20 % so the Pinyon
-     Script headword's tall ascenders clear the moon decoration
-     on the top scroll-roll of the parchment art.                  */
-  padding: 20% 18% 18% 18%;
+  /* SAFE-ZONE PADDING — top pushed to 24 % so the Pinyon
+     Script headword sits comfortably below the moon decoration
+     on the parchment art's top scroll-roll.  Tighten the bottom
+     slightly to keep content from overflowing.                   */
+  padding: 24% 18% 18% 18%;
   box-sizing: border-box;
   cursor: default;
   transform-style: preserve-3d;
@@ -5337,7 +5355,26 @@ body { background: transparent !important; }
   transition: background 0.2s;
 }
 .pc-play-row:hover { background: rgba(110, 63, 18, 0.06); }
-.pc-play-row.is-playing { background: rgba(196, 152, 88, 0.18); }
+/* writing-reveal: when a ♪ row is tapped, a brief left→right
+   wipe re-draws the text as if it's being written in ink.   */
+.pc-play-row.is-playing {
+  background: rgba(196, 152, 88, 0.18);
+}
+.pc-play-row.is-playing .pc-play-phrase {
+  background-image: linear-gradient(90deg,
+    rgba(176, 122, 40, 0.45) 0%,
+    rgba(176, 122, 40, 0.45) 50%,
+    transparent 50%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  animation: pc-ink-reveal 0.6s ease-out forwards;
+}
+@keyframes pc-ink-reveal {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0;   }
+}
 .pc-play-row .pc-play {
   background: none;
   border: 0;
