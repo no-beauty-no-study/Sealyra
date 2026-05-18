@@ -2783,44 +2783,77 @@ body { background: transparent !important; }
    the blank is wrapped in <em class="q-blank"> so we can underline
    it like a fill-in field.  After the user picks, a hint at the
    bottom waits for any tap to flip to the next question.            */
-/* v=34 — ❦ flanks dropped per user.  The wrap is now sized to
-   the same column as the option buttons (max-width 460, 18px
-   side padding) so the sentence always reads as a passage at
-   least as wide as the answer choices — usually wider.         */
-.q-sentence-wrap {
+/* v=35 — UNIFIED QUESTION AREA (chapters 2 + 3).  The prompt
+   sits inside a .q-card "open page" container:
+     · hairline antique-gold border + faint velvet wash
+     · thin gold rules JUST INSIDE the top + bottom edges
+     · ❦ ornaments tucked into the 4 corners
+   Same idiom as the storybook modal so the question reads as a
+   page torn from her notebook.                                    */
+.q-card {
   position: relative;
-  display: block;
   max-width: 460px;
-  margin: 18px auto 6px;
-  padding: 0 18px;
+  margin: 14px auto 8px;
+  padding: 18px 22px 16px;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%,
+                    rgba(232, 196, 138, 0.04) 0%,
+                    transparent 80%),
+    rgba(20, 12, 36, 0.32);
+  border: 1px solid rgba(214, 164, 100, 0.34);
+  border-radius: 4px;
   box-sizing: border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+    inset 0 0 14px rgba(0, 0, 0, 0.18);
+  text-align: center;
 }
+.q-card::before,
+.q-card::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(232, 196, 138, 0.55) 22%,
+    rgba(232, 196, 138, 0.55) 78%,
+    transparent 100%);
+  pointer-events: none;
+}
+.q-card::before { top: 7px; }
+.q-card::after  { bottom: 7px; }
+.q-corner {
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(218, 168, 104, 0.72);
+  text-shadow:
+    0 0 6px rgba(232, 196, 138, 0.45),
+    0 1px 0 rgba(60, 30, 10, 0.55);
+  pointer-events: none;
+}
+.q-corner-tl { top: 4px; left: 8px; }
+.q-corner-tr { top: 4px; right: 8px; }
+.q-corner-bl { bottom: 4px; left: 8px; }
+.q-corner-br { bottom: 4px; right: 8px; }
+
+/* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
+   the inner text element; the gold rules are now on the card.    */
 .q-sentence {
   position: relative;
   font-family: var(--f-italic);
   font-style: italic;
-  font-size: 21px;
+  font-size: 20px;
   line-height: 1.5;
   color: var(--cream);
   text-align: center;
-  padding: 16px 4px;
+  padding: 8px 4px;
   margin: 0;
 }
-.q-sentence::before,
-.q-sentence::after {
-  content: '';
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(232, 196, 138, 0.50) 18%,
-    rgba(232, 196, 138, 0.50) 82%,
-    transparent 100%);
-}
-.q-sentence::before { top: 0; }
-.q-sentence::after  { bottom: 0; }
 /* same single-line blank shared by stage 3 dictation prompts */
 .dict-prompt .q-blank-mask {
   display: inline-block;
@@ -3602,25 +3635,31 @@ body { background: transparent !important; }
   pointer-events: none;
 }
 
-/* Title — italic cream, no pill border (it competed with the
-   frame's gold border for attention).  Slight gold drop-shadow
-   makes it read against the velvet.                                */
+/* Title — antique gold lettering with the same 8-direction outline
+   the .tap-title, chapter band, and index plaque use.  One title
+   voice across the whole storybook.                                */
 .modal-card .modal-title {
   display: block;
   margin: 8px 0 6px;
   padding: 0;
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  font-style: italic;
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
+  font-style: normal;
   font-weight: 500;
-  font-size: clamp(22px, 5.4vw, 26px);
-  letter-spacing: 0.02em;
-  color: #f3e3c3;
+  font-size: clamp(16px, 4.2vw, 19px);
+  letter-spacing: 0.04em;
+  color: #d6a464;
+  white-space: nowrap;
   text-shadow:
-    0 0 8px rgba(232, 196, 138, 0.35),
-    0 1px 0 rgba(40, 20, 8, 0.45);
+    -1px 0 0 rgba(40, 20, 8, 0.85), 1px 0 0 rgba(40, 20, 8, 0.85),
+    0 -1px 0 rgba(40, 20, 8, 0.85), 0 1px 0 rgba(40, 20, 8, 0.85),
+    -1px -1px 0 rgba(40, 20, 8, 0.65), 1px 1px 0 rgba(40, 20, 8, 0.65),
+    1px -1px 0 rgba(40, 20, 8, 0.65), -1px 1px 0 rgba(40, 20, 8, 0.65),
+    0 0 6px rgba(232, 196, 138, 0.45),
+    0 0 12px rgba(218, 168, 104, 0.28);
   max-width: none;
   border: 0;
   border-radius: 0;
+  text-transform: lowercase;
 }
 .modal-card .modal-body {
   font-family: 'EB Garamond', Georgia, serif;
@@ -4195,10 +4234,16 @@ body { background: transparent !important; }
   font-weight: 500;
   font-size: clamp(14px, 3.6vw, 18px);
   color: #d6a464;
+  /* Same 8-direction outline + soft gold halo as .tap-title — every
+     "real" title in the storybook (cover CTA, index plaque, chapter
+     band, modal heading) now sings in one voice. */
   text-shadow:
-    0 0 4px rgba(232,196,138,.40),
-    0 0 9px rgba(218,168,104,.22),
-    0 1px 0 rgba(80,40,10,.40);
+    -1px 0 0 rgba(40, 20, 8, 0.85), 1px 0 0 rgba(40, 20, 8, 0.85),
+    0 -1px 0 rgba(40, 20, 8, 0.85), 0 1px 0 rgba(40, 20, 8, 0.85),
+    -1px -1px 0 rgba(40, 20, 8, 0.65), 1px 1px 0 rgba(40, 20, 8, 0.65),
+    1px -1px 0 rgba(40, 20, 8, 0.65), -1px 1px 0 rgba(40, 20, 8, 0.65),
+    0 0 6px rgba(232, 196, 138, 0.45),
+    0 0 12px rgba(218, 168, 104, 0.28);
   letter-spacing: 0.04em;
   margin-top: 2px;
   white-space: nowrap;
@@ -4634,10 +4679,16 @@ body { background: transparent !important; }
   line-height: 1.0;
   letter-spacing: .04em;
   color: #d6a464;
+  /* Unified 8-direction outline + soft gold halo — same voice as
+     .tap-title and .frame-chapter .fc-name.  Gold lettering reads
+     cleanly against the plaque's purple dome.                      */
   text-shadow:
-    0 0 4px  rgba(232,196,138,.4),
-    0 0 9px  rgba(218,168,104,.22),
-    0 1px 0  rgba(80,40,10,.4);
+    -1px 0 0 rgba(40, 20, 8, 0.85), 1px 0 0 rgba(40, 20, 8, 0.85),
+    0 -1px 0 rgba(40, 20, 8, 0.85), 0 1px 0 rgba(40, 20, 8, 0.85),
+    -1px -1px 0 rgba(40, 20, 8, 0.65), 1px 1px 0 rgba(40, 20, 8, 0.65),
+    1px -1px 0 rgba(40, 20, 8, 0.65), -1px 1px 0 rgba(40, 20, 8, 0.65),
+    0 0 6px rgba(232, 196, 138, 0.45),
+    0 0 12px rgba(218, 168, 104, 0.28);
   text-transform: none;
   white-space: nowrap;
 }

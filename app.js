@@ -1479,12 +1479,17 @@ const Screens = {
       function drawQ() {
         const stage = $('#oracle-stage', el);
         const q = state.oracleQs[state.oracleIdx];
-        // ❦ flanks dropped per user — the sentence reads cleaner
-        // without ornamental brackets, and the gold rules above +
-        // below already frame the prompt.
+        // Question area = a subtle vellum page with ❦ corner
+        // ornaments + thin antique-gold rules above and below.
+        // Same idiom as the dictation card so chapters 2 + 3
+        // speak one language.
         stage.innerHTML = `
           <div class="q-progress">${String(state.oracleIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="q-sentence-wrap">
+          <div class="q-card">
+            <span class="q-corner q-corner-tl">❦</span>
+            <span class="q-corner q-corner-tr">❦</span>
+            <span class="q-corner q-corner-bl">❦</span>
+            <span class="q-corner q-corner-br">❦</span>
             <div class="q-sentence">${q.sentenceHL}</div>
           </div>
           <div class="oracle-options"></div>
@@ -1650,7 +1655,11 @@ const Screens = {
         const masked = q.prompt.replace(new RegExp(q.answer, 'i'), slot);
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="dict-card">
+          <div class="dict-card q-card">
+            <span class="q-corner q-corner-tl">❦</span>
+            <span class="q-corner q-corner-tr">❦</span>
+            <span class="q-corner q-corner-bl">❦</span>
+            <span class="q-corner q-corner-br">❦</span>
             <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
             <div class="dict-prompt">${masked}</div>
             <div class="dict-foot">
