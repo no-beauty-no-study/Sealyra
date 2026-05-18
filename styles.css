@@ -2250,30 +2250,12 @@ body { background: transparent !important; }
 
 /* ============================================================
    31. CONFIRM-READY MODAL  ("the X awaits")
-   ============================================================ */
-.modal-card.is-ready {
-  border: 1px dashed rgba(244,181,200,.45);
-  background: rgba(8,4,18,.82);
-  padding: 32px 24px 26px;
-}
-.modal-card.is-ready .modal-title {
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 24px;
-  color: var(--cream);
-  letter-spacing: .02em;
-}
-.modal-card.is-ready .modal-body {
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 14px;
-  color: var(--soft);
-  margin: 8px 0 22px;
-}
-.modal-card.is-ready .modal-actions {
-  flex-direction: column;
-  gap: 12px;
-}
+   ============================================================
+   The old dashed pink border + dark fill block lived here.
+   Retired in v=35 — the new .modal-card storybook frame already
+   carries all the visual treatment; the is-ready variant only
+   needs slight body tuning, which is handled inside the main
+   .modal-card block.                                              */
 
 
 /* ============================================================
@@ -2450,20 +2432,9 @@ body { background: transparent !important; }
 /* Defensive: a higher-specificity copy of the outlined-btn rules,
    in case an older sheet pinned .modal-actions .btn to the solid
    pink without leaving a wedge for !important.                     */
-.modal-card .btn,
-.modal-actions .btn,
-.modal-actions button.btn {
-  background: transparent !important;
-  color: var(--cream) !important;
-  border: 1px solid rgba(244,181,200,.45) !important;
-  border-radius: 999px !important;
-  box-shadow: none !important;
-}
-.modal-card .btn.ghost,
-.modal-actions .btn.ghost {
-  border-color: rgba(245,239,227,.28) !important;
-  color: var(--soft) !important;
-}
+/* (Old modal pill-button border block retired in v=35.  The new
+   storybook modal renders buttons as "─── label" gold-rule links,
+   handled by the .modal-card .btn rule near the bottom.)         */
 
 
 /* ============================================================
@@ -3524,61 +3495,235 @@ body { background: transparent !important; }
   z-index: 1000 !important;
 }
 #modal.modal-veil.show { display: flex !important; }
-/* The modal now wears the decorative 0511DE6F nav-card frame as its
-   background — same asset the index page uses for its title plaque
-   wrapper.  The dashed pink rectangle + corner crosses are gone;
-   the frame's painted gold scrollwork carries the decoration. */
+/* v=35 — STORYBOOK MODAL.  Square purple velvet frame with gold
+   hairline border, ❦ corner florals, crescent-moon + 4-point-star
+   ornament at top, painted pink-bow garland at bottom.  Designed
+   from the reference screenshot the user shared.  Lives in the
+   same "fairytale" language as the match cards + parchment so the
+   storybook keeps speaking one voice across screens.              */
 .modal-card {
   position: relative;
-  width: min(92vw, 380px) !important;
-  aspect-ratio: 951 / 597;
+  width: min(80vw, 320px) !important;
+  /* slightly portrait — gives room for moon · title · score ·
+     action · bow without the bow crushing the score line.        */
+  aspect-ratio: 1 / 1.08;
+  /* Same cardstock palette as the match cards (purple velvet + faint
+     gold fibre flecks), unified through the storybook.            */
   background:
-    url("assets/0511DE6F-6C8F-4E5D-9742-5E5AD77DCD98.png?v=31")
-    center/100% 100% no-repeat !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 14% 14% 14% !important;     /* matches the frame's inner safe-zone */
-  box-shadow: 0 12px 40px rgba(0,0,0,.55) !important;
+    radial-gradient(circle 0.7px at 14% 18%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.7px at 78% 28%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.7px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.7px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.7px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.7px at 58% 42%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(ellipse 70% 60% at 50% 0%,
+                    rgba(232, 200, 130, 0.10) 0%,
+                    transparent 70%),
+    linear-gradient(160deg, rgba(46, 32, 70, 0.96), rgba(28, 18, 50, 0.98)) !important;
+  border: 1px solid rgba(218, 168, 104, 0.55) !important;
+  border-radius: 14px !important;
+  padding: 56px 24px 78px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.42),
+    inset 0 0 18px rgba(0, 0, 0, 0.32),
+    0 18px 44px rgba(0, 0, 0, 0.65),
+    0 0 60px rgba(232, 196, 138, 0.18) !important;
   display: flex !important;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  /* Animated entrance — fades in, scales up, with a tiny rotate
+     so the page feels like it's being placed on the desk.        */
+  animation: modal-flip-in 0.42s cubic-bezier(.2,.7,.2,1);
 }
-.modal-title {
-  display: block;
-  margin: 0 auto 8px;
-  padding: 6px 14px;
-  font-family: var(--f-italic);
+@keyframes modal-flip-in {
+  0%   { opacity: 0; transform: scale(0.86) rotate(-3deg); }
+  60%  { opacity: 1; transform: scale(1.02) rotate( 0.6deg); }
+  100% { opacity: 1; transform: scale(1.00) rotate( 0deg); }
+}
+
+/* Corner ❦ — four small antique-gold florals tucked into the
+   border, same glyph as the cover tap-titles so the language is
+   continuous.                                                     */
+.modal-card .m-corner {
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 18px;
-  color: var(--cream);
-  text-align: center;
-  border: 1px solid rgba(244,181,200,.32);
-  border-radius: 999px;
-  max-width: 260px;
+  color: rgba(218, 168, 104, 0.85);
+  text-shadow:
+    0 0 6px rgba(232, 196, 138, 0.55),
+    0 1px 0 rgba(60, 30, 10, 0.55);
+  pointer-events: none;
 }
-.modal-body {
-  font-family: var(--f-italic);
+.modal-card .m-corner-tl { top: 10px; left: 12px; }
+.modal-card .m-corner-tr { top: 10px; right: 12px; }
+.modal-card .m-corner-bl { bottom: 10px; left: 12px; }
+.modal-card .m-corner-br { bottom: 10px; right: 12px; }
+
+/* Top crescent-moon ornament — small icon-moon centred between
+   two ✦ sparkles.  Sits just below the top border.               */
+.modal-card .m-top-orn {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.modal-card .m-moon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(232, 196, 138, 0.55));
+}
+.modal-card .m-orn-star {
+  font-size: 11px;
+  color: rgba(232, 196, 138, 0.85);
+  text-shadow: 0 0 6px rgba(232, 196, 138, 0.65);
+}
+
+/* Bottom bow garland — the painted icon-bow.png anchors the bottom
+   of the frame, hanging slightly below the inner safe-zone.       */
+.modal-card .m-bow {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+/* Title — italic cream, no pill border (it competed with the
+   frame's gold border for attention).  Slight gold drop-shadow
+   makes it read against the velvet.                                */
+.modal-card .modal-title {
+  display: block;
+  margin: 8px 0 6px;
+  padding: 0;
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(22px, 5.4vw, 26px);
+  letter-spacing: 0.02em;
+  color: #f3e3c3;
+  text-shadow:
+    0 0 8px rgba(232, 196, 138, 0.35),
+    0 1px 0 rgba(40, 20, 8, 0.45);
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+}
+.modal-card .modal-body {
+  font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
   font-size: 13px;
-  color: var(--soft);
-  text-align: center;
-  margin: 6px 0 18px;
-  letter-spacing: .02em;
+  color: rgba(232, 200, 158, 0.88);
+  margin: 4px 0 12px;
+  letter-spacing: 0.04em;
+  max-width: 220px;
 }
+
+/* Score — Pinyon Script, big.  The "/ N" denominator rides in
+   Cinzel Decorative so the two glyph families nod to each
+   other (calligraphy + engraved roman).                           */
+.modal-card .modal-score {
+  font-family: 'Pinyon Script', 'Snell Roundhand', 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-size: clamp(46px, 12vw, 64px);
+  line-height: 1;
+  color: #e6c084;
+  margin: 6px 0 10px;
+  text-shadow:
+    0 0 8px rgba(255, 232, 170, 0.55),
+    0 0 20px rgba(232, 196, 138, 0.40),
+    0 1px 0 rgba(80, 40, 10, 0.45);
+}
+.modal-card .modal-score small {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.40em;
+  color: #b8945c;
+  margin-left: 3px;
+  letter-spacing: 0.04em;
+  vertical-align: 0.22em;
+}
+
+/* Actions — single button rendered as "─── see results ───" so
+   it sits in the same idiom as the score-card's hint row, not as
+   a chunky pill that competes with the frame.  Multi-action
+   modals (leave-confirm) fall back to a stacked column.           */
 .modal-actions {
   display: flex !important;
   flex-direction: column !important;
-  gap: 12px;
+  gap: 10px !important;
   align-items: stretch;
+  margin-top: 8px !important;
+  width: 100%;
+  position: relative;
+  z-index: 2;
 }
 .modal-card .btn,
 .modal-actions .btn {
-  width: 100% !important;
-  padding: 14px 18px !important;
-  font-size: 16px !important;
+  width: auto !important;
+  padding: 8px 18px !important;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 15px !important;
+  letter-spacing: 0.08em !important;
+  color: #d6c39a !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   min-width: 0 !important;
+  text-transform: lowercase;
+  position: relative;
+  cursor: pointer;
 }
-.modal-card.is-ready .modal-title { font-size: 20px; padding: 8px 18px; }
+.modal-card .btn::before,
+.modal-card .btn::after {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  vertical-align: middle;
+  margin: 0 8px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(218, 168, 104, 0.55) 30%,
+    rgba(218, 168, 104, 0.55) 70%,
+    transparent 100%);
+}
+.modal-card .btn.primary {
+  color: #f3e3c3 !important;
+}
+.modal-card .btn.ghost {
+  color: rgba(193, 154, 92, 0.66) !important;
+}
+.modal-card .btn:hover,
+.modal-card .btn:active {
+  color: #fff1d0 !important;
+  text-shadow: 0 0 8px rgba(232, 196, 138, 0.55);
+}
+/* is-ready variant — the "stage X awaits" leave-confirm modal.
+   Has TWO actions ("i'm ready ♡" + "a little longer"), so we drop
+   the bottom bow + tighten the layout — the celebration ornament
+   doesn't belong on a decision-point modal anyway.                */
+.modal-card.is-ready {
+  aspect-ratio: auto;
+  padding: 56px 24px 28px !important;
+}
+.modal-card.is-ready .modal-title { font-size: clamp(20px, 5vw, 24px); }
+.modal-card.is-ready .m-bow { display: none; }
+.modal-card.is-ready .modal-actions { gap: 4px !important; }
 
 
 /* ---------- G. Question field ---------- */
@@ -3738,35 +3883,11 @@ body { background: transparent !important; }
 .modal-card .m-spark-bl { animation-delay: 1.3s; }
 .modal-card .m-spark-br { animation-delay: 1.9s; }
 
-/* Modal warmth — gradient bg + an inner rose glow rim */
-.modal-card {
-  background:
-    radial-gradient(ellipse at top, rgba(244,181,200,.10), transparent 55%),
-    linear-gradient(180deg, #14102A 0%, #0A0617 100%) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(244,181,200,.20),
-    inset 0 0 36px rgba(199,122,149,.10),
-    0 16px 44px rgba(0,0,0,.6) !important;
-  padding: 36px 26px 24px !important;
-}
-
-/* Modal title — drop the pill outline, become a real plaque */
-.modal-title {
-  display: block !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  max-width: none !important;
-  margin: 0 0 6px !important;
-  font-family: var(--f-italic) !important;
-  font-style: italic !important;
-  font-size: 22px !important;
-  letter-spacing: .02em !important;
-  color: var(--rose) !important;
-  text-shadow: 0 0 16px rgba(237,184,158,.55) !important;
-}
-.modal-card.is-ready .modal-title { font-size: 24px !important; }
-.modal-title + .modal-body { margin-top: 4px !important; }
+/* (Old "warm rose glow rim" + "rose-coloured plaque title" blocks
+   retired in v=35.  The new storybook modal carries its own
+   palette + animation; legacy rose-pink overrides clashed with
+   the velvet + gold language and stole the bow's pink for the
+   border.  Sweep complete here.)                                  */
 
 /* score in match-popup */
 .modal-score {

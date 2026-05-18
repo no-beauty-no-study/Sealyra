@@ -110,7 +110,24 @@ const SFX = (() => {
     pop:     () => tone([784, 1175, 1568],               0.06, 0.22, 'triangle', 0.12),
     right:   () => tone([880, 1175, 1568],               0.05, 0.22, 'sine',     0.16),
     wrong:   () => tone([311, 207],                      0.07, 0.20, 'square',   0.06),
-    finish:  () => tone([523, 659, 784, 988, 1175, 1318],0.08, 0.26, 'sine',     0.14)
+    finish:  () => tone([523, 659, 784, 988, 1175, 1318],0.08, 0.26, 'sine',     0.14),
+
+    // Result-modal chimes — pick one based on the score band.
+    // PERFECT: full ascending sparkle + shimmer
+    scorePerfect: () => {
+      tone([1175, 1568, 1976, 2349, 2794, 3136], 0.05, 0.28, 'triangle', 0.14);
+      setTimeout(() => tone([2349, 2794, 3136, 3520], 0.04, 0.22, 'sine', 0.09), 90);
+      setTimeout(() => tone([3520, 4186], 0.04, 0.16, 'sine', 0.06), 220);
+    },
+    // GOOD: warm major arpeggio
+    scoreGood: () => {
+      tone([784, 988, 1175, 1397], 0.06, 0.24, 'triangle', 0.13);
+      setTimeout(() => tone([1568, 1976], 0.05, 0.18, 'sine', 0.08), 100);
+    },
+    // OK: gentle two-note chime
+    scoreOk: () => tone([784, 988], 0.10, 0.32, 'sine', 0.11),
+    // LOW: soft minor sigh — encouraging, never punishing
+    scoreLow: () => tone([523, 622], 0.12, 0.36, 'sine', 0.09)
   };
 })();
 
@@ -1067,26 +1084,47 @@ function buildOracleQuestion(word) {
 function showModal({ title, body = '', score = null, actions = [], variant = '' }) {
   const veil = $('#modal');
   const cls = 'modal-card' + (variant ? ` is-${variant}` : '');
-  // Real sparkle PNGs live in the corners — iOS renders <img> alpha
-  // natively, unlike CSS gradient pseudo-elements which kept tofu-ing
-  // into white pluses.
+  // v=35 modal — fairytale storybook frame.  Moon + four-point star at
+  // the top, pink bow with garland at the bottom, gold corner florals.
+  // Layout inside the frame:
+  //   moon · star ornament
+  //   title (italic cream)
+  //   score (Pinyon Script big number) — optional
+  //   long gold rule + first action — laid out as "─── see results"
+  //   bow + floral garland
   veil.innerHTML = `
     <div class="${cls}">
-      <img class="m-spark m-spark-tl" src="assets/icon-spark-s.png?v=25" alt="">
-      <img class="m-spark m-spark-tr" src="assets/icon-spark-s.png?v=25" alt="">
-      <img class="m-spark m-spark-bl" src="assets/icon-spark-s.png?v=25" alt="">
-      <img class="m-spark m-spark-br" src="assets/icon-spark-s.png?v=25" alt="">
+      <span class="m-corner m-corner-tl">❦</span>
+      <span class="m-corner m-corner-tr">❦</span>
+      <span class="m-corner m-corner-bl">❦</span>
+      <span class="m-corner m-corner-br">❦</span>
+      <div class="m-top-orn">
+        <span class="m-orn-star">✦</span>
+        <img class="m-moon" src="assets/icon-moon.png?v=31" alt="">
+        <span class="m-orn-star">✦</span>
+      </div>
       <div class="modal-title">${escapeHtml(title)}</div>
       ${body  ? `<div class="modal-body">${escapeHtml(body)}</div>` : ''}
       ${score ? `<div class="modal-score">${score.value}<small> / ${score.total}</small></div>` : ''}
       <div class="modal-actions"></div>
+      <img class="m-bow" src="assets/icon-bow.png?v=31" alt="">
     </div>
   `;
   const ar = $('.modal-actions', veil);
   actions.forEach(a => {
     ar.appendChild(btn(a.label, () => { hideModal(); a.onClick && a.onClick(); }, { variant: a.variant || '' }));
   });
-  SFX.pop();
+  // Score-aware entrance chime — perfect / good / so-so / low.  Falls
+  // back to the old "pop" if no score is supplied (leave-confirm modals).
+  if (score && typeof score.value === 'number' && typeof score.total === 'number') {
+    const pct = score.value / Math.max(1, score.total);
+    if      (pct >= 0.99) SFX.scorePerfect();
+    else if (pct >= 0.75) SFX.scoreGood();
+    else if (pct >= 0.40) SFX.scoreOk();
+    else                  SFX.scoreLow();
+  } else {
+    SFX.pop();
+  }
   veil.classList.add('show');
 }
 function hideModal() { $('#modal').classList.remove('show'); }
