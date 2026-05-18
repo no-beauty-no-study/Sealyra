@@ -341,24 +341,27 @@ function mainCTA(label, onClick) {
 // Passing { confirm: true } wraps the click in the "are you ready" modal,
 // which is how every stage→stage transition should behave so the BGM swap
 // has a clean handoff moment.
+// v=41 — nextDoor wears the SAME tap-title.is-cta dress as the cover's
+// "Tonight's Reading" so each stage transition reads as "turning to
+// the next page of the storybook".  Label: "Next Page" between stages
+// of one chapter, "Next Chapter" between chapters (cover-bound).
 function nextDoor(label, onClick, { confirm = false } = {}) {
   const a = document.createElement('button');
-  a.className = 'next-door';
-  a.innerHTML = `<span class="nd-text">${escapeHtml(label)}</span>`;
+  a.className = 'next-door tap-title is-cta';
+  a.innerHTML = `
+    <span class="tt-glyph">❦</span>
+    <span class="tt-text">${escapeHtml(label)}</span>
+    <span class="tt-glyph">❦</span>
+  `;
   a.addEventListener('click', () => {
     if (a.classList.contains('is-engaged')) return;
-    LanBGM.unlock();                  // safe to repeat-call
-    a.classList.add('is-engaged');     // glow always — same beat as Tonight's Reading
+    LanBGM.unlock();
+    a.classList.add('is-engaged');
     SFX.tap();
     if (confirm) {
       confirmReady(label, () => { onClick && onClick(); });
-      // After the modal closes, allow another tap if the user picks "stay".
       setTimeout(() => a.classList.remove('is-engaged'), 900);
     } else {
-      // ALWAYS un-engage after the action runs.  If onClick navigates
-      // away the element is gone anyway; if onClick just popped a
-      // validation modal (e.g. "colour every card first") the user
-      // needs to be able to tap the button again afterwards.
       setTimeout(() => {
         onClick && onClick();
         a.classList.remove('is-engaged');
@@ -1440,7 +1443,7 @@ const Screens = {
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
-      $('.match-actions', el).appendChild(nextDoor('the reading', () => go('stage2'), { confirm: true }));
+      $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage2'), { confirm: true }));
 
       const grid = $('.match-result-grid', el);
       result.forEach(r => {
@@ -1626,7 +1629,7 @@ const Screens = {
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
-      $('.match-actions', el).appendChild(nextDoor('the writing hand', () => go('stage3'), { confirm: true }));
+      $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
       const grid = $('.result-grid', el);
       state.session.words.forEach(w => grid.appendChild(renderExCard(w, state.results[w].oracle, { rewrite: true, withControls: false })));
     }
@@ -1762,7 +1765,7 @@ const Screens = {
 
       el.appendChild(closeCorner({ to: 'cover' }));
 
-      $('.match-actions', el).appendChild(nextDoor('the next chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
+      $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
 
       const tickHtml = v =>
         v === null ? `<div class="tick">—</div>`

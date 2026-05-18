@@ -1255,26 +1255,14 @@ body.cover-pending .cover-gate     { visibility: visible; }
 .main-cta.is-engaged .cta-key  { color: var(--rose); opacity: 1; }
 
 /* "next stage / next chapter" door button — pink pill with two keys */
+/* (Old pink-pill .next-door retired in v=41 — the button now wears
+   the same .tap-title.is-cta dress as the cover's Tonight's Reading
+   so every "turn the page" doorway speaks one visual language.) */
 .next-door {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 22px;
-  background: linear-gradient(180deg, rgba(244,181,200,.18), rgba(199,122,149,.22));
-  border: 1px solid rgba(244,181,200,.55);
-  border-radius: 999px;
-  cursor: pointer;
-  color: var(--pink-soft);
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 15px;
-  letter-spacing: .08em;
-  box-shadow: 0 0 14px rgba(244,181,200,.18);
-  transition: box-shadow .25s, transform .15s;
+  /* Slight bump on top spacing so the gold underline doesn't crowd
+     the score frame above.                                          */
+  margin-top: 18px;
 }
-.next-door:hover { box-shadow: 0 0 20px rgba(244,181,200,.42); }
-.next-door:active { transform: translateY(1px); }
-.next-door.is-engaged { box-shadow: 0 0 26px rgba(237,184,158,.7); color: var(--cream); }
 .next-door .nd-key { color: var(--gold-deep); display: inline-flex; }
 .next-door .nd-key .ico-key { width: 10px; height: 32px; }
 .next-door .nd-key:first-child .ico-key { transform: rotate(-12deg); }
@@ -1768,21 +1756,24 @@ body { background: transparent !important; }
    identical: chapter → painted frame → content list.               */
 .score-frame {
   position: relative;
-  /* DCE4B4FE landscape asset — 1100/783 = 1.405.  Bow + key + moon +
-     gold florals are all painted in.  The inner safe-zone (measured
-     from the painted ornaments):
-       top    ~22 %  (clear of the bow + moon + star top ornaments)
-       bottom ~22 %  (clear of the gold key at the base)
-       sides  ~16 %  (clear of the floral side trails)
-     so the score number sits centred in the open velvet field.    */
+  /* DCE4B4FE landscape asset — 1100/783.  Bow + key + moon + star +
+     gold florals all painted in.  v=41: pulled UP with a chunky
+     negative margin so the chapter band overlaps the top edge —
+     per user sketch, the chapter title reads as a "sash crossing
+     the bow".  Reduces vertical real-estate so the page packs
+     denser ("人类很懒惰 下滑太多内容会感觉累").                       */
   width: min(82vw, 360px);
   aspect-ratio: 1100 / 783;
-  margin: -2px auto 6px;
+  margin: -38px auto 0;
   background:
     url("assets/DCE4B4FE-19E7-4404-93CF-D8A57B6B2AB6.png?v=40")
     center/100% 100% no-repeat;
   filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.50));
+  z-index: 1;
 }
+/* Chapter band that precedes the score frame should sit ABOVE it
+   in z-order so the negative-margin overlap reads correctly.   */
+.frame-chapter { z-index: 2; position: relative; }
 .score-frame .score-frame-inner {
   position: absolute;
   /* The DCE4B4FE bow extends down ~30 % from the top; key extends
@@ -2054,6 +2045,39 @@ body { background: transparent !important; }
 }
 .ex-card.is-correct { border-color: var(--rose);  box-shadow: var(--rose-glow), 0 6px 28px rgba(0,0,0,.35); }
 .ex-card.is-wrong   { border-color: rgba(244,181,200,.45); box-shadow: 0 0 14px rgba(199,122,149,.18); }
+
+/* v=41 — COMPACT ex-card inside .result-grid.  The full ex-card on
+   the standalone card screen stays roomy; on the stage 2 / 3 / 3-
+   summary result pages the cards are stacked, so we squeeze every
+   row to raise information density per page ("人类很懒惰" — less
+   scroll = better).                                                */
+.result-grid .ex-card {
+  margin: 8px auto;
+  padding: 28px 16px 30px;
+  border-radius: 10px;
+  width: calc(100% - 18px);
+}
+.result-grid .ex-head { padding: 0 0 3px; gap: 6px; }
+.result-grid .ex-head .ex-headword { font-size: 21px; }
+.result-grid .ex-head .ex-pos       { font-size: 11px; }
+.result-grid .ex-head .ex-headword-zh { font-size: 12px; }
+.result-grid .ex-section .ex-label { font-size: 9.5px; margin: 8px 0 3px; letter-spacing: 0.22em; }
+.result-grid .ex-card .fam-row,
+.result-grid .ex-card .fam-head,
+.result-grid .ex-card .colloc-row,
+.result-grid .ex-card .ex-example { font-size: 12px; line-height: 1.32; padding: 2px 0; }
+.result-grid .ex-card .fam-word { font-size: 12.5px; }
+.result-grid .ex-card .colloc-en { font-size: 12.5px; }
+.result-grid .ex-card .colloc-zh,
+.result-grid .ex-card .fam-ex-zh { font-size: 10.5px; }
+.result-grid .ex-card .ex-example-en { font-size: 12.5px; }
+.result-grid .ex-card .ex-example-zh { font-size: 10.5px; }
+.result-grid .ex-card .ex-divider { margin: 5px 0; }
+.result-grid .ex-card .ex-rewrite-label { font-size: 10px; margin-top: 6px; }
+.result-grid .ex-card .ex-rewrite input { font-size: 12px; padding: 5px 8px; }
+.result-grid .ex-card .ex-neighbor { padding: 3px 0; }
+.result-grid .ex-card .ex-neighbor-link { font-size: 11.5px; padding: 2px 10px; }
+.result-grid .ex-card-close { top: 8px; font-size: 9.5px; }
 
 /* Card's own close + fold pills — top-right / bottom-right */
 .ex-card-close, .ex-card-fold {
