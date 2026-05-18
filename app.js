@@ -1452,14 +1452,18 @@ const Screens = {
           <div class="dict-prompt-zh">${escapeHtml(q.prompt_zh)}</div>
           <div class="dict-input-row">
             <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}…">
-            <img class="dict-quill" src="assets/icon-quill.png?v=25" alt="">
+            <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
+              <img src="assets/icon-quill.png?v=25" alt="">
+            </button>
           </div>
           <div class="dict-feedback" id="dict-feedback"></div>
           <div class="dict-actions" id="dict-actions"></div>
         `;
         const input = $('#dict-input', stage);
-        const actions = $('#dict-actions', stage);
-        actions.appendChild(nextDoor('write', () => check()));
+        // The quill IS the submit affordance — parchment signed-line idiom.
+        $('#dict-quill', stage).addEventListener('click', () => check());
+        // Keyboard users still get Enter-to-submit.
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
         input.focus();
         input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
       }

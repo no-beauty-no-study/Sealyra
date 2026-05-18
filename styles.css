@@ -632,7 +632,10 @@ body.cover-pending .cover-gate     { visibility: visible; }
   color: var(--muted);
   margin: 16px 0 6px;
 }
-.dict-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+/* dict-actions row no longer holds a submit button — the quill IS
+   the submit affordance now.  Keep the container for the feedback
+   slot but no margin/visible.                                       */
+.dict-actions { display: none; }
 
 /* ---------- 10. Modal ---------- */
 .modal-veil {
@@ -3480,23 +3483,59 @@ body { background: transparent !important; }
   border-bottom-color: rgba(244,181,200,.45) !important;
   color: rgba(244,181,200,.5) !important;
 }
+/* Signed-line idiom from the parchment popup, brought to the
+   dictation page: the input is the line you write on, the quill
+   sits at the end like the signature mark, and tapping the quill
+   IS the submit gesture (no separate confirm button). */
 .dict-input-row {
   display: flex !important;
-  align-items: flex-end !important;
+  align-items: center !important;
   justify-content: center !important;
-  gap: 14px !important;
-  max-width: 460px !important;
+  gap: 16px !important;
+  max-width: 420px !important;
   margin: 22px auto 8px !important;
-  padding: 0 18px;
+  padding: 0 22px;
 }
 .dict-quill {
-  width: 32px !important;
-  height: 80px !important;
+  /* button reset */
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  /* big, prominent — same vertical weight as the parchment's
+     decorative side-quill.                                       */
+  width: 56px !important;
+  height: 96px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* breathing gold glow under the quill — "tap me" hint     */
+  animation: dict-quill-breathe 2.4s ease-in-out infinite;
+  transition: transform 0.18s;
+}
+.dict-quill img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  opacity: .85;
   pointer-events: none;
-  filter: drop-shadow(0 0 6px rgba(237,184,158,.32));
-  align-self: flex-end;
+  /* warm + brighten the quill PNG so it reads on the dark bg
+     even at the breathing animation's low point.            */
+  filter: brightness(1.25) saturate(1.1)
+          drop-shadow(0 0 10px rgba(232, 196, 138, 0.70));
+}
+.dict-quill:hover { transform: scale(1.06) rotate(-3deg); }
+.dict-quill:active { transform: scale(0.98); }
+/* Breath sits on the button itself (drop-shadow under the img) so
+   it stacks with the image's own warm-up filter without clobbering
+   it.                                                              */
+@keyframes dict-quill-breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(232, 196, 138, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(232, 196, 138, 0.32);
+  }
 }
 .dict-feedback {
   text-align: center;
