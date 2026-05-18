@@ -1301,7 +1301,11 @@ const Screens = {
         const q = state.oracleQs[state.oracleIdx];
         stage.innerHTML = `
           <div class="q-progress">${String(state.oracleIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="q-sentence">${q.sentenceHL}</div>
+          <div class="q-sentence-wrap">
+            <span class="q-glyph q-glyph-l">❦</span>
+            <div class="q-sentence">${q.sentenceHL}</div>
+            <span class="q-glyph q-glyph-r">❦</span>
+          </div>
           <div class="oracle-options"></div>
         `;
         const opts = $('.oracle-options', stage);
@@ -1440,7 +1444,11 @@ const Screens = {
         );
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="dict-prompt">${masked}</div>
+          <div class="q-sentence-wrap">
+            <span class="q-glyph q-glyph-l">❦</span>
+            <div class="dict-prompt">${masked}</div>
+            <span class="q-glyph q-glyph-r">❦</span>
+          </div>
           <div class="dict-prompt-zh">${escapeHtml(q.prompt_zh)}</div>
           <div class="dict-input-row">
             <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}…">

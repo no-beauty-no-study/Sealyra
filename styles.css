@@ -2506,25 +2506,26 @@ body { background: transparent !important; }
 .card--option::before { left: 11px;  }
 .card--option::after  { right: 11px; }
 
-/* is-picking — pink "I chose this" dye: body picks up a rose tint,
-   border + suits brighten to rose.  No glow — glow is reserved for
-   the CORRECT card (reveal-right). */
+/* is-picking + picked-wrong — dyed in the match-card's WINE
+   palette (tag-2 ♠).  Consistent "red card" idiom with the
+   matching game, per user.  NO halo — only the correct answer
+   (.reveal-right) gets the gold breathing halo.                  */
 .card--option.is-picking,
 .card--option.picked-wrong {
   background:
     radial-gradient(ellipse 130% 110% at 50% 50%,
-                    rgba(212, 142, 168, 0.22) 0%,
-                    rgba(178, 102, 134, 0.12) 60%,
+                    rgba(196, 122, 138, 0.22) 0%,
+                    rgba(160, 80, 96, 0.12) 60%,
                     transparent 100%),
-    linear-gradient(160deg, rgba(46, 22, 36, 0.94), rgba(28, 12, 22, 0.97)) !important;
-  border-color: rgba(212, 142, 168, 0.78) !important;
-  color: #f4cfd9 !important;
+    linear-gradient(160deg, rgba(40, 16, 22, 0.94), rgba(22, 8, 12, 0.97)) !important;
+  border-color: rgba(180, 88, 104, 0.85) !important;
+  color: rgba(220, 156, 168, 0.96) !important;
 }
 .card--option.is-picking::before,
 .card--option.is-picking::after,
 .card--option.picked-wrong::before,
 .card--option.picked-wrong::after {
-  color: rgba(232, 168, 192, 0.85) !important;
+  color: rgba(212, 152, 184, 0.92) !important;
 }
 
 /* flip — Y-axis rotate while picking (320 ms, matches match-card) */
@@ -2646,17 +2647,39 @@ body { background: transparent !important; }
    the blank is wrapped in <em class="q-blank"> so we can underline
    it like a fill-in field.  After the user picks, a hint at the
    bottom waits for any tap to flip to the next question.            */
+/* wrap holds ❦ ❦ flanks on either side of the question prompt
+   so the sentence reads as a quoted passage, not bare text.   */
+.q-sentence-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 92%;
+  margin: 6px auto 6px;
+}
+.q-glyph {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: rgba(232, 196, 138, 0.95);
+  flex-shrink: 0;
+  text-shadow:
+    0 0 8px rgba(232, 196, 138, 0.55),
+    0 0 18px rgba(218, 168, 104, 0.32),
+    0 1px 0 rgba(40, 20, 8, 0.55);
+}
 .q-sentence {
   position: relative;
+  flex: 1;
   font-family: var(--f-italic);
   font-style: italic;
   font-size: 22px;
   line-height: 1.55;
   color: var(--cream);
   text-align: center;
-  padding: 16px 24px;
-  max-width: 88%;
-  margin: 4px auto 6px;
+  padding: 16px 14px;
+  margin: 0;
 }
 .q-sentence::before,
 .q-sentence::after {
@@ -5355,25 +5378,20 @@ body { background: transparent !important; }
   transition: background 0.2s;
 }
 .pc-play-row:hover { background: rgba(110, 63, 18, 0.06); }
-/* writing-reveal: when a ♪ row is tapped, a brief left→right
-   wipe re-draws the text as if it's being written in ink.   */
-.pc-play-row.is-playing {
-  background: rgba(196, 152, 88, 0.18);
+.pc-play-row.is-playing { background: rgba(196, 152, 88, 0.18); }
+/* writing-reveal — when a ♪ row goes is-playing, the phrase text
+   re-draws left → right via a clip-path inset animation.  Result:
+   text appears as if being written in ink.  clip-path on text is
+   supported on iOS Safari + Chrome, no transparent-text trick. */
+.pc-play-row.is-playing .pc-play-phrase,
+.pc-play-row.is-playing .pc-play-zh,
+.pc-play-row.is-playing .pc-ex-en {
+  animation: pc-ink-write 0.65s ease-out;
+  display: inline-block;
 }
-.pc-play-row.is-playing .pc-play-phrase {
-  background-image: linear-gradient(90deg,
-    rgba(176, 122, 40, 0.45) 0%,
-    rgba(176, 122, 40, 0.45) 50%,
-    transparent 50%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  animation: pc-ink-reveal 0.6s ease-out forwards;
-}
-@keyframes pc-ink-reveal {
-  0%   { background-position: 100% 0; }
-  100% { background-position: 0% 0;   }
+@keyframes pc-ink-write {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0    0 0); }
 }
 .pc-play-row .pc-play {
   background: none;
