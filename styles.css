@@ -3180,28 +3180,49 @@ body { background: transparent !important; }
    q-card reserves that space via padding-bottom (set elsewhere).
    linear-gradient bands draw the two solid flap edges; a second
    pseudo-element draws the dotted stitching.                     */
+/* v=58 — q-card flap drawn via inline SVG (.q-flap-svg) instead
+   of CSS gradients.  The gradient bands rendered the V inverted
+   AND added phantom horizontal lines at the band edges — both
+   gone.  SVG polyline goes (0,0) → (50,100) → (100,0), so for a
+   bottom-anchored SVG the V points UP from the bottom apex,
+   which is exactly the envelope-flap shape: two diagonal lines
+   running from the top corners of the flap region DOWN to the
+   bottom-centre where the bow sits.  Stroke is 1 px non-scaling
+   so the lines match the outer card border thickness.            */
 .q-card::before {
-  /* v=57c — JUST the V-shape flap outline.  No filled triangle,
-     no gradient fill — those drew extra lines the user wanted
-     gone.  Two clean gold diagonals from the top of the flap
-     region down to the bottom-centre.                            */
+  /* v=58 — kept as a 3D INNER DARKEN layer.  No more gradient
+     lines; just a soft vignette so the card body feels recessed
+     ("内里加深 立体感 卡牌那种" per user).                       */
   content: '';
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 3px;
+  background:
+    radial-gradient(ellipse 95% 80% at 50% 45%,
+                    rgba(0, 0, 0, 0.00) 0%,
+                    rgba(0, 0, 0, 0.18) 75%,
+                    rgba(0, 0, 0, 0.36) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.18),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.42),
+    inset 2px 0 6px rgba(0, 0, 0, 0.28),
+    inset -2px 0 6px rgba(0, 0, 0, 0.28);
+}
+.q-flap-svg {
+  /* v=58 — V spans roughly the bottom 55 % of the card so the
+     diagonals start near the TOP-SIDE edges (matching the user's
+     sketch where the flap opens almost all the way up).         */
   position: absolute;
   left: 0;
   right: 0;
+  top: 45%;
   bottom: 0;
-  height: 90px;
+  width: 100%;
   pointer-events: none;
-  z-index: 0;
-  background:
-    linear-gradient(to bottom right,
-      transparent calc(50% - 0.9px),
-      rgba(232, 196, 138, 0.85) calc(50% - 0.9px) calc(50% + 0.9px),
-      transparent calc(50% + 0.9px)) 0 0 / 50% 100% no-repeat,
-    linear-gradient(to bottom left,
-      transparent calc(50% - 0.9px),
-      rgba(232, 196, 138, 0.85) calc(50% - 0.9px) calc(50% + 0.9px),
-      transparent calc(50% + 0.9px)) 100% 0 / 50% 100% no-repeat;
+  z-index: 1;
+  overflow: visible;
 }
 /* DOTTED STITCHING — left + bottom + right inset rules, mark
    the visible "back" of the envelope around the flap.            */

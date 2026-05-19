@@ -1804,6 +1804,11 @@ const Screens = {
             <span class="q-corner q-corner-tr">✦</span>
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
+            <svg class="q-flap-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,0 50,100 100,0"
+                fill="none" stroke="#daa868" stroke-width="1" stroke-linejoin="round"
+                vector-effect="non-scaling-stroke"/>
+            </svg>
             <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
             <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
@@ -2048,6 +2053,11 @@ const Screens = {
             <span class="q-corner q-corner-tr">✦</span>
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
+            <svg class="q-flap-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points="0,0 50,100 100,0"
+                fill="none" stroke="#daa868" stroke-width="1" stroke-linejoin="round"
+                vector-effect="non-scaling-stroke"/>
+            </svg>
             <div class="dict-prompt">${masked}</div>
             <div class="dict-zh-hint">${escapeHtml(q.sentence_zh)}</div>
             <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
