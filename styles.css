@@ -3308,13 +3308,20 @@ body { background: transparent !important; }
   z-index: 1;
   font-family: var(--f-italic);
   font-style: italic;
-  /* v=60 — font down to 11 px per user "再小点".  Long IELTS
-     contextual sentences fit in 2–3 lines comfortably.            */
-  font-size: 11px !important;
-  line-height: 1.5 !important;
+  /* v=61 — font 10 px per user "再小点".  IELTS sentences fit in
+     2 lines.                                                       */
+  font-size: 10px !important;
+  line-height: 1.55 !important;
   color: var(--cream) !important;
   text-align: center;
-  padding: 4px 2px !important;
+  /* v=61 — same gold horizontal rules on dict-prompt as on q-
+     sentence so stage 2 and stage 3 show the SAME pair of lines
+     above + below the question text per user.  They're from the
+     border-top/border-bottom on .q-sentence (line 558-559) — the
+     real source of the "两根横线" the user kept reporting.       */
+  border-top: 1px solid var(--line-gold) !important;
+  border-bottom: 1px solid var(--line-gold) !important;
+  padding: 12px 4px !important;
   margin: 0 !important;
 }
 .dict-prompt, .dict-zh-hint { position: relative; z-index: 1; }
