@@ -227,14 +227,22 @@ const Store = {
   load() {
     try {
       return Object.assign(
-        { progress: 0, learned: {}, mistakes: {} },
+        { progress: 0, learned: {}, mistakes: {}, chapter: 1 },
         JSON.parse(localStorage.getItem('hll-state') || '{}')
       );
-    } catch { return { progress: 0, learned: {}, mistakes: {} }; }
+    } catch { return { progress: 0, learned: {}, mistakes: {}, chapter: 1 }; }
   },
   save() { try { localStorage.setItem('hll-state', JSON.stringify(saved)); } catch {} }
 };
 const saved = Store.load();
+if (!saved.chapter || saved.chapter < 1) { saved.chapter = 1; Store.save(); }
+// v=63 — restart-game reset: chapter only.  Learned + mistakes are
+// lifetime stats; user resets the "where am I in the storybook"
+// counter, not their notebook.
+function resetChapterProgress() {
+  saved.chapter = 1;
+  Store.save();
+}
 function recordMistake(word) {
   saved.mistakes[word] = (saved.mistakes[word] || 0) + 1;
   Store.save();
@@ -580,14 +588,17 @@ function titleStrip() {
     </div>
   `;
 }
-function stageHeader(chapterN, name) {
-  // v=26: chapter title sits inside the long-frame PNG (6794E86E) so the
-  // matching/reading/inscription pages all share the same purple-gold band.
+function stageHeader(stageN, name) {
+  // v=63: header now shows the PERSISTED chapter counter (saved.chapter)
+  // on the top line and the stage's painted name (The Matching / The
+  // Reading / The Inscription) underneath, with a small "Stage N of 3"
+  // chip so the user knows where they are inside the current chapter.
   return `
     <div class="frame-chapter">
       <div class="frame-chapter-text">
-        <span class="fc-num">Chapter · ${chapterN}</span>
+        <span class="fc-num">Chapter · ${saved.chapter}</span>
         <span class="fc-name">${escapeHtml(name)}</span>
+        <span class="fc-stage">Stage ${stageN} of 3</span>
       </div>
     </div>
   `;
@@ -1450,25 +1461,33 @@ const Screens = {
   cover: {
     onEnter() {
       const el = $('#screen-cover');
-      const learnedCount = Object.keys(saved.learned).length;
       el.innerHTML = '';
 
+      // v=63 — chapter counter persists across sessions.  The CTA
+      // is always "Continue Reading" — it picks up at whatever
+      // chapter the user last left unfinished.  A first-time player
+      // sees Chapter · 1.  Under the title we show a small italic
+      // "Restart Game" link (replacing the old "X of N awakened"
+      // counter), which resets the chapter counter back to 1.
       const stage = document.createElement('div');
       stage.className = 'cover-stage';
       stage.innerHTML = `
         <div class="cover-mid">
           <div id="cover-cta-slot"></div>
-          <div class="home-stats">${learnedCount} of ${TOTAL_WORDS} awakened</div>
+          <div class="cover-restart" id="cover-restart-slot"></div>
         </div>
         <div class="cover-bottom">
           <div class="lil-row" id="cover-links"></div>
         </div>
       `;
       el.appendChild(stage);
-      // cover IS the home — no back-to-cover star button here.
 
-      // Tonight's Reading — unlocks audio on the way into stage 1.
-      $('#cover-cta-slot', el).appendChild(mainCTA(`Tonight's Reading`, () => {
+      // Continue Reading — unlocks audio + starts (or resumes) at the
+      // current chapter.  Each completed run-through stage1→2→3 bumps
+      // saved.chapter by one, so re-opening the page lands here on
+      // the next unfinished chapter.
+      const ctaLabel = 'Continue Reading';
+      $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
         fade.className = 'fade-out';
@@ -1482,6 +1501,28 @@ const Screens = {
           fade.classList.remove('show');
         }, 1000);
       }));
+
+      // v=63 — small italic "Restart Game · Chapter N" link.  Tap →
+      // confirm modal → reset chapter counter to 1.  Sits where
+      // the lifetime "X of N awakened" line used to.
+      const restart = document.createElement('button');
+      restart.className = 'cover-restart-btn';
+      restart.innerHTML = `<span class="cr-glyph">❦</span><span class="cr-text">Restart Game</span><span class="cr-chapter">Chapter · ${saved.chapter}</span>`;
+      restart.addEventListener('click', () => {
+        SFX.tap();
+        showModal({
+          title: 'Restart from Chapter One?',
+          body: `Your notebook of learned words will stay. Only the chapter mark resets.`,
+          actions: [
+            { label: 'keep reading', variant: 'ghost', onClick: () => {} },
+            { label: 'restart',       variant: '',     onClick: () => {
+              resetChapterProgress();
+              go('cover');
+            }}
+          ]
+        });
+      });
+      $('#cover-restart-slot', el).appendChild(restart);
       // her note / the index sit in the cover's "home" pool.  The
       // smart-play inside LanBGM no-ops when the same pool is already
       // running, so the music continues uninterrupted as the user
@@ -1771,11 +1812,13 @@ const Screens = {
     onEnter() {
       LanBGM.playHomeRandom({ volume: 0.38 });
       const el = $('#screen-stage2');
-      state.sceneIdx     = 0;
-      state.sceneFills   = [];
-      state.sceneActive  = 0;
-      state.sceneOptions = null;
-      state.sceneGraded  = false;
+      state.sceneIdx        = 0;
+      state.sceneFills      = [];          // user's pick per blank
+      state.sceneActive     = 0;           // active blank index
+      state.sceneOptions    = null;        // flat 12 (shuffled)
+      state.scenePerBlank   = null;        // [[4],[4],[4]] candidates per blank
+      state.sceneGraded     = false;
+      state.sceneReviewBlank = -1;         // currently-highlighted blank (review)
       el.innerHTML = `
         ${stageHeader(2, 'The Reading')}
         <div class="oracle-stage" id="oracle-stage"></div>
@@ -1785,30 +1828,53 @@ const Screens = {
 
       function currentQ() { return state.session.scenes[state.sceneIdx]; }
 
-      // Trim options to 4 per question: always include every answer
-      // (so the question is solvable) plus random distractors up to 4.
-      function pickFourOptions(q) {
-        const all = q.options || [];
-        const answers = q.answers || [];
-        const distractors = all.filter(o => !answers.includes(o));
-        const need = Math.max(0, 4 - answers.length);
-        const picks = [...answers, ...shuffle(distractors).slice(0, need)];
-        // pad with extra distractors / fall back if still short
-        while (picks.length < 4 && distractors.length) {
-          const d = rand(distractors);
-          if (!picks.includes(d)) picks.push(d);
-        }
-        return shuffle(picks).slice(0, Math.min(4, picks.length));
+      // v=63 — 3 blanks + 12 options.  For each answer we build a
+      // 4-card group sharing the answer's first letter (3 random
+      // PARCHMENT_CARDS distractors + the answer).  The flat 12 is
+      // shuffled.  scenePerBlank lets us "filter back" to the
+      // candidates for blank i during the review step.
+      function buildOptionsFor(q) {
+        const answers = (q.answers || []).slice();
+        const taken = new Set(answers);
+        const perBlank = answers.map(ans => {
+          const letter = (ans[0] || '').toLowerCase();
+          const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
+            if (!w) return false;
+            if (w[0].toLowerCase() !== letter) return false;
+            if (taken.has(w)) return false;
+            return true;
+          });
+          const distractors = shuffle(pool).slice(0, 3);
+          distractors.forEach(d => taken.add(d));
+          return shuffle([ans, ...distractors]);
+        });
+        // If a group came back short (rare — letter pool tiny), pad
+        // with anything from q.options that isn't already used.
+        perBlank.forEach((grp, i) => {
+          while (grp.length < 4 && (q.options || []).length) {
+            const cand = q.options.find(o => !taken.has(o));
+            if (!cand) break;
+            taken.add(cand);
+            grp.push(cand);
+          }
+        });
+        return {
+          perBlank,
+          flat: shuffle(perBlank.flat())
+        };
       }
 
       function drawQ() {
         const stage = $('#oracle-stage', el);
         const q = currentQ();
         const total = state.session.scenes.length;
-        state.sceneFills   = new Array(q.blank_count).fill(null);
-        state.sceneActive  = 0;
-        state.sceneOptions = pickFourOptions(q);
-        state.sceneGraded  = false;
+        const built = buildOptionsFor(q);
+        state.sceneFills       = new Array(q.blank_count || q.answers.length).fill(null);
+        state.sceneActive      = 0;
+        state.scenePerBlank    = built.perBlank;
+        state.sceneOptions     = built.flat;
+        state.sceneGraded      = false;
+        state.sceneReviewBlank = -1;
         stage.innerHTML = `
           <div class="q-progress">${String(state.sceneIdx + 1).padStart(2, '0')} · ${String(total).padStart(2, '0')}</div>
           <div class="q-card">
@@ -1819,7 +1885,7 @@ const Screens = {
             <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
             <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
-          <div class="oracle-options"></div>
+          <div class="oracle-options is-grid-12"></div>
         `;
         wireSlots();
         renderOptions();
@@ -1830,8 +1896,14 @@ const Screens = {
         return escapeHtml(q.blank_sentence).replace(/_{3,}/g, () => {
           const i = slotIdx++;
           const filled  = state.sceneFills[i];
-          const active  = i === state.sceneActive && !state.sceneGraded;
+          const active  = (i === state.sceneActive && !state.sceneGraded)
+                       || (state.sceneGraded && i === state.sceneReviewBlank);
+          const ans     = (currentQ().answers || [])[i];
           let cls = 'q-slot' + (filled ? ' is-filled' : '') + (active ? ' is-active' : '');
+          if (state.sceneGraded) {
+            const right = (filled || '').toLowerCase() === (ans || '').toLowerCase();
+            cls += right ? ' is-right' : ' is-wrong';
+          }
           const inner = filled ? escapeHtml(filled) : '<span class="q-slot-tail">&nbsp;</span>';
           return `<span class="${cls}" data-slot="${i}">${inner}</span>`;
         });
@@ -1840,9 +1912,19 @@ const Screens = {
       function wireSlots() {
         $$('.q-slot', el).forEach(slot => {
           slot.addEventListener('click', (ev) => {
-            if (state.sceneGraded) return;
             ev.stopPropagation();
             const i = +slot.getAttribute('data-slot');
+            if (state.sceneGraded) {
+              // v=63 review — clicking a blank highlights the 4
+              // candidates that belonged to that blank.  Each card
+              // jumps to parchment when tapped.
+              state.sceneReviewBlank = i;
+              SFX.tap();
+              $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
+              wireSlots();
+              renderOptions();
+              return;
+            }
             state.sceneActive = i;
             SFX.tap();
             $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
@@ -1854,70 +1936,81 @@ const Screens = {
       function renderOptions() {
         const opts = $('.oracle-options', el);
         opts.innerHTML = '';
-        (state.sceneOptions || []).forEach(opt => {
-          const used = state.sceneFills.includes(opt);
+        const q = currentQ();
+        const answers = q.answers || [];
+        (state.sceneOptions || []).forEach(word => {
+          const usedAt = state.sceneFills.indexOf(word);   // -1 if not picked
+          const isPick = usedAt >= 0;
+          const isCorrect = answers.includes(word);
+          const inReviewBlank = state.sceneGraded
+            && state.sceneReviewBlank >= 0
+            && (state.scenePerBlank[state.sceneReviewBlank] || []).includes(word);
+          let cls = 'card card--option';
+          if (state.sceneGraded) {
+            if (isPick && (state.sceneFills.indexOf(word) >= 0)
+                && answers[state.sceneFills.indexOf(word)].toLowerCase() === word.toLowerCase()) {
+              cls += ' picked-right reveal-right';
+            } else if (isPick) {
+              cls += ' picked-wrong';
+            }
+            // After grading every CORRECT card glows gold (whether or
+            // not the user picked it) so the user can see "the right
+            // ones" at a glance — and tap any to open parchment.
+            if (isCorrect && !cls.includes('reveal-right')) cls += ' reveal-right';
+            cls += ' is-readable';
+            if (inReviewBlank) cls += ' is-review-highlight';
+          } else if (isPick) {
+            cls += ' picked-wrong';   // wine-card while waiting
+          }
           const b = document.createElement('button');
-          b.className = 'card card--option' + (used ? ' is-used' : '');
-          b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
-          b.disabled = used;
-          b.addEventListener('click', () => pickOption(opt));
+          b.className = cls;
+          b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(word)}</span>`;
+          b.dataset.word = word;
+          b.addEventListener('click', (ev) => onOptionClick(ev, word, b));
           opts.appendChild(b);
         });
       }
 
-      function pickOption(opt) {
-        if (state.sceneGraded) return;
+      function onOptionClick(ev, word, btn) {
+        ev.stopPropagation();
+        if (state.sceneGraded) {
+          if (!PARCHMENT_CARDS[word]) return;
+          SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+          showParchment(word);
+          return;
+        }
+        // pick: ignore if already used in any blank
+        if (state.sceneFills.includes(word)) return;
         const i = state.sceneActive;
-        state.sceneFills[i] = opt;
+        if (i < 0 || i >= state.sceneFills.length) return;
+        // Card-flip animation, then fill blank.
+        btn.classList.add('is-flipping');
         SFX.tap();
-        // Auto-advance the active marker to the next empty slot, or
-        // stay on this one if there is none (user can still re-edit).
-        let next = state.sceneFills.indexOf(null);
-        if (next < 0) next = i;          // all filled — keep marker here
-        state.sceneActive = next;
-        $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
-        wireSlots();
-        renderOptions();
-        if (!state.sceneFills.includes(null)) {
-          // All blanks filled — arm a "tap anywhere blank to confirm" advance.
-          armConfirm();
-        }
-      }
-
-      function armConfirm() {
-        const stageHost = $('#oracle-stage');
-        let hint = $('.q-tap-hint', stageHost);
-        if (!hint) {
-          hint = document.createElement('div');
-          hint.className = 'q-tap-hint';
-          stageHost.appendChild(hint);
-        }
-        hint.textContent = '— tap anywhere to check —';
-        const onTap = (ev) => {
-          if (!ev || !ev.target) return;
-          if (ev.target.closest('.q-slot, .card--option, .moon-corner, .close-corner, .parchment-veil')) return;
-          document.removeEventListener('click', onTap, true);
-          grade();
-        };
-        setTimeout(() => document.addEventListener('click', onTap, true), 320);
+        setTimeout(() => {
+          state.sceneFills[i] = word;
+          // Advance active marker to next empty slot, or stay.
+          let next = state.sceneFills.indexOf(null);
+          if (next < 0) next = i;
+          state.sceneActive = next;
+          $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
+          wireSlots();
+          renderOptions();
+          if (!state.sceneFills.includes(null)) {
+            // All blanks filled → grade after a small breath.
+            setTimeout(grade, 320);
+          }
+        }, 160);
       }
 
       function grade() {
         state.sceneGraded = true;
         const q = currentQ();
-        const slots = $$('.q-slot', el);
         let allRight = true;
         q.answers.forEach((ans, i) => {
-          const slot = slots[i];
-          if (!slot) return;
-          slot.classList.remove('is-active');
           if ((state.sceneFills[i] || '').toLowerCase() === ans.toLowerCase()) {
-            slot.classList.add('is-right');
             if (PARCHMENT_CARDS[ans]) state.results[ans] = state.results[ans] || { match:null, oracle:null, dict:null };
             if (state.results[ans]) state.results[ans].oracle = true;
           } else {
-            slot.classList.add('is-wrong');
-            slot.innerHTML = `<span class="q-slot-yours">${escapeHtml(state.sceneFills[i])}</span><span class="q-slot-truth">${escapeHtml(ans)}</span>`;
             if (!state.results[ans]) state.results[ans] = { match:null, oracle:null, dict:null };
             state.results[ans].oracle = false;
             recordMistake(ans);
@@ -1925,73 +2018,32 @@ const Screens = {
           }
         });
         if (allRight) SFX.right(); else SFX.wrong();
-        // v=62 — after grading, auto-PLAY the full sentence audio
-        // so the user hears the correct usage in context, and
-        // re-enable every option chip as a parchment doorway so
-        // the user can tap any option (right or wrong) to read
-        // its definition.  No auto-advance — page stays put until
-        // the user taps an empty area.
+        // v=63 — auto-PLAY full sentence audio for context.
         try { speak(q.full_sentence); } catch {}
-        $$('.card--option', el).forEach((oldCard, idx) => {
-          const cloned = oldCard.cloneNode(true);
-          cloned.disabled = false;
-          cloned.classList.add('is-readable');
-          oldCard.replaceWith(cloned);
-          const word = (state.sceneOptions || [])[idx];
-          if (!word) return;
-          cloned.addEventListener('click', (ev) => {
-            ev.stopPropagation();
-            if (!PARCHMENT_CARDS[word]) return;
-            SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
-            showParchment(word);
-          });
-        });
-        revealFull(q);
-        armAdvance();
+        // Repaint: q-card keeps user's picks (no auto-fill of the
+        // truth), option cards reveal right/wrong via glow + wine.
+        $('#q-sentence-host').innerHTML = renderBlankSentence(q);
+        wireSlots();
+        renderOptions();
+        armBowAdvance();
       }
 
-      function revealFull(q) {
-        const stage = $('#oracle-stage', el);
-        let panel = $('.scene-reveal', stage);
-        if (!panel) {
-          panel = document.createElement('div');
-          panel.className = 'scene-reveal';
-          stage.appendChild(panel);
-        }
-        let en = escapeHtml(q.full_sentence);
-        (q.clickable_words || []).forEach(w => {
-          en = en.replace(new RegExp(`\\b${w}\\b`, 'gi'),
-            `<a class="scene-jump" data-word="${escapeAttr(w)}">${w}</a>`);
-        });
-        panel.innerHTML = `
-          <div class="scene-reveal-en">${en}</div>
-          <div class="scene-reveal-zh">${escapeHtml(q.sentence_zh)}</div>
-        `;
-        panel.querySelectorAll('.scene-jump').forEach(a => {
-          a.addEventListener('click', e => {
-            e.stopPropagation();
-            const w = a.getAttribute('data-word');
-            if (PARCHMENT_CARDS[w]) {
-              SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
-              showParchment(w);
-            }
-          });
-        });
+      function armBowAdvance() {
+        // v=63 — bow becomes the "next question" affordance.  User
+        // can roam (tap blanks to review, tap option cards to open
+        // parchment) until they tap the bow.
+        const bow = $('.q-bow.q-bow-inside', el);
+        if (!bow) return;
+        bow.classList.add('is-tappable');
+        bow.addEventListener('click', advance, { once: true });
       }
 
-      function armAdvance() {
-        const stageHost = $('#oracle-stage');
-        let hint = $('.q-tap-hint', stageHost);
-        if (hint) hint.textContent = '— tap a glowing word to read · tap anywhere else to turn —';
-        const advance = (ev) => {
-          if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .scene-jump, .card--option.is-readable, .parchment-veil')) return;
-          if (document.querySelector('.parchment-veil')) return;
-          document.removeEventListener('click', advance, true);
-          state.sceneIdx++;
-          if (state.sceneIdx >= state.session.scenes.length) go('stage2-result');
-          else drawQ();
-        };
-        setTimeout(() => document.addEventListener('click', advance, true), 480);
+      function advance(ev) {
+        if (ev) ev.stopPropagation();
+        SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+        state.sceneIdx++;
+        if (state.sceneIdx >= state.session.scenes.length) go('stage2-result');
+        else drawQ();
       }
     }
   },
@@ -2159,9 +2211,13 @@ const Screens = {
     onEnter() {
       LanBGM.playResultRandom({ volume: 0.42 });
       SFX.finish();
-      // bump progress + mark learned
+      // bump progress + mark learned + advance chapter counter
       state.session.words.forEach(w => { markLearned(w); });
       saved.progress = Math.min(saved.progress + state.session.words.length, TOTAL_WORDS);
+      // v=63 — completing stage 3 means this chapter is finished.
+      // Persist chapter+1 so the next "Continue Reading" tap lands
+      // the user on the next chapter.
+      saved.chapter = (saved.chapter || 1) + 1;
       Store.save();
 
       const el = $('#screen-stage3-result');

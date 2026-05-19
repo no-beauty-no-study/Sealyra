@@ -253,6 +253,54 @@ button { font-family: inherit; color: inherit; }
   margin-top: 18px;
 }
 
+/* v=63 — "Restart Game" small button.  Sits where the old
+   X-of-N stats line lived, under the main CTA.  Two stacked italic
+   lines (label + chapter number), separated by a hair-thin gold
+   rule, all tappable.                                              */
+.cover-restart {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+.cover-restart-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 14px 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-style: italic;
+  color: rgba(244, 194, 168, 0.75);
+  letter-spacing: 0.06em;
+  transition: color 0.25s, text-shadow 0.25s;
+}
+.cover-restart-btn .cr-glyph {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  color: rgba(218, 168, 104, 0.65);
+  line-height: 1;
+}
+.cover-restart-btn .cr-text {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+.cover-restart-btn .cr-chapter {
+  font-size: 10px;
+  color: rgba(232, 196, 138, 0.70);
+  letter-spacing: 0.22em;
+  margin-top: 2px;
+  border-top: 1px solid rgba(218, 168, 104, 0.32);
+  padding-top: 3px;
+}
+.cover-restart-btn:active { opacity: 0.75; }
+.cover-restart-btn:hover {
+  color: rgba(252, 220, 200, 0.95);
+  text-shadow: 0 0 10px rgba(237, 184, 158, 0.45);
+}
+
 /* small "her note" / "the index" links at cover bottom */
 .lil-row {
   display: inline-flex;
@@ -557,7 +605,10 @@ body.cover-pending .cover-gate     { visibility: visible; }
 
 /* ---------- 8. Oracle stage ---------- */
 .oracle-stage, .dict-stage {
-  max-width: 440px;
+  /* v=63 — stage container widens to match .q-card so the question
+     box centres in the viewport (previously the 440 px parent
+     constrained the 540 px child, pushing it visually rightward).  */
+  max-width: 540px;
   margin: 0 auto;
   width: 100%;
   z-index: 1;
@@ -3163,9 +3214,12 @@ body { background: transparent !important; }
    page torn from her notebook.                                    */
 .q-card {
   position: relative;
-  /* v=62 — wider so the smaller font has more room per line.   */
+  /* v=63 — child fills its parent (.oracle-stage / .dict-stage,
+     now also 540 px max-width), no longer reaching past the
+     screen's 18 px side padding.  This is the fix for the
+     "box leans right" bug.                                       */
   max-width: 540px;
-  width: calc(100vw - 18px);
+  width: 100%;
   margin: 18px auto 0;
   /* v=50 — q-card now matches the .card--option language: same
      hairline outer border + same INNER DOTTED GOLD FRAME (via the
@@ -3319,6 +3373,53 @@ body { background: transparent !important; }
    from the option / answer row.                                  */
 #screen-stage2 .oracle-options,
 #screen-stage3 .dict-answer { margin-top: 22px; padding-top: 0; }
+
+/* v=63 — 12-option grid for the reading puzzle.  4 candidates per
+   blank × 3 blanks = 12 cards in a 2-column × 6-row layout, shuffled
+   so the user has to sort by first letter mentally.                 */
+.oracle-options.is-grid-12 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-width: 540px;
+  padding: 0 6px;
+  perspective: 800px;
+}
+.oracle-options.is-grid-12 .card--option {
+  height: 42px !important;
+  font-size: 14px !important;
+  padding: 0 22px !important;
+}
+.oracle-options.is-grid-12 .card--option::before { left: 8px; font-size: 13px; }
+.oracle-options.is-grid-12 .card--option::after  { right: 8px; font-size: 13px; }
+
+/* v=63 — REVIEW HIGHLIGHT for the 4 candidates belonging to the
+   blank the user just clicked.  A gentle gold pulse outlines the
+   group; the rest stays at rest.                                    */
+.card--option.is-review-highlight {
+  outline: 1.5px solid rgba(232, 196, 132, 0.78);
+  outline-offset: 2px;
+  animation: review-pulse 1.8s ease-in-out infinite;
+}
+@keyframes review-pulse {
+  0%, 100% { outline-color: rgba(232, 196, 132, 0.45); }
+  50%      { outline-color: rgba(255, 220, 158, 0.95); }
+}
+
+/* v=63 — bow becomes the "next question" affordance after grading.
+   .is-tappable lifts pointer-events, adds a cursor, and pulses the
+   wax-seal so the user notices "tap me to turn the page".         */
+.q-bow.q-bow-inside.is-tappable {
+  pointer-events: auto;
+  cursor: pointer;
+  animation: bow-tappable 2.2s ease-in-out infinite;
+}
+@keyframes bow-tappable {
+  0%, 100% { filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.55)); }
+  50%      { filter: drop-shadow(0 6px 14px rgba(237, 184, 158, 0.85))
+                     drop-shadow(0 0 18px rgba(255, 200, 180, 0.55)); }
+}
+.q-bow.q-bow-inside.is-tappable:active { transform: translateX(-50%) scale(0.94); }
 
 /* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
    the inner text element; the gold rules are now on the card.    */
@@ -4811,6 +4912,19 @@ body { background: transparent !important; }
   color: #c19a5c;
   opacity: .85;
   margin-right: 8px;
+}
+/* v=63 — tiny "Stage N of 3" chip next to the chapter title.  Lives
+   on the same line as fc-num + fc-name but with quieter colour so
+   the eye reads CHAPTER first, STAGE second.                       */
+.frame-chapter .fc-stage {
+  display: inline-block;
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(9px, 2.2vw, 11px);
+  letter-spacing: .18em;
+  color: rgba(193, 154, 92, 0.62);
+  margin-left: 10px;
+  vertical-align: 1px;
 }
 .frame-chapter .fc-name {
   display: inline;
