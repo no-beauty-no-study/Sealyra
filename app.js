@@ -1806,7 +1806,7 @@ const Screens = {
             <span class="q-corner q-corner-br">✦</span>
             <svg class="q-flap-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <polyline points="0,0 50,100 100,0"
-                fill="none" stroke="#daa868" stroke-width="1" stroke-linejoin="round"
+                fill="none" stroke="#daa868" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="miter" shape-rendering="geometricPrecision"
                 vector-effect="non-scaling-stroke"/>
             </svg>
             <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
@@ -2055,7 +2055,7 @@ const Screens = {
             <span class="q-corner q-corner-br">✦</span>
             <svg class="q-flap-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <polyline points="0,0 50,100 100,0"
-                fill="none" stroke="#daa868" stroke-width="1" stroke-linejoin="round"
+                fill="none" stroke="#daa868" stroke-opacity="0.55" stroke-width="1" stroke-linejoin="miter" shape-rendering="geometricPrecision"
                 vector-effect="non-scaling-stroke"/>
             </svg>
             <div class="dict-prompt">${masked}</div>

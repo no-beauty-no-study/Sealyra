@@ -3180,19 +3180,13 @@ body { background: transparent !important; }
    q-card reserves that space via padding-bottom (set elsewhere).
    linear-gradient bands draw the two solid flap edges; a second
    pseudo-element draws the dotted stitching.                     */
-/* v=58 — q-card flap drawn via inline SVG (.q-flap-svg) instead
-   of CSS gradients.  The gradient bands rendered the V inverted
-   AND added phantom horizontal lines at the band edges — both
-   gone.  SVG polyline goes (0,0) → (50,100) → (100,0), so for a
-   bottom-anchored SVG the V points UP from the bottom apex,
-   which is exactly the envelope-flap shape: two diagonal lines
-   running from the top corners of the flap region DOWN to the
-   bottom-centre where the bow sits.  Stroke is 1 px non-scaling
-   so the lines match the outer card border thickness.            */
+/* v=58b — 3D INNER DARKEN, NO horizontal lines.  Previous
+   versions had inset shadows that drew faint gold / dark lines
+   at the top and bottom inside the card box — those are the
+   "两根横线" the user keeps seeing.  Removed all top/bottom 1 px
+   inset bands; only a radial vignette + side-only inner darken
+   remain.                                                       */
 .q-card::before {
-  /* v=58 — kept as a 3D INNER DARKEN layer.  No more gradient
-     lines; just a soft vignette so the card body feels recessed
-     ("内里加深 立体感 卡牌那种" per user).                       */
   content: '';
   position: absolute;
   inset: 1px;
@@ -3200,26 +3194,22 @@ body { background: transparent !important; }
   z-index: 0;
   border-radius: 3px;
   background:
-    radial-gradient(ellipse 95% 80% at 50% 45%,
+    radial-gradient(ellipse 95% 80% at 50% 50%,
                     rgba(0, 0, 0, 0.00) 0%,
-                    rgba(0, 0, 0, 0.18) 75%,
-                    rgba(0, 0, 0, 0.36) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.18),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.42),
-    inset 2px 0 6px rgba(0, 0, 0, 0.28),
-    inset -2px 0 6px rgba(0, 0, 0, 0.28);
+                    rgba(0, 0, 0, 0.20) 75%,
+                    rgba(0, 0, 0, 0.34) 100%);
 }
 .q-flap-svg {
-  /* v=58 — V spans roughly the bottom 55 % of the card so the
-     diagonals start near the TOP-SIDE edges (matching the user's
-     sketch where the flap opens almost all the way up).         */
   position: absolute;
-  left: 0;
-  right: 0;
+  /* v=58b — extend slightly past the border (-1 px on each side)
+     so the polyline endpoints sit ON the outer border line, not
+     1 px inside it — fixes the "V doesn't connect to the frame"
+     gap the user reported.                                        */
+  left: -1px;
+  right: -1px;
   top: 45%;
-  bottom: 0;
-  width: 100%;
+  bottom: -1px;
+  width: calc(100% + 2px);
   pointer-events: none;
   z-index: 1;
   overflow: visible;
@@ -3240,15 +3230,16 @@ body { background: transparent !important; }
     repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.50) 0 1.4px,
                               transparent 1.4px 4.2px) bottom / 100% 1px no-repeat;
 }
-/* v=56 — subtle inner highlight + shadow gives the q-card a
-   slight letterpress depth (an "embossed envelope" feel).      */
+/* v=58b — letterpress depth WITHOUT horizontal-line insets.
+   Previously inset 0 1px 0 (gold top) + inset 0 -1px 0 (dark
+   bottom) painted 1 px horizontal rules at the very top + bottom
+   of the card body; user kept calling them "the two horizontal
+   lines".  Dropped.  Outer drop-shadow + radial inner vignette
+   (on ::before) carry the depth alone now.                       */
 .q-card {
   box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.16),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.55),
     inset 0 0 24px rgba(0, 0, 0, 0.30),
-    0 8px 22px rgba(0, 0, 0, 0.48),
-    0 1px 0 rgba(232, 196, 138, 0.18) !important;
+    0 8px 22px rgba(0, 0, 0, 0.48) !important;
 }
 /* Corner ✦ — same family as the option card's flank sparkles (also
    ✦), so cards + questions share one ornament vocabulary.  z-index
