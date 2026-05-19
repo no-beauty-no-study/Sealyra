@@ -171,7 +171,16 @@ function _pickMatchPairs(n = 4) {
   return out;
 }
 function _pickSceneQuestions(n = 4) {
-  return shuffle(_SCENE_ARR).slice(0, n);
+  // v=63 — user wants the 3-blank / 12-option puzzle.  Prefer
+  // scenes with 3+ answers; fall back to the wider pool if there
+  // aren't enough.  (315 of 356 have 2 blanks, only 21 have 3.)
+  const tripled = _SCENE_ARR.filter(q => (q.answers || []).length >= 3);
+  const doubled = _SCENE_ARR.filter(q => (q.answers || []).length === 2);
+  const picks = shuffle(tripled).slice(0, n);
+  if (picks.length < n) {
+    picks.push(...shuffle(doubled).slice(0, n - picks.length));
+  }
+  return picks;
 }
 function _pickDictQuestions(n = 4) {
   // v=54 — dictation now uses SINGLE-BLANK EXAMPLE SENTENCES per
