@@ -3146,10 +3146,10 @@ body { background: transparent !important; }
      hairline outer border + same INNER DOTTED GOLD FRAME (via the
      ::before pseudo-element) the option cards use.  Visual family
      is one for question + answers now.                            */
-  /* v=57 — content area lives in the TOP half of the q-card,
-     ABOVE the 90 px envelope flap at the bottom.  Padding-bottom
-     reserves the flap zone so the .q-sentence flows above it.    */
-  padding: 16px 12px 100px;
+  /* v=60 — flap retired; bow now hugs the bottom border at -16 px.
+     Only reserves ~28 px below text for the bow's upper half +
+     a small breath of velvet.                                     */
+  padding: 14px 12px 28px;
   background:
     radial-gradient(ellipse 90% 70% at 50% 40%,
                     rgba(232, 196, 138, 0.06) 0%,
@@ -3199,37 +3199,12 @@ body { background: transparent !important; }
                     rgba(0, 0, 0, 0.20) 75%,
                     rgba(0, 0, 0, 0.34) 100%);
 }
-.q-flap-svg {
-  position: absolute;
-  /* v=58b — extend slightly past the border (-1 px on each side)
-     so the polyline endpoints sit ON the outer border line, not
-     1 px inside it — fixes the "V doesn't connect to the frame"
-     gap the user reported.                                        */
-  left: -1px;
-  right: -1px;
-  top: 45%;
-  bottom: -1px;
-  width: calc(100% + 2px);
-  pointer-events: none;
-  z-index: 1;
-  overflow: visible;
-}
-/* DOTTED STITCHING — left + bottom + right inset rules, mark
-   the visible "back" of the envelope around the flap.            */
-.q-card::after {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    repeating-linear-gradient(0deg, rgba(228, 196, 132, 0.50) 0 1.4px,
-                              transparent 1.4px 4.2px) left   / 1px 100% no-repeat,
-    repeating-linear-gradient(0deg, rgba(228, 196, 132, 0.50) 0 1.4px,
-                              transparent 1.4px 4.2px) right  / 1px 100% no-repeat,
-    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.50) 0 1.4px,
-                              transparent 1.4px 4.2px) bottom / 100% 1px no-repeat;
-}
+/* v=60 — q-flap SVG + dotted-stitching pseudo retired.  The
+   envelope V experiment couldn't draw cleanly enough in CSS
+   without phantom lines.  Reverted to a plain hairline frame +
+   ❦ corners + inside-bow + radial vignette (above).             */
+.q-flap-svg { display: none; }
+.q-card::after { content: none; }
 /* v=58b — letterpress depth WITHOUT horizontal-line insets.
    Previously inset 0 1px 0 (gold top) + inset 0 -1px 0 (dark
    bottom) painted 1 px horizontal rules at the very top + bottom
@@ -3286,14 +3261,13 @@ body { background: transparent !important; }
 .q-bow.q-bow-inside {
   position: absolute !important;
   top: auto !important;
-  /* v=55 — bow bumped from 90 px to 130 px per user "蝴蝶结
-     摆放的还是不好看…要不大一点".  Sits a tad lower so its
-     ribbons end ON the q-card's bottom border (a wax-seal feel
-     rather than a tucked-in ornament).                          */
-  bottom: -22px;
+  /* v=60 — bow smaller again (the envelope flap that motivated
+     the bigger size is gone).  Sits hugging the bottom border
+     centrally as a small wax-seal.                              */
+  bottom: -16px;
   left: 50%;
   transform: translateX(-50%);
-  width: 130px;
+  width: 86px;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.55));
@@ -3316,10 +3290,10 @@ body { background: transparent !important; }
 /* Options sit immediately below the bow's mid-line.  A small top
    padding gives the gap between the bow's lower ribbon and the
    first option button.                                           */
-/* v=55 — extra top gap so the larger 130-px bow's lower ribbons
-   don't crowd the option row / answer area below.               */
+/* v=60 — bow is small again; only a small breath separates it
+   from the option / answer row.                                  */
 #screen-stage2 .oracle-options,
-#screen-stage3 .dict-answer { margin-top: 52px; padding-top: 0; }
+#screen-stage3 .dict-answer { margin-top: 22px; padding-top: 0; }
 
 /* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
    the inner text element; the gold rules are now on the card.    */
@@ -3334,10 +3308,9 @@ body { background: transparent !important; }
   z-index: 1;
   font-family: var(--f-italic);
   font-style: italic;
-  /* v=56 — font reduced again per user ("再缩小哈哈哈 尽量三行
-     搞定").  12.5 px / 1.5 line-height lets even long IELTS
-     contextual sentences land in 3 lines on a 390-px viewport.   */
-  font-size: 12.5px !important;
+  /* v=60 — font down to 11 px per user "再小点".  Long IELTS
+     contextual sentences fit in 2–3 lines comfortably.            */
+  font-size: 11px !important;
   line-height: 1.5 !important;
   color: var(--cream) !important;
   text-align: center;
