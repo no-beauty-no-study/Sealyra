@@ -2016,10 +2016,15 @@ body { background: transparent !important; }
    visual language from the multiple-choice picked-red option
    card, so eight words show as a dense 2-column grid of wine
    tiles rather than eight bulky ex-cards.  Tap → parchment.    */
+/* v=56 — word tiles now wear the ENVELOPE-CARD look (q-card
+   minus bow): hairline outer border + diagonal gold flap lines
+   converging at the bottom centre + letterpress depth.  Same
+   visual vocabulary as the question card, just smaller — keeps
+   stage 1 / 2 / 3 result pages reading as one storybook page.   */
 .word-tile-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 9px;
   padding: 0 18px;
   max-width: 460px;
   margin: 2px auto 16px;
@@ -2027,21 +2032,59 @@ body { background: transparent !important; }
   box-sizing: border-box;
 }
 .word-tile-grid .word-tile {
+  position: relative;
   width: 100% !important;
-  height: auto !important;
-  min-height: 38px !important;
-  padding: 9px 14px !important;
+  height: 56px !important;
+  padding: 8px 14px !important;
   cursor: pointer;
-  /* card--option base already paints velvet body + dotted frame.
-     We just want the wine palette (.picked-right / .picked-wrong)
-     to define right vs. missed, with a small breathing on right. */
+  background:
+    linear-gradient(180deg,
+                    rgba(28, 16, 48, 0.55) 0%,
+                    rgba(18, 8, 36, 0.65) 100%) !important;
+  border: 1px solid rgba(218, 168, 104, 0.55) !important;
+  border-radius: 4px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+    inset 0 0 18px rgba(0, 0, 0, 0.28),
+    0 4px 12px rgba(0, 0, 0, 0.40) !important;
+  overflow: hidden;
 }
+.word-tile-grid .word-tile::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(to bottom right,
+      transparent calc(50% - 0.6px),
+      rgba(232, 196, 138, 0.55) calc(50% - 0.6px) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)) 0 0 / 50% 100% no-repeat,
+    linear-gradient(to bottom left,
+      transparent calc(50% - 0.6px),
+      rgba(232, 196, 138, 0.55) calc(50% - 0.6px) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)) 100% 0 / 50% 100% no-repeat;
+}
+.word-tile-grid .word-tile::after { content: none !important; }
+.word-tile-grid .word-tile .mc-frame { display: none !important; }
 .word-tile-grid .word-tile .mc-text {
   font-family: var(--f-italic);
   font-style: italic;
   font-weight: 500;
-  font-size: 14.5px;
+  font-size: 14px;
   letter-spacing: 0.02em;
+  color: #f0d8a8 !important;
+  position: relative;
+  z-index: 1;
+}
+.word-tile-grid .word-tile.picked-wrong {
+  opacity: 0.55;
+  filter: saturate(0.55);
+}
+.word-tile-grid .word-tile.picked-wrong .mc-text {
+  color: rgba(220, 156, 168, 0.85) !important;
 }
 .word-tile-grid .word-tile.reveal-right .mc-text {
   color: #fff1d0 !important;
@@ -2921,19 +2964,20 @@ body { background: transparent !important; }
   transition: transform 0.18s, border-color 0.3s, box-shadow 0.3s, color 0.25s;
 }
 .card--option .mc-frame {
+  /* v=56 — option card's inner frame keeps only the VERTICAL
+     gold dotted rules (left + right side) per user.  Horizontal
+     top + bottom rules removed — the outer card border + the
+     ❦ flanks already mark the edges; the extra horizontal
+     dots just stacked four parallel lines per row.            */
   position: absolute;
   inset: 3px;
   border-radius: 2px;
   pointer-events: none;
   background:
-    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.55) 0 1.4px,
-                              transparent 1.4px 4.2px) top    / 100% 1px no-repeat,
-    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.55) 0 1.4px,
-                              transparent 1.4px 4.2px) bottom / 100% 1px no-repeat,
-    repeating-linear-gradient(0deg,  rgba(228, 196, 132, 0.55) 0 1.4px,
-                              transparent 1.4px 4.2px) left   / 1px 100% no-repeat,
-    repeating-linear-gradient(0deg,  rgba(228, 196, 132, 0.55) 0 1.4px,
-                              transparent 1.4px 4.2px) right  / 1px 100% no-repeat;
+    repeating-linear-gradient(0deg, rgba(228, 196, 132, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) left  / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg, rgba(228, 196, 132, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) right / 1px 100% no-repeat;
 }
 .card--option .mc-text {
   position: relative;
@@ -3122,24 +3166,40 @@ body { background: transparent !important; }
     0 6px 22px rgba(0, 0, 0, 0.42);
   text-align: center;
 }
-/* INNER DOTTED FRAME — same idiom as .card--option .mc-frame.
-   Single pseudo-element draws all four dotted gold edges with
-   repeating-linear-gradient, sits 5 px inside the outer border. */
+/* v=56 — ENVELOPE FLAP via two diagonal gold lines from the
+   q-card's TOP corners converging at the BOW position (bottom
+   centre).  Replaces the v=50 inner-dotted-frame (the four
+   horizontal + vertical dotted rules) the user wanted removed.
+   linear-gradient bands draw clean ~1 px diagonals that scale
+   with the card's aspect.                                       */
 .q-card::before {
   content: '';
   position: absolute;
-  inset: 5px;
+  inset: 4px;
   border-radius: 2px;
   pointer-events: none;
+  z-index: 0;
   background:
-    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.55) 0 1.5px,
-                              transparent 1.5px 4.6px) top    / 100% 1px no-repeat,
-    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.55) 0 1.5px,
-                              transparent 1.5px 4.6px) bottom / 100% 1px no-repeat,
-    repeating-linear-gradient(0deg,  rgba(228, 196, 132, 0.55) 0 1.5px,
-                              transparent 1.5px 4.6px) left   / 1px 100% no-repeat,
-    repeating-linear-gradient(0deg,  rgba(228, 196, 132, 0.55) 0 1.5px,
-                              transparent 1.5px 4.6px) right  / 1px 100% no-repeat;
+    /* left flap line — top-left corner → bottom centre */
+    linear-gradient(to bottom right,
+      transparent calc(50% - 0.7px),
+      rgba(232, 196, 138, 0.62) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)) 0 0 / 50% 100% no-repeat,
+    /* right flap line — top-right corner → bottom centre */
+    linear-gradient(to bottom left,
+      transparent calc(50% - 0.7px),
+      rgba(232, 196, 138, 0.62) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)) 100% 0 / 50% 100% no-repeat;
+}
+/* v=56 — subtle inner highlight + shadow gives the q-card a
+   slight letterpress depth (an "embossed envelope" feel).      */
+.q-card {
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.55),
+    inset 0 0 24px rgba(0, 0, 0, 0.30),
+    0 8px 22px rgba(0, 0, 0, 0.48),
+    0 1px 0 rgba(232, 196, 138, 0.18) !important;
 }
 /* Corner ✦ — same family as the option card's flank sparkles (also
    ✦), so cards + questions share one ornament vocabulary.  z-index
@@ -3234,10 +3294,10 @@ body { background: transparent !important; }
   z-index: 1;
   font-family: var(--f-italic);
   font-style: italic;
-  /* v=54 — font further reduced per user ("再小点 也忒大啦").
-     14 px / 1.5 line-height lets a typical IELTS-length sentence
-     land on 2–3 lines instead of 5.                              */
-  font-size: 14px !important;
+  /* v=56 — font reduced again per user ("再缩小哈哈哈 尽量三行
+     搞定").  12.5 px / 1.5 line-height lets even long IELTS
+     contextual sentences land in 3 lines on a 390-px viewport.   */
+  font-size: 12.5px !important;
   line-height: 1.5 !important;
   color: var(--cream) !important;
   text-align: center;
@@ -6218,25 +6278,28 @@ body { background: transparent !important; }
    .is-saved flips the colour to filled-gold (bookmarked).      */
 .pc-note-add {
   position: absolute;
-  left: 8%;
-  bottom: 8%;
-  width: 50px;
-  height: 50px;
+  /* v=56b — anchored to .parchment-card directly (not the inner
+     padded box) so left/bottom % map to the painted star-in-
+     circle's pixel position on the parchment asset.  Star sits
+     at ~12 % from left, ~13 % from bottom of the asset.        */
+  left: 9%;
+  bottom: 10%;
+  width: 44px;
+  height: 44px;
   padding: 0;
   background: transparent;
-  border: 1.5px solid rgba(110, 63, 18, 0.65);
+  border: 1.5px solid rgba(110, 63, 18, 0.45);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(110, 63, 18, 0.0);   /* the painted star shows through */
+  color: rgba(110, 63, 18, 0.0);
   z-index: 4;
   animation: pc-note-breathe 2.4s ease-in-out infinite;
 }
 .pc-note-add .pc-note-star {
-  font-size: 18px;
-  /* visible only when bookmarked */
+  font-size: 14px;
   opacity: 0;
   color: #b07a28;
   text-shadow: 0 0 8px rgba(232, 196, 138, 0.65);

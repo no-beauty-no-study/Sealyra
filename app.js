@@ -682,9 +682,6 @@ function showParchment(word) {
       <div class="parchment-inner">
         <button class="pc-close" aria-label="fold this page">fold this page</button>
         <div class="pc-stack"></div>
-        <div class="pc-tap-hint">— tap the page —</div>
-        <!-- v=55 — signing line is a real text input so the user
-             can muscle-copy the word once (was decorative). -->
         <div class="pc-copy">
           <span class="pc-copy-label">signed</span>
           <input class="pc-copy-input" type="text"
@@ -692,15 +689,14 @@ function showParchment(word) {
                  placeholder="${escapeAttr(c.h)}">
           <span class="pc-copy-mark">✦</span>
         </div>
-        <!-- v=55 — bottom-left moon-star button: tap to add this
-             word to "her note" (the saved-words bucket).  Sits ON
-             the painted moon ornament that the parchment art
-             already has at its bottom-left corner.  Breathes a
-             circular gold halo so it reads as tappable.        -->
-        <button class="pc-note-add ${inNote ? 'is-saved' : ''}" aria-label="add to her note" title="add to her note">
-          <span class="pc-note-star">✦</span>
-        </button>
+        <div class="pc-tap-hint">— tap the page —</div>
       </div>
+      <!-- v=56 — note button anchored to .parchment-card directly
+           so its bottom % maps to the painted star-in-circle's
+           position on the asset (not the inner padded box).      -->
+      <button class="pc-note-add ${inNote ? 'is-saved' : ''}" aria-label="add to her note" title="add to her note">
+        <span class="pc-note-star">✦</span>
+      </button>
     </div>
   `;
   const stack = veil.querySelector('.pc-stack');
