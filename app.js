@@ -646,19 +646,35 @@ function showParchment(word) {
       <span class="pc-zh">${escapeHtml(c.zh || '')}</span>
     </div>` });
 
+  // v=52 — inline jump-link helper.  Wherever a word appears in the
+  // parchment text AND that word exists in PARCHMENT_CARDS, render
+  // it as an underlined tappable token.  Skip the headword itself
+  // (don't link a page to itself).  Underline = jumpable; plain
+  // text = not jumpable.  Replaces the v=51 bottom jump-link box.
+  const _selfWord = (c.h || '').toLowerCase();
+  function pcLinkify(text) {
+    if (!text) return '';
+    // First escape everything, then rewrap matched words.  We MUST do
+    // this in two passes so the underline span survives escape().
+    const escaped = escapeHtml(text);
+    return escaped.replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
+      const k = w.toLowerCase();
+      if (k === _selfWord) return m;            // don't link to self
+      if (!PARCHMENT_CARDS[k]) return m;        // no parchment → no link
+      return `<a class="pc-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
+    });
+  }
+
   if (c.family && c.family.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her family</div>` });
     c.family.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
       const audioTarget = phrase || w;
-      // v=46 — ONE LINE per entry per user.  Variant word + phrase
-      // + zh sit inline, like a handwritten note row.  Each tap
-      // reveals exactly one row (was two, felt too tech).
       items.push({ kind: 'fam', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(audioTarget)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-word">${escapeHtml(w)}</span>
-        ${phrase ? `<span class="pc-line-phrase">${escapeHtml(phrase)}</span>` : ''}
+        <span class="pc-line-word">${pcLinkify(w)}</span>
+        ${phrase ? `<span class="pc-line-phrase">${pcLinkify(phrase)}</span>` : ''}
         <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
       </div>` });
     });
@@ -671,21 +687,20 @@ function showParchment(word) {
       const [phrase, zh] = line.split('|').map(s => s.trim());
       items.push({ kind: 'colloc', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(phrase)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-phrase">${escapeHtml(phrase)}</span>
+        <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
         <span class="pc-line-zh">${escapeHtml(zh || '')}</span>
       </div>` });
     });
     if (c.example) {
       items.push({ kind: 'example', html: `<div class="pc-play-row pc-ex-row" data-sp="${escapeAttr(c.example)}">
         <button class="pc-play">♪</button>
-        <span class="pc-play-phrase pc-ex-en">${escapeHtml(c.example)}</span>
+        <span class="pc-play-phrase pc-ex-en">${pcLinkify(c.example)}</span>
       </div>
       ${c.example_zh ? `<div class="pc-ex-zh">${escapeHtml(c.example_zh)}</div>` : ''}` });
     }
   }
 
-  // HER KIN — words that share the same root / morpheme (v=44 per user).
-  // Same one-line idiom as .family (v=46).
+  // HER KIN — words that share the same root / morpheme.
   if (c.kin && c.kin.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
@@ -694,33 +709,17 @@ function showParchment(word) {
       const audioTarget = phrase || w;
       items.push({ kind: 'kin', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(audioTarget)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-word">${escapeHtml(w)}</span>
-        ${phrase ? `<span class="pc-line-phrase">${escapeHtml(phrase)}</span>` : ''}
+        <span class="pc-line-word">${pcLinkify(w)}</span>
+        ${phrase ? `<span class="pc-line-phrase">${pcLinkify(phrase)}</span>` : ''}
         <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
       </div>` });
     });
   }
 
-  // v=51 — JUMP LINKS section.  Three sub-lists per the new bundle:
-  // family_links / synonym_links / kin_links.  Each chip jumps to
-  // that word's parchment, but ONLY if PARCHMENT_CARDS has the
-  // target (so we never render a dead link).
-  const jumps = PARCHMENT_JUMP_LINKS[word] || {};
-  const renderJumps = (label, list) => {
-    const real = (list || []).filter(w => PARCHMENT_CARDS[w]);
-    if (!real.length) return;
-    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
-    items.push({ kind: 'label', html: `<div class="pc-section-label">${label}</div>` });
-    const chips = real.map(w =>
-      `<button class="pc-neighbor-link" data-partner="${escapeAttr(w)}">${escapeHtml(w)}</button>`
-    ).join('');
-    items.push({ kind: 'neighbor', html: `<div class="pc-neighbor-row">${chips}</div>` });
-  };
-  // Arrow-prefixed labels make these read as PORTALS to other
-  // parchments, distinct from the in-card content sections above.
-  renderJumps('↪ family pages',  jumps.family_links);
-  renderJumps('↪ her partner',   jumps.synonym_links);
-  renderJumps('↪ kin pages',     jumps.kin_links);
+  // v=52 — bottom "↪ family pages / partner / kin pages" boxes
+  // RETIRED per user.  Jump links now live inline as underlined
+  // words inside the family / friend / kin / example rows above,
+  // saving vertical space and reading more like a handwritten note.
 
   // Stage every item.  The headword reveals after the flip-in.
   // Section labels + rules reveal automatically with the next
@@ -810,8 +809,22 @@ function showParchment(word) {
   }
   veil.querySelectorAll('.pc-play-row[data-sp], .pc-head[data-sp]').forEach(wirePlay);
 
-  // Neighbor link — same-word jump.  Closes this parchment + opens the
-  // partner's parchment in its place.
+  // v=52 — Inline jump-link.  Any underlined word inside the
+  // parchment content (.pc-jump) closes this page and opens the
+  // target's parchment in its place.  Replaces the old chip-link
+  // box at the parchment bottom.
+  veil.querySelectorAll('.pc-jump').forEach(a => {
+    a.addEventListener('click', e => {
+      e.stopPropagation();
+      const target = a.getAttribute('data-jump');
+      if (!target || !PARCHMENT_CARDS[target]) return;
+      SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+      closeParchment();
+      setTimeout(() => showParchment(target), 280);
+    });
+  });
+  // Also leave the legacy chip handler in case any future code path
+  // re-emits .pc-neighbor-link buttons.
   veil.querySelectorAll('.pc-neighbor-link').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
@@ -819,8 +832,6 @@ function showParchment(word) {
       if (!partner) return;
       SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
       closeParchment();
-      // Wait for the fold-out animation to clear before flipping in the
-      // next parchment — feels like turning to a new page.
       setTimeout(() => showParchment(partner), 280);
     });
   });
@@ -1564,18 +1575,23 @@ const Screens = {
   },
 
   /* ---------- STAGE 2 — the reading ---------- */
-  /* ---------- STAGE 2 — multi-blank scene reading (v=51)
+  /* ---------- STAGE 2 — multi-blank scene reading (v=52)
      Each question is a long contextual sentence with N blanks.
-     User taps option chips to fill the blanks in order; when all
-     blanks are filled we auto-check, dye each blank green/red,
-     reveal the full sentence + Chinese gloss, and highlight the
-     clickable_words so the user can jump to their parchment.   */
+     Slots are BOXES, not underlines (so they're easier to tap to
+     re-edit).  One slot is "active" at any time (glowing gold);
+     tapping an option fills the active slot and auto-advances the
+     active marker.  Tapping a previous slot makes it active again
+     so the user can change their answer.  Once every slot is
+     filled, the next blank-area tap grades + reveals.            */
   stage2: {
     onEnter() {
       LanBGM.playHomeRandom({ volume: 0.38 });
       const el = $('#screen-stage2');
-      state.sceneIdx = 0;
-      state.sceneFills = [];   // filled answers per blank for current Q
+      state.sceneIdx     = 0;
+      state.sceneFills   = [];
+      state.sceneActive  = 0;
+      state.sceneOptions = null;
+      state.sceneGraded  = false;
       el.innerHTML = `
         ${stageHeader(2, 'The Reading')}
         <div class="oracle-stage" id="oracle-stage"></div>
@@ -1585,11 +1601,30 @@ const Screens = {
 
       function currentQ() { return state.session.scenes[state.sceneIdx]; }
 
+      // Trim options to 4 per question: always include every answer
+      // (so the question is solvable) plus random distractors up to 4.
+      function pickFourOptions(q) {
+        const all = q.options || [];
+        const answers = q.answers || [];
+        const distractors = all.filter(o => !answers.includes(o));
+        const need = Math.max(0, 4 - answers.length);
+        const picks = [...answers, ...shuffle(distractors).slice(0, need)];
+        // pad with extra distractors / fall back if still short
+        while (picks.length < 4 && distractors.length) {
+          const d = rand(distractors);
+          if (!picks.includes(d)) picks.push(d);
+        }
+        return shuffle(picks).slice(0, Math.min(4, picks.length));
+      }
+
       function drawQ() {
         const stage = $('#oracle-stage', el);
         const q = currentQ();
         const total = state.session.scenes.length;
-        state.sceneFills = new Array(q.blank_count).fill(null);
+        state.sceneFills   = new Array(q.blank_count).fill(null);
+        state.sceneActive  = 0;
+        state.sceneOptions = pickFourOptions(q);
+        state.sceneGraded  = false;
         stage.innerHTML = `
           <div class="q-progress">${String(state.sceneIdx + 1).padStart(2, '0')} · ${String(total).padStart(2, '0')}</div>
           <div class="q-card">
@@ -1597,77 +1632,110 @@ const Screens = {
             <span class="q-corner q-corner-tr">✦</span>
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
-            <div class="q-sentence" id="q-sentence-host">${renderBlankSentence(q)}</div>
+            <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
           </div>
           <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           <div class="oracle-options"></div>
         `;
+        wireSlots();
         renderOptions();
       }
 
       function renderBlankSentence(q) {
-        // Replace each "______" run with a slot span we can later dye.
-        // The blank order within the sentence drives which fill goes
-        // where (slot 0 = answers[0], slot 1 = answers[1] …).
         let slotIdx = 0;
-        const html = escapeHtml(q.blank_sentence).replace(/_{3,}/g, () => {
+        return escapeHtml(q.blank_sentence).replace(/_{3,}/g, () => {
           const i = slotIdx++;
-          const filled = state.sceneFills[i];
-          const cls = filled ? 'q-slot is-filled' : 'q-slot';
-          const inner = filled ? escapeHtml(filled) : '<span class="q-slot-tail"></span>';
+          const filled  = state.sceneFills[i];
+          const active  = i === state.sceneActive && !state.sceneGraded;
+          let cls = 'q-slot' + (filled ? ' is-filled' : '') + (active ? ' is-active' : '');
+          const inner = filled ? escapeHtml(filled) : '<span class="q-slot-tail">&nbsp;</span>';
           return `<span class="${cls}" data-slot="${i}">${inner}</span>`;
         });
-        return html;
+      }
+
+      function wireSlots() {
+        $$('.q-slot', el).forEach(slot => {
+          slot.addEventListener('click', (ev) => {
+            if (state.sceneGraded) return;
+            ev.stopPropagation();
+            const i = +slot.getAttribute('data-slot');
+            state.sceneActive = i;
+            SFX.tap();
+            $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
+            wireSlots();
+          });
+        });
       }
 
       function renderOptions() {
-        const stage = $('#oracle-stage', el);
-        const opts  = $('.oracle-options', stage);
-        const q     = currentQ();
+        const opts = $('.oracle-options', el);
         opts.innerHTML = '';
-        q.options.forEach(opt => {
+        (state.sceneOptions || []).forEach(opt => {
           const used = state.sceneFills.includes(opt);
           const b = document.createElement('button');
           b.className = 'card card--option' + (used ? ' is-used' : '');
           b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
           b.disabled = used;
-          b.addEventListener('click', () => pickOption(opt, b));
+          b.addEventListener('click', () => pickOption(opt));
           opts.appendChild(b);
         });
       }
 
-      function pickOption(opt, button) {
-        // Fill the first empty blank.
-        const nextEmpty = state.sceneFills.indexOf(null);
-        if (nextEmpty < 0) return;
-        state.sceneFills[nextEmpty] = opt;
+      function pickOption(opt) {
+        if (state.sceneGraded) return;
+        const i = state.sceneActive;
+        state.sceneFills[i] = opt;
         SFX.tap();
-        const q = currentQ();
-        // Repaint sentence + options so the slot displays the choice.
-        $('#q-sentence-host').innerHTML = renderBlankSentence(q);
+        // Auto-advance the active marker to the next empty slot, or
+        // stay on this one if there is none (user can still re-edit).
+        let next = state.sceneFills.indexOf(null);
+        if (next < 0) next = i;          // all filled — keep marker here
+        state.sceneActive = next;
+        $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
+        wireSlots();
         renderOptions();
         if (!state.sceneFills.includes(null)) {
-          // All blanks filled — judge.
-          setTimeout(() => grade(), 420);
+          // All blanks filled — arm a "tap anywhere blank to confirm" advance.
+          armConfirm();
         }
       }
 
+      function armConfirm() {
+        const stageHost = $('#oracle-stage');
+        let hint = $('.q-tap-hint', stageHost);
+        if (!hint) {
+          hint = document.createElement('div');
+          hint.className = 'q-tap-hint';
+          stageHost.appendChild(hint);
+        }
+        hint.textContent = '— tap anywhere to check —';
+        const onTap = (ev) => {
+          if (!ev || !ev.target) return;
+          if (ev.target.closest('.q-slot, .card--option, .moon-corner, .close-corner, .parchment-veil')) return;
+          document.removeEventListener('click', onTap, true);
+          grade();
+        };
+        setTimeout(() => document.addEventListener('click', onTap, true), 320);
+      }
+
       function grade() {
+        state.sceneGraded = true;
         const q = currentQ();
         const slots = $$('.q-slot', el);
         let allRight = true;
         q.answers.forEach((ans, i) => {
           const slot = slots[i];
           if (!slot) return;
+          slot.classList.remove('is-active');
           if ((state.sceneFills[i] || '').toLowerCase() === ans.toLowerCase()) {
             slot.classList.add('is-right');
-            if (PARCHMENT_CARDS[ans]) state.results[ans] = state.results[ans] || {};
+            if (PARCHMENT_CARDS[ans]) state.results[ans] = state.results[ans] || { match:null, oracle:null, dict:null };
             if (state.results[ans]) state.results[ans].oracle = true;
           } else {
             slot.classList.add('is-wrong');
-            // Show the correct answer in faint italic next to the slot.
             slot.innerHTML = `<span class="q-slot-yours">${escapeHtml(state.sceneFills[i])}</span><span class="q-slot-truth">${escapeHtml(ans)}</span>`;
-            if (state.results[ans]) state.results[ans].oracle = false;
+            if (!state.results[ans]) state.results[ans] = { match:null, oracle:null, dict:null };
+            state.results[ans].oracle = false;
             recordMistake(ans);
             allRight = false;
           }
@@ -1685,8 +1753,6 @@ const Screens = {
           panel.className = 'scene-reveal';
           stage.appendChild(panel);
         }
-        // Highlight clickable_words as parchment doorways.  Use a
-        // word-boundary regex to avoid partial matches.
         let en = escapeHtml(q.full_sentence);
         (q.clickable_words || []).forEach(w => {
           en = en.replace(new RegExp(`\\b${w}\\b`, 'gi'),
@@ -1710,13 +1776,8 @@ const Screens = {
 
       function armAdvance() {
         const stageHost = $('#oracle-stage');
-        let hint = stageHost && $('.q-tap-hint', stageHost);
-        if (!hint && stageHost) {
-          hint = document.createElement('div');
-          hint.className = 'q-tap-hint';
-          hint.textContent = '— tap a glowing word to read · tap anywhere else to turn —';
-          stageHost.appendChild(hint);
-        }
+        let hint = $('.q-tap-hint', stageHost);
+        if (hint) hint.textContent = '— tap a glowing word to read · tap anywhere else to turn —';
         const advance = (ev) => {
           if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .scene-jump, .parchment-veil')) return;
           if (document.querySelector('.parchment-veil')) return;
@@ -1735,25 +1796,49 @@ const Screens = {
     onEnter() {
       LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage2-result');
-      // v=51 — score is per-blank across all scene questions, not
-      // per-word.  total = sum of blank_count over chosen scenes.
+      // v=52 — replaced word-tile grid with EXAMPLE SENTENCES.  Each
+      // scene's full_sentence + Chinese gloss is shown; jumpable
+      // words inside the sentence are underlined → tap to open
+      // that word's parchment.  Per user: "结算页面修改成例句，
+      // 也就是可以被跳转至单词的例句".
       const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
       const total = sceneAnswers.length || 1;
       const right = sceneAnswers.filter(w => state.results[w] && state.results[w].oracle).length;
       el.innerHTML = `
         ${scoreBlock(2, 'The Reading', right, total, encouragement(right / total))}
         <div class="match-actions"></div>
-        <div class="match-result-hint">— touch any word to read its page —</div>
-        <div class="word-tile-grid"></div>
+        <div class="match-result-hint">— touch any underlined word to read its page —</div>
+        <div class="scene-result-list"></div>
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
       $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
-      const grid = $('.word-tile-grid', el);
-      // Render every unique scene-answer as a tile, marked by correctness.
-      Array.from(new Set(sceneAnswers))
-        .filter(w => PARCHMENT_CARDS[w])
-        .forEach(w => grid.appendChild(renderWordTile(w, state.results[w] && state.results[w].oracle)));
+      const list = $('.scene-result-list', el);
+      state.session.scenes.forEach(s => {
+        const row = document.createElement('div');
+        row.className = 'scene-result-row';
+        let en = escapeHtml(s.full_sentence);
+        (s.clickable_words || []).forEach(w => {
+          if (!PARCHMENT_CARDS[w]) return;
+          en = en.replace(new RegExp(`\\b${w}\\b`, 'gi'),
+            `<a class="scene-jump" data-word="${escapeAttr(w)}">${w}</a>`);
+        });
+        row.innerHTML = `
+          <div class="scene-result-en">${en}</div>
+          <div class="scene-result-zh">${escapeHtml(s.sentence_zh)}</div>
+        `;
+        row.querySelectorAll('.scene-jump').forEach(a => {
+          a.addEventListener('click', e => {
+            e.stopPropagation();
+            const w = a.getAttribute('data-word');
+            if (PARCHMENT_CARDS[w]) {
+              SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+              showParchment(w);
+            }
+          });
+        });
+        list.appendChild(row);
+      });
     }
   },
 
