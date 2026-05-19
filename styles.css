@@ -3181,33 +3181,27 @@ body { background: transparent !important; }
    linear-gradient bands draw the two solid flap edges; a second
    pseudo-element draws the dotted stitching.                     */
 .q-card::before {
-  /* v=57b — clipped TRIANGLE flap.  Upside-down triangle filled
-     with a soft golden gradient that lights the flap face like
-     light is hitting the folded paper.  The two diagonal EDGES
-     of the triangle are drawn by the outline of the clip + a
-     drop-shadow tracing those edges in solid gold.               */
+  /* v=57c — JUST the V-shape flap outline.  No filled triangle,
+     no gradient fill — those drew extra lines the user wanted
+     gone.  Two clean gold diagonals from the top of the flap
+     region down to the bottom-centre.                            */
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 96px;
+  height: 90px;
   pointer-events: none;
   z-index: 0;
-  /* solid colour for the flap face; the clip-path turns the
-     rectangle into the upside-down triangle.                    */
   background:
-    linear-gradient(180deg,
-                    rgba(232, 196, 138, 0.18) 0%,
-                    rgba(110, 80, 40, 0.08) 60%,
-                    rgba(40, 22, 60, 0.00) 100%);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  /* outline of the triangle — drawn as a 1.2 px gold edge by the
-     filter trick: two SVG filters would be cleaner but a drop-
-     shadow with offset 0 around the clip works too.            */
-  filter:
-    drop-shadow( 1px 0 0 rgba(232, 196, 138, 0.92))
-    drop-shadow(-1px 0 0 rgba(232, 196, 138, 0.92));
+    linear-gradient(to bottom right,
+      transparent calc(50% - 0.9px),
+      rgba(232, 196, 138, 0.85) calc(50% - 0.9px) calc(50% + 0.9px),
+      transparent calc(50% + 0.9px)) 0 0 / 50% 100% no-repeat,
+    linear-gradient(to bottom left,
+      transparent calc(50% - 0.9px),
+      rgba(232, 196, 138, 0.85) calc(50% - 0.9px) calc(50% + 0.9px),
+      transparent calc(50% + 0.9px)) 100% 0 / 50% 100% no-repeat;
 }
 /* DOTTED STITCHING — left + bottom + right inset rules, mark
    the visible "back" of the envelope around the flap.            */
