@@ -601,15 +601,17 @@ body.cover-pending .cover-gate     { visibility: visible; }
   margin-bottom: 0;
 }
 .dict-prompt {
+  /* v=54 — full sentence (not a phrase) now lives here, so let it
+     wrap.  Old "white-space: nowrap + overflow-x: auto" was for
+     the legacy short-phrase prompts (retired).                    */
   font-family: 'Cormorant Garamond', 'EB Garamond', serif;
   font-style: italic;
   font-size: 22px;
   color: #e6c084;
   letter-spacing: .03em;
   text-align: center;
-  white-space: nowrap;
-  overflow-x: auto;
-  margin: 0 auto 18px;
+  white-space: normal;
+  margin: 0 auto 8px;
   padding: 4px 0 6px;
 }
 /* clean underline blank inside the sentence — first letter +
@@ -3041,10 +3043,10 @@ body { background: transparent !important; }
      hairline outer border + same INNER DOTTED GOLD FRAME (via the
      ::before pseudo-element) the option cards use.  Visual family
      is one for question + answers now.                            */
-  /* v=53 — tighter horizontal padding so long sentences don't get
-     fragmented into 2-words-per-line.  Bottom padding still
-     clears the bow's upper-half overlap zone.                    */
-  padding: 18px 12px 64px;
+  /* v=54 — bow now sits ABSOLUTE inside the q-card (.q-bow-inside);
+     bottom padding reserves a bow-sized gap so content doesn't
+     crowd it.                                                       */
+  padding: 16px 12px 78px;
   background:
     radial-gradient(ellipse 90% 70% at 50% 40%,
                     rgba(232, 196, 138, 0.06) 0%,
@@ -3118,12 +3120,25 @@ body { background: transparent !important; }
   z-index: 2;
 }
 
-/* v=50 — BOW: half INSIDE the q-card frame, half OUTSIDE (sketch).
-   icon-bow.png is square (384×384) so at 130 px wide it's 130 px
-   tall.  margin-top: -65 px lifts the bow so its centre line sits
-   exactly on the q-card's bottom border.  margin-bottom: -65 px
-   pulls the next element (options / answer) up to match, so the
-   bow takes 0 px of layout flow.                                  */
+/* v=54 — BOW INSIDE the q-card per user: "蝴蝶结还是放在题目框里
+   吧，的下方".  Absolute-positioned at the q-card's bottom-centre,
+   replacing the half-in/half-out v=50 design.  Eats no layout
+   space; the q-card's bottom padding reserves the gap.            */
+.q-bow.q-bow-inside {
+  position: absolute !important;
+  top: auto !important;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 7px rgba(0, 0, 0, 0.50));
+  pointer-events: none;
+  z-index: 2;
+}
+/* (Legacy v=50 half-in/half-out .q-bow-large kept harmless for
+   any old markup that might still emit it.)                     */
 .q-bow.q-bow-large {
   display: block;
   width: 130px;
@@ -3153,8 +3168,11 @@ body { background: transparent !important; }
   z-index: 1;
   font-family: var(--f-italic);
   font-style: italic;
-  font-size: 17px !important;
-  line-height: 1.55 !important;
+  /* v=54 — font further reduced per user ("再小点 也忒大啦").
+     14 px / 1.5 line-height lets a typical IELTS-length sentence
+     land on 2–3 lines instead of 5.                              */
+  font-size: 14px !important;
+  line-height: 1.5 !important;
   color: var(--cream) !important;
   text-align: center;
   padding: 4px 2px !important;

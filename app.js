@@ -174,10 +174,35 @@ function _pickSceneQuestions(n = 4) {
   return shuffle(_SCENE_ARR).slice(0, n);
 }
 function _pickDictQuestions(n = 4) {
-  // prefer role:output (writing-worthy words) but mix in others if pool short.
-  const output = _DICT_ARR.filter(d => d.role === 'output');
-  const pool   = output.length >= n ? shuffle(output) : shuffle(_DICT_ARR);
-  return pool.slice(0, n);
+  // v=54 — dictation now uses SINGLE-BLANK EXAMPLE SENTENCES per
+  // user.  Source = PARCHMENT_CARDS where canWrite is true (644
+  // entries), AND the card has an example sentence containing the
+  // headword.  Each question blanks out the headword from the
+  // example so the user types it in context.  Old phrase-only
+  // DICTATION_QUESTIONS path retired.
+  const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
+    const c = PARCHMENT_CARDS[w];
+    if (!c || !c.canWrite || !c.example) return false;
+    // Must actually appear in the example so we can blank it.
+    return new RegExp(`\\b${w}\\b`, 'i').test(c.example);
+  });
+  return shuffle(pool).slice(0, n).map(w => {
+    const c = PARCHMENT_CARDS[w];
+    const blank_sentence = c.example.replace(
+      new RegExp(`\\b${w}\\b`, 'i'),
+      '______'
+    );
+    return {
+      head: w,
+      hint: (c.h || w)[0],
+      blank_sentence,
+      full_sentence: c.example,
+      sentence_zh:   c.example_zh || '',
+      answer:        w,
+      role:          c.role || 'output',
+      topic:         c.topic || ''
+    };
+  });
 }
 
 function buildSession() {
@@ -1667,8 +1692,8 @@ const Screens = {
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
             <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
+            <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
-          <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           <div class="oracle-options"></div>
         `;
         wireSlots();
@@ -1896,10 +1921,13 @@ const Screens = {
       function drawQ() {
         const stage = $('#dict-stage', el);
         const q = state.session.dicts[state.dictIdx];
-        // The answer slot inside the sentence is a clean underline
-        // (a span with border-bottom).  No ✦ stars, no "(a)____".
+        // v=54 — dict prompt is now a full SENTENCE with a single
+        // ______ blank where the headword sat.  We render the blank
+        // as a slot span (first letter + ruled tail) inside the
+        // sentence, just like stage 2's multi-blank slots but with
+        // only one.                                                 */
         const slot = `<span class="dict-blank"><span class="dict-blank-first">${escapeHtml(q.answer[0])}</span><span class="dict-blank-tail"></span></span>`;
-        const masked = q.prompt.replace(new RegExp(q.answer, 'i'), slot);
+        const masked = q.blank_sentence.replace(/_{3,}/, slot);
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · ${String(state.session.dicts.length).padStart(2, '0')}</div>
           <div class="q-card">
@@ -1908,9 +1936,9 @@ const Screens = {
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
             <div class="dict-prompt">${masked}</div>
-            <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
+            <div class="dict-zh-hint">${escapeHtml(q.sentence_zh)}</div>
+            <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
-          <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           <div class="dict-answer">
             <input class="dict-slot" id="dict-input"
                    autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
@@ -1959,7 +1987,7 @@ const Screens = {
           input.classList.add('is-wrong');
           // Replace the blank inside the prompt with the real letters
           const reveal = `<span class="dict-blank is-revealed">${escapeHtml(q.answer)}</span>`;
-          const revealed = q.prompt.replace(new RegExp(q.answer, 'i'), reveal);
+          const revealed = q.blank_sentence.replace(/_{3,}/, reveal);
           stage.querySelector('.dict-prompt').innerHTML = revealed;
           feedback.innerHTML = '<em>write it once more</em>';
           feedback.className = 'dict-feedback is-wrong';
