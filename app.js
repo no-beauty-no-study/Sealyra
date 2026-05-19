@@ -256,36 +256,43 @@ const BG_BY_SCREEN = {
 // the (fixed) bg-layer look like it's moving.
 const SCROLLABLE_SCREENS = new Set(['index', 'note-bucket']);
 function go(screenId, opts = {}) {
-  // v=46 — page-turn transition: a velvet veil with a ❦ floral and
-  // a soft golden sparkle washes IN over the current screen (220
-  // ms), the screen swaps mid-veil, then the veil fades OUT (260
-  // ms).  Cinematic dark-fairytale book pacing; not a "modern
-  // SPA crossfade".  Same-screen no-ops skip the transition.
-  // Opts may pass { instant: true } to bypass (used by drawQ etc.
-  // which re-render the same screen frame).
+  // v=53 — black-curtain transition.  Two paces:
+  //   · MAJOR  (cover → stage / between stages / chapter end):
+  //     420 ms total — long black curtain with a centred ❦.
+  //   · FAST   (game → result of same stage, side panels):
+  //     220 ms total — quick black blink, no glyph.
   if (opts.instant || state.screen === screenId) return _goImmediate(screenId, opts);
-  // Mount the veil and start its ink-in animation.
+  const fast = _isFastTransition(state.screen, screenId);
   let veil = document.querySelector('.scene-veil');
   if (!veil) {
     veil = document.createElement('div');
     veil.className = 'scene-veil';
-    veil.innerHTML = `
-      <div class="scene-veil-glyph">❦</div>
-      <div class="scene-veil-dust"></div>
-    `;
+    veil.innerHTML = `<div class="scene-veil-glyph">❦</div>`;
     document.body.appendChild(veil);
   }
-  // double-rAF so the browser sees opacity:0 before we transition.
+  veil.classList.toggle('is-fast', fast);
+  // Hide the glyph on fast transitions.
+  const glyph = veil.querySelector('.scene-veil-glyph');
+  if (glyph) glyph.style.display = fast ? 'none' : '';
   requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('is-in')));
-  // mid-veil: actually swap the screen
+  const inDur  = fast ? 110 : 220;
+  const outDur = fast ? 110 : 240;
   setTimeout(() => {
     _goImmediate(screenId, opts);
     veil.classList.remove('is-in');
     veil.classList.add('is-out');
-    setTimeout(() => {
-      veil.classList.remove('is-out');
-    }, 260);
-  }, 220);
+    setTimeout(() => { veil.classList.remove('is-out'); }, outDur);
+  }, inDur);
+}
+function _isFastTransition(from, to) {
+  // game → its own result OR result → its own game count as fast
+  if (!from || !to) return false;
+  const pairs = [
+    ['stage1','stage1-result'], ['stage1-result','stage1'],
+    ['stage2','stage2-result'], ['stage2-result','stage2'],
+    ['stage3','stage3-result'], ['stage3-result','stage3'],
+  ];
+  return pairs.some(p => p[0] === from && p[1] === to);
 }
 function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
@@ -295,6 +302,33 @@ function _goImmediate(screenId, opts = {}) {
   document.body.classList.add(BG_BY_SCREEN[screenId] || 'bg-cover');
   document.body.classList.toggle('no-scroll', !SCROLLABLE_SCREENS.has(screenId));
   if (Screens[screenId] && Screens[screenId].onEnter) Screens[screenId].onEnter(opts);
+  // v=53 — explicit per-screen BGM swap.  User reported that after
+  // the connect game only 2 BGMs ever played.  Each screen now
+  // GUARANTEES its pool plays even if the per-screen onEnter
+  // forgot to call it.
+  _ensureBGM(screenId);
+}
+const BGM_POOL_BY_SCREEN = {
+  cover:           'home',
+  note:            'home',
+  'note-bucket':   'home',
+  index:           'home',
+  card:            'home',
+  stage1:          'game',
+  'stage1-result': 'result',
+  stage2:          'home',
+  'stage2-result': 'result',
+  stage3:          'game',
+  'stage3-result': 'result',
+};
+function _ensureBGM(screenId) {
+  const pool = BGM_POOL_BY_SCREEN[screenId];
+  if (!pool) return;
+  try {
+    if      (pool === 'home')   LanBGM.playHomeRandom({ volume: 0.42 });
+    else if (pool === 'game')   LanBGM.playGameRandom({ volume: 0.40 });
+    else if (pool === 'result') LanBGM.playResultRandom({ volume: 0.42 });
+  } catch {}
 }
 
 /* ------------------------------------------------------------
