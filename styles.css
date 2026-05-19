@@ -406,6 +406,20 @@ body.cover-pending .cover-gate     { visibility: visible; }
 .scene-veil.is-in  { opacity: 1; pointer-events: all; transition: opacity 0.20s ease-in;  }
 .scene-veil.is-out { opacity: 0; pointer-events: none; transition: opacity 0.22s ease-out; }
 .scene-veil.is-fast { transition-duration: 0.10s !important; }
+/* v=62 — soft cover-side veil: instead of solid black, a thin
+   gradient wash (cool plum + gold dust haze) so cover ↔ note ↔
+   index ↔ card moves feel like flipping pages within the same
+   home, not entering a new chapter.                            */
+.scene-veil.is-cover {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%,
+                    rgba(64, 32, 86, 0.55) 0%,
+                    rgba(14, 8, 32, 0.85) 100%);
+}
+.scene-veil.is-cover .scene-veil-glyph {
+  font-size: 24px;
+  opacity: 0.6;
+}
 .scene-veil-glyph {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -729,10 +743,11 @@ body.cover-pending .cover-gate     { visibility: visible; }
   text-transform: lowercase;
 }
 .dict-slot:focus {
-  border-color: rgba(232, 196, 138, 0.95);
-  box-shadow:
-    0 0 12px rgba(232, 196, 138, 0.40),
-    inset 0 0 6px rgba(232, 196, 138, 0.10);
+  /* v=62 — focus glow removed per user "点击之后不发光", page
+     felt laggy with the soft-shadow chain repainting every
+     keystroke.  Border-colour change is enough affordance.    */
+  border-color: rgba(232, 196, 138, 0.85);
+  box-shadow: none;
 }
 .dict-slot.is-right {
   border-color: rgba(232, 196, 138, 0.90);
@@ -1724,23 +1739,31 @@ body.cover-pending .cover-stage > * { visibility: hidden !important; }
    own bottom-edge colour to the deep velvet body, so the join
    reads as a soft haze rather than a sharp cutoff.               */
 #bg-layer::after {
+  /* v=62 — blurred bottom strip now FADES INTO #0e0820 (the
+     browser-bar / safe-area colour) so the scene dissolves
+     smoothly into the toolbar instead of getting hard-cut.    */
   content: '';
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 18vh;
-  background: inherit;
+  height: 22vh;
+  background:
+    linear-gradient(180deg,
+      rgba(14, 8, 32, 0) 0%,
+      rgba(14, 8, 32, 0.55) 55%,
+      rgba(14, 8, 32, 1.0) 100%),
+    inherit;
   background-position: center bottom;
-  background-size: cover;
-  filter: blur(14px) saturate(1.05);
+  background-size: 100% 100%, cover;
+  filter: blur(10px) saturate(1.02);
   -webkit-mask-image: linear-gradient(180deg,
-    transparent 0%, #000 35%, #000 100%);
+    transparent 0%, #000 30%, #000 100%);
           mask-image: linear-gradient(180deg,
-    transparent 0%, #000 35%, #000 100%);
+    transparent 0%, #000 30%, #000 100%);
   z-index: 0;
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 1;
 }
 /* Match dark body colour for the slivers iOS overscroll exposes. */
 html, body { background-color: #2a1f3a; }
@@ -1955,9 +1978,9 @@ body { background: transparent !important; }
 .frame-chapter { z-index: 1; position: relative; }
 .score-frame .score-frame-inner {
   position: absolute;
-  /* The DCE4B4FE bow extends down ~30 % from the top; key extends
-     up ~28 % from the bottom.  Inner safe-zone clears both.       */
-  inset: 32% 18% 30% 18%;
+  /* v=62 — sides widened to 22 % so the SCORE label + number
+     don't touch the painted floral garland the user flagged.    */
+  inset: 32% 22% 30% 22%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3140,7 +3163,9 @@ body { background: transparent !important; }
    page torn from her notebook.                                    */
 .q-card {
   position: relative;
-  max-width: 460px;
+  /* v=62 — wider so the smaller font has more room per line.   */
+  max-width: 540px;
+  width: calc(100vw - 18px);
   margin: 18px auto 0;
   /* v=50 — q-card now matches the .card--option language: same
      hairline outer border + same INNER DOTTED GOLD FRAME (via the
@@ -3308,21 +3333,30 @@ body { background: transparent !important; }
   z-index: 1;
   font-family: var(--f-italic);
   font-style: italic;
-  /* v=61 — font 10 px per user "再小点".  IELTS sentences fit in
-     2 lines.                                                       */
-  font-size: 10px !important;
+  /* v=62 — text 12 px (was 10 — got too small on phone).  Box
+     widens via q-card max-width below; padding tighter so the
+     border rules hug the text more snugly.                        */
+  font-size: 12px !important;
   line-height: 1.55 !important;
   color: var(--cream) !important;
   text-align: center;
-  /* v=61 — same gold horizontal rules on dict-prompt as on q-
-     sentence so stage 2 and stage 3 show the SAME pair of lines
-     above + below the question text per user.  They're from the
-     border-top/border-bottom on .q-sentence (line 558-559) — the
-     real source of the "两根横线" the user kept reporting.       */
   border-top: 1px solid var(--line-gold) !important;
   border-bottom: 1px solid var(--line-gold) !important;
-  padding: 12px 4px !important;
+  padding: 10px 8px !important;
   margin: 0 !important;
+}
+/* v=62 — stage-3 Chinese hint sits ABOVE the top border per user
+   ("把中文翻译放在第一根线的上面").  Tiny italic, dimmed.       */
+.q-card .dict-zh-hint {
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  color: rgba(232, 196, 138, 0.62);
+  letter-spacing: 0.06em;
+  text-align: center;
+  margin: 0 0 6px;
+  padding: 0;
+  border: 0;
 }
 .dict-prompt, .dict-zh-hint { position: relative; z-index: 1; }
 

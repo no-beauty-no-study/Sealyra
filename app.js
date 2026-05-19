@@ -288,6 +288,10 @@ function go(screenId, opts = {}) {
   //     220 ms total — quick black blink, no glyph.
   if (opts.instant || state.screen === screenId) return _goImmediate(screenId, opts);
   const fast = _isFastTransition(state.screen, screenId);
+  // v=62 — cover-side moves (cover ↔ note ↔ index ↔ card) use
+  // the soft "cover-veil" instead of the dramatic black curtain
+  // so the home pool of pages feels like one continuous space.
+  const coverSide = _isCoverSide(state.screen) && _isCoverSide(screenId);
   let veil = document.querySelector('.scene-veil');
   if (!veil) {
     veil = document.createElement('div');
@@ -296,6 +300,7 @@ function go(screenId, opts = {}) {
     document.body.appendChild(veil);
   }
   veil.classList.toggle('is-fast', fast);
+  veil.classList.toggle('is-cover', coverSide);
   // Hide the glyph on fast transitions.
   const glyph = veil.querySelector('.scene-veil-glyph');
   if (glyph) glyph.style.display = fast ? 'none' : '';
@@ -318,6 +323,13 @@ function _isFastTransition(from, to) {
     ['stage3','stage3-result'], ['stage3-result','stage3'],
   ];
   return pairs.some(p => p[0] === from && p[1] === to);
+}
+// v=62 — cover-side screens (cover ↔ note ↔ index ↔ card) get
+// a SOFTER transition: no black curtain, just a quick page-veil
+// fade (the existing transitionTo idiom).  Stage navigations
+// keep the dramatic black curtain.
+function _isCoverSide(s) {
+  return s === 'cover' || s === 'note' || s === 'note-bucket' || s === 'index' || s === 'card';
 }
 function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
@@ -1913,6 +1925,27 @@ const Screens = {
           }
         });
         if (allRight) SFX.right(); else SFX.wrong();
+        // v=62 — after grading, auto-PLAY the full sentence audio
+        // so the user hears the correct usage in context, and
+        // re-enable every option chip as a parchment doorway so
+        // the user can tap any option (right or wrong) to read
+        // its definition.  No auto-advance — page stays put until
+        // the user taps an empty area.
+        try { speak(q.full_sentence); } catch {}
+        $$('.card--option', el).forEach((oldCard, idx) => {
+          const cloned = oldCard.cloneNode(true);
+          cloned.disabled = false;
+          cloned.classList.add('is-readable');
+          oldCard.replaceWith(cloned);
+          const word = (state.sceneOptions || [])[idx];
+          if (!word) return;
+          cloned.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            if (!PARCHMENT_CARDS[word]) return;
+            SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+            showParchment(word);
+          });
+        });
         revealFull(q);
         armAdvance();
       }
@@ -1951,7 +1984,7 @@ const Screens = {
         let hint = $('.q-tap-hint', stageHost);
         if (hint) hint.textContent = '— tap a glowing word to read · tap anywhere else to turn —';
         const advance = (ev) => {
-          if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .scene-jump, .parchment-veil')) return;
+          if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .scene-jump, .card--option.is-readable, .parchment-veil')) return;
           if (document.querySelector('.parchment-veil')) return;
           document.removeEventListener('click', advance, true);
           state.sceneIdx++;
@@ -2048,8 +2081,8 @@ const Screens = {
             <span class="q-corner q-corner-tr">✦</span>
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
-            <div class="dict-prompt">${masked}</div>
             <div class="dict-zh-hint">${escapeHtml(q.sentence_zh)}</div>
+            <div class="dict-prompt">${masked}</div>
             <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
           <div class="dict-answer">
