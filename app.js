@@ -279,7 +279,7 @@ const BG_BY_SCREEN = {
 // Only screens with real word lists are allowed to scroll the page —
 // every other screen locks body overflow so the iOS bounce can't make
 // the (fixed) bg-layer look like it's moving.
-const SCROLLABLE_SCREENS = new Set(['index', 'note-bucket']);
+const SCROLLABLE_SCREENS = new Set(['index', 'note-bucket', 'stage3-result']);
 function go(screenId, opts = {}) {
   // v=53 — black-curtain transition.  Two paces:
   //   · MAJOR  (cover → stage / between stages / chapter end):
@@ -622,6 +622,82 @@ function renderWordTile(word, mark) {
     showParchment(word);
   });
   return tile;
+}
+
+// v=57 — renderReviewCard: an EXPANDED study card for stage-3
+// result.  Shows headword + pos.zh + example sentence + family +
+// friend + kin in inline rows, no taps needed.  User scrolls down
+// the result page to review every word touched in the chapter.
+function renderReviewCard(word) {
+  const c = PARCHMENT_CARDS[word];
+  const card = document.createElement('div');
+  card.className = 'review-card';
+  if (!c) { card.textContent = word; return card; }
+  // Reuse the same in-line linkify so jumpable words are
+  // underlined inside the example sentence + collocations.
+  const selfLower = (c.h || '').toLowerCase();
+  const linkify = (text) => {
+    if (!text) return '';
+    return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
+      const k = w.toLowerCase();
+      if (k === selfLower) return m;
+      if (!PARCHMENT_CARDS[k]) return m;
+      return `<a class="rev-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
+    });
+  };
+  const lineRow = (variant, phrase, zh) =>
+    `<div class="rev-line">
+       <span class="rev-line-word">${linkify(variant)}</span>
+       ${phrase ? `<span class="rev-line-phrase">${linkify(phrase)}</span>` : ''}
+       <span class="rev-line-zh">${escapeHtml(zh || '')}</span>
+     </div>`;
+
+  let html = `
+    <div class="rev-head">
+      <span class="rev-word">${escapeHtml(c.h)}</span>
+      <span class="rev-pos">${escapeHtml((c.pos || '').slice(0, 4))}.</span>
+      <span class="rev-zh">${escapeHtml(c.zh || '')}</span>
+    </div>`;
+  if (c.example) {
+    html += `<div class="rev-example">${linkify(c.example)}</div>`;
+    if (c.example_zh) html += `<div class="rev-example-zh">${escapeHtml(c.example_zh)}</div>`;
+  }
+  if (c.family && c.family.length) {
+    html += `<div class="rev-section-label">her family</div>`;
+    c.family.forEach(line => {
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      html += lineRow(w, phrase, phraseZh || posZh);
+    });
+  }
+  if (c.friends && c.friends.length) {
+    html += `<div class="rev-section-label">her friend</div>`;
+    c.friends.forEach(line => {
+      const [phrase, zh] = line.split('|').map(s => s ? s.trim() : '');
+      html += `<div class="rev-line">
+        <span class="rev-line-phrase">${linkify(phrase)}</span>
+        <span class="rev-line-zh">${escapeHtml(zh || '')}</span>
+      </div>`;
+    });
+  }
+  if (c.kin && c.kin.length) {
+    html += `<div class="rev-section-label">her kin</div>`;
+    c.kin.forEach(line => {
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      html += lineRow(w, phrase, phraseZh || posZh);
+    });
+  }
+  card.innerHTML = html;
+  card.querySelectorAll('.rev-jump').forEach(a => {
+    a.addEventListener('click', e => {
+      e.stopPropagation();
+      const target = a.getAttribute('data-jump');
+      if (PARCHMENT_CARDS[target]) {
+        SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+        showParchment(target);
+      }
+    });
+  });
+  return card;
 }
 
 // Encouragement copy keyed to the percentage — keeps the storybook
@@ -2075,25 +2151,21 @@ const Screens = {
       el.innerHTML = `
         ${scoreBlock(3, 'The Inscription', totalCorrect, grandTotal, encouragement(totalCorrect / grandTotal))}
         <div class="match-actions"></div>
-        <div class="match-result-hint">— three pages, all her words —</div>
-        <div class="word-tile-grid"></div>
+        <div class="match-result-hint">— three pages, all her words · scroll down to review —</div>
+        <div class="review-stack"></div>
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
 
       $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
 
-      const grid = $('.word-tile-grid', el);
-      // Show every unique word the user touched across the 3 stages,
-      // marked correct if ANY stage they took for that word passed.
-      // (Many words only show up in one stage, so an all-three rule
-      // would be near-impossible.)
-      state.session.words.forEach(w => {
-        if (!PARCHMENT_CARDS[w]) return;
-        const r = state.results[w] || {};
-        const anyRight = r.match || r.oracle || r.dict;
-        grid.appendChild(renderWordTile(w, anyRight));
-      });
+      // v=57 — EXPANDED review cards per user: stage-3 result is
+      // the END-OF-CHAPTER review.  Show every unique word touched
+      // across all three stages, each with its full parchment-style
+      // content inlined (no tap needed — just scroll).
+      const stack = $('.review-stack', el);
+      const wordsSeen = Array.from(new Set(state.session.words.filter(w => PARCHMENT_CARDS[w])));
+      wordsSeen.forEach(w => stack.appendChild(renderReviewCard(w)));
     }
   },
 

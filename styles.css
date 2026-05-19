@@ -3146,10 +3146,10 @@ body { background: transparent !important; }
      hairline outer border + same INNER DOTTED GOLD FRAME (via the
      ::before pseudo-element) the option cards use.  Visual family
      is one for question + answers now.                            */
-  /* v=55 — bow grew to 130 px (was 90) and now hangs slightly
-     BELOW the card border like a wax seal — bottom padding 64 px
-     (content stays clear of its upper half).                       */
-  padding: 16px 12px 64px;
+  /* v=57 — content area lives in the TOP half of the q-card,
+     ABOVE the 90 px envelope flap at the bottom.  Padding-bottom
+     reserves the flap zone so the .q-sentence flows above it.    */
+  padding: 16px 12px 100px;
   background:
     radial-gradient(ellipse 90% 70% at 50% 40%,
                     rgba(232, 196, 138, 0.06) 0%,
@@ -3166,30 +3166,64 @@ body { background: transparent !important; }
     0 6px 22px rgba(0, 0, 0, 0.42);
   text-align: center;
 }
-/* v=56 — ENVELOPE FLAP via two diagonal gold lines from the
-   q-card's TOP corners converging at the BOW position (bottom
-   centre).  Replaces the v=50 inner-dotted-frame (the four
-   horizontal + vertical dotted rules) the user wanted removed.
-   linear-gradient bands draw clean ~1 px diagonals that scale
-   with the card's aspect.                                       */
+/* v=57 — proper envelope per user's hand-drawn sketch:
+   · TEXT lives in the TOP half of the q-card (the visible
+     "letter" peeking above the folded flap).
+   · The BOTTOM half is the FLAP — two diagonal gold lines run
+     from the LEFT + RIGHT mid-edges down to the BOTTOM-CENTRE,
+     meeting at the bow (the wax seal).
+   · A DOTTED gold stitching outlines the back of the envelope:
+     bottom edge + lower portion of the left + right edges,
+     inset slightly so it reads as separate from the outer
+     border.
+   The flap takes a fixed 90 px at the bottom of the card; the
+   q-card reserves that space via padding-bottom (set elsewhere).
+   linear-gradient bands draw the two solid flap edges; a second
+   pseudo-element draws the dotted stitching.                     */
 .q-card::before {
+  /* v=57b — clipped TRIANGLE flap.  Upside-down triangle filled
+     with a soft golden gradient that lights the flap face like
+     light is hitting the folded paper.  The two diagonal EDGES
+     of the triangle are drawn by the outline of the clip + a
+     drop-shadow tracing those edges in solid gold.               */
   content: '';
   position: absolute;
-  inset: 4px;
-  border-radius: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 96px;
+  pointer-events: none;
+  z-index: 0;
+  /* solid colour for the flap face; the clip-path turns the
+     rectangle into the upside-down triangle.                    */
+  background:
+    linear-gradient(180deg,
+                    rgba(232, 196, 138, 0.18) 0%,
+                    rgba(110, 80, 40, 0.08) 60%,
+                    rgba(40, 22, 60, 0.00) 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  /* outline of the triangle — drawn as a 1.2 px gold edge by the
+     filter trick: two SVG filters would be cleaner but a drop-
+     shadow with offset 0 around the clip works too.            */
+  filter:
+    drop-shadow( 1px 0 0 rgba(232, 196, 138, 0.92))
+    drop-shadow(-1px 0 0 rgba(232, 196, 138, 0.92));
+}
+/* DOTTED STITCHING — left + bottom + right inset rules, mark
+   the visible "back" of the envelope around the flap.            */
+.q-card::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
   pointer-events: none;
   z-index: 0;
   background:
-    /* left flap line — top-left corner → bottom centre */
-    linear-gradient(to bottom right,
-      transparent calc(50% - 0.7px),
-      rgba(232, 196, 138, 0.62) calc(50% - 0.7px) calc(50% + 0.7px),
-      transparent calc(50% + 0.7px)) 0 0 / 50% 100% no-repeat,
-    /* right flap line — top-right corner → bottom centre */
-    linear-gradient(to bottom left,
-      transparent calc(50% - 0.7px),
-      rgba(232, 196, 138, 0.62) calc(50% - 0.7px) calc(50% + 0.7px),
-      transparent calc(50% + 0.7px)) 100% 0 / 50% 100% no-repeat;
+    repeating-linear-gradient(0deg, rgba(228, 196, 132, 0.50) 0 1.4px,
+                              transparent 1.4px 4.2px) left   / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg, rgba(228, 196, 132, 0.50) 0 1.4px,
+                              transparent 1.4px 4.2px) right  / 1px 100% no-repeat,
+    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.50) 0 1.4px,
+                              transparent 1.4px 4.2px) bottom / 100% 1px no-repeat;
 }
 /* v=56 — subtle inner highlight + shadow gives the q-card a
    slight letterpress depth (an "embossed envelope" feel).      */
@@ -6323,6 +6357,130 @@ body { background: transparent !important; }
       0 0 14px rgba(232, 196, 138, 0.42),
       0 0 28px rgba(218, 168, 104, 0.22);
   }
+}
+
+/* v=57 — REVIEW STACK on stage-3 result.  Expanded study cards
+   stacked vertically; each card has the headword + zh + example
+   + family + friend + kin inlined, no taps required.  User
+   scrolls down to revise.  Per user "默写的阶段就是展开的卡片
+   三关里所有被考过的单词 复习".                                  */
+.review-stack {
+  max-width: 460px;
+  margin: 0 auto 24px;
+  padding: 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.review-card {
+  background:
+    linear-gradient(180deg,
+                    rgba(28, 16, 48, 0.55) 0%,
+                    rgba(18, 8, 36, 0.65) 100%);
+  border: 1px solid rgba(218, 168, 104, 0.45);
+  border-radius: 4px;
+  padding: 10px 14px 12px;
+  color: var(--cream);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 200, 130, 0.10),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.42),
+    0 3px 10px rgba(0, 0, 0, 0.38);
+}
+.review-card .rev-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.review-card .rev-word {
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  color: #f0d8a8;
+}
+.review-card .rev-pos {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  color: rgba(232, 200, 158, 0.62);
+}
+.review-card .rev-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 11.5px;
+  color: rgba(232, 200, 158, 0.75);
+  margin-left: auto;
+  text-align: right;
+}
+.review-card .rev-example {
+  font-family: var(--f-italic);
+  font-style: italic;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(245, 220, 190, 0.92);
+  margin: 6px 0 2px;
+}
+.review-card .rev-example-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 10.5px;
+  color: rgba(232, 200, 158, 0.68);
+  margin-bottom: 4px;
+}
+.review-card .rev-section-label {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(218, 168, 104, 0.78);
+  margin: 6px 0 1px;
+}
+.review-card .rev-line {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 1px 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.review-card .rev-line-word {
+  font-family: 'Libre Caslon Text', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  color: #e8caa0;
+  flex-shrink: 0;
+}
+.review-card .rev-line-phrase {
+  font-family: 'Libre Caslon Text', Georgia, serif;
+  font-style: italic;
+  color: rgba(245, 220, 190, 0.85);
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.review-card .rev-line-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 10px;
+  color: rgba(232, 200, 158, 0.62);
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rev-jump {
+  text-decoration: underline dotted rgba(232, 196, 138, 0.62);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  color: inherit;
+  cursor: pointer;
+}
+.rev-jump:hover {
+  color: #fff1d0;
+  text-decoration-color: rgba(232, 196, 138, 1);
 }
 
 .pc-rule {
