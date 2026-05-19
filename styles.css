@@ -1310,16 +1310,16 @@ body:not(.cover-pending) .cover-stage > * { visibility: visible; animation: cove
   background-repeat: no-repeat;
   background-attachment: scroll;
 }
-#screen-cover.active        { background-image: url("assets/bg-cover.png?v=25"); }
+#screen-cover.active        { background-image: url("assets/bg-cover.png?v=26"); }
 #screen-stage1.active,
 #screen-stage2.active,
-#screen-stage3.active       { background-image: url("assets/bg-stage.png?v=25"); }
+#screen-stage3.active       { background-image: url("assets/bg-stage.png?v=26"); }
 #screen-stage1-result.active,
 #screen-stage2-result.active,
-#screen-stage3-result.active{ background-image: url("assets/bg-result.png?v=25"); }
+#screen-stage3-result.active{ background-image: url("assets/bg-result.png?v=26"); }
 #screen-note.active,
 #screen-index.active,
-#screen-card.active         { background-image: url("assets/bg-note.png?v=25"); }
+#screen-card.active         { background-image: url("assets/bg-note.png?v=26"); }
 
 /* The body fallback colour matches the artwork's deep violet,
    so any over-scroll just shows the same hue.                  */
@@ -1345,7 +1345,7 @@ body {
   content: "";
   display: block;
   width: 22px; height: 64px;
-  background: url("assets/icon-key.png?v=25") center/contain no-repeat;
+  background: url("assets/icon-key.png?v=26") center/contain no-repeat;
   filter: drop-shadow(0 0 6px rgba(218,168,104,.45));
 }
 .main-cta .cta-key-l::before { transform: rotate(-12deg); }
@@ -1355,7 +1355,7 @@ body {
   content: "";
   display: block;
   width: 14px; height: 40px;
-  background: url("assets/icon-key.png?v=25") center/contain no-repeat;
+  background: url("assets/icon-key.png?v=26") center/contain no-repeat;
 }
 .next-door .nd-key:first-child::before { transform: rotate(-12deg); }
 .next-door .nd-key:last-child::before  { transform: rotate( 12deg); }
@@ -1367,7 +1367,7 @@ body {
   content: "";
   display: block;
   width: 100%; height: 100%;
-  background: url("assets/icon-moon.png?v=25") center/contain no-repeat;
+  background: url("assets/icon-moon.png?v=26") center/contain no-repeat;
   filter: drop-shadow(0 0 5px rgba(218,168,104,.45));
 }
 
@@ -1378,7 +1378,7 @@ body {
   display: block;
   width: 64px; height: 40px;
   margin: 14px auto 0;
-  background: url("assets/icon-bow.png?v=25") center/contain no-repeat;
+  background: url("assets/icon-bow.png?v=26") center/contain no-repeat;
   filter: drop-shadow(0 0 5px rgba(218,168,104,.35));
 }
 /* Don't double-up — hide the old fleuron-rule divider underneath */
@@ -1395,10 +1395,10 @@ body {
   width: 14px; height: 14px;
   text-shadow: none;
 }
-.deco-stars .s:nth-child(3n)   { background-image: url("assets/icon-spark-s.png?v=25"); }
-.deco-stars .s:nth-child(3n+1) { background-image: url("assets/icon-spark-m.png?v=25"); }
-.deco-stars .s:nth-child(3n+2) { background-image: url("assets/icon-spark-l.png?v=25"); }
-.deco-stars .s:nth-child(7n)   { background-image: url("assets/icon-star8.png?v=25"); width: 22px; height: 22px; }
+.deco-stars .s:nth-child(3n)   { background-image: url("assets/icon-spark-s.png?v=26"); }
+.deco-stars .s:nth-child(3n+1) { background-image: url("assets/icon-spark-m.png?v=26"); }
+.deco-stars .s:nth-child(3n+2) { background-image: url("assets/icon-spark-l.png?v=26"); }
+.deco-stars .s:nth-child(7n)   { background-image: url("assets/icon-star8.png?v=26"); width: 22px; height: 22px; }
 
 @keyframes star-breathe {
   0%, 100% { opacity: .22; filter: drop-shadow(0 0 2px rgba(237,184,158,.4)); }
@@ -1447,10 +1447,10 @@ body.cover-pending .cover-stage > * { visibility: hidden !important; }
 #banner-top   { z-index: 200; }
 .drawer       { z-index: 500; }
 .modal-veil   { z-index: 700; }
-body.bg-cover  #bg-layer { background-image: url("assets/bg-cover.png?v=25"); }
-body.bg-stage  #bg-layer { background-image: url("assets/bg-stage.png?v=25"); }
-body.bg-result #bg-layer { background-image: url("assets/bg-result.png?v=25"); }
-body.bg-note   #bg-layer { background-image: url("assets/bg-note.png?v=25"); }
+body.bg-cover  #bg-layer { background-image: url("assets/bg-cover.png?v=26"); }
+body.bg-stage  #bg-layer { background-image: url("assets/bg-stage.png?v=26"); }
+body.bg-result #bg-layer { background-image: url("assets/bg-result.png?v=26"); }
+body.bg-note   #bg-layer { background-image: url("assets/bg-note.png?v=26"); }
 
 /* Screens themselves no longer paint backgrounds — they live on top
    of the fixed layer.  Older per-screen background-image rules are
