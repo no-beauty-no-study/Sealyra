@@ -132,64 +132,67 @@ const SFX = (() => {
 })();
 
 /* ------------------------------------------------------------
-   2. SESSION SET — 8 words per Tonight's Reading run
-   We need a word that exists in CARDS + GROUPS + DICT_QUESTIONS so
-   all three stages can use the same 8 heads.
+   2. SESSION BUILDER  (v=51 — new bundle schema)
+
+   Each stage now draws from its OWN dedicated pool, per the
+   data bundle's "11. 角色规则":
+     stage 1 → MATCH_GROUPS         (4 pairs = 8 cards)
+     stage 2 → SCENE_BLANK_QUESTIONS (4 reading sentences)
+     stage 3 → DICTATION_QUESTIONS   (4 dictation words)
+
+   The 8 match-game words DO NOT have to overlap with the stage-2
+   or stage-3 pools — the data is curated so dictation words are
+   "output" (writing-worthy) while reading words are "recognition".
+   buildSession() now picks independently from each pool, no
+   forced sharing of headwords.
    ------------------------------------------------------------ */
-const GROUP_MAP = new Map(GROUPS.map(g => [g.head, g.partner]));
-const DICT_MAP  = new Map(DICT_QUESTIONS.map(d => [d.head, d]));
-const ALL_HEADS = Object.keys(CARDS).filter(h =>
-  GROUP_MAP.has(h) && DICT_MAP.has(h)
-).sort();
-const TOTAL_WORDS = Object.keys(CARDS).length;
+const _CARDS_ALIAS    = PARCHMENT_CARDS;     // shorthand
+const TOTAL_WORDS     = Object.keys(PARCHMENT_CARDS).length;
+// Quick lookup tables.
+const _JUMP_LINKS     = PARCHMENT_JUMP_LINKS;
+const _GROUPS_ARR     = MATCH_GROUPS;
+const _DICT_ARR       = DICTATION_QUESTIONS;
+const _SCENE_ARR      = SCENE_BLANK_QUESTIONS;
+
+// Match-pair dedupe: some partners appear in multiple groups, so a
+// random 4-pair draw could land the same word on both sides.  Pull
+// pairs greedily, dropping any whose partner OR head is already on
+// the board.
+function _pickMatchPairs(n = 4) {
+  const used = new Set();
+  const out  = [];
+  const pool = shuffle(_GROUPS_ARR);
+  for (const g of pool) {
+    if (used.has(g.head) || used.has(g.partner)) continue;
+    out.push({ head: g.head, partner: g.partner });
+    used.add(g.head); used.add(g.partner);
+    if (out.length === n) break;
+  }
+  return out;
+}
+function _pickSceneQuestions(n = 4) {
+  return shuffle(_SCENE_ARR).slice(0, n);
+}
+function _pickDictQuestions(n = 4) {
+  // prefer role:output (writing-worthy words) but mix in others if pool short.
+  const output = _DICT_ARR.filter(d => d.role === 'output');
+  const pool   = output.length >= n ? shuffle(output) : shuffle(_DICT_ARR);
+  return pool.slice(0, n);
+}
 
 function buildSession() {
-  // Randomize per session: shuffle the full pool, prefer un-learned
-  // words first, fall back to mixing learned ones in only if there
-  // aren't 8 fresh words left.  The old "slice from progress" build
-  // gave the user the same 8 words every reload, AND the learned-
-  // word filter wasn't applied — fixed both here.
-  //
-  // Partner-collision guard: some heads share the same partner in
-  // GROUPS (e.g. both `investigate` and `scrutinize` point to
-  // `examine`).  If the matching board draws both, the right column
-  // shows `examine` twice and pairing becomes ambiguous.  We pick the
-  // 4 match-heads with a dedupe-by-partner pass.
-  const learned = saved.learned || {};
-  const pickMatchPairs = (pool) => {
-    const used = new Set();      // partners already on the board
-    const usedHeads = new Set(); // heads already on the board
-    const pairs = [];
-    for (const h of pool) {
-      const p = GROUP_MAP.get(h);
-      if (!p || used.has(p) || usedHeads.has(p) || used.has(h)) continue;
-      pairs.push({ head: h, partner: p });
-      used.add(p); used.add(h);
-      usedHeads.add(h);
-      if (pairs.length === 4) break;
-    }
-    return pairs;
-  };
-
-  const fresh   = shuffle(ALL_HEADS.filter(h => !learned[h]));
-  const review  = shuffle(ALL_HEADS.filter(h =>  learned[h]));
-  const fullPool = [...fresh, ...review];
-
-  // 4 match pairs first (dedupe by partner), then fill 8 total session
-  // words from whatever's left.
-  const pairs = pickMatchPairs(fullPool);
+  const pairs   = _pickMatchPairs(4);
   if (pairs.length < 4) return null;
-
-  const matchHeads = pairs.map(p => p.head);
-  const remaining = fullPool.filter(h => !matchHeads.includes(h));
-  const words = [...matchHeads, ...remaining].slice(0, 8);
-  if (words.length < 8) return null;
-
-  return {
-    words,
-    pairs,
-    dict: words.map(h => DICT_MAP.get(h))
-  };
+  const scenes  = _pickSceneQuestions(4);
+  const dicts   = _pickDictQuestions(4);
+  // `words` = a flat list of every headword touched in this run, used
+  // by the result-page summary + the learned-word bookkeeping.
+  const words = Array.from(new Set([
+    ...pairs.flatMap(p => [p.head, p.partner]),
+    ...scenes.flatMap(s => s.answers || []),
+    ...dicts.map(d => d.head)
+  ]));
+  return { pairs, scenes, dicts, words };
 }
 
 /* ------------------------------------------------------------
@@ -229,7 +232,10 @@ const state = {
 };
 function freshSession() {
   state.session = buildSession();
-  if (!state.session) state.session = { words: ALL_HEADS.slice(0, 8), pairs: [], dict: [] };
+  if (!state.session) {
+    // fallback so the UI never crashes if data is missing.
+    state.session = { pairs: [], scenes: [], dicts: [], words: Object.keys(PARCHMENT_CARDS).slice(0, 8) };
+  }
   state.results = {};
   state.session.words.forEach(w => state.results[w] = { match: null, oracle: null, dict: null });
 }
@@ -539,7 +545,7 @@ function scoreBlock(chapterN, name, value, total, message) {
 // borrowed from the multiple-choice picked-red option card so the
 // chapters speak one tile vocabulary.  Tap → parchment.
 function renderWordTile(word, mark) {
-  const c = CARDS[word] || { h: word };
+  const c = PARCHMENT_CARDS[word] || { h: word };
   const tile = document.createElement('button');
   // .card.card--option carries the cardstock + frame; .picked-right
   // adds the wine palette + gold halo; .is-wrong dims it so the user
@@ -606,7 +612,7 @@ function flipToCard(tile, word, from) {
 let _activeParchment = null;
 function showParchment(word) {
   if (_activeParchment) closeParchment();
-  const c = CARDS[word];
+  const c = PARCHMENT_CARDS[word];
   if (!c) return;
 
   const veil = document.createElement('div');
@@ -658,10 +664,10 @@ function showParchment(word) {
     });
   }
 
-  if ((c.colloc && c.colloc.length) || c.example) {
+  if ((c.friends && c.friends.length) || c.example) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her friend</div>` });
-    (c.colloc || []).forEach(line => {
+    (c.friends || []).forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
       items.push({ kind: 'colloc', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(phrase)}">
         <button class="pc-play">♪</button>
@@ -695,13 +701,26 @@ function showParchment(word) {
     });
   }
 
-  if (c.partner) {
+  // v=51 — JUMP LINKS section.  Three sub-lists per the new bundle:
+  // family_links / synonym_links / kin_links.  Each chip jumps to
+  // that word's parchment, but ONLY if PARCHMENT_CARDS has the
+  // target (so we never render a dead link).
+  const jumps = PARCHMENT_JUMP_LINKS[word] || {};
+  const renderJumps = (label, list) => {
+    const real = (list || []).filter(w => PARCHMENT_CARDS[w]);
+    if (!real.length) return;
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
-    items.push({ kind: 'label', html: `<div class="pc-section-label">her neighbor</div>` });
-    items.push({ kind: 'neighbor', html: `<div class="pc-neighbor-row">
-      <button class="pc-neighbor-link" data-partner="${escapeAttr(c.partner)}">${escapeHtml(c.partner)}</button>
-    </div>` });
-  }
+    items.push({ kind: 'label', html: `<div class="pc-section-label">${label}</div>` });
+    const chips = real.map(w =>
+      `<button class="pc-neighbor-link" data-partner="${escapeAttr(w)}">${escapeHtml(w)}</button>`
+    ).join('');
+    items.push({ kind: 'neighbor', html: `<div class="pc-neighbor-row">${chips}</div>` });
+  };
+  // Arrow-prefixed labels make these read as PORTALS to other
+  // parchments, distinct from the in-card content sections above.
+  renderJumps('↪ family pages',  jumps.family_links);
+  renderJumps('↪ her partner',   jumps.synonym_links);
+  renderJumps('↪ kin pages',     jumps.kin_links);
 
   // Stage every item.  The headword reveals after the flip-in.
   // Section labels + rules reveal automatically with the next
@@ -877,7 +896,7 @@ function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'in
     body.insertAdjacentHTML('beforeend',
       `<div class="alpha-section-title" id="letter-${L}-${fromKey}">${L}</div>`);
     groups[L].forEach(h => {
-      const c = CARDS[h];
+      const c = PARCHMENT_CARDS[h];
       const row = document.createElement('div');
       row.className = 'word-row';
       row.dataset.word = c.h.toLowerCase();
@@ -945,7 +964,7 @@ function sprinkleStars(container, count = 18) {
    learning beat.  The per-segment ♪ buttons replay without touching
    the reveal state.                                                   */
 function renderExCard(headWord, mark = null, { rewrite = false, withControls = true } = {}) {
-  const c = CARDS[headWord];
+  const c = PARCHMENT_CARDS[headWord];
   if (!c) {
     const x = document.createElement('div');
     x.className = 'ex-card';
@@ -1016,11 +1035,11 @@ function renderExCard(headWord, mark = null, { rewrite = false, withControls = t
 
   /* HER FRIEND — section label always visible, every collocation row
      is queued individually so each tap reveals + speaks ONE colloc.  */
-  if (c.colloc && c.colloc.length) {
+  if (c.friends && c.friends.length) {
     const fr = document.createElement('div');
     fr.className = 'ex-section ex-friend';
     fr.innerHTML = `<div class="ex-label">her friend</div>`;
-    c.colloc.forEach(line => {
+    c.friends.forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
       const row = document.createElement('div');
       row.className = 'colloc-row is-veiled';
@@ -1054,16 +1073,20 @@ function renderExCard(headWord, mark = null, { rewrite = false, withControls = t
     queue.push({ el: ex, audio: c.example });
   }
 
-  /* HER NEIGHBOR — always visible. */
-  if (c.partner) {
+  /* HER NEIGHBOR — first synonym from PARCHMENT_JUMP_LINKS (v=51).
+     ex-card is the legacy stand-alone study card; we only show
+     the first synonym so the card stays compact.                 */
+  const _jumpsForEx = PARCHMENT_JUMP_LINKS[headWord] || {};
+  const _firstPartner = (_jumpsForEx.synonym_links || []).find(w => PARCHMENT_CARDS[w]);
+  if (_firstPartner) {
     const nb = document.createElement('div');
     nb.className = 'ex-section ex-neighbor';
     nb.innerHTML = `<span class="ex-label">her neighbor</span>
-                    <button class="ex-neighbor-link">${escapeHtml(c.partner)}</button>`;
+                    <button class="ex-neighbor-link">${escapeHtml(_firstPartner)}</button>`;
     nb.querySelector('.ex-neighbor-link').addEventListener('click', e => {
       e.stopPropagation();
       SFX.pageTurn();
-      go('card', { word: c.partner, from: state.screen === 'card' ? (state._cardFrom || 'cover') : state.screen });
+      go('card', { word: _firstPartner, from: state.screen === 'card' ? (state._cardFrom || 'cover') : state.screen });
     });
     box.appendChild(nb);
   }
@@ -1145,7 +1168,7 @@ function renderExCard(headWord, mark = null, { rewrite = false, withControls = t
    9. ORACLE QUESTION BUILDER — Chinese options
    ------------------------------------------------------------ */
 function buildOracleQuestion(word) {
-  const c = CARDS[word];
+  const c = PARCHMENT_CARDS[word];
   const sentence = c.example || c.h;
   // Cloze: keep the first letter, blank the rest.  "abrupt" → "a______"
   const first  = c.h[0];
@@ -1161,7 +1184,7 @@ function buildOracleQuestion(word) {
   );
   // 3 distractors that ALSO start with the same letter — the lesson
   // is "tell apart the words that share the first letter".
-  const sameLetter = Object.keys(CARDS).filter(k =>
+  const sameLetter = Object.keys(PARCHMENT_CARDS).filter(k =>
     k !== word && k[0].toLowerCase() === first.toLowerCase()
   );
   const wrongs = [];
@@ -1171,7 +1194,7 @@ function buildOracleQuestion(word) {
   }
   // Fall back to random heads if there aren't 3 same-letter siblings.
   if (wrongs.length < 3) {
-    const fallback = Object.keys(CARDS).filter(k => k !== word && !wrongs.includes(k));
+    const fallback = Object.keys(PARCHMENT_CARDS).filter(k => k !== word && !wrongs.includes(k));
     while (wrongs.length < 3 && fallback.length) {
       const cand = rand(fallback);
       if (!wrongs.includes(cand)) wrongs.push(cand);
@@ -1541,147 +1564,168 @@ const Screens = {
   },
 
   /* ---------- STAGE 2 — the reading ---------- */
+  /* ---------- STAGE 2 — multi-blank scene reading (v=51)
+     Each question is a long contextual sentence with N blanks.
+     User taps option chips to fill the blanks in order; when all
+     blanks are filled we auto-check, dye each blank green/red,
+     reveal the full sentence + Chinese gloss, and highlight the
+     clickable_words so the user can jump to their parchment.   */
   stage2: {
     onEnter() {
       LanBGM.playHomeRandom({ volume: 0.38 });
       const el = $('#screen-stage2');
-      state.oracleQs  = state.session.words.map(w => buildOracleQuestion(w));
-      state.oracleIdx = 0;
+      state.sceneIdx = 0;
+      state.sceneFills = [];   // filled answers per blank for current Q
       el.innerHTML = `
         ${stageHeader(2, 'The Reading')}
         <div class="oracle-stage" id="oracle-stage"></div>
       `;
-
-      // top-left moon is the "back to cover" affordance; the right
-      // X was removed at the user's request — it crowded the right
-      // column visually and felt redundant.
       el.appendChild(closeCorner({ to: 'cover' }));
       drawQ();
 
+      function currentQ() { return state.session.scenes[state.sceneIdx]; }
+
       function drawQ() {
         const stage = $('#oracle-stage', el);
-        const q = state.oracleQs[state.oracleIdx];
-        // Question area = a subtle vellum page with ❦ corner
-        // ornaments + thin antique-gold rules above and below.
-        // Same idiom as the dictation card so chapters 2 + 3
-        // speak one language.
+        const q = currentQ();
+        const total = state.session.scenes.length;
+        state.sceneFills = new Array(q.blank_count).fill(null);
         stage.innerHTML = `
-          <div class="q-progress">${String(state.oracleIdx + 1).padStart(2, '0')} · 08</div>
+          <div class="q-progress">${String(state.sceneIdx + 1).padStart(2, '0')} · ${String(total).padStart(2, '0')}</div>
           <div class="q-card">
             <span class="q-corner q-corner-tl">✦</span>
             <span class="q-corner q-corner-tr">✦</span>
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
-            <div class="q-sentence">${q.sentenceHL}</div>
+            <div class="q-sentence" id="q-sentence-host">${renderBlankSentence(q)}</div>
           </div>
           <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           <div class="oracle-options"></div>
         `;
-        const opts = $('.oracle-options', stage);
-        q.options.forEach((opt, oi) => {
+        renderOptions();
+      }
+
+      function renderBlankSentence(q) {
+        // Replace each "______" run with a slot span we can later dye.
+        // The blank order within the sentence drives which fill goes
+        // where (slot 0 = answers[0], slot 1 = answers[1] …).
+        let slotIdx = 0;
+        const html = escapeHtml(q.blank_sentence).replace(/_{3,}/g, () => {
+          const i = slotIdx++;
+          const filled = state.sceneFills[i];
+          const cls = filled ? 'q-slot is-filled' : 'q-slot';
+          const inner = filled ? escapeHtml(filled) : '<span class="q-slot-tail"></span>';
+          return `<span class="${cls}" data-slot="${i}">${inner}</span>`;
+        });
+        return html;
+      }
+
+      function renderOptions() {
+        const stage = $('#oracle-stage', el);
+        const opts  = $('.oracle-options', stage);
+        const q     = currentQ();
+        opts.innerHTML = '';
+        q.options.forEach(opt => {
+          const used = state.sceneFills.includes(opt);
           const b = document.createElement('button');
-          // Same cardstock structure as the match-card so the two
-          // stages speak one visual language.  ❦ flanks the text,
-          // .mc-frame draws the dotted inner gold rule.
-          b.className = 'card card--option';
-          b.innerHTML = `
-            <span class="mc-frame"></span>
-            <span class="mc-text">${escapeHtml(opt)}</span>
-          `;
-          b.addEventListener('click', () => pick(oi, b));
+          b.className = 'card card--option' + (used ? ' is-used' : '');
+          b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
+          b.disabled = used;
+          b.addEventListener('click', () => pickOption(opt, b));
           opts.appendChild(b);
         });
       }
 
-      function pick(oi, button) {
-        const q = state.oracleQs[state.oracleIdx];
-        const all = $$('.card--option');
-        all.forEach(b => b.disabled = true);
-
-        // Three-beat ceremony per user spec:
-        //   1) flip the tapped card (rotateY) — "I'm turning this one"
-        //   2) at the flip midpoint, the card is dyed PINK to mark
-        //      "you picked this one"; the picked card itself does NOT
-        //      glow.
-        //   3) shortly after, the CORRECT card (whether you picked it
-        //      or not) reveals with a gold halo — the user's pick is
-        //      the answer if and only if it's the same card that's
-        //      glowing.
-        button.classList.add('is-flipping', 'is-picking');
-        // mid-flip: lock in the pink "I chose this" dye
-        setTimeout(() => button.classList.remove('is-flipping'), 320);
-
-        setTimeout(() => {
-          button.classList.remove('is-picking');
-          if (oi === q.correctIdx) {
-            // user picked correctly — same card carries the gold halo
-            button.classList.add('picked-right', 'reveal-right');
-            state.results[q.word].oracle = true;
-            SFX.right();
-          } else {
-            // user's pick stays pink-but-unglowing; the correct one
-            // breathes gold to show the "magic card" they missed.
-            button.classList.add('picked-wrong');
-            all[q.correctIdx].classList.add('reveal-right');
-            state.results[q.word].oracle = false;
-            recordMistake(q.word);
-            SFX.wrong();
-          }
-          // EVERY option card now opens its own word's parchment —
-          // not just the correct one.  User wants to be able to read
-          // the meaning of any distractor too ("错误的选项也需要跳转
-          // 到羊皮纸").  We clone each card to drop the original
-          // pick() listener (which would otherwise re-trigger the
-          // whole ceremony on the next tap), then wire the parchment-
-          // open handler on the fresh node.  Cloning preserves the
-          // state classes (picked-right / picked-wrong / reveal-right)
-          // that were just added above.
-          all.forEach((oldCard, idx) => {
-            const cloned = oldCard.cloneNode(true);
-            cloned.disabled = false;
-            cloned.classList.add('is-readable');
-            oldCard.replaceWith(cloned);
-            const word = q.options[idx];
-            cloned.addEventListener('click', (ev) => {
-              ev.stopPropagation();
-              SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
-              showParchment(word);
-            });
-          });
-          // Speak the full example sentence so the user hears the word
-          // in context.  Then arm a one-shot tap-anywhere listener: the
-          // user controls when to move on.
-          speak(q.sentencePlain);
-          armAdvance();
-        }, 280);
-
-        function armAdvance() {
-          // a hint that the page is waiting for them.  `stage` is local
-          // to drawQ(); pick() is a sibling, so we re-query the DOM.
-          const stageHost = $('#oracle-stage');
-          let hint = stageHost && $('.q-tap-hint', stageHost);
-          if (!hint && stageHost) {
-            hint = document.createElement('div');
-            hint.className = 'q-tap-hint';
-            hint.textContent = '— tap her page to read · tap anywhere else to turn —';
-            stageHost.appendChild(hint);
-          }
-          const advance = (ev) => {
-            // Skip taps that belong to the page rather than the "advance"
-            // gesture: corner star, the readable correct-card (those open
-            // the parchment), and anything inside an open parchment.
-            if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .card--option.is-readable, .parchment-veil')) return;
-            // If a parchment is currently open, swallow the tap — the
-            // user is reading, not advancing.
-            if (document.querySelector('.parchment-veil')) return;
-            document.removeEventListener('click', advance, true);
-            state.oracleIdx++;
-            if (state.oracleIdx >= state.oracleQs.length) go('stage2-result');
-            else drawQ();
-          };
-          // brief delay so the same click that picked doesn't immediately advance
-          setTimeout(() => document.addEventListener('click', advance, true), 480);
+      function pickOption(opt, button) {
+        // Fill the first empty blank.
+        const nextEmpty = state.sceneFills.indexOf(null);
+        if (nextEmpty < 0) return;
+        state.sceneFills[nextEmpty] = opt;
+        SFX.tap();
+        const q = currentQ();
+        // Repaint sentence + options so the slot displays the choice.
+        $('#q-sentence-host').innerHTML = renderBlankSentence(q);
+        renderOptions();
+        if (!state.sceneFills.includes(null)) {
+          // All blanks filled — judge.
+          setTimeout(() => grade(), 420);
         }
+      }
+
+      function grade() {
+        const q = currentQ();
+        const slots = $$('.q-slot', el);
+        let allRight = true;
+        q.answers.forEach((ans, i) => {
+          const slot = slots[i];
+          if (!slot) return;
+          if ((state.sceneFills[i] || '').toLowerCase() === ans.toLowerCase()) {
+            slot.classList.add('is-right');
+            if (PARCHMENT_CARDS[ans]) state.results[ans] = state.results[ans] || {};
+            if (state.results[ans]) state.results[ans].oracle = true;
+          } else {
+            slot.classList.add('is-wrong');
+            // Show the correct answer in faint italic next to the slot.
+            slot.innerHTML = `<span class="q-slot-yours">${escapeHtml(state.sceneFills[i])}</span><span class="q-slot-truth">${escapeHtml(ans)}</span>`;
+            if (state.results[ans]) state.results[ans].oracle = false;
+            recordMistake(ans);
+            allRight = false;
+          }
+        });
+        if (allRight) SFX.right(); else SFX.wrong();
+        revealFull(q);
+        armAdvance();
+      }
+
+      function revealFull(q) {
+        const stage = $('#oracle-stage', el);
+        let panel = $('.scene-reveal', stage);
+        if (!panel) {
+          panel = document.createElement('div');
+          panel.className = 'scene-reveal';
+          stage.appendChild(panel);
+        }
+        // Highlight clickable_words as parchment doorways.  Use a
+        // word-boundary regex to avoid partial matches.
+        let en = escapeHtml(q.full_sentence);
+        (q.clickable_words || []).forEach(w => {
+          en = en.replace(new RegExp(`\\b${w}\\b`, 'gi'),
+            `<a class="scene-jump" data-word="${escapeAttr(w)}">${w}</a>`);
+        });
+        panel.innerHTML = `
+          <div class="scene-reveal-en">${en}</div>
+          <div class="scene-reveal-zh">${escapeHtml(q.sentence_zh)}</div>
+        `;
+        panel.querySelectorAll('.scene-jump').forEach(a => {
+          a.addEventListener('click', e => {
+            e.stopPropagation();
+            const w = a.getAttribute('data-word');
+            if (PARCHMENT_CARDS[w]) {
+              SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+              showParchment(w);
+            }
+          });
+        });
+      }
+
+      function armAdvance() {
+        const stageHost = $('#oracle-stage');
+        let hint = stageHost && $('.q-tap-hint', stageHost);
+        if (!hint && stageHost) {
+          hint = document.createElement('div');
+          hint.className = 'q-tap-hint';
+          hint.textContent = '— tap a glowing word to read · tap anywhere else to turn —';
+          stageHost.appendChild(hint);
+        }
+        const advance = (ev) => {
+          if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner, .scene-jump, .parchment-veil')) return;
+          if (document.querySelector('.parchment-veil')) return;
+          document.removeEventListener('click', advance, true);
+          state.sceneIdx++;
+          if (state.sceneIdx >= state.session.scenes.length) go('stage2-result');
+          else drawQ();
+        };
+        setTimeout(() => document.addEventListener('click', advance, true), 480);
       }
     }
   },
@@ -1691,13 +1735,13 @@ const Screens = {
     onEnter() {
       LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage2-result');
-      const right = state.session.words.filter(w => state.results[w].oracle).length;
-      // v=42 — stage-2 result no longer uses the bulky ex-card.  The
-      // user wanted the same red wine-card UI from the multiple-
-      // choice (the .card--option.picked palette).  We render an 8-
-      // tile grid of the 8 words; tapping a tile opens its parchment.
+      // v=51 — score is per-blank across all scene questions, not
+      // per-word.  total = sum of blank_count over chosen scenes.
+      const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
+      const total = sceneAnswers.length || 1;
+      const right = sceneAnswers.filter(w => state.results[w] && state.results[w].oracle).length;
       el.innerHTML = `
-        ${scoreBlock(2, 'The Reading', right, 8, encouragement(right / 8))}
+        ${scoreBlock(2, 'The Reading', right, total, encouragement(right / total))}
         <div class="match-actions"></div>
         <div class="match-result-hint">— touch any word to read its page —</div>
         <div class="word-tile-grid"></div>
@@ -1706,7 +1750,10 @@ const Screens = {
       el.appendChild(closeCorner({ to: 'cover' }));
       $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
       const grid = $('.word-tile-grid', el);
-      state.session.words.forEach(w => grid.appendChild(renderWordTile(w, state.results[w].oracle)));
+      // Render every unique scene-answer as a tile, marked by correctness.
+      Array.from(new Set(sceneAnswers))
+        .filter(w => PARCHMENT_CARDS[w])
+        .forEach(w => grid.appendChild(renderWordTile(w, state.results[w] && state.results[w].oracle)));
     }
   },
 
@@ -1729,13 +1776,13 @@ const Screens = {
 
       function drawQ() {
         const stage = $('#dict-stage', el);
-        const q = state.session.dict[state.dictIdx];
+        const q = state.session.dicts[state.dictIdx];
         // The answer slot inside the sentence is a clean underline
         // (a span with border-bottom).  No ✦ stars, no "(a)____".
         const slot = `<span class="dict-blank"><span class="dict-blank-first">${escapeHtml(q.answer[0])}</span><span class="dict-blank-tail"></span></span>`;
         const masked = q.prompt.replace(new RegExp(q.answer, 'i'), slot);
         stage.innerHTML = `
-          <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
+          <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · ${String(state.session.dicts.length).padStart(2, '0')}</div>
           <div class="q-card">
             <span class="q-corner q-corner-tl">✦</span>
             <span class="q-corner q-corner-tr">✦</span>
@@ -1763,13 +1810,13 @@ const Screens = {
 
       function advance() {
         state.dictIdx++;
-        if (state.dictIdx >= state.session.dict.length) go('stage3-result');
+        if (state.dictIdx >= state.session.dicts.length) go('stage3-result');
         else drawQ();
       }
 
       function check() {
         const stage = $('#dict-stage', el);
-        const q = state.session.dict[state.dictIdx];
+        const q = state.session.dicts[state.dictIdx];
         const input = $('#dict-input', stage);
         const feedback = $('#dict-feedback', stage);
         const guess = (input.value || '').trim().toLowerCase();
@@ -1821,19 +1868,30 @@ const Screens = {
       SFX.finish();
       // bump progress + mark learned
       state.session.words.forEach(w => { markLearned(w); });
-      saved.progress = Math.min(saved.progress + 8, ALL_HEADS.length);
+      saved.progress = Math.min(saved.progress + state.session.words.length, TOTAL_WORDS);
       Store.save();
 
       const el = $('#screen-stage3-result');
-      const right = state.session.words.filter(w => state.results[w].dict).length;
-      const totalCorrect = state.session.words.reduce((acc, w) => {
-        const r = state.results[w];
-        return acc + (r.match ? 1 : 0) + (r.oracle ? 1 : 0) + (r.dict ? 1 : 0);
-      }, 0);
+      // v=51 — total = match-correct (4 pairs) + scene-correct (per
+      // blank) + dict-correct (per dict question).  Denominator is
+      // the sum of available slots across the three stages.
+      const pairsTotal  = state.session.pairs.length;
+      const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
+      const sceneTotal   = sceneAnswers.length;
+      const dictsTotal   = state.session.dicts.length;
+      const grandTotal   = pairsTotal + sceneTotal + dictsTotal;
+      // correctness per slot
+      const matchRight = state.session.pairs
+        .filter(p => state.results[p.head] && state.results[p.head].match).length;
+      const sceneRight = sceneAnswers
+        .filter(w => state.results[w] && state.results[w].oracle).length;
+      const dictRight  = state.session.dicts
+        .filter(d => state.results[d.head] && state.results[d.head].dict).length;
+      const totalCorrect = matchRight + sceneRight + dictRight;
       el.innerHTML = `
-        ${scoreBlock(3, 'The Inscription', totalCorrect, 24, encouragement(totalCorrect / 24))}
+        ${scoreBlock(3, 'The Inscription', totalCorrect, grandTotal, encouragement(totalCorrect / grandTotal))}
         <div class="match-actions"></div>
-        <div class="match-result-hint">— three stages, eight words —</div>
+        <div class="match-result-hint">— three pages, all her words —</div>
         <div class="word-tile-grid"></div>
       `;
 
@@ -1842,11 +1900,15 @@ const Screens = {
       $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
 
       const grid = $('.word-tile-grid', el);
-      // mark a word as correct only if all three stages passed it.
+      // Show every unique word the user touched across the 3 stages,
+      // marked correct if ANY stage they took for that word passed.
+      // (Many words only show up in one stage, so an all-three rule
+      // would be near-impossible.)
       state.session.words.forEach(w => {
-        const r = state.results[w];
-        const allRight = r.match && r.oracle && r.dict;
-        grid.appendChild(renderWordTile(w, allRight));
+        if (!PARCHMENT_CARDS[w]) return;
+        const r = state.results[w] || {};
+        const anyRight = r.match || r.oracle || r.dict;
+        grid.appendChild(renderWordTile(w, anyRight));
       });
     }
   },
@@ -1902,7 +1964,7 @@ const Screens = {
       const words = Object.entries(m)
         .filter(([_, c]) => bucket === 'haunt' ? c >= 3 : (c >= 1 && c <= 2))
         .map(([w]) => w)
-        .filter(w => CARDS[w])
+        .filter(w => PARCHMENT_CARDS[w])
         .sort();
       const title = bucket === 'haunt' ? 'Haunting Words' : 'Soft Slips';
       renderIndexLikePage($('#screen-note-bucket'),
@@ -1914,7 +1976,7 @@ const Screens = {
      v=26.2 — same panel UI as note-bucket via renderIndexLikePage. */
   index: {
     onEnter() {
-      const heads = Object.keys(CARDS).sort();
+      const heads = Object.keys(PARCHMENT_CARDS).sort();
       renderIndexLikePage($('#screen-index'),
         { title: 'The Index', words: heads, backTo: 'cover', fromKey: 'index' });
     }
