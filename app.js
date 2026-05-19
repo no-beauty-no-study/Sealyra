@@ -674,6 +674,7 @@ function showParchment(word) {
   const c = PARCHMENT_CARDS[word];
   if (!c) return;
 
+  const inNote = !!(saved.notes && saved.notes[word]);
   const veil = document.createElement('div');
   veil.className = 'parchment-veil';
   veil.innerHTML = `
@@ -682,11 +683,23 @@ function showParchment(word) {
         <button class="pc-close" aria-label="fold this page">fold this page</button>
         <div class="pc-stack"></div>
         <div class="pc-tap-hint">— tap the page —</div>
+        <!-- v=55 — signing line is a real text input so the user
+             can muscle-copy the word once (was decorative). -->
         <div class="pc-copy">
           <span class="pc-copy-label">signed</span>
-          <span class="pc-copy-rule"></span>
+          <input class="pc-copy-input" type="text"
+                 autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                 placeholder="${escapeAttr(c.h)}">
           <span class="pc-copy-mark">✦</span>
         </div>
+        <!-- v=55 — bottom-left moon-star button: tap to add this
+             word to "her note" (the saved-words bucket).  Sits ON
+             the painted moon ornament that the parchment art
+             already has at its bottom-left corner.  Breathes a
+             circular gold halo so it reads as tappable.        -->
+        <button class="pc-note-add ${inNote ? 'is-saved' : ''}" aria-label="add to her note" title="add to her note">
+          <span class="pc-note-star">✦</span>
+        </button>
       </div>
     </div>
   `;
@@ -899,8 +912,34 @@ function showParchment(word) {
     e.stopPropagation();
     closeParchment();
   });
+  // v=55 — add-to-note button.  Toggle this word in saved.notes.
+  // Visual flips between "empty" and "is-saved" so the user knows
+  // they bookmarked it.  Doesn't close the parchment.
+  const noteBtn = veil.querySelector('.pc-note-add');
+  if (noteBtn) {
+    noteBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!saved.notes) saved.notes = {};
+      const w = c.h;
+      if (saved.notes[w]) {
+        delete saved.notes[w];
+        noteBtn.classList.remove('is-saved');
+      } else {
+        saved.notes[w] = Date.now();
+        noteBtn.classList.add('is-saved');
+      }
+      Store.save();
+      SFX.tap();
+    });
+  }
+  // v=55 — close on ANY click outside the .parchment-card.
+  // Earlier `e.target === veil` check missed taps on the padding
+  // ring inside the veil (anything that bubbled from a descendant
+  // that isn't the card itself).  Now we close as long as the
+  // tap didn't land inside the card.
   veil.addEventListener('click', e => {
-    if (e.target === veil) closeParchment();
+    if (e.target.closest('.parchment-card')) return;
+    closeParchment();
   });
   document.addEventListener('keydown', _onParchEsc);
 
@@ -1614,14 +1653,16 @@ const Screens = {
         const tile = document.createElement('button');
         const sideClass = r.side === 'L' ? 'is-left' : 'is-right';
         const state = r.correct ? 'is-correct' : 'is-wrong';
-        // Correct tiles get a ❦ flourish just outside their outer
-        // edge — paired correct halves end up "bracketed" by twin
-        // marks.  Wrong tiles get nothing; their dimmed state speaks.
-        // ❦ U+2766 floral heart bullet — Sealyra's text logo.  The
-        // same glyph flanks tap-titles throughout, so the result
-        // page's "you got these right" mark stays in family.
         const flourish = r.correct ? '<span class="pair-mark">❦</span>' : '';
-        tile.className = `card card--match ${sideClass} tag-${r.tag} ${state}`;
+        // v=55 — each tile now carries TWO colour signals:
+        //   tag-N  → body fill, the colour the user DYED it during
+        //            the game (their guess)
+        //   pair-N → text colour, the colour of its TRUE PARTNER
+        //            (pairId).  On correct pairs the two match,
+        //            text reads cleanly; on wrong pairs the
+        //            mismatched text colour reveals "this card
+        //            actually belonged to a different pair".
+        tile.className = `card card--match ${sideClass} tag-${r.tag} pair-${r.pairId} ${state}`;
         tile.innerHTML = `
           <span class="mc-frame"></span>
           <span class="mc-text">${escapeHtml(r.text)}</span>
@@ -2156,5 +2197,29 @@ const Screens = {
    12. BOOTSTRAP
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-  go('cover');
+  // v=55 — TAP-TO-BEGIN intro screen.  Mobile browsers (and most
+  // desktop policies) require a user gesture before audio can
+  // play.  We show a fullscreen black veil with a centred italic
+  // "tap to open the book" line; the first tap anywhere unlocks
+  // BGM, plays the home pool, removes the veil, and renders the
+  // cover.
+  _goImmediate('cover');                       // pre-render behind the veil
+  const intro = document.createElement('div');
+  intro.className = 'intro-veil';
+  intro.innerHTML = `
+    <div class="intro-glyph">❦</div>
+    <div class="intro-text">tap to open the book</div>
+    <div class="intro-sub">tap anywhere</div>
+  `;
+  document.body.appendChild(intro);
+  const onFirstTap = () => {
+    document.removeEventListener('click', onFirstTap, true);
+    document.removeEventListener('touchend', onFirstTap, true);
+    intro.classList.add('is-out');
+    setTimeout(() => intro.remove(), 520);
+    try { LanBGM.unlock(); } catch {}
+    try { LanBGM.playHomeRandom({ volume: 0.42 }); } catch {}
+  };
+  document.addEventListener('click', onFirstTap, true);
+  document.addEventListener('touchend', onFirstTap, true);
 });
