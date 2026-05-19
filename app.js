@@ -471,10 +471,44 @@ const BGM_POOL_BY_SCREEN = {
   stage3:          'game',
   'stage3-result': 'result',
 };
+// v=66 — BGM continuity by SCREEN GROUP, not by pool.  Earlier the
+// LanBGM same-pool guard meant cover + stage2 + note all kept the
+// SAME home-pool track running, so the user heard the same melody
+// across very different contexts.  Now we tag each screen with a
+// "bgm group"; same-group nav (cover↔note↔index) keeps the music
+// alive, but crossing into a new group (stage 2 reading, stage 3
+// dictation, etc.) FORCES a new track even when the pool is the
+// same — we call LanBGM.stop() before playing so the guard releases.
+const BGM_GROUP_BY_SCREEN = {
+  cover:           'home-side',
+  note:            'home-side',
+  'note-bucket':   'home-side',
+  index:           'home-side',
+  card:            'home-side',
+  stage1:          'stage1',
+  'stage1-result': 'stage1-result',
+  stage2:          'stage2',
+  'stage2-result': 'stage2-result',
+  stage3:          'stage3',
+  'stage3-result': 'stage3-result',
+};
+let _lastBgmGroup = null;
+let _bgmUnlocked  = false;   // set true by the intro-veil tap handler
 function _ensureBGM(screenId) {
-  const pool = BGM_POOL_BY_SCREEN[screenId];
+  const pool  = BGM_POOL_BY_SCREEN[screenId];
+  const group = BGM_GROUP_BY_SCREEN[screenId];
   if (!pool) return;
+  // v=67 — initial cover render happens BEFORE any user gesture, so
+  // the AudioContext is still suspended.  Calling play() against it
+  // queues a clump of oscillators that all fire at once when the
+  // user finally taps, producing a noisy "wall of sound".  Defer
+  // every _ensureBGM call until after the intro-veil tap unlocks
+  // the context (see bootstrap below — onFirstTap sets the flag).
+  if (!_bgmUnlocked) return;
+  if (group && group === _lastBgmGroup) return;     // same group → keep
+  _lastBgmGroup = group;
   try {
+    LanBGM.stop();                                  // drop guard
     if      (pool === 'home')   LanBGM.playHomeRandom({ volume: 0.42 });
     else if (pool === 'game')   LanBGM.playGameRandom({ volume: 0.40 });
     else if (pool === 'result') LanBGM.playResultRandom({ volume: 0.42 });
@@ -1669,37 +1703,11 @@ const Screens = {
         });
       });
       $('#cover-restart-slot', el).appendChild(restart);
-      // her note / the index sit in the cover's "home" pool.  The
-      // smart-play inside LanBGM no-ops when the same pool is already
-      // running, so the music continues uninterrupted as the user
-      // hops between cover ↔ note ↔ index.
-      $('#cover-links', el).appendChild(lilGhost('Her Note',  () => {
-        LanBGM.unlock();
-        LanBGM.playHomeRandom({ volume: 0.42 });
-        transitionTo('note');
-      }));
-      $('#cover-links', el).appendChild(lilGhost('The Index', () => {
-        LanBGM.unlock();
-        LanBGM.playHomeRandom({ volume: 0.42 });
-        transitionTo('index');
-      }));
-
-      // Try to start the home-pool BGM the moment the cover renders.
-      // Most browsers gate audio until a user gesture; LanBGM.unlock()
-      // here is a no-op without one.  Fall back to a one-shot listener
-      // that arms the next click/touch to unlock + play.  The cover's
-      // mainCTA already does its own unlock, so the listener mostly
-      // catches users who tap the page background or a cover-link
-      // first.
-      LanBGM.playHomeRandom({ volume: 0.42 });
-      const armUnlock = () => {
-        LanBGM.unlock();
-        LanBGM.playHomeRandom({ volume: 0.42 });
-        document.removeEventListener('click',    armUnlock, true);
-        document.removeEventListener('touchend', armUnlock, true);
-      };
-      document.addEventListener('click',    armUnlock, { capture: true, once: true });
-      document.addEventListener('touchend', armUnlock, { capture: true, once: true });
+      // Her Note / The Index sit in the cover-side group.  BGM
+      // continuity is handled by _ensureBGM via the screen group
+      // map — no per-button play call needed.
+      $('#cover-links', el).appendChild(lilGhost('Her Note',  () => transitionTo('note')));
+      $('#cover-links', el).appendChild(lilGhost('The Index', () => transitionTo('index')));
     }
   },
 
@@ -1713,7 +1721,6 @@ const Screens = {
      This rule is what the user asked for: 左+右 only.            */
   stage1: {
     onEnter() {
-      LanBGM.playGameRandom({ volume: 0.40 });
       const el = $('#screen-stage1');
       const s = state.session;
       const pairs = s.pairs;
@@ -1898,7 +1905,6 @@ const Screens = {
      becomes a doorway to that word's study card on tap.               */
   'stage1-result': {
     onEnter() {
-      LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage1-result');
       const result = state.session.matchResult || [];
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
@@ -1971,7 +1977,6 @@ const Screens = {
      filled, the next blank-area tap grades + reveals.            */
   stage2: {
     onEnter() {
-      LanBGM.playHomeRandom({ volume: 0.38 });
       const el = $('#screen-stage2');
       state.sceneIdx        = 0;
       state.sceneFills      = [];          // user's pick per blank
@@ -2181,7 +2186,6 @@ const Screens = {
   /* ---------- STAGE 2 RESULT ---------- */
   'stage2-result': {
     onEnter() {
-      LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage2-result');
       // v=52 — replaced word-tile grid with EXAMPLE SENTENCES.  Each
       // scene's full_sentence + Chinese gloss is shown; jumpable
@@ -2244,7 +2248,6 @@ const Screens = {
   /* ---------- STAGE 3 — the inscription ---------- */
   stage3: {
     onEnter() {
-      LanBGM.playGameRandom({ volume: 0.40 });
       const el = $('#screen-stage3');
       state.dictIdx = 0;
       el.innerHTML = `
@@ -2351,7 +2354,6 @@ const Screens = {
   /* ---------- STAGE 3 RESULT  +  SUMMARY (end of session) ---------- */
   'stage3-result': {
     onEnter() {
-      LanBGM.playResultRandom({ volume: 0.42 });
       SFX.finish();
       // v=64 — bump chapter ONLY when stage 3 was passed perfectly
       // (every dict right on the first try).  Otherwise the user
@@ -2564,7 +2566,12 @@ document.addEventListener('DOMContentLoaded', () => {
     intro.classList.add('is-out');
     setTimeout(() => intro.remove(), 520);
     try { LanBGM.unlock(); } catch {}
-    try { LanBGM.playHomeRandom({ volume: 0.42 }); } catch {}
+    // v=67 — flip the unlock flag BEFORE first _ensureBGM, then
+    // route through the regular pipeline so the current screen's
+    // group is tracked correctly from the very first play.
+    _bgmUnlocked = true;
+    _lastBgmGroup = null;
+    _ensureBGM(state.screen || 'cover');
   };
   intro.addEventListener('touchend', onFirstTap, { passive: false });
   intro.addEventListener('click',    onFirstTap);

@@ -2029,24 +2029,23 @@ body { background: transparent !important; }
 .frame-chapter { z-index: 1; position: relative; }
 .score-frame .score-frame-inner {
   position: absolute;
-  /* v=62 — sides widened to 22 % so the SCORE label + number
-     don't touch the painted floral garland the user flagged.    */
-  inset: 32% 22% 30% 22%;
+  /* v=66 — text was still touching the painted floral garland on
+     small phones.  Tightened to inset 38% 26% 34% 26% (was 32/22/30/22)
+     and trimmed the value font so the SCORE label + number + message
+     all sit comfortably inside the painted oval safe-zone.        */
+  inset: 38% 26% 34% 26%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 1px;
 }
 .score-frame .score-frame-inner { z-index: 2; }
 .score-frame .sf-label {
-  /* v=53 — Cinzel Decorative + uppercase + tight tracking,
-     matching the chapter band's voice so the score reads as a
-     small title not a footnote.                                  */
   font-family: 'Cinzel Decorative', 'Cinzel', 'Cormorant Garamond', serif;
   font-style: normal;
   font-weight: 500;
-  font-size: clamp(9px, 2.4vw, 11px);
+  font-size: clamp(8px, 2.0vw, 10px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #d6a464;
@@ -2057,8 +2056,12 @@ body { background: transparent !important; }
 .score-frame .sf-value {
   font-family: 'Pinyon Script', 'Snell Roundhand', 'Cormorant Garamond', serif;
   font-style: normal;
-  font-size: clamp(34px, 9vw, 48px);
-  line-height: 1;
+  /* v=66 — was clamp(34px, 9vw, 48px) — too tall, the 4/4 numeral
+     hit the painted top floral.  Shrunk so the SCORE label +
+     number + message all fit comfortably inside the inner safe-
+     zone.                                                          */
+  font-size: clamp(24px, 6vw, 32px);
+  line-height: 1.0;
   color: #e6c084;
   text-shadow:
     0 0 6px rgba(255, 232, 170, 0.55),
@@ -2067,7 +2070,7 @@ body { background: transparent !important; }
 }
 .score-frame .sf-value small {
   font-family: 'Cinzel Decorative', serif;
-  font-size: 0.40em;
+  font-size: 0.42em;
   color: #b8945c;
   margin-left: 2px;
   letter-spacing: 0.04em;
@@ -2076,7 +2079,7 @@ body { background: transparent !important; }
 .score-frame .sf-message {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: clamp(11px, 2.8vw, 13px);
+  font-size: clamp(9px, 2.2vw, 11px);
   letter-spacing: 0.04em;
   color: rgba(232, 200, 158, 0.88);
   white-space: nowrap;
