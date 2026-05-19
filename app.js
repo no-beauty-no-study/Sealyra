@@ -30,6 +30,20 @@ function shuffle(arr) {
   }
   return a;
 }
+// v=64 — seeded shuffle so each chapter draws the SAME content from
+// the global pools.  Without this, every "Continue Reading" tap on
+// the same chapter showed fresh words — the user kept saying
+// "我只通关了一次但你一直在累积不同单词".  LCG keeps it tiny.       */
+function seededShuffle(arr, seed) {
+  let s = (seed | 0) || 1;
+  const rnd = () => { s = (s * 1664525 + 1013904223) | 0; return ((s >>> 0) / 4294967296); };
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 function escapeHtml(s) {
   return (s == null ? '' : String(s))
     .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -158,10 +172,12 @@ const _SCENE_ARR      = SCENE_BLANK_QUESTIONS;
 // random 4-pair draw could land the same word on both sides.  Pull
 // pairs greedily, dropping any whose partner OR head is already on
 // the board.
-function _pickMatchPairs(n = 4) {
+function _pickMatchPairs(n = 4, seed = 0) {
   const used = new Set();
   const out  = [];
-  const pool = shuffle(_GROUPS_ARR);
+  // v=64 — when a non-zero seed is passed, draw deterministically so
+  // the same chapter always shows the same pairs.
+  const pool = seed ? seededShuffle(_GROUPS_ARR, seed * 7 + 11) : shuffle(_GROUPS_ARR);
   for (const g of pool) {
     if (used.has(g.head) || used.has(g.partner)) continue;
     out.push({ head: g.head, partner: g.partner });
@@ -170,19 +186,22 @@ function _pickMatchPairs(n = 4) {
   }
   return out;
 }
-function _pickSceneQuestions(n = 4) {
+function _pickSceneQuestions(n = 4, seed = 0) {
   // v=63 — user wants the 3-blank / 12-option puzzle.  Prefer
   // scenes with 3+ answers; fall back to the wider pool if there
   // aren't enough.  (315 of 356 have 2 blanks, only 21 have 3.)
   const tripled = _SCENE_ARR.filter(q => (q.answers || []).length >= 3);
   const doubled = _SCENE_ARR.filter(q => (q.answers || []).length === 2);
-  const picks = shuffle(tripled).slice(0, n);
+  const sh = seed
+    ? (arr, offset) => seededShuffle(arr, seed * 13 + offset)
+    : (arr) => shuffle(arr);
+  const picks = sh(tripled, 3).slice(0, n);
   if (picks.length < n) {
-    picks.push(...shuffle(doubled).slice(0, n - picks.length));
+    picks.push(...sh(doubled, 5).slice(0, n - picks.length));
   }
   return picks;
 }
-function _pickDictQuestions(n = 4) {
+function _pickDictQuestions(n = 4, seed = 0) {
   // v=54 — dictation now uses SINGLE-BLANK EXAMPLE SENTENCES per
   // user.  Source = PARCHMENT_CARDS where canWrite is true (644
   // entries), AND the card has an example sentence containing the
@@ -195,7 +214,10 @@ function _pickDictQuestions(n = 4) {
     // Must actually appear in the example so we can blank it.
     return new RegExp(`\\b${w}\\b`, 'i').test(c.example);
   });
-  return shuffle(pool).slice(0, n).map(w => {
+  const picked = seed
+    ? seededShuffle(pool, seed * 17 + 23).slice(0, n)
+    : shuffle(pool).slice(0, n);
+  return picked.map(w => {
     const c = PARCHMENT_CARDS[w];
     const blank_sentence = c.example.replace(
       new RegExp(`\\b${w}\\b`, 'i'),
@@ -214,13 +236,15 @@ function _pickDictQuestions(n = 4) {
   });
 }
 
-function buildSession() {
-  const pairs   = _pickMatchPairs(4);
+function buildSession(seed = 0) {
+  // v=64 — accept an optional seed so each chapter draws stable
+  // content from the global pools.  freshSession() passes
+  // saved.chapter so "Continue Reading" on chapter N always shows
+  // the same set of pairs / scenes / dicts.                          */
+  const pairs   = _pickMatchPairs(4, seed);
   if (pairs.length < 4) return null;
-  const scenes  = _pickSceneQuestions(4);
-  const dicts   = _pickDictQuestions(4);
-  // `words` = a flat list of every headword touched in this run, used
-  // by the result-page summary + the learned-word bookkeeping.
+  const scenes  = _pickSceneQuestions(4, seed);
+  const dicts   = _pickDictQuestions(4, seed);
   const words = Array.from(new Set([
     ...pairs.flatMap(p => [p.head, p.partner]),
     ...scenes.flatMap(s => s.answers || []),
@@ -273,7 +297,9 @@ const state = {
   dictIdx: 0
 };
 function freshSession() {
-  state.session = buildSession();
+  // v=64 — seed = current chapter so each chapter has stable
+  // content across reloads.
+  state.session = buildSession(saved.chapter || 1);
   if (!state.session) {
     // fallback so the UI never crashes if data is missing.
     state.session = { pairs: [], scenes: [], dicts: [], words: Object.keys(PARCHMENT_CARDS).slice(0, 8) };
@@ -966,6 +992,14 @@ function showParchment(word) {
     if (e.target.closest('.pc-close')) return;
     if (e.target.closest('.pc-play')) return;
     advanceReveal();
+  });
+  // v=64 — tapping the veil OUTSIDE the card closes the parchment
+  // (user kept tapping the dark area expecting it to fold).
+  veil.addEventListener('click', e => {
+    if (e.target === veil) {
+      e.stopPropagation();
+      closeParchment();
+    }
   });
 
   // Individual ♪ buttons still re-play their own audio without
@@ -1780,7 +1814,22 @@ const Screens = {
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
-      $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage2'), { confirm: true }));
+      // v=64 — only PERFECT (4/4 pairs) lets the user move on to
+      // stage 2.  Otherwise show "Try Again" which redraws stage 1
+      // with a fresh shuffle of the same chapter's pairs.
+      if (correctPairs >= 4) {
+        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage2'), { confirm: true }));
+      } else {
+        $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
+          // Reset match results, keep session intact (same pairs).
+          state.session.matchResult = null;
+          state.session.pairs.forEach(p => {
+            if (state.results[p.head])    state.results[p.head].match    = null;
+            if (state.results[p.partner]) state.results[p.partner].match = null;
+          });
+          go('stage1');
+        }));
+      }
 
       const grid = $('.match-result-grid', el);
       result.forEach(r => {
@@ -2078,7 +2127,19 @@ const Screens = {
       `;
 
       el.appendChild(closeCorner({ to: 'cover' }));
-      $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
+      // v=64 — same gate as stage 1: only PERFECT lets the user
+      // advance.  Otherwise show "Try Again" which replays stage 2
+      // with the same scene questions.
+      if (right >= total && total > 0) {
+        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
+      } else {
+        $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
+          state.session.scenes.forEach(s => (s.answers || []).forEach(w => {
+            if (state.results[w]) state.results[w].oracle = null;
+          }));
+          go('stage2');
+        }));
+      }
       const list = $('.scene-result-list', el);
       state.session.scenes.forEach(s => {
         const row = document.createElement('div');
@@ -2220,13 +2281,17 @@ const Screens = {
     onEnter() {
       LanBGM.playResultRandom({ volume: 0.42 });
       SFX.finish();
-      // bump progress + mark learned + advance chapter counter
+      // v=64 — bump chapter ONLY when stage 3 was passed perfectly
+      // (every dict right on the first try).  Otherwise the user
+      // re-plays this chapter.  Words are still marked learned —
+      // exposure counts even if the user needed a hint.
       state.session.words.forEach(w => { markLearned(w); });
       saved.progress = Math.min(saved.progress + state.session.words.length, TOTAL_WORDS);
-      // v=63 — completing stage 3 means this chapter is finished.
-      // Persist chapter+1 so the next "Continue Reading" tap lands
-      // the user on the next chapter.
-      saved.chapter = (saved.chapter || 1) + 1;
+      const _dictsPerfect = state.session.dicts
+        .every(d => state.results[d.head] && state.results[d.head].dict === true);
+      if (_dictsPerfect) {
+        saved.chapter = (saved.chapter || 1) + 1;
+      }
       Store.save();
 
       const el = $('#screen-stage3-result');
@@ -2255,7 +2320,20 @@ const Screens = {
 
       el.appendChild(closeCorner({ to: 'cover' }));
 
-      $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
+      // v=64 — gate: only PERFECT stage-3 lets the user close the
+      // chapter.  Otherwise "Try Again" replays stage 3 (chapter
+      // counter did NOT advance above, so the same chapter content
+      // returns when Continue Reading is tapped again).
+      if (_dictsPerfect) {
+        $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
+      } else {
+        $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
+          state.session.dicts.forEach(d => {
+            if (state.results[d.head]) state.results[d.head].dict = null;
+          });
+          go('stage3');
+        }));
+      }
 
       // v=57 — EXPANDED review cards per user: stage-3 result is
       // the END-OF-CHAPTER review.  Show every unique word touched
@@ -2378,14 +2456,36 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="intro-sub">tap anywhere</div>
   `;
   document.body.appendChild(intro);
-  const onFirstTap = () => {
-    document.removeEventListener('click', onFirstTap, true);
-    document.removeEventListener('touchend', onFirstTap, true);
+  // v=64 — the tap that DISMISSES the intro veil must not also fire
+  // the cover's Continue Reading button.  On touch devices, touchend
+  // turns into a synthetic click ~300 ms later, by which time the
+  // veil has already gone pointer-events: none and the click lands
+  // on whatever sits behind it (the CTA).  Two fixes:
+  //   1. preventDefault on touchend suppresses the synthetic click.
+  //   2. A short "swallow" window after the dismiss eats any stray
+  //      click that still slips through (Safari is generous).      */
+  let _introConsumed = false;
+  let _swallowUntil = 0;
+  const swallowFollowUp = (e) => {
+    if (Date.now() < _swallowUntil) {
+      e.stopPropagation();
+      e.preventDefault();
+    } else {
+      document.removeEventListener('click', swallowFollowUp, true);
+    }
+  };
+  const onFirstTap = (e) => {
+    if (_introConsumed) return;
+    _introConsumed = true;
+    _swallowUntil = Date.now() + 450;
+    if (e && e.preventDefault)  e.preventDefault();
+    if (e && e.stopPropagation) e.stopPropagation();
     intro.classList.add('is-out');
     setTimeout(() => intro.remove(), 520);
     try { LanBGM.unlock(); } catch {}
     try { LanBGM.playHomeRandom({ volume: 0.42 }); } catch {}
   };
-  document.addEventListener('click', onFirstTap, true);
-  document.addEventListener('touchend', onFirstTap, true);
+  intro.addEventListener('touchend', onFirstTap, { passive: false });
+  intro.addEventListener('click',    onFirstTap);
+  document.addEventListener('click', swallowFollowUp, true);
 });

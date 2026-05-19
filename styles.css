@@ -3073,14 +3073,10 @@ body { background: transparent !important; }
 .card--option::before { left: 11px;  }
 .card--option::after  { right: 11px; }
 
-/* is-picking + picked-right + picked-wrong — every PICKED card
-   (regardless of right/wrong) wears the wine-red back-of-card
-   palette.  "翻过来正面是红色的卡牌" per user.  The gold halo
-   from .reveal-right layers ON TOP when the pick happens to be
-   correct, so right vs. wrong reads as glow vs. no-glow rather
-   than two different colours.                                       */
+/* v=64 — picked-WRONG cards wear the wine palette; picked-RIGHT
+   cards switch to a warm gold body (the user wants "金光就行",
+   i.e. right = pure gold, not wine + halo).                       */
 .card--option.is-picking,
-.card--option.picked-right,
 .card--option.picked-wrong {
   background:
     radial-gradient(ellipse 130% 110% at 50% 50%,
@@ -3091,13 +3087,25 @@ body { background: transparent !important; }
   border-color: rgba(180, 88, 104, 0.85) !important;
   color: rgba(220, 156, 168, 0.96) !important;
 }
+.card--option.picked-right {
+  background:
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    rgba(255, 220, 158, 0.30) 0%,
+                    rgba(232, 196, 132, 0.18) 60%,
+                    transparent 100%),
+    linear-gradient(160deg, rgba(56, 36, 14, 0.94), rgba(32, 20, 8, 0.97)) !important;
+  border-color: rgba(232, 196, 132, 0.92) !important;
+  color: #fff1d0 !important;
+}
 .card--option.is-picking::before,
 .card--option.is-picking::after,
-.card--option.picked-right::before,
-.card--option.picked-right::after,
 .card--option.picked-wrong::before,
 .card--option.picked-wrong::after {
   color: rgba(212, 152, 184, 0.92) !important;
+}
+.card--option.picked-right::before,
+.card--option.picked-right::after {
+  color: rgba(255, 220, 158, 0.95) !important;
 }
 
 /* flip — Y-axis rotate while picking (320 ms, matches match-card) */
@@ -6280,14 +6288,19 @@ body { background: transparent !important; }
 
 .parchment-card {
   position: relative;
-  /* v=46 — parchment enlarged to host the new single-line family
-     + kin + friend entries (was 96vw / 144vw, now 100vw / 168vw).
-     Tighter side padding so each line has more horizontal room.    */
+  /* v=64 — crop the painted asset's dark margins by scaling the
+     background up to 112% (so the dark fringe falls off-screen)
+     and slightly enlarging the card itself.  Side padding bumped
+     to compensate so text still lands inside the visible scroll. */
   width:  min(100vw, 480px);
   height: min(168vw, 820px);
   background:
     url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=31")
-    center/100% 100% no-repeat;
+    center/112% 112% no-repeat;
+  /* clip-path crops any residual dark fringe that the scale-up
+     didn't push off-screen.                                      */
+  clip-path: inset(1.5% 3% 1.5% 3%);
+  -webkit-clip-path: inset(1.5% 3% 1.5% 3%);
   /* v=53 — top padding bumped from 22% to 26% so the headword sits
      clear of the painted scroll-roll at the top of E993B660 (user
      reported "羊皮纸的顶上有点超出内容框").                          */

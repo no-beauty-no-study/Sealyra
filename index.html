@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<!-- v=64 — allow normal HTTP caching; cache-busting is handled per-asset
+     by the ?v= query string below so a fresh push still invalidates.  -->
 <meta name="theme-color" content="#0E0B1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,16 +17,16 @@
 
 <!-- Preload every background illustration in parallel so the
      screen-swap doesn't pause on a fresh download.                -->
-<link rel="preload" as="image" href="assets/bg-cover.jpg?v=63">
-<link rel="preload" as="image" href="assets/bg-stage.jpg?v=63">
-<link rel="preload" as="image" href="assets/bg-result.jpg?v=63">
-<link rel="preload" as="image" href="assets/bg-note.jpg?v=63">
-<link rel="preload" as="image" href="assets/banner.png?v=63">
-<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=63">
-<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=63">
-<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=63">
+<link rel="preload" as="image" href="assets/bg-cover.jpg?v=64">
+<link rel="preload" as="image" href="assets/bg-stage.jpg?v=64">
+<link rel="preload" as="image" href="assets/bg-result.jpg?v=64">
+<link rel="preload" as="image" href="assets/bg-note.jpg?v=64">
+<link rel="preload" as="image" href="assets/banner.png?v=64">
+<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=64">
+<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=64">
+<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=64">
 
-<link rel="stylesheet" href="styles.css?v=63">
+<link rel="stylesheet" href="styles.css?v=64">
 </head>
 <body>
 
@@ -37,7 +38,7 @@
 
 <!-- Fixed banner at the very top of every screen. -->
 <header id="banner-top">
-  <img src="assets/banner.png?v=63" alt="Her Little Lexicon">
+  <img src="assets/banner.png?v=64" alt="Her Little Lexicon">
 </header>
 
 <!-- ===== App shell. Each <section> is one screen. =====
@@ -72,9 +73,9 @@
 
 <!-- Data + BGM + App  ----- loaded in order.  Query-string cache-buster
      forces the CDN edge to fetch the latest after every push.        -->
-<script src="data.js?v=63"></script>
-<script src="bgm.js?v=63"></script>
-<script src="app.js?v=63"></script>
+<script src="data.js?v=64"></script>
+<script src="bgm.js?v=64"></script>
+<script src="app.js?v=64"></script>
 
 </body>
 </html>
