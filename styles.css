@@ -3382,24 +3382,23 @@ body { background: transparent !important; }
 #screen-stage2 .oracle-options,
 #screen-stage3 .dict-answer { margin-top: 22px; padding-top: 0; }
 
-/* v=63 — 12-option grid for the reading puzzle.  4 candidates per
-   blank × 3 blanks = 12 cards in a 2-column × 6-row layout, shuffled
-   so the user has to sort by first letter mentally.                 */
-.oracle-options.is-grid-12 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+/* v=65 — per-blank option strip: 4 cards stacked in a single column
+   (one column reads cleanly on mobile; two columns squeezed text
+   like a crossword grid).  Cards swap content whenever the user
+   clicks a different blank.                                        */
+#oracle-options.oracle-options {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  max-width: 540px;
-  padding: 0 6px;
+  max-width: 460px;
+  margin: 4px auto 0;
+  padding: 0 14px;
   perspective: 800px;
 }
-.oracle-options.is-grid-12 .card--option {
-  height: 42px !important;
-  font-size: 14px !important;
-  padding: 0 22px !important;
+#oracle-options.oracle-options .card--option {
+  height: 44px !important;
+  font-size: 15px !important;
 }
-.oracle-options.is-grid-12 .card--option::before { left: 8px; font-size: 13px; }
-.oracle-options.is-grid-12 .card--option::after  { right: 8px; font-size: 13px; }
 
 /* v=63 — REVIEW HIGHLIGHT for the 4 candidates belonging to the
    blank the user just clicked.  A gentle gold pulse outlines the
@@ -3414,20 +3413,49 @@ body { background: transparent !important; }
   50%      { outline-color: rgba(255, 220, 158, 0.95); }
 }
 
-/* v=63 — bow becomes the "next question" affordance after grading.
-   .is-tappable lifts pointer-events, adds a cursor, and pulses the
-   wax-seal so the user notices "tap me to turn the page".         */
+/* v=65 — bow stays a quiet decoration (user said "蝴蝶结不需要发光，
+   它只是一个装饰").  Tappable layer keeps pointer-events auto so the
+   "next question" affordance still works, but no animation.        */
 .q-bow.q-bow-inside.is-tappable {
   pointer-events: auto;
   cursor: pointer;
-  animation: bow-tappable 2.2s ease-in-out infinite;
-}
-@keyframes bow-tappable {
-  0%, 100% { filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.55)); }
-  50%      { filter: drop-shadow(0 6px 14px rgba(237, 184, 158, 0.85))
-                     drop-shadow(0 0 18px rgba(255, 200, 180, 0.55)); }
 }
 .q-bow.q-bow-inside.is-tappable:active { transform: translateX(-50%) scale(0.94); }
+
+/* v=65 — small hint line above the per-blank option strip.        */
+.q-hint {
+  text-align: center;
+  margin: 22px auto 8px;
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: rgba(232, 196, 138, 0.55);
+}
+
+/* v=65 — parchment "her group" line: single row of words separated
+   by a small gold middot.  No example sentences, no Chinese gloss
+   — just tappable synonym tokens.                                  */
+.pc-group-line {
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #4b2f15;
+  padding: 4px 2px;
+}
+.pc-group-sep {
+  margin: 0 7px;
+  color: rgba(148, 96, 36, 0.55);
+  font-size: 11px;
+}
+
+/* v=65 — when the user has picked something for the active blank,
+   that option card wears a quiet "selected" outline so it's clear
+   which one is currently filling the active slot.                  */
+.card--option.is-current-pick {
+  border-color: rgba(232, 196, 132, 0.92) !important;
+  box-shadow: 0 0 10px rgba(232, 196, 138, 0.35);
+}
 
 /* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
    the inner text element; the gold rules are now on the card.    */
@@ -6288,19 +6316,19 @@ body { background: transparent !important; }
 
 .parchment-card {
   position: relative;
-  /* v=64 — crop the painted asset's dark margins by scaling the
-     background up to 112% (so the dark fringe falls off-screen)
-     and slightly enlarging the card itself.  Side padding bumped
-     to compensate so text still lands inside the visible scroll. */
-  width:  min(100vw, 480px);
-  height: min(168vw, 820px);
+  /* v=65 — card shrunk to 88vw so the veil shows visibly on the
+     LEFT and RIGHT.  User wants those empty side strips to close
+     the parchment on tap (currently the only close affordance was
+     the small "fold this page" link).  Asset is also scaled up to
+     118% + clipped 2% on top/bottom and 4% on each side so the
+     painted scroll fills the visible region with NO dark fringe. */
+  width:  min(88vw, 460px);
+  height: min(158vw, 800px);
   background:
     url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=31")
-    center/112% 112% no-repeat;
-  /* clip-path crops any residual dark fringe that the scale-up
-     didn't push off-screen.                                      */
-  clip-path: inset(1.5% 3% 1.5% 3%);
-  -webkit-clip-path: inset(1.5% 3% 1.5% 3%);
+    center/118% 118% no-repeat;
+  clip-path: inset(2% 4% 2% 4%);
+  -webkit-clip-path: inset(2% 4% 2% 4%);
   /* v=53 — top padding bumped from 22% to 26% so the headword sits
      clear of the painted scroll-roll at the top of E993B660 (user
      reported "羊皮纸的顶上有点超出内容框").                          */

@@ -167,16 +167,45 @@ const _JUMP_LINKS     = PARCHMENT_JUMP_LINKS;
 const _GROUPS_ARR     = MATCH_GROUPS;
 const _DICT_ARR       = DICTATION_QUESTIONS;
 const _SCENE_ARR      = SCENE_BLANK_QUESTIONS;
+// v=65 — themed chapters from VOCAB_ALL_QUESTIONS_CLASSIFIED_CHAPTERS.
+// 212 hand-built chapters; each carries match_group_ids,
+// reading_question_ids (string ids), and dictation_question_ids
+// (format "DICT_N" → DICTATION_QUESTIONS[N]).                       */
+const _CHAPTER_PLAN   = (typeof CHAPTER_PLAN !== 'undefined') ? CHAPTER_PLAN : [];
+const _SCENE_BY_ID = (() => {
+  const m = {};
+  _SCENE_ARR.forEach(q => { if (q.id) m[q.id] = q; });
+  return m;
+})();
 
-// Match-pair dedupe: some partners appear in multiple groups, so a
-// random 4-pair draw could land the same word on both sides.  Pull
-// pairs greedily, dropping any whose partner OR head is already on
-// the board.
+function _chapterFor(chapterN) {
+  if (!_CHAPTER_PLAN.length) return null;
+  // Chapters are 1-indexed for the user; clamp + wrap.
+  const idx = Math.max(0, (chapterN | 0) - 1) % _CHAPTER_PLAN.length;
+  return _CHAPTER_PLAN[idx];
+}
+
+// v=65 — chapter-driven pickers (4 pairs / scenes / dicts each).
+// If the chapter plan is missing or short, fall back to the random
+// seeded pickers below so the UI never crashes.
 function _pickMatchPairs(n = 4, seed = 0) {
+  const ch = _chapterFor(seed);
+  if (ch && ch.match_group_ids && ch.match_group_ids.length) {
+    const used = new Set();
+    const out  = [];
+    for (const gid of ch.match_group_ids) {
+      const g = _GROUPS_ARR[gid];
+      if (!g) continue;
+      if (used.has(g.head) || used.has(g.partner)) continue;
+      out.push({ head: g.head, partner: g.partner });
+      used.add(g.head); used.add(g.partner);
+      if (out.length === n) break;
+    }
+    if (out.length === n) return out;
+  }
+  // Fallback — seeded random.
   const used = new Set();
   const out  = [];
-  // v=64 — when a non-zero seed is passed, draw deterministically so
-  // the same chapter always shows the same pairs.
   const pool = seed ? seededShuffle(_GROUPS_ARR, seed * 7 + 11) : shuffle(_GROUPS_ARR);
   for (const g of pool) {
     if (used.has(g.head) || used.has(g.partner)) continue;
@@ -187,53 +216,94 @@ function _pickMatchPairs(n = 4, seed = 0) {
   return out;
 }
 function _pickSceneQuestions(n = 4, seed = 0) {
-  // v=63 — user wants the 3-blank / 12-option puzzle.  Prefer
-  // scenes with 3+ answers; fall back to the wider pool if there
-  // aren't enough.  (315 of 356 have 2 blanks, only 21 have 3.)
-  const tripled = _SCENE_ARR.filter(q => (q.answers || []).length >= 3);
-  const doubled = _SCENE_ARR.filter(q => (q.answers || []).length === 2);
-  const sh = seed
-    ? (arr, offset) => seededShuffle(arr, seed * 13 + offset)
-    : (arr) => shuffle(arr);
-  const picks = sh(tripled, 3).slice(0, n);
-  if (picks.length < n) {
-    picks.push(...sh(doubled, 5).slice(0, n - picks.length));
+  const ch = _chapterFor(seed);
+  if (ch && ch.reading_question_ids && ch.reading_question_ids.length) {
+    const picks = ch.reading_question_ids.map(id => _SCENE_BY_ID[id]).filter(Boolean);
+    if (picks.length) {
+      // Chapter may carry fewer than n reading questions (some are short);
+      // pad with seeded-random extras so the user always gets n scenes.
+      if (picks.length < n) {
+        const extras = seededShuffle(_SCENE_ARR, seed * 13 + 5)
+          .filter(s => !picks.includes(s))
+          .slice(0, n - picks.length);
+        picks.push(...extras);
+      }
+      return picks.slice(0, n);
+    }
   }
-  return picks;
+  // Fallback — seeded random over the full pool.
+  return seededShuffle(_SCENE_ARR, seed * 13 + 5).slice(0, n);
 }
 function _pickDictQuestions(n = 4, seed = 0) {
-  // v=54 — dictation now uses SINGLE-BLANK EXAMPLE SENTENCES per
-  // user.  Source = PARCHMENT_CARDS where canWrite is true (644
-  // entries), AND the card has an example sentence containing the
-  // headword.  Each question blanks out the headword from the
-  // example so the user types it in context.  Old phrase-only
-  // DICTATION_QUESTIONS path retired.
-  const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
-    const c = PARCHMENT_CARDS[w];
-    if (!c || !c.canWrite || !c.example) return false;
-    // Must actually appear in the example so we can blank it.
-    return new RegExp(`\\b${w}\\b`, 'i').test(c.example);
-  });
-  const picked = seed
-    ? seededShuffle(pool, seed * 17 + 23).slice(0, n)
-    : shuffle(pool).slice(0, n);
-  return picked.map(w => {
-    const c = PARCHMENT_CARDS[w];
-    const blank_sentence = c.example.replace(
-      new RegExp(`\\b${w}\\b`, 'i'),
-      '______'
-    );
+  // v=65 — chapter-driven.  Each chapter lists DICT_N tokens which
+  // are 0-based indices into DICTATION_QUESTIONS.  We use the head
+  // of each entry, then build the same single-blank example
+  // sentence (from PARCHMENT_CARDS.example) the user wanted in
+  // v=54.  This way the WORD comes from the curated chapter plan
+  // but the prompt is still a contextual sentence.                  */
+  const buildFromHead = (word) => {
+    const c = PARCHMENT_CARDS[word];
+    if (!c) return null;
+    const ex = c.example || '';
+    if (!ex || !new RegExp(`\\b${word}\\b`, 'i').test(ex)) {
+      // No usable example — fall back to a phrase-style prompt.
+      const dq = _DICT_ARR.find(d => d.head === word);
+      const prompt = dq && dq.prompt ? dq.prompt : word;
+      return {
+        head: word,
+        hint: word[0],
+        blank_sentence: prompt.replace(new RegExp(`\\b${word}\\b`, 'i'), '______') || '______',
+        full_sentence: prompt,
+        sentence_zh:   dq && dq.prompt_zh ? dq.prompt_zh : (c.zh || ''),
+        answer:        word,
+        role:          c.role || 'output',
+        topic:         c.topic || ''
+      };
+    }
     return {
-      head: w,
-      hint: (c.h || w)[0],
-      blank_sentence,
-      full_sentence: c.example,
+      head: word,
+      hint: word[0],
+      blank_sentence: ex.replace(new RegExp(`\\b${word}\\b`, 'i'), '______'),
+      full_sentence: ex,
       sentence_zh:   c.example_zh || '',
-      answer:        w,
+      answer:        word,
       role:          c.role || 'output',
       topic:         c.topic || ''
     };
+  };
+  const ch = _chapterFor(seed);
+  if (ch && ch.dictation_question_ids && ch.dictation_question_ids.length) {
+    const heads = ch.dictation_question_ids
+      .map(tok => {
+        const m = /^DICT_(\d+)$/.exec(tok);
+        if (!m) return null;
+        const idx = parseInt(m[1], 10);
+        const d = _DICT_ARR[idx];
+        return d ? d.head : null;
+      })
+      .filter(Boolean);
+    const out = heads.map(buildFromHead).filter(Boolean);
+    if (out.length >= n) return out.slice(0, n);
+    if (out.length) {
+      // Pad with seeded random heads.
+      const extras = seededShuffle(Object.keys(PARCHMENT_CARDS).filter(w => {
+        const c = PARCHMENT_CARDS[w];
+        return c && c.canWrite && c.example && new RegExp(`\\b${w}\\b`, 'i').test(c.example);
+      }), seed * 17 + 23)
+        .filter(w => !out.some(o => o.head === w))
+        .slice(0, n - out.length)
+        .map(buildFromHead)
+        .filter(Boolean);
+      out.push(...extras);
+      return out.slice(0, n);
+    }
+  }
+  // Fallback — seeded random over the canWrite + has-example pool.
+  const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
+    const c = PARCHMENT_CARDS[w];
+    return c && c.canWrite && c.example && new RegExp(`\\b${w}\\b`, 'i').test(c.example);
   });
+  return seededShuffle(pool, seed * 17 + 23).slice(0, n).map(buildFromHead).filter(Boolean);
 }
 
 function buildSession(seed = 0) {
@@ -916,6 +986,22 @@ function showParchment(word) {
         <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
       </div>` });
     });
+  }
+
+  // v=65 — HER GROUP: semantic siblings (synonyms / same-scene words).
+  // Render as a single compact line of comma-separated words; jumpable
+  // tokens get the underline; no example sentences, no Chinese gloss.
+  if (c.group && c.group.length) {
+    const groupWords = c.group.map(line => {
+      const w = (line || '').split('|')[0].trim();
+      return w;
+    }).filter(Boolean);
+    if (groupWords.length) {
+      items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+      items.push({ kind: 'label', html: `<div class="pc-section-label">her group</div>` });
+      const inlineHtml = groupWords.map(w => pcLinkify(w)).join('<span class="pc-group-sep">·</span>');
+      items.push({ kind: 'group', html: `<div class="pc-line pc-group-line">${inlineHtml}</div>` });
+    }
   }
 
   // v=52 — bottom "↪ family pages / partner / kin pages" boxes
@@ -1872,11 +1958,9 @@ const Screens = {
       const el = $('#screen-stage2');
       state.sceneIdx        = 0;
       state.sceneFills      = [];          // user's pick per blank
-      state.sceneActive     = 0;           // active blank index
-      state.sceneOptions    = null;        // flat 12 (shuffled)
-      state.scenePerBlank   = null;        // [[4],[4],[4]] candidates per blank
+      state.sceneActive     = -1;          // -1 = no blank selected yet
+      state.scenePerBlank   = null;        // [[4],[4],...] candidates per blank
       state.sceneGraded     = false;
-      state.sceneReviewBlank = -1;         // currently-highlighted blank (review)
       el.innerHTML = `
         ${stageHeader(2, 'The Reading')}
         <div class="oracle-stage" id="oracle-stage"></div>
@@ -1886,53 +1970,43 @@ const Screens = {
 
       function currentQ() { return state.session.scenes[state.sceneIdx]; }
 
-      // v=63 — 3 blanks + 12 options.  For each answer we build a
-      // 4-card group sharing the answer's first letter (3 random
-      // PARCHMENT_CARDS distractors + the answer).  The flat 12 is
-      // shuffled.  scenePerBlank lets us "filter back" to the
-      // candidates for blank i during the review step.
+      // v=65 — Per-blank option group.  For each answer pick 3 same-
+      // first-letter distractors from PARCHMENT_CARDS.  Only the
+      // ACTIVE blank's 4 candidates are visible at a time; clicking
+      // another blank swaps the option strip.                       */
       function buildOptionsFor(q) {
         const answers = (q.answers || []).slice();
         const taken = new Set(answers);
-        const perBlank = answers.map(ans => {
+        return answers.map(ans => {
           const letter = (ans[0] || '').toLowerCase();
           const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
-            if (!w) return false;
-            if (w[0].toLowerCase() !== letter) return false;
-            if (taken.has(w)) return false;
-            return true;
+            if (!w || taken.has(w)) return false;
+            return w[0].toLowerCase() === letter;
           });
           const distractors = shuffle(pool).slice(0, 3);
           distractors.forEach(d => taken.add(d));
-          return shuffle([ans, ...distractors]);
-        });
-        // If a group came back short (rare — letter pool tiny), pad
-        // with anything from q.options that isn't already used.
-        perBlank.forEach((grp, i) => {
-          while (grp.length < 4 && (q.options || []).length) {
-            const cand = q.options.find(o => !taken.has(o));
+          // Pad from q.options if the letter pool is tiny.
+          while (distractors.length < 3 && (q.options || []).length) {
+            const cand = q.options.find(o => !taken.has(o) && o !== ans);
             if (!cand) break;
             taken.add(cand);
-            grp.push(cand);
+            distractors.push(cand);
           }
+          return shuffle([ans, ...distractors]);
         });
-        return {
-          perBlank,
-          flat: shuffle(perBlank.flat())
-        };
       }
 
       function drawQ() {
         const stage = $('#oracle-stage', el);
         const q = currentQ();
         const total = state.session.scenes.length;
-        const built = buildOptionsFor(q);
+        state.scenePerBlank    = buildOptionsFor(q);
         state.sceneFills       = new Array(q.blank_count || q.answers.length).fill(null);
+        // v=65 — start with the first blank active so the user sees
+        // the 4-card option strip immediately; tapping another
+        // blank swaps the strip.
         state.sceneActive      = 0;
-        state.scenePerBlank    = built.perBlank;
-        state.sceneOptions     = built.flat;
         state.sceneGraded      = false;
-        state.sceneReviewBlank = -1;
         stage.innerHTML = `
           <div class="q-progress">${String(state.sceneIdx + 1).padStart(2, '0')} · ${String(total).padStart(2, '0')}</div>
           <div class="q-card">
@@ -1943,10 +2017,11 @@ const Screens = {
             <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
             <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
-          <div class="oracle-options is-grid-12"></div>
+          <div class="q-hint" id="q-hint">— pick the word that fits this blank —</div>
+          <div class="oracle-options" id="oracle-options"></div>
         `;
         wireSlots();
-        renderOptions();
+        renderOptionsForActive();
       }
 
       function renderBlankSentence(q) {
@@ -1954,8 +2029,7 @@ const Screens = {
         return escapeHtml(q.blank_sentence).replace(/_{3,}/g, () => {
           const i = slotIdx++;
           const filled  = state.sceneFills[i];
-          const active  = (i === state.sceneActive && !state.sceneGraded)
-                       || (state.sceneGraded && i === state.sceneReviewBlank);
+          const active  = (i === state.sceneActive);
           const ans     = (currentQ().answers || [])[i];
           let cls = 'q-slot' + (filled ? ' is-filled' : '') + (active ? ' is-active' : '');
           if (state.sceneGraded) {
@@ -1972,60 +2046,49 @@ const Screens = {
           slot.addEventListener('click', (ev) => {
             ev.stopPropagation();
             const i = +slot.getAttribute('data-slot');
-            if (state.sceneGraded) {
-              // v=63 review — clicking a blank highlights the 4
-              // candidates that belonged to that blank.  Each card
-              // jumps to parchment when tapped.
-              state.sceneReviewBlank = i;
-              SFX.tap();
-              $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
-              wireSlots();
-              renderOptions();
-              return;
-            }
-            state.sceneActive = i;
             SFX.tap();
+            state.sceneActive = i;
             $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
             wireSlots();
+            renderOptionsForActive();
           });
         });
       }
 
-      function renderOptions() {
-        const opts = $('.oracle-options', el);
-        opts.innerHTML = '';
+      function renderOptionsForActive() {
+        const host = $('#oracle-options', el);
+        const hint = $('#q-hint', el);
+        host.innerHTML = '';
+        if (state.sceneActive < 0 || !state.scenePerBlank) {
+          if (hint) hint.textContent = state.sceneGraded
+            ? '— tap a blank to review its choices · tap the bow when done —'
+            : '— tap a blank to see its choices —';
+          return;
+        }
+        if (hint) hint.textContent = state.sceneGraded
+          ? '— tap any card to read its page —'
+          : '— pick the word that fits this blank —';
         const q = currentQ();
         const answers = q.answers || [];
-        (state.sceneOptions || []).forEach(word => {
-          const usedAt = state.sceneFills.indexOf(word);   // -1 if not picked
-          const isPick = usedAt >= 0;
-          const isCorrect = answers.includes(word);
-          const inReviewBlank = state.sceneGraded
-            && state.sceneReviewBlank >= 0
-            && (state.scenePerBlank[state.sceneReviewBlank] || []).includes(word);
+        const group = state.scenePerBlank[state.sceneActive] || [];
+        const userPickHere = state.sceneFills[state.sceneActive];
+        group.forEach(word => {
           let cls = 'card card--option';
           if (state.sceneGraded) {
-            if (isPick && (state.sceneFills.indexOf(word) >= 0)
-                && answers[state.sceneFills.indexOf(word)].toLowerCase() === word.toLowerCase()) {
-              cls += ' picked-right reveal-right';
-            } else if (isPick) {
-              cls += ' picked-wrong';
-            }
-            // After grading every CORRECT card glows gold (whether or
-            // not the user picked it) so the user can see "the right
-            // ones" at a glance — and tap any to open parchment.
-            if (isCorrect && !cls.includes('reveal-right')) cls += ' reveal-right';
+            const isCorrectForThis = answers[state.sceneActive] === word;
+            const isUserPickHere   = userPickHere === word;
+            if (isCorrectForThis) cls += ' picked-right reveal-right';
+            else if (isUserPickHere) cls += ' picked-wrong';
             cls += ' is-readable';
-            if (inReviewBlank) cls += ' is-review-highlight';
-          } else if (isPick) {
-            cls += ' picked-wrong';   // wine-card while waiting
+          } else if (userPickHere === word) {
+            cls += ' is-current-pick';
           }
           const b = document.createElement('button');
           b.className = cls;
           b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(word)}</span>`;
           b.dataset.word = word;
           b.addEventListener('click', (ev) => onOptionClick(ev, word, b));
-          opts.appendChild(b);
+          host.appendChild(b);
         });
       }
 
@@ -2037,24 +2100,20 @@ const Screens = {
           showParchment(word);
           return;
         }
-        // pick: ignore if already used in any blank
-        if (state.sceneFills.includes(word)) return;
+        if (state.sceneActive < 0) return;
         const i = state.sceneActive;
-        if (i < 0 || i >= state.sceneFills.length) return;
-        // Card-flip animation, then fill blank.
         btn.classList.add('is-flipping');
         SFX.tap();
         setTimeout(() => {
           state.sceneFills[i] = word;
           // Advance active marker to next empty slot, or stay.
           let next = state.sceneFills.indexOf(null);
-          if (next < 0) next = i;
+          if (next < 0) next = -1;   // all filled → no active blank
           state.sceneActive = next;
           $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
           wireSlots();
-          renderOptions();
+          renderOptionsForActive();
           if (!state.sceneFills.includes(null)) {
-            // All blanks filled → grade after a small breath.
             setTimeout(grade, 320);
           }
         }, 160);
@@ -2076,20 +2135,16 @@ const Screens = {
           }
         });
         if (allRight) SFX.right(); else SFX.wrong();
-        // v=63 — auto-PLAY full sentence audio for context.
         try { speak(q.full_sentence); } catch {}
-        // Repaint: q-card keeps user's picks (no auto-fill of the
-        // truth), option cards reveal right/wrong via glow + wine.
+        // Repaint: q-card keeps user's picks (no auto-fill).
+        state.sceneActive = -1;
         $('#q-sentence-host').innerHTML = renderBlankSentence(q);
         wireSlots();
-        renderOptions();
+        renderOptionsForActive();
         armBowAdvance();
       }
 
       function armBowAdvance() {
-        // v=63 — bow becomes the "next question" affordance.  User
-        // can roam (tap blanks to review, tap option cards to open
-        // parchment) until they tap the bow.
         const bow = $('.q-bow.q-bow-inside', el);
         if (!bow) return;
         bow.classList.add('is-tappable');
