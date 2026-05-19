@@ -392,7 +392,7 @@ const BG_BY_SCREEN = {
 // Only screens with real word lists are allowed to scroll the page —
 // every other screen locks body overflow so the iOS bounce can't make
 // the (fixed) bg-layer look like it's moving.
-const SCROLLABLE_SCREENS = new Set(['index', 'note-bucket', 'stage3-result']);
+const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result']);
 function go(screenId, opts = {}) {
   // v=53 — black-curtain transition.  Two paces:
   //   · MAJOR  (cover → stage / between stages / chapter end):
@@ -814,6 +814,16 @@ function renderReviewCard(word) {
       html += lineRow(w, phrase, phraseZh || posZh);
     });
   }
+  // v=66 — semantic siblings (group): one compact line of words.
+  if (c.group && c.group.length) {
+    const words = c.group.map(line => (line || '').split('|')[0].trim()).filter(Boolean);
+    if (words.length) {
+      html += `<div class="rev-section-label">her group</div>`;
+      html += `<div class="rev-line rev-group-line">${
+        words.map(w => linkify(w)).join('<span class="rev-group-sep">·</span>')
+      }</div>`;
+    }
+  }
   card.innerHTML = html;
   card.querySelectorAll('.rev-jump').forEach(a => {
     a.addEventListener('click', e => {
@@ -899,7 +909,14 @@ function showParchment(word) {
            so its bottom % maps to the painted star-in-circle's
            position on the asset (not the inner padded box).      -->
       <button class="pc-note-add ${inNote ? 'is-saved' : ''}" aria-label="add to her note" title="add to her note">
-        <span class="pc-note-star">✦</span>
+        <svg class="pc-note-key" viewBox="0 0 28 14" width="32" height="16" aria-hidden="true">
+          <!-- skeleton key: bow (ring) on the left + shaft + two teeth -->
+          <circle cx="5" cy="7" r="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="5" cy="7" r="1.0" fill="currentColor"/>
+          <line x1="8.6" y1="7" x2="25" y2="7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="20" y1="7"  x2="20" y2="11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="23" y1="7"  x2="23" y2="10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
       </button>
     </div>
   `;
@@ -2401,43 +2418,52 @@ const Screens = {
   },
 
   /* ---------- NOTE hub (cover-side, NOT in game flow) ----------
-     v=26.2 — page panel (0511DE6F frame) wraps the inner dome title
-     + 2 horizontal bucket buttons.  Clicking a bucket lands on
-     screen-note-bucket which now reuses the index list format.    */
+     v=66 — simplified per user.  One bucket only: words mistaken
+     THREE or more times ("haunting words" / "重点关注错题").  Each
+     word renders as the same expanded review card the stage-3
+     result uses, so users browse the full study UI inline.  No
+     soft-slip bucket, no separate detail page.                   */
   note: {
     onEnter() {
       const el = $('#screen-note');
-      const m = saved.mistakes;
-      const entries = Object.entries(m);
-      const soft  = entries.filter(([_, c]) => c >= 1 && c <= 2).map(([w]) => w);
-      const haunt = entries.filter(([_, c]) => c >= 3).map(([w]) => w);
+      const m = saved.mistakes || {};
+      // Haunting = mistaken 3+ times, AND has a parchment card.
+      const haunting = Object.entries(m)
+        .filter(([w, c]) => c >= 3 && PARCHMENT_CARDS[w])
+        .sort((a, b) => b[1] - a[1])                  // most-mistaken first
+        .map(([w]) => w);
+      // Saved keys (her note bookmarks).
+      const bookmarked = Object.keys(saved.notes || {})
+        .filter(w => PARCHMENT_CARDS[w])
+        .sort();
+
       el.innerHTML = `
-        <div class="nav-card">
+        <div class="note-page">
           ${pageTitle('Her Little Note')}
-          <div class="nav-card-body">
-            <div class="counter-row">
-              <button class="bucket-card" data-bucket="soft"  ${soft.length  ? '' : 'disabled'}>
-                <div class="bk-hint">words that slipped once</div>
-                <div class="bk-value">${soft.length}</div>
-                <div class="bk-label">soft slips</div>
-              </button>
-              <button class="bucket-card" data-bucket="haunt" ${haunt.length ? '' : 'disabled'}>
-                <div class="bk-hint">words that return</div>
-                <div class="bk-value">${haunt.length}</div>
-                <div class="bk-label">haunting words</div>
-              </button>
-            </div>
-          </div>
+          <div class="note-sub">— words that haunted her thrice or more —</div>
+          <div class="note-haunt-stack"></div>
+          ${bookmarked.length ? `
+            <div class="note-sub note-sub--keys">— and the ones she keyed away —</div>
+            <div class="note-keys-stack"></div>
+          ` : ''}
+          ${(!haunting.length && !bookmarked.length) ? `
+            <div class="note-empty">her notebook is still untouched.</div>
+          ` : ''}
         </div>
       `;
-      // Top-right star — single corner anchor per page.
       el.appendChild(closeCorner());
 
-      $$('.bucket-card', el).forEach(b => b.addEventListener('click', () => {
-        if (b.disabled) return;
-        SFX.tap();
-        go('note-bucket', { bucket: b.dataset.bucket });
-      }));
+      const hStack = $('.note-haunt-stack', el);
+      haunting.forEach(w => {
+        const card = renderReviewCard(w);
+        const badge = document.createElement('span');
+        badge.className = 'note-mistake-badge';
+        badge.textContent = `× ${m[w]}`;
+        card.prepend(badge);
+        hStack.appendChild(card);
+      });
+      const kStack = $('.note-keys-stack', el);
+      if (kStack) bookmarked.forEach(w => kStack.appendChild(renderReviewCard(w)));
     }
   },
 
