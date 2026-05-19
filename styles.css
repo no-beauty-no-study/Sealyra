@@ -712,31 +712,28 @@ body.cover-pending .cover-gate     { visibility: visible; }
   75%      { transform: translateX(4px); }
 }
 
-/* v=49 — ANSWER COMPONENT.  No more boxy second card per user
-   ("你咋做了俩大方框啊笨蛋").  The answer area is just input +
-   quill, side-by-side, treated as ONE component centred under
-   the bow.  Pill input + quill button touch each other so they
-   read as a single "writing tool".  No border around the pair —
+/* v=50 — ANSWER COMPONENT.  Per sketch the input slot sits in
+   the page's horizontal centre with the QUILL DIRECTLY BELOW it,
+   not beside it (the side-by-side layout felt asymmetric).  Both
+   stack vertically as one centred widget, no surrounding box —
    the q-card above is the only framed element on stage 3.       */
 .dict-answer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;                 /* near-touching, reads as one widget */
-  margin: 4px auto 0;
+  gap: 8px;
+  margin: 14px auto 0;
   width: auto;
 }
 .dict-answer .dict-slot {
-  width: 200px;
-  max-width: 60vw;
+  width: min(72vw, 280px);
   flex: 0 0 auto;
 }
 .dict-answer .dict-quill {
   flex-shrink: 0;
-  /* Bigger than before — comparable to the parchment's side
-     quill — so the writing tool is the focal point.            */
-  width: 78px !important;
-  height: 130px !important;
+  width: 86px !important;
+  height: 140px !important;
 }
 .dict-feedback { margin-top: 6px; }
 
@@ -2879,7 +2876,7 @@ body { background: transparent !important; }
 }
 .card--option::before,
 .card--option::after {
-  content: '❦';
+  content: '✦';
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -3036,18 +3033,21 @@ body { background: transparent !important; }
   position: relative;
   max-width: 460px;
   margin: 18px auto 0;
-  padding: 22px 22px 18px;
+  /* v=50 — q-card now matches the .card--option language: same
+     hairline outer border + same INNER DOTTED GOLD FRAME (via the
+     ::before pseudo-element) the option cards use.  Visual family
+     is one for question + answers now.                            */
+  /* Bottom padding clears the bow's upper-half overlap zone
+     (bow is 130 px tall, 65 px of it sits INSIDE the q-card).    */
+  padding: 22px 22px 70px;
   background:
     radial-gradient(ellipse 90% 70% at 50% 40%,
                     rgba(232, 196, 138, 0.06) 0%,
                     transparent 80%),
     linear-gradient(180deg,
-                    rgba(28, 16, 48, 0.38) 0%,
-                    rgba(18, 8, 36, 0.42) 100%);
-  /* v=48 — single antique-gold hairline border, NO internal rules.
-     User saw 4 lines (border + 2 ::before/::after rules) and laughed.
-     The clean single border + ❦ corners are enough framing.        */
-  border: 1px solid rgba(218, 168, 104, 0.42);
+                    rgba(28, 16, 48, 0.45) 0%,
+                    rgba(18, 8, 36, 0.50) 100%);
+  border: 1px solid rgba(218, 168, 104, 0.55);
   border-radius: 4px;
   box-sizing: border-box;
   box-shadow:
@@ -3056,21 +3056,46 @@ body { background: transparent !important; }
     0 6px 22px rgba(0, 0, 0, 0.42);
   text-align: center;
 }
+/* INNER DOTTED FRAME — same idiom as .card--option .mc-frame.
+   Single pseudo-element draws all four dotted gold edges with
+   repeating-linear-gradient, sits 5 px inside the outer border. */
+.q-card::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 2px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.55) 0 1.5px,
+                              transparent 1.5px 4.6px) top    / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, rgba(228, 196, 132, 0.55) 0 1.5px,
+                              transparent 1.5px 4.6px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(0deg,  rgba(228, 196, 132, 0.55) 0 1.5px,
+                              transparent 1.5px 4.6px) left   / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg,  rgba(228, 196, 132, 0.55) 0 1.5px,
+                              transparent 1.5px 4.6px) right  / 1px 100% no-repeat;
+}
+/* Corner ✦ — same family as the option card's flank sparkles (also
+   ✦), so cards + questions share one ornament vocabulary.  z-index
+   above .q-card::before so the star sits ON TOP of the dotted
+   frame at the corners, like a real card.                          */
 .q-corner {
   position: absolute;
   font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 13px;
-  color: rgba(218, 168, 104, 0.72);
+  font-style: normal;
+  font-size: 14px;
+  color: rgba(232, 196, 138, 0.88);
   text-shadow:
-    0 0 6px rgba(232, 196, 138, 0.45),
+    0 0 8px rgba(232, 196, 138, 0.65),
+    0 0 14px rgba(218, 168, 104, 0.32),
     0 1px 0 rgba(60, 30, 10, 0.55);
   pointer-events: none;
+  z-index: 2;
 }
-.q-corner-tl { top: 4px; left: 8px; }
-.q-corner-tr { top: 4px; right: 8px; }
-.q-corner-bl { bottom: 4px; left: 8px; }
-.q-corner-br { bottom: 4px; right: 8px; }
+.q-corner-tl { top: 2px; left: 6px; }
+.q-corner-tr { top: 2px; right: 6px; }
+.q-corner-bl { bottom: 2px; left: 6px; }
+.q-corner-br { bottom: 2px; right: 6px; }
 
 /* Small wax-seal bow that used to sit at the top of every .q-card.
    On stage 3 the dictation card still uses this (it stays nested
@@ -3088,30 +3113,33 @@ body { background: transparent !important; }
   z-index: 2;
 }
 
-/* v=48 — LARGE bow that PIN-SEALS the q-card to the options below.
-   Negative top margin pulls the bow UP so it overlaps the q-card's
-   bottom edge ("黏在框上 假装是一整个组件啦").  Bow becomes the
-   visual stitch between question and answers.  Options below get
-   pulled up with a small negative margin too.                     */
+/* v=50 — BOW: half INSIDE the q-card frame, half OUTSIDE (sketch).
+   icon-bow.png is square (384×384) so at 130 px wide it's 130 px
+   tall.  margin-top: -65 px lifts the bow so its centre line sits
+   exactly on the q-card's bottom border.  margin-bottom: -65 px
+   pulls the next element (options / answer) up to match, so the
+   bow takes 0 px of layout flow.                                  */
 .q-bow.q-bow-large {
   display: block;
-  width: 140px;
+  width: 130px;
   height: auto;
   object-fit: contain;
-  margin: -34px auto -28px;
+  margin: -65px auto -65px;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
   pointer-events: none;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
-/* Pull the option grid up so it nests just under the bow's lower
-   ribbon tails — reads as one continuous stamp + answer panel.   */
-#screen-stage2 .oracle-options { margin-top: 0; }
+/* Options sit immediately below the bow's mid-line.  A small top
+   padding gives the gap between the bow's lower ribbon and the
+   first option button.                                           */
+#screen-stage2 .oracle-options { margin-top: 8px; padding-top: 0; }
 
 /* Stage 2 sentence — sits inside .q-card.  We keep .q-sentence as
    the inner text element; the gold rules are now on the card.    */
 .q-sentence {
   position: relative;
+  z-index: 1;
   font-family: var(--f-italic);
   font-style: italic;
   font-size: 20px;
@@ -3121,6 +3149,7 @@ body { background: transparent !important; }
   padding: 8px 4px;
   margin: 0;
 }
+.dict-prompt, .dict-zh-hint { position: relative; z-index: 1; }
 /* same single-line blank shared by stage 3 dictation prompts */
 .dict-prompt .q-blank-mask {
   display: inline-block;

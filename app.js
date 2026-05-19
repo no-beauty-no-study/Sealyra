@@ -1568,10 +1568,10 @@ const Screens = {
         stage.innerHTML = `
           <div class="q-progress">${String(state.oracleIdx + 1).padStart(2, '0')} · 08</div>
           <div class="q-card">
-            <span class="q-corner q-corner-tl">❦</span>
-            <span class="q-corner q-corner-tr">❦</span>
-            <span class="q-corner q-corner-bl">❦</span>
-            <span class="q-corner q-corner-br">❦</span>
+            <span class="q-corner q-corner-tl">✦</span>
+            <span class="q-corner q-corner-tr">✦</span>
+            <span class="q-corner q-corner-bl">✦</span>
+            <span class="q-corner q-corner-br">✦</span>
             <div class="q-sentence">${q.sentenceHL}</div>
           </div>
           <img class="q-bow q-bow-large" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
@@ -1737,10 +1737,10 @@ const Screens = {
         stage.innerHTML = `
           <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
           <div class="q-card">
-            <span class="q-corner q-corner-tl">❦</span>
-            <span class="q-corner q-corner-tr">❦</span>
-            <span class="q-corner q-corner-bl">❦</span>
-            <span class="q-corner q-corner-br">❦</span>
+            <span class="q-corner q-corner-tl">✦</span>
+            <span class="q-corner q-corner-tr">✦</span>
+            <span class="q-corner q-corner-bl">✦</span>
+            <span class="q-corner q-corner-br">✦</span>
             <div class="dict-prompt">${masked}</div>
             <div class="dict-zh-hint">${escapeHtml(q.prompt_zh)}</div>
           </div>
