@@ -753,6 +753,15 @@ const Screens = {
     onEnter() {
       const el = $('#screen-cover');
       const learnedCount = Object.keys(saved.learned).length;
+      // Chapter accounting — each chapter is one 8-word session, and
+      // `saved.progress` advances by 8 at the end of stage 3.  When the
+      // user closes the tab mid-chapter, progress stays put, so on
+      // return the cover offers "continue" into the same chapter.
+      const totalChapters = Math.max(1, Math.floor(ALL_HEADS.length / 8));
+      const finishedChapters = Math.floor(saved.progress / 8);
+      const currentChapter = Math.min(finishedChapters + 1, totalChapters);
+      const allDone = saved.progress >= ALL_HEADS.length;
+      const hasProgress = saved.progress > 0 && !allDone;
       el.innerHTML = '';
 
       const stage = document.createElement('div');
@@ -760,7 +769,7 @@ const Screens = {
       stage.innerHTML = `
         <div class="cover-mid">
           <div id="cover-cta-slot"></div>
-          <div class="home-stats">${learnedCount} of ${TOTAL_WORDS} awakened</div>
+          <div id="cover-restart-slot" class="home-stats"></div>
         </div>
         <div class="cover-bottom">
           <div class="lil-row" id="cover-links"></div>
@@ -770,8 +779,14 @@ const Screens = {
 
       el.appendChild(moonCorner());
 
-      // Tonight's Reading — unlocks audio on the way into stage 1.
-      $('#cover-cta-slot', el).appendChild(mainCTA(`Tonight's Reading`, () => {
+      // Main CTA — "continue · chapter N" when there's an unfinished
+      // chapter saved; otherwise the original "Tonight's Reading".
+      // Tapping always runs freshSession(), which already starts at
+      // saved.progress, so nothing else has to change.
+      const ctaLabel = hasProgress
+        ? `continue · chapter ${currentChapter}`
+        : `Tonight's Reading`;
+      $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
         fade.className = 'fade-out';
@@ -785,6 +800,39 @@ const Screens = {
           fade.classList.remove('show');
         }, 1000);
       }));
+
+      // Sub-line under the CTA.  No progress yet → keep the old
+      // "X of Y awakened" whisper.  Progress saved → swap in a tiny
+      // "start over" link that wipes chapter progress (learned words
+      // and mistake counts are kept on purpose — clearing them would
+      // erase her notebook).
+      const sub = $('#cover-restart-slot', el);
+      if (hasProgress) {
+        const restart = document.createElement('button');
+        restart.type = 'button';
+        restart.className = 'home-restart';
+        restart.textContent = 'start over';
+        restart.addEventListener('click', () => {
+          SFX.tap();
+          showModal({
+            title: 'start over from chapter 1?',
+            body:  'your chapter progress will be cleared. words you have already learned stay in her notebook.',
+            actions: [
+              { label: 'stay' },
+              { label: 'yes, start over', variant: 'ghost', onClick: () => {
+                saved.progress = 0;
+                Store.save();
+                go('cover');
+              }}
+            ]
+          });
+        });
+        sub.appendChild(document.createTextNode(`chapter ${currentChapter} of ${totalChapters} · `));
+        sub.appendChild(restart);
+      } else {
+        sub.textContent = `${learnedCount} of ${TOTAL_WORDS} awakened`;
+      }
+
       $('#cover-links', el).appendChild(lilGhost('her note',  () => { LanBGM.unlock(); LanBGM.playHomeRandom({ volume: 0.42 }); go('note'); }));
       $('#cover-links', el).appendChild(lilGhost('the index', () => { LanBGM.unlock(); LanBGM.playHomeRandom({ volume: 0.42 }); go('index'); }));
     }

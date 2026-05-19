@@ -245,6 +245,25 @@ button { font-family: inherit; color: inherit; }
   letter-spacing: .06em;
   margin-top: 18px;
 }
+/* Inline "start over" link that lives inside .home-stats when the
+   reader has a chapter to wipe.  Inherits the parent's italic whisper
+   styling, just adds a subtle underline + brighter colour so it reads
+   as tappable next to the "chapter N of M ·" prefix. */
+.home-restart {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(218,168,104,.45);
+}
+.home-restart:hover { text-decoration-color: var(--gold); }
+.home-restart:active { opacity: .7; }
 
 /* small "her note" / "the index" links at cover bottom */
 .lil-row {
