@@ -3015,10 +3015,11 @@ body { background: transparent !important; }
   align-items: center;
   justify-content: center;
   width: 100% !important;
-  /* v=66 — same height + typography as match cards so stages 1
-     and 2 share one "card" voice.                                  */
-  height: 60px !important;
-  padding: 0 28px !important;
+  /* v=69 — auto height with min-height so long answers wrap to
+     two lines instead of being truncated.                          */
+  min-height: 60px !important;
+  height: auto !important;
+  padding: 8px 16px !important;
   margin: 0 !important;
   border: 1px solid rgba(190, 158, 100, 0.45) !important;
   border-radius: 4px !important;
@@ -3040,9 +3041,15 @@ body { background: transparent !important; }
   font-family: 'EB Garamond', 'Garamond', Georgia, serif !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 19px !important;
+  /* v=69 — same clamp + wrap rules as .card.card--match so the two
+     card kinds size identically for any word length.              */
+  font-size: clamp(13px, 3.8vw, 18px) !important;
+  line-height: 1.18 !important;
   letter-spacing: 0.02em !important;
   text-align: center;
+  white-space: normal !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
   cursor: pointer;
   transition: transform 0.18s, border-color 0.3s, box-shadow 0.3s, color 0.25s;
 }
@@ -3393,17 +3400,14 @@ body { background: transparent !important; }
 
 /* v=66 — per-blank option group laid out as a 2×2 grid, matching
    the 4×2 .match-grid sizing + spacing so stage 1 and stage 2 share
-   one "card" vocabulary.  v=68 — explicit min-width:0 on the grid
-   items so a long word in one column can't push that column wider
-   than its sibling (the source of the "left card longer, right
-   shorter" asymmetry).                                          */
+   one "card" vocabulary.                                          */
 #oracle-options.oracle-options {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
-  max-width: 460px;
+  max-width: 480px;
   margin: 6px auto;
-  padding: 2px 38px;
+  padding: 2px 22px;
   width: 100%;
   box-sizing: border-box;
   perspective: 800px;
@@ -3412,8 +3416,6 @@ body { background: transparent !important; }
   width: 100% !important;
   min-width: 0 !important;
   box-sizing: border-box !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* v=63 — REVIEW HIGHLIGHT for the 4 candidates belonging to the
@@ -5816,14 +5818,12 @@ body { background: transparent !important; }
   display: grid;
   /* v=68 — minmax(0,1fr) so a long word can't blow out its column
      and make the L+R cards visibly uneven (user: "卡牌左边的长右
-     边的短").                                                     */
+     边的短").  v=69 — tighter side padding (38→22) gives each
+     card ~32 px more text room, enough for most long words.       */
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
-  /* extra horizontal padding so the ❦ pair-mark (positioned just
-     outside each card's outer edge) has visible breathing room and
-     doesn't get clipped against the viewport edge.                  */
-  padding: 2px 38px;
-  max-width: 460px;
+  padding: 2px 22px;
+  max-width: 480px;
   margin: 6px auto;
   width: 100%;
   box-sizing: border-box;
@@ -5833,8 +5833,6 @@ body { background: transparent !important; }
 .match-result-grid > .card.card--match {
   min-width: 0 !important;
   box-sizing: border-box !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* ---------- the card itself ----------------------------------------- */
@@ -5847,14 +5845,14 @@ body { background: transparent !important; }
   align-items: center;
   justify-content: center;
   width: 100% !important;
-  /* v=66 — bigger cards + cleaner type per user ("字和牌都可以放大一点
-     不太好认").  Height bumped 52→58, font 17px italic Cormorant
-     swapped for 19px upright EB Garamond 500.  Upright weight reads
-     dramatically better at a glance on a 4×2 grid; italic stays
-     reserved for body prose where storybook tone matters more
-     than fast recognition.                                          */
-  height: 60px !important;
-  padding: 0 28px !important;
+  /* v=69 — height now AUTO with a min-height, so long words like
+     "telecommunication" / "electroencephalogram" wrap to 2 lines
+     inside the card instead of being truncated.  Padding tighter
+     so the text area is wider; font clamps down on narrow
+     viewports.                                                     */
+  min-height: 60px !important;
+  height: auto !important;
+  padding: 8px 16px !important;
   border: 1px solid rgba(190, 158, 100, 0.45) !important;
   border-radius: 4px !important;
   /* Dark purple cardstock.  Three layers, in this order:
@@ -5891,9 +5889,16 @@ body { background: transparent !important; }
   font-family: 'EB Garamond', 'Garamond', Georgia, serif !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 19px !important;
+  /* v=69 — clamp so the font shrinks on narrow phones (135 px card
+     column) but stays 18 px on tablets/desktops.  word-break +
+     normal white-space let multi-line words wrap inside the card.  */
+  font-size: clamp(13px, 3.8vw, 18px) !important;
+  line-height: 1.18 !important;
   letter-spacing: 0.02em !important;
   text-align: center;
+  white-space: normal !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
   cursor: pointer;
   transition: transform 0.18s, border-color 0.3s, box-shadow 0.3s, color 0.25s !important;
   -webkit-tap-highlight-color: transparent;
