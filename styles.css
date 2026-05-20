@@ -1480,7 +1480,7 @@ body.cover-pending .cover-gate     { visibility: visible; }
   transition: opacity .2s, transform .2s;
 }
 .moon-corner:hover { opacity: 1; transform: scale(1.06); }
-.moon-corner svg   { width: 100%; height: 100%; display: block; filter: drop-shadow(0 0 4px rgba(218,168,104,.45)); }
+.moon-corner svg   { width: 100%; height: 100%; display: block; }
 
 /* Page footer — the discreet "back to cover" link at the bottom edge
    of each page.  Like the page-number of a real book — barely there.  */
@@ -2802,6 +2802,12 @@ body { background: transparent !important; }
 .next-door img           { display: none !important; }
 
 /* D. moon-corner — CSS-drawn three-bar menu (no PNG, no unicode) */
+/* v=70 — every halo / border / svg drop-shadow that surrounded the
+   star removed.  The user said the click feedback rendered as an
+   ugly square (the icon-star8.png has a non-transparent margin so
+   drop-shadow follows its rectangular bounds, and the 999 px round
+   border also showed at certain compositing moments).  Now it's
+   just the bare star with scale + opacity feedback.              */
 .moon-corner {
   width: 36px !important;
   height: 36px !important;
@@ -2809,16 +2815,16 @@ body { background: transparent !important; }
   align-items: center !important;
   justify-content: center !important;
   background: transparent !important;
-  border: 1px solid rgba(244,181,200,.32) !important;
-  border-radius: 999px !important;
+  border: none !important;
+  border-radius: 0 !important;
   cursor: pointer;
   padding: 0 !important;
   color: var(--gold-deep) !important;
-  /* filter: none was killing the breathing-halo animation — removed */
+  filter: none !important;
+  box-shadow: none !important;
 }
-.moon-corner:hover { border-color: var(--rose) !important; color: var(--rose) !important; }
-/* the v=31 star-icon ::before owns the visual; old png pseudo
-   killers + three-bar CSS-drawn icon both removed.            */
+.moon-corner:hover  { border: none !important; transform: scale(1.06); filter: none !important; }
+.moon-corner:active { opacity: 0.7; filter: none !important; }
 .moon-corner svg     { display: none !important; }
 .moon-corner .mc-bar { display: none !important; }
 .moon-corner .__legacy-mc-bar {
@@ -5489,6 +5495,59 @@ body { background: transparent !important; }
   left: 18%;
   right: 18%;
 }
+/* v=70 — chapter-jump bar replaces the A-Z grid in the nav-card.
+   With 186 chapters it scrolls horizontally; each pill is a small
+   "01 · 02 · …" so the user can hop to any chapter section.      */
+.nav-card > .jump-bar {
+  position: absolute;
+  top: 47%;
+  height: 18%;
+  left: 12%;
+  right: 12%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 2px;
+}
+.nav-card > .jump-bar::-webkit-scrollbar { display: none; }
+.jump-bar .jb-pill {
+  flex: 0 0 auto;
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--gold-deep);
+  padding: 4px 8px;
+  border: 1px solid rgba(218, 168, 104, 0.32);
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.jump-bar .jb-pill:hover {
+  color: var(--rose);
+  border-color: rgba(244, 181, 200, 0.65);
+  background: rgba(244, 181, 200, 0.08);
+}
+/* v=70 — themed chapter section title: spans two italic lines
+   (theme code · sub-name).  Drops the giant A-Z letter look
+   that didn't suit a thematic grouping.                          */
+.chapter-section-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif !important;
+  font-style: italic !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  color: rgba(232, 196, 138, 0.85) !important;
+  text-align: left !important;
+  padding: 18px 4px 6px !important;
+  margin: 0 !important;
+  border-bottom: 1px dotted rgba(218, 168, 104, 0.32);
+}
 .nav-card > .index-search {
   position: absolute;
   top: 68%;
@@ -6376,20 +6435,22 @@ body { background: transparent !important; }
 
 .parchment-card {
   position: relative;
-  /* v=68 — clip-path retired (was cropping into the painted scroll
-     itself on the user's screen).  The card is sized to 88vw so
-     the veil already shows visibly on LEFT and RIGHT for the
-     tap-to-close gesture; the painted scroll's own border now
-     decorates the edge — no need to artificially crop it.        */
-  width:  min(88vw, 460px);
-  height: min(158vw, 800px);
+  /* v=70 — bumped to 94vw so the visible scroll is wider on
+     phones; text columns now have ~30 px more horizontal room
+     for long family/kin entries.  Still leaves 6 vw veil per
+     side for the tap-to-close gesture.                          */
+  width:  min(94vw, 500px);
+  height: min(168vw, 840px);
   background:
     url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=31")
     center/100% 100% no-repeat;
   /* v=53 — top padding bumped from 22% to 26% so the headword sits
      clear of the painted scroll-roll at the top of E993B660 (user
      reported "羊皮纸的顶上有点超出内容框").                          */
-  padding: 26% 16% 16% 16%;
+  /* v=70 — side padding pulled in from 16% → 11% so the text
+     column has another ~10% of card width.  Long phrase + zh
+     pairs now have visible breathing room.                       */
+  padding: 24% 11% 14% 11%;
   box-sizing: border-box;
   cursor: default;
   transform-style: preserve-3d;
@@ -6875,12 +6936,69 @@ body { background: transparent !important; }
   font-style: italic;
   font-size: 11.5px;
   color: #3e2812;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* v=70 — was nowrap + ellipsis, which truncated long phrases like
+     "abolitionist movement" in family/kin.  Allow wrapping; the
+     two-row .pc-entry layout below stacks phrase + zh anyway so
+     ellipsis is no longer needed.                                  */
+  white-space: normal;
+  word-break: break-word;
   flex: 1 1 auto;
   min-width: 0;
 }
+
+/* v=70 — TWO-ROW entry for family + kin.  Top row = headword + its
+   Chinese gloss; bottom row = example phrase + phrase Chinese.
+   Earlier we crammed all four pieces onto ONE flex row, which (a)
+   missed the word's own Chinese (we were showing phrase-zh only)
+   and (b) ellipsis-truncated long phrases.  Two rows give every
+   piece its own breathing space, and any text can wrap freely.    */
+.pc-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px 4px 4px 0;
+  margin: 0 0 2px;
+  border-bottom: 1px dotted rgba(110, 63, 18, 0.18);
+}
+.pc-entry:last-child { border-bottom: none; }
+.pc-entry .pc-entry-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  width: 100%;
+}
+.pc-entry .pc-line-word {
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 12.5px;
+  color: #3a1f08;
+  flex-shrink: 0;
+}
+.pc-entry .pc-line-phrase {
+  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  color: #3e2812;
+  white-space: normal;
+  word-break: break-word;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.pc-entry .pc-line-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 10px;
+  color: #6a4626;
+  margin-left: auto;
+  text-align: right;
+  white-space: normal;
+  flex-shrink: 0;
+  max-width: 50%;
+}
+.pc-entry .pc-play { flex-shrink: 0; }
+/* Indent the phrase row so it visually nests under the word row. */
+.pc-entry .pc-entry-row--phrase { padding-left: 22px; }
 .pc-line .pc-line-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;

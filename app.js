@@ -998,11 +998,21 @@ function showParchment(word) {
     c.family.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
       const audioTarget = phrase || w;
-      items.push({ kind: 'fam', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(audioTarget)}">
-        <button class="pc-play">♪</button>
-        <span class="pc-line-word">${pcLinkify(w)}</span>
-        ${phrase ? `<span class="pc-line-phrase">${pcLinkify(phrase)}</span>` : ''}
-        <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
+      // v=70 — two-row layout per entry:
+      //   row 1 : word           ·  pos.zh           (word's own meaning)
+      //   row 2 : example phrase ·  phrase zh        (collocation usage)
+      // Earlier the word zh was completely missing — phrases have many
+      // meanings and the user needs the word's own Chinese gloss.
+      items.push({ kind: 'fam', html: `<div class="pc-entry pc-play-row" data-sp="${escapeAttr(audioTarget)}">
+        <div class="pc-entry-row pc-entry-row--word">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-word">${pcLinkify(w)}</span>
+          <span class="pc-line-zh">${escapeHtml(posZh || '')}</span>
+        </div>
+        ${phrase ? `<div class="pc-entry-row pc-entry-row--phrase">
+          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
+        </div>` : ''}
       </div>` });
     });
   }
@@ -1034,11 +1044,19 @@ function showParchment(word) {
     c.kin.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
       const audioTarget = phrase || w;
-      items.push({ kind: 'kin', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(audioTarget)}">
-        <button class="pc-play">♪</button>
-        <span class="pc-line-word">${pcLinkify(w)}</span>
-        ${phrase ? `<span class="pc-line-phrase">${pcLinkify(phrase)}</span>` : ''}
-        <span class="pc-line-zh">${escapeHtml(phraseZh || posZh || '')}</span>
+      // v=70 — same two-row layout as family (word + zh / phrase + zh).
+      // Kin entries were missing the word's Chinese translation entirely
+      // (the JSON has it; we just weren't rendering it).
+      items.push({ kind: 'kin', html: `<div class="pc-entry pc-play-row" data-sp="${escapeAttr(audioTarget)}">
+        <div class="pc-entry-row pc-entry-row--word">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-word">${pcLinkify(w)}</span>
+          <span class="pc-line-zh">${escapeHtml(posZh || '')}</span>
+        </div>
+        ${phrase ? `<div class="pc-entry-row pc-entry-row--phrase">
+          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
+        </div>` : ''}
       </div>` });
     });
   }
@@ -1235,56 +1253,109 @@ function closeParchment() {
 }
 function _onParchEsc(e) { if (e.key === 'Escape') closeParchment(); }
 
-// v=26.2 — index-style listing wrapped in the page panel (0511DE6F
-// frame).  Used by both the full index and the note-bucket page so
-// they share one visual.  Renders title (in the inner dome frame)
-// + search input + A-Z bar + alpha-sectioned word rows.
-function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'index' }) {
-  const groups = {};
-  words.forEach(h => {
-    const k = h[0].toUpperCase();
-    (groups[k] = groups[k] || []).push(h);
+// v=70 — index now groups words by THEMED CHAPTER instead of
+// first letter (user: "按照首字母分的没有规律 我们是按照主题分的").
+// Each word is filed under the FIRST chapter that introduces it;
+// orphans (cards never used by any chapter) get an "unsorted" bin
+// at the bottom.  Search still filters across every row.          */
+function _resolveChapterWords(ch) {
+  const set = new Set();
+  (ch.match_group_ids || []).forEach(gid => {
+    const g = MATCH_GROUPS[gid];
+    if (!g) return;
+    if (g.head)    set.add(g.head);
+    if (g.partner) set.add(g.partner);
   });
-  // letters present in the word list (for the section headers below)
-  const letters = Object.keys(groups).sort();
-  // Always show the full A–Z so the alphabet always reads as 26
-  // letters in two even rows.  Letters with no entries get a
-  // muted style + no-op on click.
-  const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  const alphaHtml = ALL_LETTERS.map(L => {
-    const has = groups[L] && groups[L].length;
-    return `<a data-letter="${L}"${has ? '' : ' class="ab-disabled"'}>${L}</a>`;
-  }).join('');
+  (ch.reading_question_ids || []).forEach(rid => {
+    const q = _SCENE_BY_ID[rid];
+    if (q && q.answers) q.answers.forEach(w => set.add(w));
+  });
+  (ch.dictation_question_ids || []).forEach(tok => {
+    const m = /^DICT_(\d+)$/.exec(tok);
+    if (!m) return;
+    const d = _DICT_ARR[+m[1]];
+    if (d && d.head) set.add(d.head);
+  });
+  return Array.from(set);
+}
+let _wordChapterCache = null;
+function _wordToChapterMap() {
+  if (_wordChapterCache) return _wordChapterCache;
+  _wordChapterCache = new Map();
+  _CHAPTER_PLAN.forEach((ch, idx) => {
+    _resolveChapterWords(ch).forEach(w => {
+      if (!_wordChapterCache.has(w)) {
+        _wordChapterCache.set(w, { idx, theme: ch.theme });
+      }
+    });
+  });
+  return _wordChapterCache;
+}
+
+function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'index', groupBy = 'chapter' }) {
+  let sections;  // [{ key, label, words: [] }]
+  if (groupBy === 'chapter' && _CHAPTER_PLAN.length) {
+    const wc = _wordToChapterMap();
+    const byChapter = new Map();
+    const orphans = [];
+    words.forEach(h => {
+      const entry = wc.get(h);
+      if (!entry) { orphans.push(h); return; }
+      const k = entry.idx;
+      if (!byChapter.has(k)) byChapter.set(k, { key: k, label: entry.theme, words: [] });
+      byChapter.get(k).words.push(h);
+    });
+    sections = Array.from(byChapter.values()).sort((a, b) => a.key - b.key);
+    sections.forEach(s => s.words.sort());
+    if (orphans.length) sections.push({ key: 'orphans', label: 'her wanderers', words: orphans.sort() });
+  } else {
+    const groups = {};
+    words.forEach(h => {
+      const k = h[0].toUpperCase();
+      (groups[k] = groups[k] || []).push(h);
+    });
+    sections = Object.keys(groups).sort().map(L => ({ key: L, label: L, words: groups[L].sort() }));
+  }
+
+  // Quick-jump strip: a small row of "Ch · N" pills covering every
+  // present section (one pill per section, scrollable horizontally
+  // if there are many chapters).  Doubles as the section nav.
+  const jumpHtml = sections.map(s =>
+    `<a data-jump="${escapeAttr(s.key)}" class="jb-pill">${escapeHtml(
+      groupBy === 'chapter' && typeof s.key === 'number'
+        ? String(s.key + 1).padStart(2, '0')
+        : s.label
+    )}</a>`
+  ).join('');
+
   el.innerHTML = `
     <div class="nav-shield"></div>
     <div class="nav-card">
       ${pageTitle(title)}
-      <div class="alpha-bar">${alphaHtml}</div>
+      <div class="jump-bar">${jumpHtml}</div>
       <input class="index-search" type="text" placeholder="SEARCH WORDS…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
     </div>
     <div class="word-list" id="word-list-${fromKey}">
       ${words.length ? '' : `<div class="note-empty">no words yet · the page is still pristine</div>`}
     </div>
   `;
-  // Top-right star — the universal "back to cover" affordance.  We
-  // used to also stamp a top-left moon-corner here, but the user
-  // wants ONLY the right-corner star (one anchor per page).
   el.appendChild(closeCorner({ to: backTo }));
 
-  $$('.alpha-bar a', el).forEach(a => {
+  $$('.jump-bar a', el).forEach(a => {
     a.addEventListener('click', () => {
-      const L = a.getAttribute('data-letter');
-      const target = $(`#letter-${L}-${fromKey}`, el);
+      const k = a.getAttribute('data-jump');
+      const target = $(`#sec-${escapeAttr(k)}-${fromKey}`, el);
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
   const body = $(`#word-list-${fromKey}`, el);
-  letters.forEach(L => {
+  sections.forEach(s => {
     body.insertAdjacentHTML('beforeend',
-      `<div class="alpha-section-title" id="letter-${L}-${fromKey}">${L}</div>`);
-    groups[L].forEach(h => {
+      `<div class="alpha-section-title chapter-section-title" id="sec-${escapeAttr(s.key)}-${fromKey}">${escapeHtml(s.label)}</div>`);
+    s.words.forEach(h => {
       const c = PARCHMENT_CARDS[h];
+      if (!c) return;
       const row = document.createElement('div');
       row.className = 'word-row';
       row.dataset.word = c.h.toLowerCase();
@@ -1710,8 +1781,12 @@ const Screens = {
       // Her Note / The Index sit in the cover-side group.  BGM
       // continuity is handled by _ensureBGM via the screen group
       // map — no per-button play call needed.
-      $('#cover-links', el).appendChild(lilGhost('Her Note',  () => transitionTo('note')));
-      $('#cover-links', el).appendChild(lilGhost('The Index', () => transitionTo('index')));
+      // v=70 — route through go() so the cover-side soft veil
+      // (the gentler purple wash) actually fires, instead of the
+      // legacy transitionTo() which dropped its own dark page-veil
+      // and bypassed the cover-side detection in go().
+      $('#cover-links', el).appendChild(lilGhost('Her Note',  () => go('note')));
+      $('#cover-links', el).appendChild(lilGhost('The Index', () => go('index')));
     }
   },
 
