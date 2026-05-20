@@ -508,10 +508,14 @@ function _ensureBGM(screenId) {
   if (group && group === _lastBgmGroup) return;     // same group → keep
   _lastBgmGroup = group;
   try {
-    LanBGM.stop();                                  // drop guard
-    if      (pool === 'home')   LanBGM.playHomeRandom({ volume: 0.42 });
-    else if (pool === 'game')   LanBGM.playGameRandom({ volume: 0.40 });
-    else if (pool === 'result') LanBGM.playResultRandom({ volume: 0.42 });
+    // v=68 — pass force:true so bgm.js bypasses its same-pool
+    // guard.  Avoids the brief silence that LanBGM.stop() created
+    // between tracks; play() handles the in-place track-switch
+    // cleanly (clears timer, re-schedules, no audible gap).
+    const opts = { force: true };
+    if      (pool === 'home')   LanBGM.playHomeRandom({ ...opts, volume: 0.42 });
+    else if (pool === 'game')   LanBGM.playGameRandom({ ...opts, volume: 0.40 });
+    else if (pool === 'result') LanBGM.playResultRandom({ ...opts, volume: 0.42 });
   } catch {}
 }
 

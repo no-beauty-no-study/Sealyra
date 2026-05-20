@@ -1698,17 +1698,18 @@ body {
 .moon-corner { color: transparent; }
 .moon-corner svg, .moon-corner .mc-bar { display: none; }
 .moon-corner::before {
+  /* v=68 — drop-shadow halo retired.  The icon-star8.png asset has
+     a non-transparent black margin, so the drop-shadow bled into a
+     square outline on tap.  User: "发光形状很难看 把发光特效移除掉".
+     Bare star, no glow.                                            */
   content: "";
   display: block;
   width: 100%; height: 100%;
   background: url("assets/icon-star8.png?v=31") center/contain no-repeat;
-  filter: drop-shadow(0 0 5px rgba(218,168,104,.55));
-  transition: filter 0.25s, transform 0.25s;
+  transition: transform 0.25s, opacity 0.25s;
 }
-.moon-corner:hover::before {
-  filter: drop-shadow(0 0 9px rgba(232,196,138,.85));
-  transform: scale(1.06);
-}
+.moon-corner:hover::before { transform: scale(1.06); }
+.moon-corner:active::before { opacity: 0.7; }
 
 /* Stage header bow divider — appears below Chapter · Stage title */
 .stage-head { position: relative; padding-bottom: 36px; }
@@ -1790,28 +1791,31 @@ body.cover-pending .cover-stage > * { visibility: hidden !important; }
    own bottom-edge colour to the deep velvet body, so the join
    reads as a soft haze rather than a sharp cutoff.               */
 #bg-layer::after {
-  /* v=62 — blurred bottom strip now FADES INTO #0e0820 (the
-     browser-bar / safe-area colour) so the scene dissolves
-     smoothly into the toolbar instead of getting hard-cut.    */
+  /* v=68 — the blurred bottom strip now fades into the EXACT meta
+     theme-color (#0E0B1A = rgb 14,11,26), so the seam between the
+     painted scene and the browser-bar/safe-area is invisible.  The
+     mid-stop pulls more weight into the strip so the fade reads
+     as a soft haze, not a sharp cutoff.                          */
   content: '';
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 22vh;
+  height: 28vh;
   background:
     linear-gradient(180deg,
-      rgba(14, 8, 32, 0) 0%,
-      rgba(14, 8, 32, 0.55) 55%,
-      rgba(14, 8, 32, 1.0) 100%),
+      rgba(14, 11, 26, 0) 0%,
+      rgba(14, 11, 26, 0.40) 35%,
+      rgba(14, 11, 26, 0.85) 75%,
+      rgba(14, 11, 26, 1.0) 100%),
     inherit;
   background-position: center bottom;
   background-size: 100% 100%, cover;
-  filter: blur(10px) saturate(1.02);
+  filter: blur(12px) saturate(1.02);
   -webkit-mask-image: linear-gradient(180deg,
-    transparent 0%, #000 30%, #000 100%);
+    transparent 0%, #000 28%, #000 100%);
           mask-image: linear-gradient(180deg,
-    transparent 0%, #000 30%, #000 100%);
+    transparent 0%, #000 28%, #000 100%);
   z-index: 0;
   pointer-events: none;
   opacity: 1;
@@ -3389,10 +3393,13 @@ body { background: transparent !important; }
 
 /* v=66 — per-blank option group laid out as a 2×2 grid, matching
    the 4×2 .match-grid sizing + spacing so stage 1 and stage 2 share
-   one "card" vocabulary.                                            */
+   one "card" vocabulary.  v=68 — explicit min-width:0 on the grid
+   items so a long word in one column can't push that column wider
+   than its sibling (the source of the "left card longer, right
+   shorter" asymmetry).                                          */
 #oracle-options.oracle-options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
   max-width: 460px;
   margin: 6px auto;
@@ -3403,6 +3410,10 @@ body { background: transparent !important; }
 }
 #oracle-options.oracle-options .card--option {
   width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* v=63 — REVIEW HIGHLIGHT for the 4 candidates belonging to the
@@ -5292,11 +5303,16 @@ body { background: transparent !important; }
     center/100% 100% no-repeat;
 }
 .nav-shield {
+  /* v=68 — pinned to NEW banner aspect (426/1600 ≈ 0.266) so the
+     purple panel hugs the banner bottom on the index / note page.
+     Previously used the OLD banner aspect (821/1916 ≈ 0.428) which
+     left a visible gap above and pushed the panel down off the
+     screen top (user: "紫色方块要居顶 现在没有").                 */
   position: fixed;
-  top: calc(100vw * 821 / 1916);
+  top: calc(100vw * 426 / 1600 + 2px);
   left: 0;
   right: 0;
-  height: min(62vw, 372px);                 /* extended downward */
+  height: min(56vw, 345px);
   background: #18102a;
   z-index: 49;
   -webkit-mask-image: linear-gradient(180deg,
@@ -5307,7 +5323,8 @@ body { background: transparent !important; }
 }
 /* Pull the word list up so the big "A" hugs the nav-card. */
 .word-list {
-  margin-top: calc(min(56vw, 336px)) !important;
+  /* v=68 — matches the new banner-aligned nav-card height. */
+  margin-top: calc(min(100vw * 426 / 1600 + 56vw, 100vw * 426 / 1600 + 339px)) !important;
 }
 /* Word list starts AFTER the nav-card bottom (= banner + 6 + height).
    nav-card height = 76 vw × 0.75 = 57 vw, capped at 345 px. */
@@ -5797,7 +5814,10 @@ body { background: transparent !important; }
 .match-grid,
 .match-result-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* v=68 — minmax(0,1fr) so a long word can't blow out its column
+     and make the L+R cards visibly uneven (user: "卡牌左边的长右
+     边的短").                                                     */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
   /* extra horizontal padding so the ❦ pair-mark (positioned just
      outside each card's outer edge) has visible breathing room and
@@ -5808,6 +5828,13 @@ body { background: transparent !important; }
   width: 100%;
   box-sizing: border-box;
   perspective: 800px;
+}
+.match-grid > .card.card--match,
+.match-result-grid > .card.card--match {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ---------- the card itself ----------------------------------------- */
@@ -6344,19 +6371,16 @@ body { background: transparent !important; }
 
 .parchment-card {
   position: relative;
-  /* v=65 — card shrunk to 88vw so the veil shows visibly on the
-     LEFT and RIGHT.  User wants those empty side strips to close
-     the parchment on tap (currently the only close affordance was
-     the small "fold this page" link).  Asset is also scaled up to
-     118% + clipped 2% on top/bottom and 4% on each side so the
-     painted scroll fills the visible region with NO dark fringe. */
+  /* v=68 — clip-path retired (was cropping into the painted scroll
+     itself on the user's screen).  The card is sized to 88vw so
+     the veil already shows visibly on LEFT and RIGHT for the
+     tap-to-close gesture; the painted scroll's own border now
+     decorates the edge — no need to artificially crop it.        */
   width:  min(88vw, 460px);
   height: min(158vw, 800px);
   background:
     url("assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=31")
-    center/118% 118% no-repeat;
-  clip-path: inset(2% 4% 2% 4%);
-  -webkit-clip-path: inset(2% 4% 2% 4%);
+    center/100% 100% no-repeat;
   /* v=53 — top padding bumped from 22% to 26% so the headword sits
      clear of the painted scroll-roll at the top of E993B660 (user
      reported "羊皮纸的顶上有点超出内容框").                          */
