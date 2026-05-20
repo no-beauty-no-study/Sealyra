@@ -260,7 +260,13 @@ button { font-family: inherit; color: inherit; }
 .cover-restart {
   margin-top: 18px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.cover-catalog-btn .cr-chapter {
+  /* the catalog button's lower line is "N chapters", not a counter */
+  color: rgba(232, 196, 138, 0.55);
 }
 .cover-restart-btn {
   display: inline-flex;
@@ -5361,7 +5367,13 @@ body { background: transparent !important; }
   box-shadow: none !important;
   color: transparent !important;
   border-radius: 0 !important;
-  animation: corner-breathe 2.2s ease-in-out infinite;
+  /* v=71 — breathing halo + drop-shadow filter REMOVED.  The
+     icon-star8.png asset has a non-transparent black margin, so any
+     drop-shadow followed its rectangular bounds and rendered as a
+     square halo.  Bare star, with only a transform-scale + opacity
+     for hover/active feedback.                                   */
+  animation: none !important;
+  filter: none !important;
 }
 .moon-corner {
   left: 10px !important;
@@ -5369,10 +5381,7 @@ body { background: transparent !important; }
   background:
     url("assets/icon-star8.png?v=31")
     center/contain no-repeat !important;
-  /* keep the original cream-gold brightness — the previous heavy
-     sepia filter buried the star against the dark banner; user
-     couldn't see it.  Mild filter only.                          */
-  filter: drop-shadow(0 0 8px rgba(232, 196, 138, 0.55));
+  filter: none !important;
 }
 .close-corner {
   right: 10px !important;
@@ -5383,11 +5392,8 @@ body { background: transparent !important; }
     url("assets/icon-star8.png?v=31")
     center/contain no-repeat !important;
   transform: none !important;
-  /* Same cream-gold brightness as the left star (was buried in sepia
-     so the user couldn't see it at all on the dark banner).        */
-  filter: drop-shadow(0 0 8px rgba(232, 196, 138, 0.55));
+  filter: none !important;
 }
-/* Kill any leftover CSS-drawn icons inside the buttons */
 .moon-corner .mc-bar,
 .moon-corner::before,
 .moon-corner svg,
@@ -5396,29 +5402,13 @@ body { background: transparent !important; }
 .close-corner::after {
   display: none !important;
 }
-/* Breathing halo — tighter radius but brighter peak, so the
-   pulse is unmistakable.                                       */
-@keyframes corner-breathe {
-  0%, 100% { filter: drop-shadow(0 0 2px  rgba(255,232,170,.5))
-                     drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
-  50%      { filter: drop-shadow(0 0 6px  rgba(255,232,170,1))
-                     drop-shadow(0 0 12px rgba(232,196,138,.7))
-                     drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
-}
-/* v=33 — close-corner used to wear a heavy sepia filter that buried
-   the star against the dark banner.  User couldn't see it.  Match
-   the moon-corner brightness instead — same cream-gold drop-shadow
-   halo, breathing.                                                  */
-@keyframes corner-breathe-star {
-  0%, 100% { filter: drop-shadow(0 0 2px  rgba(255,232,170,.5))
-                     drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
-  50%      { filter: drop-shadow(0 0 6px  rgba(255,232,170,1))
-                     drop-shadow(0 0 12px rgba(232,196,138,.7))
-                     drop-shadow(0 2px 4px rgba(8,4,18,.55)); }
-}
-.close-corner { animation-name: corner-breathe-star; }
 .moon-corner:hover, .close-corner:hover {
-  animation-duration: 1.2s;
+  transform: scale(1.06) !important;
+  filter: none !important;
+}
+.moon-corner:active, .close-corner:active {
+  opacity: 0.7;
+  filter: none !important;
 }
 
 /* --- 47.3  title plaque — bigger + middle-line aligns to the
@@ -5495,59 +5485,92 @@ body { background: transparent !important; }
   left: 18%;
   right: 18%;
 }
-/* v=70 — chapter-jump bar replaces the A-Z grid in the nav-card.
-   With 186 chapters it scrolls horizontally; each pill is a small
-   "01 · 02 · …" so the user can hop to any chapter section.      */
-.nav-card > .jump-bar {
-  position: absolute;
-  top: 47%;
-  height: 18%;
-  left: 12%;
-  right: 12%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: 4px 2px;
+/* v=71 — Chapter Catalog page (cover-side).  Scrollable list of
+   themed chapters with a weak-chapters block on top.              */
+.catalog-page {
+  max-width: 520px;
+  margin: 0 auto 32px;
+  padding: 14px 16px 48px;
 }
-.nav-card > .jump-bar::-webkit-scrollbar { display: none; }
-.jump-bar .jb-pill {
-  flex: 0 0 auto;
-  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+.catalog-page .page-title { margin: 8px 0 6px; }
+.catalog-page .catalog-sub {
+  text-align: center;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  color: rgba(232, 196, 138, 0.62);
+  margin: 4px 0 16px;
+}
+.catalog-page .catalog-section-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgba(232, 196, 138, 0.92);
+  text-transform: lowercase;
+  text-align: left;
+  margin: 22px 4px 8px;
+  border-bottom: 1px dotted rgba(218, 168, 104, 0.38);
+  padding-bottom: 4px;
+}
+.catalog-page .catalog-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.catalog-row {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(18, 8, 36, 0.55);
+  border: 1px solid rgba(190, 158, 100, 0.32);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: normal;
+  font-size: 14px;
+  color: #efdbb4;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.12s;
+}
+.catalog-row:hover  { border-color: rgba(232, 196, 138, 0.62); background: rgba(28, 16, 48, 0.65); }
+.catalog-row:active { transform: translateY(1px); }
+.catalog-row .cat-num {
+  font-family: 'Cinzel', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(232, 196, 138, 0.65);
+  letter-spacing: 0.10em;
+}
+.catalog-row .cat-theme {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  color: #efdbb4;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.catalog-row .cat-mistakes {
+  font-family: 'Cinzel', serif;
   font-style: italic;
   font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--gold-deep);
-  padding: 4px 8px;
-  border: 1px solid rgba(218, 168, 104, 0.32);
-  border-radius: 999px;
-  cursor: pointer;
+  letter-spacing: 0.12em;
+  color: rgba(232, 168, 168, 0.85);
   white-space: nowrap;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
-.jump-bar .jb-pill:hover {
-  color: var(--rose);
-  border-color: rgba(244, 181, 200, 0.65);
-  background: rgba(244, 181, 200, 0.08);
+.catalog-row.is-weak {
+  border-color: rgba(232, 168, 168, 0.62);
+  background: rgba(38, 14, 24, 0.55);
 }
-/* v=70 — themed chapter section title: spans two italic lines
-   (theme code · sub-name).  Drops the giant A-Z letter look
-   that didn't suit a thematic grouping.                          */
-.chapter-section-title {
-  font-family: 'Cinzel Decorative', 'Cinzel', serif !important;
-  font-style: italic !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.06em !important;
-  color: rgba(232, 196, 138, 0.85) !important;
-  text-align: left !important;
-  padding: 18px 4px 6px !important;
-  margin: 0 !important;
-  border-bottom: 1px dotted rgba(218, 168, 104, 0.32);
+.catalog-row.is-current {
+  border-color: rgba(232, 196, 138, 0.85);
+  box-shadow: 0 0 12px rgba(232, 196, 138, 0.28);
 }
+.catalog-row.is-current .cat-num { color: #fff1d0; }
 .nav-card > .index-search {
   position: absolute;
   top: 68%;

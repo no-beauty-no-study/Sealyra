@@ -387,12 +387,13 @@ const BG_BY_SCREEN = {
   'stage1-result': 'bg-result',
   'stage2-result': 'bg-result',
   'stage3-result': 'bg-result',
-  note: 'bg-note', 'note-bucket': 'bg-note', index: 'bg-note', card: 'bg-note'
+  note: 'bg-note', 'note-bucket': 'bg-note', index: 'bg-note', card: 'bg-note',
+  'chapter-catalog': 'bg-note'
 };
 // Only screens with real word lists are allowed to scroll the page —
 // every other screen locks body overflow so the iOS bounce can't make
 // the (fixed) bg-layer look like it's moving.
-const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result']);
+const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result', 'chapter-catalog']);
 function go(screenId, opts = {}) {
   // v=53 — black-curtain transition.  Two paces:
   //   · MAJOR  (cover → stage / between stages / chapter end):
@@ -442,7 +443,7 @@ function _isFastTransition(from, to) {
 // fade (the existing transitionTo idiom).  Stage navigations
 // keep the dramatic black curtain.
 function _isCoverSide(s) {
-  return s === 'cover' || s === 'note' || s === 'note-bucket' || s === 'index' || s === 'card';
+  return s === 'cover' || s === 'note' || s === 'note-bucket' || s === 'index' || s === 'card' || s === 'chapter-catalog';
 }
 function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
@@ -464,6 +465,7 @@ const BGM_POOL_BY_SCREEN = {
   'note-bucket':   'home',
   index:           'home',
   card:            'home',
+  'chapter-catalog': 'home',
   stage1:          'game',
   'stage1-result': 'result',
   stage2:          'home',
@@ -485,6 +487,7 @@ const BGM_GROUP_BY_SCREEN = {
   'note-bucket':   'home-side',
   index:           'home-side',
   card:            'home-side',
+  'chapter-catalog': 'home-side',
   stage1:          'stage1',
   'stage1-result': 'stage1-result',
   stage2:          'stage2',
@@ -493,25 +496,19 @@ const BGM_GROUP_BY_SCREEN = {
   'stage3-result': 'stage3-result',
 };
 let _lastBgmGroup = null;
-let _bgmUnlocked  = false;   // set true by the intro-veil tap handler
 function _ensureBGM(screenId) {
   const pool  = BGM_POOL_BY_SCREEN[screenId];
   const group = BGM_GROUP_BY_SCREEN[screenId];
   if (!pool) return;
-  // v=67 — initial cover render happens BEFORE any user gesture, so
-  // the AudioContext is still suspended.  Calling play() against it
-  // queues a clump of oscillators that all fire at once when the
-  // user finally taps, producing a noisy "wall of sound".  Defer
-  // every _ensureBGM call until after the intro-veil tap unlocks
-  // the context (see bootstrap below — onFirstTap sets the flag).
-  if (!_bgmUnlocked) return;
   if (group && group === _lastBgmGroup) return;     // same group → keep
   _lastBgmGroup = group;
   try {
-    // v=68 — pass force:true so bgm.js bypasses its same-pool
-    // guard.  Avoids the brief silence that LanBGM.stop() created
-    // between tracks; play() handles the in-place track-switch
-    // cleanly (clears timer, re-schedules, no audible gap).
+    // v=71 — unlock gate retired.  The gate kept BGM silent for the
+    // user (their context never flipped from suspended to running in
+    // the path my code expected).  We now ALWAYS call play through
+    // bgm.js with force:true, and trust LanBGM's own suspended-ctx
+    // handling; the worst case is a few queued notes at first
+    // resume, which is far better than total silence.
     const opts = { force: true };
     if      (pool === 'home')   LanBGM.playHomeRandom({ ...opts, volume: 0.42 });
     else if (pool === 'game')   LanBGM.playGameRandom({ ...opts, volume: 0.40 });
@@ -732,16 +729,13 @@ function titleStrip() {
   `;
 }
 function stageHeader(stageN, name) {
-  // v=63: header now shows the PERSISTED chapter counter (saved.chapter)
-  // on the top line and the stage's painted name (The Matching / The
-  // Reading / The Inscription) underneath, with a small "Stage N of 3"
-  // chip so the user knows where they are inside the current chapter.
+  // v=71: shows just "Chapter · N · <name>".  The "Stage N of 3"
+  // chip retired per user — it overflowed the painted band frame.
   return `
     <div class="frame-chapter">
       <div class="frame-chapter-text">
         <span class="fc-num">Chapter · ${saved.chapter}</span>
         <span class="fc-name">${escapeHtml(name)}</span>
-        <span class="fc-stage">Stage ${stageN} of 3</span>
       </div>
     </div>
   `;
@@ -1292,47 +1286,26 @@ function _wordToChapterMap() {
   return _wordChapterCache;
 }
 
-function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'index', groupBy = 'chapter' }) {
-  let sections;  // [{ key, label, words: [] }]
-  if (groupBy === 'chapter' && _CHAPTER_PLAN.length) {
-    const wc = _wordToChapterMap();
-    const byChapter = new Map();
-    const orphans = [];
-    words.forEach(h => {
-      const entry = wc.get(h);
-      if (!entry) { orphans.push(h); return; }
-      const k = entry.idx;
-      if (!byChapter.has(k)) byChapter.set(k, { key: k, label: entry.theme, words: [] });
-      byChapter.get(k).words.push(h);
-    });
-    sections = Array.from(byChapter.values()).sort((a, b) => a.key - b.key);
-    sections.forEach(s => s.words.sort());
-    if (orphans.length) sections.push({ key: 'orphans', label: 'her wanderers', words: orphans.sort() });
-  } else {
-    const groups = {};
-    words.forEach(h => {
-      const k = h[0].toUpperCase();
-      (groups[k] = groups[k] || []).push(h);
-    });
-    sections = Object.keys(groups).sort().map(L => ({ key: L, label: L, words: groups[L].sort() }));
-  }
-
-  // Quick-jump strip: a small row of "Ch · N" pills covering every
-  // present section (one pill per section, scrollable horizontally
-  // if there are many chapters).  Doubles as the section nav.
-  const jumpHtml = sections.map(s =>
-    `<a data-jump="${escapeAttr(s.key)}" class="jb-pill">${escapeHtml(
-      groupBy === 'chapter' && typeof s.key === 'number'
-        ? String(s.key + 1).padStart(2, '0')
-        : s.label
-    )}</a>`
-  ).join('');
-
+function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'index' }) {
+  // Group by FIRST LETTER (A–Z) — the index is "the index", a
+  // straight A-to-Z dictionary lookup.  Chapter-based browsing
+  // lives on the SEPARATE chapter-catalog screen (cover-side).
+  const groups = {};
+  words.forEach(h => {
+    const k = h[0].toUpperCase();
+    (groups[k] = groups[k] || []).push(h);
+  });
+  const letters = Object.keys(groups).sort();
+  const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const alphaHtml = ALL_LETTERS.map(L => {
+    const has = groups[L] && groups[L].length;
+    return `<a data-letter="${L}"${has ? '' : ' class="ab-disabled"'}>${L}</a>`;
+  }).join('');
   el.innerHTML = `
     <div class="nav-shield"></div>
     <div class="nav-card">
       ${pageTitle(title)}
-      <div class="jump-bar">${jumpHtml}</div>
+      <div class="alpha-bar">${alphaHtml}</div>
       <input class="index-search" type="text" placeholder="SEARCH WORDS…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
     </div>
     <div class="word-list" id="word-list-${fromKey}">
@@ -1341,19 +1314,19 @@ function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'in
   `;
   el.appendChild(closeCorner({ to: backTo }));
 
-  $$('.jump-bar a', el).forEach(a => {
+  $$('.alpha-bar a', el).forEach(a => {
     a.addEventListener('click', () => {
-      const k = a.getAttribute('data-jump');
-      const target = $(`#sec-${escapeAttr(k)}-${fromKey}`, el);
+      const L = a.getAttribute('data-letter');
+      const target = $(`#letter-${L}-${fromKey}`, el);
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
   const body = $(`#word-list-${fromKey}`, el);
-  sections.forEach(s => {
+  letters.forEach(L => {
     body.insertAdjacentHTML('beforeend',
-      `<div class="alpha-section-title chapter-section-title" id="sec-${escapeAttr(s.key)}-${fromKey}">${escapeHtml(s.label)}</div>`);
-    s.words.forEach(h => {
+      `<div class="alpha-section-title" id="letter-${L}-${fromKey}">${L}</div>`);
+    groups[L].forEach(h => {
       const c = PARCHMENT_CARDS[h];
       if (!c) return;
       const row = document.createElement('div');
@@ -1778,9 +1751,20 @@ const Screens = {
         });
       });
       $('#cover-restart-slot', el).appendChild(restart);
-      // Her Note / The Index sit in the cover-side group.  BGM
-      // continuity is handled by _ensureBGM via the screen group
-      // map — no per-button play call needed.
+
+      // v=71 — "Chapter Catalog" link under the Restart Game pill.
+      // Opens the themed-chapter list so the user can jump into a
+      // weak chapter (or any chapter) without going through the
+      // sequential "Continue Reading" path.
+      const catalog = document.createElement('button');
+      catalog.className = 'cover-restart-btn cover-catalog-btn';
+      catalog.innerHTML = `<span class="cr-glyph">❦</span><span class="cr-text">Chapter Catalog</span><span class="cr-chapter">${_CHAPTER_PLAN.length} chapters</span>`;
+      catalog.addEventListener('click', () => {
+        SFX.tap();
+        go('chapter-catalog');
+      });
+      $('#cover-restart-slot', el).appendChild(catalog);
+
       // v=70 — route through go() so the cover-side soft veil
       // (the gentler purple wash) actually fires, instead of the
       // legacy transitionTo() which dropped its own dark page-veil
@@ -2576,6 +2560,75 @@ const Screens = {
     }
   },
 
+  /* ---------- CHAPTER CATALOG (cover-side) ----------
+     v=71 — every themed chapter listed with mistake-count badges
+     pulled from saved.mistakes, so the user can spot weak chapters
+     and jump straight into one for re-play.  Tapping a row sets
+     saved.chapter, freshens the session, and routes into stage 1.  */
+  'chapter-catalog': {
+    onEnter() {
+      const el = $('#screen-chapter-catalog');
+      const m = saved.mistakes || {};
+      // Per-chapter mistake count (sum of mistakes on its words).
+      const stats = _CHAPTER_PLAN.map((ch, idx) => {
+        const words = _resolveChapterWords(ch);
+        const mistakes = words.reduce((sum, w) => sum + (m[w] || 0), 0);
+        const weak = mistakes >= 3;
+        return { idx, ch, words, mistakes, weak };
+      });
+      // Sort: weak chapters first (most mistaken), then sequential.
+      const weakList   = stats.filter(s => s.weak).sort((a, b) => b.mistakes - a.mistakes);
+      const restList   = stats.filter(s => !s.weak);
+
+      el.innerHTML = `
+        <div class="catalog-page">
+          ${pageTitle('Chapter Catalog')}
+          <div class="catalog-sub">— ${stats.length} chapters · current: ${saved.chapter || 1} —</div>
+          ${weakList.length ? `
+            <div class="catalog-section-title">weak chapters · revisit</div>
+            <div class="catalog-stack" id="cat-weak"></div>
+          ` : ''}
+          <div class="catalog-section-title">all chapters</div>
+          <div class="catalog-stack" id="cat-all"></div>
+        </div>
+      `;
+      el.appendChild(closeCorner({ to: 'cover' }));
+
+      const renderRow = (host, s) => {
+        const row = document.createElement('button');
+        row.className = 'catalog-row' + (s.weak ? ' is-weak' : '') + (s.idx + 1 === saved.chapter ? ' is-current' : '');
+        const themeLabel = s.ch.theme || `Chapter ${s.idx + 1}`;
+        row.innerHTML = `
+          <span class="cat-num">${String(s.idx + 1).padStart(3, '0')}</span>
+          <span class="cat-theme">${escapeHtml(themeLabel)}</span>
+          <span class="cat-mistakes">${s.mistakes > 0 ? `× ${s.mistakes}` : ''}</span>
+        `;
+        row.addEventListener('click', () => {
+          SFX.tap();
+          showModal({
+            title: themeLabel,
+            body: `Start chapter ${s.idx + 1}?  Your current chapter mark is ${saved.chapter || 1}.`,
+            actions: [
+              { label: 'cancel',     variant: 'ghost', onClick: () => {} },
+              { label: 'play',       variant: '',     onClick: () => {
+                saved.chapter = s.idx + 1;
+                Store.save();
+                freshSession();
+                go('stage1');
+              }}
+            ]
+          });
+        });
+        host.appendChild(row);
+      };
+
+      const weakHost = $('#cat-weak', el);
+      if (weakHost) weakList.forEach(s => renderRow(weakHost, s));
+      const allHost = $('#cat-all', el);
+      stats.forEach(s => renderRow(allHost, s));
+    }
+  },
+
   /* ---------- CARD detail — the single-page parchment ----------
      v=26 — full-screen study page, .ex-card gets the .is-parchment
      skin (cream E993B660 scroll background, dark-sepia text) plus
@@ -2644,13 +2697,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e && e.stopPropagation) e.stopPropagation();
     intro.classList.add('is-out');
     setTimeout(() => intro.remove(), 520);
+    // v=71 — unlock + play DIRECTLY here.  We used to route through
+    // _ensureBGM behind a gate, but the gate left BGM silent.  Now:
+    //   1. Synchronously unlock the AudioContext (must be inside
+    //      the gesture handler for iOS to honour it).
+    //   2. Reset _lastBgmGroup so the next _ensureBGM call (any
+    //      screen change) is treated as a group change.
+    //   3. Kick the first track explicitly so BGM is audible from
+    //      the very first cover render.
     try { LanBGM.unlock(); } catch {}
-    // v=67 — flip the unlock flag BEFORE first _ensureBGM, then
-    // route through the regular pipeline so the current screen's
-    // group is tracked correctly from the very first play.
-    _bgmUnlocked = true;
     _lastBgmGroup = null;
-    _ensureBGM(state.screen || 'cover');
+    try { LanBGM.playHomeRandom({ force: true, volume: 0.42 }); } catch {}
+    _lastBgmGroup = BGM_GROUP_BY_SCREEN[state.screen || 'cover'] || 'home-side';
   };
   intro.addEventListener('touchend', onFirstTap, { passive: false });
   intro.addEventListener('click',    onFirstTap);
