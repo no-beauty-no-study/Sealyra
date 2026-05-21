@@ -3103,16 +3103,29 @@ body { background: transparent !important; }
 .card--option::before { left: 11px;  }
 .card--option::after  { right: 11px; }
 
-/* v=72 — wrong picks STAY DEFAULT (no colour change).  Correct
-   picks also stay default body — the only signal is a gold halo
-   pulse on .reveal-right (see below).  User: "选错之后正确选项
-   不应该变成金色的卡牌（只是有金色光晕）" + "实际上卡牌颜色不变
-   （暗示你没选到正确卡牌）".  This way the chosen wrong card
-   reads as "I tapped this" via NO change at all, and the right
-   card glows so the eye lands on it.                              */
-.card--option.is-picking {
-  /* briefly while the flip animation is mid-way; same body */
-  border-color: rgba(232, 196, 132, 0.65) !important;
+/* v=75 — wrong-pick card returns to the WINE palette per user
+   ("选错的时候 错误选项原本翻开的红色卡牌要发暗").  Correct option
+   stays default body with the gold halo from .reveal-right (so
+   right vs. wrong reads as glow vs. wine).                        */
+.card--option.is-picking,
+.card--option.picked-wrong {
+  background:
+    radial-gradient(ellipse 130% 110% at 50% 50%,
+                    rgba(196, 122, 138, 0.22) 0%,
+                    rgba(160, 80, 96, 0.12) 60%,
+                    transparent 100%),
+    linear-gradient(160deg, rgba(40, 16, 22, 0.94), rgba(22, 8, 12, 0.97)) !important;
+  border-color: rgba(180, 88, 104, 0.85) !important;
+  color: rgba(220, 156, 168, 0.96) !important;
+  /* slight dim so the user's wrong pick visually recedes next to
+     the glowing correct card.                                      */
+  filter: brightness(0.86);
+}
+.card--option.picked-wrong::before,
+.card--option.picked-wrong::after,
+.card--option.is-picking::before,
+.card--option.is-picking::after {
+  color: rgba(212, 152, 184, 0.85) !important;
 }
 
 /* flip — Y-axis rotate while picking (320 ms, matches match-card) */
@@ -6547,22 +6560,22 @@ body { background: transparent !important; }
 .parchment-inner {
   position: relative;
   width: 100%;
-  height: 100%;
+  /* v=75 — height shortened so the inner text box ENDS at the
+     painted scroll's bottom roll (the box no longer extends onto
+     the bottom paper roll).  User: "羊皮纸下方的文字框跑到纸卷上
+     了 把文字框拉短一点".                                        */
+  height: 88%;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   color: #3e2812;
-  /* v=73 — unified to EB Garamond so the parchment + match cards
-     speak one type voice.                                          */
   font-family: 'EB Garamond', 'Garamond', Georgia, 'Times New Roman', serif;
-  font-size: 12.5px;
-  line-height: 1.42;
+  /* v=75 — bigger font since the scroll is scrollable now.  Tighter
+     line height — was nearly bigger than the font.                 */
+  font-size: 14px;
+  line-height: 1.22;
   scrollbar-width: none;
-  /* v=73 — faint dotted gold frame inside the painted scroll so the
-     text reads as bounded.  The frame INSET keeps text away from
-     the painted edge (the user kept noticing words poking past the
-     scroll on tall phones).                                        */
   padding: 6px 8px;
   box-sizing: border-box;
   background:
@@ -6637,6 +6650,21 @@ body { background: transparent !important; }
   margin: 8px 0 4px;
   animation: pc-tap-hint-breathe 2.4s ease-in-out infinite;
   transition: opacity 0.3s;
+}
+/* v=75 — fixed-position hint that sits on the TOP painted scroll-
+   roll (above the inner content) so it stays put while the user
+   scrolls long entries.  User: "tap page的提示放在羊皮卷的上面的
+   纸卷上".                                                      */
+.pc-tap-hint--fixed {
+  position: absolute;
+  top: 9%;
+  left: 14%;
+  right: 14%;
+  margin: 0;
+  z-index: 3;
+  pointer-events: none;
+  font-size: 10.5px;
+  color: rgba(110, 63, 18, 0.62);
 }
 .pc-tap-hint.is-gone { opacity: 0; pointer-events: none; }
 @keyframes pc-tap-hint-breathe {
@@ -7110,6 +7138,80 @@ body { background: transparent !important; }
   letter-spacing: 0.02em;
   flex: 0 0 auto;
   white-space: nowrap;
+}
+
+/* v=75 — PC-ROW: the new single-flex-row container used by family,
+   kin, group, friend, example.  One row per reveal item, each with
+   its own ♪ play button so freshly-revealed lines speak.  Phrase
+   rows indent 18 px under their heading word.                    */
+.pc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  width: 100%;
+  padding: 2px 2px;
+  margin: 0;
+  flex-wrap: wrap;
+}
+.pc-row--phrase {
+  padding-left: 18px;
+}
+.pc-row .pc-play {
+  background: none;
+  border: 0;
+  color: #6a3d12;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.pc-row .pc-line-word {
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  color: #2c1808;
+  flex: 0 1 auto;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.pc-row .pc-line-word-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 10px;
+  color: rgba(110, 63, 18, 0.78);
+  letter-spacing: 0.02em;
+  flex: 0 0 auto;
+  white-space: normal;
+}
+.pc-row .pc-line-phrase {
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c1808;
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.pc-row .pc-line-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 10px;
+  color: #6a4626;
+  margin-left: auto;
+  text-align: right;
+  word-break: break-word;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.pc-row.is-playing .pc-line-phrase,
+.pc-row.is-playing .pc-line-word,
+.pc-row.is-playing .pc-line-zh {
+  animation: pc-ink-write 0.65s ease-out;
 }
 /* v=73 — UNIFIED TYPOGRAPHY FOR PARCHMENT.  Whole parchment switches
    to EB Garamond (the same family the match cards use) for clearer

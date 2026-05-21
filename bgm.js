@@ -373,6 +373,17 @@ window.LanBGM = (() => {
 
   function schedule() {
     if (!playing || !currentTrack) return;
+    // v=75 — defer ALL scheduling until the AudioContext is actually
+    // running.  Previously the loop ticked against a suspended ctx
+    // and queued a wall of osc.start(0.05) calls that all fired AT
+    // ONCE on the user's first tap — the "BGM 爆响 / starts from
+    // the middle" effect.  Now we poll every 100 ms wall-clock and
+    // only schedule when ctx is awake; step stays at 0 in the
+    // meantime so the track always opens on melody[0].
+    if (ctx.state !== 'running') {
+      timer = setTimeout(schedule, 100);
+      return;
+    }
     const track = currentTrack;
     const unit = 60 / (track.tempo || 96) * (track.pulse || 0.5);
     const now = ctx.currentTime + 0.05;

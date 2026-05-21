@@ -925,8 +925,13 @@ function showParchment(word) {
   veil.className = 'parchment-veil';
   veil.innerHTML = `
     <div class="parchment-card">
+      <!-- v=75 — "tap the page" hint anchored to the painted scroll-
+           roll above the inner content, OUTSIDE the scrolling area so
+           it stays visible while the user scrolls long entries.
+           The old "fold this page" button retired per user — it
+           scrolled with content and felt out of place.              -->
+      <div class="pc-tap-hint pc-tap-hint--fixed">— tap the page —</div>
       <div class="parchment-inner">
-        <button class="pc-close" aria-label="fold this page">fold this page</button>
         <div class="pc-stack"></div>
         <div class="pc-copy">
           <span class="pc-copy-label">signed</span>
@@ -935,7 +940,6 @@ function showParchment(word) {
                  placeholder="${escapeAttr(c.h)}">
           <span class="pc-copy-mark">✦</span>
         </div>
-        <div class="pc-tap-hint">— tap the page —</div>
       </div>
       <!-- v=56 — note button anchored to .parchment-card directly
            so its bottom % maps to the painted star-in-circle's
@@ -992,20 +996,23 @@ function showParchment(word) {
     items.push({ kind: 'label', html: `<div class="pc-section-label">her family</div>` });
     c.family.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
-      const audioTarget = phrase || w;
-      // v=74 — family entries pack onto ONE inline row per user:
-      // "word · zh · phrase · zh".  EB Garamond proportions let the
-      // four pieces sit comfortably; wrap-as-needed if a phone is
-      // very narrow.
-      items.push({ kind: 'fam', html: `<div class="pc-entry pc-entry--single pc-play-row" data-sp="${escapeAttr(audioTarget)}">
-        <div class="pc-entry-row">
-          <button class="pc-play">♪</button>
-          <span class="pc-line-word">${pcLinkify(w)}</span>
-          <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
-          ${phrase ? `<span class="pc-line-phrase">${pcLinkify(phrase)}</span>` : ''}
-          ${phraseZh ? `<span class="pc-line-zh">${escapeHtml(phraseZh)}</span>` : ''}
-        </div>
+      // v=75 — back to ROW-BY-ROW reveal (long words kept breaking the
+      // single-row idea anyway), with EVERY row getting its own ♪
+      // play button + audio so a freshly-revealed line is always
+      // spoken.  Heading row = the family word + its meaning;
+      // example row = the collocation + its zh.
+      items.push({ kind: 'fam', html: `<div class="pc-row pc-play-row" data-sp="${escapeAttr(w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
       </div>` });
+      if (phrase) {
+        items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
+        </div>` });
+      }
     });
   }
 
@@ -1014,7 +1021,7 @@ function showParchment(word) {
     items.push({ kind: 'label', html: `<div class="pc-section-label">her friend</div>` });
     (c.friends || []).forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
-      items.push({ kind: 'colloc', html: `<div class="pc-line pc-play-row" data-sp="${escapeAttr(phrase)}">
+      items.push({ kind: 'colloc', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
         <button class="pc-play">♪</button>
         <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
         <span class="pc-line-zh">${escapeHtml(zh || '')}</span>
@@ -1029,56 +1036,55 @@ function showParchment(word) {
     }
   }
 
-  // HER KIN — words that share the same root / morpheme.
+  // HER KIN — same row-by-row pattern.  Each kin entry has TWO
+  // phrases (joined by " / " in the JSON), each becoming its own
+  // tap-to-reveal row with audio.
   if (c.kin && c.kin.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
     c.kin.forEach(line => {
       const [w, posZh, phraseBlob, phraseZhBlob] = line.split('|').map(s => s ? s.trim() : '');
-      // v=74 — kin entries now carry TWO phrases per word, joined by
-      // " / " in the English slot and " ； " (or "/") in the zh.
-      // Each phrase becomes its OWN reveal item so one tap = one
-      // phrase.  Per user: "kin的词组放两行" + "按一下出来一个词组
-      // 不是按一下出来俩词组".
-      const phraseList = (phraseBlob || '').split(/\s*\/\s*/).filter(Boolean);
+      const phraseList   = (phraseBlob   || '').split(/\s*\/\s*/).filter(Boolean);
       const phraseZhList = (phraseZhBlob || '').split(/\s*[；;\/]\s*/).filter(Boolean);
-      const audioTarget = phraseList[0] || w;
-      // Row 1: word + zh (head of the entry)
-      items.push({ kind: 'kin', html: `<div class="pc-entry pc-entry--kin pc-play-row" data-sp="${escapeAttr(audioTarget)}">
-        <div class="pc-entry-row pc-entry-row--word">
-          <button class="pc-play">♪</button>
-          <span class="pc-line-word">${pcLinkify(w)}</span>
-          <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
-        </div>
+      items.push({ kind: 'kin', html: `<div class="pc-row pc-play-row" data-sp="${escapeAttr(w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
       </div>` });
-      // Subsequent rows: ONE phrase per reveal item.
       phraseList.forEach((ph, idx) => {
         const zh = phraseZhList[idx] || '';
-        items.push({ kind: 'kin-ph', html: `<div class="pc-entry pc-entry--kin-phrase pc-play-row" data-sp="${escapeAttr(ph)}">
-          <div class="pc-entry-row pc-entry-row--phrase">
-            <button class="pc-play">♪</button>
-            <span class="pc-line-phrase">${pcLinkify(ph)}</span>
-            <span class="pc-line-zh">${escapeHtml(zh)}</span>
-          </div>
+        items.push({ kind: 'kin-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(ph)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${pcLinkify(ph)}</span>
+          <span class="pc-line-zh">${escapeHtml(zh)}</span>
         </div>` });
       });
     });
   }
 
-  // v=65 — HER GROUP: semantic siblings (synonyms / same-scene words).
-  // Render as a single compact line of comma-separated words; jumpable
-  // tokens get the underline; no example sentences, no Chinese gloss.
+  // v=75 — HER GROUP: semantic siblings.  Now ROW-BY-ROW like family
+  // /kin so the user can hear each group word pronounced when it
+  // reveals.  Each entry follows the same pipe layout; we read the
+  // word + its zh on row 1 and the phrase (if any) on row 2.
   if (c.group && c.group.length) {
-    const groupWords = c.group.map(line => {
-      const w = (line || '').split('|')[0].trim();
-      return w;
-    }).filter(Boolean);
-    if (groupWords.length) {
-      items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
-      items.push({ kind: 'label', html: `<div class="pc-section-label">her group</div>` });
-      const inlineHtml = groupWords.map(w => pcLinkify(w)).join('<span class="pc-group-sep">·</span>');
-      items.push({ kind: 'group', html: `<div class="pc-line pc-group-line">${inlineHtml}</div>` });
-    }
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her group</div>` });
+    c.group.forEach(line => {
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      if (!w) return;
+      items.push({ kind: 'group', html: `<div class="pc-row pc-play-row" data-sp="${escapeAttr(w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
+      </div>` });
+      if (phrase) {
+        items.push({ kind: 'group-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
+        </div>` });
+      }
+    });
   }
 
   // v=52 — bottom "↪ family pages / partner / kin pages" boxes
@@ -1110,40 +1116,41 @@ function showParchment(word) {
   // any rule + section-label that sits immediately before it, so the
   // user doesn't have to tap empty dividers separately.
   let revealIdx = 1;
+  // v=75 — reveal kinds that play audio on reveal.  Every "content"
+  // row (family / kin / phrase / colloc / group / example) is in
+  // here so every tap speaks the line that just appeared.
+  const SPEAKING_KINDS = new Set([
+    'fam', 'fam-ph', 'kin', 'kin-ph', 'colloc', 'example',
+    'group', 'group-ph', 'neighbor'
+  ]);
   function advanceReveal() {
     if (revealIdx >= nodes.length) return false;
     // Reveal everything from revealIdx until the next "content" kind
-    // (head/fam/colloc/example) inclusive.  Rules + labels are taken
-    // along for the ride.
+    // (a row with audio) inclusive.  Rules + labels are taken along
+    // for the ride.
     while (revealIdx < nodes.length) {
       const it = items[revealIdx];
       nodes[revealIdx].classList.remove('is-staged');
       nodes[revealIdx].classList.add('is-revealed');
-      const isContent = it.kind === 'fam' || it.kind === 'colloc' || it.kind === 'example' || it.kind === 'kin' || it.kind === 'neighbor';
+      const isContent = SPEAKING_KINDS.has(it.kind);
       revealIdx++;
       if (isContent) break;
     }
-    // Find the most recently revealed content row + play its audio.
+    // Most recently revealed content row → play its audio.
     const lastContent = [...nodes].slice(0, revealIdx).reverse()
-      .find(n => n.classList.contains('pc-kind-fam')
-              || n.classList.contains('pc-kind-colloc')
-              || n.classList.contains('pc-kind-example')
-              || n.classList.contains('pc-kind-kin'));
+      .find(n => Array.from(n.classList).some(cls =>
+        cls.startsWith('pc-kind-') && SPEAKING_KINDS.has(cls.slice('pc-kind-'.length))
+      ));
     if (lastContent) {
       const sp = lastContent.getAttribute('data-sp')
               || lastContent.querySelector('[data-sp]')?.getAttribute('data-sp');
-      // Mark the play row visually + play audio.
       const playRow = lastContent.querySelector('.pc-play-row') || lastContent;
       veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
       playRow.classList.add('is-playing');
       if (sp) speak(sp);
     }
     SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
-    // Hide the "tap the page" hint once the user starts tapping.
     veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
-    // Auto-scroll the newly-revealed row into view — content past
-    // the parchment safe-zone (long families + neighbor) should
-    // never need a manual scroll.
     const justRevealed = nodes[revealIdx - 1];
     if (justRevealed) {
       requestAnimationFrame(() => justRevealed.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
@@ -1212,7 +1219,11 @@ function showParchment(word) {
     });
   });
 
-  veil.querySelector('.pc-close').addEventListener('click', e => {
+  // v=75 — .pc-close button removed; close happens via tap on the
+  // veil/padding (handled above).  The querySelector guard keeps
+  // legacy code paths safe.
+  const _legacyClose = veil.querySelector('.pc-close');
+  if (_legacyClose) _legacyClose.addEventListener('click', e => {
     e.stopPropagation();
     closeParchment();
   });
@@ -2175,10 +2186,11 @@ const Screens = {
           let cls = 'card card--option';
           if (state.sceneGraded) {
             const isCorrectForThis = answers[state.sceneActive] === word;
-            // v=72 — wrong picks STAY DEFAULT (no body colour change).
-            // Only the CORRECT option gets a gold halo (.reveal-right).
-            // User: "卡牌颜色不变（暗示你没选到正确卡牌）".
+            const isUserPickHere   = userPickHere === word;
+            // v=75 — wrong pick goes WINE/dim (so the user sees what
+            // they tapped); correct answer gets the gold halo.
             if (isCorrectForThis) cls += ' reveal-right';
+            else if (isUserPickHere) cls += ' picked-wrong';
             cls += ' is-readable';
           } else if (userPickHere === word) {
             cls += ' is-current-pick';
