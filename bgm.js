@@ -371,17 +371,21 @@ window.LanBGM = (() => {
     src.start(t);
   }
 
+  // v=76 — track whether the user has ever interacted with the page.
+  // unlock() flips this true the moment a real user gesture fires.
+  // schedule() then proceeds even if ctx.state briefly reads something
+  // other than "running" (iOS may stay "suspended"/"interrupted" for
+  // a tick after resume()).  v=75 used ctx.state directly and the
+  // polling never reached "running" on the user's device → silent.
+  let _userInteracted = false;
+
   function schedule() {
     if (!playing || !currentTrack) return;
-    // v=75 — defer ALL scheduling until the AudioContext is actually
-    // running.  Previously the loop ticked against a suspended ctx
-    // and queued a wall of osc.start(0.05) calls that all fired AT
-    // ONCE on the user's first tap — the "BGM 爆响 / starts from
-    // the middle" effect.  Now we poll every 100 ms wall-clock and
-    // only schedule when ctx is awake; step stays at 0 in the
-    // meantime so the track always opens on melody[0].
-    if (ctx.state !== 'running') {
-      timer = setTimeout(schedule, 100);
+    // Defer scheduling ONLY before the first user gesture.  After
+    // unlock() flips the flag we trust the AudioContext is on its
+    // way to running and let oscillators schedule naturally.
+    if (!_userInteracted) {
+      timer = setTimeout(schedule, 120);
       return;
     }
     const track = currentTrack;
@@ -417,6 +421,10 @@ window.LanBGM = (() => {
       // fire-and-forget; the call itself, made inside the gesture, is enough.
       try { ctx.resume(); } catch {}
     }
+    // v=76 — flip the gesture flag so schedule() stops polling and
+    // starts scheduling oscillators.  Must be set INSIDE unlock()
+    // (called from the touch/click handler) — not lazily later.
+    _userInteracted = true;
   }
 
   async function play(trackId = "homeBoxA", options = {}) {
