@@ -941,14 +941,15 @@ function showParchment(word) {
            so its bottom % maps to the painted star-in-circle's
            position on the asset (not the inner padded box).      -->
       <button class="pc-note-add ${inNote ? 'is-saved' : ''}" aria-label="add to her note" title="add to her note">
-        <svg class="pc-note-key" viewBox="0 0 28 14" width="32" height="16" aria-hidden="true">
+        <svg class="pc-note-key" viewBox="0 0 32 14" width="40" height="18" aria-hidden="true">
           <!-- skeleton key: bow (ring) on the left + shaft + two teeth -->
-          <circle cx="5" cy="7" r="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          <circle cx="5" cy="7" r="1.0" fill="currentColor"/>
-          <line x1="8.6" y1="7" x2="25" y2="7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="20" y1="7"  x2="20" y2="11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="23" y1="7"  x2="23" y2="10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="5" cy="7" r="3.8" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="5" cy="7" r="1.3" fill="currentColor"/>
+          <line x1="8.8" y1="7" x2="29" y2="7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="22" y1="7"  x2="22" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="26" y1="7"  x2="26" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
+        <span class="pc-note-key-fallback" aria-hidden="true">🗝</span>
       </button>
     </div>
   `;
@@ -1140,17 +1141,20 @@ function showParchment(word) {
     }
     return revealIdx < nodes.length;
   }
+  // v=72 — tap routing on parchment:
+  //   · ANY tap on the .parchment-inner advances the reveal
+  //     (this is where the actual readable content lives)
+  //   · taps on .pc-close / .pc-play / .pc-note-add stay scoped
+  //   · taps on the CARD's transparent padding (= visible scroll
+  //     edge / blank margin) CLOSE the parchment, because that's
+  //     the natural "fold this page" gesture the user expects
+  //   · taps on the veil (outside the card entirely) also close
   veil.querySelector('.parchment-card').addEventListener('click', e => {
-    // ignore taps on close button + individual ♪ play buttons
-    if (e.target.closest('.pc-close')) return;
-    if (e.target.closest('.pc-play')) return;
-    advanceReveal();
-  });
-  // v=64 — tapping the veil OUTSIDE the card closes the parchment
-  // (user kept tapping the dark area expecting it to fold).
-  veil.addEventListener('click', e => {
-    if (e.target === veil) {
-      e.stopPropagation();
+    if (e.target.closest('.pc-close, .pc-play, .pc-note-add')) return;
+    if (e.target.closest('.parchment-inner')) {
+      advanceReveal();
+    } else {
+      // tap landed in the card's transparent padding band — close
       closeParchment();
     }
   });
@@ -2099,6 +2103,7 @@ const Screens = {
             <span class="q-corner q-corner-tr">✦</span>
             <span class="q-corner q-corner-bl">✦</span>
             <span class="q-corner q-corner-br">✦</span>
+            <div class="q-zh" id="q-zh-host">${escapeHtml(q.sentence_zh || '')}</div>
             <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
             <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
           </div>
@@ -2161,9 +2166,10 @@ const Screens = {
           let cls = 'card card--option';
           if (state.sceneGraded) {
             const isCorrectForThis = answers[state.sceneActive] === word;
-            const isUserPickHere   = userPickHere === word;
-            if (isCorrectForThis) cls += ' picked-right reveal-right';
-            else if (isUserPickHere) cls += ' picked-wrong';
+            // v=72 — wrong picks STAY DEFAULT (no body colour change).
+            // Only the CORRECT option gets a gold halo (.reveal-right).
+            // User: "卡牌颜色不变（暗示你没选到正确卡牌）".
+            if (isCorrectForThis) cls += ' reveal-right';
             cls += ' is-readable';
           } else if (userPickHere === word) {
             cls += ' is-current-pick';
@@ -2221,25 +2227,42 @@ const Screens = {
         });
         if (allRight) SFX.right(); else SFX.wrong();
         try { speak(q.full_sentence); } catch {}
-        // Repaint: q-card keeps user's picks (no auto-fill).
+        // Repaint: q-card keeps user's picks (no auto-fill).  Add
+        // .is-graded so CSS reveals the zh hint above the top rule.
         state.sceneActive = -1;
+        const card = $('.q-card', el);
+        if (card) card.classList.add('is-graded');
         $('#q-sentence-host').innerHTML = renderBlankSentence(q);
         wireSlots();
         renderOptionsForActive();
         armBowAdvance();
       }
 
+      let _advanced = false;
       function armBowAdvance() {
+        // v=72 — bind on the q-card itself (with target check).  The
+        // bare bow <img> sometimes wasn't catching taps reliably.
+        // _advanced guard prevents double-fire if both the bow and
+        // the card-level listener trigger.
         const bow = $('.q-bow.q-bow-inside', el);
-        if (!bow) return;
-        bow.classList.add('is-tappable');
-        bow.addEventListener('click', advance, { once: true });
+        if (bow) bow.classList.add('is-tappable');
+        const card = $('.q-card', el);
+        if (card) {
+          card.addEventListener('click', (ev) => {
+            if (!state.sceneGraded) return;
+            if (ev.target.closest('.q-slot, .card--option')) return;
+            advance(ev);
+          });
+        }
       }
 
       function advance(ev) {
+        if (_advanced) return;
+        _advanced = true;
         if (ev) ev.stopPropagation();
         SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
         state.sceneIdx++;
+        _advanced = false;
         if (state.sceneIdx >= state.session.scenes.length) go('stage2-result');
         else drawQ();
       }
@@ -2599,9 +2622,10 @@ const Screens = {
         row.className = 'catalog-row' + (s.weak ? ' is-weak' : '') + (s.idx + 1 === saved.chapter ? ' is-current' : '');
         const themeLabel = s.ch.theme || `Chapter ${s.idx + 1}`;
         row.innerHTML = `
-          <span class="cat-num">${String(s.idx + 1).padStart(3, '0')}</span>
+          <span class="cat-num">chapter ${s.idx + 1}</span>
+          <span class="cat-leader" aria-hidden="true"></span>
           <span class="cat-theme">${escapeHtml(themeLabel)}</span>
-          <span class="cat-mistakes">${s.mistakes > 0 ? `× ${s.mistakes}` : ''}</span>
+          ${s.mistakes > 0 ? `<span class="cat-mistakes">× ${s.mistakes}</span>` : ''}
         `;
         row.addEventListener('click', () => {
           SFX.tap();
