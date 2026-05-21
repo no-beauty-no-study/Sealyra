@@ -7073,25 +7073,43 @@ body { background: transparent !important; }
    Earlier we crammed all four pieces onto ONE flex row, which (a)
    missed the word's own Chinese (we were showing phrase-zh only)
    and (b) ellipsis-truncated long phrases.  Two rows give every
-   piece its own breathing space, and any text can wrap freely.    */
+   piece its own breathing space, and any text can wrap freely.
+   v=74 — family compacts to ONE row; kin's PHRASES split into one
+   reveal-item each (.pc-entry--kin-phrase indented under the
+   heading row).                                                    */
 .pc-entry {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  padding: 4px 4px 4px 0;
+  padding: 3px 2px;
   margin: 0 0 2px;
   border-bottom: 1px dotted rgba(110, 63, 18, 0.18);
 }
+.pc-entry--kin-phrase {
+  border-bottom: none;
+  padding: 1px 2px 1px 18px;       /* indent under the kin heading */
+  margin-top: -2px;
+}
+.pc-entry--single { padding: 3px 2px; }
 .pc-entry:last-child { border-bottom: none; }
 .pc-entry .pc-entry-row {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 5px;
   width: 100%;
-  /* v=72 — allow wrap so a long word + long zh don't extend past
-     the card edge.  Each row stacks onto two visual lines if it
-     has to.                                                       */
   flex-wrap: wrap;
+}
+
+/* v=74 — small word-zh (right after the headword on the family
+   single-row layout).  Italic, antique brown.                    */
+.pc-entry .pc-line-word-zh {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 9.5px;
+  color: rgba(110, 63, 18, 0.78);
+  letter-spacing: 0.02em;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 /* v=73 — UNIFIED TYPOGRAPHY FOR PARCHMENT.  Whole parchment switches
    to EB Garamond (the same family the match cards use) for clearer

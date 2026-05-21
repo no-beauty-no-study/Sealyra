@@ -503,12 +503,12 @@ function _ensureBGM(screenId) {
   if (group && group === _lastBgmGroup) return;     // same group → keep
   _lastBgmGroup = group;
   try {
-    // v=71 — unlock gate retired.  The gate kept BGM silent for the
-    // user (their context never flipped from suspended to running in
-    // the path my code expected).  We now ALWAYS call play through
-    // bgm.js with force:true, and trust LanBGM's own suspended-ctx
-    // handling; the worst case is a few queued notes at first
-    // resume, which is far better than total silence.
+    // v=74 — STOP first, then play.  Without the stop, the user
+    // reported stage-2 entering with no BGM change (result track
+    // kept playing).  Stop unconditionally clears the timer +
+    // releases the same-pool guard, then playXxxRandom starts the
+    // new track cleanly from step 0.  A ~50 ms gap is the cost.
+    LanBGM.stop();
     const opts = { force: true };
     if      (pool === 'home')   LanBGM.playHomeRandom({ ...opts, volume: 0.42 });
     else if (pool === 'game')   LanBGM.playGameRandom({ ...opts, volume: 0.40 });
@@ -993,21 +993,18 @@ function showParchment(word) {
     c.family.forEach(line => {
       const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
       const audioTarget = phrase || w;
-      // v=70 — two-row layout per entry:
-      //   row 1 : word           ·  pos.zh           (word's own meaning)
-      //   row 2 : example phrase ·  phrase zh        (collocation usage)
-      // Earlier the word zh was completely missing — phrases have many
-      // meanings and the user needs the word's own Chinese gloss.
-      items.push({ kind: 'fam', html: `<div class="pc-entry pc-play-row" data-sp="${escapeAttr(audioTarget)}">
-        <div class="pc-entry-row pc-entry-row--word">
+      // v=74 — family entries pack onto ONE inline row per user:
+      // "word · zh · phrase · zh".  EB Garamond proportions let the
+      // four pieces sit comfortably; wrap-as-needed if a phone is
+      // very narrow.
+      items.push({ kind: 'fam', html: `<div class="pc-entry pc-entry--single pc-play-row" data-sp="${escapeAttr(audioTarget)}">
+        <div class="pc-entry-row">
           <button class="pc-play">♪</button>
           <span class="pc-line-word">${pcLinkify(w)}</span>
-          <span class="pc-line-zh">${escapeHtml(posZh || '')}</span>
+          <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
+          ${phrase ? `<span class="pc-line-phrase">${pcLinkify(phrase)}</span>` : ''}
+          ${phraseZh ? `<span class="pc-line-zh">${escapeHtml(phraseZh)}</span>` : ''}
         </div>
-        ${phrase ? `<div class="pc-entry-row pc-entry-row--phrase">
-          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
-          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
-        </div>` : ''}
       </div>` });
     });
   }
@@ -1037,22 +1034,34 @@ function showParchment(word) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
     c.kin.forEach(line => {
-      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
-      const audioTarget = phrase || w;
-      // v=70 — same two-row layout as family (word + zh / phrase + zh).
-      // Kin entries were missing the word's Chinese translation entirely
-      // (the JSON has it; we just weren't rendering it).
-      items.push({ kind: 'kin', html: `<div class="pc-entry pc-play-row" data-sp="${escapeAttr(audioTarget)}">
+      const [w, posZh, phraseBlob, phraseZhBlob] = line.split('|').map(s => s ? s.trim() : '');
+      // v=74 — kin entries now carry TWO phrases per word, joined by
+      // " / " in the English slot and " ； " (or "/") in the zh.
+      // Each phrase becomes its OWN reveal item so one tap = one
+      // phrase.  Per user: "kin的词组放两行" + "按一下出来一个词组
+      // 不是按一下出来俩词组".
+      const phraseList = (phraseBlob || '').split(/\s*\/\s*/).filter(Boolean);
+      const phraseZhList = (phraseZhBlob || '').split(/\s*[；;\/]\s*/).filter(Boolean);
+      const audioTarget = phraseList[0] || w;
+      // Row 1: word + zh (head of the entry)
+      items.push({ kind: 'kin', html: `<div class="pc-entry pc-entry--kin pc-play-row" data-sp="${escapeAttr(audioTarget)}">
         <div class="pc-entry-row pc-entry-row--word">
           <button class="pc-play">♪</button>
           <span class="pc-line-word">${pcLinkify(w)}</span>
-          <span class="pc-line-zh">${escapeHtml(posZh || '')}</span>
+          <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
         </div>
-        ${phrase ? `<div class="pc-entry-row pc-entry-row--phrase">
-          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
-          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
-        </div>` : ''}
       </div>` });
+      // Subsequent rows: ONE phrase per reveal item.
+      phraseList.forEach((ph, idx) => {
+        const zh = phraseZhList[idx] || '';
+        items.push({ kind: 'kin-ph', html: `<div class="pc-entry pc-entry--kin-phrase pc-play-row" data-sp="${escapeAttr(ph)}">
+          <div class="pc-entry-row pc-entry-row--phrase">
+            <button class="pc-play">♪</button>
+            <span class="pc-line-phrase">${pcLinkify(ph)}</span>
+            <span class="pc-line-zh">${escapeHtml(zh)}</span>
+          </div>
+        </div>` });
+      });
     });
   }
 
@@ -2729,7 +2738,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //      screen change) is treated as a group change.
     //   3. Kick the first track explicitly so BGM is audible from
     //      the very first cover render.
+    // v=74 — initial cover render schedules notes against a still-
+    // suspended AudioContext.  By the time the user finally taps,
+    // 3–5 schedule ticks have accumulated step++ + queued oscillators
+    // at t≈0.05, which all fire AT ONCE on resume (a chord blast).
+    // Fix: synchronously unlock → STOP (clears stale timer + step)
+    // → play fresh.  Track now restarts from melody[0].
     try { LanBGM.unlock(); } catch {}
+    try { LanBGM.stop();   } catch {}
     _lastBgmGroup = null;
     try { LanBGM.playHomeRandom({ force: true, volume: 0.42 }); } catch {}
     _lastBgmGroup = BGM_GROUP_BY_SCREEN[state.screen || 'cover'] || 'home-side';
