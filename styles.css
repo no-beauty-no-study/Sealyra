@@ -3021,7 +3021,7 @@ body { background: transparent !important; }
   padding: 0 18px;
   perspective: 800px;
 }
-.card--option {
+.card.card--option {
   position: relative;
   display: flex !important;
   align-items: center;
@@ -3033,11 +3033,11 @@ body { background: transparent !important; }
   margin: 0 !important;
   border: 1px solid rgba(190, 158, 100, 0.45) !important;
   border-radius: 4px !important;
-  /* v=78 — body now EXACTLY mirrors the match card: 8 fibre dots
-     (was 5) + a matte velvet sheen band + the purple base gradient,
-     so the default unselected option reads pixel-identical to a
-     default match card.  User: "选择题卡牌内部是透明的" — the
-     missing layers were the extra fibre dots + the velvet sheen.   */
+  /* v=79 — bumped selector specificity to .card.card--option so the
+     8-fibre + sheen + purple gradient ACTUALLY paints over the
+     pink-gradient .card base rule at line 4072 (which had been
+     winning the cascade and making the option cards look "transparent
+     pink" instead of the dark match-card purple).                   */
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
     radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
@@ -3130,10 +3130,11 @@ body { background: transparent !important; }
 }
 
 /* v=78 — wrong-pick wine palette KEEPS the 8 fibre dots + velvet
-   sheen of the base option card (user: "红色卡牌内部也没有丝绒
-   效果").  Only the base linear gradient swaps purple→wine.       */
-.card--option.is-picking,
-.card--option.picked-wrong {
+   sheen of the base option card.  Only the base linear gradient
+   swaps purple→wine.  v=79 — selector bumped to .card.card--option
+   so the wine background out-specifics the pink .card base.       */
+.card.card--option.is-picking,
+.card.card--option.picked-wrong {
   background:
     radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
     radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
@@ -3580,19 +3581,22 @@ body { background: transparent !important; }
 .dict-prompt {
   position: relative;
   z-index: 1;
-  /* v=73 — unified to EB Garamond 500 upright (the match-card
-     family).  Bigger size + uppercase letterspacing dropped for
-     legibility.  Sentence reads the same way the cards do.       */
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif !important;
+  /* v=79 — switched to GEORGIA (Microsoft web-safe serif, designed
+     specifically for screen reading).  Upright, generous x-height,
+     fast image-recognition — user said italic Garamond was hard to
+     build visual memory off, this reads cleaner.  Size dropped to
+     13 px to ease the cramped sentence + slot row on small screens
+     (matches the slot's new 13 px so the line is uniform).       */
+  font-family: Georgia, 'EB Garamond', 'Garamond', serif !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
   line-height: 1.55 !important;
   color: var(--cream) !important;
   text-align: center;
   border-top: 1px solid var(--line-gold) !important;
   border-bottom: 1px solid var(--line-gold) !important;
-  padding: 12px 10px !important;
+  padding: 11px 10px !important;
   margin: 0 !important;
 }
 /* v=62 — stage-3 Chinese hint sits ABOVE the top border per user
@@ -3617,19 +3621,23 @@ body { background: transparent !important; }
    .is-right turns gold-bright, .is-wrong turns wine with the
    correct answer shown next to the user's pick.                */
 .q-slot {
-  /* v=53 — fixed width so every blank box looks IDENTICAL
-     regardless of the word inside ("我需要完全一致").  Long
-     words overflow the visible chip but the layout stays
-     uniform across all blanks in a question.                    */
+  /* v=79 — slot text now MATCHES the sentence text in size +
+     family (Georgia 13 px upright, the unified question-card
+     type voice), so the filled word reads continuously with the
+     surrounding line.  User: "挖空部分和题目需要字体大小一样".
+     Slot grows to fit content rather than clipping at a fixed
+     84 px chip — a long word stays readable.                    */
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
-  width: 84px;
-  height: 22px;
-  padding: 1px 6px;
+  min-width: 56px;
+  padding: 1px 8px 2px;
   margin: 0 3px;
-  font-style: italic;
-  font-size: 14px;
+  font-family: Georgia, 'EB Garamond', 'Garamond', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.45;
   color: #f0d8a8;
   background: rgba(18, 8, 36, 0.55);
   border: 1px solid rgba(232, 196, 138, 0.48);
@@ -3637,8 +3645,7 @@ body { background: transparent !important; }
   cursor: pointer;
   position: relative;
   z-index: 1;
-  vertical-align: middle;
-  overflow: hidden;
+  vertical-align: baseline;
   white-space: nowrap;
   box-sizing: border-box;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
@@ -6902,20 +6909,60 @@ body { background: transparent !important; }
   color: rgba(232, 196, 138, 0.52);
   margin: 28px 0;
 }
+/* v=79 — review card restyled to evoke the question card vocabulary
+   per user request ("note里的words集合ui需要设计一下 你可以参考
+   题目").  Hairline gold border + inner dotted gold-bead frame
+   on all four edges + faint radial vignette + ❦ corner sparkles
+   — the same idiom .q-card uses.                                  */
 .review-card {
+  position: relative;
   background:
+    radial-gradient(ellipse 90% 70% at 50% 40%,
+                    rgba(232, 196, 138, 0.05) 0%,
+                    transparent 80%),
     linear-gradient(180deg,
-                    rgba(28, 16, 48, 0.55) 0%,
-                    rgba(18, 8, 36, 0.65) 100%);
-  border: 1px solid rgba(218, 168, 104, 0.45);
+                    rgba(28, 16, 48, 0.62) 0%,
+                    rgba(18, 8, 36, 0.72) 100%);
+  border: 1px solid rgba(218, 168, 104, 0.55);
   border-radius: 4px;
-  padding: 10px 14px 12px;
+  padding: 14px 16px 14px;
   color: var(--cream);
   box-shadow:
-    inset 0 1px 0 rgba(232, 200, 130, 0.10),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.42),
-    0 3px 10px rgba(0, 0, 0, 0.38);
+    inset 0 0 22px rgba(0, 0, 0, 0.32),
+    0 6px 18px rgba(0, 0, 0, 0.42);
 }
+.review-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg,
+                              rgba(228, 196, 132, 0.45) 0 1.2px,
+                              transparent 1.2px 4.2px) top    / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg,
+                              rgba(228, 196, 132, 0.45) 0 1.2px,
+                              transparent 1.2px 4.2px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(0deg,
+                              rgba(228, 196, 132, 0.45) 0 1.2px,
+                              transparent 1.2px 4.2px) left   / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg,
+                              rgba(228, 196, 132, 0.45) 0 1.2px,
+                              transparent 1.2px 4.2px) right  / 1px 100% no-repeat;
+}
+.review-card::after {
+  content: '✦  ·  ·  ·  ✦';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  color: rgba(232, 196, 138, 0.45);
+  display: none;
+}
+.review-card > * { position: relative; z-index: 1; }
 .review-card .rev-head {
   display: flex;
   align-items: baseline;

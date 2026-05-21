@@ -2232,24 +2232,47 @@ const Screens = {
         });
       }
 
+      // v=79 — event delegation on the sentence host.  ONE click
+      // listener on the parent instead of N listeners per slot
+      // re-bound on every render — eliminates the re-bind cost +
+      // the layout thrash that caused stage 2 to stutter on click.
       function wireSlots() {
-        $$('.q-slot', el).forEach(slot => {
-          slot.addEventListener('click', (ev) => {
-            ev.stopPropagation();
-            const i = +slot.getAttribute('data-slot');
-            SFX.tap();
-            state.sceneActive = i;
-            $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
-            wireSlots();
-            renderOptionsForActive();
-          });
+        const host = $('#q-sentence-host', el);
+        if (!host || host._sealyraSlotsWired) return;
+        host._sealyraSlotsWired = true;
+        host.addEventListener('click', (ev) => {
+          const slot = ev.target.closest('.q-slot');
+          if (!slot || !host.contains(slot)) return;
+          ev.stopPropagation();
+          const i = +slot.getAttribute('data-slot');
+          SFX.tap();
+          state.sceneActive = i;
+          host.innerHTML = renderBlankSentence(currentQ());
+          renderOptionsForActive();
         });
       }
 
+      // v=79 — event-delegated option clicks.  Wire ONCE on the host,
+      // then renderOptionsForActive just rebuilds child DOM without
+      // having to re-add listeners per render.  Heavy-gradient cards
+      // (8 fibre dots + sheen + base) were re-binding 4 click
+      // listeners on every blank switch — the cause of the stage-2
+      // stutter the user kept feeling.
+      function ensureOptionsHostWired() {
+        const host = $('#oracle-options', el);
+        if (!host || host._sealyraOptsWired) return;
+        host._sealyraOptsWired = true;
+        host.addEventListener('click', (ev) => {
+          const btn = ev.target.closest('.card--option');
+          if (!btn || !host.contains(btn)) return;
+          onOptionClick(ev, btn.dataset.word, btn);
+        });
+      }
       function renderOptionsForActive() {
         const host = $('#oracle-options', el);
         const hint = $('#q-hint', el);
         host.innerHTML = '';
+        ensureOptionsHostWired();
         if (state.sceneActive < 0 || !state.scenePerBlank) {
           if (hint) hint.textContent = state.sceneGraded
             ? '— tap a blank to review its choices · tap the bow when done —'
@@ -2263,13 +2286,14 @@ const Screens = {
         const answers = q.answers || [];
         const group = state.scenePerBlank[state.sceneActive] || [];
         const userPickHere = state.sceneFills[state.sceneActive];
+        // Build with DocumentFragment so the browser layouts ONCE
+        // (instead of 4 times on appendChild).
+        const frag = document.createDocumentFragment();
         group.forEach(word => {
           let cls = 'card card--option';
           if (state.sceneGraded) {
             const isCorrectForThis = answers[state.sceneActive] === word;
             const isUserPickHere   = userPickHere === word;
-            // v=75 — wrong pick goes WINE/dim (so the user sees what
-            // they tapped); correct answer gets the gold halo.
             if (isCorrectForThis) cls += ' reveal-right';
             else if (isUserPickHere) cls += ' picked-wrong';
             cls += ' is-readable';
@@ -2280,9 +2304,9 @@ const Screens = {
           b.className = cls;
           b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(word)}</span>`;
           b.dataset.word = word;
-          b.addEventListener('click', (ev) => onOptionClick(ev, word, b));
-          host.appendChild(b);
+          frag.appendChild(b);
         });
+        host.appendChild(frag);
       }
 
       function onOptionClick(ev, word, btn) {
