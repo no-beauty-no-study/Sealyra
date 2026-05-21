@@ -3281,13 +3281,30 @@ body { background: transparent !important; }
    inset bands; only a radial vignette + side-only inner darken
    remain.                                                       */
 .q-card::before {
+  /* v=73 — inner DOTTED gold-bead frame on all four edges, matching
+     the .card--match .mc-frame idiom.  User: "选择题的题目里忘记
+     搞虚线啦".  Sits above the radial vignette via gradient stack.  */
   content: '';
   position: absolute;
-  inset: 1px;
+  inset: 6px;
   pointer-events: none;
   z-index: 0;
   border-radius: 3px;
   background:
+    /* top + bottom + left + right gold dotted ticks */
+    repeating-linear-gradient(90deg,
+                              rgba(228, 196, 132, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) top    / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg,
+                              rgba(228, 196, 132, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(0deg,
+                              rgba(228, 196, 132, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) left   / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg,
+                              rgba(228, 196, 132, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) right  / 1px 100% no-repeat,
+    /* faint inner vignette */
     radial-gradient(ellipse 95% 80% at 50% 50%,
                     rgba(0, 0, 0, 0.00) 0%,
                     rgba(0, 0, 0, 0.20) 75%,
@@ -3513,18 +3530,19 @@ body { background: transparent !important; }
 .dict-prompt {
   position: relative;
   z-index: 1;
-  font-family: var(--f-italic);
-  font-style: italic;
-  /* v=62 — text 12 px (was 10 — got too small on phone).  Box
-     widens via q-card max-width below; padding tighter so the
-     border rules hug the text more snugly.                        */
-  font-size: 12px !important;
+  /* v=73 — unified to EB Garamond 500 upright (the match-card
+     family).  Bigger size + uppercase letterspacing dropped for
+     legibility.  Sentence reads the same way the cards do.       */
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
   line-height: 1.55 !important;
   color: var(--cream) !important;
   text-align: center;
   border-top: 1px solid var(--line-gold) !important;
   border-bottom: 1px solid var(--line-gold) !important;
-  padding: 10px 8px !important;
+  padding: 12px 10px !important;
   margin: 0 !important;
 }
 /* v=62 — stage-3 Chinese hint sits ABOVE the top border per user
@@ -5820,14 +5838,13 @@ body { background: transparent !important; }
 }
 .word-list .word-row .wr-word {
   flex: 0 0 auto;
+  /* v=73 — upright EB Garamond 500 (match-card family); italic
+     dropped for legibility of English headwords.                */
   font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-style: italic;
+  font-style: normal;
   font-weight: 500;
-  font-size: 15px;                         /* bigger per user */
+  font-size: 15px;
   color: #d6a464;
-  text-shadow:
-    0 0 4px  rgba(232,196,138,.55),
-    0 0 10px rgba(218,168,104,.28);
   letter-spacing: .01em;
 }
 .word-list .word-row .wr-pos {
@@ -5835,7 +5852,6 @@ body { background: transparent !important; }
   font-family: 'EB Garamond', 'Garamond', Georgia, serif;
   font-style: italic;
   font-size: 9px;
-  /* Pushed toward PINK on the pink-mauve axis. */
   color: #d6a5cd;
   letter-spacing: .04em;
   white-space: nowrap;
@@ -6504,9 +6520,11 @@ body { background: transparent !important; }
   /* v=53 — top padding bumped from 22% to 26% so the headword sits
      clear of the painted scroll-roll at the top of E993B660 (user
      reported "羊皮纸的顶上有点超出内容框").                          */
-  /* v=72 — side padding tightened further to 8% so long entries
-     stop poking past the painted scroll edge.                    */
-  padding: 24% 8% 14% 8%;
+  /* v=73 — side padding back to 14% (8% was too aggressive — long
+     phrases poked past the painted scroll edge).  Inside the inner
+     content area we draw a faint dotted gold frame so the text
+     reads as bounded — user "羊皮纸里面有一个淡淡的框".            */
+  padding: 24% 14% 14% 14%;
   box-sizing: border-box;
   cursor: default;
   transform-style: preserve-3d;
@@ -6535,10 +6553,31 @@ body { background: transparent !important; }
   display: flex;
   flex-direction: column;
   color: #3e2812;
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, 'Times New Roman', serif;
-  font-size: 12px;
+  /* v=73 — unified to EB Garamond so the parchment + match cards
+     speak one type voice.                                          */
+  font-family: 'EB Garamond', 'Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 12.5px;
   line-height: 1.42;
   scrollbar-width: none;
+  /* v=73 — faint dotted gold frame inside the painted scroll so the
+     text reads as bounded.  The frame INSET keeps text away from
+     the painted edge (the user kept noticing words poking past the
+     scroll on tall phones).                                        */
+  padding: 6px 8px;
+  box-sizing: border-box;
+  background:
+    repeating-linear-gradient(90deg,
+                              rgba(140, 90, 36, 0.32) 0 1.2px,
+                              transparent 1.2px 4px) top    / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg,
+                              rgba(140, 90, 36, 0.32) 0 1.2px,
+                              transparent 1.2px 4px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(0deg,
+                              rgba(140, 90, 36, 0.32) 0 1.2px,
+                              transparent 1.2px 4px) left   / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg,
+                              rgba(140, 90, 36, 0.32) 0 1.2px,
+                              transparent 1.2px 4px) right  / 1px 100% no-repeat;
 }
 .parchment-inner::-webkit-scrollbar { display: none; }
 
@@ -6627,27 +6666,27 @@ body { background: transparent !important; }
   flex-shrink: 0;
 }
 .pc-word {
-  font-family: 'Pinyon Script', 'Snell Roundhand', 'Italianno',
-               'Apple Chancery', 'Cormorant Garamond', serif;
+  /* v=73 — switched from Pinyon Script calligraphy to the match-card
+     family (EB Garamond 600 upright) so the headword reads the same
+     way as the cards the user just tapped on the previous screen.   */
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
   font-style: normal;
   font-size: 22px;
-  font-weight: 400;
-  color: #4a2a0e;
-  text-shadow: 0 1px 0 rgba(255,238,210,.4);
+  font-weight: 600;
+  color: #2c1808;
   letter-spacing: .01em;
-  line-height: 1.05;            /* tight — Pinyon ascenders shoot tall */
+  line-height: 1.15;
 }
 .pc-pos {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 10px;
+  font-size: 9.5px;
   color: #876239;
 }
-/* zh chinese — right-aligned, italic, small (per spec: 居右 + 小 + 斜)*/
 .pc-head .pc-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 10px;
+  font-size: 9.5px;
   color: #6a4626;
   margin-left: auto;
   text-align: right;
@@ -6809,8 +6848,10 @@ body { background: transparent !important; }
   margin-bottom: 5px;
 }
 .review-card .rev-word {
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
-  font-style: italic;
+  /* v=73 — match-card family + upright; bigger weight than the
+     phrase so the headword still anchors the card.              */
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
   font-weight: 600;
   font-size: 17px;
   color: #f0d8a8;
@@ -6818,21 +6859,22 @@ body { background: transparent !important; }
 .review-card .rev-pos {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(232, 200, 158, 0.62);
 }
 .review-card .rev-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 11.5px;
+  font-size: 10px;
   color: rgba(232, 200, 158, 0.75);
   margin-left: auto;
   text-align: right;
 }
 .review-card .rev-example {
-  font-family: var(--f-italic);
-  font-style: italic;
-  font-size: 12.5px;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
   line-height: 1.45;
   color: rgba(245, 220, 190, 0.92);
   margin: 6px 0 2px;
@@ -6840,7 +6882,7 @@ body { background: transparent !important; }
 .review-card .rev-example-zh {
   font-family: 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 10.5px;
+  font-size: 9.5px;
   color: rgba(232, 200, 158, 0.68);
   margin-bottom: 4px;
 }
@@ -6857,35 +6899,47 @@ body { background: transparent !important; }
   display: flex;
   align-items: baseline;
   gap: 6px;
-  padding: 1px 0;
-  font-size: 11.5px;
+  padding: 2px 0;
+  font-size: 12px;
   line-height: 1.45;
+  flex-wrap: wrap;
 }
+/* v=73 — same word-vs-phrase weight inversion as parchment: phrase
+   is bolder + bigger; word is quieter; zh is the smallest of the
+   three so it never dominates.                                    */
 .review-card .rev-line-word {
-  font-family: 'Libre Caslon Text', Georgia, serif;
-  font-style: italic;
-  font-weight: 600;
-  color: #e8caa0;
-  flex-shrink: 0;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  color: rgba(232, 200, 158, 0.85);
+  flex: 0 1 auto;
+  min-width: 0;
+  word-break: break-word;
 }
 .review-card .rev-line-phrase {
-  font-family: 'Libre Caslon Text', Georgia, serif;
-  font-style: italic;
-  color: rgba(245, 220, 190, 0.85);
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(245, 220, 190, 0.95);
   flex: 1 1 auto;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .review-card .rev-line-zh {
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 10px;
+  font-style: italic;
+  font-size: 9.5px;
   color: rgba(232, 200, 158, 0.62);
   margin-left: auto;
   text-align: right;
-  white-space: nowrap;
-  flex-shrink: 0;
+  white-space: normal;
+  word-break: break-word;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 .rev-jump {
   text-decoration: underline dotted rgba(232, 196, 138, 0.62);
@@ -6988,31 +7042,28 @@ body { background: transparent !important; }
 .pc-line .pc-play {
   flex-shrink: 0;
 }
+/* v=73 — legacy .pc-line (used by "her friend" + "her group"):
+   same EB Garamond family as the new .pc-entry rows.  Word quieter,
+   phrase emphasised.                                                */
 .pc-line .pc-line-word {
-  /* v=53 — variant word is distinguished from the phrase by FONT
-     (slightly heavier, darker antique-brown) — NO underline of
-     its own.  Underlines are reserved for the .pc-jump tokens
-     so the user can tell at a glance: dotted line = tappable,
-     plain bold = keyword in this row.                            */
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 12.5px;
-  color: #3a1f08;
-  flex-shrink: 0;
-  padding-bottom: 0;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  color: #4a2a10;
+  flex: 0 1 auto;
+  min-width: 0;
+  word-break: break-word;
 }
 .pc-line .pc-line-phrase {
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
-  font-style: italic;
-  font-size: 11.5px;
-  color: #3e2812;
-  /* v=70 — was nowrap + ellipsis, which truncated long phrases like
-     "abolitionist movement" in family/kin.  Allow wrapping; the
-     two-row .pc-entry layout below stacks phrase + zh anyway so
-     ellipsis is no longer needed.                                  */
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2c1808;
   white-space: normal;
   word-break: break-word;
+  overflow-wrap: anywhere;
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -7042,34 +7093,38 @@ body { background: transparent !important; }
      has to.                                                       */
   flex-wrap: wrap;
 }
+/* v=73 — UNIFIED TYPOGRAPHY FOR PARCHMENT.  Whole parchment switches
+   to EB Garamond (the same family the match cards use) for clearer
+   image-recognition reading.  Word de-emphasised (smaller, NOT bold);
+   phrase is the focal point (larger, bold).  All zh shrunk to a
+   consistent quieter size so it never dominates the row.            */
 .pc-entry .pc-line-word {
-  /* v=72 — word font shrunk per user ("应该调小单词字体 单词本体不
-     是特别重要").  Phrases stay larger because the example usage
-     is what people are actually trying to remember.               */
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
-  font-style: italic;
-  font-weight: 600;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 500;
   font-size: 11px;
-  color: #3a1f08;
+  color: #4a2a10;
   flex: 0 1 auto;
   min-width: 0;
   word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .pc-entry .pc-line-phrase {
-  /* phrase ≥ word size: collocations carry the meaning */
-  font-family: 'Libre Caslon Text', 'Caslon', Georgia, serif;
-  font-style: italic;
-  font-size: 12px;
-  color: #3e2812;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2c1808;
   white-space: normal;
   word-break: break-word;
+  overflow-wrap: anywhere;
   flex: 1 1 auto;
   min-width: 0;
 }
 .pc-entry .pc-line-zh {
-  font-family: 'EB Garamond', Georgia, serif;
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 10.5px;
+  font-size: 9.5px;
   color: #6a4626;
   margin-left: auto;
   text-align: right;
@@ -7077,7 +7132,8 @@ body { background: transparent !important; }
   word-break: break-word;
   flex: 0 1 auto;
   min-width: 0;
-  max-width: 45%;
+  max-width: 100%;
+  letter-spacing: 0.02em;
 }
 .pc-entry .pc-play { flex-shrink: 0; }
 /* Indent the phrase row so it visually nests under the word row. */
@@ -7089,8 +7145,10 @@ body { background: transparent !important; }
   color: #6a4626;
   margin-left: auto;
   text-align: right;
-  white-space: nowrap;
-  flex-shrink: 0;
+  white-space: normal;
+  word-break: break-word;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 .pc-line.is-playing .pc-line-phrase,
 .pc-line.is-playing .pc-line-zh {
