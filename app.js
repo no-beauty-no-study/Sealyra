@@ -110,37 +110,75 @@ const SFX = (() => {
     src.connect(filter); filter.connect(g); g.connect(c.destination);
     src.start(c.currentTime);
   }
+  // v=78 — band-pass noise helper for organic paper/cloth sounds.
+  // type: 'bandpass' with a fixed centre + Q; envelope shapes
+  // attack + release so the burst feels like a physical event
+  // (paper, ink, fabric) rather than a digital tap.
+  function bandNoise({ dur = 0.20, peak = 0.06, center = 1200, q = 1.2, attack = 0.01, release = 0.18 }) {
+    const c = ensure();
+    const bufferSize = Math.floor(c.sampleRate * dur);
+    const buf = c.createBuffer(1, bufferSize, c.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+    const src = c.createBufferSource();
+    src.buffer = buf;
+    const filter = c.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = center;
+    filter.Q.value = q;
+    const g = c.createGain();
+    const t0 = c.currentTime;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0001), t0 + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + attack + release);
+    src.connect(filter); filter.connect(g); g.connect(c.destination);
+    src.start(t0);
+  }
   return {
     bling:   () => {
-      // Ascending chime …
       tone([1175, 1568, 1976, 2349, 2794], 0.05, 0.32, 'triangle', 0.13);
-      // … with a shimmer chord layered ~80ms later …
       setTimeout(() => tone([2349, 2794, 3136], 0.04, 0.22, 'sine', 0.08), 80);
-      // … and a final tiny sparkle.
       setTimeout(() => tone([3520, 4186], 0.04, 0.14, 'sine', 0.05), 200);
     },
     tap:     () => tone([1050],                          0.0, 0.07, 'sine',     0.06),
-    pageTurn:() => { noise(0.18, 0.06, 2200); },
+    // v=78 — cardFlip: short "thwack" of card paper.  A quick mid-high
+    // noise burst (the snap of the card's edge) layered with a low
+    // thump (the card landing flat).  Replaces the bare SFX.tap that
+    // was being used for option card picks.
+    cardFlip: () => {
+      bandNoise({ dur: 0.10, peak: 0.10, center: 2400, q: 0.9, attack: 0.003, release: 0.09 });
+      setTimeout(() => bandNoise({ dur: 0.12, peak: 0.06, center: 420, q: 2.0, attack: 0.004, release: 0.11 }), 25);
+    },
+    // v=78 — pageTurn: rebuilt to read as a book page being turned.
+    // A soft mid-low rustle (paper) followed 60 ms later by a quieter
+    // high-mid whisper (the page settling).  Far gentler than the
+    // bare highpass noise the user described as "抽了我一巴掌".
+    pageTurn:() => {
+      bandNoise({ dur: 0.32, peak: 0.07, center: 800,  q: 1.0, attack: 0.012, release: 0.30 });
+      setTimeout(() => bandNoise({ dur: 0.22, peak: 0.045, center: 2200, q: 1.4, attack: 0.008, release: 0.20 }), 60);
+    },
+    // v=78 — inkScratch: soft pencil-on-paper scratching, used when
+    // a parchment row reveals.  Mid-frequency band noise with a
+    // very gentle envelope; quiet enough to layer under TTS.
+    inkScratch: () => {
+      bandNoise({ dur: 0.38, peak: 0.035, center: 1400, q: 0.7, attack: 0.020, release: 0.36 });
+    },
     pop:     () => tone([784, 1175, 1568],               0.06, 0.22, 'triangle', 0.12),
     right:   () => tone([880, 1175, 1568],               0.05, 0.22, 'sine',     0.16),
     wrong:   () => tone([311, 207],                      0.07, 0.20, 'square',   0.06),
     finish:  () => tone([523, 659, 784, 988, 1175, 1318],0.08, 0.26, 'sine',     0.14),
 
     // Result-modal chimes — pick one based on the score band.
-    // PERFECT: full ascending sparkle + shimmer
     scorePerfect: () => {
       tone([1175, 1568, 1976, 2349, 2794, 3136], 0.05, 0.28, 'triangle', 0.14);
       setTimeout(() => tone([2349, 2794, 3136, 3520], 0.04, 0.22, 'sine', 0.09), 90);
       setTimeout(() => tone([3520, 4186], 0.04, 0.16, 'sine', 0.06), 220);
     },
-    // GOOD: warm major arpeggio
     scoreGood: () => {
       tone([784, 988, 1175, 1397], 0.06, 0.24, 'triangle', 0.13);
       setTimeout(() => tone([1568, 1976], 0.05, 0.18, 'sine', 0.08), 100);
     },
-    // OK: gentle two-note chime
     scoreOk: () => tone([784, 988], 0.10, 0.32, 'sine', 0.11),
-    // LOW: soft minor sigh — encouraging, never punishing
     scoreLow: () => tone([523, 622], 0.12, 0.36, 'sine', 0.09)
   };
 })();
@@ -373,9 +411,14 @@ function freshSession() {
   // content across reloads.
   state.session = buildSession(saved.chapter || 1);
   if (!state.session) {
-    // fallback so the UI never crashes if data is missing.
     state.session = { pairs: [], scenes: [], dicts: [], words: Object.keys(PARCHMENT_CARDS).slice(0, 8) };
   }
+  // v=78 — question ORDER is randomised each play.  Same chapter
+  // still draws the same SET of scenes/dicts (seeded buildSession),
+  // but the order they appear in differs every time the user taps
+  // Continue Reading, so memorising "Q1=X, Q2=B" no longer works.
+  state.session.scenes = shuffle(state.session.scenes);
+  state.session.dicts  = shuffle(state.session.dicts);
   state.results = {};
   state.session.words.forEach(w => state.results[w] = { match: null, oracle: null, dict: null });
 }
@@ -1149,7 +1192,10 @@ function showParchment(word) {
       playRow.classList.add('is-playing');
       if (sp) speak(sp);
     }
-    SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+    // v=78 — parchment reveal now uses the soft ink-scratch sound
+    // (pencil on paper) so the reveal feels like writing rather than
+    // a generic page-turn.
+    (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
     veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
     const justRevealed = nodes[revealIdx - 1];
     if (justRevealed) {
@@ -1227,6 +1273,27 @@ function showParchment(word) {
     e.stopPropagation();
     closeParchment();
   });
+  // v=78 — parchment copy field doubles as a self-dictation box.
+  // Compare what the user types (lowercase) against the headword;
+  // when it matches, glow the input gold + play a small sparkle so
+  // the muscle-memory practice gets a tactile reward.  User: "写对
+  // 了之后字体发光一下".
+  const copyInput = veil.querySelector('.pc-copy-input');
+  if (copyInput) {
+    const target = (c.h || '').toLowerCase();
+    let _matched = false;
+    copyInput.addEventListener('input', () => {
+      const v = (copyInput.value || '').trim().toLowerCase();
+      if (v === target && !_matched) {
+        _matched = true;
+        copyInput.classList.add('is-correct');
+        try { SFX.scoreOk && SFX.scoreOk(); } catch {}
+      } else if (v !== target && _matched) {
+        _matched = false;
+        copyInput.classList.remove('is-correct');
+      }
+    });
+  }
   // v=55 — add-to-note button.  Toggle this word in saved.notes.
   // Visual flips between "empty" and "is-saved" so the user knows
   // they bookmarked it.  Doesn't close the parchment.
@@ -1894,7 +1961,7 @@ const Screens = {
           // auto-clear it here.  user might want to repair.  the next
           // same-side click will sweep orphans away (see below).
           flipReveal(node, () => paintSingle(node, idx));
-          SFX.tap();
+          (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
           return;
         }
 
@@ -2090,17 +2157,25 @@ const Screens = {
       // ACTIVE blank's 4 candidates are visible at a time; clicking
       // another blank swaps the option strip.                       */
       function buildOptionsFor(q) {
+        // v=78 — distractors are RANDOM across all PARCHMENT_CARDS
+        // (NOT same-first-letter).  User: "我知道这个单词的意思
+        // 一下就知道该选哪个 完全没有学习意义".  Same first letter
+        // collapsed the puzzle to "pick the longer one I recognise"
+        // — random distractors restore the lexical-comprehension
+        // test.  Pool is fully randomised each call too.
         const answers = (q.answers || []).slice();
         const taken = new Set(answers);
+        const fullPool = Object.keys(PARCHMENT_CARDS).filter(w => w && !taken.has(w));
         return answers.map(ans => {
-          const letter = (ans[0] || '').toLowerCase();
-          const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
-            if (!w || taken.has(w)) return false;
-            return w[0].toLowerCase() === letter;
-          });
-          const distractors = shuffle(pool).slice(0, 3);
-          distractors.forEach(d => taken.add(d));
-          // Pad from q.options if the letter pool is tiny.
+          // Each blank gets 3 fresh distractors from the global pool.
+          const distractors = [];
+          const local = shuffle(fullPool);
+          for (const w of local) {
+            if (taken.has(w)) continue;
+            distractors.push(w);
+            taken.add(w);
+            if (distractors.length === 3) break;
+          }
           while (distractors.length < 3 && (q.options || []).length) {
             const cand = q.options.find(o => !taken.has(o) && o !== ans);
             if (!cand) break;
@@ -2221,7 +2296,7 @@ const Screens = {
         if (state.sceneActive < 0) return;
         const i = state.sceneActive;
         btn.classList.add('is-flipping');
-        SFX.tap();
+        (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
         setTimeout(() => {
           state.sceneFills[i] = word;
           // Advance active marker to next empty slot, or stay.
