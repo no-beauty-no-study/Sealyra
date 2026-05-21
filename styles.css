@@ -3100,8 +3100,24 @@ body { background: transparent !important; }
   pointer-events: none;
   line-height: 1;
 }
-.card--option::before { left: 11px;  }
-.card--option::after  { right: 11px; }
+/* v=77 — corner glyphs match the .card--match positioning (top-left
+   + bottom-right diagonal) instead of mid-side, so the default
+   unselected option button reads IDENTICAL to a match card per
+   user: "完全一致 从设计到字体有一致性".                         */
+.card--option::before {
+  top: 6px;
+  left: 8px;
+  right: auto;
+  bottom: auto;
+  transform: rotate(90deg) scaleY(1.25);
+}
+.card--option::after {
+  bottom: 6px;
+  right: 8px;
+  top: auto;
+  left: auto;
+  transform: rotate(-90deg) scaleY(1.25);
+}
 
 /* v=75 — wrong-pick card returns to the WINE palette per user
    ("选错的时候 错误选项原本翻开的红色卡牌要发暗").  Correct option
@@ -6392,6 +6408,16 @@ body { background: transparent !important; }
   color: rgba(240, 210, 138, 0.96);
   pointer-events: none;
   animation: pair-mark-glow 3.5s ease-in-out infinite;
+}
+/* v=77 — wrong-pair mark sits in the SAME corner slot as the ❦ but
+   wears a quiet pink ✗ + no glow so the eye still finds the
+   correct pairs first.                                            */
+.card.card--match .pair-mark-wrong {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: rgba(232, 152, 168, 0.85);
+  animation: none;
+  text-shadow: 0 1px 0 rgba(40, 12, 22, 0.55);
 }
 .card.card--match.is-left  .pair-mark { left:  -26px; }
 .card.card--match.is-right .pair-mark { right: -26px; }

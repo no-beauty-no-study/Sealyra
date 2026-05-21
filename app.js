@@ -330,7 +330,7 @@ const Store = {
   load() {
     try {
       return Object.assign(
-        { progress: 0, learned: {}, mistakes: {}, chapter: 1 },
+        { progress: 0, learned: {}, mistakes: {}, chapter: 1, stage: 1 },
         JSON.parse(localStorage.getItem('hll-state') || '{}')
       );
     } catch { return { progress: 0, learned: {}, mistakes: {}, chapter: 1 }; }
@@ -339,11 +339,13 @@ const Store = {
 };
 const saved = Store.load();
 if (!saved.chapter || saved.chapter < 1) { saved.chapter = 1; Store.save(); }
+if (!saved.stage   || saved.stage   < 1 || saved.stage > 3) { saved.stage = 1; Store.save(); }
 // v=63 — restart-game reset: chapter only.  Learned + mistakes are
 // lifetime stats; user resets the "where am I in the storybook"
 // counter, not their notebook.
 function resetChapterProgress() {
   saved.chapter = 1;
+  saved.stage   = 1;
   Store.save();
 }
 function recordMistake(word) {
@@ -503,12 +505,10 @@ function _ensureBGM(screenId) {
   if (group && group === _lastBgmGroup) return;     // same group → keep
   _lastBgmGroup = group;
   try {
-    // v=74 — STOP first, then play.  Without the stop, the user
-    // reported stage-2 entering with no BGM change (result track
-    // kept playing).  Stop unconditionally clears the timer +
-    // releases the same-pool guard, then playXxxRandom starts the
-    // new track cleanly from step 0.  A ~50 ms gap is the cost.
-    LanBGM.stop();
+    // v=77 — explicit stop() retired (it was leaving the audio
+    // graph in a half-torn-down state for the user's device,
+    // killing game BGM).  Force:true on playRandom bypasses the
+    // same-pool guard and play() handles the timer swap cleanly.
     const opts = { force: true };
     if      (pool === 'home')   LanBGM.playHomeRandom({ ...opts, volume: 0.42 });
     else if (pool === 'game')   LanBGM.playGameRandom({ ...opts, volume: 0.40 });
@@ -1734,21 +1734,23 @@ const Screens = {
       `;
       el.appendChild(stage);
 
-      // Continue Reading — unlocks audio + starts (or resumes) at the
-      // current chapter.  Each completed run-through stage1→2→3 bumps
-      // saved.chapter by one, so re-opening the page lands here on
-      // the next unfinished chapter.
-      const ctaLabel = 'Continue Reading';
+      // Continue Reading — picks up at the LAST unfinished stage
+      // within the current chapter.  saved.stage tracks the highest
+      // stage the user has reached (1, 2, or 3); on cover entry we
+      // resume at that stage so a passed stage 1 + stage 2 lands
+      // the user directly on the dictation.  User: "Tonight Reading
+      // 不是继续游戏吗 — 应该从默写继续开始".
+      const resumeStage = saved.stage && saved.stage >= 1 && saved.stage <= 3 ? saved.stage : 1;
+      const ctaLabel = resumeStage > 1 ? `Continue · Stage ${resumeStage}` : 'Continue Reading';
       $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
         fade.className = 'fade-out';
         document.body.appendChild(fade);
         requestAnimationFrame(() => fade.classList.add('show'));
-        setTimeout(() => { LanBGM.stop(); }, 800);
         setTimeout(() => {
           freshSession();
-          go('stage1');
+          go('stage' + resumeStage);
           setTimeout(() => fade.remove(), 700);
           fade.classList.remove('show');
         }, 1000);
@@ -2014,6 +2016,9 @@ const Screens = {
       // stage 2.  Otherwise show "Try Again" which redraws stage 1
       // with a fresh shuffle of the same chapter's pairs.
       if (correctPairs >= 4) {
+        // v=77 — passed stage 1 → unlock stage 2 (saved.stage = 2)
+        // so a mid-chapter exit resumes on the right stage.
+        if ((saved.stage || 1) < 2) { saved.stage = 2; Store.save(); }
         $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage2'), { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
@@ -2033,19 +2038,20 @@ const Screens = {
         const sideClass = r.side === 'L' ? 'is-left' : 'is-right';
         const state = r.correct ? 'is-correct' : 'is-wrong';
         const flourish = r.correct ? '<span class="pair-mark">❦</span>' : '';
-        // v=55 — each tile now carries TWO colour signals:
-        //   tag-N  → body fill, the colour the user DYED it during
-        //            the game (their guess)
-        //   pair-N → text colour, the colour of its TRUE PARTNER
-        //            (pairId).  On correct pairs the two match,
-        //            text reads cleanly; on wrong pairs the
-        //            mismatched text colour reveals "this card
-        //            actually belonged to a different pair".
-        tile.className = `card card--match ${sideClass} tag-${r.tag} pair-${r.pairId} ${state}`;
+        // v=77 — colour BOTH body and text by pair-N (the TRUE pair
+        // id), so each correctly-belonging pair shares ONE colour
+        // across left + right.  User: "用左边一列的字体颜色来让右
+        // 列的正确对应卡牌整成相应的颜色".  Wrong pairs get a
+        // visible ✗ mark in the corner instead of relying on colour
+        // mismatch to read "wrong" (which was confusing when blue
+        // body had orange text).                                  */
+        tile.className = `card card--match ${sideClass} tag-${r.pairId} pair-${r.pairId} ${state}`;
+        const wrongMark = r.correct ? '' : '<span class="pair-mark pair-mark-wrong">✗</span>';
         tile.innerHTML = `
           <span class="mc-frame"></span>
           <span class="mc-text">${escapeHtml(r.text)}</span>
           ${flourish}
+          ${wrongMark}
         `;
         tile.addEventListener('click', () => flipToCard(tile, r.text, 'stage1-result'));
         grid.appendChild(tile);
@@ -2314,6 +2320,8 @@ const Screens = {
       // advance.  Otherwise show "Try Again" which replays stage 2
       // with the same scene questions.
       if (right >= total && total > 0) {
+        // v=77 — passed stage 2 → unlock stage 3 (saved.stage = 3).
+        if ((saved.stage || 1) < 3) { saved.stage = 3; Store.save(); }
         $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
@@ -2472,6 +2480,7 @@ const Screens = {
         .every(d => state.results[d.head] && state.results[d.head].dict === true);
       if (_dictsPerfect) {
         saved.chapter = (saved.chapter || 1) + 1;
+        saved.stage   = 1;   // v=77 — new chapter starts at stage 1
       }
       Store.save();
 
