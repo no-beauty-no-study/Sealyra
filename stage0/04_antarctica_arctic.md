@@ -81,13 +81,13 @@ The entire Antarctic continent supports only one species of true insect, a fligh
 
 Two expeditions raced across the Antarctic ice to be the first to reach the South Pole. The Norwegian explorer Amundsen prepared meticulously: sled dogs trained from infancy, a route surveyed in advance, food caches buried at every measured interval. He reached the pole, planted his country's flag, and returned without losing a single member of his party. The British captain Scott, by contrast, insisted on dragging ponies and motor sledges across terrain that demolished both, and arrived at the pole a month after Amundsen to find the Norwegian flag already there. On the return journey Scott and his four companions perished one by one inside their tent during a blizzard, eleven miles short of a food cache that would have saved them. Preparation, the Antarctic concluded, is not optional in this climate.
 
-**Q1:** Which Norwegian explorer first reached the South Pole?
-**A1:** Amundsen
+**Q1:** What kind of trained pulling animal did Amundsen rely on to reach the South Pole?
+**A1:** sled dog
 
-**Q2:** Which British captain died returning from the South Pole?
-**A2:** Scott
+**Q2:** What kind of pack animal did Scott insist on dragging, demolishing them en route?
+**A2:** pony
 
-**Q3:** What polar storm killed Scott's team?
+**Q3:** What polar storm killed Scott's team in their tent?
 **A3:** blizzard
 
 ---
@@ -96,13 +96,13 @@ Two expeditions raced across the Antarctic ice to be the first to reach the Sout
 
 The British explorer Shackleton once attempted to traverse the entire Antarctic continent on foot. His ship Endurance was caught in pack ice before it ever reached the coast, and the ice gradually crushed the wooden hull until it splintered and sank, marooning twenty-eight men on a drifting floe in the middle of the Weddell Sea. For more than two years the party persisted on that ice, sleeping in salvaged tents, consuming first their ship's provisions and then their sled dogs. When the floe finally fragmented into pieces too small to inhabit, Shackleton led six men in a small lifeboat across one of the most violent stretches of ocean on Earth to a remote whaling station, then organised a rescue mission for the rest of his crew. Every single man came home alive.
 
-**Q1:** Which explorer brought all 28 men home after losing his ship?
-**A1:** Shackleton
+**Q1:** What kind of polar journey across Antarctica was Shackleton attempting when his ship was caught?
+**A1:** expedition
 
-**Q2:** Which ship was crushed by Antarctic pack ice?
-**A2:** Endurance
+**Q2:** What kind of wooden ocean vessel was the Endurance?
+**A2:** ship
 
-**Q3:** What kind of floating ice trapped Shackleton's ship?
+**Q3:** What kind of floating frozen seawater crushed Shackleton's ship?
 **A3:** pack ice
 
 ---

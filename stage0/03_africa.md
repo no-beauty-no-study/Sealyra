@@ -24,10 +24,10 @@ Fifteen million years ago Africa itself began to tear apart. A considerable fiss
 **Q1:** Which geological scar still splits eastern Africa?
 **A1:** East African Rift
 
-**Q2:** Whose skeleton proved upright walking came before brain growth?
-**A2:** Lucy
+**Q2:** What kind of partial human remains was Lucy when palaeoanthropologists found her?
+**A2:** skeleton
 
-**Q3:** Which early hominid genus did Lucy belong to?
+**Q3:** What early hominid genus did Lucy belong to?
 **A3:** australopithecine
 
 ---
@@ -81,10 +81,10 @@ The greatest desert on Earth has not always been a desert. Ten thousand years ag
 
 The fauna south of the Sahara turn out to be considerably more cognitively sophisticated than the older textbooks ever anticipated. An African grey parrot named Alex mastered three hundred English words and articulated genuine questions about colour and quantity that no previous animal had been observed to ask spontaneously; his final words to his researcher were reported as "I love you." Elephants gather around the bodies of fallen kin and stand in something resembling a vigil, returning to the bones repeatedly across the following years and caressing the skull with a trunk that has clearly retained memory. Chimpanzees in laboratory tasks throw food back at experimenters when they observe another chimp receive a sweeter reward for the same work, exhibiting an indignation at unfairness almost embarrassing to witness. Even the cities of the continent that no human ever designed prove cognitively impressive: army ants link themselves into a temporary fortress called a bivouac each evening and march to new ground at dawn, while termite mounds ascend several metres above the savannah, their intricate ventilation shafts coordinating an internal climate that fluctuates by no more than a degree across a thirty-degree day.
 
-**Q1:** Which African parrot learned 300 English words?
-**A1:** Alex (African grey parrot)
+**Q1:** What kind of brightly intelligent African bird was Alex?
+**A1:** grey parrot
 
-**Q2:** What do elephants perform around their dead?
+**Q2:** What ritual-like behaviour do elephants perform around their dead?
 **A2:** vigil
 
 **Q3:** Which African insect builds climate-controlled towers?
@@ -102,8 +102,8 @@ Once every summer, the great river that traverses northeastern Africa flooded re
 **Q2:** What stone stairways led pharaohs to the afterlife?
 **A2:** pyramid
 
-**Q3:** Which Egyptian text guided souls through the underworld?
-**A3:** Book of the Dead
+**Q3:** What kind of preserved Egyptian dead body did embalmers produce for tombs?
+**A3:** mummy
 
 ---
 
@@ -141,14 +141,14 @@ European ships began calling regularly at the West African coast from the late f
 
 At the end of the nineteenth century the European powers gathered around a single map in Berlin and drew the boundaries of their African colonies with rulers and pencils, deliberately ignoring the tribal, linguistic, and ethnic frontiers that the continent had developed across thousands of years. The lines they drew constituted one of the most arbitrary administrative impositions in recorded history. King Leopold of Belgium designated the entire Congo basin as his private estate and compelled the inhabitants to harvest rubber under quota; those who failed to meet the quota had their hands amputated, and over ten million Congolese died across the next two decades. In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and poisoned the wells, executing the earliest systematically documented genocide of the twentieth century. The borders the Europeans drew that afternoon still hold today, decades after independence, with all their ethnic contradictions intact. The map outlived the empires that drew it.
 
-**Q1:** Where did European powers partition Africa with rulers and pencils?
-**A1:** Berlin
+**Q1:** What kind of international diplomatic meeting partitioned Africa in Berlin?
+**A1:** conference
 
 **Q2:** Which African basin did Leopold own as a private estate?
 **A2:** Congo
 
-**Q3:** Which African people did Germans exterminate in the Kalahari?
-**A3:** Herero
+**Q3:** What kind of systematic ethnic extermination did Germans inflict on the Herero?
+**A3:** genocide
 
 ---
 
@@ -159,10 +159,10 @@ Across the middle of the twentieth century, almost every African colony achieved
 **Q1:** Which South African legal system segregated the races?
 **A1:** apartheid
 
-**Q2:** Which leader chose forgiveness after 27 years in prison?
-**A2:** Nelson Mandela
+**Q2:** What was Mandela's profession before he became a political prisoner?
+**A2:** lawyer
 
-**Q3:** What did Mandela choose over revenge?
+**Q3:** What did Mandela choose over revenge upon assuming the presidency?
 **A3:** reconciliation
 
 ---
@@ -174,11 +174,11 @@ The rhythmic patterns enslaved Africans carried into the holds of the slave ship
 **Q1:** Which music genre did Fela Kuti invent in Nigeria?
 **A1:** Afrobeat
 
-**Q2:** Which Jamaican called Africa the spiritual homeland?
-**A2:** Bob Marley
+**Q2:** What Jamaican musical genre did Bob Marley make a global preaching pulpit?
+**A2:** reggae
 
-**Q3:** Which Nigerian singer headlines global arenas today?
-**A3:** Burna Boy
+**Q3:** What modern descendant of Afrobeat does Burna Boy headline global arenas with?
+**A3:** Afrobeats
 
 ---
 

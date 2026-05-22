@@ -57,8 +57,8 @@ Light is the fastest thing the universe will allow. Nothing in nature can exceed
 **Q2:** What slows down for fast-moving objects?
 **A2:** time
 
-**Q3:** Who predicted relativity from a desk?
-**A3:** Einstein
+**Q3:** What was Einstein's job when he developed relativity from a desk?
+**A3:** patent clerk
 
 ---
 
@@ -81,8 +81,8 @@ The sunlight that warms your face is older than human civilisation itself. Far d
 
 Earth, in its first hours of existence, very nearly endured a catastrophe from which it might never have recovered. A rogue planet about the size of Mars, which astronomers working backwards from the wreckage have designated Theia, accelerated into the molten young Earth at an angle, vaporised most of the crust, and dispersed a glowing cloud of rubble into orbit. Out of that ruin came a gift: the cloud, over thousands of years, gradually coalesced under its own gravity and condensed into the Moon. When the new Moon was young it occupied a position so close to Earth that it almost filled half the sky, and its gravity induced tides of colossal height across the still boiling oceans below. Days commenced and concluded inside only a handful of hours, because the planet rotated on its axis at a velocity it has never since reached. Then, over hundreds of millions of years, the Moon receded outward and the rotation slowed, until that same Moon now constitutes the patient anchor that holds Earth's axis fixed at the modest tilt that generates our seasons. Without that gentle restraint on our axis, the climate would fluctuate violently across the whole planet every few thousand years, and life as we know it might never have emerged. The Moon is not even our only quiet guardian. The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: every few hundred thousand years that field attenuates, falters, and reverses outright, so that the magnetic north pole quietly migrates toward the southern hemisphere and the south pole ascends to the north, leaving every compass on the planet pointing the wrong way around for an entire era.
 
-**Q1:** What Mars-sized body collided with young Earth to form the Moon?
-**A1:** Theia
+**Q1:** What category of large early-system body was Theia, that struck Earth?
+**A1:** protoplanet
 
 **Q2:** What stabilises Earth's axis tilt today?
 **A2:** Moon
@@ -96,8 +96,8 @@ Earth, in its first hours of existence, very nearly endured a catastrophe from w
 
 We have by now catalogued thousands of planets in orbit around distant stars, found by telescopes of ever-greater sensitivity. A handful among them constitute rough Earth-analogues, occupying just the right interval from their parent stars for liquid water to accumulate on the surface, which is the same recipe that originally generated us. Meanwhile, immense radio dishes scan the sky continuously, listening for any signal that another civilisation might have aimed its voice across the interstellar dark. Year after year, decade after decade, nothing emerges. The silence itself is what perplexes most. The universe has endured for so long, and encompasses so many stars and so many planets, that the galaxy ought to be crowded with neighbours, civilisations far older and cleverer than ours, broadcasting freely, perhaps even traversing interstellar space to make contact. And yet not one signal, not one craft, not one unambiguous trace of another mind has ever manifested in any telescope. The physicist Enrico Fermi articulated the paradox in five plain words: where is everybody? The candidate answers nobody likes go like this. Perhaps every civilisation devours itself before it ever learns to communicate between the stars. Perhaps the older civilisations out there deliberately obscure themselves from beginners like us. Or, most unsettling of all, perhaps we genuinely constitute the very first to emerge in the cosmos, the only ones broadcasting, persistently calling out into a silence that contains no one inside it to answer us back.
 
-**Q1:** Whose paradox asks "where is everybody"?
-**A1:** Fermi
+**Q1:** What category of theoretical puzzle does the Fermi inquiry articulate about alien silence?
+**A1:** paradox
 
 **Q2:** What instrument scans the sky for alien signals?
 **A2:** radio dish

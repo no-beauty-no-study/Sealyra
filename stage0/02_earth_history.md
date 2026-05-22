@@ -27,8 +27,8 @@ Then the planet froze over. For reasons climatologists still argue about, the at
 **Q2:** What sudden burst of bizarre life followed the thaw?
 **A2:** Cambrian Explosion
 
-**Q3:** Which tiny ribbon-like worm grew into your spine?
-**A3:** Pikaia
+**Q3:** What spinal precursor rod first appeared along Pikaia's body?
+**A3:** notochord
 
 ---
 
@@ -36,13 +36,13 @@ Then the planet froze over. For reasons climatologists still argue about, the at
 
 For more than two billion years after life first appeared, every living thing remained in the water. The land above was a barren expanse, baked by ultraviolet radiation and devoid of the organic matter that vertebrates would require to survive. Plants ascended onto the shore first, slowly, awkwardly, like reluctant tourists at a hostile resort, but their photosynthesis steadily generated breathable oxygen and gradually transformed the bare rock into the loamy soil we now take for granted. Then a particular lobe-finned fish named Tiktaalik, recovered from the Devonian sediments of arctic Canada, manifested something the world had never seen before: actual wrists, complete with articulated bones that could bend and bear weight. Tiktaalik almost certainly utilised those primitive limbs to crawl through tidal mudflats and ambush prey from the oxygen-rich shallows. Its descendants, with the kind of patience only evolution can demonstrate, traded gills for lungs, refined the wrist into a jointed foot, and eventually constituted the first amphibians and reptiles to inhabit dry ground. Every tetrapod that has ever walked, jumped, flown, or burrowed, from the heaviest elephant down to the smallest field mouse, traces its descent from that single ancestor on the mudflat. The atmosphere of that era was thick with oxygen, and dragonflies, encountering no predator capable of catching them, ascended to dimensions that would terrify a contemporary bird-watcher. Their wingspans reached the size of modern raptors. Imagine swatting at an insect and discovering it is the size of an eagle. That was an ordinary afternoon in the Carboniferous swamp.
 
-**Q1:** Which lobe-finned fish first crawled onto the mudflat?
-**A1:** Tiktaalik
+**Q1:** What category of bone-finned fish did Tiktaalik belong to?
+**A1:** lobe-finned fish
 
-**Q2:** What four-limbed group descended from that fish?
+**Q2:** What four-limbed vertebrate group descended from Tiktaalik?
 **A2:** tetrapod
 
-**Q3:** Which insect once grew as large as an eagle?
+**Q3:** Which insect once grew as large as an eagle in the Carboniferous swamp?
 **A3:** dragonfly
 
 ---
@@ -57,8 +57,8 @@ Long after life had spread across the continents, the continents themselves drif
 **Q2:** What mass dying eradicated 96% of marine species?
 **A2:** Permian extinction
 
-**Q3:** Which region's volcanism poisoned air and ocean for a million years?
-**A3:** Siberia
+**Q3:** What kind of long-duration volcanic event from Siberia poisoned the Permian air and ocean?
+**A3:** eruption
 
 ---
 

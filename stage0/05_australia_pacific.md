@@ -96,13 +96,13 @@ On a particular remote Polynesian island, now called Easter Island, the original
 
 Captain Cook charted the eastern coast of Australia, and the British Empire immediately recognised the value of the discovery: an entire continent on the far side of the Earth where convicts could be deposited and forgotten. Boatloads of prisoners began arriving in chains, and the colonies of New South Wales and Tasmania expanded across the next decades as open-air penal settlements. The European settlers, encountering an ecosystem they did not understand, classified the local marsupial wolf or thylacine as vermin and offered bounty payments for every carcass produced. The last thylacine died alone in a Hobart zoo cage, while a silent black-and-white film camera recorded it pacing its enclosure. That footage still survives in the Australian archives, and the species it preserves does not.
 
-**Q1:** Which British captain charted Australia's east coast?
-**A1:** Captain Cook
+**Q1:** What British naval rank did Cook hold when he charted the east Australian coast?
+**A1:** captain
 
 **Q2:** Which Tasmanian marsupial predator was hunted to extinction?
 **A2:** thylacine
 
-**Q3:** What kind of colony did Britain make Australia?
+**Q3:** What kind of prison colony did Britain make Australia into?
 **A3:** penal colony
 
 ---

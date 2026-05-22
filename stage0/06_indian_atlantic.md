@@ -24,8 +24,8 @@ Arab traders mastered the monsoon pattern long before Europe arrived. They saile
 **Q1:** Which narrow channel chokes Indian Ocean–Pacific trade?
 **A1:** Malacca Strait
 
-**Q2:** Which Chinese admiral sailed to East Africa with a huge fleet?
-**A2:** Zheng He
+**Q2:** What kind of large naval grouping did Zheng He lead to the eastern coast of Africa?
+**A2:** fleet
 
 **Q3:** Which sea region holds the planet's most diverse marine life?
 **A3:** Coral Triangle
@@ -54,8 +54,8 @@ A vast warm current ascends from the tropics along the eastern coast of the Amer
 **Q1:** Which warm current keeps Britain milder than Canada?
 **A1:** Gulf Stream
 
-**Q2:** Which famous ship struck an iceberg and sank?
-**A2:** Titanic
+**Q2:** What kind of large luxury passenger vessel was the Titanic?
+**A2:** ocean liner
 
 **Q3:** Which central Atlantic dead zone collects seaweed and plastic?
 **A3:** Sargasso Sea
