@@ -7712,37 +7712,46 @@ body.bg-stage0 #banner-top  { display: none; }
 .s0q-page .next-door .tt-text { color: #4a2810 !important; -webkit-text-fill-color: #4a2810 !important; }
 .s0q-page .next-door .tt-glyph { color: rgba(138, 90, 24, 0.85) !important; }
 
-/* v=80 — parchment header chip(s) showing which chapter(s) this
-   word belongs to.  Tappable; jumps to the chapter's stage-0
-   article.  Multi-chapter words show all chips in a row.       */
-.pc-chapter-chips {
+/* v=82 — parchment chapter DOTS: small antique-gold circles in the
+   same ink family as the parchment key glyph.  One dot per chapter
+   the word appears in.  Section number (e.g. "1.1") sits inside;
+   the long theme is the title-attribute tooltip.  Tap to jump.    */
+.pc-chapter-dots {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin: 0 0 4px;
+  gap: 5px;
+  margin: 0 0 6px;
   justify-content: center;
 }
-.pc-chapter-chip {
-  display: inline-block;
+.pc-chapter-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 8px;
   font-family: 'Cinzel', Georgia, serif;
   font-style: italic;
-  font-size: 9.5px;
-  letter-spacing: 0.06em;
-  color: rgba(110, 63, 18, 0.85);
-  background: rgba(232, 196, 138, 0.18);
-  border: 1px solid rgba(140, 90, 36, 0.42);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #8a4f12;
+  background: rgba(232, 196, 138, 0.16);
+  border: 1px solid rgba(140, 90, 36, 0.55);
   border-radius: 999px;
-  padding: 2px 8px;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.12s;
+  filter: drop-shadow(0 1px 0 rgba(255, 244, 220, 0.55));
 }
-.pc-chapter-chip:hover  {
+.pc-chapter-dot:hover {
   color: #2a1808;
-  background: rgba(232, 196, 138, 0.32);
-  border-color: rgba(140, 90, 36, 0.75);
+  background: rgba(232, 196, 138, 0.34);
+  border-color: rgba(140, 90, 36, 0.92);
 }
-.pc-chapter-chip:active { transform: translateY(1px); }
+.pc-chapter-dot:active { transform: translateY(1px) scale(0.95); }
+
+/* Legacy chip class kept around so any old markup still works. */
+.pc-chapter-chips { display: none; }
 
 /* v=81 — catalog regrouped into Part → Section.  Big parts (10)
    collapse to a header row; the current chapter's part auto-opens.
@@ -7815,4 +7824,51 @@ body.bg-stage0 #banner-top  { display: none; }
 }
 .s0-pageflip-veil.is-flipping {
   background-position: 110% 0;
+}
+
+/* v=82 — stage 0 paragraph rows with ♪ play buttons (TTS).
+   Each paragraph is its own block so the user can replay just
+   one sentence at a time, mirroring the parchment row idiom.   */
+.s0-section { display: flex; flex-direction: column; gap: 10px; }
+.s0-para {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 6px 6px 4px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.s0-para.is-playing { background: rgba(232, 196, 138, 0.18); }
+.s0-para-play {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid rgba(140, 90, 36, 0.42);
+  border-radius: 999px;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  color: #8a4f12;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.s0-para-play:hover {
+  background: rgba(232, 196, 138, 0.32);
+  border-color: rgba(140, 90, 36, 0.85);
+  color: #2a1808;
+}
+.s0-para.is-playing .s0-para-play {
+  background: rgba(232, 196, 138, 0.45);
+  border-color: rgba(140, 90, 36, 0.95);
+}
+.s0-para-text {
+  font-family: Georgia, 'EB Garamond', serif;
+  font-size: 15.5px;
+  line-height: 1.68;
+  text-align: justify;
+  color: #2a1808;
+  flex: 1 1 auto;
+  min-width: 0;
 }

@@ -1048,10 +1048,20 @@ function showParchment(word) {
   // article (stage 0).  Words in multiple chapters show all chips.
   const _wcMap = (typeof WORD_CHAPTERS !== 'undefined') ? WORD_CHAPTERS : {};
   const _wc = _wcMap[(c.h || '').toLowerCase()] || [];
+  // v=82 — chapter dots: small antique-gold circles (same family as
+  // the parchment key glyph) anchored to the painted scroll-roll at
+  // the top of the asset.  One circle per chapter; the circle wears
+  // the section number (e.g. "1.1") and the long theme is the
+  // tooltip.  Tap to jump.  Replaces the wider .pc-chapter-chip row
+  // per user: "搞几个圆圈 和你画的小钥匙同款".
   const chipHtml = _wc.length
-    ? `<div class="pc-chapter-chips">${_wc.map(e =>
-        `<button class="pc-chapter-chip" data-jump-ch="${e.idx}">Ch ${e.idx} · ${escapeHtml(e.theme || '')}</button>`
-      ).join('')}</div>`
+    ? `<div class="pc-chapter-dots">${_wc.map(e => {
+        const labelChapter = (typeof CHAPTER_PLAN !== 'undefined' && CHAPTER_PLAN[e.idx - 1])
+          ? (CHAPTER_PLAN[e.idx - 1].section || String(e.idx))
+          : String(e.idx);
+        const title = e.theme || `Chapter ${e.idx}`;
+        return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">${escapeHtml(labelChapter)}</button>`;
+      }).join('')}</div>`
     : '';
   items.push({ kind: 'head', html: `
     ${chipHtml}
@@ -1288,7 +1298,7 @@ function showParchment(word) {
   // Closes the parchment first, then sets saved.chapter (for the
   // session only — NOT advancing the mainline), reseeds the session
   // for that chapter, and lands on stage 0.
-  veil.querySelectorAll('.pc-chapter-chip').forEach(chip => {
+  veil.querySelectorAll('.pc-chapter-dot, .pc-chapter-chip').forEach(chip => {
     chip.addEventListener('click', e => {
       e.stopPropagation();
       const target = +chip.getAttribute('data-jump-ch');
@@ -1296,7 +1306,12 @@ function showParchment(word) {
       (SFX.pageTurn ? SFX.pageTurn() : SFX.tap());
       closeParchment();
       setTimeout(() => {
-        saved.chapter = target;
+        // v=82 — opening from a parchment dot is free-mode too
+        // (doesn't push the mainline).  User can read another
+        // chapter, then Continue Reading restores mainline.
+        saved.chapter  = target;
+        saved.freeMode = true;
+        saved.stage    = 0;
         Store.save();
         freshSession();
         go('stage0');
@@ -1991,16 +2006,27 @@ const Screens = {
           return m;
         });
       }
+      // v=82 — split body into sentence-paragraphs so each gets its
+      // own ♪ button.  The parchment paradigm: tap ♪ to hear the
+      // section read aloud, same as parchment rows.  Per user: "段落
+      // 朗读 跟羊皮纸一样的".
+      const paras = (section.body || '')
+        .split(/(?<=[.!?])\s+(?=[A-Z])/)   // sentence split
+        .filter(s => s.trim().length > 0);
+      const paraHtml = paras.map((p, i) => `
+        <div class="s0-para pc-play-row" data-sp="${escapeAttr(p)}" data-para-idx="${i}">
+          <button class="pc-play s0-para-play" aria-label="play">♪</button>
+          <span class="s0-para-text">${linkify(p)}</span>
+        </div>
+      `).join('');
       el.innerHTML = `
         <div class="s0-page">
           <header class="s0-header">
             <div class="s0-chip">${escapeHtml(article.title)}</div>
             <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-            <div class="s0-sub">— tap any underlined word to open its page —</div>
+            <div class="s0-sub">— ♪ to hear · tap any underlined word —</div>
           </header>
-          <section class="s0-section">
-            <p class="s0-body">${linkify(section.body)}</p>
-          </section>
+          <section class="s0-section">${paraHtml}</section>
           <div class="s0-actions"></div>
         </div>
       `;
@@ -2012,6 +2038,17 @@ const Screens = {
           (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
           showParchment(w);
         }
+      }));
+      // Wire ♪ buttons → TTS the paragraph.
+      $$('.s0-para-play', el).forEach(btn => btn.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const row = btn.closest('.s0-para');
+        const sp = row && row.getAttribute('data-sp');
+        if (!sp) return;
+        $$('.s0-para.is-playing', el).forEach(p => p.classList.remove('is-playing'));
+        row.classList.add('is-playing');
+        SFX.tap();
+        speak(sp).then(() => row.classList.remove('is-playing'));
       }));
       $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => {
         (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
