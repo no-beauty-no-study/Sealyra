@@ -1849,13 +1849,15 @@ body.no-scroll {
 body.bg-cover  #bg-layer { background-image: url("assets/bg-cover.jpg?v=46"); }
 body.bg-stage  #bg-layer { background-image: url("assets/bg-stage.jpg?v=46"); }
 body.bg-result #bg-layer { background-image: url("assets/bg-result.jpg?v=46"); }
-/* v=80 — stage 0 (article reading) uses a SOFT CREAM page background
-   per user: "白底黑字 类似羊皮纸 但羊皮纸不能复用".  No PNG asset —
-   pure CSS so the reading page has a calm, well-lit "open book"
-   feel that contrasts the dark velvet of the rest of the app.    */
+/* v=83 — stage 0 paints the user's bg-stage0.jpg (cream book page
+   with painted floral border).  The text frame .s0-text-frame
+   below is sized so words always sit inside the painted ornament.
+   User: "先框文字区 然后把字塞进去".                            */
 body.bg-stage0 #bg-layer {
-  background-image: none;
-  background-color: #f4ead0;
+  background-image: url("assets/bg-stage0.jpg?v=83");
+  background-size: cover;
+  background-position: center top;
+  background-color: #efe2c0;
 }
 body.bg-stage0 #bg-layer::after { display: none; }
 body.bg-note   #bg-layer { background-image: url("assets/bg-note.jpg?v=46"); }
@@ -7554,14 +7556,38 @@ body { background: transparent !important; }
    their parchment card.  The whole page scrolls.               */
 body.bg-stage0 .scene-veil { display: none; }
 body.bg-stage0 #banner-top  { display: none; }
+/* v=83 — the .s0-page is the OUTER container that lets the painted
+   floral border on bg-stage0.jpg show.  Padding pushes the text
+   frame inside the painted ornament; the text frame itself has
+   no decoration — text just sits between the painted columns.    */
 .s0-page {
   max-width: 720px;
   margin: 0 auto;
-  padding: 28px 22px 80px;
+  /* Top / bottom paddings reserve room for the painted floral
+     headpiece + footpiece on the asset; sides reserve the
+     vertical floral columns.                                     */
+  padding: 12vw 12vw 14vw;
   color: #2a1808;
   font-family: Georgia, 'EB Garamond', 'Garamond', serif;
   font-size: 16px;
   line-height: 1.62;
+  box-sizing: border-box;
+}
+.s0-text-frame {
+  /* Inner text box.  Stays transparent so the painted scroll
+     shows through, but its boundary tells text where to live so
+     long sentences don't drift onto the floral border.           */
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  padding: 4px 0;
+  box-sizing: border-box;
+}
+@media (min-width: 640px) {
+  .s0-page { padding: 92px 110px 110px; }
+}
+@media (min-width: 980px) {
+  .s0-page { padding: 110px 140px 130px; max-width: 820px; }
 }
 .s0-header {
   text-align: center;

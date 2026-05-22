@@ -2021,13 +2021,15 @@ const Screens = {
       `).join('');
       el.innerHTML = `
         <div class="s0-page">
-          <header class="s0-header">
-            <div class="s0-chip">${escapeHtml(article.title)}</div>
-            <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-            <div class="s0-sub">— ♪ to hear · tap any underlined word —</div>
-          </header>
-          <section class="s0-section">${paraHtml}</section>
-          <div class="s0-actions"></div>
+          <div class="s0-text-frame">
+            <header class="s0-header">
+              <div class="s0-chip">${escapeHtml(article.title)}</div>
+              <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+              <div class="s0-sub">— ♪ to hear · tap any underlined word —</div>
+            </header>
+            <section class="s0-section">${paraHtml}</section>
+            <div class="s0-actions"></div>
+          </div>
         </div>
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
