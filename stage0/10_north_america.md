@@ -452,6 +452,96 @@ A coordinated attack by hijacked passenger aircraft demolished the World Trade C
 
 ---
 
+## 10.31  The Brain in the Scanner
+
+Late twentieth-century American neuroscience finally acquired the instruments to perceive the human brain at work in real time. The functional magnetic resonance imaging scanner detects which neighbouring regions of the cortex receive elevated blood flow during particular cognitive tasks, generating a robust map of where neurons are firing across the trillions of synapses that connect them, and permits researchers to hypothesise precise circuits and validate them against the data. The amygdala lights up during fear, generating an anxious arousal that is hard to negate consciously; the hippocampus consolidates new memories into long-term storage; the prefrontal cortex moderates impulse through inhibition. The neuroscientists also identified the lateralisation of language, predominantly housed in the left hemisphere, although every clean lateralisation rule eventually meets an apprehensive counterexample. The reward neurotransmitter dopamine, generated whenever a peer-approved goal is achieved or a positive social signal is detected, has turned out to be the substance that compulsive gambling and infinite-scroll video apps quietly exploit, deliberately constructed to fire the same circuitry on a randomised schedule that no human reflex can resist. The result, increasingly visible in young populations, is an attention syndrome that resembles a clinical phobia of any task that does not deliver an immediate dopamine pulse, and therapy clinics across every American city now cater to teenagers who cannot finish a chapter of homework before the phone reaches them again.
+
+**Q1:** Which brain region activates during fear?
+**A1:** amygdala
+
+**Q2:** Which brain region consolidates long-term memories?
+**A2:** hippocampus
+
+**Q3:** Which neurotransmitter do gambling and short-video apps exploit?
+**A3:** dopamine
+
+---
+
+## 10.32  The Trial of the Century
+
+The American legal system became the most televised theatre on the planet in the late twentieth century. The trial of a celebrity defendant accused of murdering his wife generated a year of daily broadcast and split the country along racial lines that the courtroom could neither reconcile nor adjudicate. The plaintiff in any American litigation must prove its claim by a preponderance of the evidence; the prosecution in any criminal case must cite testimony that is rigorous beyond reasonable doubt. The Miranda warning, articulated after a Supreme Court ruling on a wrongful confession in Arizona, now mandates every American police officer to recite four short sentences to every arrestee about the right to remain silent and the right to an attorney. The jury system, inherited from English common law, accommodates twelve ordinary citizens within the jurisdiction of the relevant court, who must reach categorical unanimous agreement before any verdict can be ratified. When that verdict is challenged on appeal, the rebuttal must articulate either new evidence or new procedural grounds; precedents cannot be applied retroactively, and an unbiased panel must review them. Even the federal quarantine orders that closed every airport during the recent pandemic ultimately rested on a thin civil-defence statute that had not been litigated for sixty years, and the Supreme Court has yet to deem clearly what limits the executive may impose when the threat is microscopic. The rehabilitation of convicted offenders, meanwhile, invariably remains the principal unresolved question of American sentencing, the validity of any deterrence claim still hotly debated.
+
+**Q1:** Which Supreme Court warning protects every American arrestee?
+**A1:** Miranda warning
+
+**Q2:** Which legal party brings the claim in a lawsuit?
+**A2:** plaintiff
+
+**Q3:** Which public-health measure closed American airports during the pandemic?
+**A3:** quarantine
+
+---
+
+## 10.33  MBA and Wall Street
+
+Across the post-war decades the American Master of Business Administration evolved into the standard credential for entry into senior corporate management. The MBA curriculum codified financial accounting, marginal pricing, investment analysis, and the rigorous logic of profitability. The Enron collapse, in which a publicly traded energy corporation had been concealing immense hazardous liabilities inside off-balance-sheet subsidiary entities, generated an entire generation of new audit regulation that has been periodically updated whenever a new federal subsidy programme creates fresh incentives for accounting manipulation. Every American shareholder now reads the annual statement for indications of solvency, transparency, and disclosure, and any opaque footnote is likely to hamper investor confidence rather than reassure it. The contemporary American corporation produces an annual statement specifying revenue, cost, inventory, and tolerance for inventory shrinkage, and every stakeholder from passive investor to executive board reads that document for indications of the year's true direction. Apple, under the operational genius of Tim Cook, eventually constructed the most profitable industrial supply chain on the planet, outsourcing the manufacture of every iPhone to a network of Asian subsidiaries, optimising procurement contracts with several thousand suppliers, and reducing the specification tolerance on every assembled component to a fraction of a millimetre. Outdated and superficial accounting methods have been progressively superseded by software systems that flag every irregularity automatically. The economic return on investment of that single chain has, by some measures, exceeded the gross domestic product of most nations, and analysts expect comparable returns for the foreseeable future.
+
+**Q1:** Which post-war American business credential standardised corporate management?
+**A1:** MBA
+
+**Q2:** Which energy corporation's collapse rewrote American audit regulation?
+**A2:** Enron
+
+**Q3:** Which industrial structure did Tim Cook build for Apple?
+**A3:** supply chain
+
+---
+
+## 10.34  The Survey and the Number
+
+Modern American social science depends absolutely on statistics, and the foundation of any survey is the principle that a representative sample of a few thousand respondents can predict the behaviour of a population a thousand times larger. The pollster George Gallup demonstrated this in the nineteen thirties by predicting the American presidential election with greater accuracy from a sample of fewer than five thousand than his competitors had achieved by polling several million. The standard statistical instruments of contemporary research, including the median, the mode, the variance, the coefficient of correlation, and the regression line, are now deployed everywhere social phenomena are measured. The matrix of numerical parameters underlying every machine-learning model is similarly recursive, with a model trained by repeatedly applying its own theorem to its own residual error. Where the original Gallup approach relied on a simple stratified heuristic, modern models cite far more complex statistical foundations. Netflix, having accumulated the viewing histories of several hundred million subscribers into a single dense matrix, recommends what each user will watch next by reducing the matrix into a small set of latent variables that benchmark each new title against every previous one. Any salient correlation that turns out to be equivocal on closer inspection is now flagged automatically, and ambiguous parameters are tested for validity through repeated cross-validation. The same binary logic of comparison and ranking now propagates across nearly every commercial system you encounter, and a passing acquaintance with numeracy is increasingly the gateway to any sustained intellectual employment. Even the bandwidth allocation in your smartphone is decided by a statistical model.
+
+**Q1:** Which American pollster predicted elections from a small sample?
+**A1:** Gallup
+
+**Q2:** Which statistical measure is the middle value in a sorted list?
+**A2:** median
+
+**Q3:** Which statistical line best fits a scatter of points?
+**A3:** regression
+
+---
+
+## 10.35  The High Line and the Block
+
+American urban planners across the twenty-first century have begun to revisit the assumptions on which the twentieth-century car-centric city was constructed. The High Line in Manhattan, a disused elevated freight railway that had been idle for decades, was converted across a decade into a public park whose pedestrianisation and accessible amenities have generated billions in surrounding real-estate redevelopment and become an internationally imitated model of post-industrial urban revitalisation. Barcelona's neighbouring superblock districts implemented the same principle across several neighbourhoods, restricting cars to peripheral corridors and returning the interior streets to walkers, café tables, and children playing in the road. Singapore's national housing programme made urban sanitation, public transit, and affordable apartments simultaneously available to nearly every citizen, eliminating the sporadic congestion of informal slum settlement that has accompanied urban agglomeration almost everywhere else on the planet, and surmounting strenuous planning challenges that other cities have failed to solve. The bicycle infrastructure of Copenhagen turned the daily commute into a fifteen-minute pedalled crossing that no longer required a car at all. Each of these innovations rests on the same principle: an urban landmark should serve the people who live near it rather than the cars that pass through it. Transparency, accountability, and dense local participation have become the conspicuous standards of the new urbanism, and the post-war suburban sprawl is beginning, finally, to look outdated.
+
+**Q1:** Which converted Manhattan railway became a global urban-renewal model?
+**A1:** High Line
+
+**Q2:** Which Barcelona district pattern restricts cars to the periphery?
+**A2:** superblock
+
+**Q3:** Which transport service did Singapore make universally accessible?
+**A3:** public transit
+
+---
+
+## 10.36  Sponge City and the Vertical Farm
+
+Across the twentieth century, the city of Los Angeles drew its drinking water from an aqueduct hundreds of miles long that despoiled the agricultural valleys to its north and depleted every aquifer the canal could reach, a strategy that antedates almost every modern environmental regulation. Modern water engineering has shifted toward two opposite tactics that aim to alleviate the depletion. The sponge city concept, developed by Dutch engineers and exported to dozens of municipalities, replaces impermeable urban concrete with permeable pavement, increases tree-lined catchment basins, restores wetlands at the bottom of every storm watershed, and turns flooded streets back into recharge for the local water-table. Where the concept has been implemented at scale, the eutrophication that follows excess agricultural pollutant flowing into urban canals has receded measurably, debunking the once-burgeoning suspicion that urban storm management cannot be improved. At the opposite end of the spectrum, vertical farms in Manhattan basements grow lettuce hydroponically beneath neutral light-emitting diodes, using a fraction of the irrigation water consumed by the equivalent arable acreage in the open air and producing the same micronutrient content for the same caloric weight. The agronomy of indoor vertical farming, an unlikely application of classical botany, will not displace conventional livestock or wheat any time soon, though early results have been validated in several pilot operations. Even municipal landfill operations are now engineered to capture and incinerate the methane released by decomposing organic matter, converting waste combustion into electrical power. Engineers remain ambivalent about how rapidly these methods will scale, but the trajectory is unmistakable.
+
+**Q1:** Which urban design concept makes pavement absorb storm water?
+**A1:** sponge city
+
+**Q2:** Which indoor farming method grows plants without soil?
+**A2:** hydroponics
+
+**Q3:** Which buried water layer was depleted by Los Angeles's aqueduct?
+**A3:** aquifer
+
+---
+
 ## Vocabulary Drill: Database Words Used in This Chapter
 
 10.1  emerge, expose, track, populate, annihilate, encounter, vanish, reshape
@@ -514,6 +604,18 @@ A coordinated attack by hijacked passenger aircraft demolished the World Trade C
 
 10.30  hijack, demolish, damage, invade, sustain, withdraw, manifest, consume, expose, retreat, dwindle, relocate, erode, absorb
 
+10.31  perceive, detect, generate, hypothesise, validate, negate, exploit, resist, cater
+
+10.32  cite, mandate, ratify, accommodate, deem, invariably, articulate, deem
+
+10.33  hamper, supersede, outsource, audit, optimise, reduce, exceed
+
+10.34  predict, accumulate, recommend, benchmark, propagate
+
+10.35  convert, generate, restrict, surmount, eliminate
+
+10.36  despoil, deplete, alleviate, debunk, displace, capture, incinerate, validate
+
 New domain nouns introduced across the chapter:
 
-ice age, Bering land bridge, tundra, mammoth, bison, megafauna, ground sloth, sabre-toothed cat, short-faced bear, Maya, pyramid, glyph, calendar, Venus, drought, abandonment, Tenochtitlan, canal, chinampa, causeway, Cortés, Moctezuma, smallpox, Aztec, Mexico City, Sioux, Cheyenne, buffalo, hide, sinew, horn, dung, prairie, Iroquois Confederacy, council, separation of powers, federated authority, consent of the governed, Benjamin Franklin, Thomas Jefferson, Rocky Mountains, rain shadow, Great Plains, monarch butterfly, fir forest, Great Lakes, Pleistocene, ice sheet, Niagara Falls, Lake Erie, Lake Ontario, drumlin, bedrock, glacial till, Colorado River, Grand Canyon, sedimentary rock, Yellowstone, supervolcano, magma chamber, geyser, hot spring, Alaska, glacier, fjord, Pilgrim, Mayflower, Virginia, Massachusetts, Wampanoag, turkey, deer, shellfish, Thanksgiving, kite, Leyden jar, lightning rod, Boston Tea Party, Mohawk, Declaration of Independence, prospector, wagon train, clipper ship, San Francisco, Sierra Nevada, Cherokee, Choctaw, Creek, Seminole, Trail of Tears, reservation, cotton plantation, Abraham Lincoln, secede, Civil War, Emancipation Proclamation, segregation, lynching, disenfranchisement, Martin Luther King, I Have a Dream, blues, holler, spiritual, jazz, gospel choir, Elvis Presley, rock and roll, hip-hop, Bronx, sample, Edison, light bulb, phonograph, motion picture camera, patent, Leyden, Tesla, alternating current, direct current, Westinghouse, Bell, telephone, Wright brothers, glider, Henry Ford, assembly line, Model T, Rockefeller, Standard Oil, Carnegie, steel mill, Pittsburgh, library, Great Depression, New Deal, Pearl Harbor, Manhattan Project, Hiroshima, Nagasaki, fission, nuclear weapon, satellite, cosmonaut, NASA, Apollo, Neil Armstrong, Sea of Tranquillity, Voyager, phonograph record, interstellar, Skinner, reinforcement schedule, pigeon, Milgram, electrical shock, Zimbardo, Stanford prison experiment, marshmallow study, Kahneman, prospect theory, Watson, Crick, Rosalind Franklin, DNA, double helix, base pair, Salk, polio vaccine, HeLa cell, genome, CRISPR, gene-editing, Silicon Valley, orchard, Jobs, Wozniak, Apple, Gates, Allen, IBM, ARPANET, World Wide Web, iPhone, Google, Facebook, large language model, ChatGPT, Claude, Rachel Carson, DDT, pesticide, eggshell, Environmental Protection Agency, grey wolf, trophic balance, beaver, honeybee, mite, Pollock, abstract expressionism, Rothko, Warhol, pop art, Campbell soup, Marilyn Monroe, Basquiat, graffiti, MoMA, Hollywood, Snow White, Disney, Broadway, Phantom of the Opera, Lion King, Hamilton, steel skeleton, skyscraper, Manhattan skyline, Frank Lloyd Wright, Fallingwater, Frank Gehry, Guggenheim, titanium, deconstructivism, Ivy League, MIT, Stanford, endowment, tenured faculty, SAT, affirmative action, suffragette, Nineteenth Amendment, Roe v Wade, abortion, Title Nine, #MeToo, Harvey Weinstein, Stonewall, same-sex marriage, transgender rights, Black Lives Matter, George Floyd, Minneapolis, Standing Rock, pipeline, 9/11, World Trade Center, Pentagon, Afghanistan, Iraq, California wildfire, Hurricane Katrina, New Orleans, sea ice, climate refugee
+ice age, Bering land bridge, tundra, mammoth, bison, megafauna, ground sloth, sabre-toothed cat, short-faced bear, Maya, pyramid, glyph, calendar, Venus, drought, abandonment, Tenochtitlan, canal, chinampa, causeway, Cortés, Moctezuma, smallpox, Aztec, Mexico City, Sioux, Cheyenne, buffalo, hide, sinew, horn, dung, prairie, Iroquois Confederacy, council, separation of powers, federated authority, consent of the governed, Benjamin Franklin, Thomas Jefferson, Rocky Mountains, rain shadow, Great Plains, monarch butterfly, fir forest, Great Lakes, Pleistocene, ice sheet, Niagara Falls, Lake Erie, Lake Ontario, drumlin, bedrock, glacial till, Colorado River, Grand Canyon, sedimentary rock, Yellowstone, supervolcano, magma chamber, geyser, hot spring, Alaska, glacier, fjord, Pilgrim, Mayflower, Virginia, Massachusetts, Wampanoag, turkey, deer, shellfish, Thanksgiving, kite, Leyden jar, lightning rod, Boston Tea Party, Mohawk, Declaration of Independence, prospector, wagon train, clipper ship, San Francisco, Sierra Nevada, Cherokee, Choctaw, Creek, Seminole, Trail of Tears, reservation, cotton plantation, Abraham Lincoln, secede, Civil War, Emancipation Proclamation, segregation, lynching, disenfranchisement, Martin Luther King, I Have a Dream, blues, holler, spiritual, jazz, gospel choir, Elvis Presley, rock and roll, hip-hop, Bronx, sample, Edison, light bulb, phonograph, motion picture camera, patent, Leyden, Tesla, alternating current, direct current, Westinghouse, Bell, telephone, Wright brothers, glider, Henry Ford, assembly line, Model T, Rockefeller, Standard Oil, Carnegie, steel mill, Pittsburgh, library, Great Depression, New Deal, Pearl Harbor, Manhattan Project, Hiroshima, Nagasaki, fission, nuclear weapon, satellite, cosmonaut, NASA, Apollo, Neil Armstrong, Sea of Tranquillity, Voyager, phonograph record, interstellar, Skinner, reinforcement schedule, pigeon, Milgram, electrical shock, Zimbardo, Stanford prison experiment, marshmallow study, Kahneman, prospect theory, Watson, Crick, Rosalind Franklin, DNA, double helix, base pair, Salk, polio vaccine, HeLa cell, genome, CRISPR, gene-editing, Silicon Valley, orchard, Jobs, Wozniak, Apple, Gates, Allen, IBM, ARPANET, World Wide Web, iPhone, Google, Facebook, large language model, ChatGPT, Claude, Rachel Carson, DDT, pesticide, eggshell, Environmental Protection Agency, grey wolf, trophic balance, beaver, honeybee, mite, Pollock, abstract expressionism, Rothko, Warhol, pop art, Campbell soup, Marilyn Monroe, Basquiat, graffiti, MoMA, Hollywood, Snow White, Disney, Broadway, Phantom of the Opera, Lion King, Hamilton, steel skeleton, skyscraper, Manhattan skyline, Frank Lloyd Wright, Fallingwater, Frank Gehry, Guggenheim, titanium, deconstructivism, Ivy League, MIT, Stanford, endowment, tenured faculty, SAT, affirmative action, suffragette, Nineteenth Amendment, Roe v Wade, abortion, Title Nine, #MeToo, Harvey Weinstein, Stonewall, same-sex marriage, transgender rights, Black Lives Matter, George Floyd, Minneapolis, Standing Rock, pipeline, 9/11, World Trade Center, Pentagon, Afghanistan, Iraq, California wildfire, Hurricane Katrina, New Orleans, sea ice, climate refugee, fMRI, cortex, neuron, synapse, amygdala, hippocampus, prefrontal cortex, inhibition, lateralisation, dopamine, reflex, attention, syndrome, phobia, therapy, peer, defendant, plaintiff, litigation, jurisdiction, testimony, Miranda warning, jury, rebuttal, retroactive, quarantine, rehabilitation, MBA, Enron, audit, subsidiary, subsidy, shareholder, solvency, stakeholder, revenue, inventory, tolerance, specification, supply chain, outsourcing, procurement, profitability, Gallup, median, mode, variance, coefficient, regression, parameter, matrix, recursion, theorem, variable, benchmark, latent variable, binary, numeracy, bandwidth, High Line, pedestrianisation, amenities, redevelopment, revitalisation, superblock, sanitation, transit, congestion, agglomeration, commute, landmark, transparency, aqueduct, aquifer, sponge city, permeable pavement, catchment, watershed, water-table, eutrophication, pollutant, vertical farm, hydroponics, irrigation, arable, micronutrient, agronomy, botany, livestock, landfill, combustion

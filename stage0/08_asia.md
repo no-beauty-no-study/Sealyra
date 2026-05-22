@@ -332,6 +332,21 @@ To curb the demographic explosion that had accompanied the early decades of the 
 
 ---
 
+## 8.23  The Shaman and the Mammoth Hunter
+
+The paleolithic peoples of north Asia, ancestors of every indigenous community from Siberia to Alaska, organised their existence around the seasonal subsistence hunt of large mammals across treeless tundra. Their economic system rested on the barter exchange of meat, hide, and bone across small kin-based bands that traded with each other along established overland routes. The neolithic transition arrived later in the north Asian steppes than in southern river valleys, eventually leading to the domestication of the reindeer, which provided milk, meat, hide, and transport in a single animal. Across the entire Eurasian Arctic, from Saami Lapland through Siberian Evenki to coastal Inuit, the indigenous worldview was articulated by the shaman, a ritual specialist who entered trance through drumming and chanting in order to negotiate with the spirit world on behalf of the community. Each tribe identified itself with a totem, an emblematic animal or object that articulated kinship across generations. Their accumulated folklore, transmitted across centuries by oral recitation, preserved an entire anthropological cosmology that academic anthropogenesis researchers are still patiently reconstructing from the scattered linguistic relics, archaeological artefacts, and oral testimonies that have survived.
+
+**Q1:** Which old-stone-age period preceded the neolithic transition?
+**A1:** paleolithic
+
+**Q2:** Which trance-ritual specialist mediated with the spirit world?
+**A2:** shaman
+
+**Q3:** Which emblematic animal or object identifies a tribe?
+**A3:** totem
+
+---
+
 ## Vocabulary Drill: Database Words Used in This Chapter
 
 8.1  drift, collide, buckle, designate, sever, generate, sustain
@@ -378,6 +393,8 @@ To curb the demographic explosion that had accompanied the early decades of the 
 
 8.22  curb, institute, restrict, saturate, converge, matriculate, qualify, leverage, accumulate, contribute, condition, reinvent
 
+8.23  organise, rest, articulate, negotiate, identify, transmit, reconstruct
+
 New domain nouns introduced across the chapter:
 
-tectonic plate, collision, Himalaya, alpine plateau, monsoon, Tibetan plateau, snow leopard, yak, rib cage, bovine, Tibetan antelope, haemoglobin, altitude, golden eagle, permafrost, Siberian tiger, sable, fur, woolly mammoth, riverbank, surrogate, clone, rainforest, orangutan, canopy, proboscis monkey, rafflesia, vine, giant panda, bamboo, digestive tract, archipelago, Komodo dragon, venom, cardiovascular system, macaque, sweet potato, animal culture, Yangtze, rice paddy, silkworm, mulberry, cocoon, silk thread, bolt, Confucius, Analects, Confucianism, civil service, imperial examination, meritocracy, Laozi, buffalo, Dao De Jing, Zhuangzi, butterfly, Taoism, yin and yang, geomancy, Qin Shi Huang, Ying Zheng, magistrate, Great Wall, Terracotta Army, bodhi tree, Four Noble Truths, Eightfold Path, Buddha, Chan, Zen, tea ceremony, flower arrangement, way of the sword, Hinduism, Brahman, incarnation, yoga, Gandhi, Chang'an, calligraphy, brush stroke, kiln, ceramics, glaze, paper, gunpowder, compass, woodblock, sutra, Bi Sheng, movable type, Gutenberg, Reformation, Shen Kuo, Silk Road, oasis, Samarkand, Bukhara, Kashgar, crucible, marmot, plague bacterium, Genghis Khan, Temujin, cavalry, Kublai Khan, Yuan dynasty, travel pass, Marco Polo, samurai, bushido, disembowelment, dry garden, Hokusai, Great Wave, Hayao Miyazaki, Akira Kurosawa, Haruki Murakami, tea, opium, Lin Zexu, Royal Navy, Hong Kong, Qing dynasty, Tambora, ash cloud, Year Without a Summer, Mary Shelley, Frankenstein, cholera, synthetic ammonia, Deng Xiaoping, Reform and Opening Up, special economic zone, socialist market economy, high-speed rail, BYD, CATL, lithium battery, Huawei, semiconductor, Shenzhen, Made in China 2025, Belt and Road Initiative, demographic explosion, one-child policy, art conservatoire, visual communication design, multi-platform content creator, postgraduate qualification, human-computer interaction, algorithmic system, cohort
+tectonic plate, collision, Himalaya, alpine plateau, monsoon, Tibetan plateau, snow leopard, yak, rib cage, bovine, Tibetan antelope, haemoglobin, altitude, golden eagle, permafrost, Siberian tiger, sable, fur, woolly mammoth, riverbank, surrogate, clone, rainforest, orangutan, canopy, proboscis monkey, rafflesia, vine, giant panda, bamboo, digestive tract, archipelago, Komodo dragon, venom, cardiovascular system, macaque, sweet potato, animal culture, Yangtze, rice paddy, silkworm, mulberry, cocoon, silk thread, bolt, Confucius, Analects, Confucianism, civil service, imperial examination, meritocracy, Laozi, buffalo, Dao De Jing, Zhuangzi, butterfly, Taoism, yin and yang, geomancy, Qin Shi Huang, Ying Zheng, magistrate, Great Wall, Terracotta Army, bodhi tree, Four Noble Truths, Eightfold Path, Buddha, Chan, Zen, tea ceremony, flower arrangement, way of the sword, Hinduism, Brahman, incarnation, yoga, Gandhi, Chang'an, calligraphy, brush stroke, kiln, ceramics, glaze, paper, gunpowder, compass, woodblock, sutra, Bi Sheng, movable type, Gutenberg, Reformation, Shen Kuo, Silk Road, oasis, Samarkand, Bukhara, Kashgar, crucible, marmot, plague bacterium, Genghis Khan, Temujin, cavalry, Kublai Khan, Yuan dynasty, travel pass, Marco Polo, samurai, bushido, disembowelment, dry garden, Hokusai, Great Wave, Hayao Miyazaki, Akira Kurosawa, Haruki Murakami, tea, opium, Lin Zexu, Royal Navy, Hong Kong, Qing dynasty, Tambora, ash cloud, Year Without a Summer, Mary Shelley, Frankenstein, cholera, synthetic ammonia, Deng Xiaoping, Reform and Opening Up, special economic zone, socialist market economy, high-speed rail, BYD, CATL, lithium battery, Huawei, semiconductor, Shenzhen, Made in China 2025, Belt and Road Initiative, demographic explosion, one-child policy, art conservatoire, visual communication design, multi-platform content creator, postgraduate qualification, human-computer interaction, algorithmic system, cohort, paleolithic, neolithic, subsistence, tundra, barter, kin-based band, reindeer, Saami, Evenki, Inuit, shaman, trance, drum, chant, totem, kinship, folklore, anthropological, anthropogenesis, relic, artefact
