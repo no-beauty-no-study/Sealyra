@@ -368,7 +368,9 @@ const Store = {
   load() {
     try {
       return Object.assign(
-        { progress: 0, learned: {}, mistakes: {}, chapter: 1, stage: 1 },
+        // v=80 — added mainlineChapter (linear progression marker)
+        // + freeMode (true while user is playing a catalog jump).
+        { progress: 0, learned: {}, mistakes: {}, chapter: 1, stage: 0, mainlineChapter: 1, freeMode: false },
         JSON.parse(localStorage.getItem('hll-state') || '{}')
       );
     } catch { return { progress: 0, learned: {}, mistakes: {}, chapter: 1 }; }
@@ -377,13 +379,18 @@ const Store = {
 };
 const saved = Store.load();
 if (!saved.chapter || saved.chapter < 1) { saved.chapter = 1; Store.save(); }
-if (!saved.stage   || saved.stage   < 1 || saved.stage > 3) { saved.stage = 1; Store.save(); }
+if (!saved.mainlineChapter || saved.mainlineChapter < 1) { saved.mainlineChapter = saved.chapter; Store.save(); }
+// v=80 — stage 0 added as the article reading + quiz layer.
+// saved.stage ∈ {0,1,2,3}; 0 = pre-game reading, 1-3 = match/read/dict.
+if (saved.stage == null || saved.stage < 0 || saved.stage > 3) { saved.stage = 0; Store.save(); }
 // v=63 — restart-game reset: chapter only.  Learned + mistakes are
 // lifetime stats; user resets the "where am I in the storybook"
 // counter, not their notebook.
 function resetChapterProgress() {
   saved.chapter = 1;
-  saved.stage   = 1;
+  saved.mainlineChapter = 1;
+  saved.freeMode = false;
+  saved.stage   = 0;
   Store.save();
 }
 function recordMistake(word) {
@@ -428,6 +435,7 @@ function freshSession() {
    ------------------------------------------------------------ */
 const BG_BY_SCREEN = {
   cover: 'bg-cover',
+  stage0: 'bg-stage0', 'stage0-quiz': 'bg-stage0',
   stage1: 'bg-stage', stage2: 'bg-stage', stage3: 'bg-stage',
   'stage1-result': 'bg-result',
   'stage2-result': 'bg-result',
@@ -435,10 +443,7 @@ const BG_BY_SCREEN = {
   note: 'bg-note', 'note-bucket': 'bg-note', index: 'bg-note', card: 'bg-note',
   'chapter-catalog': 'bg-note'
 };
-// Only screens with real word lists are allowed to scroll the page —
-// every other screen locks body overflow so the iOS bounce can't make
-// the (fixed) bg-layer look like it's moving.
-const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result', 'chapter-catalog']);
+const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result', 'chapter-catalog', 'stage0', 'stage0-quiz']);
 function go(screenId, opts = {}) {
   // v=53 — black-curtain transition.  Two paces:
   //   · MAJOR  (cover → stage / between stages / chapter end):
@@ -511,6 +516,8 @@ const BGM_POOL_BY_SCREEN = {
   index:           'home',
   card:            'home',
   'chapter-catalog': 'home',
+  stage0:          'home',
+  'stage0-quiz':   'home',
   stage1:          'game',
   'stage1-result': 'result',
   stage2:          'home',
@@ -533,6 +540,8 @@ const BGM_GROUP_BY_SCREEN = {
   index:           'home-side',
   card:            'home-side',
   'chapter-catalog': 'home-side',
+  stage0:          'stage0',
+  'stage0-quiz':   'stage0-quiz',
   stage1:          'stage1',
   'stage1-result': 'stage1-result',
   stage2:          'stage2',
@@ -1007,7 +1016,18 @@ function showParchment(word) {
   // and reveals one-by-one on tap.
   const items = [];
 
+  // v=80 — header chapter chip(s): which chapter(s) does this word
+  // appear in?  Tapping a chip jumps to that chapter's reading
+  // article (stage 0).  Words in multiple chapters show all chips.
+  const _wcMap = (typeof WORD_CHAPTERS !== 'undefined') ? WORD_CHAPTERS : {};
+  const _wc = _wcMap[(c.h || '').toLowerCase()] || [];
+  const chipHtml = _wc.length
+    ? `<div class="pc-chapter-chips">${_wc.map(e =>
+        `<button class="pc-chapter-chip" data-jump-ch="${e.idx}">Ch ${e.idx} · ${escapeHtml(e.theme || '')}</button>`
+      ).join('')}</div>`
+    : '';
   items.push({ kind: 'head', html: `
+    ${chipHtml}
     <div class="pc-head" data-sp="${escapeAttr(c.h)}">
       <button class="pc-play" aria-label="play">♪</button>
       <span class="pc-word">${escapeHtml(c.h)}</span>
@@ -1237,6 +1257,25 @@ function showParchment(word) {
     });
   }
   veil.querySelectorAll('.pc-play-row[data-sp], .pc-head[data-sp]').forEach(wirePlay);
+  // v=80 — chapter chips jump to that chapter's reading article.
+  // Closes the parchment first, then sets saved.chapter (for the
+  // session only — NOT advancing the mainline), reseeds the session
+  // for that chapter, and lands on stage 0.
+  veil.querySelectorAll('.pc-chapter-chip').forEach(chip => {
+    chip.addEventListener('click', e => {
+      e.stopPropagation();
+      const target = +chip.getAttribute('data-jump-ch');
+      if (!target) return;
+      (SFX.pageTurn ? SFX.pageTurn() : SFX.tap());
+      closeParchment();
+      setTimeout(() => {
+        saved.chapter = target;
+        Store.save();
+        freshSession();
+        go('stage0');
+      }, 280);
+    });
+  });
 
   // v=52 — Inline jump-link.  Any underlined word inside the
   // parchment content (.pc-jump) closes this page and opens the
@@ -1807,8 +1846,24 @@ const Screens = {
       // resume at that stage so a passed stage 1 + stage 2 lands
       // the user directly on the dictation.  User: "Tonight Reading
       // 不是继续游戏吗 — 应该从默写继续开始".
-      const resumeStage = saved.stage && saved.stage >= 1 && saved.stage <= 3 ? saved.stage : 1;
-      const ctaLabel = resumeStage > 1 ? `Continue · Stage ${resumeStage}` : 'Continue Reading';
+      // v=80 — Continue Reading always lands on the MAINLINE chapter
+      // (linear progression).  Catalog jumps set saved.freeMode and
+      // saved.chapter to whatever was tapped, but mainlineChapter
+      // tracks the true linear position.  Hitting Continue Reading
+      // syncs saved.chapter back to mainlineChapter and clears
+      // freeMode.
+      let resumeStage = (saved.stage == null) ? 0 : saved.stage;
+      if (resumeStage < 0 || resumeStage > 3) resumeStage = 0;
+      const mainline = saved.mainlineChapter || saved.chapter || 1;
+      const chapHasArticle = mainline <= (typeof STAGE0_ARTICLES !== 'undefined' ? STAGE0_ARTICLES.length : 0);
+      if (resumeStage === 0 && !chapHasArticle) resumeStage = 1;
+      const stageLabels = {
+        0: 'Continue · Reading',
+        1: 'Continue · Stage 1',
+        2: 'Continue · Stage 2',
+        3: 'Continue · Stage 3'
+      };
+      const ctaLabel = resumeStage === 0 && mainline === 1 ? 'Continue Reading' : stageLabels[resumeStage];
       $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
@@ -1816,6 +1871,14 @@ const Screens = {
         document.body.appendChild(fade);
         requestAnimationFrame(() => fade.classList.add('show'));
         setTimeout(() => {
+          // v=80 — Continue Reading clears freeMode + resyncs saved.
+          // chapter to mainlineChapter so the linear progression
+          // resumes correctly even if the user had hopped into a
+          // catalog chapter previously.
+          saved.freeMode = false;
+          saved.chapter = saved.mainlineChapter || saved.chapter || 1;
+          if (!saved.mainlineChapter) saved.mainlineChapter = saved.chapter;
+          Store.save();
           freshSession();
           go('stage' + resumeStage);
           setTimeout(() => fade.remove(), 700);
@@ -1875,6 +1938,157 @@ const Screens = {
      If the user dyes a left card while the current tag already has
      a left card, the previous left is cleared — same with right.
      This rule is what the user asked for: 左+右 only.            */
+
+  /* ---------- STAGE 0 — pre-game reading material (v=80) ----------
+     The user wrote 10 themed articles ("The Universe", "Earth
+     History", "Africa", etc.).  This screen displays the article
+     of the current chapter; every word that has a parchment card
+     becomes an underlined jump-link.  A "begin questions" button
+     at the bottom routes to stage0-quiz.                            */
+  stage0: {
+    onEnter() {
+      const el = $('#screen-stage0');
+      const articleIdx = (saved.chapter || 1) - 1;
+      const article = (typeof STAGE0_ARTICLES !== 'undefined')
+                    && STAGE0_ARTICLES[articleIdx];
+      if (!article) {
+        // Chapter has no article — skip to stage 1.
+        go('stage1');
+        return;
+      }
+      // Inline-linkify every word that matches a PARCHMENT_CARD.
+      function linkify(text) {
+        if (!text) return '';
+        return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
+          const k = w.toLowerCase();
+          if (PARCHMENT_CARDS[k]) {
+            return `<a class="s0-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
+          }
+          return m;
+        });
+      }
+      const sectionsHtml = article.sections.map(s => `
+        <section class="s0-section">
+          <h3 class="s0-section-title"><span class="s0-section-num">${escapeHtml(s.id)}</span> ${escapeHtml(s.title)}</h3>
+          <p class="s0-body">${linkify(s.body)}</p>
+        </section>
+      `).join('');
+      el.innerHTML = `
+        <div class="s0-page">
+          <header class="s0-header">
+            <div class="s0-chip">Chapter ${article.id} · Stage 0</div>
+            <h1 class="s0-title">${escapeHtml(article.title)}</h1>
+            <div class="s0-sub">— read the story · tap any underlined word to open its page —</div>
+          </header>
+          ${sectionsHtml}
+          <div class="s0-actions"></div>
+        </div>
+      `;
+      el.appendChild(closeCorner({ to: 'cover' }));
+      // Wire jump-links → parchment.
+      $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const w = a.getAttribute('data-jump');
+        if (PARCHMENT_CARDS[w]) {
+          (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
+          showParchment(w);
+        }
+      }));
+      // "Begin questions" CTA.
+      $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => go('stage0-quiz'), { confirm: false }));
+    }
+  },
+
+  /* ---------- STAGE 0 QUIZ — 3 noun-recall questions (v=80) ----------
+     Picks 3 questions at random from the article's Q&A list.  Each
+     question gets 4 options: the true answer + 3 distractor nouns
+     drawn from OTHER questions of the same article (all are nouns
+     by design).                                                     */
+  'stage0-quiz': {
+    onEnter() {
+      const el = $('#screen-stage0-quiz');
+      const articleIdx = (saved.chapter || 1) - 1;
+      const article = (typeof STAGE0_ARTICLES !== 'undefined')
+                    && STAGE0_ARTICLES[articleIdx];
+      if (!article) { go('stage1'); return; }
+      // Collect all article Q&A
+      const allQs = [];
+      article.sections.forEach(s => (s.questions || []).forEach(q => {
+        if (q.q && q.a) allQs.push({ q: q.q, a: q.a, secId: s.id, secTitle: s.title });
+      }));
+      if (allQs.length < 3) { go('stage1'); return; }
+      // 3 random questions + a noun pool for distractors
+      const picks = shuffle(allQs).slice(0, 3);
+      const nounPool = Array.from(new Set(allQs.map(q => q.a)));
+      const state0 = { idx: 0, correct: 0, answered: false, picks };
+      function drawQ() {
+        const q = state0.picks[state0.idx];
+        const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
+        const options = shuffle([q.a, ...distractors]);
+        el.innerHTML = `
+          <div class="s0q-page">
+            <div class="s0q-progress">${state0.idx + 1} of 3</div>
+            <div class="s0q-section">${escapeHtml(q.secId)} · ${escapeHtml(q.secTitle)}</div>
+            <h2 class="s0q-question">${escapeHtml(q.q)}</h2>
+            <div class="s0q-options"></div>
+            <div class="s0q-feedback" id="s0q-feedback"></div>
+            <div class="s0q-actions"></div>
+          </div>
+        `;
+        const optsHost = $('.s0q-options', el);
+        options.forEach(opt => {
+          const b = document.createElement('button');
+          b.className = 'card card--option s0q-opt';
+          b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
+          b.addEventListener('click', () => {
+            if (state0.answered) return;
+            state0.answered = true;
+            (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
+            const isRight = opt.toLowerCase() === q.a.toLowerCase();
+            if (isRight) {
+              state0.correct++;
+              b.classList.add('reveal-right');
+              SFX.right();
+            } else {
+              b.classList.add('picked-wrong');
+              // Also highlight the correct one
+              $$('.s0q-opt', el).forEach(other => {
+                if (other.querySelector('.mc-text').textContent.toLowerCase() === q.a.toLowerCase()) {
+                  other.classList.add('reveal-right');
+                }
+              });
+              SFX.wrong();
+            }
+            $('#s0q-feedback', el).innerHTML = isRight
+              ? '<em>✦ inscribed</em>'
+              : `<em>the answer was <span class="s0q-truth">${escapeHtml(q.a)}</span></em>`;
+            $('.s0q-actions', el).appendChild(nextDoor(
+              state0.idx === 2 ? 'Begin Stage 1' : 'Next Question',
+              () => {
+                if (state0.idx === 2) {
+                  // Bump saved.stage to 1 (out of reading layer) if
+                  // got at least 2/3.
+                  if ((saved.stage || 0) < 1) {
+                    saved.stage = 1;
+                    Store.save();
+                  }
+                  go('stage1');
+                } else {
+                  state0.idx++;
+                  state0.answered = false;
+                  drawQ();
+                }
+              },
+              { confirm: false }
+            ));
+          });
+          optsHost.appendChild(b);
+        });
+      }
+      drawQ();
+      el.appendChild(closeCorner({ to: 'cover' }));
+    }
+  },
   stage1: {
     onEnter() {
       const el = $('#screen-stage1');
@@ -2578,8 +2792,18 @@ const Screens = {
       const _dictsPerfect = state.session.dicts
         .every(d => state.results[d.head] && state.results[d.head].dict === true);
       if (_dictsPerfect) {
-        saved.chapter = (saved.chapter || 1) + 1;
-        saved.stage   = 1;   // v=77 — new chapter starts at stage 1
+        // v=80 — only the MAINLINE chapter advances saved.chapter +
+        // saved.mainlineChapter.  Free-mode (catalog) plays don't
+        // touch the linear progression.
+        const isMainline = !saved.freeMode &&
+          (saved.chapter === (saved.mainlineChapter || saved.chapter));
+        if (isMainline) {
+          saved.chapter = (saved.chapter || 1) + 1;
+          saved.mainlineChapter = saved.chapter;
+          saved.stage = 0;   // new chapter starts at stage 0
+        }
+        // In free-mode the chapter stays put; user goes back to
+        // cover and Continue Reading will land them on mainline.
       }
       Store.save();
 
@@ -2764,10 +2988,16 @@ const Screens = {
             actions: [
               { label: 'cancel',     variant: 'ghost', onClick: () => {} },
               { label: 'play',       variant: '',     onClick: () => {
+                // v=80 — catalog jumps mark the session as "free
+                // play": saved.chapter shifts but saved.mainline
+                // doesn't advance.  Continue Reading still resumes
+                // at the linear mainline chapter.
                 saved.chapter = s.idx + 1;
+                saved.freeMode = true;
+                saved.stage = 0;
                 Store.save();
                 freshSession();
-                go('stage1');
+                go('stage0');
               }}
             ]
           });

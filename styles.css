@@ -1849,6 +1849,15 @@ body.no-scroll {
 body.bg-cover  #bg-layer { background-image: url("assets/bg-cover.jpg?v=46"); }
 body.bg-stage  #bg-layer { background-image: url("assets/bg-stage.jpg?v=46"); }
 body.bg-result #bg-layer { background-image: url("assets/bg-result.jpg?v=46"); }
+/* v=80 — stage 0 (article reading) uses a SOFT CREAM page background
+   per user: "白底黑字 类似羊皮纸 但羊皮纸不能复用".  No PNG asset —
+   pure CSS so the reading page has a calm, well-lit "open book"
+   feel that contrasts the dark velvet of the rest of the app.    */
+body.bg-stage0 #bg-layer {
+  background-image: none;
+  background-color: #f4ead0;
+}
+body.bg-stage0 #bg-layer::after { display: none; }
 body.bg-note   #bg-layer { background-image: url("assets/bg-note.jpg?v=46"); }
 
 /* Screens themselves no longer paint backgrounds — they live on top
@@ -7535,3 +7544,202 @@ body { background: transparent !important; }
   font-size: 10px;
   opacity: 0.85;
 }
+
+/* ============================================================
+   v=80 — STAGE 0 (pre-game reading article)
+   ============================================================
+   White-cream paper background, antique-brown serif text.  Each
+   section has a chapter-number prefix in italic + title in
+   capitalised serif.  Inline .s0-jump words are jumpable to
+   their parchment card.  The whole page scrolls.               */
+body.bg-stage0 .scene-veil { display: none; }
+body.bg-stage0 #banner-top  { display: none; }
+.s0-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 22px 80px;
+  color: #2a1808;
+  font-family: Georgia, 'EB Garamond', 'Garamond', serif;
+  font-size: 16px;
+  line-height: 1.62;
+}
+.s0-header {
+  text-align: center;
+  margin: 8px 0 26px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(110, 63, 18, 0.22);
+}
+.s0-chip {
+  display: inline-block;
+  font-family: 'Cinzel', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(110, 63, 18, 0.72);
+  margin-bottom: 10px;
+}
+.s0-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(22px, 5vw, 30px);
+  color: #2a1808;
+  margin: 0 0 8px;
+  letter-spacing: 0.04em;
+}
+.s0-sub {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(110, 63, 18, 0.58);
+  letter-spacing: 0.06em;
+}
+.s0-section {
+  margin: 22px 0;
+}
+.s0-section-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #4a2810;
+  margin: 0 0 10px;
+  letter-spacing: 0.02em;
+}
+.s0-section-num {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(138, 90, 24, 0.78);
+  margin-right: 6px;
+}
+.s0-body {
+  font-family: Georgia, 'EB Garamond', serif;
+  font-size: 15.5px;
+  line-height: 1.68;
+  text-align: justify;
+  text-indent: 1.4em;
+  margin: 0;
+  color: #2a1808;
+}
+.s0-jump {
+  text-decoration: underline dotted rgba(110, 63, 18, 0.65);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  color: #5a3010;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+.s0-jump:hover, .s0-jump:active {
+  color: #2a1808;
+  text-decoration-color: rgba(110, 63, 18, 1);
+  text-decoration-thickness: 1.4px;
+}
+.s0-actions {
+  text-align: center;
+  margin: 36px 0 12px;
+}
+.s0-page .next-door .tt-text,
+.s0-page .next-door .cta-text {
+  color: #4a2810 !important;
+  -webkit-text-fill-color: #4a2810 !important;
+}
+.s0-page .next-door .tt-glyph { color: rgba(138, 90, 24, 0.85) !important; }
+
+/* ============================================================
+   v=80 — STAGE 0 QUIZ (3 noun-recall questions, 4 options each)
+   ============================================================
+   Same cream-paper background; cards use the existing match-card
+   visual but on a lighter tray.                                 */
+.s0q-page {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 28px 22px 60px;
+  color: #2a1808;
+  text-align: center;
+}
+.s0q-progress {
+  font-family: 'Cinzel', Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(110, 63, 18, 0.72);
+  margin-bottom: 8px;
+}
+.s0q-section {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(110, 63, 18, 0.58);
+  margin-bottom: 18px;
+}
+.s0q-question {
+  font-family: Georgia, 'EB Garamond', serif;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.45;
+  color: #2a1808;
+  margin: 0 auto 28px;
+  max-width: 460px;
+}
+.s0q-options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+.s0q-feedback {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(110, 63, 18, 0.72);
+  margin: 22px 0 12px;
+  min-height: 22px;
+}
+.s0q-truth {
+  color: #2a1808;
+  font-weight: 600;
+  text-decoration: underline dotted rgba(138, 90, 24, 0.65);
+  text-underline-offset: 2px;
+}
+.s0q-actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+.s0q-page .next-door .tt-text { color: #4a2810 !important; -webkit-text-fill-color: #4a2810 !important; }
+.s0q-page .next-door .tt-glyph { color: rgba(138, 90, 24, 0.85) !important; }
+
+/* v=80 — parchment header chip(s) showing which chapter(s) this
+   word belongs to.  Tappable; jumps to the chapter's stage-0
+   article.  Multi-chapter words show all chips in a row.       */
+.pc-chapter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 4px;
+  justify-content: center;
+}
+.pc-chapter-chip {
+  display: inline-block;
+  font-family: 'Cinzel', Georgia, serif;
+  font-style: italic;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: rgba(110, 63, 18, 0.85);
+  background: rgba(232, 196, 138, 0.18);
+  border: 1px solid rgba(140, 90, 36, 0.42);
+  border-radius: 999px;
+  padding: 2px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.pc-chapter-chip:hover  {
+  color: #2a1808;
+  background: rgba(232, 196, 138, 0.32);
+  border-color: rgba(140, 90, 36, 0.75);
+}
+.pc-chapter-chip:active { transform: translateY(1px); }
