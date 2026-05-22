@@ -186,13 +186,13 @@ The work songs of enslaved Africans labouring in cotton fields, the call-and-res
 
 The American inventor Edison opened a research laboratory in New Jersey and generated the first commercially viable incandescent light bulb, the phonograph, and the motion picture camera, eventually accumulating over a thousand patents. He insisted that direct electrical current was the only safe form of household electricity and toured the country electrocuting stray dogs and even an elephant to demonstrate the supposed dangers of his rival's system. His Serbian-born former assistant Nikola Tesla, a famously clever experimentalist working with the manufacturer Westinghouse, advocated alternating current, whose lower transmission losses across long distances permitted electricity to be distributed economically from a single generating station to an entire city. The physics ultimately favoured Tesla and the American electrical grid was constructed on alternating current. Tesla himself, despite an immense list of inventions, died in poverty in a small New York hotel, while Edison left a vast industrial empire and his name on every major American utility.
 
-**Q1:** Which US inventor got over a thousand patents?
-**A1:** Edison
+**Q1:** What kind of legal protection did Edison accumulate over a thousand of?
+**A1:** patent
 
-**Q2:** Which Serbian inventor died poor after beating Edison on AC?
-**A2:** Tesla
+**Q2:** What recording invention did Edison generate for sound playback?
+**A2:** phonograph
 
-**Q3:** Which current became the US electrical grid standard?
+**Q3:** What form of electrical current became the US grid standard?
 **A3:** alternating current
 
 ---
@@ -201,14 +201,14 @@ The American inventor Edison opened a research laboratory in New Jersey and gene
 
 The Scottish-American Alexander Graham Bell, attempting to design a hearing aid for his deaf mother, accidentally invented the telephone instead and demonstrated for the first time that the human voice could be transmitted across an electrical wire. The Wright brothers, who repaired bicycles in Ohio for a living, conducted patient aerodynamic experiments on the dunes of North Carolina until they achieved the first sustained powered flight in a wooden glider whose wings they had warped through cable-and-pulley control, founding the entire modern aviation industry. Henry Ford devised the moving automobile assembly line in Detroit, dropping the price of the Model T to a level that ordinary American workers could afford, and effectively converted the automobile from an aristocratic toy into the everyday means of transport that has restructured every American city built afterward.
 
-**Q1:** Who accidentally invented the telephone designing a hearing aid?
-**A1:** Alexander Graham Bell
+**Q1:** What invention did Bell accidentally generate while designing a hearing aid?
+**A1:** telephone
 
-**Q2:** Which Ohio brothers achieved the first powered flight?
-**A2:** Wright brothers
+**Q2:** What kind of wooden flying machine did the Wright brothers pilot first?
+**A2:** glider
 
-**Q3:** Who devised the Detroit assembly line?
-**A3:** Henry Ford
+**Q3:** What manufacturing system did Ford devise in Detroit?
+**A3:** assembly line
 
 ---
 

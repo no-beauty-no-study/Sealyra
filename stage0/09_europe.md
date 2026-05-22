@@ -36,14 +36,14 @@ In the ancient city of Athens the free male citizens convened on a hilltop assem
 
 Socrates roamed the Athenian agora interrogating politicians and wealthy citizens with relentless questions about the nature of justice and the good, never writing anything down himself, until at the age of seventy he was condemned to death by the very city he had cross-examined for a lifetime. His student Plato recorded their conversations and articulated the doctrine that the perceptible world consists merely of imperfect shadows of higher Forms. Plato's own student Aristotle reversed the doctrine, insisting that the Forms reside within ordinary objects, and assigned the names that still designate every major academic discipline. Across the sea in Syracuse, the engineer Archimedes leapt from his bath shouting "eureka" upon perceiving the principle of buoyancy, and later used polished mirrors to focus sunlight and incinerate the besieging Roman ships.
 
-**Q1:** Which Athenian philosopher was sentenced to death at seventy?
-**A1:** Socrates
+**Q1:** What was Socrates's profession?
+**A1:** philosopher
 
-**Q2:** Which student of Plato named every academic discipline?
-**A2:** Aristotle
+**Q2:** Where did Socrates interrogate politicians and citizens in Athens?
+**A2:** agora
 
-**Q3:** Which Syracusan engineer shouted "eureka" in the bath?
-**A3:** Archimedes
+**Q3:** What physical principle did Archimedes discover in his bath?
+**A3:** buoyancy
 
 ---
 
@@ -201,14 +201,14 @@ The Florentine cathedral had stood for a century with a vast circular opening at
 
 Leonardo da Vinci painted the Mona Lisa during the day and dissected human cadavers in secret at night, recording in his notebooks the anatomical details he observed alongside designs for helicopters, tanks, and submarines four centuries ahead of any plausible implementation. Michelangelo painted the ceiling of the Sistine Chapel lying on his back for four years, after which his cervical vertebrae had deformed permanently. Raphael, the youngest of the three, assembled all the major Greek philosophers in his fresco The School of Athens beneath a single arched ceiling, painting each one with a distinct personality and including a small smiling self-portrait in the corner. All three figures were simultaneously artists, engineers, and anatomists. Leonardo had dissected his first cadaver as a teenager; Michelangelo personally selected each block of marble from the Carrara quarry.
 
-**Q1:** Who painted Mona Lisa and designed helicopters?
-**A1:** Leonardo da Vinci
+**Q1:** What did Leonardo secretly dissect at night to study anatomy?
+**A1:** cadaver
 
-**Q2:** Who painted the Sistine Chapel ceiling on his back?
-**A2:** Michelangelo
+**Q2:** What body part of Michelangelo permanently deformed from painting on his back?
+**A2:** cervical vertebrae
 
-**Q3:** Who painted The School of Athens?
-**A3:** Raphael
+**Q3:** What kind of wall painting is The School of Athens?
+**A3:** fresco
 
 ---
 
@@ -291,14 +291,14 @@ The Polish astronomer Copernicus calculated, against every philosophical and the
 
 The son of a small-town glove-maker grew up to write thirty-seven plays and one hundred fifty-four sonnets that effectively reshaped the English language itself. Shakespeare invented or first attested vocabulary so basic that contemporary speakers cannot perceive its provenance: assassination, addiction, lonely, eyeball, bedroom. His lines have become idiomatic shorthand for entire human conditions. Meanwhile his sovereign, Elizabeth I, refused all proposals of marriage and declared herself wedded instead to her kingdom, personally authorised the naval engagement that demolished the Spanish Armada, and steered England from the periphery of European affairs into the centre of a maritime empire that would extend across the next three centuries. A glover's son and an unmarried queen, working in parallel through language and through fleet, had together opened England's path to global influence.
 
-**Q1:** Which glover's son wrote 37 plays that reshaped English?
-**A1:** Shakespeare
+**Q1:** What 14-line poems did Shakespeare master alongside his plays?
+**A1:** sonnet
 
-**Q2:** Which English queen defeated the Spanish Armada?
-**A2:** Elizabeth I
+**Q2:** Which trade did Shakespeare's father practise in Stratford?
+**A2:** glove-making (or glover)
 
-**Q3:** Which Spanish fleet did Elizabeth I demolish?
-**A3:** Spanish Armada
+**Q3:** What kind of naval expedition did Elizabeth I demolish off the English coast?
+**A3:** armada
 
 ---
 
@@ -606,14 +606,14 @@ The French chemist Pasteur demonstrated through controlled experiments that ferm
 
 The Polish-French chemist Marie Curie isolated the element radium from several tons of uranium ore in a poorly ventilated laboratory shed, eventually winning Nobel prizes in both physics and chemistry, and continues to be the only person who has won the Nobel in two distinct scientific disciplines. The same century redrew the foundations of classical mechanics itself: physicists rewrote the laws governing equilibrium, momentum, friction, inertia, and the optical spectrum into the elegant formal architecture that every modern engineering discipline now relies upon. Her sustained exposure to radioactive material eventually terminated her through leukaemia, and her laboratory notebooks remain so radioactive that researchers wishing to consult them must still wear protective clothing. The English experimentalist Faraday, a blacksmith's son, discovered electromagnetic induction. The Scottish theorist Maxwell condensed Faraday's experimental findings into four elegant equations that predicted electromagnetic waves. The German experimenter Hertz demonstrated those waves directly. The Swiss patent clerk Einstein then articulated special relativity and the equivalence of mass and energy, rewriting the entire field of physics from a small wooden desk.
 
-**Q1:** Which Polish-French chemist isolated radium?
-**A1:** Marie Curie
+**Q1:** What radioactive element did Marie Curie isolate from uranium ore?
+**A1:** radium
 
-**Q2:** Whose equations predicted electromagnetic waves?
-**A2:** Maxwell
+**Q2:** What blood disease eventually killed Marie Curie from her work?
+**A2:** leukaemia
 
-**Q3:** Which Swiss patent clerk articulated E=mc²?
-**A3:** Einstein
+**Q3:** What does Einstein's E=mc² assert about mass and energy?
+**A3:** equivalence
 
 ---
 
