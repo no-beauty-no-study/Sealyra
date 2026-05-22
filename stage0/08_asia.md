@@ -96,13 +96,13 @@ On a small Japanese island, a single young female macaque was observed picking u
 
 In the marshy lowlands along the lower Yangtze River, prehistoric farmers gradually domesticated a small-grained wild grass into the rice plant that today sustains nearly half the human population on the planet. The same farmers, generations later, domesticated a small white insect called the silkworm, which consumes nothing but the leaves of the mulberry tree and produces a continuous thread of glossy protein with which it wraps itself into a cocoon. Chinese cultivators learned to harvest these cocoons before the moth emerged, unwinding them into immense lengths of silk thread that could be woven into the finest fabric ever produced in the ancient world. The Chinese imperial government guarded the silkworm secret for over a thousand years, executing anyone who attempted to smuggle the eggs abroad, while a single bolt of silk fetched its own weight in gold in the markets of Rome.
 
-**Q1:** Which Chinese river valley domesticated rice?
-**A1:** Yangtze
+**Q1:** What grain crop did prehistoric farmers domesticate from a marshy wild grass in the Yangtze valley?
+**A1:** rice
 
-**Q2:** Which insect spins silk in its cocoon?
-**A2:** silkworm
+**Q2:** What protective wrapping does the silkworm spin around itself before becoming a moth?
+**A2:** cocoon
 
-**Q3:** What punishment awaited silkworm smugglers?
+**Q3:** What sentence did imperial China impose on silkworm smugglers to protect its monopoly?
 **A3:** execution
 
 ---
@@ -141,14 +141,14 @@ A near contemporary of Confucius, the elder Laozi, rode westward on a buffalo th
 
 A king of the western Chinese state of Qin, named Ying Zheng, spent a decade conquering the six other warring states and unified the whole of China under a single throne, designating himself the First Emperor. He standardised the script, the coinage, the units of length and weight, and abolished hereditary aristocracy in favour of a centralised bureaucracy of magistrates appointed directly from the capital, a template that has structured Chinese governance for two thousand years afterward. To restrain the nomadic horsemen pressing in from the north, he connected the existing border walls into the first version of the Great Wall. To extend his rule beyond the grave, he commissioned a buried army of several thousand life-sized terracotta soldiers to guard his tomb, the Terracotta Army, which lay undisturbed beneath the soil until peasants digging a well in the twentieth century stumbled across the first warrior by accident.
 
-**Q1:** Which king unified China and called himself First Emperor?
-**A1:** Qin Shi Huang
+**Q1:** What centralised administrative structure did Qin Shi Huang impose in place of hereditary aristocracy?
+**A1:** bureaucracy
 
-**Q2:** Which defensive wall did he assemble against northern nomads?
-**A2:** Great Wall
+**Q2:** What kind of defensive structure did the First Emperor connect along the northern border?
+**A2:** wall
 
-**Q3:** Which buried clay army guards his tomb?
-**A3:** Terracotta Army
+**Q3:** What kind of clay sculpture is each warrior in the buried army that guards the First Emperor's tomb?
+**A3:** terracotta
 
 ---
 
@@ -156,14 +156,14 @@ A king of the western Chinese state of Qin, named Ying Zheng, spent a decade con
 
 A young prince in northern India, raised in the comfort of his father's palace, encountered for the first time outside its walls an aged man, a sick man, and a corpse. The shock transformed him utterly. He renounced his royal inheritance, walked into the forest, and meditated beneath a tree we now call the bodhi tree until he grasped the Four Noble Truths: that life involves suffering, that suffering originates in craving, that craving can be extinguished, and that the method of extinguishing it is the Eightfold Path. He emerged from the meditation as the Buddha, and the teaching he subsequently transmitted spread across South, Southeast, and East Asia. In China the doctrine fused with Taoism to develop into Chan Buddhism. Chan crossed the sea into Japan and developed into Zen, generating in turn the meditative tea ceremony, the flower arrangement, and the way of the sword.
 
-**Q1:** Which Indian prince renounced his palace to meditate?
-**A1:** Buddha
+**Q1:** What did the young Indian prince renounce when he walked into the forest to meditate?
+**A1:** inheritance
 
-**Q2:** Which sacred tree did he sit beneath?
-**A2:** bodhi tree
+**Q2:** What discipline of seated quiet contemplation did the Buddha pursue under the bodhi tree?
+**A2:** meditation
 
-**Q3:** Which Japanese form of Buddhism descended from Chinese Chan?
-**A3:** Zen
+**Q3:** What ceremonial practice of preparing and drinking matcha did Japanese Zen generate?
+**A3:** tea ceremony
 
 ---
 
@@ -171,14 +171,14 @@ A young prince in northern India, raised in the comfort of his father's palace, 
 
 Older than Buddhism itself, Hinduism has never functioned as a single religion in the European sense but rather as an entire way of life. The Hindu cosmology conceives the perceptible world as the manifestation of Brahman, the ultimate reality, and each individual soul as a fragment of that same Brahman, returning across successive incarnations toward eventual reunification with the source. Hindu practitioners devised yoga, a discipline that combines bodily posture, controlled breathing, and meditation in order to align the body with the mind and the mind with the cosmos. In the twentieth century a slight Indian lawyer named Mahatma Gandhi adapted the Hindu doctrines of non-violence and refusal to harm into a political instrument against the British colonial administration, walking barefoot across the subcontinent and urging his compatriots to refuse cooperation without ever striking back, eventually compelling the British Empire to withdraw.
 
-**Q1:** Which Indian way of life conceives the world as Brahman?
-**A1:** Hinduism
+**Q1:** What ultimate reality does Hindu cosmology hold the perceptible world to be a manifestation of?
+**A1:** Brahman
 
-**Q2:** Which Hindu discipline aligns body, breath, and mind?
+**Q2:** What Hindu discipline of bodily posture, breathing, and meditation aligns body with mind?
 **A2:** yoga
 
-**Q3:** Which Indian lawyer drove out the British with non-violence?
-**A3:** Gandhi
+**Q3:** What political doctrine of refusing to strike back did Gandhi adapt from Hindu teaching?
+**A3:** non-violence
 
 ---
 
@@ -186,13 +186,13 @@ Older than Buddhism itself, Hinduism has never functioned as a single religion i
 
 The Tang dynasty capital of Chang'an was the largest international city in the world during its century, its avenues thronged with Persian merchants, Arab envoys, Japanese student monks, and Korean painters. The Tang calligraphers treated each brush stroke as a breathing thing; the Song landscape painters mastered the layered perspective of receding mountains; the great kilns produced ceramics whose translucent glaze has never been equalled. Across the same span China generated four inventions that eventually reshaped the entire planet: paper, which liberated text from the cumbersome bamboo strip; printing, which liberated books from the labour of copying by hand; gunpowder, originally formulated by alchemists chasing immortality but eventually mounted on European cannon; and the compass, which gave oceanic navigation its first reliable direction. Few civilisations have generated as many world-altering technologies in a single epoch.
 
-**Q1:** Which Tang dynasty capital was the world's largest city?
-**A1:** Chang'an
+**Q1:** What was the Tang capital Chang'an, in size, relative to every other city of its century?
+**A1:** largest
 
-**Q2:** Which Chinese explosive did alchemists invent chasing immortality?
-**A2:** gunpowder
+**Q2:** What immortality-chasing pseudoscience did Chinese alchemists practise, which incidentally generated gunpowder?
+**A2:** alchemy
 
-**Q3:** Which Chinese instrument first reliably pointed at sea?
+**Q3:** What navigational instrument did Chinese sailors first deploy reliably at sea?
 **A3:** compass
 
 ---
@@ -201,14 +201,14 @@ The Tang dynasty capital of Chang'an was the largest international city in the w
 
 Tang dynasty Buddhist monks first carved entire sutras onto wooden blocks and printed multiple copies of each text by inking the blocks and pressing paper against them, a technique that exploded the availability of religious literature throughout East Asia. Several centuries later a Song dynasty craftsman named Bi Sheng improved on the technique by carving each character onto a separate small clay block, generating the world's first movable type. The Chinese technology eventually propagated westward across the Silk Road and emerged in Europe four centuries later, where the German artisan Gutenberg adapted it to the Latin alphabet, printed the first European Bible, and inadvertently catalysed the Reformation, the Renaissance, and the scientific revolution. Bi Sheng himself died in relative obscurity in China, his name preserved only because a contemporary scientist named Shen Kuo happened to record the invention in his collected notebooks.
 
-**Q1:** Which Chinese craftsman invented movable type?
-**A1:** Bi Sheng
+**Q1:** What reusable printing technology of small clay blocks did Bi Sheng invent?
+**A1:** movable type
 
-**Q2:** Which German adapted Chinese type to print the Bible?
-**A2:** Gutenberg
+**Q2:** What religious book did Gutenberg's adapted European movable-type press print first?
+**A2:** Bible
 
-**Q3:** Whose notebook preserved Bi Sheng's name?
-**A3:** Shen Kuo
+**Q3:** What kind of personal collected writings preserved the record of Bi Sheng's invention?
+**A3:** notebook
 
 ---
 
@@ -231,14 +231,14 @@ The Silk Road never carried only silk. Along its caravan tracks travelled Buddhi
 
 A poor steppe chieftain named Temujin, who would later assume the title Genghis Khan, organised the scattered Mongol tribes into the most disciplined cavalry the planet had ever seen, and across a single generation conquered the largest contiguous land empire in human history, extending from the Pacific coast all the way to the eastern edge of Europe. His grandson Kublai Khan completed the conquest of southern China and established the Yuan dynasty in Beijing. Within the Mongol empire the Silk Road operated with unprecedented security: a single travel pass issued by the central administration permitted a merchant to traverse from Beijing to Damascus without harassment, and the Venetian merchant Marco Polo crossed the entire span and served as an official in the Yuan court. The same road, decades later, conveyed the bubonic plague from the Asian steppes into the Crimean ports and onward into every harbour in Europe.
 
-**Q1:** Which Mongol leader built history's largest land empire?
-**A1:** Genghis Khan
+**Q1:** What highly disciplined mounted military force did Genghis Khan organise from the scattered Mongol tribes?
+**A1:** cavalry
 
-**Q2:** Which Venetian merchant served in the Yuan court?
-**A2:** Marco Polo
+**Q2:** What kind of administrative travel document permitted a single merchant to traverse from Beijing to Damascus under the Mongols?
+**A2:** travel pass
 
-**Q3:** Which Chinese dynasty did Kublai Khan establish in Beijing?
-**A3:** Yuan
+**Q3:** What Italian city was Marco Polo originally a merchant from?
+**A3:** Venice
 
 ---
 
@@ -246,14 +246,14 @@ A poor steppe chieftain named Temujin, who would later assume the title Genghis 
 
 Separated from the Asian mainland by a narrow strait, Japan developed across centuries a culture distinct from any continental neighbour. The medieval samurai class devised bushido, an ethical code in which loyalty, honour, and composure in the face of death overrode the survival instinct itself, and ritual disembowelment by one's own sword became the most honourable termination available to a disgraced aristocrat. Zen Buddhism, imported from China, evolved into the austere dry-garden contemplation, the once-in-a-lifetime tea ceremony, and the meditative way of the sword. The Edo-period printmaker Hokusai produced the Great Wave off Kanagawa, which directly inspired the French Impressionists a century later. The post-war animator Hayao Miyazaki, the director Akira Kurosawa, and the novelist Haruki Murakami have together exported Japanese aesthetic sensibility to every young person on the planet.
 
-**Q1:** Which samurai code valued honour above survival?
-**A1:** bushido
+**Q1:** What ritualised self-disembowelment was the most honourable death available to a disgraced samurai under bushido?
+**A1:** seppuku
 
-**Q2:** Which Japanese printmaker made the Great Wave?
-**A2:** Hokusai
+**Q2:** What kind of wood-block art form did Hokusai master in the Edo period?
+**A2:** printmaking
 
-**Q3:** Which Japanese animator exported Studio Ghibli worldwide?
-**A3:** Hayao Miyazaki
+**Q3:** What kind of hand-drawn film form did Hayao Miyazaki perfect for global export?
+**A3:** animation
 
 ---
 
@@ -261,14 +261,14 @@ Separated from the Asian mainland by a narrow strait, Japan developed across cen
 
 In the mountains of Yunnan grows a small evergreen shrub whose dried leaves release a mild stimulant when steeped in hot water. By the eighteenth century the British had developed an addiction to Chinese tea so thorough that they were exhausting their silver reserves to purchase it by the ton. The British East India Company resolved the resulting deficit by industrialising opium cultivation in India and smuggling the drug into China against the imperial prohibition. When the Chinese commissioner Lin Zexu seized and burnt the British opium stock at Canton, the Royal Navy bombarded the Chinese coast, demolished the imperial fleet, and forced the Qing court to legalise opium imports and cede Hong Kong as sovereign British territory. A single agricultural product cultivated in one colony had been used to undermine and partially dismantle an empire that had endured for two millennia.
 
-**Q1:** Which Chinese commissioner burnt British opium at Canton?
-**A1:** Lin Zexu
+**Q1:** What kind of imperial Chinese official was Lin Zexu when he burnt the British opium at Canton?
+**A1:** commissioner
 
-**Q2:** Which drug did the British smuggle into China for tea silver?
+**Q2:** What addictive narcotic did the British East India Company smuggle into China against imperial prohibition?
 **A2:** opium
 
-**Q3:** Which Chinese coastal territory did Britain seize after the war?
-**A3:** Hong Kong
+**Q3:** What kind of unequal diplomatic agreement forced the Qing to legalise opium and cede Hong Kong?
+**A3:** treaty
 
 ---
 
@@ -276,13 +276,13 @@ In the mountains of Yunnan grows a small evergreen shrub whose dried leaves rele
 
 The Indonesian volcano Tambora erupted with such violence that its ash cloud encircled the entire planet and reduced the solar radiation reaching the surface for an entire year, generating what later observers called the Year Without a Summer. Crops failed across Yunnan and famine ensued in southwestern China. The South Asian monsoon faltered, and a cholera epidemic erupted from Bengal that eventually traversed every continent. European harvests collapsed, and a young Mary Shelley, trapped indoors on the shore of Lake Geneva by the unrelenting rain that summer, drafted the novel that became Frankenstein. The same crisis provoked European chemists to study the fertilising chemistry of mineral nitrogen and eventually to develop the synthetic ammonia process that now feeds half of modern agriculture. A single Indonesian eruption reshaped global food production, the history of the gothic novel, and modern chemistry for the following two centuries.
 
-**Q1:** Which Indonesian volcano caused a Year Without a Summer?
-**A1:** Tambora
+**Q1:** What kind of mountain on the island of Sumbawa erupted, generating the global Year Without a Summer?
+**A1:** volcano
 
-**Q2:** Which gothic novel did Mary Shelley draft that rainy summer?
-**A2:** Frankenstein
+**Q2:** What new literary genre did Mary Shelley invent with Frankenstein during that rainy summer?
+**A2:** science fiction
 
-**Q3:** Which epidemic erupted from Bengal during the same crisis?
+**Q3:** What intestinal epidemic erupted from Bengal during the same climatic crisis?
 **A3:** cholera
 
 ---
@@ -291,13 +291,13 @@ The Indonesian volcano Tambora erupted with such violence that its ash cloud enc
 
 After a century of foreign humiliation, civil war, and revolutionary upheaval, China entered a period of austere central planning in which private commerce was effectively eliminated and every farm and factory belonged to the collective. The economy stagnated. A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designated Reform and Opening Up, which redistributed agricultural land back to the households that cultivated it, legalised small private enterprises, and established the first special economic zones along the southern coast at Shenzhen, Zhuhai, Shantou, and Xiamen, where foreign capital could enter on favourable terms. Deng described the resulting hybrid as a socialist market economy, advocating that the country should cross the river by feeling for the stones beneath its feet. Within four decades the experiment had transformed China into the second largest economy on the planet, lifting more people out of poverty in a shorter span than any other policy in history.
 
-**Q1:** Which Chinese leader launched Reform and Opening Up?
-**A1:** Deng Xiaoping
+**Q1:** What reform policy did Deng Xiaoping initiate, redistributing land and legalising private enterprise?
+**A1:** Reform and Opening Up
 
-**Q2:** What experimental coastal districts welcomed foreign capital?
+**Q2:** What kind of designated coastal district welcomed foreign capital on favourable terms?
 **A2:** special economic zone
 
-**Q3:** What hybrid economic model did Deng articulate?
+**Q3:** What kind of mixed economic system did Deng's reforms generate?
 **A3:** socialist market economy
 
 ---
