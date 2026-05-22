@@ -107,17 +107,17 @@ In the marshy lowlands along the lower Yangtze River, prehistoric farmers gradua
 
 ---
 
-## 8.8  Confucius and the Examination
+## 8.8  The Way That Did Not Prevail
 
-In the fifth century before the common era, a wandering scholar named Confucius travelled from one Chinese state to another attempting to persuade the various princes to govern according to a system of moral relationships: ruler kind to subject, father generous to son, husband considerate to wife, elder brother responsible for younger. Not a single prince adopted his teaching during his lifetime, and he died lamenting that the way had not prevailed. Two centuries later the Han emperor instituted Confucianism as the official state philosophy, and across the subsequent two millennia the doctrine has shaped every East Asian society to its core. Centuries later the Sui and Tang dynasties devised the imperial examination, an objective written test of Confucian classics through which any commoner who could memorise the canon might enter the civil service, a meritocratic instrument that prefigured the modern competitive examination by a thousand years.
+In the fifth century before the common era, an unemployed clerk named Confucius walked from one Chinese kingdom to the next, attempting to persuade princes that a state could be governed not by punishment or by armed force but by a single discipline: the patient cultivation of moral relationships between people. Ruler kind to subject. Father generous to son. Husband considerate to wife. Elder brother responsible for younger. If those five bonds held, he insisted, the whole society would hold with them. Not one prince listened. He retreated to teach a handful of students, dictated the conversations they later compiled as the Analects, and died lamenting that the way had not prevailed. Two centuries later the Han emperor read the same conversations and recognised what every prince had missed: a doctrine in which every citizen already knows his proper place is a doctrine that runs itself. Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the moral architecture of every East Asian society, from Korean ancestral rites to Japanese corporate hierarchy to the Vietnamese family table. Then came the masterstroke. The Sui and Tang dynasties devised the imperial examination, an open written test of the Confucian canon through which any peasant's son who could memorise the classics might outrank a duke's nephew and enter the bureaucracy on pure merit. The system ran for thirteen hundred years, the first meritocratic civil service the planet had ever assembled, predating the European abandonment of hereditary aristocracy by an entire millennium. The man who could not persuade a single prince to take him seriously had ended up dictating the rules by which an entire civilisation chose its rulers, for longer than any other political system in recorded human history.
 
 **Q1:** Which Chinese moral doctrine shaped East Asia for two millennia?
 **A1:** Confucianism
 
-**Q2:** Which sage articulated those moral relationships?
-**A2:** Confucius
+**Q2:** What five-relationship framework taught the basis of social order?
+**A2:** five bonds
 
-**Q3:** Which written test let commoners enter the civil service?
+**Q3:** Which written test let commoners outrank aristocrats by merit?
 **A3:** imperial examination
 
 ---
