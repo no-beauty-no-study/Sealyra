@@ -3,10 +3,10 @@
    silently retires the old cache entry, and the second open of any
    given version is INSTANT (no re-download).  Old caches are pruned
    on activate.                                                        */
-const VERSION = 'v83';
+const VERSION = 'v84';
 const CACHE = `sealyra-${VERSION}`;
 
-/* v=83 — PRECACHE LIST.  Every asset the user might hit before the
+/* v=84 — PRECACHE LIST.  Every asset the user might hit before the
    end-of-session is fetched right after install, so even brand-new
    screens (stage backgrounds, painted frames) appear instantly the
    first time the user navigates to them.  Adds maybe ~3 MB to the

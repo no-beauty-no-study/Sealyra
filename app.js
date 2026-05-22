@@ -499,7 +499,7 @@ function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === `screen-${screenId}`));
   window.scrollTo(0, 0);
-  ['bg-cover','bg-stage','bg-result','bg-note'].forEach(c => document.body.classList.remove(c));
+  ['bg-cover','bg-stage','bg-stage0','bg-result','bg-note'].forEach(c => document.body.classList.remove(c));
   document.body.classList.add(BG_BY_SCREEN[screenId] || 'bg-cover');
   document.body.classList.toggle('no-scroll', !SCROLLABLE_SCREENS.has(screenId));
   if (Screens[screenId] && Screens[screenId].onEnter) Screens[screenId].onEnter(opts);
@@ -1054,13 +1054,22 @@ function showParchment(word) {
   // the section number (e.g. "1.1") and the long theme is the
   // tooltip.  Tap to jump.  Replaces the wider .pc-chapter-chip row
   // per user: "搞几个圆圈 和你画的小钥匙同款".
+  // v=84 — chapter dots redesigned per user: small METAL ring with
+  // a dot in the centre (like a button or the parchment-key bow).
+  // The chapter number sits as a tooltip on hover; the ring itself
+  // is purely ornamental.  Tap → flash + open that chapter's
+  // reading article.                                              */
   const chipHtml = _wc.length
     ? `<div class="pc-chapter-dots">${_wc.map(e => {
         const labelChapter = (typeof CHAPTER_PLAN !== 'undefined' && CHAPTER_PLAN[e.idx - 1])
           ? (CHAPTER_PLAN[e.idx - 1].section || String(e.idx))
           : String(e.idx);
-        const title = e.theme || `Chapter ${e.idx}`;
-        return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">${escapeHtml(labelChapter)}</button>`;
+        const title = `Chapter ${labelChapter} · ${(e.theme || '').replace(/^[\d.]+\s*/, '')}`;
+        return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">
+          <span class="pc-chapter-dot-ring"></span>
+          <span class="pc-chapter-dot-center"></span>
+          <span class="pc-chapter-dot-label">${escapeHtml(labelChapter)}</span>
+        </button>`;
       }).join('')}</div>`
     : '';
   items.push({ kind: 'head', html: `
@@ -1303,19 +1312,23 @@ function showParchment(word) {
       e.stopPropagation();
       const target = +chip.getAttribute('data-jump-ch');
       if (!target) return;
+      // v=84 — flash the ring before navigating so the user sees
+      // it light up first.
+      chip.classList.add('is-flashing');
       (SFX.pageTurn ? SFX.pageTurn() : SFX.tap());
-      closeParchment();
       setTimeout(() => {
-        // v=82 — opening from a parchment dot is free-mode too
-        // (doesn't push the mainline).  User can read another
-        // chapter, then Continue Reading restores mainline.
-        saved.chapter  = target;
-        saved.freeMode = true;
-        saved.stage    = 0;
+        closeParchment();
+        // v=84 — record where we came from + which word so the
+        // stage-0 back button can return to this parchment.
+        saved.chapter      = target;
+        saved.freeMode     = true;
+        saved.stage        = 0;
+        saved.s0Origin     = 'parchment';
+        saved.s0OriginWord = word;
         Store.save();
         freshSession();
         go('stage0');
-      }, 280);
+      }, 320);
     });
   });
 
@@ -1897,7 +1910,13 @@ const Screens = {
       let resumeStage = (saved.stage == null) ? 0 : saved.stage;
       if (resumeStage < 0 || resumeStage > 3) resumeStage = 0;
       const mainline = saved.mainlineChapter || saved.chapter || 1;
-      const chapHasArticle = mainline <= (typeof STAGE0_ARTICLES !== 'undefined' ? STAGE0_ARTICLES.length : 0);
+      // v=84 — STAGE0_ARTICLES was renamed to STAGE0_PARTS in v=81;
+      // the leftover check fell through and pushed every fresh
+      // chapter to stage 1 by accident.  Now we look at
+      // _CHAPTER_PLAN[mainline-1].article_id — only chapters with
+      // an article id route through stage 0.
+      const mlChapter = _CHAPTER_PLAN[mainline - 1];
+      const chapHasArticle = !!(mlChapter && mlChapter.article_id);
       if (resumeStage === 0 && !chapHasArticle) resumeStage = 1;
       const stageLabels = {
         0: 'Continue · Reading',
@@ -1905,7 +1924,8 @@ const Screens = {
         2: 'Continue · Stage 2',
         3: 'Continue · Stage 3'
       };
-      const ctaLabel = resumeStage === 0 && mainline === 1 ? 'Continue Reading' : stageLabels[resumeStage];
+      const ctaLabel = resumeStage === 0 && mainline === 1 && (saved.stage == null || saved.stage === 0)
+        ? 'Tonight’s Reading' : stageLabels[resumeStage];
       $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
@@ -2006,33 +2026,60 @@ const Screens = {
           return m;
         });
       }
-      // v=82 — split body into sentence-paragraphs so each gets its
-      // own ♪ button.  The parchment paradigm: tap ♪ to hear the
-      // section read aloud, same as parchment rows.  Per user: "段落
-      // 朗读 跟羊皮纸一样的".
+      // v=84 — TAP-TO-REVEAL paragraphs (parchment idiom).  Body is
+      // split into sentences; only the first is shown; each tap
+      // anywhere on the text frame reveals the next sentence + TTS
+      // it.  When the last sentence is revealed, a "Begin Questions"
+      // CTA appears.  Per user: "点一下 出一段话的+自动播放语音的
+      // 效果".
       const paras = (section.body || '')
-        .split(/(?<=[.!?])\s+(?=[A-Z])/)   // sentence split
+        .split(/(?<=[.!?])\s+(?=[A-Z])/)
         .filter(s => s.trim().length > 0);
       const paraHtml = paras.map((p, i) => `
-        <div class="s0-para pc-play-row" data-sp="${escapeAttr(p)}" data-para-idx="${i}">
-          <button class="pc-play s0-para-play" aria-label="play">♪</button>
-          <span class="s0-para-text">${linkify(p)}</span>
+        <div class="s0-para${i === 0 ? ' is-revealed' : ' is-staged'}" data-sp="${escapeAttr(p)}" data-idx="${i}">
+          ${linkify(p)}
         </div>
       `).join('');
+      // Origin: where did we come from?  If from a parchment chip,
+      // saved.s0Origin === 'parchment' and we show a "return to
+      // parchment" round button in the top-right corner instead of
+      // the regular ✦ close.
+      const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
       el.innerHTML = `
         <div class="s0-page">
           <div class="s0-text-frame">
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-              <div class="s0-sub">— ♪ to hear · tap any underlined word —</div>
+              <div class="s0-sub">— tap the page to reveal each line —</div>
             </header>
             <section class="s0-section">${paraHtml}</section>
             <div class="s0-actions"></div>
+            <div class="s0-tap-hint">— tap to read on —</div>
           </div>
         </div>
       `;
-      el.appendChild(closeCorner({ to: 'cover' }));
+      if (fromParchment) {
+        // Round metal "return to parchment" corner.
+        const back = document.createElement('button');
+        back.className = 's0-corner-back';
+        back.setAttribute('aria-label', 'return to parchment');
+        back.innerHTML = `<span class="s0-corner-dot"></span>`;
+        back.addEventListener('click', () => {
+          (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
+          const w = saved.s0OriginWord;
+          saved.s0Origin = null;
+          saved.s0OriginWord = null;
+          Store.save();
+          go('cover', { instant: true });
+          // re-open parchment after the cover transition lands.
+          setTimeout(() => { if (PARCHMENT_CARDS[w]) showParchment(w); }, 80);
+        });
+        el.appendChild(back);
+      } else {
+        el.appendChild(closeCorner({ to: 'cover' }));
+      }
+      // Underlined-word taps → parchment popup.
       $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const w = a.getAttribute('data-jump');
@@ -2041,29 +2088,47 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // Wire ♪ buttons → TTS the paragraph.
-      $$('.s0-para-play', el).forEach(btn => btn.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        const row = btn.closest('.s0-para');
-        const sp = row && row.getAttribute('data-sp');
-        if (!sp) return;
-        $$('.s0-para.is-playing', el).forEach(p => p.classList.remove('is-playing'));
-        row.classList.add('is-playing');
-        SFX.tap();
-        speak(sp).then(() => row.classList.remove('is-playing'));
-      }));
-      $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => {
-        (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
-        // Page-flip transition CSS class added during go().
-        const veil = document.createElement('div');
-        veil.className = 's0-pageflip-veil';
-        document.body.appendChild(veil);
-        requestAnimationFrame(() => veil.classList.add('is-flipping'));
-        setTimeout(() => {
-          go('stage0-quiz');
-          setTimeout(() => veil.remove(), 600);
-        }, 380);
-      }, { confirm: false }));
+      // Speak the FIRST paragraph on enter.
+      const firstPara = el.querySelector('.s0-para[data-idx="0"]');
+      if (firstPara) {
+        setTimeout(() => speak(firstPara.getAttribute('data-sp')), 400);
+      }
+      // Reveal mechanism: tap anywhere on the text frame (outside
+      // a .s0-jump or the back button) → reveal next + speak.
+      let revealIdx = 1;
+      const total = paras.length;
+      const frame = $('.s0-text-frame', el);
+      function showActions() {
+        if (!$('.s0-actions .next-door', el)) {
+          $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => {
+            (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
+            const veil = document.createElement('div');
+            veil.className = 's0-pageflip-veil';
+            document.body.appendChild(veil);
+            requestAnimationFrame(() => veil.classList.add('is-flipping'));
+            setTimeout(() => {
+              go('stage0-quiz');
+              setTimeout(() => veil.remove(), 600);
+            }, 380);
+          }, { confirm: false }));
+          $('.s0-tap-hint', el)?.classList.add('is-gone');
+        }
+      }
+      if (total <= 1) showActions();
+      function advance(ev) {
+        if (ev && ev.target && ev.target.closest('.s0-jump, .s0-corner-back, .next-door')) return;
+        if (revealIdx >= total) return;
+        const para = el.querySelector(`.s0-para[data-idx="${revealIdx}"]`);
+        if (!para) return;
+        para.classList.remove('is-staged');
+        para.classList.add('is-revealed');
+        (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
+        speak(para.getAttribute('data-sp'));
+        para.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        revealIdx++;
+        if (revealIdx >= total) showActions();
+      }
+      frame.addEventListener('click', advance);
     }
   },
 
