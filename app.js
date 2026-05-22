@@ -550,6 +550,33 @@ const BGM_GROUP_BY_SCREEN = {
   'stage3-result': 'stage3-result',
 };
 let _lastBgmGroup = null;
+// v=81 — find the next playable stage for the current chapter,
+// skipping any whose data is empty.  If all game stages are empty,
+// loop back to cover with a soft completion.
+function _stageHasData(stageN, ch) {
+  if (!ch) return false;
+  if (stageN === 1) return (ch.match_group_ids || []).length > 0;
+  if (stageN === 2) return (ch.reading_question_ids || []).length > 0;
+  if (stageN === 3) return (ch.dictation_question_ids || []).length > 0;
+  return true;
+}
+function _nextStageId(currentStage) {
+  const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+  for (let s = currentStage + 1; s <= 3; s++) {
+    if (_stageHasData(s, ch)) return 'stage' + s;
+  }
+  return 'stage3-result';
+}
+function _stage0AdvanceFromQuiz() {
+  const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+  // Skip stage 1 / 2 / 3 if they have no data; route to first
+  // available stage, or to stage3-result if none.
+  for (const s of [1, 2, 3]) {
+    if (_stageHasData(s, ch)) { go('stage' + s); return; }
+  }
+  go('stage3-result');
+}
+
 function _ensureBGM(screenId) {
   const pool  = BGM_POOL_BY_SCREEN[screenId];
   const group = BGM_GROUP_BY_SCREEN[screenId];
@@ -1939,24 +1966,21 @@ const Screens = {
      a left card, the previous left is cleared — same with right.
      This rule is what the user asked for: 左+右 only.            */
 
-  /* ---------- STAGE 0 — pre-game reading material (v=80) ----------
-     The user wrote 10 themed articles ("The Universe", "Earth
-     History", "Africa", etc.).  This screen displays the article
-     of the current chapter; every word that has a parchment card
-     becomes an underlined jump-link.  A "begin questions" button
-     at the bottom routes to stage0-quiz.                            */
+  /* ---------- STAGE 0 — pre-game reading section (v=81) ----------
+     v=81 — restructured: each "chapter" is now ONE small section
+     (1.1, 1.2, etc).  Stage 0 shows that ONE section's body +
+     title; the 3 questions tied to that section feed the quiz.
+     Big parts (10 of them) just group small chapters for catalog
+     navigation.                                                      */
   stage0: {
     onEnter() {
       const el = $('#screen-stage0');
-      const articleIdx = (saved.chapter || 1) - 1;
-      const article = (typeof STAGE0_ARTICLES !== 'undefined')
-                    && STAGE0_ARTICLES[articleIdx];
-      if (!article) {
-        // Chapter has no article — skip to stage 1.
-        go('stage1');
-        return;
-      }
-      // Inline-linkify every word that matches a PARCHMENT_CARD.
+      const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+      if (!ch) { go('stage1'); return; }
+      const article = (typeof STAGE0_PARTS !== 'undefined')
+                    && STAGE0_PARTS[ch.article_id - 1];
+      const section = article && article.sections[ch.section_idx];
+      if (!section) { go('stage1'); return; }
       function linkify(text) {
         if (!text) return '';
         return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
@@ -1967,25 +1991,20 @@ const Screens = {
           return m;
         });
       }
-      const sectionsHtml = article.sections.map(s => `
-        <section class="s0-section">
-          <h3 class="s0-section-title"><span class="s0-section-num">${escapeHtml(s.id)}</span> ${escapeHtml(s.title)}</h3>
-          <p class="s0-body">${linkify(s.body)}</p>
-        </section>
-      `).join('');
       el.innerHTML = `
         <div class="s0-page">
           <header class="s0-header">
-            <div class="s0-chip">Chapter ${article.id} · Stage 0</div>
-            <h1 class="s0-title">${escapeHtml(article.title)}</h1>
-            <div class="s0-sub">— read the story · tap any underlined word to open its page —</div>
+            <div class="s0-chip">${escapeHtml(article.title)}</div>
+            <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+            <div class="s0-sub">— tap any underlined word to open its page —</div>
           </header>
-          ${sectionsHtml}
+          <section class="s0-section">
+            <p class="s0-body">${linkify(section.body)}</p>
+          </section>
           <div class="s0-actions"></div>
         </div>
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
-      // Wire jump-links → parchment.
       $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const w = a.getAttribute('data-jump');
@@ -1994,32 +2013,48 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // "Begin questions" CTA.
-      $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => go('stage0-quiz'), { confirm: false }));
+      $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => {
+        (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
+        // Page-flip transition CSS class added during go().
+        const veil = document.createElement('div');
+        veil.className = 's0-pageflip-veil';
+        document.body.appendChild(veil);
+        requestAnimationFrame(() => veil.classList.add('is-flipping'));
+        setTimeout(() => {
+          go('stage0-quiz');
+          setTimeout(() => veil.remove(), 600);
+        }, 380);
+      }, { confirm: false }));
     }
   },
 
-  /* ---------- STAGE 0 QUIZ — 3 noun-recall questions (v=80) ----------
-     Picks 3 questions at random from the article's Q&A list.  Each
-     question gets 4 options: the true answer + 3 distractor nouns
-     drawn from OTHER questions of the same article (all are nouns
-     by design).                                                     */
+  /* ---------- STAGE 0 QUIZ — 3 noun-recall questions (v=81) ----------
+     Uses THE CURRENT SECTION'S 3 questions only.  Distractor pool
+     also drawn from this section's other noun answers — keeps the
+     scope tight to what the user just read.                         */
   'stage0-quiz': {
     onEnter() {
       const el = $('#screen-stage0-quiz');
-      const articleIdx = (saved.chapter || 1) - 1;
-      const article = (typeof STAGE0_ARTICLES !== 'undefined')
-                    && STAGE0_ARTICLES[articleIdx];
-      if (!article) { go('stage1'); return; }
-      // Collect all article Q&A
-      const allQs = [];
-      article.sections.forEach(s => (s.questions || []).forEach(q => {
-        if (q.q && q.a) allQs.push({ q: q.q, a: q.a, secId: s.id, secTitle: s.title });
+      const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+      if (!ch) { _stage0AdvanceFromQuiz(); return; }
+      const article = (typeof STAGE0_PARTS !== 'undefined')
+                    && STAGE0_PARTS[ch.article_id - 1];
+      const section = article && article.sections[ch.section_idx];
+      if (!section || !section.questions || section.questions.length === 0) {
+        _stage0AdvanceFromQuiz(); return;
+      }
+      const allQs = section.questions
+        .filter(q => q.q && q.a)
+        .map(q => ({ q: q.q, a: q.a, secId: section.id, secTitle: section.title }));
+      if (allQs.length === 0) { _stage0AdvanceFromQuiz(); return; }
+      // Build distractor pool from OTHER sections in the same article
+      // so we have enough noun candidates.
+      const distractorPool = new Set();
+      article.sections.forEach(s => s.questions.forEach(q => {
+        if (q.a) distractorPool.add(q.a);
       }));
-      if (allQs.length < 3) { go('stage1'); return; }
-      // 3 random questions + a noun pool for distractors
       const picks = shuffle(allQs).slice(0, 3);
-      const nounPool = Array.from(new Set(allQs.map(q => q.a)));
+      const nounPool = Array.from(distractorPool);
       const state0 = { idx: 0, correct: 0, answered: false, picks };
       function drawQ() {
         const q = state0.picks[state0.idx];
@@ -2062,17 +2097,16 @@ const Screens = {
             $('#s0q-feedback', el).innerHTML = isRight
               ? '<em>✦ inscribed</em>'
               : `<em>the answer was <span class="s0q-truth">${escapeHtml(q.a)}</span></em>`;
+            const isLast = (state0.idx >= picks.length - 1);
             $('.s0q-actions', el).appendChild(nextDoor(
-              state0.idx === 2 ? 'Begin Stage 1' : 'Next Question',
+              isLast ? 'Continue' : 'Next Question',
               () => {
-                if (state0.idx === 2) {
-                  // Bump saved.stage to 1 (out of reading layer) if
-                  // got at least 2/3.
+                if (isLast) {
                   if ((saved.stage || 0) < 1) {
                     saved.stage = 1;
                     Store.save();
                   }
-                  go('stage1');
+                  _stage0AdvanceFromQuiz();
                 } else {
                   state0.idx++;
                   state0.answered = false;
@@ -2300,7 +2334,7 @@ const Screens = {
         // v=77 — passed stage 1 → unlock stage 2 (saved.stage = 2)
         // so a mid-chapter exit resumes on the right stage.
         if ((saved.stage || 1) < 2) { saved.stage = 2; Store.save(); }
-        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage2'), { confirm: true }));
+        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go(_nextStageId(1)), { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
           // Reset match results, keep session intact (same pairs).
@@ -2635,7 +2669,7 @@ const Screens = {
       if (right >= total && total > 0) {
         // v=77 — passed stage 2 → unlock stage 3 (saved.stage = 3).
         if ((saved.stage || 1) < 3) { saved.stage = 3; Store.save(); }
-        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go('stage3'), { confirm: true }));
+        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go(_nextStageId(2)), { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
           state.session.scenes.forEach(s => (s.answers || []).forEach(w => {
@@ -2943,72 +2977,96 @@ const Screens = {
      saved.chapter, freshens the session, and routes into stage 1.  */
   'chapter-catalog': {
     onEnter() {
+      // v=81 — catalog reorganised into PART → SECTION hierarchy.
+      // 10 collapsible big parts (e.g. "01 The Universe"); each
+      // expands to show its small chapters (1.1, 1.2, …).  Mistake
+      // counts surface on the small-chapter rows.
       const el = $('#screen-chapter-catalog');
       const m = saved.mistakes || {};
-      // Per-chapter mistake count (sum of mistakes on its words).
-      const stats = _CHAPTER_PLAN.map((ch, idx) => {
-        const words = _resolveChapterWords(ch);
-        const mistakes = words.reduce((sum, w) => sum + (m[w] || 0), 0);
-        const weak = mistakes >= 3;
-        return { idx, ch, words, mistakes, weak };
+      const partsMap = new Map();
+      _CHAPTER_PLAN.forEach((ch, idx) => {
+        const key = ch.part || 0;
+        if (!partsMap.has(key)) partsMap.set(key, { id: key, theme: ch.partTheme || '', rows: [] });
+        // Mistake sum for this section's words.
+        const article = (typeof STAGE0_PARTS !== 'undefined') && STAGE0_PARTS[ch.article_id - 1];
+        const section = article && article.sections[ch.section_idx];
+        let mistakes = 0;
+        if (section) {
+          const text = section.body + ' ' + section.questions.map(q => q.q + ' ' + q.a).join(' ');
+          (text.toLowerCase().match(/\b[a-z][a-z'\-]{1,}\b/g) || []).forEach(w => {
+            if (m[w]) mistakes += m[w];
+          });
+        }
+        partsMap.get(key).rows.push({ idx, ch, mistakes });
       });
-      // Sort: weak chapters first (most mistaken), then sequential.
-      const weakList   = stats.filter(s => s.weak).sort((a, b) => b.mistakes - a.mistakes);
-      const restList   = stats.filter(s => !s.weak);
-
+      const partsArr = Array.from(partsMap.values()).sort((a, b) => a.id - b.id);
+      const totalChapters = _CHAPTER_PLAN.length;
       el.innerHTML = `
         <div class="catalog-page">
           ${pageTitle('Chapter Catalog')}
-          <div class="catalog-sub">— ${stats.length} chapters · current: ${saved.chapter || 1} —</div>
-          ${weakList.length ? `
-            <div class="catalog-section-title">weak chapters · revisit</div>
-            <div class="catalog-stack" id="cat-weak"></div>
-          ` : ''}
-          <div class="catalog-section-title">all chapters</div>
-          <div class="catalog-stack" id="cat-all"></div>
+          <div class="catalog-sub">— ${totalChapters} chapters across ${partsArr.length} parts · mainline: ${saved.mainlineChapter || 1} —</div>
+          <div class="catalog-parts" id="cat-parts"></div>
         </div>
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
-
-      const renderRow = (host, s) => {
-        const row = document.createElement('button');
-        row.className = 'catalog-row' + (s.weak ? ' is-weak' : '') + (s.idx + 1 === saved.chapter ? ' is-current' : '');
-        const themeLabel = s.ch.theme || `Chapter ${s.idx + 1}`;
-        row.innerHTML = `
-          <span class="cat-num">chapter ${s.idx + 1}</span>
-          <span class="cat-leader" aria-hidden="true"></span>
-          <span class="cat-theme">${escapeHtml(themeLabel)}</span>
-          ${s.mistakes > 0 ? `<span class="cat-mistakes">× ${s.mistakes}</span>` : ''}
+      const partsHost = $('#cat-parts', el);
+      // Auto-expand the part the user's current chapter belongs to.
+      const currentPart = (_CHAPTER_PLAN[(saved.chapter || 1) - 1] || {}).part;
+      partsArr.forEach(part => {
+        const partWrap = document.createElement('div');
+        partWrap.className = 'catalog-part';
+        const isOpen = part.id === currentPart;
+        if (isOpen) partWrap.classList.add('is-open');
+        const partMistakes = part.rows.reduce((s, r) => s + r.mistakes, 0);
+        partWrap.innerHTML = `
+          <button class="catalog-part-head">
+            <span class="cat-part-toggle">${isOpen ? '▾' : '▸'}</span>
+            <span class="cat-part-theme">${escapeHtml(part.theme)}</span>
+            <span class="cat-part-count">${part.rows.length} chapters${partMistakes > 0 ? ` · × ${partMistakes}` : ''}</span>
+          </button>
+          <div class="catalog-part-body"></div>
         `;
-        row.addEventListener('click', () => {
-          SFX.tap();
-          showModal({
-            title: themeLabel,
-            body: `Start chapter ${s.idx + 1}?  Your current chapter mark is ${saved.chapter || 1}.`,
-            actions: [
-              { label: 'cancel',     variant: 'ghost', onClick: () => {} },
-              { label: 'play',       variant: '',     onClick: () => {
-                // v=80 — catalog jumps mark the session as "free
-                // play": saved.chapter shifts but saved.mainline
-                // doesn't advance.  Continue Reading still resumes
-                // at the linear mainline chapter.
-                saved.chapter = s.idx + 1;
-                saved.freeMode = true;
-                saved.stage = 0;
-                Store.save();
-                freshSession();
-                go('stage0');
-              }}
-            ]
-          });
+        const head = $('.catalog-part-head', partWrap);
+        const body = $('.catalog-part-body', partWrap);
+        head.addEventListener('click', () => {
+          partWrap.classList.toggle('is-open');
+          $('.cat-part-toggle', partWrap).textContent =
+            partWrap.classList.contains('is-open') ? '▾' : '▸';
         });
-        host.appendChild(row);
-      };
-
-      const weakHost = $('#cat-weak', el);
-      if (weakHost) weakList.forEach(s => renderRow(weakHost, s));
-      const allHost = $('#cat-all', el);
-      stats.forEach(s => renderRow(allHost, s));
+        part.rows.forEach(r => {
+          const isCurrent = (r.idx + 1) === (saved.chapter || 1);
+          const row = document.createElement('button');
+          row.className = 'catalog-row'
+                       + (r.mistakes >= 3 ? ' is-weak' : '')
+                       + (isCurrent ? ' is-current' : '');
+          row.innerHTML = `
+            <span class="cat-num">${escapeHtml(r.ch.section || (r.idx + 1))}</span>
+            <span class="cat-leader" aria-hidden="true"></span>
+            <span class="cat-theme">${escapeHtml((r.ch.theme || '').replace(/^[\d.]+\s*/, ''))}</span>
+            ${r.mistakes > 0 ? `<span class="cat-mistakes">× ${r.mistakes}</span>` : ''}
+          `;
+          row.addEventListener('click', () => {
+            SFX.tap();
+            showModal({
+              title: r.ch.theme,
+              body: `Open this chapter?  Free play doesn't advance your mainline (currently ch ${saved.mainlineChapter || 1}).`,
+              actions: [
+                { label: 'cancel', variant: 'ghost', onClick: () => {} },
+                { label: 'play',   variant: '',     onClick: () => {
+                  saved.chapter  = r.idx + 1;
+                  saved.freeMode = true;
+                  saved.stage    = 0;
+                  Store.save();
+                  freshSession();
+                  go('stage0');
+                }}
+              ]
+            });
+          });
+          body.appendChild(row);
+        });
+        partsHost.appendChild(partWrap);
+      });
     }
   },
 

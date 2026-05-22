@@ -7743,3 +7743,76 @@ body.bg-stage0 #banner-top  { display: none; }
   border-color: rgba(140, 90, 36, 0.75);
 }
 .pc-chapter-chip:active { transform: translateY(1px); }
+
+/* v=81 — catalog regrouped into Part → Section.  Big parts (10)
+   collapse to a header row; the current chapter's part auto-opens.
+   Small chapters use the existing .catalog-row style.            */
+.catalog-parts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0;
+}
+.catalog-part {
+  border-bottom: 1px dotted rgba(218, 168, 104, 0.22);
+}
+.catalog-part-head {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  color: #efdbb4;
+  text-align: left;
+}
+.catalog-part-head:hover { background: rgba(232, 196, 138, 0.08); }
+.cat-part-toggle {
+  font-size: 12px;
+  color: rgba(232, 196, 138, 0.62);
+}
+.cat-part-theme {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.cat-part-count {
+  font-family: 'Cinzel', Georgia, serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  color: rgba(232, 168, 168, 0.85);
+  white-space: nowrap;
+}
+.catalog-part-body {
+  display: none;
+  padding: 4px 0 8px 18px;
+}
+.catalog-part.is-open .catalog-part-body { display: block; }
+
+/* v=81 — page-flip veil shown while transitioning between stage 0
+   (reading) and stage 0 quiz.  A warm-gold streak sweeps across
+   the viewport like a book page turning over.                    */
+.s0-pageflip-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background: linear-gradient(120deg,
+    rgba(244, 234, 208, 0)   0%,
+    rgba(244, 234, 208, 0.85) 40%,
+    rgba(232, 196, 138, 0.95) 50%,
+    rgba(244, 234, 208, 0.85) 60%,
+    rgba(244, 234, 208, 0) 100%);
+  background-size: 220% 100%;
+  background-position: -110% 0;
+  transition: background-position 0.55s cubic-bezier(.4, .1, .4, 1);
+}
+.s0-pageflip-veil.is-flipping {
+  background-position: 110% 0;
+}
