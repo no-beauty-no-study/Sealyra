@@ -7696,28 +7696,35 @@ body.bg-stage0 .scene-veil { display: none; }
   .s0-page { padding: 150px 110px 110px; max-width: 760px; }
 }
 .s0-header {
+  /* v=91 — antique book chapter head: NO horizontal rule, no big
+     gap below.  Per user: "古典书籍 都没有横线 而且离得挺近的".
+     The smallcaps chapter line and the display title sit on top of
+     each other and the body text starts almost immediately.       */
   text-align: center;
-  margin: 8px 0 26px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(110, 63, 18, 0.22);
+  margin: 4px 0 6px;
+  padding-bottom: 0;
+  border-bottom: none;
 }
+/* no ornament — tight typesetting is the entire effect.            */
 .s0-chip {
   display: inline-block;
   font-family: 'Cinzel', Georgia, serif;
   font-style: italic;
-  font-size: 11px;
-  letter-spacing: 0.20em;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: rgba(110, 63, 18, 0.72);
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 .s0-title {
-  font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
-  font-weight: 700;
+  font-family: 'IM Fell English', 'Cormorant Garamond', 'Cinzel Decorative', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
   font-size: clamp(22px, 5vw, 30px);
   color: #2a1808;
-  margin: 0 0 8px;
-  letter-spacing: 0.04em;
+  margin: 0;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
 }
 .s0-sub {
   font-family: Georgia, serif;
@@ -7951,49 +7958,70 @@ body.bg-stage0 .scene-veil { display: none; }
   border-bottom: 1px dotted rgba(218, 168, 104, 0.22);
 }
 .catalog-part-head {
-  /* v=90 — same dotted-leader skeleton as the small .catalog-row:
-     [▸] [theme]  ·········  [N chapters]                          */
+  /* v=91 — printed-book ToC row.  Layout:
+       [▸]  chapter 1  ·········  The Universe   [×N]
+     No bold (per user: "谁家目录里加粗的"), no "N chapters"
+     count suffix.  All italic, all one weight, tight gap.       */
   display: grid;
-  grid-template-columns: 18px auto 1fr auto;
+  grid-template-columns: 14px auto 1fr auto auto;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  padding: 11px 6px 9px;
+  padding: 7px 4px 6px;
   background: transparent;
   border: 0;
   cursor: pointer;
   font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 16px;
-  color: #f3e0b8;
+  font-weight: 400;
+  font-size: 15px;
+  color: #efdbb4;
   text-align: left;
 }
 .catalog-part-head:hover { background: rgba(232, 196, 138, 0.08); }
 .cat-part-toggle {
-  font-size: 12px;
-  color: rgba(232, 196, 138, 0.62);
+  font-size: 10px;
+  color: rgba(232, 196, 138, 0.55);
   align-self: center;
 }
+.cat-part-label {
+  /* "chapter 1", "chapter 2" — lowercase, smallcaps-ish in EB    */
+  font-family: 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: rgba(232, 196, 138, 0.92);
+  white-space: nowrap;
+}
 .cat-part-theme {
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: #f3e0b8;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .cat-part-leader {
-  /* dotted leader between the theme and the chapter count.        */
   display: block;
   border-bottom: 1.5px dotted rgba(218, 168, 104, 0.42);
-  margin: 0 6px 5px;
+  margin: 0 4px 5px;
   height: 0;
-  min-width: 18px;
+  min-width: 14px;
   align-self: end;
 }
-.cat-part-count {
+.cat-part-mistakes {
   font-family: 'Cinzel', Georgia, serif;
   font-style: italic;
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: 0.10em;
   color: rgba(232, 168, 168, 0.85);
   white-space: nowrap;
+  margin-left: 8px;
 }
 .catalog-part-body {
   display: none;
@@ -8221,7 +8249,7 @@ body.bg-stage0 #screen-stage0-quiz { min-height: 100vh; }
   line-height: 0.95 !important;
   letter-spacing: -0.03em !important;
   color: #2a1808;
-  margin: 6px 0 4px;
+  margin: 2px 0 2px !important;   /* v=91 tight — was 6px / 4px */
 }
 .s0-chip {
   font-family: var(--f-smallcaps) !important;
@@ -8486,13 +8514,14 @@ body.bg-stage0 #screen-stage0-quiz { min-height: 100vh; }
   margin-top: 12px;
 }
 .s0q-block {
+  /* v=91 — no dividing rule between questions.  An antique exam
+     paper separates items by whitespace, not by lines.            */
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 8px 0 14px;
-  border-bottom: 1px dotted rgba(140, 90, 36, 0.32);
+  gap: 6px;
+  padding: 4px 0 10px;
+  border-bottom: 0;
 }
-.s0q-block:last-child { border-bottom: 0; }
 .s0q-block .s0q-question {
   font-family: var(--f-title);
   font-weight: 400;
@@ -8640,21 +8669,38 @@ body.bg-stage0 #screen-stage0-quiz {
 }
 .s0-para {
   display: block;
-  margin: 4px 0;
+  margin: 3px 0;
   padding: 0;
   background: transparent;
   font-family: var(--f-reading);
   font-size: inherit;
   line-height: 1.16;
-  text-align: left;
+  text-align: justify;            /* v=91 — justified text like a printed book */
+  hyphens: auto;
   letter-spacing: -0.015em;
   word-spacing: -0.02em;
   color: #1f1004;
   overflow-wrap: break-word;
 }
+/* v=91 — illuminated drop cap on the very first paragraph of
+   every stage-0 reading.  Classic antique book convention: a
+   single oversized italic capital that "drops" two lines into
+   the body.  Per user: "羊皮纸 油墨不均匀的字 各种各样的字体".  */
+.s0-para[data-idx="0"]::first-letter {
+  font-family: 'UnifrakturMaguntia', 'IM Fell English', 'Cinzel Decorative', Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.82;
+  padding: 4px 6px 0 0;
+  margin: 2px 2px 0 0;
+  color: #6e3c1a;
+  text-shadow: 0 1px 0 rgba(110, 63, 18, 0.18);
+}
 /* No staged/revealed dance — entire short article is on the
    page from the start (book mode).                            */
-.s0-para.is-staged { opacity: 1; max-height: none; margin: 4px 0; pointer-events: auto; }
+.s0-para.is-staged { opacity: 1; max-height: none; margin: 3px 0; pointer-events: auto; }
 .s0-para.is-revealed { opacity: 1; }
 
 /* Tap hints retired entirely — book pages don't whisper "tap me". */

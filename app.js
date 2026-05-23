@@ -3131,12 +3131,20 @@ const Screens = {
         const isOpen = part.id === currentPart;
         if (isOpen) partWrap.classList.add('is-open');
         const partMistakes = part.rows.reduce((s, r) => s + r.mistakes, 0);
+        // v=91 — catalog row mirrors a printed book's table of
+        // contents: "chapter1 ········· The Universe".  No bold,
+        // no "12 chapters" suffix (the small rows below convey
+        // count by their visible presence).  Mistake count, if any,
+        // floats to the very right.
+        const partLabel = `chapter ${part.id}`;
+        const partName  = (part.theme || '').replace(/^chapter\s*\d+\s*[:：]\s*/i, '');
         partWrap.innerHTML = `
           <button class="catalog-part-head">
             <span class="cat-part-toggle">${isOpen ? '▾' : '▸'}</span>
-            <span class="cat-part-theme">${escapeHtml(part.theme)}</span>
+            <span class="cat-part-label">${escapeHtml(partLabel)}</span>
             <span class="cat-part-leader" aria-hidden="true"></span>
-            <span class="cat-part-count">${part.rows.length} chapters${partMistakes > 0 ? ` · × ${partMistakes}` : ''}</span>
+            <span class="cat-part-theme">${escapeHtml(partName)}</span>
+            ${partMistakes > 0 ? `<span class="cat-part-mistakes">× ${partMistakes}</span>` : ''}
           </button>
           <div class="catalog-part-body"></div>
         `;
