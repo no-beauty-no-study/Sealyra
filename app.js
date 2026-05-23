@@ -895,12 +895,14 @@ function renderReviewCard(word) {
   // Reuse the same in-line linkify so jumpable words are
   // underlined inside the example sentence + collocations.
   const selfLower = (c.h || '').toLowerCase();
+  const _revLookup = _buildLinkLookup();
   const linkify = (text) => {
     if (!text) return '';
-    return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
-      const k = w.toLowerCase();
-      if (k === selfLower) return m;
-      if (!PARCHMENT_CARDS[k]) return m;
+    return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+      const lw = w.toLowerCase();
+      if (lw === selfLower) return m;
+      const k = _revLookup(lw);
+      if (!k || k === selfLower) return m;
       return `<a class="rev-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
     });
   };
@@ -986,6 +988,63 @@ function pageTitle(name) {
   const html = escapeHtml(name).replace(/\n/g, '<br>');
   return `<div class="title-plaque"><span class="tp-text">${html}</span></div>`;
 }
+
+// v=92 — build a reverse word→head index over PARCHMENT_CARDS.
+//   1. Every card head H maps to itself.
+//   2. Every word listed in H's `family` or `kin` maps to H.
+//   3. Common stems (length ≥ 5) of all the above also map to H,
+//      so e.g. "compress" (stem of family["compression"]) can
+//      reach `compressive`.
+// Then linkFor(w) tries: direct → reverse map → strip prefix
+// (in/un/non/dis/re/over/under/pre/sub/inter) → re-lookup.  This
+// is what lets `fraction` reach `fragile`, `incomprehensible`
+// reach `comprehensible`, `cosmos` reach `cosmology`, etc.
+// Memoised — called once, cached on window.                     */
+let _LINK_REV = null;
+function _buildLinkLookup() {
+  if (_LINK_REV) return _LINK_REV._lookup;
+  const rev = Object.create(null);
+  const STEM_PRE = /^(in|un|non|dis|re|over|under|pre|sub|inter|im|ir|il)/;
+  const STEM_SUF = /(ically|ingly|ously|edness|tion|sion|ment|ness|ity|able|ible|less|ful|ize|ise|ify|ically|ical|ively|edly|ed|ing|er|est|ly|al|ic|ive|ous|s)$/;
+  function stem(w) {
+    w = (w || '').toLowerCase();
+    let s = w.replace(STEM_PRE, '');
+    if (s.length < 4) s = w;
+    s = s.replace(STEM_SUF, '');
+    return s.length >= 5 ? s : w;
+  }
+  function add(word, head) {
+    word = (word || '').toLowerCase().replace(/[^a-z'\-]/g, '');
+    if (!word) return;
+    if (!rev[word]) rev[word] = head;
+    const st = stem(word);
+    if (st !== word && st.length >= 5 && !rev[st]) rev[st] = head;
+  }
+  Object.entries(PARCHMENT_CARDS).forEach(([head, c]) => {
+    add(head, head);
+    (c.family || []).forEach(f => add((f.split('|')[0] || '').trim(), head));
+    (c.kin    || []).forEach(k => add((k.split('|')[0] || '').trim(), head));
+  });
+  const PRE = /^(in|un|non|dis|re|over|under|pre|sub|inter|im|ir|il)/;
+  function lookup(w) {
+    w = (w || '').toLowerCase();
+    if (w.length < 3) return null;
+    if (rev[w]) return rev[w];
+    // try common morphological stripping
+    const s = stem(w);
+    if (s !== w && rev[s]) return rev[s];
+    const np = w.replace(PRE, '');
+    if (np !== w && np.length >= 4) {
+      if (rev[np]) return rev[np];
+      const ns = stem(np);
+      if (ns !== np && rev[ns]) return rev[ns];
+    }
+    return null;
+  }
+  _LINK_REV = { _lookup: lookup, _rev: rev };
+  return lookup;
+}
+
 // Visual writing-line at the bottom of the single-word parchment.
 // NOT an input — pure cue that says "copy this word once".
 function copyLine() {
@@ -1101,15 +1160,18 @@ function showParchment(word) {
   // (don't link a page to itself).  Underline = jumpable; plain
   // text = not jumpable.  Replaces the v=51 bottom jump-link box.
   const _selfWord = (c.h || '').toLowerCase();
+  const _pcLookup = _buildLinkLookup();
   function pcLinkify(text) {
     if (!text) return '';
-    // First escape everything, then rewrap matched words.  We MUST do
-    // this in two passes so the underline span survives escape().
+    // v=92 — same generous family/kin reverse lookup that stage 0
+    // uses, so e.g. clicking "compression" inside a parchment opens
+    // `compressive` rather than dropping the click on the floor.
     const escaped = escapeHtml(text);
-    return escaped.replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
-      const k = w.toLowerCase();
-      if (k === _selfWord) return m;            // don't link to self
-      if (!PARCHMENT_CARDS[k]) return m;        // no parchment → no link
+    return escaped.replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+      const lw = w.toLowerCase();
+      if (lw === _selfWord) return m;
+      const k = _pcLookup(lw);
+      if (!k || k === _selfWord) return m;
       return `<a class="pc-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
     });
   }
@@ -2030,25 +2092,29 @@ const Screens = {
                     && STAGE0_PARTS[ch.article_id - 1];
       const section = article && article.sections[ch.section_idx];
       if (!section) { go('stage1'); return; }
+      // v=92 — generous word→card lookup.  Direct head match first,
+      // then a reverse map built from every card's family/kin words
+      // (so `fraction` reaches `fragile`, `compression` reaches
+      // `compressive`, etc.), then a prefix-strip pass (in-/un-/non-/
+      // dis-/re-) for things like `incomprehensible → comprehensible`.
+      const linkFor = (window._buildLinkLookup || _buildLinkLookup)();
       function linkify(text) {
         if (!text) return '';
-        return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]+)\b/g, (m, w) => {
-          const k = w.toLowerCase();
-          if (PARCHMENT_CARDS[k]) {
-            return `<a class="s0-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
-          }
+        return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+          const k = linkFor(w);
+          if (k) return `<a class="s0-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
           return m;
         });
       }
-      // v=88 — BOOK MODE.  Entire section body is on the page from
-      // the start (no tap-to-reveal); paragraphs are sentence-split
-      // only so each sentence reads as its own line.  Page does NOT
-      // scroll — _s0FitToPage() auto-shrinks font until it fits.
+      // v=92 — sentence-by-sentence ink-bleed reveal.  Each sentence
+      // starts invisible; tapping it inks it in AND auto-plays its
+      // TTS.  Tapping an already-revealed sentence replays.  Per user:
+      // "需要一句话一句话的点开 自动播放语音… 不然很容易注意力失效".
       const paras = (section.body || '')
         .split(/(?<=[.!?])\s+(?=[A-Z])/)
         .filter(s => s.trim().length > 0);
       const paraHtml = paras.map((p, i) => `
-        <div class="s0-para is-revealed" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
+        <div class="s0-para${i === 0 ? ' is-revealed' : ''}" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
       `).join('');
       const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
       el.innerHTML = `
@@ -2107,9 +2173,21 @@ const Screens = {
         go('stage0-quiz');
       });
       $('.s0-text-frame', el).appendChild(key);
+      // v=92 — sentence interaction: tap = reveal (if hidden) + speak
+      // just this sentence (so the user can match audio to text).
+      // The link-jumps inside still take precedence via stopPropagation.
+      $$('.s0-para', el).forEach(p => {
+        p.addEventListener('click', (ev) => {
+          if (ev.target && ev.target.closest('.s0-jump')) return;
+          if (!p.classList.contains('is-revealed')) {
+            p.classList.add('is-revealed');
+          }
+          speak(p.getAttribute('data-sp'));
+        });
+      });
       // Fit text into the painted page region without overflow.
       requestAnimationFrame(() => _s0FitToPage(el));
-      // Auto-speak first sentence on entry (no tap needed).
+      // Auto-reveal + speak the first sentence on entry.
       const firstPara = el.querySelector('.s0-para[data-idx="0"]');
       if (firstPara) setTimeout(() => speak(firstPara.getAttribute('data-sp')), 400);
     }

@@ -8211,9 +8211,9 @@ body.bg-stage0 .s0-chip {
   color: rgba(110, 63, 18, 0.62);
   font-size: 10.5px;
 }
-.s0-page { padding: 14vw 12vw 12vw; }
-@media (min-width: 640px) { .s0-page { padding: 100px 110px 110px; } }
-@media (min-width: 980px) { .s0-page { padding: 110px 140px 130px; max-width: 820px; } }
+.s0-page { padding: 14vw 9vw 12vw 18vw; }   /* v=92 — shift text right so it clears the book's left binding on phone */
+@media (min-width: 640px) { .s0-page { padding: 100px 90px 110px 140px; } }
+@media (min-width: 980px) { .s0-page { padding: 110px 110px 130px 170px; max-width: 820px; } }
 
 /* Guarantee the text frame fills the available width even if a
    tight flex parent tries to shrink it (the user reported "右边
@@ -8682,26 +8682,41 @@ body.bg-stage0 #screen-stage0-quiz {
   color: #1f1004;
   overflow-wrap: break-word;
 }
-/* v=91 — illuminated drop cap on the very first paragraph of
-   every stage-0 reading.  Classic antique book convention: a
-   single oversized italic capital that "drops" two lines into
-   the body.  Per user: "羊皮纸 油墨不均匀的字 各种各样的字体".  */
-.s0-para[data-idx="0"]::first-letter {
-  font-family: 'UnifrakturMaguntia', 'IM Fell English', 'Cinzel Decorative', Georgia, serif;
-  font-style: normal;
-  font-weight: 400;
-  float: left;
-  font-size: 3.6em;
-  line-height: 0.82;
-  padding: 4px 6px 0 0;
-  margin: 2px 2px 0 0;
-  color: #6e3c1a;
-  text-shadow: 0 1px 0 rgba(110, 63, 18, 0.18);
+/* v=92 — drop cap removed.  User: "开头不用加大首字母啦 我有点看不
+   懂了！(图像思维者…)".  The chapter head is enough flair on its own.
+   Replaced by per-sentence ink-bleed reveal below.                  */
+/* v=92 — sentence-by-sentence INK-BLEED reveal.  Hidden sentences
+   sit as a barely-visible ghost on the page (so the reader sees
+   roughly how much there is left without giving the text away).
+   Tapping a sentence inks it in: text-shadow blur collapses from
+   a soft halo down to crisp letterforms, opacity ramps to 1, like
+   ink settling onto a damp page.  Per user: "羊皮纸的显现…感觉太
+   机械了… 很像是被读出来被写出来的字 隐形墨水缓缓浮现".         */
+.s0-para {
+  opacity: 0.34;
+  color: rgba(110, 63, 18, 0.5);
+  filter: blur(0.6px);
+  text-shadow: 0 0 3px rgba(110, 63, 18, 0.18);
+  cursor: pointer;
+  transition: opacity 0.55s ease-out,
+              color    0.55s ease-out,
+              filter   0.55s ease-out,
+              text-shadow 0.55s ease-out;
 }
-/* No staged/revealed dance — entire short article is on the
-   page from the start (book mode).                            */
+.s0-para:hover { opacity: 0.5; filter: blur(0.3px); }
+.s0-para.is-revealed {
+  opacity: 1;
+  color: #1f1004;
+  filter: blur(0);
+  text-shadow: 0 0 0 transparent;
+  animation: ink-settle 0.62s ease-out;
+}
 .s0-para.is-staged { opacity: 1; max-height: none; margin: 3px 0; pointer-events: auto; }
-.s0-para.is-revealed { opacity: 1; }
+@keyframes ink-settle {
+  0%   { opacity: 0.34; filter: blur(1.6px); color: rgba(110, 63, 18, 0.5);  text-shadow: 0 0 8px rgba(110, 63, 18, 0.24); }
+  45%  { opacity: 0.7;  filter: blur(0.8px); color: rgba(90, 40, 8, 0.78);   text-shadow: 0 0 4px rgba(110, 63, 18, 0.18); }
+  100% { opacity: 1;    filter: blur(0);     color: #1f1004;                 text-shadow: 0 0 0 transparent; }
+}
 
 /* Tap hints retired entirely — book pages don't whisper "tap me". */
 .s0-tap-hint,
