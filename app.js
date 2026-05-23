@@ -569,12 +569,32 @@ function _nextStageId(currentStage) {
 }
 function _stage0AdvanceFromQuiz() {
   const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
-  // Skip stage 1 / 2 / 3 if they have no data; route to first
-  // available stage, or to stage3-result if none.
   for (const s of [1, 2, 3]) {
     if (_stageHasData(s, ch)) { go('stage' + s); return; }
   }
   go('stage3-result');
+}
+
+// v=88 — auto-fit the stage 0 / quiz content into the painted
+// book-page area.  We measure the scrollHeight of the content
+// host vs. its container's clientHeight and walk a --s0-fit-scale
+// custom property down from 1.0 until everything fits (or we hit
+// 0.6).  Pure shrink; no layout reflow loop.
+function _s0FitToPage(rootEl) {
+  if (!rootEl) return;
+  const frame = rootEl.querySelector('.s0-text-frame');
+  const inner = rootEl.querySelector('.s0-section, .s0q-stack');
+  if (!frame || !inner) return;
+  let scale = 1;
+  inner.style.setProperty('--s0-fit-scale', scale);
+  // bail if we already fit
+  if (inner.scrollHeight <= frame.clientHeight) return;
+  let guard = 0;
+  while (inner.scrollHeight > frame.clientHeight && scale > 0.6 && guard < 20) {
+    scale -= 0.05;
+    inner.style.setProperty('--s0-fit-scale', scale.toFixed(3));
+    guard++;
+  }
 }
 
 function _ensureBGM(screenId) {
@@ -2020,24 +2040,16 @@ const Screens = {
           return m;
         });
       }
-      // v=84 — TAP-TO-REVEAL paragraphs (parchment idiom).  Body is
-      // split into sentences; only the first is shown; each tap
-      // anywhere on the text frame reveals the next sentence + TTS
-      // it.  When the last sentence is revealed, a "Begin Questions"
-      // CTA appears.  Per user: "点一下 出一段话的+自动播放语音的
-      // 效果".
+      // v=88 — BOOK MODE.  Entire section body is on the page from
+      // the start (no tap-to-reveal); paragraphs are sentence-split
+      // only so each sentence reads as its own line.  Page does NOT
+      // scroll — _s0FitToPage() auto-shrinks font until it fits.
       const paras = (section.body || '')
         .split(/(?<=[.!?])\s+(?=[A-Z])/)
         .filter(s => s.trim().length > 0);
       const paraHtml = paras.map((p, i) => `
-        <div class="s0-para${i === 0 ? ' is-revealed' : ' is-staged'}" data-sp="${escapeAttr(p)}" data-idx="${i}">
-          ${linkify(p)}
-        </div>
+        <div class="s0-para is-revealed" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
       `).join('');
-      // Origin: where did we come from?  If from a parchment chip,
-      // saved.s0Origin === 'parchment' and we show a "return to
-      // parchment" round button in the top-right corner instead of
-      // the regular ✦ close.
       const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
       el.innerHTML = `
         <div class="s0-page">
@@ -2045,15 +2057,12 @@ const Screens = {
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-              <div class="s0-sub">— tap the page to reveal each line —</div>
             </header>
             <section class="s0-section">${paraHtml}</section>
-            <div class="s0-tap-hint">— tap to read on —</div>
           </div>
         </div>
       `;
       if (fromParchment) {
-        // Round metal "return to parchment" corner.
         const back = document.createElement('button');
         back.className = 's0-corner-back';
         back.setAttribute('aria-label', 'return to parchment');
@@ -2065,14 +2074,13 @@ const Screens = {
           saved.s0OriginWord = null;
           Store.save();
           go('cover', { instant: true });
-          // re-open parchment after the cover transition lands.
           setTimeout(() => { if (PARCHMENT_CARDS[w]) showParchment(w); }, 80);
         });
         el.appendChild(back);
       } else {
         el.appendChild(closeCorner({ to: 'cover' }));
       }
-      // Underlined-word taps → parchment popup.
+      // Word-jump links → parchment.
       $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const w = a.getAttribute('data-jump');
@@ -2081,58 +2089,29 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // Speak the FIRST paragraph on enter.
+      // Vertical key glyph (bottom-right of text frame) → quiz.
+      const key = document.createElement('button');
+      key.className = 's0-next-key is-armed';
+      key.setAttribute('aria-label', 'begin questions');
+      key.innerHTML = `
+        <svg viewBox="0 0 14 32" width="22" height="36" aria-hidden="true">
+          <circle cx="7" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="7" cy="5" r="1.2" fill="currentColor"/>
+          <line x1="7" y1="9" x2="7" y2="29" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="7"  y1="22" x2="11" y2="22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="7"  y1="26" x2="10" y2="26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      `;
+      key.addEventListener('click', () => {
+        (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
+        go('stage0-quiz');
+      });
+      $('.s0-text-frame', el).appendChild(key);
+      // Fit text into the painted page region without overflow.
+      requestAnimationFrame(() => _s0FitToPage(el));
+      // Auto-speak first sentence on entry (no tap needed).
       const firstPara = el.querySelector('.s0-para[data-idx="0"]');
-      if (firstPara) {
-        setTimeout(() => speak(firstPara.getAttribute('data-sp')), 400);
-      }
-      // Reveal mechanism: tap anywhere on the text frame (outside
-      // a .s0-jump or the back button) → reveal next + speak.
-      let revealIdx = 1;
-      const total = paras.length;
-      const frame = $('.s0-text-frame', el);
-      // v=87 — replaced the chunky "Begin Questions" button with a
-      // small vertical KEY glyph at the text frame's bottom-right.
-      // Tap → questions screen.  Per user: "点击书页右下角的钥匙
-      // 进行下一步得了 (竖着的钥匙符号)".
-      function showActions() {
-        if (!$('.s0-next-key', el)) {
-          const key = document.createElement('button');
-          key.className = 's0-next-key is-armed';
-          key.setAttribute('aria-label', 'begin questions');
-          key.innerHTML = `
-            <svg viewBox="0 0 14 32" width="22" height="36" aria-hidden="true">
-              <!-- vertical skeleton key: bow at top, shaft, two teeth -->
-              <circle cx="7" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
-              <circle cx="7" cy="5" r="1.2" fill="currentColor"/>
-              <line x1="7" y1="9" x2="7" y2="29" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="7"  y1="22" x2="11" y2="22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="7"  y1="26" x2="10" y2="26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          `;
-          key.addEventListener('click', () => {
-            (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
-            go('stage0-quiz');
-          });
-          $('.s0-text-frame', el).appendChild(key);
-          $('.s0-tap-hint', el)?.classList.add('is-gone');
-        }
-      }
-      if (total <= 1) showActions();
-      function advance(ev) {
-        if (ev && ev.target && ev.target.closest('.s0-jump, .s0-corner-back, .s0-next-key')) return;
-        if (revealIdx >= total) return;
-        const para = el.querySelector(`.s0-para[data-idx="${revealIdx}"]`);
-        if (!para) return;
-        para.classList.remove('is-staged');
-        para.classList.add('is-revealed');
-        (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
-        speak(para.getAttribute('data-sp'));
-        para.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        revealIdx++;
-        if (revealIdx >= total) showActions();
-      }
-      frame.addEventListener('click', advance);
+      if (firstPara) setTimeout(() => speak(firstPara.getAttribute('data-sp')), 400);
     }
   },
 
@@ -2169,11 +2148,18 @@ const Screens = {
       // key glyph at the bottom-right of the text frame routes to
       // stage 1 when at least one answer is locked in (or any
       // time — we don't force completion).
+      // v=88 — quiz pedagogy rewritten per user: NO answer reveal,
+      // NO truth label.  Picking the right one stays neutral
+      // (subtle gold border, no halo).  Picking wrong: only the
+      // wrong card dims; after a short beat the page auto-routes
+      // BACK to stage 0 so the user re-reads the article.  Only
+      // when ALL THREE are right does the bottom key arm + lead
+      // to stage 1.  User: "错了就显示错了 (即不发光) 然后自动
+      // 跳转回 stage0 ... 全做对了自动跳转到 stage1".
       const qBlocks = picks.map((q, i) => `
         <div class="s0q-block" data-qi="${i}">
           <div class="s0q-question">${escapeHtml(q.q)}</div>
           <div class="s0q-options"></div>
-          <div class="s0q-feedback"></div>
         </div>
       `).join('');
       el.innerHTML = `
@@ -2182,7 +2168,6 @@ const Screens = {
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-              <div class="s0-sub">— three questions · tap the key when done —</div>
             </header>
             <div class="s0q-stack">${qBlocks}</div>
           </div>
@@ -2190,7 +2175,8 @@ const Screens = {
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
 
-      const answered = new Array(picks.length).fill(false);
+      const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
+      let _failed = false;
       $$('.s0q-block', el).forEach((block, qi) => {
         const q = picks[qi];
         const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
@@ -2201,27 +2187,25 @@ const Screens = {
           b.className = 'card card--option s0q-opt';
           b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
           b.addEventListener('click', () => {
-            if (answered[qi]) return;
-            answered[qi] = true;
+            if (answered[qi] !== null || _failed) return;
             (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
             const isRight = opt.toLowerCase() === q.a.toLowerCase();
             if (isRight) {
-              b.classList.add('reveal-right');
+              answered[qi] = 'right';
+              b.classList.add('s0q-locked-right');
               SFX.right();
+              if (answered.every(v => v === 'right')) armKey();
             } else {
-              b.classList.add('picked-wrong');
-              $$('.s0q-opt', block).forEach(other => {
-                if (other.querySelector('.mc-text').textContent.toLowerCase() === q.a.toLowerCase()) {
-                  other.classList.add('reveal-right');
-                }
-              });
+              answered[qi] = 'wrong';
+              b.classList.add('s0q-locked-wrong');
               SFX.wrong();
+              _failed = true;
+              // Auto-bounce back to stage 0 after a short beat so
+              // the user can re-read the article and try again.
+              setTimeout(() => {
+                go('stage0');
+              }, 900);
             }
-            $('.s0q-feedback', block).innerHTML = isRight
-              ? '<em>✦ inscribed</em>'
-              : `<em>the answer was <span class="s0q-truth">${escapeHtml(q.a)}</span></em>`;
-            // If all 3 answered, arm the bottom key.
-            if (answered.every(Boolean)) armKey();
           });
           optsHost.appendChild(b);
         });
@@ -2248,6 +2232,8 @@ const Screens = {
         });
         $('.s0-text-frame', el).appendChild(key);
       }
+      // Auto-fit so 3 question blocks stay inside the painted page.
+      requestAnimationFrame(() => _s0FitToPage(el));
     }
   },
   stage1: {
