@@ -1020,17 +1020,35 @@ function _buildLinkLookup() {
     const st = stem(word);
     if (st !== word && st.length >= 5 && !rev[st]) rev[st] = head;
   }
+  const headSet = new Set();
   Object.entries(PARCHMENT_CARDS).forEach(([head, c]) => {
+    headSet.add(head);
     add(head, head);
     (c.family || []).forEach(f => add((f.split('|')[0] || '').trim(), head));
     (c.kin    || []).forEach(k => add((k.split('|')[0] || '').trim(), head));
   });
   const PRE = /^(in|un|non|dis|re|over|under|pre|sub|inter|im|ir|il)/;
+  // v=93 — substring fallback: for words ≥ 7 chars where every other
+  // path fails, find the longest 5+ char substring that is itself a
+  // card head.  This is what makes `ecological → logic`, `geopolitical
+  // → politic`, `subterranean → terrain` etc work without forcing a
+  // new card to be authored.  Per user: "ecological 应该也可以挂进
+  // 单词表里 比如ecosystem或者logic… 任何词只要一部分和当前词库有
+  // 相似度直接挂进去就行".
+  function subMatch(w) {
+    if (w.length < 7) return null;
+    for (let len = Math.min(w.length - 1, 9); len >= 5; len--) {
+      for (let i = 0; i + len <= w.length; i++) {
+        const sub = w.slice(i, i + len);
+        if (headSet.has(sub)) return sub;
+      }
+    }
+    return null;
+  }
   function lookup(w) {
     w = (w || '').toLowerCase();
     if (w.length < 3) return null;
     if (rev[w]) return rev[w];
-    // try common morphological stripping
     const s = stem(w);
     if (s !== w && rev[s]) return rev[s];
     const np = w.replace(PRE, '');
@@ -1039,9 +1057,11 @@ function _buildLinkLookup() {
       const ns = stem(np);
       if (ns !== np && rev[ns]) return rev[ns];
     }
+    const sub = subMatch(w);
+    if (sub) return sub;
     return null;
   }
-  _LINK_REV = { _lookup: lookup, _rev: rev };
+  _LINK_REV = { _lookup: lookup, _rev: rev, _heads: headSet };
   return lookup;
 }
 

@@ -1,924 +1,1091 @@
-# Orphan content words from Stage 0 readings
+# Words that need a collocation in an existing parchment
 
-Each row is a 6+ character word that appears in a chapter article
-but the linkify lookup (direct head + family/kin reverse + prefix
-strip + stem fallback) can't reach any parchment card.
+Each word below appears in a Stage 0 reading article and is **not
+an orphan** — the in-app lookup (direct head → family/kin reverse
+→ stem → prefix-strip → substring) can reach a parent card. But
+the word itself is **not yet a literal entry** in that parent's
+`family` or `kin` array, so when the user opens the parchment
+they don't see why their click landed there.
 
-For each word, ask GPT to produce:
+What to do with this list:
 
-  1. Which **existing** PARCHMENT_CARDS head to anchor it to (look
-     for a head sharing a root, prefix, or semantic family).
-  2. One **family-style** line (if the orphan is an inflection /
-     direct derivative of that head) **or** a **kin-style** line
-     (if it just shares a root).  Same format used by existing
-     cards:
+For each row, paste the trio into GPT:
 
-         "<word> | <pos> | <english collocation> | <chinese gloss>"
+> Given the parent card head **<parent>** and the reading word
+> **<word>** (sample sentence: *<ctx>*), produce one line in the
+> existing card format:
+>
+>     "<word> | <pos> | <english collocation> | <chinese gloss>"
+>
+> Decide whether the entry belongs in `family` (direct
+> inflection / derivative of <parent>) or in `kin` (shares a
+> root with <parent>).
 
-  3. If nothing in PARCHMENT_CARDS is a credible anchor, mark
-     "NEW CARD" and propose a full card stub.
+Then drop the produced lines into PARCHMENT_CARDS[<parent>].family
+or .kin and they'll start linking from reading articles.
 
-Process in **chapter order** — Chapter 1 first, since that's the
-user's current reading.
+The `Path` column shows how the lookup found the parent — use it
+to sanity-check whether the anchor is reasonable.  `substring(...)`
+matches are the loosest; reject any that don't actually share a
+root.
 
-Total orphans: **849**
+Stats:
+- words analysed across all stage 0 articles: **5486**
+- has own parchment card (leave alone): **883**
+- already a literal family/kin entry: **670**
+- true orphans (no anchor, no own card) dropped: **2803**
+- needs a collocation written: **1003**
 
 
-## Chapter 1 (102 orphans)
+## Chapter 1 (70 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| kilometres | 15 | 1.4, 2.2, 2.6 | That negligible gap sounds like a curiosity until you recall the navigation satellites in orbit overhead: thei… |
-| civilisation | 12 | 1.5, 1.7, 2.5 | The sunlight that warms your face is older than human civilisation itself.… |
-| reached | 12 | 1.6, 2.2, 2.3 | Days commenced and concluded inside only a handful of hours, because the planet rotated on its axis at a veloc… |
-| centre | 10 | 1.2, 6.4, 9.13 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| engineers | 10 | 1.4, 9.4, 9.14 | That negligible gap sounds like a curiosity until you recall the navigation satellites in orbit overhead: thei… |
-| working | 10 | 1.6, 9.13, 9.20 | A rogue planet about the size of Mars, which astronomers working backwards from the wreckage have designated T… |
-| nuclear | 8 | 1.2, 2.6, 9.49 | When a giant star has at last consumed the nuclear fuel that had sustained it for billions of years, gravity w… |
-| required | 8 | 1.3, 9.2, 9.8 | Eventually they designated this invisible mass as dark matter, mostly because the scientific consensus require… |
-| existence | 8 | 1.6, 5.4, 8.23 | Earth, in its first hours of existence, very nearly endured a catastrophe from which it might never have recov… |
-| matter | 7 | 1.1, 1.3, 2.3 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable heat, could … |
-| patterns | 7 | 1.3, 3.3, 3.12 | The constellations we see at night are merely the patterns nearby stars happen to make against the deeper back… |
-| controlled | 7 | 1.5, 3.11, 8.12 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent day the sa… |
-| previously | 6 | 1.2, 2.4, 2.7 | When a giant star has at last consumed the nuclear fuel that had sustained it for billions of years, gravity w… |
-| boundary | 6 | 1.2, 6.5, 8.1 | Around that point hangs an invisible boundary called the event horizon, and once anything has crossed it, noth… |
-| scientific | 6 | 1.3, 4.8, 5.3 | Eventually they designated this invisible mass as dark matter, mostly because the scientific consensus require… |
-| station | 6 | 1.4, 4.7, 7.7 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of a second … |
-| propagate | 5 | 1.1, 1.5, 6.6 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable heat, could … |
-| physics | 5 | 1.2, 9.25, 9.41 | The exhausted core buckles inward, and condenses everything it once contained into a single point of unimagina… |
-| distant | 5 | 1.2, 1.7, 2.1 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| bodies | 5 | 1.3, 3.6, 8.3 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the Milky Way… |
-| frozen | 5 | 1.3, 2.2, 4.1 | The constellations we see at night are merely the patterns nearby stars happen to make against the deeper back… |
-| astronomers | 5 | 1.3, 1.6, 7.6 | When astronomers first began to measure the orbital velocity of stars near the edge of a galaxy, they encounte… |
-| intact | 5 | 1.3, 3.7, 3.10 | Yet the galaxies endured, coherent and intact.… |
-| moving | 5 | 1.4, 3.3, 6.6 | Nothing in nature can exceed it, and the closer anything accelerates toward that ceiling, the more time itself… |
-| sunlight | 5 | 1.5, 2.1, 2.2 | The sunlight that warms your face is older than human civilisation itself.… |
-| colossal | 5 | 1.6, 2.4, 3.7 | When the new Moon was young it occupied a position so close to Earth that it almost filled half the sky, and i… |
-| handful | 5 | 1.6, 1.7, 8.8 | Days commenced and concluded inside only a handful of hours, because the planet rotated on its axis at a veloc… |
-| civilisations | 5 | 1.7, 3.7, 6.1 | The universe has endured for so long, and encompasses so many stars and so many planets, that the galaxy ought… |
-| begins | 4 | 1.2, 1.4, 3.8 | Stranger still, time itself begins to slow as the gravity intensifies.… |
-| glowing | 4 | 1.3, 1.6, 2.6 | The constellations we see at night are merely the patterns nearby stars happen to make against the deeper back… |
-| instrument | 4 | 1.3, 6.3, 8.12 | Something invisible was holding the stars in their orbits, something no instrument astronomers have ever devis… |
-| ceiling | 4 | 1.4, 7.9, 9.14 | Nothing in nature can exceed it, and the closer anything accelerates toward that ceiling, the more time itself… |
-| whatever | 4 | 1.4, 3.2, 4.4 | Nothing in nature can exceed it, and the closer anything accelerates toward that ceiling, the more time itself… |
-| clocks | 4 | 1.4, 9.47 | The astronaut aboard would step out of her capsule having endured only a little ageing, while the planet she l… |
-| neighbour | 4 | 1.5, 8.17 | But the plasma packing the Sun's core is so dense that the new photon cannot propagate straight outward; inste… |
-| filled | 4 | 1.6, 5.1, 7.9 | When the new Moon was young it occupied a position so close to Earth that it almost filled half the sky, and i… |
-| lethal | 4 | 1.6, 7.10, 8.15 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: every few hu… |
-| neighbours | 4 | 1.7, 3.3, 3.9 | The universe has endured for so long, and encompasses so many stars and so many planets, that the galaxy ought… |
-| nobody | 4 | 1.7, 2.1, 3.14 | The candidate answers nobody likes go like this.… |
-| intuition | 3 | 1.1, 8.9, 9.19 | From this incomprehensible compression, the universe erupted outward with such violence that it underwent a ph… |
-| particles | 3 | 1.1, 1.5, 4.10 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable heat, could … |
-| witness | 3 | 1.1, 3.6, 5.9 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable heat, could … |
-| stretched | 3 | 1.1, 1.2, 9.44 | That ancient radiance, now stretched and attenuated by the relentless expansion of space, still permeates the … |
-| relentless | 3 | 1.1, 2.4, 9.3 | That ancient radiance, now stretched and attenuated by the relentless expansion of space, still permeates the … |
-| layers | 3 | 1.2, 9.34, 10.37 | When a giant star has at last consumed the nuclear fuel that had sustained it for billions of years, gravity w… |
-| spacecraft | 3 | 1.2, 1.4 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| appear | 3 | 1.2, 2.2, 10.1 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| remainder | 3 | 1.2, 9.19, 9.25 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| stream | 3 | 1.2, 4.1, 6.4 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| occasional | 3 | 1.2, 1.3, 3.4 | One looms at the heart of almost every galaxy we have ever observed, our own Milky Way included, where it pers… |
-| telescope | 3 | 1.3, 1.7, 9.19 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the Milky Way… |
-| deeper | 3 | 1.3, 4.11, 9.51 | The constellations we see at night are merely the patterns nearby stars happen to make against the deeper back… |
-| managed | 3 | 1.3, 2.4, 5.1 | Something invisible was holding the stars in their orbits, something no instrument astronomers have ever devis… |
-| nature | 3 | 1.4, 9.3, 9.21 | Nothing in nature can exceed it, and the closer anything accelerates toward that ceiling, the more time itself… |
-| closer | 3 | 1.4, 2.4, 10.34 | Nothing in nature can exceed it, and the closer anything accelerates toward that ceiling, the more time itself… |
-| occupies | 3 | 1.4, 7.6, 10.37 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of a second … |
-| curiosity | 3 | 1.4, 5.2, 7.11 | That negligible gap sounds like a curiosity until you recall the navigation satellites in orbit overhead: thei… |
-| crushed | 3 | 1.5, 4.7, 9.45 | Far down inside the Sun, where the temperature ascends into the millions and hydrogen atoms are crushed togeth… |
-| vacuum | 3 | 1.5, 9.31, 10.37 | Once that photon finally breaks free of the surface and enters the vacuum of space, the trip across to Earth t… |
-| yellow | 3 | 1.5, 7.4, 9.47 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent day the sa… |
-| strength | 3 | 1.5, 4.10, 10.37 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent day the sa… |
-| receded | 3 | 1.6, 9.1, 10.36 | Then, over hundreds of millions of years, the Moon receded outward and the rotation slowed, until that same Mo… |
-| modest | 3 | 1.6, 2.5, 2.7 | Then, over hundreds of millions of years, the Moon receded outward and the rotation slowed, until that same Mo… |
-| interval | 3 | 1.7, 4.6, 9.25 | A handful among them constitute rough Earth-analogues, occupying just the right interval from their parent sta… |
-| deliberately | 3 | 1.7, 3.10, 10.31 | Perhaps the older civilisations out there deliberately obscure themselves from beginners like us.… |
-| answer | 3 | 1.7, 3.4, 9.17 | Or, most unsettling of all, perhaps we genuinely constitute the very first to emerge in the cosmos, the only o… |
-| unimaginable | 2 | 1.1, 1.2 | In an epoch so remote that no human concept of time can encompass it, the entirety of the cosmos was condensed… |
-| familiar | 2 | 1.1, 1.2 | In an epoch so remote that no human concept of time can encompass it, the entirety of the cosmos was condensed… |
-| bearing | 2 | 1.1, 5.3 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable heat, could … |
-| permeates | 2 | 1.1, 9.36 | That ancient radiance, now stretched and attenuated by the relentless expansion of space, still permeates the … |
-| stations | 2 | 1.1, 8.21 | That ancient radiance, now stretched and attenuated by the relentless expansion of space, still permeates the … |
-| losing | 2 | 1.2, 4.6 | When a giant star has at last consumed the nuclear fuel that had sustained it for billions of years, gravity w… |
-| stranger | 2 | 1.2, 1.3 | Stranger still, time itself begins to slow as the gravity intensifies.… |
-| plunge | 2 | 1.2, 7.5 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| watched | 2 | 1.2, 10.18 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit, that obs… |
-| included | 2 | 1.2, 2.2 | One looms at the heart of almost every galaxy we have ever observed, our own Milky Way included, where it pers… |
-| rotating | 2 | 1.3, 4.3 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the Milky Way… |
-| centres | 2 | 1.3, 10.10 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the Milky Way… |
-| stretch | 2 | 1.3, 6.2 | The constellations we see at night are merely the patterns nearby stars happen to make against the deeper back… |
-| puzzle | 2 | 1.3, 9.17 | When astronomers first began to measure the orbital velocity of stars near the edge of a galaxy, they encounte… |
-| holding | 2 | 1.3, 8.4 | Something invisible was holding the stars in their orbits, something no instrument astronomers have ever devis… |
-| picture | 2 | 1.3, 10.13 | And then the picture grew stranger.… |
-| propelled | 2 | 1.3, 2.5 | The cosmos as a whole, the data revealed, is not merely expanding but accelerating outward, propelled apart by… |
-| aboard | 2 | 1.4, 7.2 | The astronaut aboard would step out of her capsule having endured only a little ageing, while the planet she l… |
-| ageing | 2 | 1.4, 9.22 | The astronaut aboard would step out of her capsule having endured only a little ageing, while the planet she l… |
-| returns | 2 | 1.4, 10.33 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of a second … |
-| younger | 2 | 1.4, 8.8 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of a second … |
-| faster | 2 | 1.4, 6.1 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of a second … |
-| farther | 2 | 1.4, 6.5 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of a second … |
-| journey | 2 | 1.5, 4.6 | But the plasma packing the Sun's core is so dense that the new photon cannot propagate straight outward; inste… |
-| average | 2 | 1.5, 5.9 | But the plasma packing the Sun's core is so dense that the new photon cannot propagate straight outward; inste… |
-| nearest | 2 | 1.5, 3.4 | But our nearest star is not a gentle neighbour.… |
-| backwards | 2 | 1.6, 2.2 | A rogue planet about the size of Mars, which astronomers working backwards from the wreckage have designated T… |
-| wreckage | 2 | 1.6, 9.51 | A rogue planet about the size of Mars, which astronomers working backwards from the wreckage have designated T… |
-| height | 2 | 1.6, 10.3 | When the new Moon was young it occupied a position so close to Earth that it almost filled half the sky, and i… |
-| streaming | 2 | 1.6, 4.10 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: every few hu… |
-| outright | 2 | 1.6, 2.1 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: every few hu… |
-| catalogued | 2 | 1.7, 9.10 | We have by now catalogued thousands of planets in orbit around distant stars, found by telescopes of ever-grea… |
-| telescopes | 2 | 1.7, 7.6 | We have by now catalogued thousands of planets in orbit around distant stars, found by telescopes of ever-grea… |
-| listening | 2 | 1.7, 9.28 | Meanwhile, immense radio dishes scan the sky continuously, listening for any signal that another civilisation … |
-| physicist | 2 | 1.7, 10.20 | The physicist Enrico Fermi articulated the paradox in five plain words: where is everybody?… |
-| calling | 2 | 1.7, 3.9 | Or, most unsettling of all, perhaps we genuinely constitute the very first to emerge in the cosmos, the only o… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **directly** | `redirect` | stem(direct) | 16 | 1.3, 1.4, 1.5 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the… |
+| **emerged** | `emerge` | stem(emerg) | 16 | 1.6, 2.1, 2.2 | Without that gentle restraint on our axis, the climate would fluctuate violently across the whole pl… |
+| **constitutes** | `constitute` | stem(constitute) | 12 | 1.3, 1.6, 4.1 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the… |
+| **civilisation** | `civil` | substring(civil) | 12 | 1.5, 1.7, 2.5 | The sunlight that warms your face is older than human civilisation itself.… |
+| **persisted** | `consistent` | stem(persist) | 10 | 1.5, 2.1, 2.2 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent … |
+| **sustained** | `sustainable` | stem(sustain) | 9 | 1.2, 3.7, 9.2 | When a giant star has at last consumed the nuclear fuel that had sustained it for billions of years,… |
+| **nuclear** | `clear` | substring(clear) | 8 | 1.2, 2.6, 9.49 | When a giant star has at last consumed the nuclear fuel that had sustained it for billions of years,… |
+| **moment** | `momentum` | stem-of-family | 7 | 1.1, 2.4, 7.12 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable he… |
+| **direction** | `redirect` | stem(direc) | 7 | 1.1, 1.5, 6.3 | That ancient radiance, now stretched and attenuated by the relentless expansion of space, still perm… |
+| **ascends** | `ascend` | stem(ascend) | 7 | 1.5, 1.6, 4.2 | Far down inside the Sun, where the temperature ascends into the millions and hydrogen atoms are crus… |
+| **crossed** | `crucial` | stem(cross) | 6 | 1.2, 7.11, 8.11 | Around that point hangs an invisible boundary called the event horizon, and once anything has crosse… |
+| **standing** | `substantial` | stem(stand) | 6 | 1.4, 4.3, 7.1 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of… |
+| **recovered** | `coverage` | stem(cover) | 6 | 1.6, 2.3, 8.3 | Earth, in its first hours of existence, very nearly endured a catastrophe from which it might never … |
+| **oceans** | `oceanography` | stem(ocean) | 6 | 1.6, 2.1, 2.2 | When the new Moon was young it occupied a position so close to Earth that it almost filled half the … |
+| **sunlight** | `light` | substring(light) | 5 | 1.5, 2.1, 2.2 | The sunlight that warms your face is older than human civilisation itself.… |
+| **civilisations** | `civil` | substring(civil) | 5 | 1.7, 3.7, 6.1 | The universe has endured for so long, and encompasses so many stars and so many planets, that the ga… |
+| **satellites** | `satellite` | stem(satellite) | 4 | 1.4, 1.5, 7.3 | That negligible gap sounds like a curiosity until you recall the navigation satellites in orbit over… |
+| **minutes** | `diminish` | stem(minute) | 4 | 1.5, 3.3, 3.13 | Once that photon finally breaks free of the surface and enters the vacuum of space, the trip across … |
+| **converting** | `avert` | stem(convert) | 4 | 1.5, 4.11, 10.22 | The Sun has maintained this furnace by converting its own mass into pure radiation, second by second… |
+| **seasons** | `sea` | stem(season) | 4 | 1.6, 4.10, 9.28 | Then, over hundreds of millions of years, the Moon receded outward and the rotation slowed, until th… |
+| **originally** | `aboriginal` | stem(original) | 4 | 1.7, 8.13, 9.13 | A handful among them constitute rough Earth-analogues, occupying just the right interval from their … |
+| **contains** | `obtain` | stem(contain) | 4 | 1.7, 4.11, 8.2 | Or, most unsettling of all, perhaps we genuinely constitute the very first to emerge in the cosmos, … |
+| **condensed** | `density` | stem(condens) | 3 | 1.1, 1.6, 9.41 | In an epoch so remote that no human concept of time can encompass it, the entirety of the cosmos was… |
+| **erupted** | `abrupt` | stem(erupt) | 3 | 1.1, 8.19 | From this incomprehensible compression, the universe erupted outward with such violence that it unde… |
+| **signals** | `designate` | stem(signal) | 3 | 1.2, 1.4, 1.5 | Around that point hangs an invisible boundary called the event horizon, and once anything has crosse… |
+| **spacecraft** | `space` | substring(space) | 3 | 1.2, 1.4 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit… |
+| **margins** | `marginal` | stem(margin) | 3 | 1.3, 4.5, 9.5 | The constellations we see at night are merely the patterns nearby stars happen to make against the d… |
+| **emerges** | `merge` | stem(emerge) | 3 | 1.5, 1.7, 6.5 | Far down inside the Sun, where the temperature ascends into the millions and hydrogen atoms are crus… |
+| **storms** | `brainstorm` | stem(storm) | 3 | 1.5, 9.6, 10.8 | Every so often the Sun unleashes a vast storm of charged particles directly at our planet, and when … |
+| **generates** | `generate` | stem(generate) | 3 | 1.6, 4.4, 10.20 | Then, over hundreds of millions of years, the Moon receded outward and the rotation slowed, until th… |
+| **deliberately** | `liberate` | substring(liberate) | 3 | 1.7, 3.10, 10.31 | Perhaps the older civilisations out there deliberately obscure themselves from beginners like us.… |
+| **expanding** | `expand` | stem(expand) | 2 | 1.1, 1.3 | From this incomprehensible compression, the universe erupted outward with such violence that it unde… |
+| **devours** | `devour` | stem(devour) | 2 | 1.2, 1.7 | One looms at the heart of almost every galaxy we have ever observed, our own Milky Way included, whe… |
+| **accelerating** | `accelerate` | stem(accelerat) | 2 | 1.3, 5.8 | The cosmos as a whole, the data revealed, is not merely expanding but accelerating outward, propelle… |
+| **persists** | `consistent` | stem(persist) | 2 | 1.3, 3.3 | The other ninety five per cent persists, for now, as a complete blank.… |
+| **accelerates** | `accelerate` | stem(accelerate) | 2 | 1.4 | Nothing in nature can exceed it, and the closer anything accelerates toward that ceiling, the more t… |
+| **orbiting** | `orbit` | stem(orbit) | 2 | 1.4, 2.6 | An astronaut who occupies a space station orbiting above the atmosphere returns a few thousandths of… |
+| **fluctuates** | `fluctuate` | stem(fluctuate) | 2 | 1.5, 3.6 | Every so often the Sun unleashes a vast storm of charged particles directly at our planet, and when … |
+| **reverses** | `versatile` | stem(verse) | 2 | 1.6, 6.1 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: ev… |
+| **planets** | `plankton` | stem(planet) | 2 | 1.7 | We have by now catalogued thousands of planets in orbit around distant stars, found by telescopes of… |
+| **broadcasting** | `broad` | stem(broadcast) | 2 | 1.7 | The universe has endured for so long, and encompasses so many stars and so many planets, that the ga… |
+| **incomprehensible** | `apprehend` | stem(comprehens) | 1 | 1.1 | From this incomprehensible compression, the universe erupted outward with such violence that it unde… |
+| **inconceivable** | `conceive` | stem(conceiv) | 1 | 1.1 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable he… |
+| **universe's** | `universe` | substring(universe) | 1 | 1.1 | Only after aeons of gradual cooling, as the primordial matter slowly dissipated its inconceivable he… |
+| **reference** | `infer` | stem(ference) | 1 | 1.2 | If a spacecraft were to plunge inward while a distant observer watched its descent from a safe orbit… |
+| **drifts** | `derive` | stem(drift) | 1 | 1.2 | One looms at the heart of almost every galaxy we have ever observed, our own Milky Way included, whe… |
+| **undistinguished** | `distinguish` | stem(distinguish) | 1 | 1.3 | It constitutes one undistinguished ember among the hundred billion celestial bodies that inhabit the… |
+| **constellations** | `constellation` | stem(constellation) | 1 | 1.3 | The constellations we see at night are merely the patterns nearby stars happen to make against the d… |
+| **nebulae** | `nebula` | substring(nebula) | 1 | 1.3 | The constellations we see at night are merely the patterns nearby stars happen to make against the d… |
+| **comets** | `comet` | stem(comet) | 1 | 1.3 | The constellations we see at night are merely the patterns nearby stars happen to make against the d… |
+| **orbits** | `orbit` | stem(orbit) | 1 | 1.3 | Something invisible was holding the stars in their orbits, something no instrument astronomers have … |
+| **near-light** | `light` | substring(light) | 1 | 1.4 | Imagine a spacecraft that accelerates outward from Earth and cruises for years at near-light velocit… |
+| **sounds** | `absurd` | stem(sound) | 1 | 1.4 | That negligible gap sounds like a curiosity until you recall the navigation satellites in orbit over… |
+| **scatters** | `scatter` | stem(scatter) | 1 | 1.5 | But the plasma packing the Sun's core is so dense that the new photon cannot propagate straight outw… |
+| **breaks** | `breach` | stem(break) | 1 | 1.5 | Once that photon finally breaks free of the surface and enters the vacuum of space, the trip across … |
+| **encounters** | `encounter` | stem(encounter) | 1 | 1.5 | Every so often the Sun unleashes a vast storm of charged particles directly at our planet, and when … |
+| **oscillates** | `oscillation` | stem(oscillate) | 1 | 1.5 | Every so often the Sun unleashes a vast storm of charged particles directly at our planet, and when … |
+| **illuminates** | `illuminate` | stem(luminate) | 1 | 1.5 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent … |
+| **aurorae** | `aurora` | substring(aurora) | 1 | 1.5 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent … |
+| **disrupts** | `disrupt` | substring(disrupt) | 1 | 1.5 | On a quiet day the collision merely illuminates the polar sky with shimmering aurorae; on a violent … |
+| **violently** | `violate` | stem(violent) | 1 | 1.6 | Without that gentle restraint on our axis, the climate would fluctuate violently across the whole pl… |
+| **attenuates** | `attenuate` | stem(attenuate) | 1 | 1.6 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: ev… |
+| **falters** | `alter` | stem(falter) | 1 | 1.6 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: ev… |
+| **migrates** | `mitigate` | stem(migrate) | 1 | 1.6 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: ev… |
+| **pointing** | `appoint` | stem(point) | 1 | 1.6 | The magnetic field that deflects the lethal radiation streaming off the Sun is no fixed buttress: ev… |
+| **occupying** | `occupy` | stem(occupy) | 1 | 1.7 | A handful among them constitute rough Earth-analogues, occupying just the right interval from their … |
+| **encompasses** | `encompass` | substring(encompass) | 1 | 1.7 | The universe has endured for so long, and encompasses so many stars and so many planets, that the ga… |
+| **cleverer** | `clever` | stem(clever) | 1 | 1.7 | The universe has endured for so long, and encompasses so many stars and so many planets, that the ga… |
+| **unambiguous** | `ambiguous` | stem(ambigu) | 1 | 1.7 | And yet not one signal, not one craft, not one unambiguous trace of another mind has ever manifested… |
+| **beginners** | `inner` | substring(inner) | 1 | 1.7 | Perhaps the older civilisations out there deliberately obscure themselves from beginners like us.… |
 
-## Chapter 2 (103 orphans)
+## Chapter 2 (84 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| surrounding | 18 | 2.1, 5.1, 5.9 | Deep below those oceans, hydrothermal vents emerged along the volcanic seams in the crust, expelling scalding … |
-| arrived | 17 | 2.5, 4.6, 5.3 | That is how each modern continent eventually arrived at such a divergent collection of native animals: not by … |
-| living | 12 | 2.3, 3.1, 3.3 | For more than two billion years after life first appeared, every living thing remained in the water.… |
-| recorded | 10 | 2.1, 3.10, 5.7 | Once the surface had finally hardened, the dense clouds above released a downpour that endured, by some estima… |
-| evolved | 10 | 2.5, 3.1, 5.1 | One particular line of reptiles, modest in size at the outset, evolved across the next thirty million years in… |
-| opposite | 10 | 2.5, 6.4, 7.3 | That is how each modern continent eventually arrived at such a divergent collection of native animals: not by … |
-| narrow | 8 | 2.2, 3.7, 5.4 | Life persisted, but only in narrow pockets near hydrothermal vents on the seafloor, where heat continued to es… |
-| walked | 8 | 2.3, 3.2, 3.3 | Every tetrapod that has ever walked, jumped, flown, or burrowed, from the heaviest elephant down to the smalle… |
-| received | 7 | 2.2, 2.4, 8.15 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carbon dioxide… |
-| marine | 7 | 2.4, 6.2, 7.1 | The eroding topography of the supercontinent exposed bare strata of sediment to relentless acid rain, while in… |
-| collapsed | 7 | 2.6, 5.6, 7.8 | The entire complex food chain, maintained throughout the long Mesozoic, collapsed inside what geologists call … |
-| absence | 6 | 2.1, 5.2, 5.8 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here arrives the … |
-| refined | 6 | 2.3, 7.12, 9.8 | Its descendants, with the kind of patience only evolution can demonstrate, traded gills for lungs, refined the… |
-| landmass | 6 | 2.4, 3.1, 4.1 | Two hundred and fifty million years ago every landmass on Earth converged into a single colossal supercontinen… |
-| chemistry | 6 | 2.4, 8.19, 9.9 | The eroding topography of the supercontinent exposed bare strata of sediment to relentless acid rain, while in… |
-| surviving | 6 | 2.4, 2.7, 4.3 | The few species that managed to withstand the disaster received a stage that had been almost completely cleare… |
-| dinosaurs | 6 | 2.5, 2.6, 4.1 | These were the dinosaurs, and they encompassed every conceivable ecological niche so quickly that no rival ver… |
-| fragment | 6 | 2.5, 2.6, 3.1 | Pangaea had begun to fragment.… |
-| including | 6 | 2.6, 6.4, 7.9 | Roughly three quarters of every species on the planet was eradicated, including every dinosaur larger than a c… |
-| released | 5 | 2.1, 4.8, 5.8 | Once the surface had finally hardened, the dense clouds above released a downpour that endured, by some estima… |
-| learned | 5 | 2.1, 3.1, 4.4 | Then a particular cyanobacterium learned to harness sunlight directly, and the by-product of its new metabolis… |
-| descendants | 5 | 2.3, 3.3, 3.8 | Its descendants, with the kind of patience only evolution can demonstrate, traded gills for lungs, refined the… |
-| insect | 5 | 2.3, 4.5, 5.8 | Imagine swatting at an insect and discovering it is the size of an eagle.… |
-| opened | 5 | 2.4, 3.2, 9.20 | Across what is now Siberia, fissures opened in the crust and persisted for almost a million years, expelling l… |
-| survivors | 5 | 2.5, 7.11, 9.12 | Onto the empty stage stepped the survivors, and they refused to apologise for being alive.… |
-| ecological | 5 | 2.5, 5.2, 5.4 | These were the dinosaurs, and they encompassed every conceivable ecological niche so quickly that no rival ver… |
-| afterward | 4 | 2.1, 8.10, 9.25 | For roughly two billion years afterward, life persisted as a microbial film, consuming dissolved carbon and ex… |
-| seawater | 4 | 2.1, 2.4, 8.6 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here arrives the … |
-| plants | 4 | 2.3, 2.5, 2.6 | Plants ascended onto the shore first, slowly, awkwardly, like reluctant tourists at a hostile resort, but thei… |
-| afternoon | 4 | 2.3, 2.5, 3.10 | That was an ordinary afternoon in the Carboniferous swamp.… |
-| stepped | 4 | 2.5, 3.7, 9.31 | Onto the empty stage stepped the survivors, and they refused to apologise for being alive.… |
-| launched | 4 | 2.5, 9.50, 10.16 | That is how each modern continent eventually arrived at such a divergent collection of native animals: not by … |
-| collided | 4 | 2.6, 8.1, 9.1 | Sixty-six million years ago a stone roughly ten kilometres across, an unannounced fragment of debris orbiting … |
-| inheritance | 4 | 2.6, 3.8, 8.11 | Above them, where the dinosaurs had ruled for one hundred and sixty-five million years, the surface stood almo… |
-| branch | 4 | 2.7, 3.3, 3.4 | One particularly modest branch of these mammals ascended into the canopies of tropical forests and constituted… |
-| saturated | 3 | 2.1, 8.22, 10.25 | Deep below those oceans, hydrothermal vents emerged along the volcanic seams in the crust, expelling scalding … |
-| chemical | 3 | 2.1, 9.4, 10.37 | Deep below those oceans, hydrothermal vents emerged along the volcanic seams in the crust, expelling scalding … |
-| microbial | 3 | 2.1, 9.40 | For roughly two billion years afterward, life persisted as a microbial film, consuming dissolved carbon and ex… |
-| dissolved | 3 | 2.1, 2.4, 9.35 | For roughly two billion years afterward, life persisted as a microbial film, consuming dissolved carbon and ex… |
-| cooled | 3 | 2.2, 2.7, 4.11 | For reasons climatologists still argue about, the atmosphere cooled so drastically that ice advanced from the … |
-| utterly | 3 | 2.2, 3.4, 8.11 | Animals of forms so bizarre they appear nearly imaginary suddenly emerged in the fossil record: the predatory … |
-| anatomical | 3 | 2.2, 9.14, 9.23 | Yet hidden along Pikaia's slender body lay a thin internal rod called a notochord, and that single anatomical … |
-| patience | 3 | 2.2, 2.3, 3.11 | Yet hidden along Pikaia's slender body lay a thin internal rod called a notochord, and that single anatomical … |
-| granted | 3 | 2.3, 2.7, 10.28 | Plants ascended onto the shore first, slowly, awkwardly, like reluctant tourists at a hostile resort, but thei… |
-| traded | 3 | 2.3, 8.23, 10.33 | Its descendants, with the kind of patience only evolution can demonstrate, traded gills for lungs, refined the… |
-| reptiles | 3 | 2.3, 2.5 | Its descendants, with the kind of patience only evolution can demonstrate, traded gills for lungs, refined the… |
-| suffering | 3 | 2.4, 8.11 | The oceans absorbed so much carbon dioxide that they turned acidic and the dissolved oxygen they had once cont… |
-| chapter | 3 | 2.4, 9.46, 10.31 | The few species that managed to withstand the disaster received a stage that had been almost completely cleare… |
-| prevailed | 3 | 2.5, 8.8 | For one hundred and sixty-five million years, a duration roughly four hundred times longer than human civilisa… |
-| directions | 3 | 2.5, 5.5, 10.26 | That is how each modern continent eventually arrived at such a divergent collection of native animals: not by … |
-| downward | 3 | 2.6, 6.4, 10.7 | Sixty-six million years ago a stone roughly ten kilometres across, an unannounced fragment of debris orbiting … |
-| incinerated | 3 | 2.6, 9.49, 10.17 | The impact ejected a curtain of incinerated rock into the upper atmosphere, where it ascended into orbital tra… |
-| eroded | 3 | 2.6, 5.6, 10.30 | Tsunamis dispersed outward from the impact site, vast walls of water that eroded coastlines on every shore of … |
-| coastlines | 3 | 2.6, 6.3, 10.30 | Tsunamis dispersed outward from the impact site, vast walls of water that eroded coastlines on every shore of … |
-| starved | 3 | 2.6, 9.45 | The herbivores starved.… |
-| underground | 3 | 2.6, 7.10 | But a few small mammals had been quietly inhabiting underground burrows, hibernating through the worst of the … |
-| belonged | 3 | 2.7, 8.20, 9.43 | Once the giants were gone, the planet belonged to the mammals.… |
-| survival | 3 | 2.7, 8.17, 10.8 | Across the next sixty million years they accumulated the survival features we now take entirely for granted: d… |
-| offspring | 3 | 2.7, 5.2, 8.22 | Across the next sixty million years they accumulated the survival features we now take entirely for granted: d… |
-| stones | 3 | 2.7, 7.8, 8.20 | The freed pair of forelimbs accumulated stones, manipulated sticks, kindled the first fires, and ignited the l… |
-| turbulent | 2 | 2.1, 9.39 | Beneath a roiling atmosphere of steam and corrosive gases, the crust constituted a turbulent ocean of magma th… |
-| expelling | 2 | 2.1, 2.4 | Deep below those oceans, hydrothermal vents emerged along the volcanic seams in the crust, expelling scalding … |
-| thrived | 2 | 2.1, 2.4 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here arrives the … |
-| pockets | 2 | 2.2, 10.21 | Life persisted, but only in narrow pockets near hydrothermal vents on the seafloor, where heat continued to es… |
-| escape | 2 | 2.2, 8.2 | Life persisted, but only in narrow pockets near hydrothermal vents on the seafloor, where heat continued to es… |
-| volcanoes | 2 | 2.2, 7.1 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carbon dioxide… |
-| paused | 2 | 2.2, 7.2 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carbon dioxide… |
-| locked | 2 | 2.2, 3.9 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carbon dioxide… |
-| opportunity | 2 | 2.2, 10.28 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carbon dioxide… |
-| reptile | 2 | 2.2, 9.33 | Yet hidden along Pikaia's slender body lay a thin internal rod called a notochord, and that single anatomical … |
-| strange | 2 | 2.2, 9.15 | Here is the strange consolation of being human: trace your own lineage backwards far enough and you arrive at … |
-| survive | 2 | 2.3, 9.32 | The land above was a barren expanse, baked by ultraviolet radiation and devoid of the organic matter that vert… |
-| ambush | 2 | 2.3, 3.3 | Tiktaalik almost certainly utilised those primitive limbs to crawl through tidal mudflats and ambush prey from… |
-| heaviest | 2 | 2.3, 3.3 | Every tetrapod that has ever walked, jumped, flown, or burrowed, from the heaviest elephant down to the smalle… |
-| geologists | 2 | 2.4, 2.6 | Two hundred and fifty million years ago every landmass on Earth converged into a single colossal supercontinen… |
-| surrounded | 2 | 2.4, 4.9 | Two hundred and fifty million years ago every landmass on Earth converged into a single colossal supercontinen… |
-| coastline | 2 | 2.4, 4.10 | The coastline, suddenly compressed into one continuous loop, dwindled drastically, and the vast interior of Pa… |
-| contaminated | 2 | 2.4, 9.39 | Sulphur dioxide contaminated the air.… |
-| eroding | 2 | 2.4, 10.7 | The eroding topography of the supercontinent exposed bare strata of sediment to relentless acid rain, while in… |
-| acidic | 2 | 2.4, 3.3 | The oceans absorbed so much carbon dioxide that they turned acidic and the dissolved oxygen they had once cont… |
-| breathe | 2 | 2.4, 4.9 | The oceans absorbed so much carbon dioxide that they turned acidic and the dissolved oxygen they had once cont… |
-| episode | 2 | 2.4, 8.6 | The result was the Permian extinction, the most ruinous episode of mass dying the planet has ever endured.… |
-| vanishing | 2 | 2.4, 7.8 | Life as a whole came closer to vanishing entirely than at any other moment in its history.… |
-| disaster | 2 | 2.4, 10.30 | The few species that managed to withstand the disaster received a stage that had been almost completely cleare… |
-| improvised | 2 | 2.4, 9.17 | The few species that managed to withstand the disaster received a stage that had been almost completely cleare… |
-| canopies | 2 | 2.5, 2.7 | Long-necked sauropods consumed the canopies of entire forests in a single afternoon.… |
-| leathery | 2 | 2.5, 2.7 | Pterosaurs, technically not dinosaurs but their close kin, articulated immense leathery wings and patrolled th… |
-| seizing | 2 | 2.5, 10.3 | Plesiosaurs occupied the seas, propelled by paddled limbs and capable of seizing fish at depths most other rep… |
-| sixty-five | 2 | 2.5, 2.6 | For one hundred and sixty-five million years, a duration roughly four hundred times longer than human civilisa… |
-| motion | 2 | 2.5, 10.13 | The supercontinent split, and split again, and the resulting plates drifted apart in slow motion, each one car… |
-| carrying | 2 | 2.5, 8.6 | The supercontinent split, and split again, and the resulting plates drifted apart in slow motion, each one car… |
-| instant | 2 | 2.6, 10.10 | The entire complex food chain, maintained throughout the long Mesozoic, collapsed inside what geologists call … |
-| dinosaur | 2 | 2.6, 4.1 | Roughly three quarters of every species on the planet was eradicated, including every dinosaur larger than a c… |
-| chicken | 2 | 2.6, 9.24 | Roughly three quarters of every species on the planet was eradicated, including every dinosaur larger than a c… |
-| stored | 2 | 2.6, 4.3 | But a few small mammals had been quietly inhabiting underground burrows, hibernating through the worst of the … |
-| competitors | 2 | 2.7, 10.34 | Across the next sixty million years they accumulated the survival features we now take entirely for granted: d… |
-| tropical | 2 | 2.7, 4.1 | One particularly modest branch of these mammals ascended into the canopies of tropical forests and constituted… |
-| branches | 2 | 2.7, 3.4 | Life among the branches demands precision: to leap from one bough to the next without missing, the brain must … |
-| landing | 2 | 2.7, 10.18 | Life among the branches demands precision: to leap from one bough to the next without missing, the brain must … |
-| upright | 2 | 2.7, 3.2 | Forests across Africa diminished, and one particular line of primates was compelled to descend to the open sav… |
-| sticks | 2 | 2.7, 10.24 | The freed pair of forelimbs accumulated stones, manipulated sticks, kindled the first fires, and ignited the l… |
-| refinement | 2 | 2.7, 3.3 | The freed pair of forelimbs accumulated stones, manipulated sticks, kindled the first fires, and ignited the l… |
-| recognise | 2 | 2.7, 9.19 | And from a single dwindling population of African australopithecines, one species eventually emerged that coul… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **generating** | `generate` | stem(generat) | 24 | 2.2, 4.5, 5.1 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carb… |
+| **global** | `globalization` | stem-of-family | 19 | 2.6, 3.12, 3.13 | The impact ejected a curtain of incinerated rock into the upper atmosphere, where it ascended into o… |
+| **mammals** | `mammal` | stem(mammal) | 12 | 2.6, 2.7, 4.1 | But a few small mammals had been quietly inhabiting underground burrows, hibernating through the wor… |
+| **forests** | `afforestation` | stem(forest) | 10 | 2.4, 2.5, 2.7 | Roughly ninety-six per cent of every marine species on Earth was eradicated, along with the majority… |
+| **populations** | `population` | stem(population) | 8 | 2.1, 5.9, 9.7 | Entire populations of anaerobic microbes were eradicated outright by the exhalations of their distan… |
+| **record** | `accord` | strip-re | 7 | 2.2, 3.7, 7.5 | Animals of forms so bizarre they appear nearly imaginary suddenly emerged in the fossil record: the … |
+| **animals** | `animal` | stem(animal) | 6 | 2.2, 2.5, 3.8 | Animals of forms so bizarre they appear nearly imaginary suddenly emerged in the fossil record: the … |
+| **drifted** | `derive` | stem(drift) | 6 | 2.4, 2.5, 3.1 | Long after life had spread across the continents, the continents themselves drifted slowly together.… |
+| **humans** | `human` | stem(human) | 6 | 2.6, 7.2, 9.7 | The collision generated an explosion approximately a billion times more energetic than every nuclear… |
+| **conditions** | `conditioning` | stem(condition) | 6 | 2.7, 7.2, 9.20 | Across the next sixty million years they accumulated the survival features we now take entirely for … |
+| **consuming** | `consume` | stem(consum) | 5 | 2.1, 4.7, 5.8 | For roughly two billion years afterward, life persisted as a microbial film, consuming dissolved car… |
+| **giants** | `ant` | stem(giant) | 5 | 2.2, 2.7, 7.5 | Here is the strange consolation of being human: trace your own lineage backwards far enough and you … |
+| **ecological** | `logical` | substring(logical) | 5 | 2.5, 5.2, 5.4 | These were the dinosaurs, and they encompassed every conceivable ecological niche so quickly that no… |
+| **predators** | `prey` | stem(dator) | 5 | 2.5, 2.6, 3.3 | Giant predators ascended to the top of the food chain on land.… |
+| **whales** | `whale` | stem(whale) | 5 | 2.7, 4.2, 4.9 | They diverged into whales beneath the surface of every ocean, into bats articulating leathery wings … |
+| **articulating** | `articulate` | stem(articulat) | 5 | 2.7, 9.9, 9.33 | They diverged into whales beneath the surface of every ocean, into bats articulating leathery wings … |
+| **seawater** | `water` | substring(water) | 4 | 2.1, 2.4, 8.6 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here ar… |
+| **cleared** | `clarify` | stem(clear) | 4 | 2.1, 2.4, 2.6 | This Great Oxygenation Event constituted the first mass extinction the planet had ever endured, and … |
+| **plates** | `latent` | stem(plate) | 4 | 2.2, 2.5, 4.2 | Animals of forms so bizarre they appear nearly imaginary suddenly emerged in the fossil record: the … |
+| **continents** | `continuous` | stem(continent) | 4 | 2.4, 6.5, 9.42 | Long after life had spread across the continents, the continents themselves drifted slowly together.… |
+| **completely** | `accomplish` | stem(complete) | 4 | 2.4, 2.6, 9.29 | The few species that managed to withstand the disaster received a stage that had been almost complet… |
+| **primates** | `primate` | stem(primate) | 4 | 2.7, 3.1, 3.4 | One particularly modest branch of these mammals ascended into the canopies of tropical forests and c… |
+| **sufficiently** | `insufficiency` | stem(sufficient) | 3 | 2.1, 9.19, 10.1 | Beneath a roiling atmosphere of steam and corrosive gases, the crust constituted a turbulent ocean o… |
+| **vertebrates** | `vertebrate` | stem(vertebrate) | 3 | 2.3, 2.4, 8.2 | The land above was a barren expanse, baked by ultraviolet radiation and devoid of the organic matter… |
+| **burrowed** | `burrow` | stem(burrow) | 3 | 2.3, 5.2, 9.48 | Every tetrapod that has ever walked, jumped, flown, or burrowed, from the heaviest elephant down to … |
+| **shifted** | `shift` | stem(shift) | 3 | 2.4, 3.5, 10.36 | The eroding topography of the supercontinent exposed bare strata of sediment to relentless acid rain… |
+| **successful** | `access` | stem(success) | 3 | 2.5, 4.8, 9.28 | One particular line of reptiles, modest in size at the outset, evolved across the next thirty millio… |
+| **directions** | `direct` | substring(direct) | 3 | 2.5, 5.5, 10.26 | That is how each modern continent eventually arrived at such a divergent collection of native animal… |
+| **underground** | `ground` | substring(ground) | 3 | 2.6, 7.10 | But a few small mammals had been quietly inhabiting underground burrows, hibernating through the wor… |
+| **offspring** | `spring` | substring(spring) | 3 | 2.7, 5.2, 8.22 | Across the next sixty million years they accumulated the survival features we now take entirely for … |
+| **clouds** | `cloud` | stem(cloud) | 2 | 2.1, 7.8 | Once the surface had finally hardened, the dense clouds above released a downpour that endured, by s… |
+| **estimates** | `estimate` | stem(estimate) | 2 | 2.1, 9.16 | Once the surface had finally hardened, the dense clouds above released a downpour that endured, by s… |
+| **molecules** | `molecule` | stem(molecule) | 2 | 2.1, 10.37 | Deep below those oceans, hydrothermal vents emerged along the volcanic seams in the crust, expelling… |
+| **arrives** | `rival` | stem(arrive) | 2 | 2.1, 9.55 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here ar… |
+| **breath** | `breathing` | stem-of-family | 2 | 2.1, 8.2 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here ar… |
+| **depends** | `independent` | stem(depend) | 2 | 2.1, 10.34 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here ar… |
+| **poisonous** | `poison` | stem(poison) | 2 | 2.1, 7.4 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here ar… |
+| **continued** | `continuous` | stem(continu) | 2 | 2.2, 9.23 | Life persisted, but only in narrow pockets near hydrothermal vents on the seafloor, where heat conti… |
+| **volcanoes** | `volcano` | substring(volcano) | 2 | 2.2, 7.1 | Crucially, the volcanoes themselves never paused: across millions of years they kept generating carb… |
+| **traces** | `portrait` | stem(trace) | 2 | 2.3, 6.5 | Every tetrapod that has ever walked, jumped, flown, or burrowed, from the heaviest elephant down to … |
+| **dimensions** | `immense` | stem(dimension) | 2 | 2.3, 9.2 | The atmosphere of that era was thick with oxygen, and dragonflies, encountering no predator capable … |
+| **compressed** | `compressive` | stem(compress) | 2 | 2.4, 3.2 | The coastline, suddenly compressed into one continuous loop, dwindled drastically, and the vast inte… |
+| **discharging** | `charged` | stem(charg) | 2 | 2.4, 7.3 | Across what is now Siberia, fissures opened in the crust and persisted for almost a million years, e… |
+| **displace** | `replace` | stem(place) | 2 | 2.5, 10.36 | These were the dinosaurs, and they encompassed every conceivable ecological niche so quickly that no… |
+| **transporting** | `support` | stem(transport) | 2 | 2.5, 3.8 | That is how each modern continent eventually arrived at such a divergent collection of native animal… |
+| **inhabiting** | `exhibit` | stem(habit) | 2 | 2.6, 3.1 | But a few small mammals had been quietly inhabiting underground burrows, hibernating through the wor… |
+| **diverged** | `diverge` | stem(diverg) | 2 | 2.7, 5.3 | They diverged into whales beneath the surface of every ocean, into bats articulating leathery wings … |
+| **patiently** | `compassion` | stem(patient) | 2 | 2.7, 8.23 | They diverged into whales beneath the surface of every ocean, into bats articulating leathery wings … |
+| **branches** | `ranch` | substring(ranch) | 2 | 2.7, 3.4 | Life among the branches demands precision: to leap from one bough to the next without missing, the b… |
+| **demands** | `demand` | stem(demand) | 2 | 2.7, 10.22 | Life among the branches demands precision: to leap from one bough to the next without missing, the b… |
+| **demanded** | `demand` | stem(demand) | 2 | 2.7, 7.9 | The brain demanded by all this manipulation expanded in size.… |
+| **sentences** | `assent` | stem(sentence) | 2 | 2.7, 10.32 | And from a single dwindling population of African australopithecines, one species eventually emerged… |
+| **minerals** | `undermine` | stem(mineral) | 1 | 2.1 | Deep below those oceans, hydrothermal vents emerged along the volcanic seams in the crust, expelling… |
+| **profoundly** | `found` | stem(profound) | 1 | 2.1 | The released oxygen accumulated relentlessly in the seawater and then in the atmosphere, and here ar… |
+| **microbes** | `micronutrient` | stem(microbe) | 1 | 2.1 | Entire populations of anaerobic microbes were eradicated outright by the exhalations of their distan… |
+| **oxygenation** | `oxygen` | substring(oxygen) | 1 | 2.1 | This Great Oxygenation Event constituted the first mass extinction the planet had ever endured, and … |
+| **segmented** | `segmentation` | stem(segment) | 1 | 2.2 | Animals of forms so bizarre they appear nearly imaginary suddenly emerged in the fossil record: the … |
+| **trilobites** | `trilobite` | stem(trilobite) | 1 | 2.2 | Animals of forms so bizarre they appear nearly imaginary suddenly emerged in the fossil record: the … |
+| **breathable** | `breathing` | stem(breath) | 1 | 2.3 | Plants ascended onto the shore first, slowly, awkwardly, like reluctant tourists at a hostile resort… |
+| **lobe-finned** | `finned` | substring(finned) | 1 | 2.3 | Then a particular lobe-finned fish named Tiktaalik, recovered from the Devonian sediments of arctic … |
+| **sediments** | `sediment` | stem(sediment) | 1 | 2.3 | Then a particular lobe-finned fish named Tiktaalik, recovered from the Devonian sediments of arctic … |
+| **mudflats** | `mudflat` | stem(mudflat) | 1 | 2.3 | Tiktaalik almost certainly utilised those primitive limbs to crawl through tidal mudflats and ambush… |
+| **oxygen-rich** | `oxygen` | substring(oxygen) | 1 | 2.3 | Tiktaalik almost certainly utilised those primitive limbs to crawl through tidal mudflats and ambush… |
+| **amphibians** | `amphibian` | stem(amphibian) | 1 | 2.3 | Its descendants, with the kind of patience only evolution can demonstrate, traded gills for lungs, r… |
+| **dragonflies** | `dragon` | substring(dragon) | 1 | 2.3 | The atmosphere of that era was thick with oxygen, and dragonflies, encountering no predator capable … |
+| **catching** | `catchment` | stem(catch) | 1 | 2.3 | The atmosphere of that era was thick with oxygen, and dragonflies, encountering no predator capable … |
+| **raptors** | `raptor` | stem(raptor) | 1 | 2.3 | Their wingspans reached the size of modern raptors.… |
+| **discovering** | `coverage` | stem(cover) | 1 | 2.3 | Imagine swatting at an insect and discovering it is the size of an eagle.… |
+| **fissures** | `ensure` | stem(fissure) | 1 | 2.4 | Across what is now Siberia, fissures opened in the crust and persisted for almost a million years, e… |
+| **catastrophic** | `trophic` | substring(trophic) | 1 | 2.4 | The eroding topography of the supercontinent exposed bare strata of sediment to relentless acid rain… |
+| **tetrapods** | `tetrapod` | stem(tetrapod) | 1 | 2.5 | One particular line of reptiles, modest in size at the outset, evolved across the next thirty millio… |
+| **sauropods** | `sauropod` | stem(sauropod) | 1 | 2.5 | Long-necked sauropods consumed the canopies of entire forests in a single afternoon.… |
+| **pterosaurs** | `pterosaur` | stem(pterosaur) | 1 | 2.5 | Pterosaurs, technically not dinosaurs but their close kin, articulated immense leathery wings and pa… |
+| **plesiosaurs** | `plesiosaur` | stem(plesiosaur) | 1 | 2.5 | Plesiosaurs occupied the seas, propelled by paddled limbs and capable of seizing fish at depths most… |
+| **separating** | `separate` | stem(separat) | 1 | 2.5 | That is how each modern continent eventually arrived at such a divergent collection of native animal… |
+| **lineages** | `alienation` | stem(lineage) | 1 | 2.5 | That is how each modern continent eventually arrived at such a divergent collection of native animal… |
+| **ejected** | `adjacent` | stem(eject) | 1 | 2.6 | The impact ejected a curtain of incinerated rock into the upper atmosphere, where it ascended into o… |
+| **hailstorm** | `storm` | substring(storm) | 1 | 2.6 | The impact ejected a curtain of incinerated rock into the upper atmosphere, where it ascended into o… |
+| **tsunamis** | `tsunami` | stem(tsunami) | 1 | 2.6 | Tsunamis dispersed outward from the impact site, vast walls of water that eroded coastlines on every… |
+| **burrows** | `burrow` | stem(burrow) | 1 | 2.6 | But a few small mammals had been quietly inhabiting underground burrows, hibernating through the wor… |
+| **features** | `feasible` | stem(feature) | 1 | 2.7 | Across the next sixty million years they accumulated the survival features we now take entirely for … |
+| **accurately** | `cure` | stem(accurate) | 1 | 2.7 | Life among the branches demands precision: to leap from one bough to the next without missing, the b… |
+| **fingers** | `linger` | stem(finger) | 1 | 2.7 | Life among the branches demands precision: to leap from one bough to the next without missing, the b… |
+| **australopithecines** | `australopithecine` | stem(australopithecine) | 1 | 2.7 | And from a single dwindling population of African australopithecines, one species eventually emerged… |
 
-## Chapter 3 (137 orphans)
+## Chapter 3 (135 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| political | 19 | 3.4, 3.11, 8.8 | Chimpanzees, our nearest cousin by genetic measure, live in restless political troops in which an alpha male p… |
-| twentieth | 14 | 3.10, 3.11, 3.13 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and poisoned … |
-| region | 13 | 3.2, 3.5, 4.1 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Ethiopia ext… |
-| landscape | 11 | 3.5, 4.1, 4.4 | As the vegetation deteriorated, the dust accumulated and the entire region transformed into the harshest lands… |
-| remains | 11 | 3.11, 4.11, 9.4 | It remains one of the most improbable political transitions of the twentieth century.… |
-| country | 11 | 3.14, 5.8, 8.20 | The country chose the unlikely path of digital governance: the entire territory was wired with fibre optic cab… |
-| summer | 10 | 3.5, 3.7, 4.9 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grasslands fed … |
-| network | 9 | 3.5, 7.7, 7.10 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grasslands fed … |
-| returning | 9 | 3.6, 4.4, 6.6 | An African grey parrot named Alex mastered three hundred English words and articulated genuine questions about… |
-| agricultural | 9 | 3.7, 6.1, 8.18 | This dependable cycle of inundation generated the agricultural surplus that sustained one of humanity's earlie… |
-| organised | 9 | 3.9, 3.11, 4.7 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them with the fore… |
-| movement | 9 | 3.11, 9.45, 9.47 | South Africa presented the starkest case: a ruling white minority enforced a legal system called apartheid tha… |
-| rainforest | 8 | 3.4, 3.8, 3.13 | While one branch of African primates wandered out across the world, several other branches stayed in the equat… |
-| northward | 8 | 3.5, 5.1, 8.1 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grasslands fed … |
-| wooden | 8 | 3.8, 3.9, 4.7 | They had been concealed in private wooden chests by descendants who would rather hide their inheritance than s… |
-| migrated | 8 | 3.13, 4.10, 9.7 | Almost simultaneously, the human immunodeficiency virus migrated out of the central African rainforest and pro… |
-| geological | 7 | 3.1, 3.5, 5.1 | Eighty-eight million years of geological solitude generated a continent in miniature, populated by creatures t… |
-| cities | 7 | 3.6, 6.4, 8.15 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants link them… |
-| national | 7 | 3.14, 7.12, 9.17 | The country chose the unlikely path of digital governance: the entire territory was wired with fibre optic cab… |
-| volume | 7 | 3.14, 7.3, 8.2 | In Nigeria, the Nollywood film industry currently produces more films per year than Hollywood, ranking as the … |
-| traverses | 6 | 3.2, 3.7, 4.3 | A considerable fissure called the East African Rift opened in the crust and continues to expand to this day, s… |
-| buried | 6 | 3.2, 4.1, 4.6 | As volcanic ash from each successive eruption settled across the rift, it buried whatever had been lying on th… |
-| female | 6 | 3.2, 3.4, 4.3 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Ethiopia ext… |
-| colour | 6 | 3.6, 5.5, 5.9 | An African grey parrot named Alex mastered three hundred English words and articulated genuine questions about… |
-| coastal | 6 | 3.9, 4.5, 6.3 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them with the fore… |
-| failed | 6 | 3.10, 5.8, 8.19 | King Leopold of Belgium designated the entire Congo basin as his private estate and compelled the inhabitants … |
-| fields | 6 | 3.12, 5.8, 7.12 | The rhythmic patterns enslaved Africans carried into the holds of the slave ships eventually transformed, in t… |
-| returned | 6 | 3.12, 4.6, 6.2 | The beat that left the continent in chains four centuries ago has returned in triumph, and Africa now defines … |
-| coloured | 5 | 3.1, 7.4, 9.38 | With no large predator ever managing to colonise the island, the early primates left there were free to divers… |
-| nineteen | 5 | 3.2, 3.11, 3.12 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Ethiopia ext… |
-| communities | 5 | 3.3, 9.12, 9.17 | Human communities still living on the African savannah occupy the same food chain as their unspeaking neighbou… |
-| mountain | 5 | 3.4, 6.5, 7.1 | Gorillas, the largest of the three and gentle vegetarians, live in quiet mountain harems guided by a single si… |
-| traversed | 5 | 3.8, 6.2, 6.3 | Camel caravans, each comprising several thousand animals, traversed the desert in convoys, transporting bars o… |
-| principal | 5 | 3.8, 4.9, 9.11 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three principal mos… |
-| medicine | 5 | 3.8, 8.9, 9.9 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three principal mos… |
-| vanished | 5 | 3.8, 4.1, 7.5 | When the first European traveller finally reached Timbuktu in the early nineteenth century he found the wells … |
-| colonial | 5 | 3.10, 3.13, 5.3 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and poisoned … |
-| systematically | 5 | 3.10, 9.10, 9.49 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and poisoned … |
-| documented | 5 | 3.10, 5.6, 8.4 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and poisoned … |
-| presented | 5 | 3.11, 7.9, 10.22 | South Africa presented the starkest case: a ruling white minority enforced a legal system called apartheid tha… |
-| enslaved | 5 | 3.12, 6.5, 10.9 | The rhythmic patterns enslaved Africans carried into the holds of the slave ships eventually transformed, in t… |
-| military | 5 | 3.12, 4.8, 7.9 | In nineteen seventies Nigeria, the saxophonist Fela Kuti fused traditional Yoruba percussion with American fun… |
-| rhythm | 5 | 3.12, 10.12 | The Jamaican Bob Marley, having traced his own rhythm back to West Africa, declared the continent the spiritua… |
-| populated | 4 | 3.1, 3.3, 9.15 | Eighty-eight million years of geological solitude generated a continent in miniature, populated by creatures t… |
-| countries | 4 | 3.2, 3.11, 9.50 | A considerable fissure called the East African Rift opened in the crust and continues to expand to this day, s… |
-| excavated | 4 | 3.5, 7.5, 8.3 | Beneath today's dunes, the bones of crocodiles and turtles are still being excavated from the dried beds of fo… |
-| mastered | 4 | 3.6, 6.2, 6.5 | An African grey parrot named Alex mastered three hundred English words and articulated genuine questions about… |
-| previous | 4 | 3.6, 9.48, 10.34 | An African grey parrot named Alex mastered three hundred English words and articulated genuine questions about… |
-| channel | 4 | 3.7, 6.2, 7.3 | Egyptian scribes also pioneered an early cartography of the river, charting every channel and seasonal flood l… |
-| nineteenth | 4 | 3.8, 3.9, 3.10 | When the first European traveller finally reached Timbuktu in the early nineteenth century he found the wells … |
-| libraries | 4 | 3.8, 9.5, 9.10 | When the first European traveller finally reached Timbuktu in the early nineteenth century he found the wells … |
-| return | 4 | 3.9, 4.3, 4.6 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them with the fore… |
-| prisoners | 4 | 3.9, 5.7, 10.19 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them with the fore… |
-| twelve | 4 | 3.9, 4.8, 8.5 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve million Afri… |
-| foreign | 4 | 3.9, 5.1, 8.20 | The wound was not inflicted only by the foreign ships; it was inflicted, as every honest historian eventually … |
-| colonies | 4 | 3.10, 5.7, 5.9 | At the end of the nineteenth century the European powers gathered around a single map in Berlin and drew the b… |
-| borders | 4 | 3.10, 3.11, 9.53 | The borders the Europeans drew that afternoon still hold today, decades after independence, with all their eth… |
-| middle | 4 | 3.11, 4.7, 7.3 | Across the middle of the twentieth century, almost every African colony achieved nominal independence, yet the… |
-| lawyer | 4 | 3.11, 8.12, 10.9 | Nelson Mandela, a young lawyer and political organiser, was imprisoned in nineteen sixty-four for resisting th… |
-| president | 4 | 3.11, 9.49, 10.16 | As president, he chose to forgive rather than retaliate, supervising a peaceful transition of power that produ… |
-| declared | 4 | 3.12, 8.21, 9.20 | The Jamaican Bob Marley, having traced his own rhythm back to West Africa, declared the continent the spiritua… |
-| spiritual | 4 | 3.12, 8.9, 9.15 | The Jamaican Bob Marley, having traced his own rhythm back to West Africa, declared the continent the spiritua… |
-| person | 4 | 3.12, 8.17, 9.41 | The Jamaican Bob Marley, having traced his own rhythm back to West Africa, declared the continent the spiritua… |
-| killing | 4 | 3.13, 10.17, 10.29 | Almost simultaneously, the human immunodeficiency virus migrated out of the central African rainforest and pro… |
-| delivered | 4 | 3.14, 7.9, 9.4 | The country chose the unlikely path of digital governance: the entire territory was wired with fibre optic cab… |
-| fifteen | 3 | 3.2, 4.5, 9.39 | Fifteen million years ago Africa itself began to tear apart.… |
-| walking | 3 | 3.2, 8.12, 9.16 | She was an australopithecine, an early hominid whose anatomy demonstrated that bipedal walking had developed i… |
-| pursuit | 3 | 3.3, 9.32, 10.4 | Lions, the heaviest cats on the planet, dominate the upper level of that food chain, hunting in coordinated pr… |
-| problem | 3 | 3.4, 8.2 | Bonobos, who differ from chimpanzees only slightly in anatomy, have devised an utterly different solution to t… |
-| former | 3 | 3.5, 9.49, 10.13 | Beneath today's dunes, the bones of crocodiles and turtles are still being excavated from the dried beds of fo… |
-| researcher | 3 | 3.6, 8.6, 10.19 | An African grey parrot named Alex mastered three hundred English words and articulated genuine questions about… |
-| metres | 3 | 3.6, 6.4, 7.1 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants link them… |
-| northeastern | 3 | 3.7, 5.9, 10.27 | Once every summer, the great river that traverses northeastern Africa flooded reliably across its lower valley… |
-| intended | 3 | 3.7, 9.18, 10.8 | The pharaoh, who functioned as both king and living god, mobilised entire generations of stonemasons to assemb… |
-| trading | 3 | 3.8, 7.9, 9.12 | On the southern edge of the Sahara, where the desert begins to yield to the savannah, a trading city named Tim… |
-| kingdoms | 3 | 3.8, 3.9 | Camel caravans, each comprising several thousand animals, traversed the desert in convoys, transporting bars o… |
-| accompanied | 3 | 3.8, 8.22, 10.35 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three principal mos… |
-| theology | 3 | 3.8, 9.11, 9.33 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three principal mos… |
-| sugarcane | 3 | 3.9, 5.8, 6.5 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve million Afri… |
-| divided | 3 | 3.11, 9.54, 10.19 | Across the middle of the twentieth century, almost every African colony achieved nominal independence, yet the… |
-| carried | 3 | 3.12, 7.7, 8.15 | The rhythmic patterns enslaved Africans carried into the holds of the slave ships eventually transformed, in t… |
-| propagated | 3 | 3.13, 8.14, 10.3 | Almost simultaneously, the human immunodeficiency virus migrated out of the central African rainforest and pro… |
-| border | 3 | 3.14, 8.10, 9.54 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accounts to tra… |
-| farmers | 3 | 3.14, 8.7 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accounts to tra… |
-| ranking | 3 | 3.14, 10.22, 10.34 | In Nigeria, the Nollywood film industry currently produces more films per year than Hollywood, ranking as the … |
-| settled | 2 | 3.1, 3.2 | A fragment of what is now Africa broke loose from the parent continent eighty-eight million years ago and drif… |
-| brightly | 2 | 3.1, 7.4 | With no large predator ever managing to colonise the island, the early primates left there were free to divers… |
-| sticky | 2 | 3.1, 10.37 | The chameleon learned to rotate each eye independently and to unfurl a sticky tongue twice the length of its b… |
-| moisture | 2 | 3.1, 7.6 | The baobab simply enlarged its trunk into a living water tank capable of accumulating enough moisture to endur… |
-| anatomy | 2 | 3.2, 3.4 | She was an australopithecine, an early hominid whose anatomy demonstrated that bipedal walking had developed i… |
-| grassland | 2 | 3.3, 10.5 | One particular branch chose to remain on the same African grassland where Lucy had walked, and that branch per… |
-| stomachs | 2 | 3.3, 4.3 | Vultures circle above the entire system, scavengers whose acidic stomachs can devour rotting carcasses that wo… |
-| rotting | 2 | 3.3, 8.4 | Vultures circle above the entire system, scavengers whose acidic stomachs can devour rotting carcasses that wo… |
-| related | 2 | 3.4, 9.42 | Three closely related apes now share that vast green canopy.… |
-| carefully | 2 | 3.4, 3.5 | Chimpanzees, our nearest cousin by genetic measure, live in restless political troops in which an alpha male p… |
-| dispute | 2 | 3.4, 9.25 | Bonobos, who differ from chimpanzees only slightly in anatomy, have devised an utterly different solution to t… |
-| sexual | 2 | 3.4, 10.28 | Bonobos, who differ from chimpanzees only slightly in anatomy, have devised an utterly different solution to t… |
-| grasslands | 2 | 3.5, 10.4 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grasslands fed … |
-| cliffs | 2 | 3.5, 9.33 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grasslands fed … |
-| cattle | 2 | 3.5, 7.12 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grasslands fed … |
-| degree | 2 | 3.5, 3.6 | Then, roughly three thousand years ago, the orbital tilt of the Earth altered by a fraction of a degree, the m… |
-| textbooks | 2 | 3.6, 9.23 | The fauna south of the Sahara turn out to be considerably more cognitively sophisticated than the older textbo… |
-| reward | 2 | 3.6, 10.31 | Chimpanzees in laboratory tasks throw food back at experimenters when they observe another chimp receive a swe… |
-| evening | 2 | 3.6, 9.52 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants link them… |
-| flooded | 2 | 3.7, 10.36 | Once every summer, the great river that traverses northeastern Africa flooded reliably across its lower valley… |
-| centralised | 2 | 3.7, 8.10 | This dependable cycle of inundation generated the agricultural surplus that sustained one of humanity's earlie… |
-| corpse | 2 | 3.7, 8.11 | An elaborate guide to the underworld, the Book of the Dead, was deposited with each corpse to instruct the sou… |
-| astronomy | 2 | 3.8, 10.2 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three principal mos… |
-| traveller | 2 | 3.8, 8.15 | When the first European traveller finally reached Timbuktu in the early nineteenth century he found the wells … |
-| concealed | 2 | 3.8, 7.8 | They had been concealed in private wooden chests by descendants who would rather hide their inheritance than s… |
-| invasion | 2 | 3.8, 9.36 | Most of those chests have outlasted every subsequent invasion.… |
-| captured | 2 | 3.9, 7.9 | European ships began calling regularly at the West African coast from the late fifteenth century, exchanging g… |
-| capturing | 2 | 3.9, 9.38 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them with the fore… |
-| transatlantic | 2 | 3.9, 6.4 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve million Afri… |
-| somewhere | 2 | 3.9, 3.13 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve million Afri… |
-| slavery | 2 | 3.9, 10.11 | The demographic and social fabric of West Africa fractured under the constant haemorrhage of its young populat… |
-| absorbing | 2 | 3.9, 10.30 | The whole continent is still absorbing the aftershock.… |
-| decided | 2 | 3.9, 10.34 | The wound was not inflicted only by the foreign ships; it was inflicted, as every honest historian eventually … |
-| rulers | 2 | 3.10, 8.8 | At the end of the nineteenth century the European powers gathered around a single map in Berlin and drew the b… |
-| ruling | 2 | 3.11, 10.32 | South Africa presented the starkest case: a ruling white minority enforced a legal system called apartheid tha… |
-| twenty-seven | 2 | 3.11, 10.24 | Nelson Mandela, a young lawyer and political organiser, was imprisoned in nineteen sixty-four for resisting th… |
-| consecutive | 2 | 3.11, 4.3 | Nelson Mandela, a young lawyer and political organiser, was imprisoned in nineteen sixty-four for resisting th… |
-| transition | 2 | 3.11, 8.23 | As president, he chose to forgive rather than retaliate, supervising a peaceful transition of power that produ… |
-| hip-hop | 2 | 3.12, 10.12 | The rhythmic patterns enslaved Africans carried into the holds of the slave ships eventually transformed, in t… |
-| traditional | 2 | 3.12, 9.13 | In nineteen seventies Nigeria, the saxophonist Fela Kuti fused traditional Yoruba percussion with American fun… |
-| traced | 2 | 3.12, 9.46 | The Jamaican Bob Marley, having traced his own rhythm back to West Africa, declared the continent the spiritua… |
-| descendant | 2 | 3.12, 8.9 | Today Afrobeats, the modern descendant of Fela's original synthesis, has overtaken pop charts in London, Paris… |
-| overtaken | 2 | 3.12, 10.18 | Today Afrobeats, the modern descendant of Fela's original synthesis, has overtaken pop charts in London, Paris… |
-| classified | 2 | 3.13, 5.7 | In Rwanda, the colonial Belgian administration had classified the population into two groups, Hutu and Tutsi, … |
-| originated | 2 | 3.13, 9.40 | Malaria continues to terminate the life of a child somewhere on the continent every two minutes, and Ebola eru… |
-| mobile | 2 | 3.14, 8.22 | The country chose the unlikely path of digital governance: the entire territory was wired with fibre optic cab… |
-| service | 2 | 3.14, 8.8 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accounts to tra… |
-| allows | 2 | 3.14, 5.2 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accounts to tra… |
-| instantly | 2 | 3.14, 10.17 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accounts to tra… |
-| studied | 2 | 3.14, 10.4 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accounts to tra… |
-| textbook | 2 | 3.14, 9.10 | And in Malawi, a fourteen-year-old boy named William Kamkwamba built a fully functional windmill from a borrow… |
-| married | 2 | 3.14, 9.36 | And in Malawi, a fourteen-year-old boy named William Kamkwamba built a fully functional windmill from a borrow… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **produced** | `produce` | stem(produc) | 21 | 3.1, 3.11, 5.7 | With no large predator ever managing to colonise the island, the early primates left there were free… |
+| **developed** | `redevelopment` | stem(develop) | 17 | 3.2, 3.4, 3.10 | She was an australopithecine, an early hominid whose anatomy demonstrated that bipedal walking had d… |
+| **government** | `governance` | stem(govern) | 10 | 3.12, 5.8, 8.7 | In nineteen seventies Nigeria, the saxophonist Fela Kuti fused traditional Yoruba percussion with Am… |
+| **agricultural** | `cultural` | substring(cultural) | 9 | 3.7, 6.1, 8.18 | This dependable cycle of inundation generated the agricultural surplus that sustained one of humanit… |
+| **generations** | `generate` | stem(generation) | 9 | 3.7, 3.13, 8.6 | The pharaoh, who functioned as both king and living god, mobilised entire generations of stonemasons… |
+| **accumulating** | `accumulate` | stem(accumulat) | 8 | 3.1, 4.9, 8.22 | The baobab simply enlarged its trunk into a living water tank capable of accumulating enough moistur… |
+| **abandoned** | `abandonment` | stem(abandon) | 8 | 3.3, 7.8, 9.22 | Human communities still living on the African savannah occupy the same food chain as their unspeakin… |
+| **northward** | `north` | substring(north) | 8 | 3.5, 5.1, 8.1 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grass… |
+| **geological** | `logical` | substring(logical) | 7 | 3.1, 3.5, 5.1 | Eighty-eight million years of geological solitude generated a continent in miniature, populated by c… |
+| **creatures** | `concrete` | stem(creature) | 6 | 3.1, 4.2, 9.21 | Eighty-eight million years of geological solitude generated a continent in miniature, populated by c… |
+| **inhabitants** | `inhabit` | stem(habitant) | 6 | 3.8, 3.10, 6.3 | At its peak Timbuktu accommodated nearly a hundred thousand inhabitants and amassed a library repute… |
+| **manuscripts** | `manifest` | stem(manuscript) | 6 | 3.8, 9.5, 9.9 | At its peak Timbuktu accommodated nearly a hundred thousand inhabitants and amassed a library repute… |
+| **continues** | `continuous` | stem(continue) | 5 | 3.2, 3.13, 5.2 | A considerable fissure called the East African Rift opened in the crust and continues to expand to t… |
+| **designed** | `designate` | stem(design) | 5 | 3.6, 9.17, 9.26 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants… |
+| **systematically** | `system` | substring(system) | 5 | 3.10, 9.10, 9.49 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and… |
+| **successive** | `access` | stem(success) | 4 | 3.2, 8.12, 9.1 | As volcanic ash from each successive eruption settled across the rift, it buried whatever had been l… |
+| **paintings** | `painting` | stem(painting) | 4 | 3.5, 9.7, 9.47 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grass… |
+| **seasonal** | `sea` | stem(season) | 4 | 3.7, 8.1, 8.23 | Egyptian scribes also pioneered an early cartography of the river, charting every channel and season… |
+| **functioned** | `function` | stem(function) | 4 | 3.7, 3.13, 8.12 | The pharaoh, who functioned as both king and living god, mobilised entire generations of stonemasons… |
+| **operations** | `cooperate` | stem(operation) | 4 | 3.7, 10.23, 10.36 | Egyptian scribes devised hieroglyphs to record harvests, taxes, decrees, and prayers, encoding the o… |
+| **producing** | `produce` | stem(produc) | 4 | 3.7, 10.22, 10.36 | Embalmers extracted the internal organs of the dead and preserved the body in resin and natron salt,… |
+| **deposited** | `composite` | stem(deposit) | 4 | 3.7, 5.7, 8.15 | An elaborate guide to the underworld, the Book of the Dead, was deposited with each corpse to instru… |
+| **beings** | `well-being` | stem(being) | 4 | 3.9, 5.5, 6.5 | European ships began calling regularly at the West African coast from the late fifteenth century, ex… |
+| **prisoners** | `prison` | substring(prison) | 4 | 3.9, 5.7, 10.19 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them wit… |
+| **inflicted** | `conflict` | stem(flict) | 4 | 3.9, 3.13, 9.43 | The wound was not inflicted only by the foreign ships; it was inflicted, as every honest historian e… |
+| **powers** | `power` | stem(power) | 4 | 3.10, 9.27, 9.51 | At the end of the nineteenth century the European powers gathered around a single map in Berlin and … |
+| **spiritual** | `ritual` | substring(ritual) | 4 | 3.12, 8.9, 9.15 | The Jamaican Bob Marley, having traced his own rhythm back to West Africa, declared the continent th… |
+| **produces** | `productive` | stem(produce) | 4 | 3.14, 8.1, 8.7 | In Nigeria, the Nollywood film industry currently produces more films per year than Hollywood, ranki… |
+| **extracted** | `abstract` | stem(extract) | 3 | 3.2, 3.7, 4.8 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Et… |
+| **perceiving** | `perceive` | stem(perceiv) | 3 | 3.3, 9.3, 10.18 | Giraffes browse the upper canopy of the acacia, perceiving distant predators several minutes before … |
+| **closely** | `conclude` | stem(close) | 3 | 3.4, 7.6, 10.36 | Three closely related apes now share that vast green canopy.… |
+| **chimpanzees** | `chimpanzee` | stem(chimpanzee) | 3 | 3.4, 3.6 | Chimpanzees, our nearest cousin by genetic measure, live in restless political troops in which an al… |
+| **questions** | `conquest` | stem(question) | 3 | 3.6, 9.3, 10.22 | An African grey parrot named Alex mastered three hundred English words and articulated genuine quest… |
+| **northeastern** | `north` | substring(north) | 3 | 3.7, 5.9, 10.27 | Once every summer, the great river that traverses northeastern Africa flooded reliably across its lo… |
+| **scribes** | `inscription` | stem(scribe) | 3 | 3.7, 9.5 | Egyptian scribes also pioneered an early cartography of the river, charting every channel and season… |
+| **pyramids** | `pyramid` | stem(pyramid) | 3 | 3.7, 9.43, 10.2 | The pharaoh, who functioned as both king and living god, mobilised entire generations of stonemasons… |
+| **sugarcane** | `sugar` | substring(sugar) | 3 | 3.9, 5.8, 6.5 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve mi… |
+| **chains** | `chain` | stem(chain) | 3 | 3.9, 3.12, 5.7 | The demographic and social fabric of West Africa fractured under the constant haemorrhage of its you… |
+| **groups** | `intergroup` | stem(group) | 3 | 3.11, 3.13, 10.27 | Across the middle of the twentieth century, almost every African colony achieved nominal independenc… |
+| **wounds** | `vulnerable` | stem(wound) | 3 | 3.13, 8.5 | Some wounds inflicted on Africa in the late twentieth century have refused to close on schedule.… |
+| **colonise** | `colonization` | stem(colon) | 2 | 3.1, 5.5 | With no large predator ever managing to colonise the island, the early primates left there were free… |
+| **alliances** | `liable` | stem(alliance) | 2 | 3.4, 10.3 | Chimpanzees, our nearest cousin by genetic measure, live in restless political troops in which an al… |
+| **organise** | `organic` | stem(organ) | 2 | 3.4, 9.54 | Three apes, each genetically almost identical to the others, yet each demonstrates a radically disti… |
+| **reliably** | `liable` | strip-re | 2 | 3.5, 3.7 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grass… |
+| **rivers** | `derive` | stem(river) | 2 | 3.5, 10.36 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grass… |
+| **cognitively** | `cognitive` | stem(cognit) | 2 | 3.6 | The fauna south of the Sahara turn out to be considerably more cognitively sophisticated than the ol… |
+| **spontaneously** | `spontaneous` | stem(spontane) | 2 | 3.6, 9.27 | An African grey parrot named Alex mastered three hundred English words and articulated genuine quest… |
+| **elephants** | `ant` | stem(elephant) | 2 | 3.6, 6.3 | An African grey parrot named Alex mastered three hundred English words and articulated genuine quest… |
+| **harvests** | `harvest` | stem(harvest) | 2 | 3.7, 8.19 | Egyptian scribes devised hieroglyphs to record harvests, taxes, decrees, and prayers, encoding the o… |
+| **organs** | `organic` | stem(organ) | 2 | 3.7, 8.3 | Embalmers extracted the internal organs of the dead and preserved the body in resin and natron salt,… |
+| **scholars** | `scholar` | stem(scholar) | 2 | 3.8, 9.10 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three pri… |
+| **traveller** | `travel` | substring(travel) | 2 | 3.8, 8.15 | When the first European traveller finally reached Timbuktu in the early nineteenth century he found … |
+| **chests** | `chest` | stem(chest) | 2 | 3.8 | They had been concealed in private wooden chests by descendants who would rather hide their inherita… |
+| **firearms** | `ignite` | stem(firearm) | 2 | 3.9, 7.9 | Several coastal African kingdoms quickly perceived that capturing neighbours and exchanging them wit… |
+| **plantations** | `ion` | stem(plantation) | 2 | 3.9, 6.5 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve mi… |
+| **poisoned** | `poison` | stem(poison) | 2 | 3.10, 9.4 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and… |
+| **executing** | `executive` | stem(execut) | 2 | 3.10, 8.7 | In what is now Namibia, the German colonial authority herded the Herero people into the Kalahari and… |
+| **contradictions** | `contradict` | stem(contradiction) | 2 | 3.10, 9.35 | The borders the Europeans drew that afternoon still hold today, decades after independence, with all… |
+| **empires** | `empirical` | stem(empire) | 2 | 3.10, 10.25 | The map outlived the empires that drew it.… |
+| **reserves** | `preserve` | stem(serve) | 2 | 3.11, 8.18 | South Africa presented the starkest case: a ruling white minority enforced a legal system called apa… |
+| **imprisoned** | `prison` | stem(prison) | 2 | 3.11, 9.32 | Nelson Mandela, a young lawyer and political organiser, was imprisoned in nineteen sixty-four for re… |
+| **transition** | `transit` | substring(transit) | 2 | 3.11, 8.23 | As president, he chose to forgive rather than retaliate, supervising a peaceful transition of power … |
+| **improbable** | `probe` | strip-im | 2 | 3.11, 9.5 | It remains one of the most improbable political transitions of the twentieth century.… |
+| **orphans** | `orphan` | stem(orphan) | 2 | 3.13 | Almost simultaneously, the human immunodeficiency virus migrated out of the central African rainfore… |
+| **phones** | `phonetics` | stem(phone) | 2 | 3.14 | The country chose the unlikely path of digital governance: the entire territory was wired with fibre… |
+| **parents** | `apparent` | stem(parent) | 2 | 3.14, 8.22 | And in Malawi, a fourteen-year-old boy named William Kamkwamba built a fully functional windmill fro… |
+| **lemurs** | `lemur` | stem(lemur) | 1 | 3.1 | With no large predator ever managing to colonise the island, the early primates left there were free… |
+| **monkeys** | `monkey` | stem(monkey) | 1 | 3.1 | With no large predator ever managing to colonise the island, the early primates left there were free… |
+| **enlarged** | `large` | substring(large) | 1 | 3.1 | The baobab simply enlarged its trunk into a living water tank capable of accumulating enough moistur… |
+| **seventy-four** | `event` | substring(event) | 1 | 3.2 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Et… |
+| **palaeoanthropologists** | `palaeoanthropologist` | stem(palaeoanthropologist) | 1 | 3.2 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Et… |
+| **climbed** | `climax` | stem(climb) | 1 | 3.2 | In nineteen seventy-four, palaeoanthropologists excavating one such ash bed in the Afar region of Et… |
+| **emigration** | `migration` | substring(migration) | 1 | 3.3 | Lucy's descendants, after roughly two million years of slow refinement, commenced the long emigratio… |
+| **unspeaking** | `peak` | stem(speak) | 1 | 3.3 | Human communities still living on the African savannah occupy the same food chain as their unspeakin… |
+| **seasonally** | `season` | substring(season) | 1 | 3.3 | Human communities still living on the African savannah occupy the same food chain as their unspeakin… |
+| **prides** | `pride` | stem(pride) | 1 | 3.3 | Lions, the heaviest cats on the planet, dominate the upper level of that food chain, hunting in coor… |
+| **giraffes** | `giraffe` | stem(giraffe) | 1 | 3.3 | Giraffes browse the upper canopy of the acacia, perceiving distant predators several minutes before … |
+| **zebras** | `zebra` | stem(zebra) | 1 | 3.3 | Zebras assemble in striped multitudes whose moving patterns confuse the visual processing of pursuin… |
+| **processing** | `access` | stem(process) | 1 | 3.3 | Zebras assemble in striped multitudes whose moving patterns confuse the visual processing of pursuin… |
+| **vultures** | `vulture` | stem(vulture) | 1 | 3.3 | Vultures circle above the entire system, scavengers whose acidic stomachs can devour rotting carcass… |
+| **scavengers** | `scavenger` | stem(scavenger) | 1 | 3.3 | Vultures circle above the entire system, scavengers whose acidic stomachs can devour rotting carcass… |
+| **carcasses** | `carcass` | substring(carcass) | 1 | 3.3 | Vultures circle above the entire system, scavengers whose acidic stomachs can devour rotting carcass… |
+| **wandered** | `erratic` | stem(wander) | 1 | 3.4 | While one branch of African primates wandered out across the world, several other branches stayed in… |
+| **troops** | `troop` | stem(troop) | 1 | 3.4 | Chimpanzees, our nearest cousin by genetic measure, live in restless political troops in which an al… |
+| **bonobos** | `bonobo` | stem(bonobo) | 1 | 3.4 | Bonobos, who differ from chimpanzees only slightly in anatomy, have devised an utterly different sol… |
+| **gorillas** | `gorilla` | stem(gorilla) | 1 | 3.4 | Gorillas, the largest of the three and gentle vegetarians, live in quiet mountain harems guided by a… |
+| **harems** | `harem` | stem(harem) | 1 | 3.4 | Gorillas, the largest of the three and gentle vegetarians, live in quiet mountain harems guided by a… |
+| **silverback** | `silver` | substring(silver) | 1 | 3.4 | Gorillas, the largest of the three and gentle vegetarians, live in quiet mountain harems guided by a… |
+| **genetically** | `genome` | stem(genet) | 1 | 3.4 | Three apes, each genetically almost identical to the others, yet each demonstrates a radically disti… |
+| **demonstrates** | `demonstrate` | stem(demonstrate) | 1 | 3.4 | Three apes, each genetically almost identical to the others, yet each demonstrates a radically disti… |
+| **sprawling** | `disperse` | stem(sprawl) | 1 | 3.5 | Ten thousand years ago, the region we now call the Sahara was a sprawling network of lakes and grass… |
+| **crocodiles** | `crocodile` | stem(crocodile) | 1 | 3.5 | Beneath today's dunes, the bones of crocodiles and turtles are still being excavated from the dried … |
+| **turtles** | `turtle` | stem(turtle) | 1 | 3.5 | Beneath today's dunes, the bones of crocodiles and turtles are still being excavated from the dried … |
+| **sweeter** | `sweet` | stem(sweet) | 1 | 3.6 | Chimpanzees in laboratory tasks throw food back at experimenters when they observe another chimp rec… |
+| **exhibiting** | `exhibit` | stem(exhibit) | 1 | 3.6 | Chimpanzees in laboratory tasks throw food back at experimenters when they observe another chimp rec… |
+| **unfairness** | `fair` | strip-un | 1 | 3.6 | Chimpanzees in laboratory tasks throw food back at experimenters when they observe another chimp rec… |
+| **embarrassing** | `barren` | stem(embarrass) | 1 | 3.6 | Chimpanzees in laboratory tasks throw food back at experimenters when they observe another chimp rec… |
+| **impressive** | `express` | stem(press) | 1 | 3.6 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants… |
+| **mounds** | `mound` | stem(mound) | 1 | 3.6 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants… |
+| **shafts** | `shaft` | stem(shaft) | 1 | 3.6 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants… |
+| **coordinating** | `coordinate` | stem(coordinat) | 1 | 3.6 | Even the cities of the continent that no human ever designed prove cognitively impressive: army ants… |
+| **depositing** | `composite` | stem(deposit) | 1 | 3.7 | Once every summer, the great river that traverses northeastern Africa flooded reliably across its lo… |
+| **dependable** | `independent` | stem(depend) | 1 | 3.7 | This dependable cycle of inundation generated the agricultural surplus that sustained one of humanit… |
+| **humanity's** | `human` | substring(human) | 1 | 3.7 | This dependable cycle of inundation generated the agricultural surplus that sustained one of humanit… |
+| **stonemasons** | `stonemason` | stem(stonemason) | 1 | 3.7 | The pharaoh, who functioned as both king and living god, mobilised entire generations of stonemasons… |
+| **courses** | `resource` | stem(course) | 1 | 3.7 | The pharaoh, who functioned as both king and living god, mobilised entire generations of stonemasons… |
+| **hieroglyphs** | `glyph` | substring(glyph) | 1 | 3.7 | Egyptian scribes devised hieroglyphs to record harvests, taxes, decrees, and prayers, encoding the o… |
+| **decrees** | `decree` | stem(decree) | 1 | 3.7 | Egyptian scribes devised hieroglyphs to record harvests, taxes, decrees, and prayers, encoding the o… |
+| **prayers** | `prey` | stem(prayer) | 1 | 3.7 | Egyptian scribes devised hieroglyphs to record harvests, taxes, decrees, and prayers, encoding the o… |
+| **embalmers** | `embalmer` | stem(embalmer) | 1 | 3.7 | Embalmers extracted the internal organs of the dead and preserved the body in resin and natron salt,… |
+| **caravans** | `advance` | stem(caravan) | 1 | 3.8 | Camel caravans, each comprising several thousand animals, traversed the desert in convoys, transport… |
+| **convoys** | `convey` | stem(convoy) | 1 | 3.8 | Camel caravans, each comprising several thousand animals, traversed the desert in convoys, transport… |
+| **mosques** | `mosque` | stem(mosque) | 1 | 3.8 | Scholars from across the Islamic world accompanied the trade and accumulated in the city's three pri… |
+| **transported** | `support` | stem(transport) | 1 | 3.9 | Across four centuries this transatlantic slave trade transported somewhere between ten and twelve mi… |
+| **fractured** | `fracture` | substring(fracture) | 1 | 3.9 | The demographic and social fabric of West Africa fractured under the constant haemorrhage of its you… |
+| **aftershock** | `shock` | substring(shock) | 1 | 3.9 | The whole continent is still absorbing the aftershock.… |
+| **ignoring** | `ignore` | stem(ignor) | 1 | 3.10 | At the end of the nineteenth century the European powers gathered around a single map in Berlin and … |
+| **frontiers** | `confront` | stem(frontier) | 1 | 3.10 | At the end of the nineteenth century the European powers gathered around a single map in Berlin and … |
+| **impositions** | `composite` | stem(position) | 1 | 3.10 | The lines they drew constituted one of the most arbitrary administrative impositions in recorded his… |
+| **seventy-two** | `event` | substring(event) | 1 | 3.11 | Nelson Mandela, a young lawyer and political organiser, was imprisoned in nineteen sixty-four for re… |
+| **transitions** | `transit` | substring(transit) | 1 | 3.11 | It remains one of the most improbable political transitions of the twentieth century.… |
+| **reflected** | `flexible` | stem(flect) | 1 | 3.12 | The rhythmic patterns enslaved Africans carried into the holds of the slave ships eventually transfo… |
+| **seventies** | `event` | substring(event) | 1 | 3.12 | In nineteen seventies Nigeria, the saxophonist Fela Kuti fused traditional Yoruba percussion with Am… |
+| **defines** | `finalize` | stem(define) | 1 | 3.12 | The beat that left the continent in chains four centuries ago has returned in triumph, and Africa no… |
+| **supplying** | `supply` | stem(supply) | 1 | 3.12 | The beat that left the continent in chains four centuries ago has returned in triumph, and Africa no… |
+| **wielding** | `unwieldy` | stem(wield) | 1 | 3.13 | Independence inherited the artificial division, and in nineteen ninety-four nearly a million Tutsi a… |
+| **machetes** | `machete` | stem(machete) | 1 | 3.13 | Independence inherited the artificial division, and in nineteen ninety-four nearly a million Tutsi a… |
+| **erupts** | `abrupt` | stem(erupt) | 1 | 3.13 | Malaria continues to terminate the life of a child somewhere on the continent every two minutes, and… |
+| **genocides** | `genocide` | stem(genocide) | 1 | 3.13 | The genocides, the epidemics, and the orphans together comprise one of the largest unhealed wounds i… |
+| **epidemics** | `epidemic` | stem(epidemic) | 1 | 3.13 | The genocides, the epidemics, and the orphans together comprise one of the largest unhealed wounds i… |
+| **hospitals** | `hostile` | stem(hospital) | 1 | 3.14 | The country chose the unlikely path of digital governance: the entire territory was wired with fibre… |
+| **accounts** | `encounter` | stem(account) | 1 | 3.14 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accou… |
+| **old-fashioned** | `fashion` | substring(fashion) | 1 | 3.14 | Across the border in Kenya, the mobile-money service called M-Pesa allows farmers without bank accou… |
+| **currently** | `concur` | stem(current) | 1 | 3.14 | In Nigeria, the Nollywood film industry currently produces more films per year than Hollywood, ranki… |
+| **second-largest** | `large` | substring(large) | 1 | 3.14 | In Nigeria, the Nollywood film industry currently produces more films per year than Hollywood, ranki… |
 
-## Chapter 4 (61 orphans)
+## Chapter 4 (60 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| research | 10 | 4.8, 8.4, 9.35 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, prohibiting… |
-| individual | 9 | 4.3, 8.12, 9.35 | Hundreds of males huddle together in a continuously rotating mass that distributes the cold equally and preven… |
-| traverse | 9 | 4.7, 5.1, 5.2 | The British explorer Shackleton once attempted to traverse the entire Antarctic continent on foot.… |
-| technique | 8 | 4.4, 8.14, 9.15 | Each predator has devised a specialised technique tuned exactly to its single available prey, and the result i… |
-| upward | 7 | 4.2, 4.4, 6.2 | As the cold water circulates, it pumps deep nutrients upward toward the surface, and the sunlight reaching the… |
-| attempted | 7 | 4.7, 5.8, 7.12 | The British explorer Shackleton once attempted to traverse the entire Antarctic continent on foot.… |
-| opening | 7 | 4.11, 8.20, 9.13 | The thaw is opening the long-frozen Northwest Passage to commercial shipping, and Russia, Canada, Denmark, and… |
-| nations | 6 | 4.8, 5.9, 10.3 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, prohibiting… |
-| months | 5 | 4.3, 5.2, 9.18 | The male incubates the egg on his feet beneath a brood pouch of warm skin for four consecutive months, standin… |
-| insisted | 5 | 4.6, 8.8, 9.16 | The British captain Scott, by contrast, insisted on dragging ponies and motor sledges across terrain that demo… |
-| annual | 5 | 4.9, 6.1, 10.33 | The Arctic tern, the bird with the longest annual migration on Earth, traverses to the Antarctic and back ever… |
-| lifetime | 5 | 4.9, 9.3, 9.17 | The Arctic tern, the bird with the longest annual migration on Earth, traverses to the Antarctic and back ever… |
-| alongside | 5 | 4.10, 9.14, 9.36 | Further east, in Lapland, the Sami people migrated alongside reindeer herds across the seasons, treating the e… |
-| resident | 4 | 4.3, 8.2, 9.29 | The Antarctic ice imposes a peculiar parental rule on its most famous resident.… |
-| degrees | 4 | 4.3, 4.5, 4.10 | The male incubates the egg on his feet beneath a brood pouch of warm skin for four consecutive months, standin… |
-| prevents | 4 | 4.3, 4.5, 7.6 | Hundreds of males huddle together in a continuously rotating mass that distributes the cold equally and preven… |
-| infancy | 4 | 4.6, 8.6, 8.22 | The Norwegian explorer Amundsen prepared meticulously: sled dogs trained from infancy, a route surveyed in adv… |
-| captain | 4 | 4.6, 5.7, 7.9 | The British captain Scott, by contrast, insisted on dragging ponies and motor sledges across terrain that demo… |
-| contrast | 4 | 4.6, 4.9, 7.4 | The British captain Scott, by contrast, insisted on dragging ponies and motor sledges across terrain that demo… |
-| stretches | 4 | 4.7, 5.4, 5.9 | When the floe finally fragmented into pieces too small to inhabit, Shackleton led six men in a small lifeboat … |
-| environmental | 4 | 4.8, 10.23, 10.36 | The discovery provoked the most successful environmental agreement ever signed, which eliminated those chemica… |
-| peoples | 4 | 4.10, 5.5, 7.12 | Across the long polar nights, the sky above both peoples could suddenly ignite with the green and violet curta… |
-| circumpolar | 3 | 4.1, 4.2 | Then the continent drifted slowly southward to its present position above the pole, and a vast new ocean curre… |
-| reaching | 3 | 4.2, 6.2, 8.19 | As the cold water circulates, it pumps deep nutrients upward toward the surface, and the sunlight reaching the… |
-| fishing | 3 | 4.4, 8.21, 10.37 | Leopard seals lurk just beneath the surface near a crack in the ice and wait silently for penguins returning f… |
-| explosive | 3 | 4.4, 4.9, 10.10 | Leopard seals lurk just beneath the surface near a crack in the ice and wait silently for penguins returning f… |
-| specialised | 3 | 4.4, 5.2, 8.2 | Each predator has devised a specialised technique tuned exactly to its single available prey, and the result i… |
-| perished | 3 | 4.6, 7.10, 9.5 | On the return journey Scott and his four companions perished one by one inside their tent during a blizzard, e… |
-| caught | 3 | 4.7, 9.24, 9.26 | His ship Endurance was caught in pack ice before it ever reached the coast, and the ice gradually crushed the … |
-| signed | 3 | 4.8, 10.11 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, prohibiting… |
-| permitting | 3 | 4.8, 8.2, 10.9 | The discovery provoked the most successful environmental agreement ever signed, which eliminated those chemica… |
-| strikes | 3 | 4.9, 10.15, 10.28 | The bear waits motionlessly at a breathing hole in the ice until a seal surfaces, then strikes with a single e… |
-| stacked | 3 | 4.10, 9.43, 10.24 | The Inuit of the Arctic constructed shelters from compacted snow bricks cut and stacked into a domed structure… |
-| reindeer | 3 | 4.10, 8.23, 9.52 | Further east, in Lapland, the Sami people migrated alongside reindeer herds across the seasons, treating the e… |
-| treating | 3 | 4.10, 9.9, 10.19 | Further east, in Lapland, the Sami people migrated alongside reindeer herds across the seasons, treating the e… |
-| southward | 2 | 4.1, 9.1 | Then the continent drifted slowly southward to its present position above the pole, and a vast new ocean curre… |
-| warmer | 2 | 4.1, 4.5 | Within a few hundred thousand years the entire landmass was encompassed by a kilometre-thick ice sheet, and ev… |
-| patches | 2 | 4.2, 4.5 | Krill swarm in shoals so dense that they tint entire patches of the Southern Ocean red, and from that single s… |
-| concentrated | 2 | 4.2, 9.22 | Without the patient upwelling of nutrients that the circumpolar current induces, none of this concentrated abu… |
-| famous | 2 | 4.3, 6.4 | The Antarctic ice imposes a peculiar parental rule on its most famous resident.… |
-| chicks | 2 | 4.3, 10.23 | When the chicks finally hatch, the females return from the sea with their stomachs full of fish, and exhausted… |
-| females | 2 | 4.3, 8.4 | When the chicks finally hatch, the females return from the sea with their stomachs full of fish, and exhausted… |
-| simple | 2 | 4.4, 10.34 | A simple food chain forces every predator on it to develop more elaborate strategies.… |
-| leopard | 2 | 4.4, 8.2 | Leopard seals lurk just beneath the surface near a crack in the ice and wait silently for penguins returning f… |
-| played | 2 | 4.4, 9.29 | Each predator has devised a specialised technique tuned exactly to its single available prey, and the result i… |
-| explorer | 2 | 4.6, 4.7 | The Norwegian explorer Amundsen prepared meticulously: sled dogs trained from infancy, a route surveyed in adv… |
-| member | 2 | 4.6, 6.6 | He reached the pole, planted his country's flag, and returned without losing a single member of his party.… |
-| eleven | 2 | 4.6, 10.18 | On the return journey Scott and his four companions perished one by one inside their tent during a blizzard, e… |
-| preparation | 2 | 4.6, 9.40 | Preparation, the Antarctic concluded, is not optional in this climate.… |
-| sleeping | 2 | 4.7, 8.2 | For more than two years the party persisted on that ice, sleeping in salvaged tents, consuming first their shi… |
-| fragmented | 2 | 4.7, 9.50 | When the floe finally fragmented into pieces too small to inhabit, Shackleton led six men in a small lifeboat … |
-| testing | 2 | 4.8, 10.37 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, prohibiting… |
-| allowing | 2 | 4.8, 9.15 | Decades later, scientists drilling deep cores into the ice extracted bubbles of air that had been preserved wi… |
-| thinning | 2 | 4.8, 10.23 | The same scientists discovered, through routine monitoring, that the ozone layer above the continent was thinn… |
-| discovery | 2 | 4.8, 5.7 | The discovery provoked the most successful environmental agreement ever signed, which eliminated those chemica… |
-| distance | 2 | 4.9, 7.7 | The Arctic tern, the bird with the longest annual migration on Earth, traverses to the Antarctic and back ever… |
-| violet | 2 | 4.10, 9.52 | Across the long polar nights, the sky above both peoples could suddenly ignite with the green and violet curta… |
-| collide | 2 | 4.10, 6.4 | Across the long polar nights, the sky above both peoples could suddenly ignite with the green and violet curta… |
-| measurably | 2 | 4.11, 10.36 | The pack ice of the Arctic now shrinks measurably every summer, and polar bears who cannot find a stable floe … |
-| shipping | 2 | 4.11, 9.52 | The thaw is opening the long-frozen Northwest Passage to commercial shipping, and Russia, Canada, Denmark, and… |
-| decomposing | 2 | 4.11, 10.36 | The frozen soil of Siberia and Alaska contains the slowly decomposing remains of ancient vegetation, and as th… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **constructed** | `construe` | stem(construct) | 17 | 4.10, 5.8, 5.9 | The Inuit of the Arctic constructed shelters from compacted snow bricks cut and stacked into a domed… |
+| **demolished** | `abolish` | stem(demolish) | 10 | 4.6, 8.18, 9.12 | The British captain Scott, by contrast, insisted on dragging ponies and motor sledges across terrain… |
+| **demonstrating** | `demonstrate` | stem(demonstrat) | 7 | 4.5, 8.6, 9.16 | The Antarctic midge therefore constitutes the lower limit of complex terrestrial life on the planet,… |
+| **trained** | `restrain` | stem(train) | 7 | 4.6, 7.7, 9.8 | The Norwegian explorer Amundsen prepared meticulously: sled dogs trained from infancy, a route surve… |
+| **discovered** | `coverage` | stem(cover) | 7 | 4.8, 7.1, 9.11 | The same scientists discovered, through routine monitoring, that the ozone layer above the continent… |
+| **drifting** | `derive` | stem(drift) | 6 | 4.7, 4.9, 6.4 | His ship Endurance was caught in pack ice before it ever reached the coast, and the ice gradually cr… |
+| **sustains** | `sustainable` | stem(sustain) | 4 | 4.2, 7.3, 8.1 | As the cold water circulates, it pumps deep nutrients upward toward the surface, and the sunlight re… |
+| **immediately** | `mediate` | stem(mediate) | 4 | 4.3, 5.7, 6.3 | Once a female emperor penguin has laid her single egg, she immediately transfers it onto her partner… |
+| **prevents** | `prevent` | substring(prevent) | 4 | 4.3, 4.5, 7.6 | Hundreds of males huddle together in a continuously rotating mass that distributes the cold equally … |
+| **develop** | `redevelopment` | stem-of-family | 4 | 4.4, 5.2, 8.11 | A simple food chain forces every predator on it to develop more elaborate strategies.… |
+| **circumpolar** | `polar` | substring(polar) | 3 | 4.1, 4.2 | Then the continent drifted slowly southward to its present position above the pole, and a vast new o… |
+| **nutrients** | `nurture` | stem(nutrient) | 3 | 4.2, 8.5 | As the cold water circulates, it pumps deep nutrients upward toward the surface, and the sunlight re… |
+| **penguins** | `penguin` | stem(penguin) | 2 | 4.2, 4.4 | Penguins dive after them, seals devour them, humpbacks sing through them.… |
+| **temperatures** | `temperament` | stem(temperature) | 2 | 4.3, 4.5 | The male incubates the egg on his feet beneath a brood pouch of warm skin for four consecutive month… |
+| **equally** | `equivalent` | stem(equal) | 2 | 4.3, 5.4 | Hundreds of males huddle together in a continuously rotating mass that distributes the cold equally … |
+| **forces** | `enforce` | stem(force) | 2 | 4.4, 9.53 | A simple food chain forces every predator on it to develop more elaborate strategies.… |
+| **terminates** | `terminate` | stem(terminate) | 2 | 4.4, 8.5 | Each predator has devised a specialised technique tuned exactly to its single available prey, and th… |
+| **supports** | `support` | stem(support) | 2 | 4.5 | The entire Antarctic continent supports only one species of true insect, a flightless midge two mill… |
+| **inhabits** | `exhibit` | stem(habit) | 2 | 4.5, 8.3 | The entire Antarctic continent supports only one species of true insect, a flightless midge two mill… |
+| **designating** | `designate` | stem(designat) | 2 | 4.8, 8.10 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, p… |
+| **prohibiting** | `exhibit` | stem(prohibit) | 2 | 4.8, 9.42 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, p… |
+| **activity** | `inactive` | stem(activ) | 2 | 4.8, 10.16 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, p… |
+| **weapons** | `weapon` | stem(weapon) | 2 | 4.8, 10.17 | Twelve nations signed a treaty designating the entire Antarctic continent as a scientific reserve, p… |
+| **nights** | `neighboring` | stem(night) | 2 | 4.10, 10.29 | Across the long polar nights, the sky above both peoples could suddenly ignite with the green and vi… |
+| **curtains** | `obscure` | stem(curtain) | 2 | 4.10, 9.52 | Across the long polar nights, the sky above both peoples could suddenly ignite with the green and vi… |
+| **planet's** | `planet` | substring(planet) | 2 | 4.11 | The planet's largest refrigerated archive is in the process of converting itself into the planet's l… |
+| **fossils** | `fossil` | stem(fossil) | 1 | 4.1 | Today Antarctica constitutes the coldest, driest, windiest continent on the planet, a vast white des… |
+| **circulates** | `circulation` | stem(circulate) | 1 | 4.2 | As the cold water circulates, it pumps deep nutrients upward toward the surface, and the sunlight re… |
+| **provokes** | `provoke` | stem(provoke) | 1 | 4.2 | As the cold water circulates, it pumps deep nutrients upward toward the surface, and the sunlight re… |
+| **waters** | `hydrothermal` | stem(water) | 1 | 4.2 | Blue whales, the largest creatures the planet has ever generated, migrate annually to these waters a… |
+| **humpbacks** | `humpback` | stem(humpback) | 1 | 4.2 | Penguins dive after them, seals devour them, humpbacks sing through them.… |
+| **induces** | `induce` | substring(induce) | 1 | 4.2 | Without the patient upwelling of nutrients that the circumpolar current induces, none of this concen… |
+| **imposes** | `impose` | substring(impose) | 1 | 4.3 | The Antarctic ice imposes a peculiar parental rule on its most famous resident.… |
+| **parental** | `apparent` | stem(parent) | 1 | 4.3 | The Antarctic ice imposes a peculiar parental rule on its most famous resident.… |
+| **transfers** | `refer` | stem(transfer) | 1 | 4.3 | Once a female emperor penguin has laid her single egg, she immediately transfers it onto her partner… |
+| **distributes** | `contribution` | stem(tribute) | 1 | 4.3 | Hundreds of males huddle together in a continuously rotating mass that distributes the cold equally … |
+| **fathers** | `patriarchy` | stem(father) | 1 | 4.3 | When the chicks finally hatch, the females return from the sea with their stomachs full of fish, and… |
+| **silently** | `resilient` | stem(silent) | 1 | 4.4 | Leopard seals lurk just beneath the surface near a crack in the ice and wait silently for penguins r… |
+| **flightless** | `slight` | stem(flight) | 1 | 4.5 | The entire Antarctic continent supports only one species of true insect, a flightless midge two mill… |
+| **withstands** | `withstand` | stem(withstand) | 1 | 4.5 | It withstands temperatures down to minus fifteen degrees by generating an antifreeze protein in its … |
+| **fluids** | `fluctuate` | stem(fluid) | 1 | 4.5 | It withstands temperatures down to minus fifteen degrees by generating an antifreeze protein in its … |
+| **crystals** | `crystalline` | stem(crystal) | 1 | 4.5 | It withstands temperatures down to minus fifteen degrees by generating an antifreeze protein in its … |
+| **expeditions** | `expedite` | stem(expedition) | 1 | 4.6 | Two expeditions raced across the Antarctic ice to be the first to reach the South Pole.… |
+| **caches** | `cache` | stem(cache) | 1 | 4.6 | The Norwegian explorer Amundsen prepared meticulously: sled dogs trained from infancy, a route surve… |
+| **optional** | `optimize` | stem(option) | 1 | 4.6 | Preparation, the Antarctic concluded, is not optional in this climate.… |
+| **bubbles** | `bubble` | stem(bubble) | 1 | 4.8 | Decades later, scientists drilling deep cores into the ice extracted bubbles of air that had been pr… |
+| **catastrophically** | `trophic` | substring(trophic) | 1 | 4.8 | The same scientists discovered, through routine monitoring, that the ozone layer above the continent… |
+| **globally** | `globalization` | stem(global) | 1 | 4.8 | The discovery provoked the most successful environmental agreement ever signed, which eliminated tho… |
+| **recover** | `coverage` | strip-re | 1 | 4.8 | The discovery provoked the most successful environmental agreement ever signed, which eliminated tho… |
+| **expands** | `expand` | stem(expand) | 1 | 4.9 | Across its surface a vast layer of pack ice expands every winter and retreats every summer, and acro… |
+| **surfaces** | `interface` | stem(surface) | 1 | 4.9 | The bear waits motionlessly at a breathing hole in the ice until a seal surfaces, then strikes with … |
+| **narwhals** | `narwhal` | stem(narwhal) | 1 | 4.9 | Narwhals, the deepwater whales whose males generate a single spiral tusk reminiscent of a unicorn's … |
+| **deepwater** | `water` | substring(water) | 1 | 4.9 | Narwhals, the deepwater whales whose males generate a single spiral tusk reminiscent of a unicorn's … |
+| **shifting** | `shift` | stem(shift) | 1 | 4.9 | Narwhals, the deepwater whales whose males generate a single spiral tusk reminiscent of a unicorn's … |
+| **walruses** | `walrus` | substring(walrus) | 1 | 4.9 | Walruses pry open breathing holes in the fresh ice with their own tusks.… |
+| **compacted** | `compatible` | stem(compact) | 1 | 4.10 | The Inuit of the Arctic constructed shelters from compacted snow bricks cut and stacked into a domed… |
+| **bricks** | `brick` | stem(brick) | 1 | 4.10 | The Inuit of the Arctic constructed shelters from compacted snow bricks cut and stacked into a domed… |
+| **harpoons** | `harpoon` | stem(harpoon) | 1 | 4.10 | They hunted seal, walrus, whale, and polar bear with harpoons and dog sleds, and inhabited every coa… |
+| **northwest** | `north` | substring(north) | 1 | 4.11 | The thaw is opening the long-frozen Northwest Passage to commercial shipping, and Russia, Canada, De… |
+| **deposits** | `composite` | stem(deposit) | 1 | 4.11 | The thaw is opening the long-frozen Northwest Passage to commercial shipping, and Russia, Canada, De… |
 
-## Chapter 5 (38 orphans)
+## Chapter 5 (41 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| writing | 7 | 5.4, 7.7, 9.3 | They developed no system of writing in the European sense, yet they devised something equally durable.… |
-| disease | 7 | 5.8, 9.40, 10.8 | Within decades the rabbit population, in the absence of any natural predator or local disease, exploded across… |
-| increasingly | 6 | 5.9, 10.11, 10.27 | Meanwhile across the open Pacific, increasingly violent cyclones now strike the low-lying nations of Tuvalu an… |
-| leaves | 5 | 5.2, 7.4, 8.4 | Koalas ascended into the eucalyptus canopy and developed an entire metabolism specialised to digest its toxic … |
-| carries | 5 | 5.3, 5.5, 8.2 | The platypus is a mammal that lays eggs rather than bearing live young, swims with webbed feet, possesses a bi… |
-| encoded | 5 | 5.4, 7.7, 9.55 | The entire terrain of the continent, every water source, every dangerous animal, every safe ridge, was encoded… |
-| instruments | 5 | 5.5, 9.15, 9.21 | They steered outrigger canoes from one island to the next across distances that European sailors, even centuri… |
-| follows | 4 | 5.2, 6.1, 9.47 | Every native Australian mammal you can name follows this pattern.… |
-| pattern | 4 | 5.2, 6.1, 6.2 | Every native Australian mammal you can name follows this pattern.… |
-| attempt | 4 | 5.5, 8.5, 9.16 | They steered outrigger canoes from one island to the next across distances that European sailors, even centuri… |
-| natural | 4 | 5.8, 9.33, 9.47 | Within decades the rabbit population, in the absence of any natural predator or local disease, exploded across… |
-| authorities | 4 | 5.8, 7.10, 8.22 | Decades later, the same authorities introduced cane toads from Hawaii to control insect pests in the sugarcane… |
-| distances | 3 | 5.2, 5.5, 10.13 | Kangaroos perfected the bouncing gait that allows them to traverse vast distances at low energy cost, the legs… |
-| openly | 3 | 5.3, 8.3, 10.22 | The first preserved specimen sent back to London by a colonial naturalist was widely assumed to be a hoax, wit… |
-| sailors | 3 | 5.5, 6.6, 10.3 | They steered outrigger canoes from one island to the next across distances that European sailors, even centuri… |
-| offshore | 3 | 5.6, 7.3, 7.6 | Without canoes, they lost the ability to fish offshore or to migrate elsewhere when famine arrived.… |
-| enclosed | 3 | 5.6, 6.4, 9.1 | The chiefdoms that had once cooperated on the moai now began to wage war against each other, and the entire ci… |
-| environment | 3 | 5.6, 6.6, 7.6 | Easter Island therefore constitutes the cleanest documented sample of an ecological suicide: a society that co… |
-| recognised | 3 | 5.7, 8.8, 9.55 | Captain Cook charted the eastern coast of Australia, and the British Empire immediately recognised the value o… |
-| encircled | 2 | 5.1, 8.19 | Australia tore loose from the supercontinent Gondwana very early in its geological history and drifted slowly … |
-| competition | 2 | 5.1, 9.51 | Within the long isolation that followed, every native lineage on the continent evolved without competition fro… |
-| unrelated | 2 | 5.2, 5.3 | Marsupial moles burrowed through the dry interior soil exactly as their unrelated placental counterparts excav… |
-| elsewhere | 2 | 5.2, 5.6 | Marsupial moles burrowed through the dry interior soil exactly as their unrelated placental counterparts excav… |
-| perfected | 2 | 5.2, 9.9 | Kangaroos perfected the bouncing gait that allows them to traverse vast distances at low energy cost, the legs… |
-| biologists | 2 | 5.3, 8.3 | The first preserved specimen sent back to London by a colonial naturalist was widely assumed to be a hoax, wit… |
-| accept | 2 | 5.3, 9.33 | Only when subsequent live specimens arrived did the scientific establishment accept that the creature was real… |
-| encyclopaedia | 2 | 5.4, 9.8 | A single song constitutes a complete navigational chart and ecological encyclopaedia simultaneously.… |
-| tracked | 2 | 5.5, 10.19 | They tracked the flight directions of seabirds to locate land below the horizon.… |
-| steered | 2 | 5.5, 9.20 | They steered outrigger canoes from one island to the next across distances that European sailors, even centuri… |
-| settlers | 2 | 5.6, 5.7 | On a particular remote Polynesian island, now called Easter Island, the original settlers gradually felled eve… |
-| ceremonial | 2 | 5.6, 7.11 | On a particular remote Polynesian island, now called Easter Island, the original settlers gradually felled eve… |
-| arriving | 2 | 5.7, 8.1 | Boatloads of prisoners began arriving in chains, and the colonies of New South Wales and Tasmania expanded acr… |
-| settlements | 2 | 5.7, 10.10 | Boatloads of prisoners began arriving in chains, and the colonies of New South Wales and Tasmania expanded acr… |
-| exploded | 2 | 5.8, 8.14 | Within decades the rabbit population, in the absence of any natural predator or local disease, exploded across… |
-| control | 2 | 5.8, 10.14 | Decades later, the same authorities introduced cane toads from Hawaii to control insect pests in the sugarcane… |
-| embedded | 2 | 5.9, 8.15 | It is constructed by the slow secretion of calcium carbonate by colonies of coral polyps cooperating with phot… |
-| tissues | 2 | 5.9, 10.23 | It is constructed by the slow secretion of calcium carbonate by colonies of coral polyps cooperating with phot… |
-| long-term | 2 | 5.9, 10.31 | When the surrounding sea temperature ascends only a few degrees above the long-term average, the corals expel … |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **transmitted** | `neurotransmitter` | stem(transmitt) | 6 | 5.4, 8.6, 8.11 | The entire terrain of the continent, every water source, every dangerous animal, every safe ridge, w… |
+| **resembles** | `assemble` | stem(semble) | 4 | 5.1, 7.6, 8.5 | The result is a continent that biologically resembles no other on the planet, and which has therefor… |
+| **canoes** | `canoe` | stem(canoe) | 3 | 5.5, 5.6 | They steered outrigger canoes from one island to the next across distances that European sailors, ev… |
+| **preserves** | `preserve` | stem(serve) | 3 | 5.7, 9.7, 10.7 | That footage still survives in the Australian archives, and the species it preserves does not.… |
+| **marsupials** | `marsupial` | stem(marsupial) | 2 | 5.2, 5.3 | In the absence of placental mammals, the marsupials of Australia diversified to fill every ecologica… |
+| **functioning** | `function` | stem(function) | 2 | 5.2, 9.5 | Kangaroos perfected the bouncing gait that allows them to traverse vast distances at low energy cost… |
+| **springs** | `spring` | stem(spring) | 2 | 5.2, 10.7 | Kangaroos perfected the bouncing gait that allows them to traverse vast distances at low energy cost… |
+| **crossing** | `crucial` | stem(cross) | 2 | 5.4, 10.35 | Aboriginal Australians arrived on the continent during the Ice Age, crossing narrow stretches of oce… |
+| **possessed** | `assess` | stem(possess) | 2 | 5.5, 10.3 | The Polynesian peoples of the Pacific possessed no compass, no chronometer, no astrolabe, and yet th… |
+| **currents** | `concur` | stem(current) | 2 | 5.5, 6.4 | They interpreted the colour and the temperature of ocean currents beneath their hands.… |
+| **seabirds** | `sea` | stem(seabird) | 2 | 5.5, 6.6 | They tracked the flight directions of seabirds to locate land below the horizon.… |
+| **locate** | `allocate` | stem-of-family | 2 | 5.5, 9.46 | They tracked the flight directions of seabirds to locate land below the horizon.… |
+| **platforms** | `transform` | stem(platform) | 2 | 5.6, 10.2 | On a particular remote Polynesian island, now called Easter Island, the original settlers gradually … |
+| **sustaining** | `sustainable` | stem(sustain) | 2 | 5.6, 9.48 | Easter Island therefore constitutes the cleanest documented sample of an ecological suicide: a socie… |
+| **barriers** | `barren` | stem(barrier) | 1 | 5.1 | Australia tore loose from the supercontinent Gondwana very early in its geological history and drift… |
+| **biologically** | `biosphere` | stem(biolog) | 1 | 5.1 | The result is a continent that biologically resembles no other on the planet, and which has therefor… |
+| **strictly** | `restrict` | stem(strict) | 1 | 5.1 | The result is a continent that biologically resembles no other on the planet, and which has therefor… |
+| **koalas** | `koala` | stem(koala) | 1 | 5.2 | Koalas ascended into the eucalyptus canopy and developed an entire metabolism specialised to digest … |
+| **kangaroos** | `kangaroo` | stem(kangaroo) | 1 | 5.2 | Kangaroos perfected the bouncing gait that allows them to traverse vast distances at low energy cost… |
+| **beaver's** | `beaver` | substring(beaver) | 1 | 5.3 | The platypus is a mammal that lays eggs rather than bearing live young, swims with webbed feet, poss… |
+| **venomous** | `venom` | stem(venom) | 1 | 5.3 | The platypus is a mammal that lays eggs rather than bearing live young, swims with webbed feet, poss… |
+| **specimens** | `specimen` | stem(specimen) | 1 | 5.3 | Only when subsequent live specimens arrived did the scientific establishment accept that the creatur… |
+| **monotremes** | `monoculture` | stem(monotreme) | 1 | 5.3 | It belongs to a tiny order called the monotremes, the only surviving mammals that still reproduce by… |
+| **placentals** | `replace` | stem(placental) | 1 | 5.3 | It belongs to a tiny order called the monotremes, the only surviving mammals that still reproduce by… |
+| **levels** | `elevate` | stem(level) | 1 | 5.4 | Aboriginal Australians arrived on the continent during the Ice Age, crossing narrow stretches of oce… |
+| **navigational** | `ion` | stem(navigation) | 1 | 5.4 | A single song constitutes a complete navigational chart and ecological encyclopaedia simultaneously.… |
+| **positions** | `composite` | stem(position) | 1 | 5.5 | They read the positions of stars by memory.… |
+| **outrigger** | `trigger` | substring(trigger) | 1 | 5.5 | They steered outrigger canoes from one island to the next across distances that European sailors, ev… |
+| **chiefdoms** | `achieve` | stem(chiefdom) | 1 | 5.6 | The chiefdoms that had once cooperated on the moai now began to wage war against each other, and the… |
+| **cooperated** | `cooperate` | stem(cooperat) | 1 | 5.6 | The chiefdoms that had once cooperated on the moai now began to wage war against each other, and the… |
+| **convicts** | `convict` | stem(convict) | 1 | 5.7 | Captain Cook charted the eastern coast of Australia, and the British Empire immediately recognised t… |
+| **archives** | `achieve` | stem(archive) | 1 | 5.7 | That footage still survives in the Australian archives, and the species it preserves does not.… |
+| **rabbits** | `rabbit` | stem(rabbit) | 1 | 5.8 | An English farmer released a small group of European rabbits onto his Australian estate so that he c… |
+| **rabbit-proof** | `rabbit` | substring(rabbit) | 1 | 5.8 | The Australian government constructed a rabbit-proof fence stretching for thousands of kilometres ac… |
+| **polyps** | `polyp` | stem(polyp) | 1 | 5.9 | It is constructed by the slow secretion of calcium carbonate by colonies of coral polyps cooperating… |
+| **cooperating** | `cooperate` | stem(cooperat) | 1 | 5.9 | It is constructed by the slow secretion of calcium carbonate by colonies of coral polyps cooperating… |
+| **corals** | `core` | stem(coral) | 1 | 5.9 | When the surrounding sea temperature ascends only a few degrees above the long-term average, the cor… |
+| **partners** | `counterpart` | stem(partner) | 1 | 5.9 | When the surrounding sea temperature ascends only a few degrees above the long-term average, the cor… |
+| **bleached** | `bleaching` | stem(bleach) | 1 | 5.9 | Vast stretches of the reef have already bleached.… |
+| **cyclones** | `cyclone` | stem(cyclone) | 1 | 5.9 | Meanwhile across the open Pacific, increasingly violent cyclones now strike the low-lying nations of… |
+| **submerging** | `merge` | strip-sub | 1 | 5.9 | Meanwhile across the open Pacific, increasingly violent cyclones now strike the low-lying nations of… |
 
-## Chapter 6 (23 orphans)
+## Chapter 6 (30 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| sailed | 4 | 6.2, 7.2, 9.33 | They sailed south to India in summer on the inward wind, exchanged spices and gemstones, and returned home on … |
-| passing | 4 | 6.4, 8.1, 8.15 | Drifting downward from the Arctic in the opposite direction come the icebergs, immense fragments of glacial ic… |
-| routes | 3 | 6.2, 7.9, 8.23 | Chinese fleets under the admiral Zheng He traversed the same routes in colossal wooden vessels, reaching the e… |
-| strait | 3 | 6.2, 8.17 | Between the Indian Ocean and the Pacific lies the Malacca Strait, a narrow channel through which roughly a qua… |
-| passes | 3 | 6.2, 7.7, 8.2 | Between the Indian Ocean and the Pacific lies the Malacca Strait, a narrow channel through which roughly a qua… |
-| controls | 3 | 6.2, 9.54 | Whichever power controls the strait controls the route, and the channel has constituted a strategic chokehold … |
-| lifted | 3 | 6.3, 8.2, 10.17 | A long rupture in the seabed off the western coast of Sumatra abruptly lifted the entire floor of the ocean, d… |
-| higher | 3 | 6.3, 9.3, 9.35 | Yet immediately before the first wave arrived, elephants, birds, and dogs had already begun to flee inland to … |
-| underwater | 3 | 6.3, 6.5, 6.6 | The catastrophe provoked the deployment of underwater pressure sensors across every major seabed, which now mo… |
-| pressure | 3 | 6.3, 8.1, 9.30 | The catastrophe provoked the deployment of underwater pressure sensors across every major seabed, which now mo… |
-| icebergs | 3 | 6.4, 7.5, 10.7 | Drifting downward from the Arctic in the opposite direction come the icebergs, immense fragments of glacial ic… |
-| struck | 3 | 6.4, 7.4, 9.16 | Drifting downward from the Arctic in the opposite direction come the icebergs, immense fragments of glacial ic… |
-| hauled | 3 | 6.5, 7.11, 9.6 | Once European ships had mastered the Atlantic wind systems, they used this ocean to construct one of the cruel… |
-| shipped | 3 | 6.5, 7.10 | Once European ships had mastered the Atlantic wind systems, they used this ocean to construct one of the cruel… |
-| navigate | 3 | 6.6, 9.55, 10.21 | Dolphins navigate by emitting rapid clicks and interpreting the returning echoes, mapping their underwater env… |
-| prolonged | 2 | 6.1, 10.28 | The air above the land ascends in vast convection columns, and the moisture-saturated air from the Indian Ocea… |
-| exchanged | 2 | 6.2, 7.10 | They sailed south to India in summer on the inward wind, exchanged spices and gemstones, and returned home on … |
-| maritime | 2 | 6.2, 9.20 | Between the Indian Ocean and the Pacific lies the Malacca Strait, a narrow channel through which roughly a qua… |
-| circular | 2 | 6.4, 9.13 | In the centre of the Atlantic lies the Sargasso Sea, a circular region of nearly stationary water enclosed by … |
-| floating | 2 | 6.4, 10.3 | In the centre of the Atlantic lies the Sargasso Sea, a circular region of nearly stationary water enclosed by … |
-| emitting | 2 | 6.6, 8.4 | Dolphins navigate by emitting rapid clicks and interpreting the returning echoes, mapping their underwater env… |
-| singing | 2 | 6.6, 9.9 | Humpback whales produce songs that propagate hundreds of kilometres through the ocean, with every member of a … |
-| strong | 2 | 6.6, 9.55 | Albatrosses, the largest seabirds on the planet, exploit the strong winds of the Southern Ocean to circle the … |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **systems** | `system` | stem(system) | 4 | 6.5, 8.22, 10.22 | Once European ships had mastered the Atlantic wind systems, they used this ocean to construct one of… |
+| **underwater** | `water` | substring(water) | 3 | 6.3, 6.5, 6.6 | The catastrophe provoked the deployment of underwater pressure sensors across every major seabed, wh… |
+| **shifts** | `shift` | stem(shift) | 3 | 6.3, 9.55 | The catastrophe provoked the deployment of underwater pressure sensors across every major seabed, wh… |
+| **columns** | `culmination` | stem(column) | 2 | 6.1, 9.26 | The air above the land ascends in vast convection columns, and the moisture-saturated air from the I… |
+| **spices** | `glaciation` | stem(spice) | 2 | 6.2, 8.15 | They sailed south to India in summer on the inward wind, exchanged spices and gemstones, and returne… |
+| **gemstones** | `gemstone` | stem(gemstone) | 2 | 6.2, 8.15 | They sailed south to India in summer on the inward wind, exchanged spices and gemstones, and returne… |
+| **inland** | `land` | strip-in | 2 | 6.3, 10.30 | Yet immediately before the first wave arrived, elephants, birds, and dogs had already begun to flee … |
+| **winters** | `winter` | stem(winter) | 2 | 6.4, 9.52 | This current is the Gulf Stream, and it explains why London receives mild winters while Canadian cit… |
+| **submerged** | `merge` | strip-sub | 2 | 6.5, 7.1 | The entire ridge is submerged from view, yet it traces the boundary between the American tectonic pl… |
+| **circuits** | `circulation` | stem(circuit) | 2 | 6.5, 10.31 | Once European ships had mastered the Atlantic wind systems, they used this ocean to construct one of… |
+| **reliability** | `liable` | stem(liabil) | 1 | 6.1 | The monsoon constitutes the literal lifeline of more than two billion people, and its annual reliabi… |
+| **traders** | `trade` | substring(trade) | 1 | 6.2 | Arab traders mastered the monsoon pattern long before Europe arrived.… |
+| **fleets** | `fleet` | stem(fleet) | 1 | 6.2 | Chinese fleets under the admiral Zheng He traversed the same routes in colossal wooden vessels, reac… |
+| **vessels** | `vessel` | stem(vessel) | 1 | 6.2 | Chinese fleets under the admiral Zheng He traversed the same routes in colossal wooden vessels, reac… |
+| **sensors** | `sensor` | stem(sensor) | 1 | 6.3 | The catastrophe provoked the deployment of underwater pressure sensors across every major seabed, wh… |
+| **warnings** | `warning` | stem(warning) | 1 | 6.3 | The catastrophe provoked the deployment of underwater pressure sensors across every major seabed, wh… |
+| **reproduced** | `produce` | stem(produc) | 1 | 6.3 | The instinct of an animal, in this case, had to be reproduced by an instrument.… |
+| **tempers** | `temperament` | stem(temper) | 1 | 6.4 | A vast warm current ascends from the tropics along the eastern coast of the Americas, then traverses… |
+| **extends** | `extend` | stem(extend) | 1 | 6.5 | Beneath the Atlantic Ocean runs a vast underwater mountain range that extends from the abyssal plain… |
+| **constituting** | `constitute` | stem(constitut) | 1 | 6.5 | Beneath the Atlantic Ocean runs a vast underwater mountain range that extends from the abyssal plain… |
+| **manufactured** | `manufacturing` | stem(manufactur) | 1 | 6.5 | Once European ships had mastered the Atlantic wind systems, they used this ocean to construct one of… |
+| **captives** | `captive` | stem(captive) | 1 | 6.5 | Once European ships had mastered the Atlantic wind systems, they used this ocean to construct one of… |
+| **clicks** | `click` | stem(click) | 1 | 6.6 | Dolphins navigate by emitting rapid clicks and interpreting the returning echoes, mapping their unde… |
+| **modifying** | `modify` | stem(modify) | 1 | 6.6 | Humpback whales produce songs that propagate hundreds of kilometres through the ocean, with every me… |
+| **phrases** | `emphasize` | stem(phrase) | 1 | 6.6 | Humpback whales produce songs that propagate hundreds of kilometres through the ocean, with every me… |
+| **collaboratively** | `collaborate` | stem(collaborat) | 1 | 6.6 | Humpback whales produce songs that propagate hundreds of kilometres through the ocean, with every me… |
+| **octopuses** | `octopus` | substring(octopus) | 1 | 6.6 | Octopuses, despite an entirely separate evolutionary lineage from any vertebrate, demonstrate remark… |
+| **albatrosses** | `albatross` | substring(albatross) | 1 | 6.6 | Albatrosses, the largest seabirds on the planet, exploit the strong winds of the Southern Ocean to c… |
+| **featureless** | `feasible` | stem(feature) | 1 | 6.6 | The open ocean is not the silent and featureless wilderness early sailors imagined.… |
+| **densely** | `density` | stem(dense) | 1 | 6.6 | The aquatic ecosystem at every depth is densely inhabited by minds of forms we have only recently be… |
 
-## Chapter 7 (51 orphans)
+## Chapter 7 (50 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| language | 13 | 7.12, 8.6, 9.9 | Football has become the third major South American export to the world after the potato and the chocolate bar:… |
-| capital | 12 | 7.7, 7.9, 8.10 | A single instruction issued from the capital could descend across snow ridges and arrive at the coast before a… |
-| forced | 10 | 7.10, 8.1, 8.2 | Spanish authorities forced indigenous Quechua and African slave labourers into the oxygen-thin tunnels to extr… |
-| westward | 8 | 7.11, 8.9, 8.14 | The potato proved so productive that the population of northern Europe expanded rapidly until a single fungal … |
-| church | 7 | 7.8, 9.9, 9.12 | The walls have nevertheless persisted intact through centuries of earthquakes that destroyed every Spanish chu… |
-| layered | 6 | 7.3, 8.13, 9.15 | The Amazon delivers a volume of fresh water sufficient to push the saltwater of the ocean back a hundred kilom… |
-| mountains | 6 | 7.5, 8.9, 8.13 | Glaciers descend from the pristine surrounding mountains and crawl slowly toward the Atlantic, where their lea… |
-| hunters | 5 | 7.4, 7.5, 9.7 | Indigenous hunters extract the venom by simply wiping a blowdart tip across the frog's skin.… |
-| completed | 5 | 7.9, 8.16, 9.8 | The conquest of the largest empire in the western hemisphere had been completed by a contagion riding ahead of… |
-| multiple | 4 | 7.2, 8.14, 10.1 | Darwin realised that a single ancestral species had diversified gradually into multiple distinct forms by adap… |
-| artillery | 4 | 7.5, 9.31, 9.53 | Glaciers descend from the pristine surrounding mountains and crawl slowly toward the Atlantic, where their lea… |
-| nevertheless | 4 | 7.8, 9.19, 9.27 | The walls have nevertheless persisted intact through centuries of earthquakes that destroyed every Spanish chu… |
-| pizarro | 4 | 7.9 | A small Spanish band led by the captain Pizarro approached the Inca empire with horses, swords, and firearms, … |
-| horses | 4 | 7.9, 8.15, 9.7 | A small Spanish band led by the captain Pizarro approached the Inca empire with horses, swords, and firearms, … |
-| thrust | 3 | 7.1, 9.8 | The thrust of that subduction has been so persistent that fossilised marine shells are still being discovered … |
-| fossilised | 3 | 7.1, 7.5, 9.33 | The thrust of that subduction has been so persistent that fossilised marine shells are still being discovered … |
-| knowing | 3 | 7.2, 9.12, 9.32 | Knowing how thoroughly his society would resist the implication that humans had emerged from the same mechanis… |
-| permanent | 3 | 7.5, 9.35, 10.6 | The southernmost extremity of South America is Patagonia, a vast wind-scoured wasteland in which the constant … |
-| leading | 3 | 7.5, 8.23, 9.37 | Glaciers descend from the pristine surrounding mountains and crawl slowly toward the Atlantic, where their lea… |
-| applied | 3 | 7.8, 9.2, 10.32 | The masons cut every block of granite with such precision that the resulting walls accommodate no gap wide eno… |
-| accepted | 3 | 7.9, 9.9 | Pizarro accepted the ransom and then, in a final deceitful gesture, executed Atahualpa anyway.… |
-| victory | 3 | 7.9, 9.42, 10.16 | The conquest of the largest empire in the western hemisphere had been completed by a contagion riding ahead of… |
-| peasant | 3 | 7.11, 9.12, 9.51 | The Andes had cultivated the potato for thousands of years before the Spanish encountered it, and the Spanish … |
-| infected | 3 | 7.11, 9.12, 10.3 | The potato proved so productive that the population of northern Europe expanded rapidly until a single fungal … |
-| currency | 3 | 7.11, 9.49, 9.54 | The cocoa bean had been ceremonial currency among the Aztec elite, valuable enough that a sack of beans could … |
-| exported | 3 | 7.11, 8.17, 10.36 | The Spanish added sugar to the bitter Aztec drink, sweetened the resulting beverage, exported it to Europe, an… |
-| exporting | 3 | 7.12, 9.45, 9.52 | The Amazon rainforest, often called the lungs of the planet, is being cleared rapidly at the present moment to… |
-| lifting | 2 | 7.1, 8.20 | Across millions of years the Pacific plate has slowly subducted beneath the South American continent, lifting … |
-| summit | 2 | 7.1, 7.3 | The thrust of that subduction has been so persistent that fossilised marine shells are still being discovered … |
-| outcrops | 2 | 7.2, 10.26 | The young naturalist Charles Darwin sailed aboard a British vessel called the Beagle that paused at the Galápa… |
-| realised | 2 | 7.2, 9.28 | Darwin realised that a single ancestral species had diversified gradually into multiple distinct forms by adap… |
-| thoroughly | 2 | 7.2, 7.4 | Knowing how thoroughly his society would resist the implication that humans had emerged from the same mechanis… |
-| publish | 2 | 7.2, 9.33 | Knowing how thoroughly his society would resist the implication that humans had emerged from the same mechanis… |
-| drawing | 2 | 7.3, 9.51 | The Amazon River begins as a small glacial trickle near the summit of the Andes and traverses the entire South… |
-| streams | 2 | 7.3, 10.23 | The Amazon River begins as a small glacial trickle near the summit of the Andes and traverses the entire South… |
-| freshwater | 2 | 7.3, 10.6 | The Amazon delivers a volume of fresh water sufficient to push the saltwater of the ocean back a hundred kilom… |
-| disguised | 2 | 7.4, 10.9 | The Amazon rainforest is the most thoroughly disguised landscape on the planet.… |
-| angles | 2 | 7.5, 9.47 | The southernmost extremity of South America is Patagonia, a vast wind-scoured wasteland in which the constant … |
-| ice-age | 2 | 7.5, 10.1 | Darwin during his Beagle voyage excavated the fossilised bones of an extinct giant ground sloth in the soil of… |
-| megafauna | 2 | 7.5, 10.1 | Darwin during his Beagle voyage excavated the fossilised bones of an extinct giant ground sloth in the soil of… |
-| instruction | 2 | 7.7, 10.19 | A single instruction issued from the capital could descend across snow ridges and arrive at the coast before a… |
-| issued | 2 | 7.7, 8.16 | A single instruction issued from the capital could descend across snow ridges and arrive at the coast before a… |
-| masons | 2 | 7.8, 9.8 | The masons cut every block of granite with such precision that the resulting walls accommodate no gap wide eno… |
-| destroyed | 2 | 7.8, 9.32 | The walls have nevertheless persisted intact through centuries of earthquakes that destroyed every Spanish chu… |
-| jungle | 2 | 7.8, 10.2 | After the empire collapsed, the citadel was simply abandoned and overgrown by the surrounding jungle, vanishin… |
-| stumbled | 2 | 7.8, 8.10 | After the empire collapsed, the citadel was simply abandoned and overgrown by the surrounding jungle, vanishin… |
-| searching | 2 | 7.8, 9.50 | After the empire collapsed, the citadel was simply abandoned and overgrown by the surrounding jungle, vanishin… |
-| riding | 2 | 7.9, 8.15 | The conquest of the largest empire in the western hemisphere had been completed by a contagion riding ahead of… |
-| tunnels | 2 | 7.10, 10.10 | Spanish authorities forced indigenous Quechua and African slave labourers into the oxygen-thin tunnels to extr… |
-| afford | 2 | 7.11, 10.14 | The Andes had cultivated the potato for thousands of years before the Spanish encountered it, and the Spanish … |
-| export | 2 | 7.12, 10.25 | Football has become the third major South American export to the world after the potato and the chocolate bar:… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **universal** | `university` | stem(ivers) | 4 | 7.12, 9.25, 9.55 | Football has become the third major South American export to the world after the potato and the choc… |
+| **fossilised** | `fossil` | substring(fossil) | 3 | 7.1, 7.5, 9.33 | The thrust of that subduction has been so persistent that fossilised marine shells are still being d… |
+| **shells** | `shelf` | stem(shell) | 3 | 7.1, 10.16, 10.23 | The thrust of that subduction has been so persistent that fossilised marine shells are still being d… |
+| **earthquakes** | `earthquake` | stem(earthquake) | 3 | 7.1, 7.8, 9.4 | The same subduction has triggered a chain of active volcanoes along the western coast and induced th… |
+| **powerful** | `power` | stem(power) | 3 | 7.2, 9.21, 10.28 | On every island Darwin encountered a slightly different variety of small finch, and the beaks of eac… |
+| **suppressed** | `oppression` | stem(suppress) | 3 | 7.2, 9.19, 10.15 | Knowing how thoroughly his society would resist the implication that humans had emerged from the sam… |
+| **glaciers** | `glacier` | stem(glacier) | 3 | 7.5, 9.1, 10.7 | Glaciers descend from the pristine surrounding mountains and crawl slowly toward the Atlantic, where… |
+| **fjords** | `fjord` | stem(fjord) | 3 | 7.5, 9.1, 10.7 | Glaciers descend from the pristine surrounding mountains and crawl slowly toward the Atlantic, where… |
+| **valleys** | `valley` | stem(valley) | 3 | 7.6, 8.23, 10.36 | Several valleys within the Atacama have not recorded a single drop of precipitation in centuries.… |
+| **constructing** | `construe` | stem(construct) | 3 | 7.7, 8.21, 9.49 | The Inca empire occupied the entire spine of the Andes from modern Colombia to Chile without ever in… |
+| **executed** | `executive` | stem(execut) | 3 | 7.9, 9.12, 9.53 | Pizarro accepted the ransom and then, in a final deceitful gesture, executed Atahualpa anyway.… |
+| **ridges** | `ridge` | stem(ridge) | 2 | 7.1, 7.7 | The thrust of that subduction has been so persistent that fossilised marine shells are still being d… |
+| **consisted** | `inconsistency` | stem(consist) | 2 | 7.2 | On every island Darwin encountered a slightly different variety of small finch, and the beaks of eac… |
+| **freshwater** | `water` | substring(water) | 2 | 7.3, 10.6 | The Amazon delivers a volume of fresh water sufficient to push the saltwater of the ocean back a hun… |
+| **megafauna** | `fauna` | substring(fauna) | 2 | 7.5, 10.1 | Darwin during his Beagle voyage excavated the fossilised bones of an extinct giant ground sloth in t… |
+| **condensing** | `density` | stem(condens) | 2 | 7.6, 9.30 | The Atacama Desert occupies a narrow coastal strip along the western edge of South America, where th… |
+| **differed** | `indifference` | stem(differ) | 1 | 7.2 | On every island Darwin encountered a slightly different variety of small finch, and the beaks of eac… |
+| **pointed** | `appoint` | stem(point) | 1 | 7.2 | On every island Darwin encountered a slightly different variety of small finch, and the beaks of eac… |
+| **adapting** | `adapt` | stem(adapt) | 1 | 7.2 | Darwin realised that a single ancestral species had diversified gradually into multiple distinct for… |
+| **saltwater** | `water` | substring(water) | 1 | 7.3 | The Amazon delivers a volume of fresh water sufficient to push the saltwater of the ocean back a hun… |
+| **sloths** | `sloth` | stem(sloth) | 1 | 7.4 | Sloths cultivate algae on their own fur in order to merge perfectly with the surrounding foliage.… |
+| **moments** | `momentum` | stem(moment) | 1 | 7.4 | Within moments any monkey or bird struck by the dart drops paralysed from the canopy.… |
+| **southernmost** | `southern` | substring(southern) | 1 | 7.5 | The southernmost extremity of South America is Patagonia, a vast wind-scoured wasteland in which the… |
+| **rovers** | `rover` | stem(rover) | 1 | 7.6 | NASA tests its Mars rovers in the Atacama because the local environment so closely resembles the sur… |
+| **approximates** | `approximate` | stem(approximate) | 1 | 7.6 | NASA tests its Mars rovers in the Atacama because the local environment so closely resembles the sur… |
+| **observations** | `observe` | stem(observation) | 1 | 7.6 | For the same reason, astronomers have constructed the largest array of radio telescopes on the plane… |
+| **uninhabitable** | `inhabit` | stem(inhabit) | 1 | 7.6 | The very absence that makes the Atacama uninhabitable is what renders it scientifically irreplaceabl… |
+| **irreplaceable** | `replace` | stem(replace) | 1 | 7.6 | The very absence that makes the Atacama uninhabitable is what renders it scientifically irreplaceabl… |
+| **inventing** | `invent` | substring(invent) | 1 | 7.7 | The Inca empire occupied the entire spine of the Andes from modern Colombia to Chile without ever in… |
+| **wheeled** | `rotation` | stem(wheel) | 1 | 7.7 | The Inca empire occupied the entire spine of the Andes from modern Colombia to Chile without ever in… |
+| **quipus** | `quipu` | stem(quipu) | 1 | 7.7 | Information was encoded into knotted cords called quipus, which trained record-keepers could interpr… |
+| **runners** | `runner` | stem(runner) | 1 | 7.7 | Information was encoded into knotted cords called quipus, which trained record-keepers could interpr… |
+| **conquistadors** | `conquistador` | stem(conquistador) | 1 | 7.8 | The ridge had concealed the city in the clouds for so long that the Spanish conquistadors never even… |
+| **suspected** | `inspect` | stem(suspect) | 1 | 7.8 | The ridge had concealed the city in the clouds for so long that the Spanish conquistadors never even… |
+| **approached** | `approximate` | stem(approach) | 1 | 7.9 | A small Spanish band led by the captain Pizarro approached the Inca empire with horses, swords, and … |
+| **swords** | `sword` | stem(sword) | 1 | 7.9 | A small Spanish band led by the captain Pizarro approached the Inca empire with horses, swords, and … |
+| **succession** | `access` | stem(succes) | 1 | 7.9 | The empire was therefore convulsed by a succession crisis and a depopulated military when Pizarro pr… |
+| **stands** | `substantial` | stem(stand) | 1 | 7.10 | In the high thin air of the Bolivian altiplano stands a mountain called Potosí, beneath which lay on… |
+| **richest** | `chest` | substring(chest) | 1 | 7.10 | In the high thin air of the Bolivian altiplano stands a mountain called Potosí, beneath which lay on… |
+| **concentrations** | `rational` | stem(concentration) | 1 | 7.10 | In the high thin air of the Bolivian altiplano stands a mountain called Potosí, beneath which lay on… |
+| **labourers** | `labour` | substring(labour) | 1 | 7.10 | Spanish authorities forced indigenous Quechua and African slave labourers into the oxygen-thin tunne… |
+| **oxygen-thin** | `oxygen` | substring(oxygen) | 1 | 7.10 | Spanish authorities forced indigenous Quechua and African slave labourers into the oxygen-thin tunne… |
+| **uncounted** | `counterbalance` | stem(count) | 1 | 7.10 | Spanish authorities forced indigenous Quechua and African slave labourers into the oxygen-thin tunne… |
+| **galleons** | `galleon` | stem(galleon) | 1 | 7.10 | The silver was loaded onto enormous Spanish galleons and shipped first to Spain and then onward to M… |
+| **tubers** | `tube` | stem(tuber) | 1 | 7.11 | The Andes had cultivated the potato for thousands of years before the Spanish encountered it, and th… |
+| **sweetened** | `sweet` | substring(sweet) | 1 | 7.11 | The Spanish added sugar to the bitter Aztec drink, sweetened the resulting beverage, exported it to … |
+| **imagines** | `imaginary` | stem(agine) | 1 | 7.11 | The Spanish added sugar to the bitter Aztec drink, sweetened the resulting beverage, exported it to … |
+| **ranches** | `ranch` | substring(ranch) | 1 | 7.12 | The Amazon rainforest, often called the lungs of the planet, is being cleared rapidly at the present… |
+| **murals** | `mural` | stem(mural) | 1 | 7.12 | Football has become the third major South American export to the world after the potato and the choc… |
+| **speaking** | `peak` | stem(speak) | 1 | 7.12 | Football has become the third major South American export to the world after the potato and the choc… |
 
-## Chapter 8 (118 orphans)
+## Chapter 8 (106 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| permitted | 11 | 8.3, 8.16, 9.33 | The Siberian cold has preserved the past with such precision that the future may yet be permitted to borrow fr… |
-| medieval | 9 | 8.15, 8.17, 9.8 | The same road also conveyed the most lethal of its passengers: the plague bacterium, riding in the gut of flea… |
-| imperial | 8 | 8.7, 8.8, 8.9 | The Chinese imperial government guarded the silkworm secret for over a thousand years, executing anyone who at… |
-| philosopher | 8 | 8.9, 9.21, 9.24 | His spiritual descendant Zhuangzi pursued the same intuition further, asking whether the philosopher had dream… |
-| post-war | 8 | 8.17, 9.49, 9.50 | The post-war animator Hayao Miyazaki, the director Akira Kurosawa, and the novelist Haruki Murakami have toget… |
-| attempting | 6 | 8.8, 9.11, 9.17 | In the fifth century before the common era, an unemployed clerk named Confucius walked from one Chinese kingdo… |
-| reshaped | 6 | 8.13, 8.19, 9.16 | Across the same span China generated four inventions that eventually reshaped the entire planet: paper, which … |
-| religious | 6 | 8.14, 9.7, 9.12 | Tang dynasty Buddhist monks first carved entire sutras onto wooden blocks and printed multiple copies of each … |
-| survived | 6 | 8.23, 9.5, 9.10 | Their accumulated folklore, transmitted across centuries by oral recitation, preserved an entire anthropologic… |
-| philosophy | 5 | 8.8, 9.24, 9.36 | Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the… |
-| student | 5 | 8.13, 9.3, 9.36 | The Tang dynasty capital of Chang'an was the largest international city in the world during its century, its a… |
-| entered | 5 | 8.20, 8.23, 9.5 | After a century of foreign humiliation, civil war, and revolutionary upheaval, China entered a period of auste… |
-| dispatched | 5 | 8.21, 9.11, 9.31 | The Made in China 2025 strategy declared the intention to achieve self-sufficiency in artificial intelligence,… |
-| programme | 5 | 8.22, 10.16, 10.18 | She matriculated through the formal Chinese educational apparatus, qualified for an art conservatoire as an ad… |
-| written | 4 | 8.6, 8.8, 8.22 | Knowledge, the macaques had quietly demonstrated, does not require a written language.… |
-| prince | 4 | 8.8, 8.11 | Not one prince listened.… |
-| retreated | 4 | 8.8, 9.25, 10.6 | He retreated to teach a handful of students, dictated the conversations they later compiled as the Analects, a… |
-| students | 4 | 8.8, 9.11, 10.27 | He retreated to teach a handful of students, dictated the conversations they later compiled as the Analects, a… |
-| family | 4 | 8.8, 9.25, 9.29 | Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the… |
-| millennium | 4 | 8.8, 9.5, 9.23 | The system ran for thirteen hundred years, the first meritocratic civil service the planet had ever assembled,… |
-| favour | 4 | 8.10, 9.22, 9.37 | He standardised the script, the coinage, the units of length and weight, and abolished hereditary aristocracy … |
-| international | 4 | 8.13, 9.43, 9.51 | The Tang dynasty capital of Chang'an was the largest international city in the world during its century, its a… |
-| mounted | 4 | 8.13, 9.11, 9.30 | Across the same span China generated four inventions that eventually reshaped the entire planet: paper, which … |
-| printed | 4 | 8.14, 9.18, 9.19 | Tang dynasty Buddhist monks first carved entire sutras onto wooden blocks and printed multiple copies of each … |
-| company | 4 | 8.18, 8.21, 9.21 | The British East India Company resolved the resulting deficit by industrialising opium cultivation in India an… |
-| revolutionary | 4 | 8.20, 9.13, 9.31 | After a century of foreign humiliation, civil war, and revolutionary upheaval, China entered a period of auste… |
-| period | 4 | 8.20, 9.8, 9.25 | After a century of foreign humiliation, civil war, and revolutionary upheaval, China entered a period of auste… |
-| internet | 4 | 8.22, 10.21, 10.22 | Rather than enter institutional employment upon graduation, she leveraged the saturating new mobile internet i… |
-| audience | 4 | 8.22, 9.28, 9.45 | Rather than enter institutional employment upon graduation, she leveraged the saturating new mobile internet i… |
-| researchers | 4 | 8.23, 9.41, 10.22 | Their accumulated folklore, transmitted across centuries by oral recitation, preserved an entire anthropologic… |
-| tracks | 3 | 8.5, 8.15, 10.25 | It simply tracks the wounded prey across the island for several days until the venom terminates the victim its… |
-| secret | 3 | 8.7, 9.14, 10.17 | The Chinese imperial government guarded the silkworm secret for over a thousand years, executing anyone who at… |
-| relationships | 3 | 8.8, 9.47, 10.22 | In the fifth century before the common era, an unemployed clerk named Confucius walked from one Chinese kingdo… |
-| conversations | 3 | 8.8, 9.3 | He retreated to teach a handful of students, dictated the conversations they later compiled as the Analects, a… |
-| citizen | 3 | 8.8, 9.2, 10.35 | Two centuries later the Han emperor read the same conversations and recognised what every prince had missed: a… |
-| official | 3 | 8.8, 8.16, 9.38 | Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the… |
-| corporate | 3 | 8.8, 10.22, 10.33 | Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the… |
-| cuisine | 3 | 8.9, 8.15, 9.16 | The whole system, Taoism, penetrates Chinese medicine, martial arts, geomancy, and cuisine through the complem… |
-| neither | 3 | 8.9, 8.22, 10.32 | The whole system, Taoism, penetrates Chinese medicine, martial arts, geomancy, and cuisine through the complem… |
-| standardised | 3 | 8.10, 9.29, 10.27 | He standardised the script, the coinage, the units of length and weight, and abolished hereditary aristocracy … |
-| soldiers | 3 | 8.10, 9.37, 10.3 | To extend his rule beyond the grave, he commissioned a buried army of several thousand life-sized terracotta s… |
-| peasants | 3 | 8.10, 9.36, 9.37 | To extend his rule beyond the grave, he commissioned a buried army of several thousand life-sized terracotta s… |
-| meditative | 3 | 8.11, 8.17, 9.44 | Chan crossed the sea into Japan and developed into Zen, generating in turn the meditative tea ceremony, the fl… |
-| ceremony | 3 | 8.11, 8.17, 9.7 | Chan crossed the sea into Japan and developed into Zen, generating in turn the meditative tea ceremony, the fl… |
-| withdraw | 3 | 8.12, 9.53, 9.54 | In the twentieth century a slight Indian lawyer named Mahatma Gandhi adapted the Hindu doctrines of non-violen… |
-| painters | 3 | 8.13, 9.38 | The Tang dynasty capital of Chang'an was the largest international city in the world during its century, its a… |
-| inventions | 3 | 8.13, 10.13, 10.37 | Across the same span China generated four inventions that eventually reshaped the entire planet: paper, which … |
-| copying | 3 | 8.13, 9.9, 9.10 | Across the same span China generated four inventions that eventually reshaped the entire planet: paper, which … |
-| carved | 3 | 8.14, 9.1, 10.7 | Tang dynasty Buddhist monks first carved entire sutras onto wooden blocks and printed multiple copies of each … |
-| scientist | 3 | 8.14, 9.32, 10.21 | Bi Sheng himself died in relative obscurity in China, his name preserved only because a contemporary scientist… |
-| notebooks | 3 | 8.14, 9.14, 9.41 | Bi Sheng himself died in relative obscurity in China, his name preserved only because a contemporary scientist… |
-| eastward | 3 | 8.15, 9.16, 10.1 | Along its caravan tracks travelled Buddhist scriptures from India into China, papermaking from China into the … |
-| bubonic | 3 | 8.16, 9.12, 9.25 | The same road, decades later, conveyed the bubonic plague from the Asian steppes into the Crimean ports and on… |
-| cholera | 3 | 8.19, 9.39, 9.40 | The South Asian monsoon faltered, and a cholera epidemic erupted from Bengal that eventually traversed every c… |
-| economy | 3 | 8.20 | The economy stagnated.… |
-| special | 3 | 8.20, 8.21, 9.41 | A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designated Reform … |
-| operating | 3 | 8.21, 9.30, 10.21 | The telecommunications company Huawei, when sanctioned by the United States and denied access to American semi… |
-| construction | 3 | 8.21, 9.17, 10.29 | The Made in China 2025 strategy declared the intention to achieve self-sufficiency in artificial intelligence,… |
-| studies | 3 | 8.22, 9.55 | Rather than enter institutional employment upon graduation, she leveraged the saturating new mobile internet i… |
-| growing | 2 | 8.1, 9.55 | The crust at the boundary had nowhere to go but upward, and the entire region buckled into a colossal vertical… |
-| rainforests | 2 | 8.1, 8.4 | The same range severed the dry cold air arriving from the north and forced the humid air ascending from the In… |
-| wolves | 2 | 8.2, 10.23 | The Tibetan antelope has developed a specialised form of haemoglobin that binds oxygen more efficiently at alt… |
-| pursue | 2 | 8.2, 10.27 | The Tibetan antelope has developed a specialised form of haemoglobin that binds oxygen more efficiently at alt… |
-| non-human | 2 | 8.4, 8.6 | The orangutan, the great red-haired ape of Borneo and Sumatra, has been observed tearing a leaf from a tree an… |
-| flower | 2 | 8.4, 8.11 | The rafflesia, the largest flower on the planet, blooms across a metre of forest floor without possessing any … |
-| dropped | 2 | 8.6, 10.1 | On a small Japanese island, a single young female macaque was observed picking up a sweet potato that had been… |
-| lowlands | 2 | 8.7, 10.2 | In the marshy lowlands along the lower Yangtze River, prehistoric farmers gradually domesticated a small-grain… |
-| kingdom | 2 | 8.8, 9.20 | In the fifth century before the common era, an unemployed clerk named Confucius walked from one Chinese kingdo… |
-| husband | 2 | 8.8, 9.32 | Husband considerate to wife.… |
-| missed | 2 | 8.8, 9.37 | Two centuries later the Han emperor read the same conversations and recognised what every prince had missed: a… |
-| millennia | 2 | 8.8, 8.18 | Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the… |
-| shaped | 2 | 8.8, 10.19 | Confucianism was promulgated as the official state philosophy, and across the next two millennia it shaped the… |
-| dynasties | 2 | 8.8, 10.28 | The Sui and Tang dynasties devised the imperial examination, an open written test of the Confucian canon throu… |
-| dictating | 2 | 8.8, 9.11 | The man who could not persuade a single prince to take him seriously had ended up dictating the rules by which… |
-| subjects | 2 | 8.9, 9.22 | Where Confucius had advocated active moral cultivation, Laozi articulated the opposite: the best ruler is the … |
-| pursued | 2 | 8.9, 9.15 | His spiritual descendant Zhuangzi pursued the same intuition further, asking whether the philosopher had dream… |
-| complementary | 2 | 8.9, 10.20 | The whole system, Taoism, penetrates Chinese medicine, martial arts, geomancy, and cuisine through the complem… |
-| throne | 2 | 8.10, 9.48 | A king of the western Chinese state of Qin, named Ying Zheng, spent a decade conquering the six other warring … |
-| pressing | 2 | 8.10, 8.14 | To restrain the nomadic horsemen pressing in from the north, he connected the existing border walls into the f… |
-| existing | 2 | 8.10, 9.5 | To restrain the nomadic horsemen pressing in from the north, he connected the existing border walls into the f… |
-| version | 2 | 8.10, 9.25 | To restrain the nomadic horsemen pressing in from the north, he connected the existing border walls into the f… |
-| warrior | 2 | 8.10, 9.45 | To extend his rule beyond the grave, he commissioned a buried army of several thousand life-sized terracotta s… |
-| meditation | 2 | 8.11, 8.12 | He emerged from the meditation as the Buddha, and the teaching he subsequently transmitted spread across South… |
-| treated | 2 | 8.13, 9.55 | The Tang calligraphers treated each brush stroke as a breathing thing; the Song landscape painters mastered th… |
-| receding | 2 | 8.13, 9.7 | The Tang calligraphers treated each brush stroke as a breathing thing; the Song landscape painters mastered th… |
-| printing | 2 | 8.13, 9.18 | Across the same span China generated four inventions that eventually reshaped the entire planet: paper, which … |
-| copies | 2 | 8.14, 9.5 | Tang dynasty Buddhist monks first carved entire sutras onto wooden blocks and printed multiple copies of each … |
-| world's | 2 | 8.14, 10.1 | Several centuries later a Song dynasty craftsman named Bi Sheng improved on the technique by carving each char… |
-| catalysed | 2 | 8.14, 9.45 | The Chinese technology eventually propagated westward across the Silk Road and emerged in Europe four centurie… |
-| steppe | 2 | 8.15, 8.16 | The same road also conveyed the most lethal of its passengers: the plague bacterium, riding in the gut of flea… |
-| operated | 2 | 8.16, 9.22 | Within the Mongol empire the Silk Road operated with unprecedented security: a single travel pass issued by th… |
-| harassment | 2 | 8.16, 10.28 | Within the Mongol empire the Silk Road operated with unprecedented security: a single travel pass issued by th… |
-| served | 2 | 8.16, 9.29 | Within the Mongol empire the Silk Road operated with unprecedented security: a single travel pass issued by th… |
-| steppes | 2 | 8.16, 8.23 | The same road, decades later, conveyed the bubonic plague from the Asian steppes into the Crimean ports and on… |
-| harbour | 2 | 8.16, 10.9 | The same road, decades later, conveyed the bubonic plague from the Asian steppes into the Crimean ports and on… |
-| loyalty | 2 | 8.17, 9.11 | The medieval samurai class devised bushido, an ethical code in which loyalty, honour, and composure in the fac… |
-| honourable | 2 | 8.17, 9.11 | The medieval samurai class devised bushido, an ethical code in which loyalty, honour, and composure in the fac… |
-| imported | 2 | 8.17, 10.10 | Zen Buddhism, imported from China, evolved into the austere dry-garden contemplation, the once-in-a-lifetime t… |
-| austere | 2 | 8.17, 8.20 | Zen Buddhism, imported from China, evolved into the austere dry-garden contemplation, the once-in-a-lifetime t… |
-| sensibility | 2 | 8.17, 9.34 | The post-war animator Hayao Miyazaki, the director Akira Kurosawa, and the novelist Haruki Murakami have toget… |
-| addiction | 2 | 8.18, 9.20 | By the eighteenth century the British had developed an addiction to Chinese tea so thorough that they were exh… |
-| unrelenting | 2 | 8.19, 9.32 | European harvests collapsed, and a young Mary Shelley, trapped indoors on the shore of Lake Geneva by the unre… |
-| gothic | 2 | 8.19, 9.8 | A single Indonesian eruption reshaped global food production, the history of the gothic novel, and modern chem… |
-| planning | 2 | 8.20, 10.35 | After a century of foreign humiliation, civil war, and revolutionary upheaval, China entered a period of auste… |
-| shenzhen | 2 | 8.20, 8.21 | A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designated Reform … |
-| manufacturers | 2 | 8.21, 10.37 | The Chinese manufacturers BYD and CATL eventually dominated the global market for electric vehicles and lithiu… |
-| batteries | 2 | 8.21, 10.37 | The Chinese manufacturers BYD and CATL eventually dominated the global market for electric vehicles and lithiu… |
-| families | 2 | 8.22, 9.36 | To curb the demographic explosion that had accompanied the early decades of the People's Republic, the central… |
-| daughter | 2 | 8.22, 9.33 | sealyra was born into precisely this demographic interlude, an only daughter saturated from infancy with the u… |
-| grandparents | 2 | 8.22, 10.5 | sealyra was born into precisely this demographic interlude, an only daughter saturated from infancy with the u… |
-| educational | 2 | 8.22, 10.15 | She matriculated through the formal Chinese educational apparatus, qualified for an art conservatoire as an ad… |
-| adolescent | 2 | 8.22, 9.42 | She matriculated through the formal Chinese educational apparatus, qualified for an art conservatoire as an ad… |
-| representative | 2 | 8.22, 10.34 | She is, in this sense, neither a representative of her generation nor an exception to it, but a single recorde… |
-| treeless | 2 | 8.23, 10.4 | The paleolithic peoples of north Asia, ancestors of every indigenous community from Siberia to Alaska, organis… |
-| rested | 2 | 8.23, 10.32 | Their economic system rested on the barter exchange of meat, hide, and bone across small kin-based bands that … |
-| provided | 2 | 8.23, 10.4 | The neolithic transition arrived later in the north Asian steppes than in southern river valleys, eventually l… |
-| spirit | 2 | 8.23, 9.51 | Across the entire Eurasian Arctic, from Saami Lapland through Siberian Evenki to coastal Inuit, the indigenous… |
-| academic | 2 | 8.23, 9.3 | Their accumulated folklore, transmitted across centuries by oral recitation, preserved an entire anthropologic… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **severed** | `severe` | stem(sever) | 4 | 8.1, 9.1, 9.18 | The same range severed the dry cold air arriving from the north and forced the humid air ascending f… |
+| **governed** | `governance` | stem(govern) | 4 | 8.8, 9.11, 9.27 | In the fifth century before the common era, an unemployed clerk named Confucius walked from one Chin… |
+| **partially** | `impartial` | stem(partial) | 4 | 8.18, 9.4, 9.8 | A single agricultural product cultivated in one colony had been used to undermine and partially dism… |
+| **organisms** | `organic` | stem(organism) | 3 | 8.4, 9.21, 9.40 | The humid rainforests of Southeast Asia have generated some of the strangest organisms on the planet… |
+| **perceptible** | `perceive` | stem(percept) | 3 | 8.12, 9.3, 9.44 | The Hindu cosmology conceives the perceptible world as the manifestation of Brahman, the ultimate re… |
+| **combines** | `combine` | stem(combine) | 3 | 8.12, 10.22, 10.31 | Hindu practitioners devised yoga, a discipline that combines bodily posture, controlled breathing, a… |
+| **inventions** | `invent` | substring(invent) | 3 | 8.13, 10.13, 10.37 | Across the same span China generated four inventions that eventually reshaped the entire planet: pap… |
+| **reintroduced** | `introduce` | strip-re | 2 | 8.3, 10.23 | Russian and Korean biologists are now openly contemplating whether the species could be reintroduced… |
+| **non-human** | `human` | substring(human) | 2 | 8.4, 8.6 | The orangutan, the great red-haired ape of Borneo and Sumatra, has been observed tearing a leaf from… |
+| **structured** | `structure` | stem(structur) | 2 | 8.10, 9.9 | He standardised the script, the coinage, the units of length and weight, and abolished hereditary ar… |
+| **extinguished** | `distinguish` | stem(extinguish) | 2 | 8.11, 9.7 | He renounced his royal inheritance, walked into the forest, and meditated beneath a tree we now call… |
+| **doctrines** | `orthodox` | stem(doctrine) | 2 | 8.12, 9.12 | In the twentieth century a slight Indian lawyer named Mahatma Gandhi adapted the Hindu doctrines of … |
+| **merchants** | `commence` | stem(merchant) | 2 | 8.13, 9.13 | The Tang dynasty capital of Chang'an was the largest international city in the world during its cent… |
+| **tribes** | `tribe` | stem(tribe) | 2 | 8.16, 9.5 | A poor steppe chieftain named Temujin, who would later assume the title Genghis Khan, organised the … |
+| **extending** | `extend` | stem(extend) | 2 | 8.16, 10.26 | A poor steppe chieftain named Temujin, who would later assume the title Genghis Khan, organised the … |
+| **aristocrat** | `bureaucratic` | stem-of-family | 2 | 8.17, 9.36 | The medieval samurai class devised bushido, an ethical code in which loyalty, honour, and composure … |
+| **collectively** | `intelligent` | stem(collect) | 2 | 8.20, 10.27 | A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designat… |
+| **households** | `economic` | stem(household) | 2 | 8.20, 9.4 | A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designat… |
+| **bicycles** | `recycle` | stem(bicycle) | 2 | 8.21, 10.14 | Within a generation the same continent that had been pedalling bicycles to the rice paddy was constr… |
+| **semiconductors** | `deduce` | stem(semiconductor) | 2 | 8.21 | The telecommunications company Huawei, when sanctioned by the United States and denied access to Ame… |
+| **restricting** | `restrict` | stem(strict) | 2 | 8.22, 10.35 | To curb the demographic explosion that had accompanied the early decades of the People's Republic, t… |
+| **grandparents** | `parent` | substring(parent) | 2 | 8.22, 10.5 | sealyra was born into precisely this demographic interlude, an only daughter saturated from infancy … |
+| **financed** | `financial` | stem(financ) | 2 | 8.22, 9.35 | Rather than enter institutional employment upon graduation, she leveraged the saturating new mobile … |
+| **ancestors** | `ancestral` | stem(ancestor) | 2 | 8.23, 9.33 | The paleolithic peoples of north Asia, ancestors of every indigenous community from Siberia to Alask… |
+| **solutions** | `solvent` | stem(solution) | 1 | 8.2 | The Tibetan plateau, lifted into air that contains only half the oxygen of sea level, has forced its… |
+| **assists** | `consistent` | stem(assist) | 1 | 8.2 | The snow leopard has evolved a tail nearly as long as its body, which assists balance when sprinting… |
+| **humidify** | `humidity` | stem(humid) | 1 | 8.2 | The snow leopard has evolved a tail nearly as long as its body, which assists balance when sprinting… |
+| **speeds** | `speed` | stem(speed) | 1 | 8.2 | The Tibetan antelope has developed a specialised form of haemoglobin that binds oxygen more efficien… |
+| **mammoths** | `mammoth` | stem(mammoth) | 1 | 8.3 | Beneath them lie the most spectacular discoveries of all: nearly intact juvenile mammoths excavated … |
+| **riverbanks** | `derive` | stem(riverbank) | 1 | 8.3 | Beneath them lie the most spectacular discoveries of all: nearly intact juvenile mammoths excavated … |
+| **undigested** | `congested` | stem(digest) | 1 | 8.3 | Beneath them lie the most spectacular discoveries of all: nearly intact juvenile mammoths excavated … |
+| **contemplating** | `contemplate` | stem(contemplat) | 1 | 8.3 | Russian and Korean biologists are now openly contemplating whether the species could be reintroduced… |
+| **surrogates** | `surrogate` | stem(surrogate) | 1 | 8.3 | Russian and Korean biologists are now openly contemplating whether the species could be reintroduced… |
+| **makeshift** | `shift` | substring(shift) | 1 | 8.4 | The orangutan, the great red-haired ape of Borneo and Sumatra, has been observed tearing a leaf from… |
+| **possessing** | `assess` | stem(possess) | 1 | 8.4 | The rafflesia, the largest flower on the planet, blooms across a metre of forest floor without posse… |
+| **ancestrally** | `ancestral` | stem(ancestral) | 1 | 8.5 | The giant panda, an ancestrally carnivorous bear, transitioned several million years ago to a diet o… |
+| **transitioned** | `transit` | substring(transit) | 1 | 8.5 | The giant panda, an ancestrally carnivorous bear, transitioned several million years ago to a diet o… |
+| **extracts** | `abstract` | stem(extract) | 1 | 8.5 | The giant panda, an ancestrally carnivorous bear, transitioned several million years ago to a diet o… |
+| **seventeen** | `event` | substring(event) | 1 | 8.5 | The giant panda, an ancestrally carnivorous bear, transitioned several million years ago to a diet o… |
+| **undermines** | `undermine` | stem(dermine) | 1 | 8.5 | Its jaw secretes a complex venom that prevents wounds from clotting and gradually undermines the car… |
+| **wounded** | `vulnerable` | stem(wound) | 1 | 8.5 | It simply tracks the wounded prey across the island for several days until the venom terminates the … |
+| **seasoned** | `sea` | stem(season) | 1 | 8.6 | The sand washed off, and the seawater conveniently seasoned the potato.… |
+| **potatoes** | `potato` | substring(potato) | 1 | 8.6 | Within a single generation every macaque in the local group was washing potatoes.… |
+| **macaques** | `macaque` | stem(macaque) | 1 | 8.6 | Knowledge, the macaques had quietly demonstrated, does not require a written language.… |
+| **requires** | `acquire` | stem(quire) | 1 | 8.6 | It only requires a willingness to watch what someone smarter than you has just figured out.… |
+| **consumes** | `consume` | stem(consume) | 1 | 8.7 | The same farmers, generations later, domesticated a small white insect called the silkworm, which co… |
+| **cultivators** | `cultivate` | stem(cultivator) | 1 | 8.7 | Chinese cultivators learned to harvest these cocoons before the moth emerged, unwinding them into im… |
+| **cocoons** | `cocoon` | stem(cocoon) | 1 | 8.7 | Chinese cultivators learned to harvest these cocoons before the moth emerged, unwinding them into im… |
+| **lengths** | `length` | stem(length) | 1 | 8.7 | Chinese cultivators learned to harvest these cocoons before the moth emerged, unwinding them into im… |
+| **guarded** | `regard` | stem(guard) | 1 | 8.7 | The Chinese imperial government guarded the silkworm secret for over a thousand years, executing any… |
+| **markets** | `marginal` | stem(market) | 1 | 8.7 | The Chinese imperial government guarded the silkworm secret for over a thousand years, executing any… |
+| **generous** | `genre` | stem(gener) | 1 | 8.8 | Father generous to son.… |
+| **masterstroke** | `stroke` | substring(stroke) | 1 | 8.8 | Then came the masterstroke.… |
+| **memorise** | `commemorate` | stem(memor) | 1 | 8.8 | The Sui and Tang dynasties devised the imperial examination, an open written test of the Confucian c… |
+| **five-thousand-character** | `character` | substring(character) | 1 | 8.9 | A near contemporary of Confucius, the elder Laozi, rode westward on a buffalo through the imperial g… |
+| **conquering** | `conquest` | stem(conquer) | 1 | 8.10 | A king of the western Chinese state of Qin, named Ying Zheng, spent a decade conquering the six othe… |
+| **magistrates** | `magistrate` | stem(magistrate) | 1 | 8.10 | He standardised the script, the coinage, the units of length and weight, and abolished hereditary ar… |
+| **involves** | `involve` | stem(volve) | 1 | 8.11 | He renounced his royal inheritance, walked into the forest, and meditated beneath a tree we now call… |
+| **extinguishing** | `distinguish` | stem(extinguish) | 1 | 8.11 | He renounced his royal inheritance, walked into the forest, and meditated beneath a tree we now call… |
+| **teaching** | `treacherous` | stem(teach) | 1 | 8.11 | He emerged from the meditation as the Buddha, and the teaching he subsequently transmitted spread ac… |
+| **conceives** | `conceive` | stem(conceive) | 1 | 8.12 | The Hindu cosmology conceives the perceptible world as the manifestation of Brahman, the ultimate re… |
+| **reunification** | `unify` | strip-re | 1 | 8.12 | The Hindu cosmology conceives the perceptible world as the manifestation of Brahman, the ultimate re… |
+| **avenues** | `convene` | stem(avenue) | 1 | 8.13 | The Tang dynasty capital of Chang'an was the largest international city in the world during its cent… |
+| **immortality** | `moral` | stem(mortal) | 1 | 8.13 | Across the same span China generated four inventions that eventually reshaped the entire planet: pap… |
+| **oceanic** | `oceanography` | stem(ocean) | 1 | 8.13 | Across the same span China generated four inventions that eventually reshaped the entire planet: pap… |
+| **world-altering** | `alter` | substring(alter) | 1 | 8.13 | Few civilisations have generated as many world-altering technologies in a single epoch.… |
+| **sutras** | `sutra` | stem(sutra) | 1 | 8.14 | Tang dynasty Buddhist monks first carved entire sutras onto wooden blocks and printed multiple copie… |
+| **alphabet** | `alpha` | substring(alpha) | 1 | 8.14 | The Chinese technology eventually propagated westward across the Silk Road and emerged in Europe fou… |
+| **collected** | `intelligent` | stem(collect) | 1 | 8.14 | Bi Sheng himself died in relative obscurity in China, his name preserved only because a contemporary… |
+| **travelled** | `travel` | substring(travel) | 1 | 8.15 | Along its caravan tracks travelled Buddhist scriptures from India into China, papermaking from China… |
+| **papermaking** | `paper` | substring(paper) | 1 | 8.15 | Along its caravan tracks travelled Buddhist scriptures from India into China, papermaking from China… |
+| **formulas** | `transform` | stem(formula) | 1 | 8.15 | Along its caravan tracks travelled Buddhist scriptures from India into China, papermaking from China… |
+| **crucibles** | `crucible` | stem(crucible) | 1 | 8.15 | The oasis cities along the route, Samarkand, Bukhara, Kashgar, transformed into multilingual multi-r… |
+| **passengers** | `encompass` | stem(passenger) | 1 | 8.15 | The same road also conveyed the most lethal of its passengers: the plague bacterium, riding in the g… |
+| **marmots** | `marmot` | stem(marmot) | 1 | 8.15 | The same road also conveyed the most lethal of its passengers: the plague bacterium, riding in the g… |
+| **crimean** | `crime` | substring(crime) | 1 | 8.16 | The same road, decades later, conveyed the bubonic plague from the Asian steppes into the Crimean po… |
+| **director** | `direct` | substring(direct) | 1 | 8.17 | The post-war animator Hayao Miyazaki, the director Akira Kurosawa, and the novelist Haruki Murakami … |
+| **exhausting** | `exhaustive` | stem(exhaust) | 1 | 8.18 | By the eighteenth century the British had developed an addiction to Chinese tea so thorough that the… |
+| **legalise** | `eligible` | stem(legal) | 1 | 8.18 | When the Chinese commissioner Lin Zexu seized and burnt the British opium stock at Canton, the Royal… |
+| **dismantle** | `mantle` | stem(mantle) | 1 | 8.18 | A single agricultural product cultivated in one colony had been used to undermine and partially dism… |
+| **observers** | `observe` | stem(observer) | 1 | 8.19 | The Indonesian volcano Tambora erupted with such violence that its ash cloud encircled the entire pl… |
+| **redistributed** | `distribute` | strip-re | 1 | 8.20 | A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designat… |
+| **enterprises** | `interpret` | stem(enterprise) | 1 | 8.20 | A short pragmatic leader named Deng Xiaoping initiated a series of reforms now collectively designat… |
+| **described** | `scribe` | substring(scribe) | 1 | 8.20 | Deng described the resulting hybrid as a socialist market economy, advocating that the country shoul… |
+| **socialist** | `social` | substring(social) | 1 | 8.20 | Deng described the resulting hybrid as a socialist market economy, advocating that the country shoul… |
+| **advocating** | `advocate` | stem(advocat) | 1 | 8.20 | Deng described the resulting hybrid as a socialist market economy, advocating that the country shoul… |
+| **shorter** | `short` | stem(short) | 1 | 8.20 | Within four decades the experiment had transformed China into the second largest economy on the plan… |
+| **high-speed** | `speed` | substring(speed) | 1 | 8.21 | Within a generation the same continent that had been pedalling bicycles to the rice paddy was constr… |
+| **vehicles** | `convey` | stem(vehicle) | 1 | 8.21 | The Chinese manufacturers BYD and CATL eventually dominated the global market for electric vehicles … |
+| **telecommunications** | `communicate` | stem(telecommunication) | 1 | 8.21 | The telecommunications company Huawei, when sanctioned by the United States and denied access to Ame… |
+| **sanctioned** | `sanction` | stem(sanction) | 1 | 8.21 | The telecommunications company Huawei, when sanctioned by the United States and denied access to Ame… |
+| **reconnecting** | `connect` | stem(connect) | 1 | 8.21 | The Made in China 2025 strategy declared the intention to achieve self-sufficiency in artificial int… |
+| **colloquially** | `eloquent` | stem(colloquial) | 1 | 8.22 | To curb the demographic explosion that had accompanied the early decades of the People's Republic, t… |
+| **one-child** | `child` | substring(child) | 1 | 8.22 | To curb the demographic explosion that had accompanied the early decades of the People's Republic, t… |
+| **resources** | `resource` | stem(source) | 1 | 8.22 | sealyra was born into precisely this demographic interlude, an only daughter saturated from infancy … |
+| **generational** | `generate` | stem(generation) | 1 | 8.22 | sealyra was born into precisely this demographic interlude, an only daughter saturated from infancy … |
+| **converging** | `converge` | stem(converg) | 1 | 8.22 | sealyra was born into precisely this demographic interlude, an only daughter saturated from infancy … |
+| **proceeded** | `precede` | stem(proceed) | 1 | 8.22 | She matriculated through the formal Chinese educational apparatus, qualified for an art conservatoir… |
+| **multi-platform** | `platform` | substring(platform) | 1 | 8.22 | Rather than enter institutional employment upon graduation, she leveraged the saturating new mobile … |
+| **ecosystems** | `ecosystem` | stem(ecosystem) | 1 | 8.22 | Rather than enter institutional employment upon graduation, she leveraged the saturating new mobile … |
+| **human-computer** | `computer` | substring(computer) | 1 | 8.22 | Her current trajectory aims at the emergent discipline of human-computer interaction, in which she i… |
+| **conditioned** | `conditioning` | stem(condition) | 1 | 8.22 | Her current trajectory aims at the emergent discipline of human-computer interaction, in which she i… |
+| **reinventing** | `prevent` | stem(invent) | 1 | 8.22 | She is, in this sense, neither a representative of her generation nor an exception to it, but a sing… |
+| **overland** | `land` | strip-over | 1 | 8.23 | Their economic system rested on the barter exchange of meat, hide, and bone across small kin-based b… |
+| **recitation** | `incentive` | strip-re | 1 | 8.23 | Their accumulated folklore, transmitted across centuries by oral recitation, preserved an entire ant… |
+| **reconstructing** | `construe` | stem(construct) | 1 | 8.23 | Their accumulated folklore, transmitted across centuries by oral recitation, preserved an entire ant… |
 
-## Chapter 9 (178 orphans)
+## Chapter 9 (240 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| public | 11 | 9.12, 9.31, 9.42 | The catastrophe demolished public faith in the religious institutions that had failed to prevent it.… |
-| principle | 7 | 9.3, 9.40, 9.42 | Across the sea in Syracuse, the engineer Archimedes leapt from his bath shouting "eureka" upon perceiving the … |
-| children | 6 | 9.7, 9.12, 9.30 | The cave at Lascaux in southern France preserves vivid wall paintings of bulls, horses, and stags that may hav… |
-| translation | 6 | 9.10, 9.55 | While Western Europe was still copying manuscripts in marginal monasteries, the Abbasid caliphate in Baghdad e… |
-| personally | 6 | 9.14, 9.20, 9.24 | Leonardo had dissected his first cadaver as a teenager; Michelangelo personally selected each block of marble … |
-| invented | 6 | 9.18, 9.20, 9.25 | The German artisan Gutenberg invented movable metal type and printed the first European Bible, then went bankr… |
-| theatre | 6 | 9.22, 9.39, 9.45 | The Italian Caravaggio illuminated his subjects as if a theatre spotlight had cracked the surrounding darkness… |
-| twentieth-century | 6 | 9.36, 9.44, 9.47 | Crime and Punishment dissects the mental collapse of a poor student who murders a pawnbroker, while The Brothe… |
-| popular | 5 | 9.6, 9.49, 10.12 | The names Odin, Thor, and Valkyrie, preserved in those sagas, continue to populate the popular cinema of the p… |
-| actually | 5 | 9.15, 9.44, 9.50 | The Dutchman Hieronymus Bosch painted the triptych Garden of Earthly Delights, populated with bird-headed huma… |
-| parallel | 5 | 9.20, 9.27, 9.48 | A glover's son and an unmarried queen, working in parallel through language and through fleet, had together op… |
-| corporation | 5 | 9.21, 10.15, 10.33 | All this occurred under the financial superstructure of the Dutch East India Company, the first multinational … |
-| workers | 5 | 9.30, 10.10, 10.14 | The Luddites, displaced textile workers, smashed the machines that had replaced them and were hanged for treas… |
-| citizens | 4 | 9.2, 9.3, 10.21 | In the ancient city of Athens the free male citizens convened on a hilltop assembly and voted directly on ever… |
-| calculated | 4 | 9.2, 9.16, 9.19 | In the same century, a librarian named Eratosthenes calculated the circumference of the planet using nothing b… |
-| divine | 4 | 9.8, 9.9, 9.12 | Theologians of the period had pronounced that light was the most refined form in which the divine could manife… |
-| exiled | 4 | 9.9, 9.27, 9.32 | The exiled Florentine Dante Alighieri composed The Divine Comedy in the Tuscan vernacular of his native city, … |
-| entertainment | 4 | 9.11, 9.39, 10.28 | Their principal entertainment was the joust, in which mounted knights charged each other with long lances, att… |
-| canvas | 4 | 9.17, 9.38, 9.47 | The court painter Velázquez inserted himself into his own canvas in Las Meninas, generating a visual puzzle so… |
-| tradition | 4 | 9.19, 9.37, 9.50 | Galileo recanted publicly and was confined to house arrest for the remainder of his life, though tradition rec… |
-| overturned | 4 | 9.23, 9.35, 10.27 | Together these two books overturned a millennium of received medical doctrine.… |
-| career | 4 | 9.28, 9.35, 10.15 | The German Bach wrote several hundred cantatas across his career as a provincial church musician, dying in obs… |
-| engine | 4 | 9.30, 10.37 | The Scottish engineer James Watt, repairing a worn Newcomen steam engine, perceived that adding a separate con… |
-| capitalism | 4 | 9.35, 9.51 | The German political economist Marx spent decades in the reading room of the British Museum drafting Das Kapit… |
-| studio | 4 | 9.38, 9.50, 10.24 | They abandoned the dark studio in favour of working outdoors directly from the changing light, capturing the s… |
-| engineering | 4 | 9.41, 10.27, 10.36 | The same century redrew the foundations of classical mechanics itself: physicists rewrote the laws governing e… |
-| equivalence | 4 | 9.41, 9.49, 9.55 | The Swiss patent clerk Einstein then articulated special relativity and the equivalence of mass and energy, re… |
-| half-century | 4 | 9.50, 10.17, 10.20 | Every independent film made anywhere on the planet across the following half-century inherits something from t… |
-| statistical | 4 | 9.51, 10.34 | The French sociologist Durkheim demonstrated through statistical analysis of suicide that even the most appare… |
-| universities | 4 | 9.55, 10.15, 10.27 | European universities accordingly restructured their language curriculum to incorporate translation as a disci… |
-| melting | 3 | 9.1, 9.17, 9.47 | As the melting glaciers receded, their meltwater carved the deep narrow fjords that now penetrate the western … |
-| engineer | 3 | 9.3, 9.30 | Across the sea in Syracuse, the engineer Archimedes leapt from his bath shouting "eureka" upon perceiving the … |
-| monasteries | 3 | 9.6, 9.9, 9.10 | The Vikings raided the coastal monasteries of England, colonised Iceland and Greenland, and reached the Newfou… |
-| protection | 3 | 9.11, 10.23, 10.29 | The whole class was governed by an explicit code called chivalry: protection of women, loyalty to the king, ho… |
-| institutions | 3 | 9.12, 9.51, 10.15 | The catastrophe demolished public faith in the religious institutions that had failed to prevent it.… |
-| dissected | 3 | 9.14, 9.23 | Leonardo da Vinci painted the Mona Lisa during the day and dissected human cadavers in secret at night, record… |
-| document | 3 | 9.18, 10.33 | Gutenberg's press copied his document across the entire German-speaking world within months.… |
-| publicly | 3 | 9.19, 9.25, 10.33 | Galileo recanted publicly and was confined to house arrest for the remainder of his life, though tradition rec… |
-| everywhere | 3 | 9.21, 10.34, 10.35 | All this occurred under the financial superstructure of the Dutch East India Company, the first multinational … |
-| medical | 3 | 9.23 | Medieval European authorities had prohibited the dissection of human cadavers, so European medical textbooks c… |
-| closed | 3 | 9.23, 9.25, 10.32 | The English physician Harvey measured the volume of blood pumped per minute by the heart, demonstrated that th… |
-| chamber | 3 | 9.24, 9.30, 10.7 | He shut himself into a heated chamber in Germany and methodically doubted every belief he held until he arrive… |
-| newton | 3 | 9.25 | When the bubonic plague closed Cambridge, a young undergraduate named Isaac Newton retreated to the family far… |
-| dedicated | 3 | 9.25, 9.39, 9.55 | Newton dedicated more of his energy to alchemy and biblical prophecy than to physics, with results he himself … |
-| biblical | 3 | 9.25, 9.33, 10.12 | Newton dedicated more of his energy to alchemy and biblical prophecy than to physics, with results he himself … |
-| published | 3 | 9.25, 9.55, 10.23 | Newton dedicated more of his energy to alchemy and biblical prophecy than to physics, with results he himself … |
-| neighbouring | 3 | 9.26, 10.31, 10.35 | The cathedral survived the German blitz of the Second World War when every neighbouring street had been demoli… |
-| intellectual | 3 | 9.27, 10.22, 10.34 | The intellectual centre of European Europe migrated from the monastery and the royal salon into the cafés of e… |
-| economist | 3 | 9.27, 9.35, 9.51 | The Scottish economist Adam Smith, working in parallel, articulated the doctrine of the invisible hand by whic… |
-| autumn | 3 | 9.28, 10.5, 10.8 | The Venetian Vivaldi composed The Four Seasons, in which violins and orchestra paint the bird-song of spring, … |
-| consolidated | 3 | 9.29, 10.15, 10.25 | The three composers who consolidated the classical symphony all converged on imperial Vienna across a single c… |
-| patrons | 3 | 9.29, 10.29 | Mozart played the piano in front of European courts from the age of three, composed operas, symphonies, and co… |
-| factories | 3 | 9.30, 10.16 | His improved steam engine, installed across the textile factories of northern England, generated the mechanica… |
-| additional | 3 | 9.31, 9.33, 10.1 | The revolutionary leader Robespierre, presiding over the Committee of Public Safety, dispatched several thousa… |
-| dramatically | 3 | 9.33, 9.40, 10.30 | Her findings forced Victorian Britain to accept that species could become extinct, that the planet had support… |
-| concealing | 3 | 9.34, 9.39, 10.33 | Jane Austen, writing in the parlour of a rural rectory, articulated the layered subtleties of the country gent… |
-| meaning | 3 | 9.35, 9.55 | The later German philosopher Nietzsche overturned all such consolatory metaphysics with the announcement that … |
-| clinical | 3 | 9.36, 10.31 | Chekhov, a country doctor, wrote short stories and plays of a clinical understated precision.… |
-| chemist | 3 | 9.40, 9.41, 10.37 | The French chemist Pasteur demonstrated through controlled experiments that fermentation and infectious diseas… |
-| microscopic | 3 | 9.40, 10.32 | The French chemist Pasteur demonstrated through controlled experiments that fermentation and infectious diseas… |
-| physicists | 3 | 9.41, 10.17 | The same century redrew the foundations of classical mechanics itself: physicists rewrote the laws governing e… |
-| revival | 3 | 9.42, 9.45 | The French baron Coubertin, having read about the ancient Olympic Games, devised a modern revival in which ath… |
-| childhood | 3 | 9.44, 9.50, 10.25 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered consciousn… |
-| ending | 3 | 9.49, 10.11, 10.17 | The American Manhattan Project converted Einstein's mass-energy equivalence into the atomic bombs that ultimat… |
-| departed | 3 | 9.50, 10.5, 10.26 | Fellini, raised in the same neorealist tradition, eventually departed from it into the dreamlike autobiography… |
-| election | 3 | 9.51, 10.11, 10.34 | The German sociologist Weber argued in The Protestant Ethic and the Spirit of Capitalism that capitalism had e… |
-| languages | 3 | 9.53, 9.55, 10.18 | The federation of Yugoslavia held together six south Slavic republics, four languages, and three religions und… |
-| warfare | 3 | 9.54, 10.2, 10.30 | The first significant fracture arrived when Britain voted to withdraw from the union, and the second arrived w… |
-| hollowed | 2 | 9.1, 9.8 | Each glaciation ground southward across the landmass, hollowed out the basin of the North Sea, depressed the l… |
-| principles | 2 | 9.2, 9.27 | The ancient Greeks had demonstrated that the human mind, applied with sufficient discipline, could establish b… |
-| wealthy | 2 | 9.3, 9.13 | Socrates roamed the Athenian agora interrogating politicians and wealthy citizens with relentless questions ab… |
-| condemned | 2 | 9.3, 9.36 | Socrates roamed the Athenian agora interrogating politicians and wealthy citizens with relentless questions ab… |
-| assigned | 2 | 9.3, 9.48 | Plato's own student Aristotle reversed the doctrine, insisting that the Forms reside within ordinary objects, … |
-| drinking | 2 | 9.4, 10.36 | The aqueducts that delivered fresh water to the patrician households were constructed from lead piping, and le… |
-| darkness | 2 | 9.5, 9.22 | When the Western Roman Empire collapsed beneath the migrating tribes, Western Europe entered a millennium of a… |
-| copied | 2 | 9.5, 9.18 | It survived through the earnest persistence of a handful of monks on the remote islands of Ireland, who, in co… |
-| accidentally | 2 | 9.5, 10.14 | Those marginal doodles, far from undermining the manuscripts, accidentally protected them from neglect.… |
-| engineered | 2 | 9.6, 10.36 | The Vikings of Scandinavia engineered a kind of long shallow-draft vessel called the longship, light enough to… |
-| warriors | 2 | 9.6, 10.9 | Lacking any written script, the Vikings transmitted their oral history through epic narratives called sagas, w… |
-| transferred | 2 | 9.8, 9.16 | Medieval European builders devised a structural innovation called the flying buttress, an external supporting … |
-| relieved | 2 | 9.8, 9.12 | Walls relieved of that thrust could be hollowed out for enormous windows, and stained glass installed in those… |
-| theological | 2 | 9.8, 9.19 | Walls relieved of that thrust could be hollowed out for enormous windows, and stained glass installed in those… |
-| buildings | 2 | 9.8, 10.26 | Theologians of the period had pronounced that light was the most refined form in which the divine could manife… |
-| adding | 2 | 9.8, 9.30 | Notre Dame de Paris required more than a century to complete, with successive generations of masons inheriting… |
-| farming | 2 | 9.9, 10.36 | Medieval Benedictine monks structured their existence around the doctrine that work itself constituted prayer,… |
-| remembered | 2 | 9.10, 10.16 | While Western Europe was still copying manuscripts in marginal monasteries, the Abbasid caliphate in Baghdad e… |
-| rendered | 2 | 9.10, 9.49 | While Western Europe was still copying manuscripts in marginal monasteries, the Abbasid caliphate in Baghdad e… |
-| mathematician | 2 | 9.10, 9.25 | The Persian mathematician al-Khwarizmi composed there a textbook whose Arabic title, al-jabr, would eventually… |
-| broken | 2 | 9.11, 9.34 | Their principal entertainment was the joust, in which mounted knights charged each other with long lances, att… |
-| prevented | 2 | 9.12, 9.32 | The resulting witch hunts persisted for three centuries and executed approximately eighty thousand women, the … |
-| authorised | 2 | 9.12, 9.20 | The resulting witch hunts persisted for three centuries and executed approximately eighty thousand women, the … |
-| scaffold | 2 | 9.13, 9.31 | The traditional approach required scaffolding from the ground, and the cathedral was too tall to scaffold.… |
-| double-shell | 2 | 9.13, 9.26 | A trained goldsmith named Brunelleschi devised a revolutionary solution: a double-shell dome in which two conc… |
-| marble | 2 | 9.13, 9.14 | His working blueprint demonstrated a strict mathematical symmetry, and the marble facade of the cathedral acqu… |
-| geometric | 2 | 9.13, 9.15 | His working blueprint demonstrated a strict mathematical symmetry, and the marble facade of the cathedral acqu… |
-| building | 2 | 9.13, 9.47 | His working blueprint demonstrated a strict mathematical symmetry, and the marble facade of the cathedral acqu… |
-| politics | 2 | 9.13, 9.51 | The wealthy banking dynasty of the Medici, originally wool merchants, controlled Florentine politics, patronis… |
-| permanently | 2 | 9.14, 9.51 | Michelangelo painted the ceiling of the Sistine Chapel lying on his back for four years, after which his cervi… |
-| philosophers | 2 | 9.14, 9.27 | Raphael, the youngest of the three, assembled all the major Greek philosophers in his fresco The School of Ath… |
-| garden | 2 | 9.15, 9.38 | The Dutchman Hieronymus Bosch painted the triptych Garden of Earthly Delights, populated with bird-headed huma… |
-| killed | 2 | 9.16, 9.24 | The Portuguese captain Magellan attempted the first complete circumnavigation; he himself was killed in the Ph… |
-| eighteen | 2 | 9.16, 9.25 | The Portuguese captain Magellan attempted the first complete circumnavigation; he himself was killed in the Ph… |
-| charges | 2 | 9.17, 10.10 | The Castilian writer Cervantes composed Don Quixote, in which an elderly gentleman addled by chivalric novels … |
-| universally | 2 | 9.17, 9.27 | The Castilian writer Cervantes composed Don Quixote, in which an elderly gentleman addled by chivalric novels … |
-| civilians | 2 | 9.17, 10.30 | Goya documented the Napoleonic massacre of Madrid civilians in The Third of May.… |
-| recognisable | 2 | 9.17, 9.47 | The flamenco of southern Andalusia, originally improvised by the Roma communities through stamping heels and p… |
-| bankrupt | 2 | 9.18, 9.22 | The German artisan Gutenberg invented movable metal type and printed the first European Bible, then went bankr… |
-| friend | 2 | 9.19, 9.35 | The conclusion terrified him sufficiently that he suppressed the manuscript until his deathbed, by which point… |
-| pressed | 2 | 9.19, 9.30 | The conclusion terrified him sufficiently that he suppressed the manuscript until his deathbed, by which point… |
-| threat | 2 | 9.19, 10.32 | The Roman Inquisition summoned him to confess heresy under the explicit threat of torture.… |
-| courtroom | 2 | 9.19, 10.32 | Galileo recanted publicly and was confined to house arrest for the remainder of his life, though tradition rec… |
-| small-town | 2 | 9.20, 9.37 | The son of a small-town glove-maker grew up to write thirty-seven plays and one hundred fifty-four sonnets tha… |
-| thirty-seven | 2 | 9.20, 9.38 | The son of a small-town glove-maker grew up to write thirty-seven plays and one hundred fifty-four sonnets tha… |
-| bedroom | 2 | 9.20, 9.46 | Shakespeare invented or first attested vocabulary so basic that contemporary speakers cannot perceive its prov… |
-| sketched | 2 | 9.21, 9.22 | He sketched these creatures and posted his drawings to the Royal Society in London, where the entire Western w… |
-| unaided | 2 | 9.21, 9.40 | He sketched these creatures and posted his drawings to the Royal Society in London, where the entire Western w… |
-| baroque | 2 | 9.22, 9.28 | Baroque painting abandoned the calm clarity of the Renaissance in favour of high contrast and emotional violen… |
-| master | 2 | 9.22, 10.33 | The Dutch Rembrandt produced more than a hundred self-portraits across his lifetime, unflinchingly documenting… |
-| courts | 2 | 9.22, 9.29 | The Flemish Rubens operated a vast painting workshop in which he sketched the composition and assistants compl… |
-| experimentation | 2 | 9.24, 10.37 | The statement "I think, therefore I am" thereby became the founding axiom of modern rationalism, and Western p… |
-| presiding | 2 | 9.25, 9.31 | Newton, presiding over the Royal Society, denounced Leibniz publicly as a plagiarist, although modern historia… |
-| bombardment | 2 | 9.26, 9.48 | The cathedral survived the German blitz of the Second World War when every neighbouring street had been demoli… |
-| argued | 2 | 9.27, 9.51 | Rousseau argued in The Social Contract that all human beings are born free yet are nevertheless universally en… |
-| mutual | 2 | 9.27, 9.48 | Montesquieu proposed that legislative, executive, and judicial powers must be separated and held in mutual res… |
-| chorus | 2 | 9.28, 10.25 | The German Handel migrated to London, wrote commercially successful operas and oratorios, and authored the Hal… |
-| recognises | 2 | 9.28, 9.51 | The German Handel migrated to London, wrote commercially successful operas and oratorios, and authored the Hal… |
-| singer | 2 | 9.29, 10.12 | He completed his Ninth Symphony after he had become completely deaf, and at its premiere had to be turned by a… |
-| worker | 2 | 9.30, 10.15 | The spinning jenny enabled one worker to operate eight spindles simultaneously, and factory owners pressed chi… |
-| smashed | 2 | 9.30, 9.49 | The Luddites, displaced textile workers, smashed the machines that had replaced them and were hanged for treas… |
-| industrialised | 2 | 9.30, 10.11 | The engineer Stephenson eventually mounted the steam engine on rails, and the resulting locomotive network con… |
-| monarchy | 2 | 9.31, 10.4 | The French king Louis XVI was conducted to the public scaffold in Paris and beheaded by guillotine before a ch… |
-| safety | 2 | 9.31, 10.37 | The revolutionary leader Robespierre, presiding over the Committee of Public Safety, dispatched several thousa… |
-| officer | 2 | 9.31, 10.32 | Into the resulting vacuum stepped a short Corsican artillery officer named Napoleon, who crowned himself emper… |
-| escaped | 2 | 9.31, 9.49 | Into the resulting vacuum stepped a short Corsican artillery officer named Napoleon, who crowned himself emper… |
-| fought | 2 | 9.31, 9.48 | Into the resulting vacuum stepped a short Corsican artillery officer named Napoleon, who crowned himself emper… |
-| tuberculosis | 2 | 9.32, 9.40 | The poet Keats, dying of tuberculosis in Rome at twenty-five, composed Ode to a Nightingale knowing he would n… |
-| romantic | 2 | 9.32, 9.37 | The English Romantic period burned briefly and intensely.… |
-| burned | 2 | 9.32, 10.4 | The English Romantic period burned briefly and intensely.… |
-| furniture | 2 | 9.33, 9.52 | A twelve-year-old English girl named Mary Anning, daughter of a furniture repairman on the south coast of Dors… |
-| findings | 2 | 9.33, 9.41 | Her findings forced Victorian Britain to accept that species could become extinct, that the planet had support… |
-| dignity | 2 | 9.34, 9.37 | The Brontë sisters, raised in a Yorkshire parsonage, produced Jane Eyre, the chronicle of a governess who refu… |
-| homosexuality | 2 | 9.34, 9.39 | Oscar Wilde, the wittiest playwright of the century, was eventually convicted for homosexuality, sentenced to … |
-| reading | 2 | 9.35, 9.44 | The German political economist Marx spent decades in the reading room of the British Museum drafting Das Kapit… |
-| embraced | 2 | 9.35, 9.37 | Nietzsche himself, in his final lucid moment, embraced a beaten cart horse in the streets of Turin and dissolv… |
-| tracking | 2 | 9.36, 10.1 | The Russian aristocrat Tolstoy left his estate to labour alongside the peasants in his own fields, wrote War a… |
-| railway | 2 | 9.36, 10.35 | He eventually abandoned the estate altogether in old age and died in a small railway station having walked out… |
-| firing | 2 | 9.36, 10.31 | Dostoevsky, condemned to execution in his youth and reprieved only at the moment the firing squad raised its r… |
-| experience | 2 | 9.36, 9.46 | Dostoevsky, condemned to execution in his youth and reprieved only at the moment the firing squad raised its r… |
-| brothers | 2 | 9.36, 10.14 | Crime and Punishment dissects the mental collapse of a poor student who murders a pawnbroker, while The Brothe… |
-| competing | 2 | 9.37, 10.21 | After the French Revolution, painting split into competing schools.… |
-| rejected | 2 | 9.37, 9.38 | Courbet rejected such allegory in favour of stark realism, declaring that he had never seen an angel and would… |
-| declaring | 2 | 9.37, 10.24 | Courbet rejected such allegory in favour of stark realism, declaring that he had never seen an angel and would… |
-| canvases | 2 | 9.38, 10.24 | Monet repainted his garden water lilies hundreds of times across his old age, his fading eyesight pushing the … |
-| nineteenth-century | 2 | 9.39, 9.42 | The nineteenth-century opera house became the centre of European bourgeois entertainment.… |
-| famously | 2 | 9.39, 10.13 | The Polish émigré Chopin composed piano nocturnes of an unrepeatable melancholy and conducted a famously turbu… |
-| deliberate | 2 | 9.39, 10.20 | The Russian Tchaikovsky composed Swan Lake and The Nutcracker while concealing his homosexuality from a hostil… |
-| experimentalist | 2 | 9.41, 10.13 | The English experimentalist Faraday, a blacksmith's son, discovered electromagnetic induction.… |
-| nation | 2 | 9.42, 9.43 | The French baron Coubertin, having read about the ancient Olympic Games, devised a modern revival in which ath… |
-| spoken | 2 | 9.45, 10.12 | The dramatist Synge wrote The Playboy of the Western World in the spoken dialect of rural Connacht, provoking … |
-| search | 2 | 9.46, 10.22 | Proust composed seven volumes of In Search of Lost Time from a soundproofed bedroom, the entire project ignite… |
-| sarajevo | 2 | 9.48, 9.53 | A Serbian nationalist named Princip shot the heir to the Austro-Hungarian throne in the streets of Sarajevo, a… |
-| dragged | 2 | 9.48, 10.16 | A Serbian nationalist named Princip shot the heir to the Austro-Hungarian throne in the streets of Sarajevo, a… |
-| assault | 2 | 9.48, 10.28 | The infantry assault, the dominant battle technique of the previous three centuries, collapsed against the mac… |
-| machine | 2 | 9.48, 10.21 | The infantry assault, the dominant battle technique of the previous three centuries, collapsed against the mac… |
-| armies | 2 | 9.48, 10.15 | The opposing armies on the Western Front therefore burrowed into parallel trenches and fought the same few kil… |
-| albert | 2 | 9.49, 10.17 | Albert Einstein, who was himself Jewish, escaped to America and warned the American president Roosevelt that G… |
-| inaugurating | 2 | 9.49, 10.26 | The American Manhattan Project converted Einstein's mass-energy equivalence into the atomic bombs that ultimat… |
-| casting | 2 | 9.50, 10.5 | Italian Neorealism took the camera out of the studio into the rubble of the bombed cities, casting non-profess… |
-| wealth | 2 | 9.51, 10.15 | The German sociologist Weber argued in The Protestant Ethic and the Spirit of Capitalism that capitalism had e… |
-| enlightenment | 2 | 9.51, 10.4 | The Scottish enlightenment had earlier proposed altruism and benevolence as the natural ethical pair to self-i… |
-| capitalist | 2 | 9.51, 9.54 | Contemporary social theory recognises that the empowerment of marginalised populations, not merely their accom… |
-| periodically | 2 | 9.52, 10.33 | The polar sky above them ignites periodically with the green and violet curtains of the aurora, and the midsum… |
-| presidency | 2 | 9.53, 10.11 | The federation of Yugoslavia held together six south Slavic republics, four languages, and three religions und… |
-| politically | 2 | 9.53, 10.29 | Roughly one hundred and fifty thousand died across the entire disintegration, and the borders the wars produce… |
-| invaded | 2 | 9.54, 10.30 | The first significant fracture arrived when Britain voted to withdraw from the union, and the second arrived w… |
-| speech | 2 | 9.55, 10.11 | The Swiss linguist Ferdinand de Saussure articulated, in lectures published only after his death, the structur… |
-| worldwide | 2 | 9.55, 10.25 | The American Noam Chomsky proposed, with worldwide consequences, that every human infant arrives with a univer… |
-| physical | 2 | 9.55, 10.22 | Modern linguistics divides into phonetics, the study of physical sound; syntax, the study of grammatical struc… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **conducted** | `deduce` | stem(conduct) | 7 | 9.9, 9.31, 9.39 | The abbess Hildegard of Bingen produced the earliest European treatise on herbal medicine, composed … |
+| **streets** | `strategy` | stem(street) | 7 | 9.12, 9.26, 9.35 | Some survivors organised themselves into processions of flagellants who scourged themselves through … |
+| **founding** | `found` | stem(found) | 7 | 9.24, 9.42, 9.51 | The statement "I think, therefore I am" thereby became the founding axiom of modern rationalism, and… |
+| **experiments** | `experiment` | stem(experiment) | 7 | 9.25, 9.40, 9.47 | When the bubonic plague closed Cambridge, a young undergraduate named Isaac Newton retreated to the … |
+| **children** | `child` | substring(child) | 6 | 9.7, 9.12, 9.30 | The cave at Lascaux in southern France preserves vivid wall paintings of bulls, horses, and stags th… |
+| **painted** | `painting` | stem(paint) | 6 | 9.13, 9.14, 9.15 | Their patronage supported Giotto, who developed early linear perspective in painting, and Botticelli… |
+| **invented** | `invent` | substring(invent) | 6 | 9.18, 9.20, 9.25 | The German artisan Gutenberg invented movable metal type and printed the first European Bible, then … |
+| **schools** | `schedule` | stem(school) | 5 | 9.37, 9.42, 10.27 | After the French Revolution, painting split into competing schools.… |
+| **converted** | `avert` | stem(convert) | 5 | 9.43, 9.49, 10.14 | He converted the entire equatorial rainforest into a privately owned rubber plantation and compelled… |
+| **emotional** | `motivate` | stem(emotion) | 4 | 9.22, 9.44, 9.50 | Baroque painting abandoned the calm clarity of the Renaissance in favour of high contrast and emotio… |
+| **exceeded** | `exceed` | stem(exceed) | 4 | 9.23, 10.4, 10.15 | The English physician Harvey measured the volume of blood pumped per minute by the heart, demonstrat… |
+| **classical** | `clash` | stem(class) | 4 | 9.29, 9.41, 9.50 | The three composers who consolidated the classical symphony all converged on imperial Vienna across … |
+| **experimental** | `experiment` | stem(experiment) | 4 | 9.40, 9.41, 9.44 | He developed the gentle heating process now called pasteurisation to preserve milk and wine, and mos… |
+| **deploying** | `exploit` | stem(deploy) | 4 | 9.46, 9.47, 9.48 | Joyce wrote Ulysses, narrating a single day in Dublin across seven hundred pages, each chapter deplo… |
+| **settlement** | `sedimentation` | stem(settle) | 3 | 9.6, 10.10, 10.35 | The Vikings raided the coastal monasteries of England, colonised Iceland and Greenland, and reached … |
+| **painter** | `painting` | stem(paint) | 3 | 9.15, 9.17, 10.24 | The Flemish painter Jan van Eyck developed a refined oil painting technique in which thin glazes of … |
+| **drafting** | `draft` | stem(draft) | 3 | 9.21, 9.35, 10.4 | In the same city, the philosopher Spinoza, expelled by his own Jewish community for heretical panthe… |
+| **identifying** | `identify` | stem(identify) | 3 | 9.23, 9.44, 9.51 | The Flemish anatomist Vesalius, working at the medical school in Padua, retrieved corpses from gallo… |
+| **commercially** | `commercial` | stem(commercial) | 3 | 9.28, 10.13, 10.21 | The German Handel migrated to London, wrote commercially successful operas and oratorios, and author… |
+| **childhood** | `child` | substring(child) | 3 | 9.44, 9.50, 10.25 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered … |
+| **restructured** | `structure` | stem(structur) | 3 | 9.55, 10.14, 10.37 | European universities accordingly restructured their language curriculum to incorporate translation … |
+| **sheets** | `sheet` | stem(sheet) | 2 | 9.1, 10.6 | The continent of Europe was sculpted, across successive ice ages, by the advance and retreat of imme… |
+| **decisions** | `decisive` | stem(decision) | 2 | 9.2, 9.4 | Each citizen could speak in turn, and decisions required a majority of raised hands.… |
+| **consists** | `inconsistency` | stem(consist) | 2 | 9.3, 10.9 | His student Plato recorded their conversations and articulated the doctrine that the perceptible wor… |
+| **objects** | `objective` | stem(object) | 2 | 9.3, 9.47 | Plato's own student Aristotle reversed the doctrine, insisting that the Forms reside within ordinary… |
+| **maintaining** | `obtain` | stem(maintain) | 2 | 9.5, 9.28 | When the Western Roman Empire collapsed beneath the migrating tribes, Western Europe entered a mille… |
+| **supporting** | `support` | stem(support) | 2 | 9.8, 9.33 | Medieval European builders devised a structural innovation called the flying buttress, an external s… |
+| **installed** | `establish` | stem(stall) | 2 | 9.8, 9.30 | Walls relieved of that thrust could be hollowed out for enormous windows, and stained glass installe… |
+| **theological** | `logical` | substring(logical) | 2 | 9.8, 9.19 | Walls relieved of that thrust could be hollowed out for enormous windows, and stained glass installe… |
+| **accordingly** | `accord` | stem(accord) | 2 | 9.8, 9.55 | Theologians of the period had pronounced that light was the most refined form in which the divine co… |
+| **offices** | `efficient` | stem(office) | 2 | 9.9, 10.16 | Medieval Benedictine monks structured their existence around the doctrine that work itself constitut… |
+| **prevented** | `prevent` | substring(prevent) | 2 | 9.12, 9.32 | The resulting witch hunts persisted for three centuries and executed approximately eighty thousand w… |
+| **double-shell** | `shell` | substring(shell) | 2 | 9.13, 9.26 | A trained goldsmith named Brunelleschi devised a revolutionary solution: a double-shell dome in whic… |
+| **cadavers** | `cadaver` | stem(cadaver) | 2 | 9.14, 9.23 | Leonardo da Vinci painted the Mona Lisa during the day and dissected human cadavers in secret at nig… |
+| **historians** | `historian` | stem(historian) | 2 | 9.15, 9.25 | The Flemish painter Jan van Eyck developed a refined oil painting technique in which thin glazes of … |
+| **civilians** | `civil` | substring(civil) | 2 | 9.17, 10.30 | Goya documented the Napoleonic massacre of Madrid civilians in The Third of May.… |
+| **recognisable** | `sable` | substring(sable) | 2 | 9.17, 9.47 | The flamenco of southern Andalusia, originally improvised by the Roma communities through stamping h… |
+| **errors** | `erratic` | stem(error) | 2 | 9.23 | Medieval European authorities had prohibited the dissection of human cadavers, so European medical t… |
+| **doubting** | `doubtful` | stem(doubt) | 2 | 9.24 | He shut himself into a heated chamber in Germany and methodically doubted every belief he held until… |
+| **operas** | `cooperate` | stem(opera) | 2 | 9.28, 9.29 | The German Handel migrated to London, wrote commercially successful operas and oratorios, and author… |
+| **authored** | `authentic` | stem(author) | 2 | 9.28, 9.36 | The German Handel migrated to London, wrote commercially successful operas and oratorios, and author… |
+| **terminating** | `terminate` | stem(terminat) | 2 | 9.31, 10.17 | The French king Louis XVI was conducted to the public scaffold in Paris and beheaded by guillotine b… |
+| **monarchy** | `monarch` | substring(monarch) | 2 | 9.31, 10.4 | The French king Louis XVI was conducted to the public scaffold in Paris and beheaded by guillotine b… |
+| **moderates** | `modern` | stem(moderate) | 2 | 9.31, 10.31 | The revolutionary leader Robespierre, presiding over the Committee of Public Safety, dispatched seve… |
+| **similarly** | `assimilate` | stem(similar) | 2 | 9.31, 10.34 | The revolutionary leader Robespierre, presiding over the Committee of Public Safety, dispatched seve… |
+| **tuberculosis** | `tuber` | substring(tuber) | 2 | 9.32, 9.40 | The poet Keats, dying of tuberculosis in Rome at twenty-five, composed Ode to a Nightingale knowing … |
+| **convicted** | `convict` | stem(convict) | 2 | 9.34, 10.32 | Oscar Wilde, the wittiest playwright of the century, was eventually convicted for homosexuality, sen… |
+| **historically** | `prehistoric` | stem(histor) | 2 | 9.35, 10.27 | The German political economist Marx spent decades in the reading room of the British Museum drafting… |
+| **deliberate** | `liberate` | substring(liberate) | 2 | 9.39, 10.20 | The Russian Tchaikovsky composed Swan Lake and The Nutcracker while concealing his homosexuality fro… |
+| **cultured** | `acculturation` | stem(cultur) | 2 | 9.40, 10.20 | The German bacteriologist Koch isolated and cultured the individual pathogens responsible for tuberc… |
+| **foundations** | `found` | stem(foundation) | 2 | 9.41, 10.34 | The same century redrew the foundations of classical mechanics itself: physicists rewrote the laws g… |
+| **radioactive** | `radio` | substring(radio) | 2 | 9.41 | Her sustained exposure to radioactive material eventually terminated her through leukaemia, and her … |
+| **electromagnetic** | `magnetic` | substring(magnetic) | 2 | 9.41 | The English experimentalist Faraday, a blacksmith's son, discovered electromagnetic induction.… |
+| **patients** | `compassion` | stem(patient) | 2 | 9.44, 10.20 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered … |
+| **consciousness** | `subconscious` | stem(conscious) | 2 | 9.44, 9.46 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered … |
+| **operates** | `cooperate` | stem(operate) | 2 | 9.44, 9.55 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered … |
+| **limits** | `eliminate` | stem(limit) | 2 | 9.44, 10.32 | The Austrian philosopher Wittgenstein composed the Tractatus Logico-Philosophicus to determine the p… |
+| **characters** | `character` | stem(character) | 2 | 9.46, 9.50 | Woolf, in Mrs Dalloway, traced consciousness as it flickered between several characters across a sin… |
+| **dismantled** | `mantle` | stem(mantl) | 2 | 9.51, 10.19 | Beneath that Protestant ethic lay centuries of medieval feudalism, in which every peasant had been b… |
+| **debated** | `debate` | stem(debat) | 2 | 9.51, 10.32 | Later thinkers, drawing on a deeper radicalism, debated whether egalitarian welfare can be ethically… |
+| **enlightenment** | `light` | substring(light) | 2 | 9.51, 10.4 | The Scottish enlightenment had earlier proposed altruism and benevolence as the natural ethical pair… |
+| **demonstrations** | `demonstrate` | stem(demonstration) | 2 | 9.54, 10.28 | Across forty years the Berlin Wall divided a single German city into a Western capitalist half and a… |
+| **sculpted** | `sculpture` | stem(sculpt) | 1 | 9.1 | The continent of Europe was sculpted, across successive ice ages, by the advance and retreat of imme… |
+| **meltwater** | `water` | substring(water) | 1 | 9.1 | As the melting glaciers receded, their meltwater carved the deep narrow fjords that now penetrate th… |
+| **tempered** | `temperament` | stem(temper) | 1 | 9.1 | The same collision sealed off what had once been an open passage to the Atlantic, generating the war… |
+| **cross-examined** | `examine` | substring(examine) | 1 | 9.3 | Socrates roamed the Athenian agora interrogating politicians and wealthy citizens with relentless qu… |
+| **shadows** | `overshadow` | stem(shadow) | 1 | 9.3 | His student Plato recorded their conversations and articulated the doctrine that the perceptible wor… |
+| **polished** | `abolish` | stem(polish) | 1 | 9.3 | Across the sea in Syracuse, the engineer Archimedes leapt from his bath shouting "eureka" upon perce… |
+| **mirrors** | `merit` | stem(mirror) | 1 | 9.3 | Across the sea in Syracuse, the engineer Archimedes leapt from his bath shouting "eureka" upon perce… |
+| **unreinforced** | `reinforce` | strip-un | 1 | 9.4 | The Pantheon in Rome was assembled from this concrete and remains the largest unreinforced concrete … |
+| **brains** | `brainstorm` | stem(brain) | 1 | 9.4 | The aqueducts that delivered fresh water to the patrician households were constructed from lead pipi… |
+| **emperors** | `emperor` | stem(emperor) | 1 | 9.4 | The progressive mental deterioration evident in the late imperial decisions of certain emperors has … |
+| **attributed** | `attribute` | substring(attribute) | 1 | 9.4 | The progressive mental deterioration evident in the late imperial decisions of certain emperors has … |
+| **monsters** | `demonstrate` | stem(monster) | 1 | 9.5 | They illustrated the margins of their copies with whimsical doodles of small dogs and improbable mon… |
+| **shallow-draft** | `draft` | substring(draft) | 1 | 9.6 | The Vikings of Scandinavia engineered a kind of long shallow-draft vessel called the longship, light… |
+| **portages** | `support` | stem(portage) | 1 | 9.6 | The Vikings of Scandinavia engineered a kind of long shallow-draft vessel called the longship, light… |
+| **newfoundland** | `found` | substring(found) | 1 | 9.6 | The Vikings raided the coastal monasteries of England, colonised Iceland and Greenland, and reached … |
+| **short-lived** | `short` | substring(short) | 1 | 9.6 | The Vikings raided the coastal monasteries of England, colonised Iceland and Greenland, and reached … |
+| **abandoning** | `abandonment` | stem(abandon) | 1 | 9.6 | The Vikings raided the coastal monasteries of England, colonised Iceland and Greenland, and reached … |
+| **narratives** | `narrative` | stem(narrative) | 1 | 9.6 | Lacking any written script, the Vikings transmitted their oral history through epic narratives calle… |
+| **windows** | `overshadow` | stem(window) | 1 | 9.8 | Walls relieved of that thrust could be hollowed out for enormous windows, and stained glass installe… |
+| **illiterate** | `literacy` | stem(literate) | 1 | 9.8 | Walls relieved of that thrust could be hollowed out for enormous windows, and stained glass installe… |
+| **architects** | `detect` | stem(architect) | 1 | 9.8 | Theologians of the period had pronounced that light was the most refined form in which the divine co… |
+| **inheriting** | `heritage` | stem(herit) | 1 | 9.8 | Notre Dame de Paris required more than a century to complete, with successive generations of masons … |
+| **reconnected** | `connect` | stem(connect) | 1 | 9.10 | These translated and annotated works survived in the Islamic caliphate of Andalusia in southern Spai… |
+| **knights** | `night` | substring(night) | 1 | 9.11 | Their principal entertainment was the joust, in which mounted knights charged each other with long l… |
+| **teachers** | `treacherous` | stem(teacher) | 1 | 9.11 | Meanwhile in Bologna, a group of law students banded together to hire their own teachers rather than… |
+| **trusting** | `buttress` | stem(trust) | 1 | 9.12 | Every European peasant faced the same dilemma: continue trusting the church or treat all its doctrin… |
+| **mortality** | `moral` | stem(mortal) | 1 | 9.12 | Every European peasant faced the same dilemma: continue trusting the church or treat all its doctrin… |
+| **flagellants** | `ant` | stem(flagellant) | 1 | 9.12 | Some survivors organised themselves into processions of flagellants who scourged themselves through … |
+| **witches** | `witch` | substring(witch) | 1 | 9.12 | Some survivors organised themselves into processions of flagellants who scourged themselves through … |
+| **assisted** | `consistent` | stem(assist) | 1 | 9.12 | The resulting witch hunts persisted for three centuries and executed approximately eighty thousand w… |
+| **childbirth** | `child` | substring(child) | 1 | 9.12 | The resulting witch hunts persisted for three centuries and executed approximately eighty thousand w… |
+| **details** | `detailed` | stem(detail) | 1 | 9.14 | Leonardo da Vinci painted the Mona Lisa during the day and dissected human cadavers in secret at nig… |
+| **designs** | `designate` | stem(design) | 1 | 9.14 | Leonardo da Vinci painted the Mona Lisa during the day and dissected human cadavers in secret at nig… |
+| **helicopters** | `helicopter` | stem(helicopter) | 1 | 9.14 | Leonardo da Vinci painted the Mona Lisa during the day and dissected human cadavers in secret at nig… |
+| **self-portrait** | `portrait` | substring(portrait) | 1 | 9.14 | Raphael, the youngest of the three, assembled all the major Greek philosophers in his fresco The Sch… |
+| **figures** | `decipher` | stem(figure) | 1 | 9.14 | All three figures were simultaneously artists, engineers, and anatomists.… |
+| **translucently** | `elucidate` | stem(translucent) | 1 | 9.15 | The Flemish painter Jan van Eyck developed a refined oil painting technique in which thin glazes of … |
+| **obsessive** | `assess` | stem(obsess) | 1 | 9.15 | The German Albrecht Dürer combined Italian perspective with Northern obsessive detail, his engraving… |
+| **assembling** | `assemble` | stem(assembl) | 1 | 9.15 | The German Albrecht Dürer combined Italian perspective with Northern obsessive detail, his engraving… |
+| **hourglass** | `glass` | substring(glass) | 1 | 9.15 | The German Albrecht Dürer combined Italian perspective with Northern obsessive detail, his engraving… |
+| **delights** | `light` | substring(light) | 1 | 9.15 | The Dutchman Hieronymus Bosch painted the triptych Garden of Earthly Delights, populated with bird-h… |
+| **depicts** | `depict` | stem(depict) | 1 | 9.15 | The Dutchman Hieronymus Bosch painted the triptych Garden of Earthly Delights, populated with bird-h… |
+| **novels** | `innovative` | stem(novel) | 1 | 9.17 | The Castilian writer Cervantes composed Don Quixote, in which an elderly gentleman addled by chivalr… |
+| **credited** | `credible` | stem(credit) | 1 | 9.17 | The Castilian writer Cervantes composed Don Quixote, in which an elderly gentleman addled by chivalr… |
+| **variations** | `vary` | stem(variation) | 1 | 9.17 | The court painter Velázquez inserted himself into his own canvas in Las Meninas, generating a visual… |
+| **incomplete** | `accomplish` | stem(complete) | 1 | 9.17 | The Catalan architect Gaudí designed the Sagrada Familia with melting organic forms whose constructi… |
+| **indulgences** | `indulgence` | stem(dulgence) | 1 | 9.18 | The implication, when it arrived, took the form of a German friar named Martin Luther nailing ninety… |
+| **scholarly** | `scholar` | stem(scholar) | 1 | 9.18 | He had intended a scholarly debate.… |
+| **orbited** | `orbit` | stem(orbit) | 1 | 9.19 | The Polish astronomer Copernicus calculated, against every philosophical and theological intuition o… |
+| **phases** | `emphasize` | stem(phase) | 1 | 9.19 | The Italian astronomer Galileo, equipped with an improved telescope, observed the moons of Jupiter a… |
+| **sonnets** | `sonnet` | stem(sonnet) | 1 | 9.20 | The son of a small-town glove-maker grew up to write thirty-seven plays and one hundred fifty-four s… |
+| **shorthand** | `short` | substring(short) | 1 | 9.20 | His lines have become idiomatic shorthand for entire human conditions.… |
+| **proposals** | `proposal` | stem(proposal) | 1 | 9.20 | Meanwhile his sovereign, Elizabeth I, refused all proposals of marriage and declared herself wedded … |
+| **affairs** | `fair` | stem(affair) | 1 | 9.20 | Meanwhile his sovereign, Elizabeth I, refused all proposals of marriage and declared herself wedded … |
+| **animalcules** | `animal` | substring(animal) | 1 | 9.21 | The Delft cloth merchant Anton van Leeuwenhoek ground his own glass lenses and constructed the most … |
+| **resolution** | `solvent` | strip-re | 1 | 9.21 | He sketched these creatures and posted his drawings to the Royal Society in London, where the entire… |
+| **superstructure** | `structure` | substring(structure) | 1 | 9.21 | All this occurred under the financial superstructure of the Dutch East India Company, the first mult… |
+| **joint-stock** | `joint` | substring(joint) | 1 | 9.21 | All this occurred under the financial superstructure of the Dutch East India Company, the first mult… |
+| **spotlight** | `light` | substring(light) | 1 | 9.22 | The Italian Caravaggio illuminated his subjects as if a theatre spotlight had cracked the surroundin… |
+| **self-portraits** | `portrait` | substring(portrait) | 1 | 9.22 | The Dutch Rembrandt produced more than a hundred self-portraits across his lifetime, unflinchingly d… |
+| **prohibited** | `exhibit` | stem(prohibit) | 1 | 9.23 | Medieval European authorities had prohibited the dissection of human cadavers, so European medical t… |
+| **reproducing** | `produce` | stem(produc) | 1 | 9.23 | Medieval European authorities had prohibited the dissection of human cadavers, so European medical t… |
+| **retrieved** | `retrieval` | stem(triev) | 1 | 9.23 | The Flemish anatomist Vesalius, working at the medical school in Padua, retrieved corpses from gallo… |
+| **corrected** | `redirect` | stem(correct) | 1 | 9.23 | The Flemish anatomist Vesalius, working at the medical school in Padua, retrieved corpses from gallo… |
+| **illustrating** | `illustrate` | stem(lustrat) | 1 | 9.23 | The Flemish anatomist Vesalius, working at the medical school in Padua, retrieved corpses from gallo… |
+| **replenished** | `deplete` | stem(plenish) | 1 | 9.23 | The English physician Harvey measured the volume of blood pumped per minute by the heart, demonstrat… |
+| **adopted** | `adapt` | stem(adopt) | 1 | 9.24 | The French philosopher Descartes adopted the opposite approach.… |
+| **methodically** | `methodology` | stem(method) | 1 | 9.24 | He shut himself into a heated chamber in Germany and methodically doubted every belief he held until… |
+| **doubted** | `doubtful` | stem(doubt) | 1 | 9.24 | He shut himself into a heated chamber in Germany and methodically doubted every belief he held until… |
+| **rationalist** | `rational` | substring(rational) | 1 | 9.24 | The statement "I think, therefore I am" thereby became the founding axiom of modern rationalism, and… |
+| **gravitation** | `gravity` | stem-of-family | 1 | 9.25 | When the bubonic plague closed Cambridge, a young undergraduate named Isaac Newton retreated to the … |
+| **differential** | `different` | substring(different) | 1 | 9.25 | When the bubonic plague closed Cambridge, a young undergraduate named Isaac Newton retreated to the … |
+| **demolishing** | `abolish` | stem(demolish) | 1 | 9.26 | A bakery on Pudding Lane caught fire one night and the resulting blaze consumed two thirds of the me… |
+| **enchained** | `chain` | substring(chain) | 1 | 9.27 | Rousseau argued in The Social Contract that all human beings are born free yet are nevertheless univ… |
+| **derives** | `derive` | stem(derive) | 1 | 9.27 | Rousseau argued in The Social Contract that all human beings are born free yet are nevertheless univ… |
+| **coordinates** | `coordinate` | stem(coordinate) | 1 | 9.27 | The Scottish economist Adam Smith, working in parallel, articulated the doctrine of the invisible ha… |
+| **cantatas** | `cantata` | stem(cantata) | 1 | 9.28 | The German Bach wrote several hundred cantatas across his career as a provincial church musician, dy… |
+| **violins** | `violate` | stem(violin) | 1 | 9.28 | The Venetian Vivaldi composed The Four Seasons, in which violins and orchestra paint the bird-song o… |
+| **orchestra** | `chest` | substring(chest) | 1 | 9.28 | The Venetian Vivaldi composed The Four Seasons, in which violins and orchestra paint the bird-song o… |
+| **composers** | `compose` | stem(composer) | 1 | 9.29 | The three composers who consolidated the classical symphony all converged on imperial Vienna across … |
+| **workshops** | `hop` | stem(workshop) | 1 | 9.30 | The spinning jenny enabled one worker to operate eight spindles simultaneously, and factory owners p… |
+| **aristocrats** | `bureaucratic` | stem(aristocrat) | 1 | 9.31 | The revolutionary leader Robespierre, presiding over the Committee of Public Safety, dispatched seve… |
+| **priests** | `interpret` | stem(priest) | 1 | 9.31 | The revolutionary leader Robespierre, presiding over the Committee of Public Safety, dispatched seve… |
+| **waterloo** | `water` | substring(water) | 1 | 9.31 | Into the resulting vacuum stepped a short Corsican artillery officer named Napoleon, who crowned him… |
+| **assembles** | `assemble` | stem(assemble) | 1 | 9.32 | The eighteen-year-old Mary Shelley produced the story of a scientist who assembles a living creature… |
+| **nightingale** | `night` | substring(night) | 1 | 9.32 | The poet Keats, dying of tuberculosis in Rome at twenty-five, composed Ode to a Nightingale knowing … |
+| **theoretically** | `theorem` | stem(theoret) | 1 | 9.33 | A twelve-year-old English girl named Mary Anning, daughter of a furniture repairman on the south coa… |
+| **polarised** | `polar` | substring(polar) | 1 | 9.33 | The implication, that humans had emerged the same way, polarised Britain irreversibly.… |
+| **subtleties** | `subtle` | substring(subtle) | 1 | 9.34 | Jane Austen, writing in the parlour of a rural rectory, articulated the layered subtleties of the co… |
+| **refuses** | `refuse` | substring(refuse) | 1 | 9.34 | The Brontë sisters, raised in a Yorkshire parsonage, produced Jane Eyre, the chronicle of a governes… |
+| **laboured** | `labour` | stem(labour) | 1 | 9.34 | Dickens, who had himself laboured in a factory as a child, wrote Oliver Twist and A Tale of Two Citi… |
+| **manchester** | `chest` | substring(chest) | 1 | 9.35 | His friend Engels, whose family owned a Manchester textile factory, financed Marx's entire research … |
+| **profits** | `proficiency` | stem(profit) | 1 | 9.35 | His friend Engels, whose family owned a Manchester textile factory, financed Marx's entire research … |
+| **dialectical** | `dialect` | stem(dialect) | 1 | 9.35 | The earlier German philosopher Hegel had proposed that history advanced through dialectical oppositi… |
+| **synthesising** | `synthetic` | stem(synthesis) | 1 | 9.35 | The earlier German philosopher Hegel had proposed that history advanced through dialectical oppositi… |
+| **wheels** | `rotation` | stem(wheel) | 1 | 9.36 | The Russian aristocrat Tolstoy left his estate to labour alongside the peasants in his own fields, w… |
+| **articulates** | `articulate` | stem(articulate) | 1 | 9.36 | Crime and Punishment dissects the mental collapse of a poor student who murders a pawnbroker, while … |
+| **bare-chested** | `chest` | substring(chest) | 1 | 9.37 | Delacroix embraced romantic intensity in Liberty Leading the People, in which an allegorical woman b… |
+| **harvested** | `harvest` | stem(harvest) | 1 | 9.37 | Millet painted The Gleaners and The Angelus, in which bent peasants gathering missed grain from harv… |
+| **repainted** | `painting` | stem(paint) | 1 | 9.38 | Monet repainted his garden water lilies hundreds of times across his old age, his fading eyesight pu… |
+| **nocturnes** | `nocturne` | stem(nocturne) | 1 | 9.39 | The Polish émigré Chopin composed piano nocturnes of an unrepeatable melancholy and conducted a famo… |
+| **unrepeatable** | `repeat` | stem(repeat) | 1 | 9.39 | The Polish émigré Chopin composed piano nocturnes of an unrepeatable melancholy and conducted a famo… |
+| **cycles** | `recycle` | stem(cycle) | 1 | 9.39 | The German Wagner constructed massive operatic cycles of his own design, the four-part Ring of the N… |
+| **pathogens** | `pathology` | stem(pathogen) | 1 | 9.40 | The German bacteriologist Koch isolated and cultured the individual pathogens responsible for tuberc… |
+| **causes** | `cautious` | stem(cause) | 1 | 9.40 | The combined work of Pasteur and Koch transformed medicine from a craft of empirical guesswork into … |
+| **prizes** | `comprise` | stem(prize) | 1 | 9.41 | The Polish-French chemist Marie Curie isolated the element radium from several tons of uranium ore i… |
+| **disciplines** | `discipline` | stem(cipline) | 1 | 9.41 | The Polish-French chemist Marie Curie isolated the element radium from several tons of uranium ore i… |
+| **governing** | `governance` | stem(govern) | 1 | 9.41 | The same century redrew the foundations of classical mechanics itself: physicists rewrote the laws g… |
+| **equations** | `equivalent` | stem(equation) | 1 | 9.41 | The Scottish theorist Maxwell condensed Faraday's experimental findings into four elegant equations … |
+| **experimenter** | `experiment` | stem(experiment) | 1 | 9.41 | The German experimenter Hertz demonstrated those waves directly.… |
+| **virtues** | `virtue` | stem(virtue) | 1 | 9.42 | Modern team sports emerged largely from the public schools of nineteenth-century England, where mast… |
+| **codifying** | `decode` | stem(codify) | 1 | 9.42 | Representatives of several London schools convened in a pub and agreed on a single rulebook for foot… |
+| **pupils** | `discipline` | stem(pupil) | 1 | 9.42 | Pupils at the school of Rugby, frustrated with the new prohibition, simply picked up the ball and ra… |
+| **representing** | `misrepresent` | stem(present) | 1 | 9.42 | The French baron Coubertin, having read about the ancient Olympic Games, devised a modern revival in… |
+| **legally** | `eligible` | stem(legal) | 1 | 9.43 | The Belgian king Leopold II personally acquired sovereignty over a vast territory in central Africa,… |
+| **privately** | `privatization` | stem(private) | 1 | 9.43 | He converted the entire equatorial rainforest into a privately owned rubber plantation and compelled… |
+| **punished** | `punishment` | stem(punish) | 1 | 9.43 | He converted the entire equatorial rainforest into a privately owned rubber plantation and compelled… |
+| **photographs** | `demographic` | stem(photograph) | 1 | 9.43 | Photographs of severed hands stacked in pyramids eventually reached the international press, generat… |
+| **humanitarian** | `human` | substring(human) | 1 | 9.43 | Photographs of severed hands stacked in pyramids eventually reached the international press, generat… |
+| **filtering** | `falter` | stem(filter) | 1 | 9.44 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered … |
+| **recurrent** | `concur` | stem(current) | 1 | 9.44 | The neurologist Freud encouraged his patients to recline on a couch and articulate whatever entered … |
+| **tractatus** | `tract` | substring(tract) | 1 | 9.44 | The Austrian philosopher Wittgenstein composed the Tractatus Logico-Philosophicus to determine the p… |
+| **logico-philosophicus** | `logic` | substring(logic) | 1 | 9.44 | The Austrian philosopher Wittgenstein composed the Tractatus Logico-Philosophicus to determine the p… |
+| **fronts** | `prefrontal` | stem(front) | 1 | 9.44 | Three independent attempts on three independent fronts to articulate the same question: what is the … |
+| **culturally** | `acculturation` | stem(cultural) | 1 | 9.45 | After centuries of English domination and the potato famine that had starved a million Irish to deat… |
+| **half-perceived** | `perceive` | substring(perceive) | 1 | 9.45 | A revival movement led by the poet Yeats recovered the surviving Celtic mythology of the warrior Cú … |
+| **provoking** | `provoke` | stem(provok) | 1 | 9.45 | The dramatist Synge wrote The Playboy of the Western World in the spoken dialect of rural Connacht, … |
+| **travelling** | `travel` | substring(travel) | 1 | 9.46 | The Czech clerk Kafka, writing in German at his insurance office, produced The Metamorphosis, in whi… |
+| **narrating** | `narrative` | stem(narrat) | 1 | 9.46 | Joyce wrote Ulysses, narrating a single day in Dublin across seven hundred pages, each chapter deplo… |
+| **flickered** | `conflict` | stem(flicker) | 1 | 9.46 | Woolf, in Mrs Dalloway, traced consciousness as it flickered between several characters across a sin… |
+| **soundproofed** | `proof` | substring(proof) | 1 | 9.46 | Proust composed seven volumes of In Search of Lost Time from a soundproofed bedroom, the entire proj… |
+| **aggressively** | `aggression` | stem(aggress) | 1 | 9.47 | Twentieth-century painting, the most aggressively avant-garde movement in any art form, demolished f… |
+| **depicting** | `depict` | stem(depict) | 1 | 9.47 | The Spaniard Picasso invented Cubism, depicting the same object from several angles simultaneously o… |
+| **dream-logic** | `logic` | substring(logic) | 1 | 9.47 | The Catalan Dalí painted melting clocks draped across desert rocks in The Persistence of Memory, est… |
+| **synthesised** | `synthetic` | stem(synthesis) | 1 | 9.47 | The German Bauhaus school synthesised these aesthetic experiments with industrial production, articu… |
+| **opposing** | `oppose` | stem(oppos) | 1 | 9.48 | The opposing armies on the Western Front therefore burrowed into parallel trenches and fought the sa… |
+| **trenches** | `trench` | substring(trench) | 1 | 9.48 | The opposing armies on the Western Front therefore burrowed into parallel trenches and fought the sa… |
+| **hyperinflation** | `inflation` | substring(inflation) | 1 | 9.49 | Post-war German hyperinflation rendered the currency so worthless that a loaf of bread required a wh… |
+| **newspaper** | `paper` | substring(paper) | 1 | 9.49 | An Austrian-born former corporal named Hitler exploited the resulting public bitterness to seize pol… |
+| **exterminated** | `terminate` | substring(terminate) | 1 | 9.49 | An Austrian-born former corporal named Hitler exploited the resulting public bitterness to seize pol… |
+| **developing** | `redevelopment` | stem(develop) | 1 | 9.49 | Albert Einstein, who was himself Jewish, escaped to America and warned the American president Roosev… |
+| **mass-energy** | `energy` | substring(energy) | 1 | 9.49 | The American Manhattan Project converted Einstein's mass-energy equivalence into the atomic bombs th… |
+| **actors** | `exact` | stem(actor) | 1 | 9.50 | Italian Neorealism took the camera out of the studio into the rubble of the bombed cities, casting n… |
+| **breathless** | `breathing` | stem(breath) | 1 | 9.50 | Godard fragmented Breathless with jump cuts that violated every continuity rule of classical editing… |
+| **inherits** | `heritage` | stem(herit) | 1 | 9.50 | Every independent film made anywhere on the planet across the following half-century inherits someth… |
+| **pre-modern** | `modern` | substring(modern) | 1 | 9.51 | Modern social theory built itself from the wreckage of pre-modern Europe.… |
+| **specifically** | `specimen` | stem(specif) | 1 | 9.51 | The German sociologist Weber argued in The Protestant Ethic and the Spirit of Capitalism that capita… |
+| **unintelligible** | `intelligible` | strip-un | 1 | 9.51 | Beneath that Protestant ethic lay centuries of medieval feudalism, in which every peasant had been b… |
+| **conformed** | `conformity` | stem(conform) | 1 | 9.51 | The French sociologist Durkheim demonstrated through statistical analysis of suicide that even the m… |
+| **marginalises** | `marginal` | substring(marginal) | 1 | 9.51 | The French sociologist Durkheim demonstrated through statistical analysis of suicide that even the m… |
+| **maximise** | `maximize` | stem(maxim) | 1 | 9.51 | The English philosopher Bentham articulated utilitarianism, the doctrine that public policy should m… |
+| **marginalisation** | `marginal` | substring(marginal) | 1 | 9.51 | Later thinkers, drawing on a deeper radicalism, debated whether egalitarian welfare can be ethically… |
+| **accumulates** | `accumulate` | stem(accumulate) | 1 | 9.51 | Later thinkers, drawing on a deeper radicalism, debated whether egalitarian welfare can be ethically… |
+| **deficits** | `deficiency` | stem(deficit) | 1 | 9.51 | The English economist Keynes proposed in his General Theory of Employment, Interest, and Money that … |
+| **recessions** | `recession` | substring(recession) | 1 | 9.51 | The English economist Keynes proposed in his General Theory of Employment, Interest, and Money that … |
+| **marginalised** | `marginal` | substring(marginal) | 1 | 9.51 | Contemporary social theory recognises that the empowerment of marginalised populations, not merely t… |
+| **unconstrained** | `restrain` | stem(constrain) | 1 | 9.51 | Contemporary social theory recognises that the empowerment of marginalised populations, not merely t… |
+| **emphasised** | `emphasize` | stem(emphasis) | 1 | 9.52 | The resulting design philosophy emphasised clean lines, unembellished pale timber, and the minimum v… |
+| **ornamentation** | `ornament` | substring(ornament) | 1 | 9.52 | The resulting design philosophy emphasised clean lines, unembellished pale timber, and the minimum v… |
+| **designates** | `designate` | stem(designate) | 1 | 9.52 | The Danish concept of hygge designates the small domestic ritual of candles, blankets, hot drinks, a… |
+| **candles** | `kindle` | stem(candle) | 1 | 9.52 | The Danish concept of hygge designates the small domestic ritual of candles, blankets, hot drinks, a… |
+| **converts** | `avert` | stem(convert) | 1 | 9.52 | The Danish concept of hygge designates the small domestic ritual of candles, blankets, hot drinks, a… |
+| **ignites** | `ignite` | stem(ignite) | 1 | 9.52 | The polar sky above them ignites periodically with the green and violet curtains of the aurora, and … |
+| **religions** | `oblige` | stem(ligion) | 1 | 9.53 | The federation of Yugoslavia held together six south Slavic republics, four languages, and three rel… |
+| **besieged** | `siege` | substring(siege) | 1 | 9.53 | Sarajevo, the same city in which the First World War had been ignited, was now besieged by Serbian a… |
+| **airpower** | `power` | substring(power) | 1 | 9.53 | In Kosovo the Albanian population was driven from its homes until NATO airpower forced the Serbian m… |
+| **disintegration** | `integrate` | strip-dis | 1 | 9.53 | Roughly one hundred and fifty thousand died across the entire disintegration, and the borders the wa… |
+| **unstable** | `establish` | strip-un | 1 | 9.53 | Roughly one hundred and fifty thousand died across the entire disintegration, and the borders the wa… |
+| **unable** | `enable` | strip-un | 1 | 9.54 | Across forty years the Berlin Wall divided a single German city into a Western capitalist half and a… |
+| **suspended** | `impending` | stem(suspend) | 1 | 9.54 | Across forty years the Berlin Wall divided a single German city into a Western capitalist half and a… |
+| **crowds** | `overcrowded` | stem(crowd) | 1 | 9.54 | Across forty years the Berlin Wall divided a single German city into a Western capitalist half and a… |
+| **customs** | `consumerism` | stem(custom) | 1 | 9.54 | The collapse of the Soviet system that followed permitted Western Europe to organise itself into the… |
+| **adopting** | `adapt` | stem(adopt) | 1 | 9.54 | The collapse of the Soviet system that followed permitted Western Europe to organise itself into the… |
+| **linguist** | `linguistics` | stem-of-family | 1 | 9.55 | The Swiss linguist Ferdinand de Saussure articulated, in lectures published only after his death, th… |
+| **lectures** | `intelligent` | stem(lecture) | 1 | 9.55 | The Swiss linguist Ferdinand de Saussure articulated, in lectures published only after his death, th… |
+| **consequences** | `frequent` | stem(consequence) | 1 | 9.55 | The American Noam Chomsky proposed, with worldwide consequences, that every human infant arrives wit… |
+| **lexicons** | `lexicon` | stem(lexicon) | 1 | 9.55 | The lexicon of each language remains the most resistant element to translation; bilingual children n… |
+| **switching** | `witch` | substring(witch) | 1 | 9.55 | The lexicon of each language remains the most resistant element to translation; bilingual children n… |
 
-## Chapter 10 (38 orphans)
+## Chapter 10 (187 words)
 
-| Word | Hits | Sections | Sentence excerpt |
-|---|---:|---|---|
-| federal | 7 | 10.11, 10.16, 10.18 | Black Americans endured another full century of segregation, lynching, and disenfranchisement before the civil… |
-| laboratories | 4 | 10.19, 10.21, 10.22 | Twentieth-century American psychology laboratories conducted a series of experiments that progressively disman… |
-| falling | 3 | 10.6, 10.26 | The Niagara River connects Lake Erie to Lake Ontario, descending across a sheer cliff at Niagara Falls in a pe… |
-| hunger | 3 | 10.8, 10.10, 10.28 | The first winter eradicated nearly half of the small community through cold, hunger, and disease.… |
-| racial | 3 | 10.11, 10.30, 10.32 | Black Americans endured another full century of segregation, lynching, and disenfranchisement before the civil… |
-| teenagers | 3 | 10.12, 10.31 | The white singer Elvis Presley adapted Black rhythm and blues into the rock and roll that made an entire gener… |
-| personal | 3 | 10.15, 10.21, 10.22 | Rockefeller began with a single Ohio refinery and across his career consolidated ninety per cent of American o… |
-| unresolved | 3 | 10.20, 10.27, 10.32 | The Obama-era Affordable Care Act extended healthcare insurance to millions of previously uninsured Americans,… |
-| models | 3 | 10.22, 10.34 | American research laboratories then trained large language models on virtually the entire accessible text of t… |
-| studios | 3 | 10.25 | A handful of Jewish immigrant entrepreneurs migrated west from New York to the small Los Angeles suburb of Hol… |
-| police | 3 | 10.29, 10.32 | A confrontation between police and the patrons of a Manhattan bar called the Stonewall Inn precipitated severa… |
-| reaches | 2 | 10.1, 10.31 | Across multiple ice ages the level of the world's oceans dropped sufficiently that a wide land corridor emerge… |
-| arrival | 2 | 10.1, 10.5 | The mammoth, the giant ground sloth, the sabre-toothed cat, the giant short-faced bear, the American camel, an… |
-| accuracy | 2 | 10.2, 10.34 | Their astronomers had calculated the orbit of Venus with sufficient accuracy to predict its appearances centur… |
-| allied | 2 | 10.4, 10.16 | Across the immense grasslands of the North American interior, the Sioux, the Cheyenne, and several allied nati… |
-| benjamin | 2 | 10.4, 10.9 | Benjamin Franklin and Thomas Jefferson studied this confederacy explicitly while drafting the American constit… |
-| withdrew | 2 | 10.6, 10.30 | The whole landscape from Quebec to Minnesota still bears the scars of glacial scouring: smoothed bedrock, moun… |
-| application | 2 | 10.9, 10.36 | Benjamin Franklin flew a kite into a thunderstorm with a key attached to the string, demonstrating that lightn… |
-| finding | 2 | 10.9, 10.19 | Benjamin Franklin flew a kite into a thunderstorm with a key attached to the string, demonstrating that lightn… |
-| california | 2 | 10.10, 10.30 | Word that gold had been discovered in California provoked hundreds of thousands of prospectors to migrate west… |
-| forcibly | 2 | 10.10, 10.19 | To clear the territory for white settlement, the Cherokee, the Choctaw, the Creek, and the Seminole were forci… |
-| relied | 2 | 10.11, 10.34 | The northern states, having industrialised earlier, no longer relied on slavery and increasingly opposed it on… |
-| restoring | 2 | 10.16, 10.28 | The newly elected president Franklin Roosevelt launched a programme called the New Deal in which the federal g… |
-| attack | 2 | 10.16, 10.30 | The Japanese surprise attack on the American naval base at Pearl Harbor dragged the United States into the Sec… |
-| resistance | 2 | 10.17, 10.37 | The bombs incinerated Hiroshima and Nagasaki within days of each other, instantly killing approximately a hund… |
-| progressively | 2 | 10.19, 10.33 | Twentieth-century American psychology laboratories conducted a series of experiments that progressively disman… |
-| incentives | 2 | 10.19, 10.33 | Skinner's behaviourism trained pigeons to perform sequential behaviours through reinforcement schedules, demon… |
-| biologist | 2 | 10.20, 10.23 | The American biologist Watson and the British physicist Crick, working at Cambridge with crucial X-ray crystal… |
-| affordable | 2 | 10.20, 10.35 | The Obama-era Affordable Care Act extended healthcare insurance to millions of previously uninsured Americans,… |
-| pipeline | 2 | 10.25, 10.29 | Across the twentieth century these studios consolidated the entire industrial pipeline from script through pro… |
-| adolescents | 2 | 10.25, 10.27 | American film and popular music have so saturated global culture that adolescents in countries the studios hav… |
-| gateway | 2 | 10.27, 10.34 | The Scholastic Aptitude Test became the standardised gateway through which American adolescents are sorted int… |
-| review | 2 | 10.32, 10.37 | When that verdict is challenged on appeal, the rebuttal must articulate either new evidence or new procedural … |
-| management | 2 | 10.33, 10.36 | Across the post-war decades the American Master of Business Administration evolved into the standard credentia… |
-| reducing | 2 | 10.33, 10.34 | Apple, under the operational genius of Tim Cook, eventually constructed the most profitable industrial supply … |
-| superseded | 2 | 10.33, 10.37 | Outdated and superficial accounting methods have been progressively superseded by software systems that flag e… |
-| behaviour | 2 | 10.34, 10.37 | Modern American social science depends absolutely on statistics, and the foundation of any survey is the princ… |
-| implemented | 2 | 10.35, 10.36 | Barcelona's neighbouring superblock districts implemented the same principle across several neighbourhoods, re… |
+| Word | Parent | Path | Hits | Sections | Sample sentence |
+|---|---|---|---:|---|---|
+| **electricity** | `hydroelectric` | stem(electric) | 3 | 10.13, 10.22 | He insisted that direct electrical current was the only safe form of household electricity and toure… |
+| **methods** | `methodology` | stem(method) | 3 | 10.19, 10.33, 10.36 | The behaviourist paradigm of these experiments dominated American psychology for decades, treating i… |
+| **accounting** | `encounter` | stem(account) | 3 | 10.33 | The MBA curriculum codified financial accounting, marginal pricing, investment analysis, and the rig… |
+| **materials** | `materialism` | stem(material) | 3 | 10.37 | The American materials sciences of the twentieth century produced inventions that quietly restructur… |
+| **arrival** | `rival` | substring(rival) | 2 | 10.1, 10.5 | The mammoth, the giant ground sloth, the sabre-toothed cat, the giant short-faced bear, the American… |
+| **canals** | `canal` | stem(canal) | 2 | 10.3, 10.36 | In the high valley of central Mexico the Aztec people constructed the floating city of Tenochtitlan,… |
+| **lightning** | `light` | substring(light) | 2 | 10.9 | Benjamin Franklin flew a kite into a thunderstorm with a key attached to the string, demonstrating t… |
+| **representation** | `misrepresent` | strip-re | 2 | 10.9, 10.27 | A few decades later, when the British Parliament imposed yet another tax on the American colonies wi… |
+| **grounds** | `background` | stem(ground) | 2 | 10.11, 10.32 | The northern states, having industrialised earlier, no longer relied on slavery and increasingly opp… |
+| **equality** | `equivalent` | stem(equal) | 2 | 10.11 | Legal abolition did not generate equality.… |
+| **samples** | `sample` | stem(sample) | 2 | 10.12, 10.18 | Bronx Black teenagers eventually layered spoken rhyme over looped instrumental samples and generated… |
+| **alternating** | `alter` | stem(alternat) | 2 | 10.13 | His Serbian-born former assistant Nikola Tesla, a famously clever experimentalist working with the m… |
+| **incentives** | `incentive` | substring(incentive) | 2 | 10.19, 10.33 | Skinner's behaviourism trained pigeons to perform sequential behaviours through reinforcement schedu… |
+| **participants** | `participate` | stem(participant) | 2 | 10.19 | Milgram instructed ordinary participants to administer escalating electrical shocks to another perso… |
+| **guards** | `regard` | stem(guard) | 2 | 10.19 | Zimbardo divided Stanford undergraduates into mock prisoners and mock guards, and within a week the … |
+| **computers** | `input` | stem(computer) | 2 | 10.21 | Several young engineers assembled the first commercially viable personal computers from kits in thei… |
+| **designing** | `designate` | stem(design) | 2 | 10.26 | The American architect Frank Lloyd Wright moved in the opposite direction, designing the residence F… |
+| **sciences** | `subconscious` | stem(science) | 2 | 10.27, 10.37 | The Scholastic Aptitude Test became the standardised gateway through which American adolescents are … |
+| **transgender** | `gender` | substring(gender) | 2 | 10.29 | A confrontation between police and the patrons of a Manhattan bar called the Stonewall Inn precipita… |
+| **measures** | `immense` | stem(measure) | 2 | 10.31, 10.33 | The body's homeostasis is maintained by a thousand small feedback loops that the conscious mind neve… |
+| **superseded** | `supersede` | substring(supersede) | 2 | 10.33, 10.37 | Outdated and superficial accounting methods have been progressively superseded by software systems t… |
+| **automatically** | `autonomous` | stem(automat) | 2 | 10.33, 10.34 | Outdated and superficial accounting methods have been progressively superseded by software systems t… |
+| **parameters** | `barometer` | stem(parameter) | 2 | 10.34 | The matrix of numerical parameters underlying every machine-learning model is similarly recursive, w… |
+| **implemented** | `implement` | substring(implement) | 2 | 10.35, 10.36 | Barcelona's neighbouring superblock districts implemented the same principle across several neighbou… |
+| **sabre-toothed** | `toothed` | substring(toothed) | 1 | 10.1 | The mammoth, the giant ground sloth, the sabre-toothed cat, the giant short-faced bear, the American… |
+| **short-faced** | `short` | substring(short) | 1 | 10.1 | The mammoth, the giant ground sloth, the sabre-toothed cat, the giant short-faced bear, the American… |
+| **glyphs** | `glyph` | stem(glyph) | 1 | 10.2 | The Maya constructed stepped stone pyramids that ascended above the surrounding canopy, devised a wr… |
+| **appearances** | `apparent` | stem(appearance) | 1 | 10.2 | Their astronomers had calculated the orbit of Venus with sufficient accuracy to predict its appearan… |
+| **reclaimed** | `claim` | stem(claim) | 1 | 10.2 | The population dispersed into smaller communities and the surrounding jungle reclaimed the platforms… |
+| **accounted** | `encounter` | stem(account) | 1 | 10.2 | Archaeologists continue to debate whether drought, internal warfare, ecological collapse, or some co… |
+| **causeways** | `cautious` | stem(causeway) | 1 | 10.3 | In the high valley of central Mexico the Aztec people constructed the floating city of Tenochtitlan,… |
+| **descended** | `ascend` | stem(descend) | 1 | 10.4 | The American political experiment, in this sense, descended from indigenous political imagination as… |
+| **intercepting** | `exceptional` | stem(tercept) | 1 | 10.5 | The Rocky Mountains rise as a vast spine along the western interior of North America, intercepting t… |
+| **overwinter** | `winter` | strip-over | 1 | 10.5 | They depart Canada and the northern United States, fly four thousand kilometres south to a small clu… |
+| **depressions** | `depress` | stem(depression) | 1 | 10.6 | Five enormous freshwater lakes occupy the basin between the United States and Canada, the remnants o… |
+| **connects** | `connect` | stem(connect) | 1 | 10.6 | The Niagara River connects Lake Erie to Lake Ontario, descending across a sheer cliff at Niagara Fal… |
+| **descending** | `ascend` | stem(descend) | 1 | 10.6 | The Niagara River connects Lake Erie to Lake Ontario, descending across a sheer cliff at Niagara Fal… |
+| **erodes** | `corrode` | stem(erode) | 1 | 10.6 | The cliff itself is gradually retreating upstream as the falling water erodes the rim, and at the pr… |
+| **mounded** | `mound` | stem(mound) | 1 | 10.6 | The whole landscape from Quebec to Minnesota still bears the scars of glacial scouring: smoothed bed… |
+| **drumlins** | `drumlin` | stem(drumlin) | 1 | 10.6 | The whole landscape from Quebec to Minnesota still bears the scars of glacial scouring: smoothed bed… |
+| **supervolcano** | `volcano` | substring(volcano) | 1 | 10.7 | The Yellowstone Plateau, further north, conceals beneath its surface a supervolcano whose magma cham… |
+| **pulses** | `compel` | stem(pulse) | 1 | 10.7 | The Yellowstone Plateau, further north, conceals beneath its surface a supervolcano whose magma cham… |
+| **geysers** | `geyser` | stem(geyser) | 1 | 10.7 | The Yellowstone Plateau, further north, conceals beneath its surface a supervolcano whose magma cham… |
+| **practise** | `pragmatic` | stem(pract) | 1 | 10.8 | A small group of English religious dissenters called Pilgrims sailed westward across the Atlantic on… |
+| **shellfish** | `shell` | substring(shell) | 1 | 10.8 | The survivors were tutored through the following spring by the local Wampanoag people, who taught th… |
+| **ritualised** | `ritual` | substring(ritual) | 1 | 10.8 | At the autumn harvest the two communities convened a shared feast to acknowledge a year of survival,… |
+| **thunderstorm** | `storm` | substring(storm) | 1 | 10.9 | Benjamin Franklin flew a kite into a thunderstorm with a key attached to the string, demonstrating t… |
+| **attached** | `detach` | stem(attach) | 1 | 10.9 | Benjamin Franklin flew a kite into a thunderstorm with a key attached to the string, demonstrating t… |
+| **created** | `creativity` | stem(creat) | 1 | 10.9 | The resulting confrontation escalated into the American Revolutionary War, and the lawyer Thomas Jef… |
+| **prospectors** | `prospect` | substring(prospect) | 1 | 10.10 | Word that gold had been discovered in California provoked hundreds of thousands of prospectors to mi… |
+| **transforming** | `transform` | stem(transform) | 1 | 10.10 | Word that gold had been discovered in California provoked hundreds of thousands of prospectors to mi… |
+| **disenfranchisement** | `franchise` | substring(franchise) | 1 | 10.11 | Black Americans endured another full century of segregation, lynching, and disenfranchisement before… |
+| **labouring** | `labour` | stem(labour) | 1 | 10.12 | The work songs of enslaved Africans labouring in cotton fields, the call-and-response hollers that s… |
+| **hollers** | `holler` | stem(holler) | 1 | 10.12 | The work songs of enslaved Africans labouring in cotton fields, the call-and-response hollers that s… |
+| **spirituals** | `ritual` | substring(ritual) | 1 | 10.12 | The work songs of enslaved Africans labouring in cotton fields, the call-and-response hollers that s… |
+| **senses** | `consensus` | stem(sense) | 1 | 10.12 | The white singer Elvis Presley adapted Black rhythm and blues into the rock and roll that made an en… |
+| **descends** | `ascend` | stem(descend) | 1 | 10.12 | Every contemporary popular song descends from a field holler.… |
+| **incandescent** | `descent` | substring(descent) | 1 | 10.13 | The American inventor Edison opened a research laboratory in New Jersey and generated the first comm… |
+| **patents** | `patent` | stem(patent) | 1 | 10.13 | The American inventor Edison opened a research laboratory in New Jersey and generated the first comm… |
+| **dangers** | `endanger` | stem(danger) | 1 | 10.13 | He insisted that direct electrical current was the only safe form of household electricity and toure… |
+| **rival's** | `rival` | substring(rival) | 1 | 10.13 | He insisted that direct electrical current was the only safe form of household electricity and toure… |
+| **manufacturer** | `manufacturing` | stem(manufactur) | 1 | 10.13 | His Serbian-born former assistant Nikola Tesla, a famously clever experimentalist working with the m… |
+| **powered** | `power` | stem(power) | 1 | 10.14 | The Wright brothers, who repaired bicycles in Ohio for a living, conducted patient aerodynamic exper… |
+| **labourer** | `labour` | stem(labour) | 1 | 10.15 | Andrew Carnegie migrated as a child from Scotland to the Pittsburgh steel mills, started as a textil… |
+| **redistribution** | `contribution` | strip-re | 1 | 10.15 | Yet both ultimately donated the majority of their immense fortunes to founding libraries, universiti… |
+| **accumulations** | `accumulate` | stem(accumulation) | 1 | 10.15 | Yet both ultimately donated the majority of their immense fortunes to founding libraries, universiti… |
+| **elected** | `eligible` | stem(elect) | 1 | 10.16 | The newly elected president Franklin Roosevelt launched a programme called the New Deal in which the… |
+| **projects** | `conjecture` | stem(project) | 1 | 10.16 | The newly elected president Franklin Roosevelt launched a programme called the New Deal in which the… |
+| **superpower** | `power` | substring(power) | 1 | 10.17 | Every superpower confrontation since has been conducted in the perpetual awareness that nuclear weap… |
+| **astronauts** | `astronaut` | stem(astronaut) | 1 | 10.18 | When the Soviet Union launched the first artificial satellite into low Earth orbit and the first cos… |
+| **probes** | `probe` | stem(probe) | 1 | 10.18 | NASA also dispatched the Voyager probes outward past Jupiter and Saturn and out of the solar system … |
+| **gold-plated** | `plate` | substring(plate) | 1 | 10.18 | Each probe carries a gold-plated phonograph record encoded with greetings in fifty-five human langua… |
+| **skinner's** | `inner` | substring(inner) | 1 | 10.19 | Skinner's behaviourism trained pigeons to perform sequential behaviours through reinforcement schedu… |
+| **pigeons** | `pigeon` | stem(pigeon) | 1 | 10.19 | Skinner's behaviourism trained pigeons to perform sequential behaviours through reinforcement schedu… |
+| **schedules** | `schedule` | stem(schedule) | 1 | 10.19 | Skinner's behaviourism trained pigeons to perform sequential behaviours through reinforcement schedu… |
+| **instructed** | `construe` | stem(struct) | 1 | 10.19 | Milgram instructed ordinary participants to administer escalating electrical shocks to another perso… |
+| **shocks** | `shock` | stem(shock) | 1 | 10.19 | Milgram instructed ordinary participants to administer escalating electrical shocks to another perso… |
+| **life-outcome** | `outcome` | substring(outcome) | 1 | 10.19 | The marshmallow study tracked children who could delay gratification against those who could not, fi… |
+| **differences** | `indifference` | stem(difference) | 1 | 10.19 | The marshmallow study tracked children who could delay gratification against those who could not, fi… |
+| **consider** | `considerable` | stem-of-family | 1 | 10.19 | The behaviourist paradigm of these experiments dominated American psychology for decades, treating i… |
+| **biomedical** | `biome` | substring(biome) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **once-terminal** | `terminal` | substring(terminal) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **hormone-replacement** | `hormone` | substring(hormone) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **protocols** | `protocol` | stem(protocol) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **vaccines** | `vaccination` | stem(vaccine) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **pathogen's** | `pathogen` | substring(pathogen) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **immortal** | `moral` | strip-im | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **gene-editing** | `editing` | substring(editing) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **traits** | `portrait` | stem(trait) | 1 | 10.20 | Across the following half-century, American biomedical research generated the polio vaccine develope… |
+| **orchards** | `orchard` | stem(orchard) | 1 | 10.21 | A region of small fruit orchards south of San Francisco transformed across a few decades into the te… |
+| **technological** | `logical` | substring(logical) | 1 | 10.21 | A region of small fruit orchards south of San Francisco transformed across a few decades into the te… |
+| **computing** | `input` | stem(comput) | 1 | 10.21 | The cumulative effect across roughly two decades was to migrate computing from government laboratori… |
+| **integrating** | `integrate` | stem(tegrat) | 1 | 10.22 | Steve Jobs returned to Apple after a decade of exile and presented the iPhone, integrating a touch-s… |
+| **conducting** | `deduce` | stem(conduct) | 1 | 10.22 | Within a decade nearly every adult on the planet was conducting daily life through a similar device.… |
+| **algorithms** | `algorithm` | stem(algorithm) | 1 | 10.22 | Google indexed the entire navigable Web and continuously enhanced its ranking algorithms, converting… |
+| **assisting** | `consistent` | stem(assist) | 1 | 10.22 | American research laboratories then trained large language models on virtually the entire accessible… |
+| **training** | `restrain` | stem(train) | 1 | 10.22 | The computational scale of each training run is measured in gigawatts of electricity, and the underl… |
+| **virtualisation** | `virtual` | substring(virtual) | 1 | 10.22 | The computational scale of each training run is measured in gigawatts of electricity, and the underl… |
+| **instances** | `substantial` | stem(stance) | 1 | 10.22 | The computational scale of each training run is measured in gigawatts of electricity, and the underl… |
+| **debating** | `debate` | stem(debat) | 1 | 10.22 | OpenAI's ChatGPT and Anthropic's Claude eventually presented these capabilities to the general publi… |
+| **sprayed** | `spread` | stem(spray) | 1 | 10.23 | The marine biologist Rachel Carson published a book demonstrating that the pesticide DDT, sprayed li… |
+| **liberally** | `liberate` | stem(liberal) | 1 | 10.23 | The marine biologist Rachel Carson published a book demonstrating that the pesticide DDT, sprayed li… |
+| **honeybees** | `honeybee` | stem(honeybee) | 1 | 10.23 | Meanwhile honeybees have been disappearing from American commercial pollination operations through a… |
+| **brushes** | `brush` | substring(brush) | 1 | 10.24 | Jackson Pollock laid an immense canvas on his studio floor and dripped industrial enamel paint from … |
+| **expressionism** | `express` | substring(express) | 1 | 10.24 | Jackson Pollock laid an immense canvas on his studio floor and dripped industrial enamel paint from … |
+| **rectangles** | `redirect` | stem(ctangle) | 1 | 10.24 | Mark Rothko produced enormous canvases of stacked soft-edged coloured rectangles that overwhelmed th… |
+| **silk-screening** | `screen` | substring(screen) | 1 | 10.24 | Andy Warhol abandoned the entire premise of unique art by silk-screening Campbell soup cans, Marilyn… |
+| **reproductions** | `produce` | stem(production) | 1 | 10.24 | Andy Warhol abandoned the entire premise of unique art by silk-screening Campbell soup cans, Marilyn… |
+| **entrepreneurs** | `entrepreneurship` | stem(entrepreneur) | 1 | 10.25 | A handful of Jewish immigrant entrepreneurs migrated west from New York to the small Los Angeles sub… |
+| **broadway** | `broad` | substring(broad) | 1 | 10.25 | The Broadway theatre district in midtown Manhattan generated musicals fusing song, dialogue, choreog… |
+| **steel-skeleton** | `skeleton` | substring(skeleton) | 1 | 10.26 | After the Chicago Fire, engineers invented the steel-skeleton load-bearing structure, which permitte… |
+| **fallingwater** | `water` | substring(water) | 1 | 10.26 | The American architect Frank Lloyd Wright moved in the opposite direction, designing the residence F… |
+| **waterfall** | `water` | substring(water) | 1 | 10.26 | The American architect Frank Lloyd Wright moved in the opposite direction, designing the residence F… |
+| **horizontal** | `horizon` | substring(horizon) | 1 | 10.26 | The American architect Frank Lloyd Wright moved in the opposite direction, designing the residence F… |
+| **terraces** | `territory` | stem(terrace) | 1 | 10.26 | The American architect Frank Lloyd Wright moved in the opposite direction, designing the residence F… |
+| **unpredictable** | `predictable` | stem(predict) | 1 | 10.26 | The Canadian-born architect Frank Gehry departed from straight lines entirely, designing the Guggenh… |
+| **endowments** | `endowment` | stem(endowment) | 1 | 10.27 | Eight private universities along the northeastern American coast collectively form what is now known… |
+| **founders** | `found` | stem(founder) | 1 | 10.27 | The Massachusetts Institute of Technology and Stanford University, the principal engineering schools… |
+| **preference** | `infer` | stem(ference) | 1 | 10.27 | Affirmative action policies attempting to increase the representation of historically underrepresent… |
+| **constitutionally** | `constitute` | stem(constitutional) | 1 | 10.27 | Affirmative action policies attempting to increase the representation of historically underrepresent… |
+| **imprisonment** | `prison` | stem(prison) | 1 | 10.28 | American women acquired the legal right to vote only after a prolonged campaign of demonstrations, h… |
+| **suffragettes** | `suffragette` | stem(suffragette) | 1 | 10.28 | American women acquired the legal right to vote only after a prolonged campaign of demonstrations, h… |
+| **reproductive** | `productive` | stem(product) | 1 | 10.28 | The Supreme Court in Roe versus Wade subsequently established a constitutional right to abortion, wh… |
+| **amendments** | `amendment` | stem(amendment) | 1 | 10.28 | Title Nine of the Education Amendments required federally funded American schools to provide equal o… |
+| **contested** | `antagonize` | stem(contest) | 1 | 10.29 | Across the subsequent half-century the movement achieved the legalisation of same-sex marriage by th… |
+| **igniting** | `ignite` | stem(ignit) | 1 | 10.29 | The Black Lives Matter movement emerged in response to the deaths of unarmed Black Americans in poli… |
+| **protests** | `detest` | stem(protest) | 1 | 10.29 | The Black Lives Matter movement emerged in response to the deaths of unarmed Black Americans in poli… |
+| **wildfires** | `bewildered` | stem(wildfire) | 1 | 10.30 | California wildfires consumed entire towns.… |
+| **detects** | `detect` | stem(detect) | 1 | 10.31 | The functional magnetic resonance imaging scanner detects which neighbouring regions of the cortex r… |
+| **neurons** | `neuroscience` | stem(neuron) | 1 | 10.31 | The functional magnetic resonance imaging scanner detects which neighbouring regions of the cortex r… |
+| **synapses** | `neuron` | stem(synapse) | 1 | 10.31 | The functional magnetic resonance imaging scanner detects which neighbouring regions of the cortex r… |
+| **permits** | `omit` | stem(permit) | 1 | 10.31 | The functional magnetic resonance imaging scanner detects which neighbouring regions of the cortex r… |
+| **hypothesise** | `hypothesis` | stem(hypothes) | 1 | 10.31 | The functional magnetic resonance imaging scanner detects which neighbouring regions of the cortex r… |
+| **lights** | `elucidate` | stem(light) | 1 | 10.31 | The amygdala lights up during fear, generating an anxious arousal that is hard to negate consciously… |
+| **consciously** | `subconscious` | stem(consci) | 1 | 10.31 | The amygdala lights up during fear, generating an anxious arousal that is hard to negate consciously… |
+| **predominantly** | `dominant` | stem(dominant) | 1 | 10.31 | The neuroscientists also identified the lateralisation of language, predominantly housed in the left… |
+| **detected** | `detect` | stem(detect) | 1 | 10.31 | The reward neurotransmitter dopamine, generated whenever a peer-approved goal is achieved or a posit… |
+| **registers** | `register` | stem(gister) | 1 | 10.31 | The body's homeostasis is maintained by a thousand small feedback loops that the conscious mind neve… |
+| **mandates** | `demand` | stem(mandate) | 1 | 10.32 | The Miranda warning, articulated after a Supreme Court ruling on a wrongful confession in Arizona, n… |
+| **accommodates** | `accommodate` | stem(accommodate) | 1 | 10.32 | The jury system, inherited from English common law, accommodates twelve ordinary citizens within the… |
+| **precedents** | `prudent` | stem(cedent) | 1 | 10.32 | When that verdict is challenged on appeal, the rebuttal must articulate either new evidence or new p… |
+| **orders** | `coordinate` | stem(order) | 1 | 10.32 | Even the federal quarantine orders that closed every airport during the recent pandemic ultimately r… |
+| **civil-defence** | `civil` | substring(civil) | 1 | 10.32 | Even the federal quarantine orders that closed every airport during the recent pandemic ultimately r… |
+| **credential** | `credible` | stem-of-family | 1 | 10.33 | Across the post-war decades the American Master of Business Administration evolved into the standard… |
+| **off-balance-sheet** | `balance` | substring(balance) | 1 | 10.33 | The Enron collapse, in which a publicly traded energy corporation had been concealing immense hazard… |
+| **creates** | `concrete` | stem(create) | 1 | 10.33 | The Enron collapse, in which a publicly traded energy corporation had been concealing immense hazard… |
+| **reassure** | `ensure` | stem(assure) | 1 | 10.33 | Every American shareholder now reads the annual statement for indications of solvency, transparency,… |
+| **specifying** | `specification` | stem(specify) | 1 | 10.33 | The contemporary American corporation produces an annual statement specifying revenue, cost, invento… |
+| **expenses** | `compensate` | stem(expense) | 1 | 10.33 | Internal travel and entertainment expenses are now reimbursed only against documented receipts.… |
+| **receipts** | `deceitful` | stem(ceipt) | 1 | 10.33 | Internal travel and entertainment expenses are now reimbursed only against documented receipts.… |
+| **operational** | `cooperate` | stem(operation) | 1 | 10.33 | Apple, under the operational genius of Tim Cook, eventually constructed the most profitable industri… |
+| **contracts** | `abstract` | stem(contract) | 1 | 10.33 | Apple, under the operational genius of Tim Cook, eventually constructed the most profitable industri… |
+| **suppliers** | `supply` | stem(supplier) | 1 | 10.33 | Apple, under the operational genius of Tim Cook, eventually constructed the most profitable industri… |
+| **presidential** | `residential` | stem(sidenti) | 1 | 10.34 | The pollster George Gallup demonstrated this in the nineteen thirties by predicting the American pre… |
+| **deployed** | `exploit` | stem(deploy) | 1 | 10.34 | The standard statistical instruments of contemporary research, including the median, the mode, the v… |
+| **applying** | `implied` | stem(apply) | 1 | 10.34 | The matrix of numerical parameters underlying every machine-learning model is similarly recursive, w… |
+| **subscribers** | `scribe` | substring(scribe) | 1 | 10.34 | Netflix, having accumulated the viewing histories of several hundred million subscribers into a sing… |
+| **recommends** | `commendable` | stem(commend) | 1 | 10.34 | Netflix, having accumulated the viewing histories of several hundred million subscribers into a sing… |
+| **variables** | `enable` | stem(variable) | 1 | 10.34 | Netflix, having accumulated the viewing histories of several hundred million subscribers into a sing… |
+| **cross-validation** | `valid` | substring(valid) | 1 | 10.34 | Any salient correlation that turns out to be equivocal on closer inspection is now flagged automatic… |
+| **assumptions** | `assumption` | stem(assumption) | 1 | 10.35 | American urban planners across the twenty-first century have begun to revisit the assumptions on whi… |
+| **districts** | `restrict` | stem(trict) | 1 | 10.35 | Barcelona's neighbouring superblock districts implemented the same principle across several neighbou… |
+| **tables** | `establish` | stem(table) | 1 | 10.35 | Barcelona's neighbouring superblock districts implemented the same principle across several neighbou… |
+| **informal** | `formidable` | strip-in | 1 | 10.35 | Singapore's national housing programme made urban sanitation, public transit, and affordable apartme… |
+| **surmounting** | `surmount` | stem(surmount) | 1 | 10.35 | Singapore's national housing programme made urban sanitation, public transit, and affordable apartme… |
+| **challenges** | `challenging` | stem(challenge) | 1 | 10.35 | Singapore's national housing programme made urban sanitation, public transit, and affordable apartme… |
+| **standards** | `withstand` | stem(standard) | 1 | 10.35 | Transparency, accountability, and dense local participation have become the conspicuous standards of… |
+| **urbanism** | `urban` | substring(urban) | 1 | 10.35 | Transparency, accountability, and dense local participation have become the conspicuous standards of… |
+| **replaces** | `replace` | stem(place) | 1 | 10.36 | The sponge city concept, developed by Dutch engineers and exported to dozens of municipalities, repl… |
+| **impermeable** | `enable` | stem(perme) | 1 | 10.36 | The sponge city concept, developed by Dutch engineers and exported to dozens of municipalities, repl… |
+| **increases** | `incremental` | stem(crease) | 1 | 10.36 | The sponge city concept, developed by Dutch engineers and exported to dozens of municipalities, repl… |
+| **basins** | `basin` | stem(basin) | 1 | 10.36 | The sponge city concept, developed by Dutch engineers and exported to dozens of municipalities, repl… |
+| **restores** | `restore` | stem(store) | 1 | 10.36 | The sponge city concept, developed by Dutch engineers and exported to dozens of municipalities, repl… |
+| **once-burgeoning** | `burgeon` | substring(burgeon) | 1 | 10.36 | Where the concept has been implemented at scale, the eutrophication that follows excess agricultural… |
+| **basements** | `basic` | stem(basement) | 1 | 10.36 | At the opposite end of the spectrum, vertical farms in Manhattan basements grow lettuce hydroponical… |
+| **hydroponically** | `hydroponics` | stem(hydropon) | 1 | 10.36 | At the opposite end of the spectrum, vertical farms in Manhattan basements grow lettuce hydroponical… |
+| **light-emitting** | `light` | substring(light) | 1 | 10.36 | At the opposite end of the spectrum, vertical farms in Manhattan basements grow lettuce hydroponical… |
+| **indoor** | `dormant` | strip-in | 1 | 10.36 | The agronomy of indoor vertical farming, an unlikely application of classical botany, will not displ… |
+| **discharged** | `charged` | stem(charg) | 1 | 10.36 | Industrial effluent discharged into rivers is intercepted earlier in the treatment process, and the … |
+| **intercepted** | `exceptional` | stem(tercept) | 1 | 10.36 | Industrial effluent discharged into rivers is intercepted earlier in the treatment process, and the … |
+| **derivatives** | `derive` | stem(derivative) | 1 | 10.37 | The chemist Wallace Carothers at the DuPont laboratory in Wilmington discovered, through patient cat… |
+| **long-chain** | `chain` | substring(chain) | 1 | 10.37 | The chemist Wallace Carothers at the DuPont laboratory in Wilmington discovered, through patient cat… |
+| **stockings** | `stock` | substring(stock) | 1 | 10.37 | The polymer he had generated, named nylon, replaced silk in parachutes during the Second World War, … |
+| **trivial-seeming** | `trivial` | substring(trivial) | 1 | 10.37 | Even the trivial-seeming dilemma of how to attach a sticky note without leaving residue eventually g… |
+| **determines** | `terminate` | stem(determine) | 1 | 10.37 | Engineers test every new alloy for tensile strength, fatigue resistance, corrosion behaviour, and th… |
+| **prototypes** | `prototype` | stem(prototype) | 1 | 10.37 | The wind turbine, the jet engine, the surgical implant, and the rocket nozzle all rest on the same a… |
+| **stricter** | `restrict` | stem(strict) | 1 | 10.37 | The wind turbine, the jet engine, the surgical implant, and the rocket nozzle all rest on the same a… |
