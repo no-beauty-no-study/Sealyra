@@ -5614,6 +5614,31 @@ body { background: transparent !important; }
   padding: 14px 16px 48px;
 }
 .catalog-page .page-title { margin: 8px 0 6px; }
+/* v=90 — catalog title (was naked plain text "Chapter Catalog").
+   Gives the standalone .title-plaque on this page a Cinzel
+   Decorative look matching The Glossary's gold cartouche. */
+.catalog-page .title-plaque {
+  text-align: center;
+  margin: 6px 0 4px;
+}
+.catalog-page .title-plaque .tp-text {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  color: #f1d79a;
+  text-shadow: 0 1px 0 rgba(40, 18, 6, 0.6),
+               0 0 14px rgba(218, 168, 104, 0.25);
+}
+.catalog-page .title-plaque::before,
+.catalog-page .title-plaque::after {
+  content: '✦';
+  display: inline-block;
+  margin: 0 14px;
+  color: rgba(232, 196, 138, 0.55);
+  font-size: 14px;
+  vertical-align: 4px;
+}
 .catalog-page .catalog-sub {
   text-align: center;
   font-family: 'EB Garamond', Georgia, serif;
@@ -7926,29 +7951,41 @@ body.bg-stage0 .scene-veil { display: none; }
   border-bottom: 1px dotted rgba(218, 168, 104, 0.22);
 }
 .catalog-part-head {
+  /* v=90 — same dotted-leader skeleton as the small .catalog-row:
+     [▸] [theme]  ·········  [N chapters]                          */
   display: grid;
-  grid-template-columns: 18px 1fr auto;
-  align-items: center;
+  grid-template-columns: 18px auto 1fr auto;
+  align-items: baseline;
   gap: 8px;
   width: 100%;
-  padding: 10px 6px;
+  padding: 11px 6px 9px;
   background: transparent;
   border: 0;
   cursor: pointer;
-  font-family: 'EB Garamond', Georgia, serif;
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 15px;
-  color: #efdbb4;
+  font-size: 16px;
+  color: #f3e0b8;
   text-align: left;
 }
 .catalog-part-head:hover { background: rgba(232, 196, 138, 0.08); }
 .cat-part-toggle {
   font-size: 12px;
   color: rgba(232, 196, 138, 0.62);
+  align-self: center;
 }
 .cat-part-theme {
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+.cat-part-leader {
+  /* dotted leader between the theme and the chapter count.        */
+  display: block;
+  border-bottom: 1.5px dotted rgba(218, 168, 104, 0.42);
+  margin: 0 6px 5px;
+  height: 0;
+  min-width: 18px;
+  align-self: end;
 }
 .cat-part-count {
   font-family: 'Cinzel', Georgia, serif;
@@ -8540,6 +8577,17 @@ body.bg-stage0 #screen-stage0-quiz {
    screens — they should behave like static book pages.        */
 body.bg-stage0.no-scroll,
 body.bg-stage0 { overflow: hidden !important; }
+/* v=90 — clamp <html> AND the screen wrapper's padding.  Without
+   this the html element itself still scrolls (200ms reveal: a
+   subtitle visibly slid up off the top of the painted page). */
+html:has(body.bg-stage0) { overflow: hidden !important; height: 100vh; }
+body.bg-stage0 #screen-stage0,
+body.bg-stage0 #screen-stage0-quiz {
+  padding: 0 !important;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
+}
 
 /* Wider text frame + zero vertical scroll inside.  Padding values
    re-tuned so the frame hugs the painted scroll-roll on top and
@@ -8639,6 +8687,77 @@ body.bg-stage0 { overflow: hidden !important; }
   font-size: clamp(11px, 3vw, 13px) !important;
   padding: 4px 10px !important;
 }
+
+/* v=90 — paper-exam style quiz options.  Per user: "别搞按钮了 就搞
+   很古典的那种 A.xxxx B.xxx 很有纸张上的考试感".  All four picks
+   are left-aligned text rows; the letter is small caps in front of
+   the answer body.  No card outline, no tinted background — the
+   page itself is the paper.                                       */
+.s0q-block .s0q-question {
+  font-family: 'Libre Caslon Text', 'Libre Baskerville', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(13.5px, 3.6vw, 15.5px) !important;
+  line-height: 1.25 !important;
+  color: #1f1004;
+  margin: 4px 0 4px;
+  text-align: left;
+  letter-spacing: 0.005em;
+}
+.s0q-block .s0q-options {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 2px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: left !important;
+  width: 100%;
+}
+.qa-row {
+  all: unset;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 6px;
+  cursor: pointer;
+  padding: 3px 0 3px 18px;   /* hanging indent like a printed exam */
+  font-family: 'Libre Caslon Text', 'Libre Baskerville', Georgia, serif;
+  font-size: clamp(12.5px, 3.3vw, 14px);
+  line-height: 1.28;
+  color: #2a160a;
+  transition: color 0.12s, opacity 0.12s;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+.qa-row:hover { color: #4a2a14; }
+.qa-row .qa-letter {
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 600;
+  font-size: 0.92em;
+  letter-spacing: 0.04em;
+  color: #6e3c1a;
+  min-width: 1.4em;
+  text-align: left;
+}
+.qa-row .qa-text { flex: 1 1 auto; }
+.qa-row.is-right .qa-letter,
+.qa-row.is-right .qa-text {
+  color: #5a3c10;
+  font-style: italic;
+}
+.qa-row.is-right .qa-text::after {
+  content: ' ✓';
+  color: rgba(110, 60, 26, 0.55);
+  font-size: 0.85em;
+}
+.qa-row.is-wrong {
+  color: rgba(110, 50, 40, 0.55);
+  text-decoration: line-through;
+  text-decoration-color: rgba(110, 50, 40, 0.4);
+}
+.qa-row.is-wrong .qa-letter { color: rgba(110, 50, 40, 0.55); }
 
 /* v=88 — quiz option lock states.  Right pick: subtle warm tint
    (NO glow / no halo — per user "全做对了自动跳转 不发光").

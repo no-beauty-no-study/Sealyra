@@ -443,7 +443,7 @@ const BG_BY_SCREEN = {
   note: 'bg-note', 'note-bucket': 'bg-note', index: 'bg-note', card: 'bg-note',
   'chapter-catalog': 'bg-note'
 };
-const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result', 'chapter-catalog', 'stage0', 'stage0-quiz']);
+const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result', 'chapter-catalog']);
 function go(screenId, opts = {}) {
   // v=53 — black-curtain transition.  Two paces:
   //   · MAJOR  (cover → stage / between stages / chapter end):
@@ -1990,7 +1990,7 @@ const Screens = {
       // sequential "Continue Reading" path.
       const catalog = document.createElement('button');
       catalog.className = 'cover-restart-btn cover-catalog-btn';
-      catalog.innerHTML = `<span class="cr-glyph">❦</span><span class="cr-text">Chapter Catalog</span><span class="cr-chapter">${_CHAPTER_PLAN.length} chapters</span>`;
+      catalog.innerHTML = `<span class="cr-glyph">❦</span><span class="cr-text">Index</span><span class="cr-chapter">${_CHAPTER_PLAN.length} chapters</span>`;
       catalog.addEventListener('click', () => {
         SFX.tap();
         go('chapter-catalog');
@@ -2002,7 +2002,7 @@ const Screens = {
       // legacy transitionTo() which dropped its own dark page-veil
       // and bypassed the cover-side detection in go().
       $('#cover-links', el).appendChild(lilGhost('Her Note',  () => go('note')));
-      $('#cover-links', el).appendChild(lilGhost('The Index', () => go('index')));
+      $('#cover-links', el).appendChild(lilGhost('The Glossary', () => go('index')));
     }
   },
 
@@ -2177,34 +2177,34 @@ const Screens = {
 
       const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
       let _failed = false;
+      // v=90 — paper-exam options: plain "A. xxx / B. xxx" rows, no
+      // card chrome.  Per user: "stage0 的三组按钮全都不一样大 别搞
+      // 按钮了 就搞很古典的那种 A.xxxx B.xxx 很有纸张上的考试感".
+      const LETTERS = ['A', 'B', 'C', 'D'];
       $$('.s0q-block', el).forEach((block, qi) => {
         const q = picks[qi];
         const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
         const options = shuffle([q.a, ...distractors]);
         const optsHost = $('.s0q-options', block);
-        options.forEach(opt => {
+        options.forEach((opt, oi) => {
           const b = document.createElement('button');
-          b.className = 'card card--option s0q-opt';
-          b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
+          b.className = 'qa-row';
+          b.innerHTML = `<span class="qa-letter">${LETTERS[oi]}.</span><span class="qa-text">${escapeHtml(opt)}</span>`;
           b.addEventListener('click', () => {
             if (answered[qi] !== null || _failed) return;
             (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
             const isRight = opt.toLowerCase() === q.a.toLowerCase();
             if (isRight) {
               answered[qi] = 'right';
-              b.classList.add('s0q-locked-right');
+              b.classList.add('is-right');
               SFX.right();
               if (answered.every(v => v === 'right')) armKey();
             } else {
               answered[qi] = 'wrong';
-              b.classList.add('s0q-locked-wrong');
+              b.classList.add('is-wrong');
               SFX.wrong();
               _failed = true;
-              // Auto-bounce back to stage 0 after a short beat so
-              // the user can re-read the article and try again.
-              setTimeout(() => {
-                go('stage0');
-              }, 900);
+              setTimeout(() => { go('stage0'); }, 900);
             }
           });
           optsHost.appendChild(b);
@@ -3079,7 +3079,7 @@ const Screens = {
     onEnter() {
       const heads = Object.keys(PARCHMENT_CARDS).sort();
       renderIndexLikePage($('#screen-index'),
-        { title: 'The Index', words: heads, backTo: 'cover', fromKey: 'index' });
+        { title: 'The Glossary', words: heads, backTo: 'cover', fromKey: 'index' });
     }
   },
 
@@ -3116,7 +3116,7 @@ const Screens = {
       const totalChapters = _CHAPTER_PLAN.length;
       el.innerHTML = `
         <div class="catalog-page">
-          ${pageTitle('Chapter Catalog')}
+          ${pageTitle('Index')}
           <div class="catalog-sub">— ${totalChapters} chapters across ${partsArr.length} parts · mainline: ${saved.mainlineChapter || 1} —</div>
           <div class="catalog-parts" id="cat-parts"></div>
         </div>
@@ -3135,6 +3135,7 @@ const Screens = {
           <button class="catalog-part-head">
             <span class="cat-part-toggle">${isOpen ? '▾' : '▸'}</span>
             <span class="cat-part-theme">${escapeHtml(part.theme)}</span>
+            <span class="cat-part-leader" aria-hidden="true"></span>
             <span class="cat-part-count">${part.rows.length} chapters${partMistakes > 0 ? ` · × ${partMistakes}` : ''}</span>
           </button>
           <div class="catalog-part-body"></div>
@@ -3275,3 +3276,13 @@ document.addEventListener('DOMContentLoaded', () => {
   intro.addEventListener('click',    onFirstTap);
   document.addEventListener('click', swallowFollowUp, true);
 });
+
+// v=89 — minimal debug exposure so an external screenshot harness
+// (or DevTools) can drive the app:  window.go(screen) /
+// window.saved / window.state.  No behaviour change for users.
+try {
+  Object.assign(window, {
+    go, saved, state,
+    PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
+  });
+} catch {}
