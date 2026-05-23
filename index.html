@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<!-- v=85 — allow normal HTTP caching; cache-busting is handled per-asset
+<!-- v=86 — allow normal HTTP caching; cache-busting is handled per-asset
      by the ?v= query string below so a fresh push still invalidates.  -->
 <meta name="theme-color" content="#0E0B1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,21 +13,21 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=UnifrakturMaguntia&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 
 <!-- Preload every background illustration in parallel so the
      screen-swap doesn't pause on a fresh download.                -->
-<link rel="preload" as="image" href="assets/bg-cover.jpg?v=85">
-<link rel="preload" as="image" href="assets/bg-stage.jpg?v=85">
-<link rel="preload" as="image" href="assets/bg-result.jpg?v=85">
-<link rel="preload" as="image" href="assets/bg-note.jpg?v=85">
-<link rel="preload" as="image" href="assets/bg-stage0.jpg?v=85">
-<link rel="preload" as="image" href="assets/banner.png?v=85">
-<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=85">
-<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=85">
-<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=85">
+<link rel="preload" as="image" href="assets/bg-cover.jpg?v=86">
+<link rel="preload" as="image" href="assets/bg-stage.jpg?v=86">
+<link rel="preload" as="image" href="assets/bg-result.jpg?v=86">
+<link rel="preload" as="image" href="assets/bg-note.jpg?v=86">
+<link rel="preload" as="image" href="assets/bg-stage0.jpg?v=86">
+<link rel="preload" as="image" href="assets/banner.png?v=86">
+<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=86">
+<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=86">
+<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=86">
 
-<link rel="stylesheet" href="styles.css?v=85">
+<link rel="stylesheet" href="styles.css?v=86">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
 
 <!-- Fixed banner at the very top of every screen. -->
 <header id="banner-top">
-  <img src="assets/banner.png?v=85" alt="Her Little Lexicon">
+  <img src="assets/banner.png?v=86" alt="Her Little Lexicon">
 </header>
 
 <!-- ===== App shell. Each <section> is one screen. =====
@@ -50,7 +50,7 @@
   <!-- Cover hub (the home) -->
   <section id="screen-cover"   class="screen"></section>
 
-  <!-- v=85: stage 0 — pre-game reading article + 3-question quiz -->
+  <!-- v=86: stage 0 — pre-game reading article + 3-question quiz -->
   <section id="screen-stage0"      class="screen"></section>
   <section id="screen-stage0-quiz" class="screen"></section>
 
@@ -71,7 +71,7 @@
   <!-- Vocab card detail (opened from note / index with the tarot flip) -->
   <section id="screen-card" class="screen"></section>
 
-  <!-- v=85: chapter catalog (cover-side; pick a chapter to play) -->
+  <!-- v=86: chapter catalog (cover-side; pick a chapter to play) -->
   <section id="screen-chapter-catalog" class="screen"></section>
 
 </div>
@@ -81,11 +81,11 @@
 
 <!-- Data + BGM + App  ----- loaded in order.  Query-string cache-buster
      forces the CDN edge to fetch the latest after every push.        -->
-<script src="data.js?v=85"></script>
-<script src="bgm.js?v=85"></script>
-<script src="app.js?v=85"></script>
+<script src="data.js?v=86"></script>
+<script src="bgm.js?v=86"></script>
+<script src="app.js?v=86"></script>
 <script>
-  /* v=85 — service worker for offline-first asset caching.  Without
+  /* v=86 — service worker for offline-first asset caching.  Without
      this the user complained the page re-downloaded every asset on
      every visit; with this, the second open of the same version
      loads instantly from the local cache.                            */

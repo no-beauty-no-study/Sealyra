@@ -40,6 +40,15 @@
   --f-iowan:  "Iowan Old Style", Georgia, Palatino, serif;
   --f-italic: 'EB Garamond', Georgia, serif;
   --f-zh:     "STSong", "Songti SC", "Hiragino Mincho ProN", serif;
+
+  /* v=86 — 16th-18th century Old-Style typography system.
+     User: "你太喜欢用现代模版了 哈哈哈我偏偏不喜欢现代".
+     Mapped to Jenson / Garamond / Caslon / Baskerville families.  */
+  --f-title:     'EB Garamond', 'Cormorant Garamond', Garamond, serif;
+  --f-subtitle:  'Libre Baskerville', Baskerville, serif;
+  --f-reading:   'Libre Caslon Text', 'Adobe Caslon Pro', Caslon, Georgia, serif;
+  --f-annot:     'IM Fell English', 'Libre Caslon Text', serif;
+  --f-smallcaps: 'Cinzel', 'Trajan Pro', serif;
 }
 
 /* ---------- 1. Reset ---------- */
@@ -7570,17 +7579,17 @@ body.bg-stage0 #banner-top  { display: none; }
    frame inside the painted ornament; the text frame itself has
    no decoration — text just sits between the painted columns.    */
 .s0-page {
-  /* v=85 — tighter symmetric padding that hugs the painted floral
-     border without crushing the text column.  Left + right + bottom
-     all 8vw; top 16vw to clear the painted headpiece + scroll-roll
-     on the asset.                                                 */
+  /* v=86 — user reported text overflowing top + left after the bg
+     was re-cropped (smaller painted ornament zone).  Top padding
+     bumped 16→22vw to clear the new tighter headpiece; sides
+     pulled in 8→7vw.                                              */
   max-width: 680px;
   margin: 0 auto;
-  padding: 16vw 8vw 10vw 8vw;
-  color: #2a1808;
-  font-family: Georgia, 'EB Garamond', 'Garamond', serif;
-  font-size: 15px;
-  line-height: 1.55;
+  padding: 22vw 7vw 12vw 7vw;
+  color: #1f1004;
+  font-family: var(--f-reading);
+  font-size: 13px;
+  line-height: 1.18;
   box-sizing: border-box;
 }
 .s0-text-frame {
@@ -7590,10 +7599,10 @@ body.bg-stage0 #banner-top  { display: none; }
   box-sizing: border-box;
 }
 @media (min-width: 640px) {
-  .s0-page { padding: 110px 90px 90px; }
+  .s0-page { padding: 130px 80px 90px; }
 }
 @media (min-width: 980px) {
-  .s0-page { padding: 130px 120px 110px; max-width: 760px; }
+  .s0-page { padding: 150px 110px 110px; max-width: 760px; }
 }
 .s0-header {
   text-align: center;
@@ -7782,31 +7791,30 @@ body.bg-stage0 #banner-top  { display: none; }
 }
 .pc-chapter-dot-label { display: none; }
 .pc-chapter-dot-ring {
+  /* v=86 — brighter cream-gold metallic so the ring reads as a
+     warm coin against the parchment, NOT the black blob the user
+     reported.  Solid cream fill + warm gold border + soft halo. */
   position: relative;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 1.8px solid #8a4f12;
-  background:
-    radial-gradient(circle at 35% 30%,
-                    rgba(255, 244, 220, 0.85) 0%,
-                    rgba(232, 196, 138, 0.45) 35%,
-                    rgba(170, 116, 54, 0.30) 90%);
+  border: 1.6px solid #c08a30;
+  background: #f5e6b0;
   box-shadow:
-    inset 0 1px 1px rgba(255, 244, 220, 0.85),
-    inset 0 -1px 1px rgba(60, 30, 8, 0.35),
-    0 1px 0 rgba(255, 244, 220, 0.55);
+    inset 0 1px 1px rgba(255, 255, 220, 0.95),
+    inset 0 -1px 1px rgba(140, 90, 36, 0.30),
+    0 0 4px rgba(232, 196, 138, 0.55);
 }
 .pc-chapter-dot-center {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: #5a3010;
+  background: #8a4f12;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 1px rgba(60, 30, 8, 0.45), 0 1px 0 rgba(255, 244, 220, 0.5);
+  box-shadow: 0 0 0 1px rgba(140, 90, 36, 0.45);
 }
 .pc-chapter-dot-label {
   font-family: 'Cinzel', Georgia, serif;
@@ -8087,3 +8095,279 @@ body.bg-stage0 .s0-chip {
 #screen-stage0-quiz { padding: 0 !important; }
 body.bg-stage0 #screen-stage0,
 body.bg-stage0 #screen-stage0-quiz { min-height: 100vh; }
+
+/* ============================================================
+   v=86 — 16th–18th century OLD-STYLE TYPOGRAPHY OVERRIDE
+   ============================================================
+   Five families layered across the app per the user's printer's
+   spec (Jenson / Garamond / Caslon / Baskerville):
+     · title       → EB Garamond, tight kerning
+     · subtitle    → Libre Baskerville italic
+     · reading     → Libre Caslon Text, tight tracking
+     · annotation  → IM Fell English (for zh, posZh, tiny labels)
+     · smallcaps   → Cinzel (chapter / stage / category strips)
+   Tight line-height + negative letter-spacing throughout — user:
+   "字间距和行距都太宽了 不适合图像记忆".                       */
+
+/* --- STAGE 0 reading page --- */
+.s0-title {
+  font-family: var(--f-title) !important;
+  font-weight: 400 !important;
+  font-size: clamp(28px, 7vw, 38px) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.03em !important;
+  color: #2a1808;
+  margin: 6px 0 4px;
+}
+.s0-chip {
+  font-family: var(--f-smallcaps) !important;
+  font-style: normal !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  color: rgba(110, 63, 18, 0.78);
+}
+.s0-sub {
+  font-family: var(--f-subtitle) !important;
+  font-style: italic !important;
+  font-size: 13px !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.01em !important;
+  color: rgba(110, 63, 18, 0.62);
+  margin-top: 6px;
+}
+.s0-para,
+.s0-para-text {
+  font-family: var(--f-reading) !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.015em !important;
+  word-spacing: -0.02em !important;
+  color: #1f1004;
+  text-align: left !important;
+}
+
+/* --- STAGE 0 QUIZ --- */
+.s0q-progress { font-family: var(--f-smallcaps) !important; letter-spacing: 0.28em !important; font-size: 11px !important; }
+.s0q-section  { font-family: var(--f-subtitle) !important; font-style: italic !important; font-size: 12px !important; letter-spacing: 0 !important; }
+.s0q-question {
+  font-family: var(--f-title) !important;
+  font-weight: 400 !important;
+  font-size: clamp(18px, 4.5vw, 22px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+  color: #1f1004;
+  margin-bottom: 22px;
+}
+.s0q-feedback { font-family: var(--f-subtitle) !important; font-style: italic !important; font-size: 12px !important; }
+
+/* --- PARCHMENT popup --- */
+.pc-word {
+  font-family: var(--f-title) !important;
+  font-weight: 400 !important;
+  font-size: 26px !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.03em !important;
+  color: #2a1808;
+}
+.pc-pos {
+  font-family: var(--f-annot) !important;
+  font-style: italic !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.005em !important;
+  color: #6a4626;
+}
+.pc-head .pc-zh,
+.pc-row .pc-line-zh,
+.pc-row .pc-line-word-zh,
+.pc-entry .pc-line-zh,
+.pc-entry .pc-line-word-zh {
+  font-family: var(--f-annot) !important;
+  font-style: italic !important;
+  font-size: 10.5px !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+  color: #5a3010;
+}
+.pc-section-label {
+  font-family: var(--f-smallcaps) !important;
+  font-style: normal !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  color: #8a4f12;
+  margin: 8px 0 2px;
+}
+.pc-row,
+.pc-row .pc-line-word,
+.pc-row .pc-line-phrase,
+.pc-entry,
+.pc-entry .pc-line-word,
+.pc-entry .pc-line-phrase,
+.pc-line,
+.pc-line .pc-line-word,
+.pc-line .pc-line-phrase {
+  font-family: var(--f-reading) !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.15 !important;
+}
+.pc-row .pc-line-word,
+.pc-entry .pc-line-word,
+.pc-line .pc-line-word {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: #3a1f08;
+}
+.pc-row .pc-line-phrase,
+.pc-entry .pc-line-phrase,
+.pc-line .pc-line-phrase {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #2a1808;
+}
+.parchment-inner {
+  font-family: var(--f-reading) !important;
+  font-size: 13px !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* --- QUESTION CARD (stage 2 + stage 3) --- */
+.q-sentence,
+.q-sentence-blanks,
+.dict-prompt {
+  font-family: var(--f-reading) !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.015em !important;
+  word-spacing: -0.02em !important;
+  color: var(--cream) !important;
+  font-style: normal !important;
+}
+.q-slot {
+  font-family: var(--f-reading) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.18 !important;
+}
+.q-card .q-zh {
+  font-family: var(--f-annot) !important;
+  font-style: italic !important;
+  font-size: 10.5px !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+}
+
+/* --- OPTION + MATCH cards (keep upright + tight) --- */
+.card.card--option,
+.card.card--match {
+  font-family: var(--f-reading) !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: clamp(13px, 3.6vw, 17px) !important;
+  line-height: 1.10 !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* --- INDEX list rows --- */
+.word-list .word-row .wr-word {
+  font-family: var(--f-reading) !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.015em !important;
+}
+.word-list .word-row .wr-pos,
+.word-list .word-row .wr-zh {
+  font-family: var(--f-annot) !important;
+  font-style: italic !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0 !important;
+}
+
+/* --- COVER / CHAPTER CATALOG headers --- */
+.book-title,
+.page-title {
+  font-family: var(--f-title) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 0.98 !important;
+}
+.frame-chapter .fc-num,
+.fc-stage,
+.catalog-section-title {
+  font-family: var(--f-smallcaps) !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  font-style: normal !important;
+}
+.frame-chapter .fc-name {
+  font-family: var(--f-title) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em !important;
+}
+.catalog-row {
+  font-family: var(--f-reading) !important;
+  font-size: 13.5px !important;
+  letter-spacing: -0.015em !important;
+}
+.cat-num, .catalog-row .cat-num {
+  font-family: var(--f-smallcaps) !important;
+  font-style: normal !important;
+  letter-spacing: 0.18em !important;
+}
+.cat-theme, .catalog-row .cat-theme {
+  font-family: var(--f-reading) !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* --- REVIEW cards (note hub / stage 3 result) --- */
+.review-card .rev-word {
+  font-family: var(--f-title) !important;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.02em !important;
+}
+.review-card .rev-pos,
+.review-card .rev-zh,
+.review-card .rev-example-zh,
+.review-card .rev-line-zh {
+  font-family: var(--f-annot) !important;
+  font-style: italic !important;
+  font-size: 10px !important;
+  letter-spacing: 0 !important;
+}
+.review-card .rev-example {
+  font-family: var(--f-reading) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12.5px !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.015em !important;
+}
+.review-card .rev-section-label {
+  font-family: var(--f-smallcaps) !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase !important;
+  font-size: 9.5px !important;
+}
+.review-card .rev-line-word {
+  font-family: var(--f-reading) !important;
+  font-weight: 400 !important;
+  font-size: 11px !important;
+}
+.review-card .rev-line-phrase {
+  font-family: var(--f-reading) !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+}
