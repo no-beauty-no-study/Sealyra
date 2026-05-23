@@ -1000,16 +1000,27 @@ function showParchment(word) {
   if (!c) return;
 
   const inNote = !!(saved.notes && saved.notes[word]);
+  // v=85 — compute chapter dots BEFORE the innerHTML template uses them.
+  const _wcMapEarly = (typeof WORD_CHAPTERS !== 'undefined') ? WORD_CHAPTERS : {};
+  const _wcEarly = _wcMapEarly[(c.h || '').toLowerCase()] || [];
+  const _dotsHtml = _wcEarly.length
+    ? `<div class="pc-chapter-dots">${_wcEarly.map(e => {
+        const labelChapter = (typeof CHAPTER_PLAN !== 'undefined' && CHAPTER_PLAN[e.idx - 1])
+          ? (CHAPTER_PLAN[e.idx - 1].section || String(e.idx))
+          : String(e.idx);
+        const title = `Chapter ${labelChapter} · ${(e.theme || '').replace(/^[\d.]+\s*/, '')}`;
+        return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">
+          <span class="pc-chapter-dot-ring"></span>
+          <span class="pc-chapter-dot-center"></span>
+        </button>`;
+      }).join('')}</div>`
+    : '';
   const veil = document.createElement('div');
   veil.className = 'parchment-veil';
   veil.innerHTML = `
     <div class="parchment-card">
-      <!-- v=75 — "tap the page" hint anchored to the painted scroll-
-           roll above the inner content, OUTSIDE the scrolling area so
-           it stays visible while the user scrolls long entries.
-           The old "fold this page" button retired per user — it
-           scrolled with content and felt out of place.              -->
       <div class="pc-tap-hint pc-tap-hint--fixed">— tap the page —</div>
+      ${_dotsHtml}
       <div class="parchment-inner">
         <div class="pc-stack"></div>
         <div class="pc-copy">
@@ -1054,26 +1065,9 @@ function showParchment(word) {
   // the section number (e.g. "1.1") and the long theme is the
   // tooltip.  Tap to jump.  Replaces the wider .pc-chapter-chip row
   // per user: "搞几个圆圈 和你画的小钥匙同款".
-  // v=84 — chapter dots redesigned per user: small METAL ring with
-  // a dot in the centre (like a button or the parchment-key bow).
-  // The chapter number sits as a tooltip on hover; the ring itself
-  // is purely ornamental.  Tap → flash + open that chapter's
-  // reading article.                                              */
-  const chipHtml = _wc.length
-    ? `<div class="pc-chapter-dots">${_wc.map(e => {
-        const labelChapter = (typeof CHAPTER_PLAN !== 'undefined' && CHAPTER_PLAN[e.idx - 1])
-          ? (CHAPTER_PLAN[e.idx - 1].section || String(e.idx))
-          : String(e.idx);
-        const title = `Chapter ${labelChapter} · ${(e.theme || '').replace(/^[\d.]+\s*/, '')}`;
-        return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">
-          <span class="pc-chapter-dot-ring"></span>
-          <span class="pc-chapter-dot-center"></span>
-          <span class="pc-chapter-dot-label">${escapeHtml(labelChapter)}</span>
-        </button>`;
-      }).join('')}</div>`
-    : '';
+  // v=85 — chapter dots rendered OUTSIDE the items stack (see
+  // veil.innerHTML above).  Head row stays clean of them.
   items.push({ kind: 'head', html: `
-    ${chipHtml}
     <div class="pc-head" data-sp="${escapeAttr(c.h)}">
       <button class="pc-play" aria-label="play">♪</button>
       <span class="pc-word">${escapeHtml(c.h)}</span>
@@ -2101,15 +2095,11 @@ const Screens = {
       function showActions() {
         if (!$('.s0-actions .next-door', el)) {
           $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => {
+            // v=85 — page-flip veil retired (the swept gold band was
+            // reading as the "白色横条" the user kept noticing).
+            // Direct transition + pageTurn sound only.
             (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
-            const veil = document.createElement('div');
-            veil.className = 's0-pageflip-veil';
-            document.body.appendChild(veil);
-            requestAnimationFrame(() => veil.classList.add('is-flipping'));
-            setTimeout(() => {
-              go('stage0-quiz');
-              setTimeout(() => veil.remove(), 600);
-            }, 380);
+            go('stage0-quiz');
           }, { confirm: false }));
           $('.s0-tap-hint', el)?.classList.add('is-gone');
         }
