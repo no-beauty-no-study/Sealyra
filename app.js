@@ -2048,7 +2048,6 @@ const Screens = {
               <div class="s0-sub">— tap the page to reveal each line —</div>
             </header>
             <section class="s0-section">${paraHtml}</section>
-            <div class="s0-actions"></div>
             <div class="s0-tap-hint">— tap to read on —</div>
           </div>
         </div>
@@ -2092,21 +2091,36 @@ const Screens = {
       let revealIdx = 1;
       const total = paras.length;
       const frame = $('.s0-text-frame', el);
+      // v=87 — replaced the chunky "Begin Questions" button with a
+      // small vertical KEY glyph at the text frame's bottom-right.
+      // Tap → questions screen.  Per user: "点击书页右下角的钥匙
+      // 进行下一步得了 (竖着的钥匙符号)".
       function showActions() {
-        if (!$('.s0-actions .next-door', el)) {
-          $('.s0-actions', el).appendChild(nextDoor('Begin Questions', () => {
-            // v=85 — page-flip veil retired (the swept gold band was
-            // reading as the "白色横条" the user kept noticing).
-            // Direct transition + pageTurn sound only.
+        if (!$('.s0-next-key', el)) {
+          const key = document.createElement('button');
+          key.className = 's0-next-key is-armed';
+          key.setAttribute('aria-label', 'begin questions');
+          key.innerHTML = `
+            <svg viewBox="0 0 14 32" width="22" height="36" aria-hidden="true">
+              <!-- vertical skeleton key: bow at top, shaft, two teeth -->
+              <circle cx="7" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="7" cy="5" r="1.2" fill="currentColor"/>
+              <line x1="7" y1="9" x2="7" y2="29" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="7"  y1="22" x2="11" y2="22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <line x1="7"  y1="26" x2="10" y2="26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          `;
+          key.addEventListener('click', () => {
             (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
             go('stage0-quiz');
-          }, { confirm: false }));
+          });
+          $('.s0-text-frame', el).appendChild(key);
           $('.s0-tap-hint', el)?.classList.add('is-gone');
         }
       }
       if (total <= 1) showActions();
       function advance(ev) {
-        if (ev && ev.target && ev.target.closest('.s0-jump, .s0-corner-back, .next-door')) return;
+        if (ev && ev.target && ev.target.closest('.s0-jump, .s0-corner-back, .s0-next-key')) return;
         if (revealIdx >= total) return;
         const para = el.querySelector(`.s0-para[data-idx="${revealIdx}"]`);
         if (!para) return;
@@ -2141,80 +2155,99 @@ const Screens = {
         .filter(q => q.q && q.a)
         .map(q => ({ q: q.q, a: q.a, secId: section.id, secTitle: section.title }));
       if (allQs.length === 0) { _stage0AdvanceFromQuiz(); return; }
-      // Build distractor pool from OTHER sections in the same article
-      // so we have enough noun candidates.
+      // distractor pool: all noun answers across this article.
       const distractorPool = new Set();
       article.sections.forEach(s => s.questions.forEach(q => {
         if (q.a) distractorPool.add(q.a);
       }));
-      const picks = shuffle(allQs).slice(0, 3);
       const nounPool = Array.from(distractorPool);
-      const state0 = { idx: 0, correct: 0, answered: false, picks };
-      function drawQ() {
-        const q = state0.picks[state0.idx];
+      const picks = shuffle(allQs).slice(0, 3);
+
+      // v=87 — ALL THREE questions on ONE scrolling page.  User:
+      // "问题是在一整页的 不是分三页".  Each question block has
+      // its own options grid + feedback line.  A small vertical
+      // key glyph at the bottom-right of the text frame routes to
+      // stage 1 when at least one answer is locked in (or any
+      // time — we don't force completion).
+      const qBlocks = picks.map((q, i) => `
+        <div class="s0q-block" data-qi="${i}">
+          <div class="s0q-question">${escapeHtml(q.q)}</div>
+          <div class="s0q-options"></div>
+          <div class="s0q-feedback"></div>
+        </div>
+      `).join('');
+      el.innerHTML = `
+        <div class="s0-page s0q-page-frame">
+          <div class="s0-text-frame">
+            <header class="s0-header">
+              <div class="s0-chip">${escapeHtml(article.title)}</div>
+              <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+              <div class="s0-sub">— three questions · tap the key when done —</div>
+            </header>
+            <div class="s0q-stack">${qBlocks}</div>
+          </div>
+        </div>
+      `;
+      el.appendChild(closeCorner({ to: 'cover' }));
+
+      const answered = new Array(picks.length).fill(false);
+      $$('.s0q-block', el).forEach((block, qi) => {
+        const q = picks[qi];
         const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
         const options = shuffle([q.a, ...distractors]);
-        el.innerHTML = `
-          <div class="s0q-page">
-            <div class="s0q-progress">${state0.idx + 1} of 3</div>
-            <div class="s0q-section">${escapeHtml(q.secId)} · ${escapeHtml(q.secTitle)}</div>
-            <h2 class="s0q-question">${escapeHtml(q.q)}</h2>
-            <div class="s0q-options"></div>
-            <div class="s0q-feedback" id="s0q-feedback"></div>
-            <div class="s0q-actions"></div>
-          </div>
-        `;
-        const optsHost = $('.s0q-options', el);
+        const optsHost = $('.s0q-options', block);
         options.forEach(opt => {
           const b = document.createElement('button');
           b.className = 'card card--option s0q-opt';
           b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(opt)}</span>`;
           b.addEventListener('click', () => {
-            if (state0.answered) return;
-            state0.answered = true;
+            if (answered[qi]) return;
+            answered[qi] = true;
             (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
             const isRight = opt.toLowerCase() === q.a.toLowerCase();
             if (isRight) {
-              state0.correct++;
               b.classList.add('reveal-right');
               SFX.right();
             } else {
               b.classList.add('picked-wrong');
-              // Also highlight the correct one
-              $$('.s0q-opt', el).forEach(other => {
+              $$('.s0q-opt', block).forEach(other => {
                 if (other.querySelector('.mc-text').textContent.toLowerCase() === q.a.toLowerCase()) {
                   other.classList.add('reveal-right');
                 }
               });
               SFX.wrong();
             }
-            $('#s0q-feedback', el).innerHTML = isRight
+            $('.s0q-feedback', block).innerHTML = isRight
               ? '<em>✦ inscribed</em>'
               : `<em>the answer was <span class="s0q-truth">${escapeHtml(q.a)}</span></em>`;
-            const isLast = (state0.idx >= picks.length - 1);
-            $('.s0q-actions', el).appendChild(nextDoor(
-              isLast ? 'Continue' : 'Next Question',
-              () => {
-                if (isLast) {
-                  if ((saved.stage || 0) < 1) {
-                    saved.stage = 1;
-                    Store.save();
-                  }
-                  _stage0AdvanceFromQuiz();
-                } else {
-                  state0.idx++;
-                  state0.answered = false;
-                  drawQ();
-                }
-              },
-              { confirm: false }
-            ));
+            // If all 3 answered, arm the bottom key.
+            if (answered.every(Boolean)) armKey();
           });
           optsHost.appendChild(b);
         });
+      });
+
+      function armKey() {
+        if ($('.s0-next-key', el)) return;
+        const key = document.createElement('button');
+        key.className = 's0-next-key is-armed';
+        key.setAttribute('aria-label', 'begin stage 1');
+        key.innerHTML = `
+          <svg viewBox="0 0 14 32" width="22" height="36" aria-hidden="true">
+            <circle cx="7" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="7" cy="5" r="1.2" fill="currentColor"/>
+            <line x1="7" y1="9" x2="7" y2="29" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="7"  y1="22" x2="11" y2="22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="7"  y1="26" x2="10" y2="26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        `;
+        key.addEventListener('click', () => {
+          (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
+          if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
+          _stage0AdvanceFromQuiz();
+        });
+        $('.s0-text-frame', el).appendChild(key);
       }
-      drawQ();
-      el.appendChild(closeCorner({ to: 'cover' }));
     }
   },
   stage1: {

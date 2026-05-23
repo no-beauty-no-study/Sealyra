@@ -7572,8 +7572,10 @@ body { background: transparent !important; }
    section has a chapter-number prefix in italic + title in
    capitalised serif.  Inline .s0-jump words are jumpable to
    their parchment card.  The whole page scrolls.               */
+/* v=87 — banner shows again on stage 0; the painted bg already
+   reserves a margin at top so the banner sits cleanly above the
+   text frame.  User: "banner 咋没了 怪怪的".                    */
 body.bg-stage0 .scene-veil { display: none; }
-body.bg-stage0 #banner-top  { display: none; }
 /* v=83 — the .s0-page is the OUTER container that lets the painted
    floral border on bg-stage0.jpg show.  Padding pushes the text
    frame inside the painted ornament; the text frame itself has
@@ -7593,10 +7595,74 @@ body.bg-stage0 #banner-top  { display: none; }
   box-sizing: border-box;
 }
 .s0-text-frame {
+  /* v=87 — REAL frame: hairline gold border + inner dotted gold-
+     bead frame, same idiom as .q-card.  User: "你根本没画框吧?".
+     Sits centred inside the painted floral border + reserves
+     bottom padding for the corner key glyph.                      */
   position: relative;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  padding: 22px 18px 56px;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 40%,
+                    rgba(255, 244, 220, 0.18) 0%,
+                    transparent 80%),
+    rgba(244, 234, 200, 0.62);
+  border: 1px solid rgba(140, 90, 36, 0.55);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 14px rgba(60, 30, 8, 0.32),
+    inset 0 0 22px rgba(255, 244, 220, 0.35);
+}
+.s0-text-frame::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, rgba(140, 90, 36, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) top    / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, rgba(140, 90, 36, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(0deg,  rgba(140, 90, 36, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) left   / 1px 100% no-repeat,
+    repeating-linear-gradient(0deg,  rgba(140, 90, 36, 0.55) 0 1.4px,
+                              transparent 1.4px 4.2px) right  / 1px 100% no-repeat;
+}
+.s0-text-frame > * { position: relative; z-index: 1; }
+
+/* v=87 — small vertical key glyph at the bottom-right corner of
+   the text frame.  Tapping it advances to the questions screen.
+   Replaces the chunky "Begin Questions" CTA per user request.   */
+.s0-next-key {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  color: #8a4f12;
+  transition: color 0.18s, transform 0.12s;
+}
+.s0-next-key:hover  { color: #2a1808; transform: translateY(-2px); }
+.s0-next-key:active { transform: translateY(0) scale(0.96); }
+.s0-next-key svg { display: block; filter: drop-shadow(0 1px 0 rgba(255, 244, 220, 0.7)); }
+.s0-next-key.is-armed {
+  animation: s0-key-breathe 1.8s ease-in-out infinite;
+}
+@keyframes s0-key-breathe {
+  0%, 100% { color: #8a4f12; }
+  50%      { color: #c08a30; transform: translateY(-2px); }
 }
 @media (min-width: 640px) {
   .s0-page { padding: 130px 80px 90px; }
@@ -8371,3 +8437,83 @@ body.bg-stage0 #screen-stage0-quiz { min-height: 100vh; }
   font-weight: 700 !important;
   font-size: 12.5px !important;
 }
+
+/* v=87 — stage 0 quiz on ONE scrolling page: 3 question blocks
+   stacked, each with its own option grid + feedback line.  The
+   bottom-right key glyph arms when all 3 are answered.          */
+.s0q-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 12px;
+}
+.s0q-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 0 14px;
+  border-bottom: 1px dotted rgba(140, 90, 36, 0.32);
+}
+.s0q-block:last-child { border-bottom: 0; }
+.s0q-block .s0q-question {
+  font-family: var(--f-title);
+  font-weight: 400;
+  font-size: clamp(15px, 4vw, 18px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #1f1004;
+  margin: 0;
+}
+.s0q-block .s0q-options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+.s0q-block .s0q-options .card--option {
+  /* Quiz options sit on a cream page, so override the dark-velvet
+     bodies of the regular .card.card--option.                    */
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 40%,
+                    rgba(255, 244, 220, 0.22) 0%,
+                    transparent 80%),
+    linear-gradient(160deg,
+                    rgba(244, 230, 200, 0.95) 0%,
+                    rgba(232, 218, 178, 0.95) 100%) !important;
+  border-color: rgba(140, 90, 36, 0.62) !important;
+  color: #1f1004 !important;
+  min-height: 44px !important;
+  font-size: clamp(12px, 3.2vw, 14px) !important;
+}
+.s0q-block .s0q-options .card--option.reveal-right {
+  border-color: rgba(140, 90, 36, 1) !important;
+  box-shadow: 0 0 14px rgba(232, 196, 138, 0.6);
+}
+.s0q-block .s0q-options .card--option.picked-wrong {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 40%,
+                    rgba(220, 130, 130, 0.18) 0%,
+                    transparent 80%),
+    linear-gradient(160deg,
+                    rgba(216, 180, 168, 0.95) 0%,
+                    rgba(190, 150, 140, 0.95) 100%) !important;
+  filter: brightness(0.92);
+}
+.s0q-block .s0q-feedback {
+  font-family: var(--f-subtitle);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: rgba(110, 63, 18, 0.78);
+  text-align: center;
+  min-height: 16px;
+}
+.s0q-truth {
+  color: #2a1808;
+  font-family: var(--f-reading);
+  font-weight: 700;
+  text-decoration: underline dotted rgba(140, 90, 36, 0.7);
+  text-underline-offset: 2px;
+}
+
+/* Reuse the stage-0 page padding for the quiz page too. */
+.s0q-page-frame {}
