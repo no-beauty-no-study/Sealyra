@@ -1101,7 +1101,10 @@ function showParchment(word) {
   const inNote = !!(saved.notes && saved.notes[word]);
   // v=85 — compute chapter dots BEFORE the innerHTML template uses them.
   const _wcMapEarly = (typeof WORD_CHAPTERS !== 'undefined') ? WORD_CHAPTERS : {};
-  const _wcEarly = _wcMapEarly[(c.h || '').toLowerCase()] || [];
+  // v=98 — cap chapter dots at 6 in a single row.  Some words (e.g.
+  // "ion") appear in 87 chapters and the wall-of-dots was a visual
+  // assault.  Per user: "只能放一排哈… 最多放6个吧".
+  const _wcEarly = (_wcMapEarly[(c.h || '').toLowerCase()] || []).slice(0, 6);
   const _dotsHtml = _wcEarly.length
     ? `<div class="pc-chapter-dots">${_wcEarly.map(e => {
         const labelChapter = (typeof CHAPTER_PLAN !== 'undefined' && CHAPTER_PLAN[e.idx - 1])
@@ -2309,9 +2312,16 @@ const Screens = {
 
       const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
       let _failed = false;
-      // v=90 — paper-exam options: plain "A. xxx / B. xxx" rows, no
-      // card chrome.  Per user: "stage0 的三组按钮全都不一样大 别搞
-      // 按钮了 就搞很古典的那种 A.xxxx B.xxx 很有纸张上的考试感".
+      let _activeQi = -1;            // -1 = none revealed yet
+      // v=98 — quiz pedagogy rewritten per user:
+      //   "每一个问题都要点击任意部分出来一个题和四个答案+自动播
+      //    放语音.  选错了播放用户选择的单词语音后直接返回.
+      //    选对了播放语音自动浮现下一题".
+      // Only ONE question visible at a time; tap anywhere to reveal
+      // the next.  After the LAST question is answered correctly the
+      // "next page" link arms (in the foot) instead of advancing
+      // straight to stage 1 — that gives the user a single tap to
+      // turn the page consciously.
       const LETTERS = ['A', 'B', 'C', 'D'];
       $$('.s0q-block', el).forEach((block, qi) => {
         const q = picks[qi];
@@ -2322,25 +2332,55 @@ const Screens = {
           const b = document.createElement('button');
           b.className = 'qa-row';
           b.innerHTML = `<span class="qa-letter">${LETTERS[oi]}.</span><span class="qa-text">${escapeHtml(opt)}</span>`;
-          b.addEventListener('click', () => {
+          b.addEventListener('click', (ev) => {
+            ev.stopPropagation();
             if (answered[qi] !== null || _failed) return;
             (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
             const isRight = opt.toLowerCase() === q.a.toLowerCase();
+            speak(opt);
             if (isRight) {
               answered[qi] = 'right';
               b.classList.add('is-right');
               SFX.right();
-              if (answered.every(v => v === 'right')) armKey();
+              if (answered.every(v => v === 'right')) {
+                setTimeout(() => armKey(), 700);
+              } else {
+                setTimeout(() => _revealNextQ(), 850);
+              }
             } else {
               answered[qi] = 'wrong';
               b.classList.add('is-wrong');
               SFX.wrong();
               _failed = true;
-              setTimeout(() => { go('stage0'); }, 900);
+              setTimeout(() => { go('stage0'); }, 1100);
             }
           });
           optsHost.appendChild(b);
         });
+      });
+      // Hide all questions on entry — wait for a page tap to reveal Q1.
+      $$('.s0q-block', el).forEach(b => b.classList.remove('is-active'));
+      function _revealNextQ() {
+        const blocks = $$('.s0q-block', el);
+        const nextIdx = blocks.findIndex((b, i) => !b.classList.contains('is-active') && i > _activeQi);
+        if (nextIdx < 0) return;
+        // Hide all previous active questions; show this one.
+        blocks.forEach(b => b.classList.remove('is-active'));
+        const block = blocks[nextIdx];
+        block.classList.add('is-active');
+        _activeQi = nextIdx;
+        setTimeout(() => speak(picks[nextIdx].q), 250);
+      }
+      // Tap anywhere on the page = reveal next question (until one is
+      // already showing and unanswered, in which case taps do nothing
+      // except option clicks).
+      $('.s0-page', el).addEventListener('click', (ev) => {
+        if (ev.target.closest('.qa-row')) return;
+        if (ev.target.closest('.s0-next-link')) return;
+        if (ev.target.closest('.s0-corner-close')) return;
+        if (_activeQi < 0 || (_activeQi >= 0 && answered[_activeQi] !== null && !_failed)) {
+          _revealNextQ();
+        }
       });
 
       function armKey() {
