@@ -2139,15 +2139,22 @@ const Screens = {
         <div class="s0-para" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
       `).join('');
       const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
+      // v=99 — header gets the "next page" link directly under the
+      // chapter title (filling the dead-space between title and body
+      // the user had been complaining about).  Foot becomes the
+      // pure decorative folio digit in the bottom-right corner.
+      const _pageNum = ((saved.chapter || 1) - 1) * 2 + 1;
       el.innerHTML = `
         <div class="s0-page">
           <div class="s0-text-frame">
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+              <button class="s0-next-link s0-next-link--inhead" aria-label="turn page to quiz">next page</button>
             </header>
             <section class="s0-section">${paraHtml}</section>
           </div>
+          <span class="s0-folio">${_pageNum}</span>
         </div>
       `;
       if (fromParchment) {
@@ -2177,31 +2184,20 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // v=96 — book-page furniture, written ON the paper:
-      //   centre  →  next page  (small, italic, soft gold glow)
-      //   right   →  N           (a single illuminated digit
-      //                           tucked into the painted floral
-      //                           corner — decorative, not a button)
-      // No more ››› / dashes — user found both ugly.
-      const _pageNum = ((saved.chapter || 1) - 1) * 2 + 1;
-      const _foot = document.createElement('div');
-      _foot.className = 's0-foot';
-      _foot.innerHTML = `
-        <button class="s0-next-link" aria-label="turn page to quiz">next page</button>
-        <span class="s0-folio">${_pageNum}</span>
-      `;
-      const _foot_key = $('.s0-next-link', _foot);
+      // v=99 — wire the in-header "next page" link to advance to
+      // the quiz.  Arms (gold pulse) once every sentence is
+      // revealed.
+      const _foot_key = $('.s0-next-link', el);
       function _armKeyIfDone() {
         const total = $$('.s0-para', el).length;
         const done  = $$('.s0-para.is-revealed', el).length;
-        if (done >= total) _foot_key.classList.add('is-armed');
+        if (done >= total && _foot_key) _foot_key.classList.add('is-armed');
       }
-      _foot_key.addEventListener('click', (ev) => {
+      if (_foot_key) _foot_key.addEventListener('click', (ev) => {
         ev.stopPropagation();
         (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
         go('stage0-quiz');
       });
-      $('.s0-text-frame', el).appendChild(_foot);
       // v=94 — tap ANYWHERE on the page reveals the NEXT sentence in
       // order and speaks just that sentence.  Tapping an already-
       // revealed sentence replays its TTS.  Per user: "点击任意部分
@@ -2286,29 +2282,24 @@ const Screens = {
           <div class="s0q-options"></div>
         </div>
       `).join('');
+      // v=99 — quiz furniture: in-header "next page" link (hidden
+      // until all 3 are correct), bottom-right decorative folio
+      // digit.
+      const _qpage = ((saved.chapter || 1) - 1) * 2 + 2;
       el.innerHTML = `
         <div class="s0-page s0q-page-frame">
           <div class="s0-text-frame">
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+              <button class="s0-next-link s0-next-link--inhead is-hidden" aria-label="begin stage 1">next page</button>
             </header>
             <div class="s0q-stack">${qBlocks}</div>
           </div>
+          <span class="s0-folio">${_qpage}</span>
         </div>
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
-      // v=96 — quiz folio: illuminated page digit in the right-hand
-      // floral corner, soft-gold "next page" link in the centre.
-      // The link is hidden until all 3 questions are correct.
-      const _qpage = ((saved.chapter || 1) - 1) * 2 + 2;
-      const _qfoot = document.createElement('div');
-      _qfoot.className = 's0-foot';
-      _qfoot.innerHTML = `
-        <span class="s0-foot-spacer" aria-hidden="true"></span>
-        <span class="s0-folio">${_qpage}</span>
-      `;
-      $('.s0-text-frame', el).appendChild(_qfoot);
 
       const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
       let _failed = false;
@@ -2384,19 +2375,15 @@ const Screens = {
       });
 
       function armKey() {
-        if ($('.s0-next-link', _qfoot)) return;
-        const key = document.createElement('button');
-        key.className = 's0-next-link is-armed';
-        key.setAttribute('aria-label', 'begin stage 1');
-        key.textContent = 'next page';
-        key.addEventListener('click', () => {
+        const link = $('.s0-next-link', el);
+        if (!link || link.classList.contains('is-armed')) return;
+        link.classList.remove('is-hidden');
+        link.classList.add('is-armed');
+        link.addEventListener('click', () => {
           (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
           if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
           _stage0AdvanceFromQuiz();
-        });
-        const spacer = $('.s0-foot-spacer', _qfoot);
-        if (spacer) spacer.replaceWith(key);
-        else        _qfoot.insertBefore(key, _qfoot.firstChild);
+        }, { once: true });
       }
       // Auto-fit so 3 question blocks stay inside the painted page.
       requestAnimationFrame(() => _s0FitToPage(el));
