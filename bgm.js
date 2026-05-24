@@ -1,4 +1,4 @@
-/* v=101 — Lan BGM (mp3 player).
+/* v=102 — Lan BGM (mp3 player).
    Replaces the old Web Audio synth.  Plays the 14 mp3 tracks in
    assets/ per the user's pool config:
 
@@ -54,7 +54,7 @@
   let _volume = 0.42;
   let _fading = null;
 
-  function _track(name) { return ASSET_BASE + name + '?v=101'; }
+  function _track(name) { return ASSET_BASE + name + '?v=102'; }
   function _pick(pool) {
     if (pool.mode === 'fixed') return pool.track;
     const ts = pool.tracks || [];
@@ -136,8 +136,29 @@
   function playGameRandom(opts)   { return playForPool((opts && opts.pool) || 'stage1_game',   opts); }
   function playResultRandom(opts) { return playForPool((opts && opts.pool) || 'stage1_result', opts); }
 
+  // v=102 — unlock() restored.  Called from inside user-gesture
+  // handlers (cover CTA, etc.) so the <audio> element is flagged
+  // as user-activated for iOS / autoplay-blocked browsers.  Plays
+  // a 1-frame silent buffer then immediately pauses, which is the
+  // standard mp3 unlock dance.                                     */
+  let _unlocked = false;
+  function unlock() {
+    if (_unlocked) return;
+    const a = _ensureAudio();
+    try {
+      const wasMuted = a.muted;
+      a.muted = true;
+      // 1-second silent mp3 (base64), ~270 bytes
+      a.src = 'data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjQ1LjEwMAAAAAAAAAAAAAAA//tQwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAACAAACcAACAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf//////////////////////////////////////////AAAAOUxBTUUzLjEwMAGqAAAAAC4AABRGJANcaAAAegAAAnA=';
+      const p = a.play();
+      const after = () => { try { a.pause(); a.src = ''; a.muted = wasMuted; } catch {}; _unlocked = true; };
+      if (p && typeof p.then === 'function') p.then(after).catch(after);
+      else after();
+    } catch { _unlocked = true; }
+  }
+
   window.LanBGM = {
-    playForPool, stop, setVolume,
+    playForPool, stop, setVolume, unlock,
     playHomeRandom, playGameRandom, playResultRandom,
     play: playForPool,
   };

@@ -7730,9 +7730,7 @@ body.bg-stage0 .scene-veil { display: none; }
    chapter title and the body.  Per user: "另外nextpage你还是放在
    1.1 the universe的下面的吧 正好那中间空了一行".                  */
 .s0-next-link {
-  /* v=101 — quieter still.  Subtitle face (Libre Baskerville italic
-     per the user's typography spec), small, low-contrast — blends
-     into the page like a printer's marginalia, not a button.      */
+  /* v=102 — static (no animation).  User: "next page会动 不要动". */
   display: inline-block;
   padding: 0;
   margin: 4px auto 2px;
@@ -7745,20 +7743,13 @@ body.bg-stage0 .scene-veil { display: none; }
   font-size: 11.5px;
   line-height: 1;
   letter-spacing: 0.1em;
-  color: rgba(60, 30, 8, 0.42);
-  transition: color 0.22s, letter-spacing 0.22s;
+  color: rgba(60, 30, 8, 0.55);
+  transition: color 0.22s;
 }
-.s0-next-link:hover  { color: rgba(60, 30, 8, 0.78); letter-spacing: 0.18em; }
+.s0-next-link:hover  { color: #2a1808; }
 .s0-next-link:active { color: #2a1808; }
-.s0-next-link.is-armed {
-  color: rgba(60, 30, 8, 0.78);
-  animation: s0-next-arm 2.4s ease-in-out infinite;
-}
+.s0-next-link.is-armed { color: #2a1808; }
 .s0-next-link.is-hidden { display: none !important; }
-@keyframes s0-next-arm {
-  0%, 100% { color: rgba(60, 30, 8, 0.62); letter-spacing: 0.10em; }
-  50%      { color: #2a1808;               letter-spacing: 0.16em; }
-}
 .s0-next-link:hover { letter-spacing: 0.22em; transform: translateY(-1px); }
 .s0-next-link:active { transform: translateY(0) scale(0.96); }
 .s0-next-link.is-armed {
@@ -8284,9 +8275,9 @@ body.bg-stage0 .s0-chip {
   color: rgba(110, 63, 18, 0.62);
   font-size: 10.5px;
 }
-.s0-page { padding: 14vw 7vw 12vw 30vw; }   /* v=101 — push column further right */
-@media (min-width: 640px) { .s0-page { padding: 100px 70px 110px 200px; } }
-@media (min-width: 980px) { .s0-page { padding: 110px 90px 130px 240px; max-width: 840px; } }
+.s0-page { padding: 14vw 7vw 12vw 36vw; }   /* v=102 — push column further right */
+@media (min-width: 640px) { .s0-page { padding: 100px 70px 110px 230px; } }
+@media (min-width: 980px) { .s0-page { padding: 110px 90px 130px 280px; max-width: 860px; } }
 
 /* Guarantee the text frame fills the available width even if a
    tight flex parent tries to shrink it (the user reported "右边
