@@ -1109,8 +1109,7 @@ function showParchment(word) {
           : String(e.idx);
         const title = `Chapter ${labelChapter} · ${(e.theme || '').replace(/^[\d.]+\s*/, '')}`;
         return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">
-          <span class="pc-chapter-dot-ring"></span>
-          <span class="pc-chapter-dot-center"></span>
+          <span class="pc-chapter-dot-glyph">✦</span>
         </button>`;
       }).join('')}</div>`
     : '';
@@ -2175,25 +2174,29 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // v=94 — visible "next page" button bottom-right (was a tiny
-      // unlabelled key glyph the user couldn't find).  Arms (breathes
-      // gold) once every sentence is revealed; tapping it advances to
-      // the quiz.
-      const key = document.createElement('button');
-      key.className = 's0-next-key';
-      key.setAttribute('aria-label', 'turn page to quiz');
-      key.innerHTML = `<span class="nk-label">turn page</span><span class="nk-chev">❯</span>`;
+      // v=95 — page furniture written ON the paper: a centred page
+      // number (· N ·) at the bottom and a >>> page-turn glyph at
+      // the bottom-right, both in italic ink — no button chrome.
+      // 181 chapters × (reading + quiz) = 362 pages.
+      const _pageNum = ((saved.chapter || 1) - 1) * 2 + 1;
+      const _foot = document.createElement('div');
+      _foot.className = 's0-foot';
+      _foot.innerHTML = `
+        <span class="s0-folio">— ${_pageNum} —</span>
+        <button class="s0-next-key" aria-label="turn page to quiz">›››</button>
+      `;
+      const _foot_key = $('.s0-next-key', _foot);
       function _armKeyIfDone() {
         const total = $$('.s0-para', el).length;
         const done  = $$('.s0-para.is-revealed', el).length;
-        if (done >= total) key.classList.add('is-armed');
+        if (done >= total) _foot_key.classList.add('is-armed');
       }
-      key.addEventListener('click', (ev) => {
+      _foot_key.addEventListener('click', (ev) => {
         ev.stopPropagation();
         (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
         go('stage0-quiz');
       });
-      $('.s0-text-frame', el).appendChild(key);
+      $('.s0-text-frame', el).appendChild(_foot);
       // v=94 — tap ANYWHERE on the page reveals the NEXT sentence in
       // order and speaks just that sentence.  Tapping an already-
       // revealed sentence replays its TTS.  Per user: "点击任意部分
@@ -2290,6 +2293,16 @@ const Screens = {
         </div>
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
+      // v=95 — quiz folio: page number on the paper bottom-centre,
+      // disabled ›› on the right that arms once all 3 are correct.
+      const _qpage = ((saved.chapter || 1) - 1) * 2 + 2;
+      const _qfoot = document.createElement('div');
+      _qfoot.className = 's0-foot';
+      _qfoot.innerHTML = `
+        <span class="s0-folio">— ${_qpage} —</span>
+        <span class="s0-foot-spacer" aria-hidden="true"></span>
+      `;
+      $('.s0-text-frame', el).appendChild(_qfoot);
 
       const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
       let _failed = false;
@@ -2328,25 +2341,19 @@ const Screens = {
       });
 
       function armKey() {
-        if ($('.s0-next-key', el)) return;
+        if ($('.s0-next-key', _qfoot)) return;
         const key = document.createElement('button');
         key.className = 's0-next-key is-armed';
         key.setAttribute('aria-label', 'begin stage 1');
-        key.innerHTML = `
-          <svg viewBox="0 0 14 32" width="22" height="36" aria-hidden="true">
-            <circle cx="7" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="7" cy="5" r="1.2" fill="currentColor"/>
-            <line x1="7" y1="9" x2="7" y2="29" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="7"  y1="22" x2="11" y2="22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="7"  y1="26" x2="10" y2="26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        `;
+        key.textContent = '›››';
         key.addEventListener('click', () => {
           (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
           if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
           _stage0AdvanceFromQuiz();
         });
-        $('.s0-text-frame', el).appendChild(key);
+        const spacer = $('.s0-foot-spacer', _qfoot);
+        if (spacer) spacer.replaceWith(key);
+        else        _qfoot.appendChild(key);
       }
       // Auto-fit so 3 question blocks stay inside the painted page.
       requestAnimationFrame(() => _s0FitToPage(el));

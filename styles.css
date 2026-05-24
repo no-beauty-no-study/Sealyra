@@ -7222,19 +7222,22 @@ body { background: transparent !important; }
    same EB Garamond family as the new .pc-entry rows.  Word quieter,
    phrase emphasised.                                                */
 .pc-line .pc-line-word {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-style: normal;
-  font-weight: 500;
+  font-family: 'Libre Caslon Text', 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
   font-size: 11px;
   color: #4a2a10;
   flex: 0 1 auto;
   min-width: 0;
   word-break: break-word;
+  letter-spacing: -0.005em;
 }
 .pc-line .pc-line-phrase {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  /* v=95 — de-bolded; matches stage 0 reading typography for
+     consistency.  User: "词组不加粗了 感觉没必要 有点破坏一致性". */
+  font-family: 'Libre Caslon Text', 'EB Garamond', Georgia, serif;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 13px;
   color: #2c1808;
   white-space: normal;
@@ -7242,6 +7245,8 @@ body { background: transparent !important; }
   overflow-wrap: anywhere;
   flex: 1 1 auto;
   min-width: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
 }
 
 /* v=70 — TWO-ROW entry for family + kin.  Top row = headword + its
@@ -7315,15 +7320,16 @@ body { background: transparent !important; }
   flex: 0 0 auto;
 }
 .pc-row .pc-line-word {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-style: normal;
-  font-weight: 500;
+  font-family: 'Libre Caslon Text', 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
   font-size: 13px;
   color: #2c1808;
   flex: 0 1 auto;
   min-width: 0;
   word-break: break-word;
   overflow-wrap: anywhere;
+  letter-spacing: -0.005em;
 }
 .pc-row .pc-line-word-zh {
   font-family: 'EB Garamond', Georgia, serif;
@@ -7335,15 +7341,17 @@ body { background: transparent !important; }
   white-space: normal;
 }
 .pc-row .pc-line-phrase {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-family: 'Libre Caslon Text', 'EB Garamond', Georgia, serif;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;       /* v=95 — de-bolded */
   font-size: 14px;
   color: #2c1808;
   flex: 1 1 auto;
   min-width: 0;
   word-break: break-word;
   overflow-wrap: anywhere;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
 }
 .pc-row .pc-line-zh {
   font-family: 'EB Garamond', Georgia, serif;
@@ -7367,20 +7375,21 @@ body { background: transparent !important; }
    phrase is the focal point (larger, bold).  All zh shrunk to a
    consistent quieter size so it never dominates the row.            */
 .pc-entry .pc-line-word {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
-  font-style: normal;
-  font-weight: 500;
+  font-family: 'Libre Caslon Text', 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
   font-size: 11px;
   color: #4a2a10;
   flex: 0 1 auto;
   min-width: 0;
   word-break: break-word;
   overflow-wrap: anywhere;
+  letter-spacing: -0.005em;
 }
 .pc-entry .pc-line-phrase {
-  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-family: 'Libre Caslon Text', 'EB Garamond', Georgia, serif;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;       /* v=95 — de-bolded */
   font-size: 13px;
   color: #2c1808;
   white-space: normal;
@@ -7388,6 +7397,8 @@ body { background: transparent !important; }
   overflow-wrap: anywhere;
   flex: 1 1 auto;
   min-width: 0;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
 }
 .pc-entry .pc-line-zh {
   font-family: 'EB Garamond', 'Garamond', Georgia, serif;
@@ -7662,43 +7673,70 @@ body.bg-stage0 .scene-veil { display: none; }
 /* v=87 — small vertical key glyph at the bottom-right corner of
    the text frame.  Tapping it advances to the questions screen.
    Replaces the chunky "Begin Questions" CTA per user request.   */
-.s0-next-key {
-  /* v=94 — visible labelled "next page" button per user.  Sits in
-     the bottom-right corner of the page; only arms (breathes gold)
-     once the user has revealed every sentence on the page.        */
+/* v=95 — book-page furniture, written ON the paper (no button chrome).
+   Layout:
+        [          ]
+        [   — N —    ›››  ]
+   The page number is dead-centred along the bottom edge in the same
+   italic ink as the body; the ›››  page-turn glyph sits in the
+   bottom-right corner and arms (gold breathing) once the user has
+   revealed every sentence.  Per user: "在书页的正下方整个类似 -1- 的
+   标 右下角是 >>>" and "直接用 >>> 这样的类似的标识 '写在' 纸张背景的
+   右下角 作为书页的内容".                                            */
+.s0-foot {
+  /* Sits high enough above the very bottom that it lands on the
+     painted cream paper, not the wood the bg image shows below.
+     90px clears the cream→wood transition the bg image paints.   */
   position: absolute;
-  right: 14px;
-  bottom: 12px;
-  display: inline-flex;
+  left: 8px;
+  right: 8px;
+  bottom: 92px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: baseline;
-  gap: 8px;
-  padding: 8px 14px;
-  background: rgba(255, 244, 220, 0.55);
-  border: 1px solid rgba(140, 90, 36, 0.4);
-  border-radius: 3px;
-  cursor: pointer;
   z-index: 3;
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  pointer-events: none;
+}
+@media (min-width: 640px) { .s0-foot { bottom: 76px; } }
+@media (min-width: 980px) { .s0-foot { bottom: 88px; } }
+.s0-foot > *      { pointer-events: auto; }
+.s0-folio {
+  grid-column: 2;
+  justify-self: center;
+  font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
   font-weight: 400;
-  font-size: 15px;
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  letter-spacing: 0.22em;
   color: #6e3c1a;
-  transition: color 0.22s, transform 0.12s, background 0.22s, border-color 0.22s;
-  box-shadow: 0 2px 6px rgba(60, 30, 8, 0.18);
 }
-.s0-next-key .nk-label { font-size: 14px; }
-.s0-next-key .nk-chev  { font-family: 'Cinzel', serif; font-size: 19px; line-height: 1; transform: translateY(1px); color: #8a4f12; }
-.s0-next-key svg { display: none; }   /* hide the old key glyph */
-.s0-next-key:hover  { color: #2a1808; transform: translateX(2px); }
-.s0-next-key:active { transform: translateX(0) scale(0.97); }
+.s0-next-key {
+  grid-column: 3;
+  justify-self: end;
+  align-self: baseline;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: #6e3c1a;
+  transition: color 0.22s, transform 0.18s, letter-spacing 0.18s;
+}
+.s0-foot-spacer { grid-column: 3; }
+.s0-next-key:hover  { color: #2a1808; letter-spacing: 0.12em; }
+.s0-next-key:active { transform: scale(0.95); }
 .s0-next-key.is-armed {
   color: #8a4f12;
   animation: s0-key-breathe 1.8s ease-in-out infinite;
 }
 @keyframes s0-key-breathe {
-  0%, 100% { color: #8a4f12; transform: translateX(0); }
-  50%      { color: #c08a30; transform: translateX(3px); }
+  0%, 100% { color: #8a4f12; letter-spacing: 0.04em; }
+  50%      { color: #c08a30; letter-spacing: 0.14em; }
 }
 @media (min-width: 640px) {
   .s0-page { padding: 130px 80px 90px; }
@@ -7868,15 +7906,16 @@ body.bg-stage0 .scene-veil { display: none; }
    中间加个点的金属圆圈图形".  The section number (1.1, 3.7…)
    sits below as a tiny label.  Click → flash + jump.            */
 .pc-chapter-dots {
-  /* v=94 — moved up onto the painted parchment scroll-roll itself
-     per user: "然后再往上移 在羊皮卷".                            */
+  /* v=95 — chapter markers on the scroll-roll.  Replaced the spindly
+     hollow ring + dot with a solid antique ✦ — no thin lines, scales
+     well at small size, reads as a printer's-mark dingbat.           */
   position: absolute;
-  top: 5%;
+  top: 4.5%;
   left: 0;
   right: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin: 0;
   justify-content: center;
   align-items: center;
@@ -7893,33 +7932,33 @@ body.bg-stage0 .scene-veil { display: none; }
   border: 0;
   padding: 0;
   cursor: pointer;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.15s, color 0.15s;
 }
+.pc-chapter-dot-ring,
+.pc-chapter-dot-center,
 .pc-chapter-dot-label { display: none; }
-.pc-chapter-dot-ring {
-  /* v=94 — EXACT same hollow bow as the skeleton-key icon below the
-     parchment (svg.pc-note-key): outer ring stroke only, no fill,
-     inner small dot in centre.  Per user: "我要的是羊皮纸下方的钥匙
-     完全同款的空心圆圈".                                            */
-  position: relative;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1.6px solid #8a4f12;
-  background: transparent;
-  box-shadow: none;
+.pc-chapter-dot-glyph {
+  font-family: 'Cinzel', 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  line-height: 1;
+  color: #c08a30;
+  text-shadow:
+    0 1px 0 rgba(255, 244, 220, 0.55),
+    0 0 4px rgba(232, 196, 138, 0.45);
 }
-.pc-chapter-dot-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #8a4f12;
-  transform: translate(-50%, -50%);
-  box-shadow: none;
+.pc-chapter-dot:hover .pc-chapter-dot-glyph {
+  color: #5a3010;
+  transform: scale(1.18);
+}
+.pc-chapter-dot.is-flashing .pc-chapter-dot-glyph {
+  animation: pc-chapter-dot-flash 0.42s ease-out forwards;
+}
+@keyframes pc-chapter-dot-flash {
+  0%   { transform: scale(1);   color: #c08a30; text-shadow: 0 0 0 transparent; }
+  50%  { transform: scale(1.45); color: #fff1d0; text-shadow: 0 0 16px rgba(255, 244, 220, 0.95); }
+  100% { transform: scale(1.05); color: #8a4f12; text-shadow: 0 0 5px rgba(232, 196, 138, 0.55); }
 }
 .pc-chapter-dot-label {
   font-family: 'Cinzel', Georgia, serif;
@@ -7929,23 +7968,7 @@ body.bg-stage0 .scene-veil { display: none; }
   color: rgba(110, 63, 18, 0.85);
   white-space: nowrap;
 }
-.pc-chapter-dot:hover .pc-chapter-dot-ring {
-  border-color: #5a3010;
-  box-shadow:
-    inset 0 1px 1px rgba(255, 244, 220, 0.95),
-    inset 0 -1px 1px rgba(60, 30, 8, 0.45),
-    0 0 10px rgba(232, 196, 138, 0.85);
-}
-.pc-chapter-dot.is-flashing .pc-chapter-dot-ring {
-  animation: pc-chapter-dot-flash 0.32s ease-out forwards;
-}
-@keyframes pc-chapter-dot-flash {
-  0%   { box-shadow: 0 0 0 rgba(255, 244, 220, 0); transform: scale(1); }
-  50%  { box-shadow: 0 0 18px rgba(255, 244, 220, 1), 0 0 30px rgba(232, 196, 138, 0.85);
-         transform: scale(1.18);
-         border-color: rgba(255, 244, 220, 1); }
-  100% { box-shadow: 0 0 6px rgba(232, 196, 138, 0.45); transform: scale(1.06); }
-}
+/* v=95 — old ring-based hover/flash kept above on .pc-chapter-dot-glyph */
 .pc-chapter-chips { display: none; }
 
 /* Legacy chip class kept around so any old markup still works. */
@@ -8652,13 +8675,14 @@ body.bg-stage0 #screen-stage0-quiz {
 .s0-text-frame {
   /* Now stretches the FULL page width inside the painted border.
      No internal scrolling — text is sized to fit via JS-set
-     --s0-fit-scale (default 1).                                 */
+     --s0-fit-scale (default 1).  Bottom padding bumped to 132 px
+     so content stops above the page-number footer.               */
   position: relative;
   width: 100%;
   max-width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 14px 14px 48px;
+  padding: 14px 14px 132px;
   background: transparent;
   border: 0;
   box-shadow: none;
