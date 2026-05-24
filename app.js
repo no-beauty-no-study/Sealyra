@@ -1195,28 +1195,45 @@ function showParchment(word) {
     });
   }
 
+  // v=101 — group consecutive lines that share a leading word so a
+  // multi-phrase entry renders as ONE word header + N phrase rows
+  // (the user diagrammed this: "xxx \n xxxx bbbb \n xxxx cccc").
+  function groupByLeadingWord(lines) {
+    const out = [];
+    let last = null;
+    (lines || []).forEach(line => {
+      const [w, posZh, phraseBlob, phraseZhBlob] = (line || '').split('|').map(s => s ? s.trim() : '');
+      if (!w) return;
+      const phraseList   = (phraseBlob   || '').split(/\s*\/\s*/).filter(Boolean);
+      const phraseZhList = (phraseZhBlob || '').split(/\s*[；;\/]\s*/).filter(Boolean);
+      const phrases = phraseList.map((p, i) => ({ phrase: p, phraseZh: phraseZhList[i] || '' }));
+      if (last && last.w.toLowerCase() === w.toLowerCase()) {
+        last.phrases.push(...phrases);
+      } else {
+        last = { w, posZh, phrases };
+        out.push(last);
+      }
+    });
+    return out;
+  }
+
   if (c.family && c.family.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her family</div>` });
-    c.family.forEach(line => {
-      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
-      // v=75 — back to ROW-BY-ROW reveal (long words kept breaking the
-      // single-row idea anyway), with EVERY row getting its own ♪
-      // play button + audio so a freshly-revealed line is always
-      // spoken.  Heading row = the family word + its meaning;
-      // example row = the collocation + its zh.
-      items.push({ kind: 'fam', html: `<div class="pc-row pc-play-row" data-sp="${escapeAttr(w)}">
+    groupByLeadingWord(c.family).forEach(g => {
+      items.push({ kind: 'fam', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-word">${pcLinkify(w)}</span>
-        <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
       </div>` });
-      if (phrase) {
-        items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
           <button class="pc-play">♪</button>
-          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
-          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
+          <span class="pc-line-phrase">${pcLinkify(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh || '')}</span>
         </div>` });
-      }
+      });
     });
   }
 
@@ -1246,21 +1263,18 @@ function showParchment(word) {
   if (c.kin && c.kin.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
-    c.kin.forEach(line => {
-      const [w, posZh, phraseBlob, phraseZhBlob] = line.split('|').map(s => s ? s.trim() : '');
-      const phraseList   = (phraseBlob   || '').split(/\s*\/\s*/).filter(Boolean);
-      const phraseZhList = (phraseZhBlob || '').split(/\s*[；;\/]\s*/).filter(Boolean);
-      items.push({ kind: 'kin', html: `<div class="pc-row pc-play-row" data-sp="${escapeAttr(w)}">
+    groupByLeadingWord(c.kin).forEach(g => {
+      items.push({ kind: 'kin', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-word">${pcLinkify(w)}</span>
-        <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
       </div>` });
-      phraseList.forEach((ph, idx) => {
-        const zh = phraseZhList[idx] || '';
-        items.push({ kind: 'kin-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(ph)}">
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'kin-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
           <button class="pc-play">♪</button>
-          <span class="pc-line-phrase">${pcLinkify(ph)}</span>
-          <span class="pc-line-zh">${escapeHtml(zh)}</span>
+          <span class="pc-line-phrase">${pcLinkify(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh)}</span>
         </div>` });
       });
     });
@@ -1273,21 +1287,20 @@ function showParchment(word) {
   if (c.group && c.group.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her group</div>` });
-    c.group.forEach(line => {
-      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
-      if (!w) return;
-      items.push({ kind: 'group', html: `<div class="pc-row pc-play-row" data-sp="${escapeAttr(w)}">
+    groupByLeadingWord(c.group).forEach(g => {
+      items.push({ kind: 'group', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-word">${pcLinkify(w)}</span>
-        <span class="pc-line-word-zh">${escapeHtml(posZh || '')}</span>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
       </div>` });
-      if (phrase) {
-        items.push({ kind: 'group-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'group-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
           <button class="pc-play">♪</button>
-          <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
-          <span class="pc-line-zh">${escapeHtml(phraseZh || '')}</span>
+          <span class="pc-line-phrase">${pcLinkify(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh)}</span>
         </div>` });
-      }
+      });
     });
   }
 

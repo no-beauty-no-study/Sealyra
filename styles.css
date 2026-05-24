@@ -7309,21 +7309,22 @@ body { background: transparent !important; }
   flex-wrap: wrap;
   line-height: 1.1;
 }
-/* v=100 — a phrase row is the SAME entry as the word row above it
-   (e.g. abolition + abolition of slavery), so pull them tight.
-   Per user: "羊皮纸上的同一单词与对应的俩词组的行间距再拉近 离
-   那么远干嘛 他们是共生的".                                       */
+/* v=101 — within ONE entry (word head + its phrase rows), the rows
+   sit tight: head + phrase1 + phrase2 + … all bound together.
+   Between distinct entries, leave a breathing gap.  The user's
+   diagram:
+       xxx          ← word head
+       xxxx bbbb    ← phrase 1     (tight against head)
+       xxxx cccc    ← phrase 2     (tight against phrase 1)
+                    ← gap kept
+       aaa          ← next word head                              */
 .pc-row--phrase {
   padding-left: 18px;
   margin-top: -2px;
 }
-/* Add small spacing between distinct entries (the word row that
-   STARTS a new entry).  Trick: any .pc-row that is NOT --phrase
-   and is NOT the first child gets a small top margin so the
-   entries don't all melt into one block.                          */
-.pc-stack .pc-row:not(.pc-row--phrase) + .pc-row:not(.pc-row--phrase),
-.pc-row--phrase + .pc-row:not(.pc-row--phrase) {
-  margin-top: 4px;
+.pc-row--head + .pc-row--head,
+.pc-row--phrase + .pc-row--head {
+  margin-top: 6px;
 }
 .pc-row .pc-play {
   /* v=98 — hidden per user: "那个播放横条还是没取消".  The whole
@@ -7729,36 +7730,34 @@ body.bg-stage0 .scene-veil { display: none; }
    chapter title and the body.  Per user: "另外nextpage你还是放在
    1.1 the universe的下面的吧 正好那中间空了一行".                  */
 .s0-next-link {
-  /* v=100 — handwritten ink, no metal.  User: "那个next page不要
-     金色了吧老感觉好奇怪 他们中世纪作者名不是用的手写体嘛".  Same
-     warm brown ink as the body, just in a cursive face so it
-     reads as a flourish under the chapter head.                  */
+  /* v=101 — quieter still.  Subtitle face (Libre Baskerville italic
+     per the user's typography spec), small, low-contrast — blends
+     into the page like a printer's marginalia, not a button.      */
   display: inline-block;
   padding: 0;
-  margin: 6px auto 0;
+  margin: 4px auto 2px;
   background: transparent;
   border: 0;
   cursor: pointer;
-  font-family: 'Pinyon Script', 'Cormorant Garamond', Georgia, serif;
-  font-style: normal;
+  font-family: var(--f-subtitle), 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 11.5px;
   line-height: 1;
-  letter-spacing: 0.02em;
-  color: rgba(60, 30, 8, 0.62);
-  text-shadow: 0 1px 0 rgba(255, 244, 220, 0.42);
-  transition: color 0.22s, transform 0.18s, letter-spacing 0.22s;
+  letter-spacing: 0.1em;
+  color: rgba(60, 30, 8, 0.42);
+  transition: color 0.22s, letter-spacing 0.22s;
 }
-.s0-next-link:hover  { color: #2a1808; letter-spacing: 0.06em; }
-.s0-next-link:active { transform: scale(0.96); }
+.s0-next-link:hover  { color: rgba(60, 30, 8, 0.78); letter-spacing: 0.18em; }
+.s0-next-link:active { color: #2a1808; }
 .s0-next-link.is-armed {
-  color: rgba(60, 30, 8, 0.88);
-  animation: s0-next-arm 1.8s ease-in-out infinite;
+  color: rgba(60, 30, 8, 0.78);
+  animation: s0-next-arm 2.4s ease-in-out infinite;
 }
 .s0-next-link.is-hidden { display: none !important; }
 @keyframes s0-next-arm {
-  0%, 100% { color: rgba(60, 30, 8, 0.78); letter-spacing: 0.02em; }
-  50%      { color: #1f1004;               letter-spacing: 0.08em; }
+  0%, 100% { color: rgba(60, 30, 8, 0.62); letter-spacing: 0.10em; }
+  50%      { color: #2a1808;               letter-spacing: 0.16em; }
 }
 .s0-next-link:hover { letter-spacing: 0.22em; transform: translateY(-1px); }
 .s0-next-link:active { transform: translateY(0) scale(0.96); }
@@ -8285,9 +8284,9 @@ body.bg-stage0 .s0-chip {
   color: rgba(110, 63, 18, 0.62);
   font-size: 10.5px;
 }
-.s0-page { padding: 14vw 8vw 12vw 26vw; }   /* v=98 — more left padding */
-@media (min-width: 640px) { .s0-page { padding: 100px 80px 110px 180px; } }
-@media (min-width: 980px) { .s0-page { padding: 110px 100px 130px 220px; max-width: 820px; } }
+.s0-page { padding: 14vw 7vw 12vw 30vw; }   /* v=101 — push column further right */
+@media (min-width: 640px) { .s0-page { padding: 100px 70px 110px 200px; } }
+@media (min-width: 980px) { .s0-page { padding: 110px 90px 130px 240px; max-width: 840px; } }
 
 /* Guarantee the text frame fills the available width even if a
    tight flex parent tries to shrink it (the user reported "右边
@@ -8423,21 +8422,50 @@ body.bg-stage0 #screen-stage0-quiz { min-height: 100vh; }
   letter-spacing: -0.015em !important;
   line-height: 1.15 !important;
 }
+/* v=101 — all parchment text now sits on a single ink colour.
+   Hierarchy comes from font family and size, not from colour.
+   Per user: "字体颜色是一模一样的 那种感觉很古典".               */
 .pc-row .pc-line-word,
 .pc-entry .pc-line-word,
 .pc-line .pc-line-word {
-  font-size: 12px !important;
+  font-family: var(--f-reading) !important;
+  font-size: 12.5px !important;
   font-weight: 400 !important;
-  color: #3a1f08;
+  font-style: normal !important;
+  color: #1f1004 !important;
 }
 .pc-row .pc-line-phrase,
 .pc-entry .pc-line-phrase,
 .pc-line .pc-line-phrase {
+  font-family: var(--f-reading) !important;
   font-size: 13.5px !important;
-  font-weight: 400 !important;   /* v=99 — user: no bold */
+  font-weight: 400 !important;
   font-style: normal !important;
-  color: #2a1808;
+  color: #1f1004 !important;
 }
+.pc-row .pc-line-word-zh,
+.pc-entry .pc-line-word-zh,
+.pc-row .pc-line-zh,
+.pc-entry .pc-line-zh,
+.pc-line .pc-line-zh {
+  font-family: var(--f-annot) !important;
+  font-size: 10px !important;
+  font-style: italic !important;
+  color: #1f1004 !important;
+  letter-spacing: 0 !important;
+}
+.pc-section-label {
+  font-family: var(--f-smallcaps) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.22em !important;
+  font-size: 10.5px !important;
+  color: #1f1004 !important;
+  text-transform: uppercase !important;
+}
+.pc-word { font-family: var(--f-title) !important; color: #1f1004 !important; }
+.pc-pos  { font-family: var(--f-annot) !important;  color: #1f1004 !important; font-style: italic !important; }
+.pc-zh   { font-family: var(--f-annot) !important;  color: #1f1004 !important; font-style: italic !important; }
 .parchment-inner {
   font-family: var(--f-reading) !important;
   font-size: 13px !important;

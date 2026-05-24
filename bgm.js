@@ -1,4 +1,4 @@
-/* v=100 — Lan BGM (mp3 player).
+/* v=101 — Lan BGM (mp3 player).
    Replaces the old Web Audio synth.  Plays the 14 mp3 tracks in
    assets/ per the user's pool config:
 
@@ -54,7 +54,7 @@
   let _volume = 0.42;
   let _fading = null;
 
-  function _track(name) { return ASSET_BASE + name + '?v=100'; }
+  function _track(name) { return ASSET_BASE + name + '?v=101'; }
   function _pick(pool) {
     if (pool.mode === 'fixed') return pool.track;
     const ts = pool.tracks || [];
