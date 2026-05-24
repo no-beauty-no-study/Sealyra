@@ -2134,7 +2134,7 @@ const Screens = {
         .split(/(?<=[.!?])\s+(?=[A-Z])/)
         .filter(s => s.trim().length > 0);
       const paraHtml = paras.map((p, i) => `
-        <div class="s0-para${i === 0 ? ' is-revealed' : ''}" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
+        <div class="s0-para" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
       `).join('');
       const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
       el.innerHTML = `
@@ -2175,41 +2175,59 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // Vertical key glyph (bottom-right of text frame) → quiz.
+      // v=94 — visible "next page" button bottom-right (was a tiny
+      // unlabelled key glyph the user couldn't find).  Arms (breathes
+      // gold) once every sentence is revealed; tapping it advances to
+      // the quiz.
       const key = document.createElement('button');
-      key.className = 's0-next-key is-armed';
-      key.setAttribute('aria-label', 'begin questions');
-      key.innerHTML = `
-        <svg viewBox="0 0 14 32" width="22" height="36" aria-hidden="true">
-          <circle cx="7" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
-          <circle cx="7" cy="5" r="1.2" fill="currentColor"/>
-          <line x1="7" y1="9" x2="7" y2="29" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          <line x1="7"  y1="22" x2="11" y2="22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          <line x1="7"  y1="26" x2="10" y2="26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-      `;
-      key.addEventListener('click', () => {
+      key.className = 's0-next-key';
+      key.setAttribute('aria-label', 'turn page to quiz');
+      key.innerHTML = `<span class="nk-label">turn page</span><span class="nk-chev">❯</span>`;
+      function _armKeyIfDone() {
+        const total = $$('.s0-para', el).length;
+        const done  = $$('.s0-para.is-revealed', el).length;
+        if (done >= total) key.classList.add('is-armed');
+      }
+      key.addEventListener('click', (ev) => {
+        ev.stopPropagation();
         (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
         go('stage0-quiz');
       });
       $('.s0-text-frame', el).appendChild(key);
-      // v=92 — sentence interaction: tap = reveal (if hidden) + speak
-      // just this sentence (so the user can match audio to text).
-      // The link-jumps inside still take precedence via stopPropagation.
-      $$('.s0-para', el).forEach(p => {
-        p.addEventListener('click', (ev) => {
-          if (ev.target && ev.target.closest('.s0-jump')) return;
-          if (!p.classList.contains('is-revealed')) {
-            p.classList.add('is-revealed');
-          }
-          speak(p.getAttribute('data-sp'));
-        });
+      // v=94 — tap ANYWHERE on the page reveals the NEXT sentence in
+      // order and speaks just that sentence.  Tapping an already-
+      // revealed sentence replays its TTS.  Per user: "点击任意部分
+      // 就显现一段… 不然顺序乱了".
+      function _revealNext() {
+        const next = el.querySelector('.s0-para:not(.is-revealed)');
+        if (!next) return null;
+        next.classList.add('is-revealed');
+        speak(next.getAttribute('data-sp'));
+        _armKeyIfDone();
+        return next;
+      }
+      $('.s0-page', el).addEventListener('click', (ev) => {
+        if (ev.target.closest('.s0-jump')) return;
+        if (ev.target.closest('.s0-next-key')) return;
+        if (ev.target.closest('.s0-corner-back')) return;
+        const onPara = ev.target.closest('.s0-para');
+        if (onPara && onPara.classList.contains('is-revealed')) {
+          speak(onPara.getAttribute('data-sp'));   // replay this line
+          return;
+        }
+        _revealNext();
       });
       // Fit text into the painted page region without overflow.
       requestAnimationFrame(() => _s0FitToPage(el));
       // Auto-reveal + speak the first sentence on entry.
-      const firstPara = el.querySelector('.s0-para[data-idx="0"]');
-      if (firstPara) setTimeout(() => speak(firstPara.getAttribute('data-sp')), 400);
+      setTimeout(() => {
+        const firstPara = el.querySelector('.s0-para[data-idx="0"]');
+        if (firstPara) {
+          firstPara.classList.add('is-revealed');
+          speak(firstPara.getAttribute('data-sp'));
+          _armKeyIfDone();
+        }
+      }, 400);
     }
   },
 
@@ -3388,7 +3406,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // window.saved / window.state.  No behaviour change for users.
 try {
   Object.assign(window, {
-    go, saved, state,
+    go, saved, state, showParchment,
     PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
   });
 } catch {}
