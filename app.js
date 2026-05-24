@@ -510,20 +510,20 @@ function _goImmediate(screenId, opts = {}) {
   _ensureBGM(screenId);
 }
 const BGM_POOL_BY_SCREEN = {
-  cover:           'home',
-  note:            'home',
-  'note-bucket':   'home',
-  index:           'home',
-  card:            'home',
-  'chapter-catalog': 'home',
-  stage0:          'home',
-  'stage0-quiz':   'home',
-  stage1:          'game',
-  'stage1-result': 'result',
-  stage2:          'home',
-  'stage2-result': 'result',
-  stage3:          'game',
-  'stage3-result': 'result',
+  cover:           'cover',
+  note:            'cover',
+  'note-bucket':   'cover',
+  index:           'cover',
+  card:            'cover',
+  'chapter-catalog': 'cover',
+  stage0:          'stage0',
+  'stage0-quiz':   'stage0',
+  stage1:          'stage1_game',
+  'stage1-result': 'stage1_result',
+  stage2:          'stage2_game',
+  'stage2-result': 'stage2_result',
+  stage3:          'stage3_game',
+  'stage3-result': 'stage3_result',
 };
 // v=66 — BGM continuity by SCREEN GROUP, not by pool.  Earlier the
 // LanBGM same-pool guard meant cover + stage2 + note all kept the
@@ -604,14 +604,11 @@ function _ensureBGM(screenId) {
   if (group && group === _lastBgmGroup) return;     // same group → keep
   _lastBgmGroup = group;
   try {
-    // v=77 — explicit stop() retired (it was leaving the audio
-    // graph in a half-torn-down state for the user's device,
-    // killing game BGM).  Force:true on playRandom bypasses the
-    // same-pool guard and play() handles the timer swap cleanly.
-    const opts = { force: true };
-    if      (pool === 'home')   LanBGM.playHomeRandom({ ...opts, volume: 0.42 });
-    else if (pool === 'game')   LanBGM.playGameRandom({ ...opts, volume: 0.40 });
-    else if (pool === 'result') LanBGM.playResultRandom({ ...opts, volume: 0.42 });
+    // v=99 — pool name now matches the mp3 config in bgm.js exactly.
+    // Volume bumped slightly on result screens so the chime cuts
+    // through; reading + game pools stay quieter so VO is clear.
+    const isResult = /_result$/.test(pool);
+    LanBGM.playForPool(pool, { force: true, volume: isResult ? 0.44 : 0.40 });
   } catch {}
 }
 

@@ -7304,12 +7304,26 @@ body { background: transparent !important; }
   align-items: baseline;
   gap: 6px;
   width: 100%;
-  padding: 1px 2px;
+  padding: 0 2px;
   margin: 0;
   flex-wrap: wrap;
+  line-height: 1.1;
 }
+/* v=100 — a phrase row is the SAME entry as the word row above it
+   (e.g. abolition + abolition of slavery), so pull them tight.
+   Per user: "羊皮纸上的同一单词与对应的俩词组的行间距再拉近 离
+   那么远干嘛 他们是共生的".                                       */
 .pc-row--phrase {
   padding-left: 18px;
+  margin-top: -2px;
+}
+/* Add small spacing between distinct entries (the word row that
+   STARTS a new entry).  Trick: any .pc-row that is NOT --phrase
+   and is NOT the first child gets a small top margin so the
+   entries don't all melt into one block.                          */
+.pc-stack .pc-row:not(.pc-row--phrase) + .pc-row:not(.pc-row--phrase),
+.pc-row--phrase + .pc-row:not(.pc-row--phrase) {
+  margin-top: 4px;
 }
 .pc-row .pc-play {
   /* v=98 — hidden per user: "那个播放横条还是没取消".  The whole
@@ -7715,29 +7729,37 @@ body.bg-stage0 .scene-veil { display: none; }
    chapter title and the body.  Per user: "另外nextpage你还是放在
    1.1 the universe的下面的吧 正好那中间空了一行".                  */
 .s0-next-link {
+  /* v=100 — handwritten ink, no metal.  User: "那个next page不要
+     金色了吧老感觉好奇怪 他们中世纪作者名不是用的手写体嘛".  Same
+     warm brown ink as the body, just in a cursive face so it
+     reads as a flourish under the chapter head.                  */
   display: inline-block;
   padding: 0;
-  margin: 4px auto 0;
+  margin: 6px auto 0;
   background: transparent;
   border: 0;
   cursor: pointer;
   font-family: 'Pinyon Script', 'Cormorant Garamond', Georgia, serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  background-image: linear-gradient(180deg, #fff1c8 0%, #d6a64a 50%, #8a4f12 100%);
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  filter:
-    drop-shadow(0 1px 0 rgba(40, 18, 6, 0.4))
-    drop-shadow(0 0 4px rgba(232, 196, 138, 0.35));
-  transition: filter 0.32s, transform 0.18s, letter-spacing 0.32s;
-  animation: s0-next-shimmer 3.2s ease-in-out infinite;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgba(60, 30, 8, 0.62);
+  text-shadow: 0 1px 0 rgba(255, 244, 220, 0.42);
+  transition: color 0.22s, transform 0.18s, letter-spacing 0.22s;
+}
+.s0-next-link:hover  { color: #2a1808; letter-spacing: 0.06em; }
+.s0-next-link:active { transform: scale(0.96); }
+.s0-next-link.is-armed {
+  color: rgba(60, 30, 8, 0.88);
+  animation: s0-next-arm 1.8s ease-in-out infinite;
 }
 .s0-next-link.is-hidden { display: none !important; }
+@keyframes s0-next-arm {
+  0%, 100% { color: rgba(60, 30, 8, 0.78); letter-spacing: 0.02em; }
+  50%      { color: #1f1004;               letter-spacing: 0.08em; }
+}
 .s0-next-link:hover { letter-spacing: 0.22em; transform: translateY(-1px); }
 .s0-next-link:active { transform: translateY(0) scale(0.96); }
 .s0-next-link.is-armed {
@@ -8801,15 +8823,15 @@ body.bg-stage0 #screen-stage0-quiz {
   font-size: calc(13px * var(--s0-fit-scale, 1));
 }
 .s0q-block {
-  padding: 4px 0 8px;
-  gap: 6px;
+  padding: 2px 0 6px;
+  gap: 2px;
 }
 .s0q-block .s0q-question {
-  font-size: clamp(14px, 3.8vw, 16px);
-  line-height: 1.05;
+  font-size: clamp(13px, 3.4vw, 14.5px);
+  line-height: 1.18;
 }
 .s0q-block .s0q-options {
-  gap: 6px;
+  gap: 0;
 }
 .s0q-block .s0q-options .card--option {
   min-height: 36px !important;
@@ -8823,12 +8845,15 @@ body.bg-stage0 #screen-stage0-quiz {
    the answer body.  No card outline, no tinted background — the
    page itself is the paper.                                       */
 .s0q-block .s0q-question {
+  /* v=100 — tighter: smaller font, less padding, no top margin so
+     the question hugs the header.  Per user: "选择题也是 一题的
+     内容紧一点 能一页就全显示出来就好".                              */
   font-family: 'Libre Caslon Text', 'Libre Baskerville', Georgia, serif;
   font-weight: 400;
-  font-size: clamp(13.5px, 3.6vw, 15.5px) !important;
-  line-height: 1.25 !important;
+  font-size: clamp(13px, 3.4vw, 14.5px) !important;
+  line-height: 1.18 !important;
   color: #1f1004;
-  margin: 4px 0 4px;
+  margin: 0 0 2px;
   text-align: left;
   letter-spacing: 0.005em;
 }
@@ -8837,7 +8862,7 @@ body.bg-stage0 #screen-stage0-quiz {
   flex-direction: column !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
-  gap: 2px !important;
+  gap: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
   text-align: left !important;
@@ -8850,10 +8875,10 @@ body.bg-stage0 #screen-stage0-quiz {
   justify-content: flex-start;
   gap: 6px;
   cursor: pointer;
-  padding: 3px 0 3px 18px;   /* hanging indent like a printed exam */
+  padding: 1px 0 1px 18px;
   font-family: 'Libre Caslon Text', 'Libre Baskerville', Georgia, serif;
-  font-size: clamp(12.5px, 3.3vw, 14px);
-  line-height: 1.28;
+  font-size: clamp(12px, 3.1vw, 13.5px);
+  line-height: 1.22;
   color: #2a160a;
   transition: color 0.12s, opacity 0.12s;
   width: 100%;
