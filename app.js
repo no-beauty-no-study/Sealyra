@@ -2174,18 +2174,20 @@ const Screens = {
           showParchment(w);
         }
       }));
-      // v=95 — page furniture written ON the paper: a centred page
-      // number (· N ·) at the bottom and a >>> page-turn glyph at
-      // the bottom-right, both in italic ink — no button chrome.
-      // 181 chapters × (reading + quiz) = 362 pages.
+      // v=96 — book-page furniture, written ON the paper:
+      //   centre  →  next page  (small, italic, soft gold glow)
+      //   right   →  N           (a single illuminated digit
+      //                           tucked into the painted floral
+      //                           corner — decorative, not a button)
+      // No more ››› / dashes — user found both ugly.
       const _pageNum = ((saved.chapter || 1) - 1) * 2 + 1;
       const _foot = document.createElement('div');
       _foot.className = 's0-foot';
       _foot.innerHTML = `
-        <span class="s0-folio">— ${_pageNum} —</span>
-        <button class="s0-next-key" aria-label="turn page to quiz">›››</button>
+        <button class="s0-next-link" aria-label="turn page to quiz">next page</button>
+        <span class="s0-folio">${_pageNum}</span>
       `;
-      const _foot_key = $('.s0-next-key', _foot);
+      const _foot_key = $('.s0-next-link', _foot);
       function _armKeyIfDone() {
         const total = $$('.s0-para', el).length;
         const done  = $$('.s0-para.is-revealed', el).length;
@@ -2293,14 +2295,15 @@ const Screens = {
         </div>
       `;
       el.appendChild(closeCorner({ to: 'cover' }));
-      // v=95 — quiz folio: page number on the paper bottom-centre,
-      // disabled ›› on the right that arms once all 3 are correct.
+      // v=96 — quiz folio: illuminated page digit in the right-hand
+      // floral corner, soft-gold "next page" link in the centre.
+      // The link is hidden until all 3 questions are correct.
       const _qpage = ((saved.chapter || 1) - 1) * 2 + 2;
       const _qfoot = document.createElement('div');
       _qfoot.className = 's0-foot';
       _qfoot.innerHTML = `
-        <span class="s0-folio">— ${_qpage} —</span>
         <span class="s0-foot-spacer" aria-hidden="true"></span>
+        <span class="s0-folio">${_qpage}</span>
       `;
       $('.s0-text-frame', el).appendChild(_qfoot);
 
@@ -2341,11 +2344,11 @@ const Screens = {
       });
 
       function armKey() {
-        if ($('.s0-next-key', _qfoot)) return;
+        if ($('.s0-next-link', _qfoot)) return;
         const key = document.createElement('button');
-        key.className = 's0-next-key is-armed';
+        key.className = 's0-next-link is-armed';
         key.setAttribute('aria-label', 'begin stage 1');
-        key.textContent = '›››';
+        key.textContent = 'next page';
         key.addEventListener('click', () => {
           (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
           if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
@@ -2353,7 +2356,7 @@ const Screens = {
         });
         const spacer = $('.s0-foot-spacer', _qfoot);
         if (spacer) spacer.replaceWith(key);
-        else        _qfoot.appendChild(key);
+        else        _qfoot.insertBefore(key, _qfoot.firstChild);
       }
       // Auto-fit so 3 question blocks stay inside the painted page.
       requestAnimationFrame(() => _s0FitToPage(el));

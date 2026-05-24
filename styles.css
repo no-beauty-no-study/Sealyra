@@ -7673,20 +7673,21 @@ body.bg-stage0 .scene-veil { display: none; }
 /* v=87 — small vertical key glyph at the bottom-right corner of
    the text frame.  Tapping it advances to the questions screen.
    Replaces the chunky "Begin Questions" CTA per user request.   */
-/* v=95 — book-page furniture, written ON the paper (no button chrome).
-   Layout:
-        [          ]
-        [   — N —    ›››  ]
-   The page number is dead-centred along the bottom edge in the same
-   italic ink as the body; the ›››  page-turn glyph sits in the
-   bottom-right corner and arms (gold breathing) once the user has
-   revealed every sentence.  Per user: "在书页的正下方整个类似 -1- 的
-   标 右下角是 >>>" and "直接用 >>> 这样的类似的标识 '写在' 纸张背景的
-   右下角 作为书页的内容".                                            */
+/* v=96 — book-page furniture, redone:
+        [                      ]
+        [      next page    N  ]
+     · centre  →  small italic "next page" with a soft metallic
+                  gold glow (subtle breathing) — the actual tap
+                  target.  Per user: "写个next page然后小小的发光
+                  一下（金属质感那种）写在每个文章到文本框最下方
+                  的中间地方".
+     · right   →  a single illuminated digit, tucked into the
+                  bg's painted floral corner.  Decorative, not a
+                  button, dark ink so it reads as part of the
+                  page furniture.  Per user: "只写一个美丽字体的
+                  数字作为装饰 颜色统一为内容字的颜色".
+   No more dashes, no more ››› — both were ugly per user.        */
 .s0-foot {
-  /* Sits high enough above the very bottom that it lands on the
-     painted cream paper, not the wood the bg image shows below.
-     90px clears the cream→wood transition the bg image paints.   */
   position: absolute;
   left: 8px;
   right: 8px;
@@ -7700,43 +7701,63 @@ body.bg-stage0 .scene-veil { display: none; }
 @media (min-width: 640px) { .s0-foot { bottom: 76px; } }
 @media (min-width: 980px) { .s0-foot { bottom: 88px; } }
 .s0-foot > *      { pointer-events: auto; }
+.s0-foot-spacer { grid-column: 1; }
 .s0-folio {
-  grid-column: 2;
-  justify-self: center;
-  font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: 0.22em;
-  color: #6e3c1a;
-}
-.s0-next-key {
+  /* Single decorative digit tucked into the right-hand painted
+     flower.  Body-text colour so it doesn't read as red. */
   grid-column: 3;
   justify-self: end;
+  align-self: baseline;
+  margin-right: 12px;
+  font-family: 'UnifrakturMaguntia', 'Pinyon Script', 'Cinzel Decorative', Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #1f1004;
+  text-shadow:
+    0 1px 0 rgba(255, 244, 220, 0.45),
+    0 -1px 1px rgba(60, 30, 8, 0.25);
+}
+.s0-next-link {
+  grid-column: 2;
+  justify-self: center;
   align-self: baseline;
   padding: 0;
   margin: 0;
   background: transparent;
   border: 0;
   cursor: pointer;
-  font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   font-style: italic;
-  font-weight: 400;
-  font-size: 22px;
-  letter-spacing: 0.06em;
-  color: #6e3c1a;
-  transition: color 0.22s, transform 0.18s, letter-spacing 0.18s;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  /* Metallic gold gradient on the glyphs themselves. */
+  background-image: linear-gradient(180deg, #fff1c8 0%, #d6a64a 45%, #8a4f12 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 1px 0 rgba(40, 18, 6, 0.5))
+    drop-shadow(0 0 5px rgba(232, 196, 138, 0.45));
+  transition: filter 0.32s, transform 0.18s, letter-spacing 0.32s;
+  animation: s0-next-shimmer 3.2s ease-in-out infinite;
 }
-.s0-foot-spacer { grid-column: 3; }
-.s0-next-key:hover  { color: #2a1808; letter-spacing: 0.12em; }
-.s0-next-key:active { transform: scale(0.95); }
-.s0-next-key.is-armed {
-  color: #8a4f12;
-  animation: s0-key-breathe 1.8s ease-in-out infinite;
+.s0-next-link:hover { letter-spacing: 0.22em; transform: translateY(-1px); }
+.s0-next-link:active { transform: translateY(0) scale(0.96); }
+.s0-next-link.is-armed {
+  animation: s0-next-pulse 1.8s ease-in-out infinite;
 }
-@keyframes s0-key-breathe {
-  0%, 100% { color: #8a4f12; letter-spacing: 0.04em; }
-  50%      { color: #c08a30; letter-spacing: 0.14em; }
+@keyframes s0-next-shimmer {
+  0%, 100% { filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.5)) drop-shadow(0 0 4px rgba(232, 196, 138, 0.35)); }
+  50%      { filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.5)) drop-shadow(0 0 9px rgba(255, 244, 200, 0.7));   }
+}
+@keyframes s0-next-pulse {
+  0%, 100% { filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55)) drop-shadow(0 0 6px rgba(232, 196, 138, 0.55)); letter-spacing: 0.16em; }
+  50%      { filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55)) drop-shadow(0 0 12px rgba(255, 244, 200, 0.95)); letter-spacing: 0.22em; }
 }
 @media (min-width: 640px) {
   .s0-page { padding: 130px 80px 90px; }
@@ -7906,16 +7927,18 @@ body.bg-stage0 .scene-veil { display: none; }
    中间加个点的金属圆圈图形".  The section number (1.1, 3.7…)
    sits below as a tiny label.  Click → flash + jump.            */
 .pc-chapter-dots {
-  /* v=95 — chapter markers on the scroll-roll.  Replaced the spindly
-     hollow ring + dot with a solid antique ✦ — no thin lines, scales
-     well at small size, reads as a printer's-mark dingbat.           */
+  /* v=96 — ✦ printer's marks on the scroll-roll, pushed down so
+     they sit lower on the wood (was riding the top edge), and
+     given a layered light/shadow so they read as embossed metal
+     instead of flat ink.  Per user: "这个星星有点高了… 往下一点
+     然后稍微立体一点".                                            */
   position: absolute;
-  top: 4.5%;
+  top: 7.5%;
   left: 0;
   right: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin: 0;
   justify-content: center;
   align-items: center;
@@ -7934,31 +7957,42 @@ body.bg-stage0 .scene-veil { display: none; }
   cursor: pointer;
   width: 20px;
   height: 20px;
-  transition: transform 0.15s, color 0.15s;
+  transition: transform 0.15s, filter 0.15s;
 }
 .pc-chapter-dot-ring,
 .pc-chapter-dot-center,
 .pc-chapter-dot-label { display: none; }
 .pc-chapter-dot-glyph {
+  /* Metallic gold star with embossed depth:
+       top highlight (cream)  + inner downshadow (warm dark)
+       + drop shadow (bottom-right) for lift off the wood.   */
   font-family: 'Cinzel', 'EB Garamond', Georgia, serif;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1;
-  color: #c08a30;
-  text-shadow:
-    0 1px 0 rgba(255, 244, 220, 0.55),
-    0 0 4px rgba(232, 196, 138, 0.45);
+  background-image: linear-gradient(155deg, #fff5cc 0%, #e7c171 35%, #b07a28 70%, #6e3c1a 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55))
+    drop-shadow(1px 1px 2px rgba(40, 18, 6, 0.45))
+    drop-shadow(0 0 4px rgba(232, 196, 138, 0.35));
 }
 .pc-chapter-dot:hover .pc-chapter-dot-glyph {
-  color: #5a3010;
+  filter:
+    drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55))
+    drop-shadow(1px 1px 3px rgba(40, 18, 6, 0.55))
+    drop-shadow(0 0 9px rgba(255, 244, 200, 0.75));
   transform: scale(1.18);
 }
 .pc-chapter-dot.is-flashing .pc-chapter-dot-glyph {
   animation: pc-chapter-dot-flash 0.42s ease-out forwards;
 }
 @keyframes pc-chapter-dot-flash {
-  0%   { transform: scale(1);   color: #c08a30; text-shadow: 0 0 0 transparent; }
-  50%  { transform: scale(1.45); color: #fff1d0; text-shadow: 0 0 16px rgba(255, 244, 220, 0.95); }
-  100% { transform: scale(1.05); color: #8a4f12; text-shadow: 0 0 5px rgba(232, 196, 138, 0.55); }
+  0%   { transform: scale(1);   filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55)) drop-shadow(1px 1px 2px rgba(40, 18, 6, 0.45)); }
+  50%  { transform: scale(1.45); filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55)) drop-shadow(0 0 18px rgba(255, 244, 200, 1)); }
+  100% { transform: scale(1.05); filter: drop-shadow(0 1px 0 rgba(40, 18, 6, 0.55)) drop-shadow(1px 1px 3px rgba(40, 18, 6, 0.45)) drop-shadow(0 0 6px rgba(232, 196, 138, 0.55)); }
 }
 .pc-chapter-dot-label {
   font-family: 'Cinzel', Georgia, serif;
