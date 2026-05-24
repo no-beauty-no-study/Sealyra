@@ -7688,37 +7688,39 @@ body.bg-stage0 .scene-veil { display: none; }
                   数字作为装饰 颜色统一为内容字的颜色".
    No more dashes, no more ››› — both were ugly per user.        */
 .s0-foot {
+  /* Lifted clear of the painted floral corner.  Sits roughly
+     midway between the last visible content line and the painted
+     page edge — like the folio area in a real book.              */
   position: absolute;
   left: 8px;
   right: 8px;
-  bottom: 92px;
+  bottom: 138px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: baseline;
   z-index: 3;
   pointer-events: none;
 }
-@media (min-width: 640px) { .s0-foot { bottom: 76px; } }
-@media (min-width: 980px) { .s0-foot { bottom: 88px; } }
+@media (min-width: 640px) { .s0-foot { bottom: 120px; } }
+@media (min-width: 980px) { .s0-foot { bottom: 132px; } }
 .s0-foot > *      { pointer-events: auto; }
 .s0-foot-spacer { grid-column: 1; }
 .s0-folio {
-  /* Single decorative digit tucked into the right-hand painted
-     flower.  Body-text colour so it doesn't read as red. */
+  /* Smaller, no tinted shadow.  Clean dark ink so it doesn't read
+     as reddish against the cream paper.  Per user: "1再小点 …
+     颜色统一为内容字的颜色 不要用红色".                            */
   grid-column: 3;
   justify-self: end;
   align-self: baseline;
-  margin-right: 12px;
+  margin-right: 10px;
   font-family: 'UnifrakturMaguntia', 'Pinyon Script', 'Cinzel Decorative', Georgia, serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 26px;
+  font-size: 18px;
   line-height: 1;
   letter-spacing: 0;
   color: #1f1004;
-  text-shadow:
-    0 1px 0 rgba(255, 244, 220, 0.45),
-    0 -1px 1px rgba(60, 30, 8, 0.25);
+  text-shadow: none;
 }
 .s0-next-link {
   grid-column: 2;
@@ -7927,13 +7929,10 @@ body.bg-stage0 .scene-veil { display: none; }
    中间加个点的金属圆圈图形".  The section number (1.1, 3.7…)
    sits below as a tiny label.  Click → flash + jump.            */
 .pc-chapter-dots {
-  /* v=96 — ✦ printer's marks on the scroll-roll, pushed down so
-     they sit lower on the wood (was riding the top edge), and
-     given a layered light/shadow so they read as embossed metal
-     instead of flat ink.  Per user: "这个星星有点高了… 往下一点
-     然后稍微立体一点".                                            */
+  /* Sits on the body of the scroll-roll (not riding its top edge,
+     not down on the seam below it).                              */
   position: absolute;
-  top: 7.5%;
+  top: 6%;
   left: 0;
   right: 0;
   display: flex;
@@ -8707,16 +8706,14 @@ body.bg-stage0 #screen-stage0-quiz {
   .s0-page { padding: 130px 90px 90px; max-width: 820px; }
 }
 .s0-text-frame {
-  /* Now stretches the FULL page width inside the painted border.
-     No internal scrolling — text is sized to fit via JS-set
-     --s0-fit-scale (default 1).  Bottom padding bumped to 132 px
-     so content stops above the page-number footer.               */
+  /* Bottom padding bumped further so the foot can sit well above
+     the painted floral corner the bg image puts at the bottom.   */
   position: relative;
   width: 100%;
   max-width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 14px 14px 132px;
+  padding: 14px 14px 180px;
   background: transparent;
   border: 0;
   box-shadow: none;
