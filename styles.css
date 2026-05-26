@@ -8275,9 +8275,9 @@ body.bg-stage0 .s0-chip {
   color: rgba(110, 63, 18, 0.62);
   font-size: 10.5px;
 }
-.s0-page { padding: 14vw 7vw 12vw 36vw; }   /* v=102 — push column further right */
-@media (min-width: 640px) { .s0-page { padding: 100px 70px 110px 230px; } }
-@media (min-width: 980px) { .s0-page { padding: 110px 90px 130px 280px; max-width: 860px; } }
+.s0-page { padding: 14vw 6vw 12vw 42vw; }   /* v=103 — push column further right */
+@media (min-width: 640px) { .s0-page { padding: 100px 64px 110px 260px; } }
+@media (min-width: 980px) { .s0-page { padding: 110px 84px 130px 320px; max-width: 900px; } }
 
 /* Guarantee the text frame fills the available width even if a
    tight flex parent tries to shrink it (the user reported "右边

@@ -1,4 +1,4 @@
-/* v=102 — Lan BGM (mp3 player).
+/* v=103 — Lan BGM (mp3 player).
    Replaces the old Web Audio synth.  Plays the 14 mp3 tracks in
    assets/ per the user's pool config:
 
@@ -54,7 +54,7 @@
   let _volume = 0.42;
   let _fading = null;
 
-  function _track(name) { return ASSET_BASE + name + '?v=102'; }
+  function _track(name) { return ASSET_BASE + name + '?v=103'; }
   function _pick(pool) {
     if (pool.mode === 'fixed') return pool.track;
     const ts = pool.tracks || [];
@@ -136,7 +136,7 @@
   function playGameRandom(opts)   { return playForPool((opts && opts.pool) || 'stage1_game',   opts); }
   function playResultRandom(opts) { return playForPool((opts && opts.pool) || 'stage1_result', opts); }
 
-  // v=102 — unlock() restored.  Called from inside user-gesture
+  // v=103 — unlock() restored.  Called from inside user-gesture
   // handlers (cover CTA, etc.) so the <audio> element is flagged
   // as user-activated for iOS / autoplay-blocked browsers.  Plays
   // a 1-frame silent buffer then immediately pauses, which is the

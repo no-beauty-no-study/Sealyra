@@ -51,6 +51,32 @@ function escapeHtml(s) {
 }
 function escapeAttr(s) { return escapeHtml(s); }
 
+// v=103 — voice picker, default Ava per user request.  We pick once
+// (lazily) when voices first load; Apple's "Ava" is the macOS / iOS
+// premium en-US voice, but on browsers without it we fall back to
+// another softer en-US choice rather than the platform default.
+let _voiceCache = null;
+function _pickVoice() {
+  if (_voiceCache) return _voiceCache;
+  if (!window.speechSynthesis) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices || voices.length === 0) return null;
+  const want = ['Ava', 'Ava (Enhanced)', 'Ava (Premium)', 'Samantha', 'Karen', 'Allison', 'Susan'];
+  for (const name of want) {
+    const v = voices.find(x => x.name && x.name.toLowerCase().includes(name.toLowerCase()) && /en[-_]?(US|GB|AU)/i.test(x.lang));
+    if (v) { _voiceCache = v; return v; }
+  }
+  // Generic en-US female fallback if name match fails.
+  const v = voices.find(x => /female/i.test(x.name) && x.lang.startsWith('en')) ||
+            voices.find(x => x.lang === 'en-US') ||
+            voices.find(x => x.lang.startsWith('en'));
+  if (v) { _voiceCache = v; return v; }
+  return null;
+}
+if (window.speechSynthesis && typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
+  window.speechSynthesis.onvoiceschanged = () => { _voiceCache = null; _pickVoice(); };
+}
+
 function speak(text, lang = 'en-US') {
   if (!window.speechSynthesis) return Promise.resolve();
   window.speechSynthesis.cancel();
@@ -59,6 +85,8 @@ function speak(text, lang = 'en-US') {
     u.lang = lang;
     u.rate = 0.92;
     u.pitch = 1.0;
+    const v = _pickVoice();
+    if (v) u.voice = v;
     u.onend   = () => resolve();
     u.onerror = () => resolve();
     window.speechSynthesis.speak(u);
