@@ -524,16 +524,23 @@ function _isCoverSide(s) {
 }
 function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
+  // v=110 — remember the last gameplay screen so the cover's
+  // Continue CTA always lands the user exactly where they left
+  // off (not on stage 0 reading just because saved.stage is
+  // still the pre-quiz value).  Per user: "上一次退出在什么界面
+  // 再次进入还是什么界面 不然我都做完连连看了 竟然还是从reading
+  // 开始进入".  We only record meaningful gameplay screens.
+  const REMEMBERABLE = /^(stage[0-3](-result|-quiz)?)$/;
+  if (REMEMBERABLE.test(screenId)) {
+    saved.lastScreen = screenId;
+    try { Store.save(); } catch {}
+  }
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === `screen-${screenId}`));
   window.scrollTo(0, 0);
   ['bg-cover','bg-stage','bg-stage0','bg-result','bg-note'].forEach(c => document.body.classList.remove(c));
   document.body.classList.add(BG_BY_SCREEN[screenId] || 'bg-cover');
   document.body.classList.toggle('no-scroll', !SCROLLABLE_SCREENS.has(screenId));
   if (Screens[screenId] && Screens[screenId].onEnter) Screens[screenId].onEnter(opts);
-  // v=53 — explicit per-screen BGM swap.  User reported that after
-  // the connect game only 2 BGMs ever played.  Each screen now
-  // GUARANTEES its pool plays even if the per-screen onEnter
-  // forgot to call it.
   _ensureBGM(screenId);
 }
 const BGM_POOL_BY_SCREEN = {
@@ -2342,22 +2349,30 @@ const Screens = {
       let resumeStage = (saved.stage == null) ? 0 : saved.stage;
       if (resumeStage < 0 || resumeStage > 3) resumeStage = 0;
       const mainline = saved.mainlineChapter || saved.chapter || 1;
-      // v=84 — STAGE0_ARTICLES was renamed to STAGE0_PARTS in v=81;
-      // the leftover check fell through and pushed every fresh
-      // chapter to stage 1 by accident.  Now we look at
-      // _CHAPTER_PLAN[mainline-1].article_id — only chapters with
-      // an article id route through stage 0.
       const mlChapter = _CHAPTER_PLAN[mainline - 1];
       const chapHasArticle = !!(mlChapter && mlChapter.article_id);
       if (resumeStage === 0 && !chapHasArticle) resumeStage = 1;
+      // v=110 — if we recorded a specific gameplay screen last
+      // session (e.g. stage1-result, stage2), use IT for the CTA
+      // target.  Per user: "上一次退出在什么界面 再次进入还是
+      // 什么界面 不然我都做完连连看了 竟然还是从reading开始进入".
+      const REMEMBERABLE = /^stage[0-3](-result|-quiz)?$/;
+      let resumeScreen  = 'stage' + resumeStage;
+      if (saved.lastScreen && REMEMBERABLE.test(saved.lastScreen)) {
+        resumeScreen = saved.lastScreen;
+      }
       const stageLabels = {
-        0: 'Continue · Reading',
-        1: 'Continue · Stage 1',
-        2: 'Continue · Stage 2',
-        3: 'Continue · Stage 3'
+        'stage0':         'Continue · Reading',
+        'stage0-quiz':    'Continue · Reading Quiz',
+        'stage1':         'Continue · Stage 1',
+        'stage1-result':  'Continue · Stage 1',
+        'stage2':         'Continue · Stage 2',
+        'stage2-result':  'Continue · Stage 2',
+        'stage3':         'Continue · Stage 3',
+        'stage3-result':  'Continue · Stage 3'
       };
       const ctaLabel = resumeStage === 0 && mainline === 1 && (saved.stage == null || saved.stage === 0)
-        ? 'Tonight’s Reading' : stageLabels[resumeStage];
+        ? 'Tonight’s Reading' : (stageLabels[resumeScreen] || stageLabels['stage' + resumeStage]);
       $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
@@ -2374,7 +2389,7 @@ const Screens = {
           if (!saved.mainlineChapter) saved.mainlineChapter = saved.chapter;
           Store.save();
           freshSession();
-          go('stage' + resumeStage);
+          go(resumeScreen);
           setTimeout(() => fade.remove(), 700);
           fade.classList.remove('show');
         }, 1000);

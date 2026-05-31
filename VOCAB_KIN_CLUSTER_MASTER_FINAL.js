@@ -1,8 +1,8 @@
 window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
   "metadata": {
-    "name": "KIN_CLUSTER_MASTER_FINAL_WEBSITE_CLEANED_V15_POS",
+    "name": "KIN_CLUSTER_MASTER_FINAL_WEBSITE_CLEANED_V18_LEARNABILITY_REPAIR",
     "source": "V13 minus review singletons + 67 reworked kin clusters",
-    "rule": "No fake singleton kin. Family words inherit family head. Small-only words have no big kin card. 67 rework words receive curated visible/root kin.",
+    "rule": "V15 plus targeted dirty-kin cleanup: remove condense/spond false cluster, -ensity fake cluster, and ed/ing inflection words from kin.",
     "pos_added": true
   },
   "kin_clusters": [
@@ -16,18 +16,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "adaptation",
         "adaptably"
       ],
-      "external_words": [
-        {
-          "word": "maladapted",
-          "zh": "适应不良的",
-          "phrase_1": "maladapted policy",
-          "phrase_1_zh": "适应不良的政策",
-          "phrase_2": "maladapted species",
-          "phrase_2_zh": "适应不良的物种",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_adaptable_adaptably_adapt_adaptive_adaptation",
       "internal_word_items": [
@@ -49,9 +39,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "adaptation": "n.",
         "adaptably": "adv."
       },
-      "external_pos_map": {
-        "maladapted": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_advertise_convert_avert_diversion_rover",
@@ -1958,30 +1946,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "challenging",
-          "zh": "有挑战性的",
-          "phrase_1": "challenging environment",
-          "phrase_1_zh": "有挑战性的环境",
-          "phrase_2": "challenging task",
-          "phrase_2_zh": "艰巨任务",
-          "pos": "n./adj."
-        },
-        {
           "word": "challengeable",
           "zh": "可挑战的；可质疑的",
           "phrase_1": "challengeable decision",
           "phrase_1_zh": "可质疑的决定",
           "phrase_2": "challengeable evidence",
           "phrase_2_zh": "可挑战的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "unchallenged",
-          "zh": "未受质疑的",
-          "phrase_1": "unchallenged authority",
-          "phrase_1_zh": "未受质疑的权威",
-          "phrase_2": "unchallenged assumption",
-          "phrase_2_zh": "未受质疑的假设",
           "pos": "adj."
         },
         {
@@ -1994,7 +1964,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_challenge_challengingly_challenging_challenger_unchallenged",
       "internal_word_items": [
@@ -2008,9 +1978,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "counterchallenge": "n./v.",
-        "challenging": "n./adj.",
         "challengeable": "adj.",
-        "unchallenged": "adj.",
         "challenger": "n."
       }
     },
@@ -2810,11 +2778,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "constraint",
         "constrain",
         "strain",
-        "unconstrained",
         "restrain"
       ],
       "external_words": [],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_constraint_restrain_unconstrained",
       "internal_word_items": [
@@ -2831,10 +2798,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "unconstrained",
-          "pos": "adj."
-        },
-        {
           "word": "restrain",
           "pos": "v."
         }
@@ -2843,7 +2806,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "constraint": "n.",
         "constrain": "v.",
         "strain": "n./v.",
-        "unconstrained": "adj.",
         "restrain": "v."
       },
       "external_pos_map": {}
@@ -3152,7 +3114,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "high",
       "internal_words": [
         "coverage",
-        "discovered",
         "recover"
       ],
       "external_words": [
@@ -3175,7 +3136,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_coverage_resilience_recover_discovered",
       "internal_word_items": [
@@ -3184,17 +3145,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "discovered",
-          "pos": "v."
-        },
-        {
           "word": "recover",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
         "coverage": "n.",
-        "discovered": "v.",
         "recover": "n."
       },
       "external_pos_map": {
@@ -3397,12 +3353,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deconstructivist",
         "instruct",
         "structure",
-        "unconstrained",
         "reconstruct",
         "deconstructivism"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_deconstructivist_deconstructivism_reconstruct_unconstrained_construct",
       "internal_word_items": [
@@ -3419,10 +3374,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unconstrained",
-          "pos": "adj."
-        },
-        {
           "word": "reconstruct",
           "pos": "v."
         },
@@ -3435,7 +3386,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deconstructivist": "n.",
         "instruct": "v.",
         "structure": "n.",
-        "unconstrained": "adj.",
         "reconstruct": "v.",
         "deconstructivism": "n."
       },
@@ -3717,7 +3667,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "describe / scrib",
       "confidence": "review",
       "internal_words": [
-        "described",
         "script",
         "inscribe",
         "descriptive"
@@ -3742,14 +3691,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_described_descriptive_scribe_inscribe",
       "internal_word_items": [
-        {
-          "word": "described",
-          "pos": "v."
-        },
         {
           "word": "script",
           "pos": "n."
@@ -3764,7 +3709,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "described": "v.",
         "script": "n.",
         "inscribe": "v.",
         "descriptive": "adj."
@@ -3780,7 +3724,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "scrib",
       "confidence": "high",
       "internal_words": [
-        "described",
         "script",
         "transcription",
         "subscribers",
@@ -3788,14 +3731,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "inscription"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_described_inscription_scribe_subscribers_transcription",
       "internal_word_items": [
-        {
-          "word": "described",
-          "pos": "v."
-        },
         {
           "word": "script",
           "pos": "n."
@@ -3818,7 +3757,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "described": "v.",
         "script": "n.",
         "transcription": "n.",
         "subscribers": "n.",
@@ -3833,7 +3771,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "scribe",
       "confidence": "high",
       "internal_words": [
-        "described",
         "manuscript",
         "transcribe",
         "inscribe",
@@ -3841,14 +3778,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "subscribers"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_described_subscribers",
       "internal_word_items": [
-        {
-          "word": "described",
-          "pos": "v."
-        },
         {
           "word": "manuscript",
           "pos": "n."
@@ -3871,7 +3804,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "described": "v.",
         "manuscript": "n.",
         "transcribe": "v.",
         "inscribe": "v.",
@@ -4056,14 +3988,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "signify",
         "signature",
         "insignificant",
-        "designtesting",
         "designspecification",
         "designator",
         "designate",
         "signal"
       ],
       "external_words": [],
-      "total_words": 10,
+      "total_words": 9,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_design_signal_designate_designator_designspecification",
       "internal_word_items": [
@@ -4088,10 +4019,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "designtesting",
-          "pos": "n."
-        },
-        {
           "word": "designspecification",
           "pos": "n."
         },
@@ -4114,7 +4041,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "signify": "v.",
         "signature": "n.",
         "insignificant": "adj.",
-        "designtesting": "n.",
         "designspecification": "n.",
         "designator": "n.",
         "designate": "v.",
@@ -5109,7 +5035,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "editing",
       "confidence": "review",
       "internal_words": [
-        "editing",
         "gene-editing",
         "editorial",
         "editor"
@@ -5134,14 +5059,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_editing_gene_editing",
       "internal_word_items": [
-        {
-          "word": "editing",
-          "pos": "n."
-        },
         {
           "word": "gene-editing",
           "pos": "n./adj."
@@ -5156,7 +5077,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "editing": "n.",
         "gene-editing": "n./adj.",
         "editorial": "adj.",
         "editor": "n."
@@ -5669,19 +5589,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "farm",
       "confidence": "review",
       "internal_words": [
-        "farm",
-        "fishfarming"
+        "farm"
       ],
       "external_words": [
-        {
-          "word": "farming",
-          "zh": "农业；耕作",
-          "phrase_1": "precision farming technology",
-          "phrase_1_zh": "精准农业技术",
-          "phrase_2": "organic farming practice",
-          "phrase_2_zh": "有机耕作实践",
-          "pos": "n./adj."
-        },
         {
           "word": "farmhouse",
           "zh": "农舍",
@@ -5710,25 +5620,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_farm_fishfarming",
       "internal_word_items": [
         {
           "word": "farm",
           "pos": "n."
-        },
-        {
-          "word": "fishfarming",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "farm": "n.",
-        "fishfarming": "n."
+        "farm": "n."
       },
       "external_pos_map": {
-        "farming": "n./adj.",
         "farmhouse": "n./v.",
         "farmer": "n.",
         "farmland": "n./v."
@@ -5740,25 +5644,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "finned",
       "confidence": "review",
       "internal_words": [
-        "finned",
         "lobe-finned"
       ],
       "external_words": [],
-      "total_words": 2,
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_finned_lobe_finned",
       "internal_word_items": [
-        {
-          "word": "finned",
-          "pos": "n."
-        },
         {
           "word": "lobe-finned",
           "pos": "n./adj."
         }
       ],
       "internal_pos_map": {
-        "finned": "n.",
         "lobe-finned": "n./adj."
       },
       "external_pos_map": {}
@@ -5770,8 +5668,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "fish",
-        "shellfish",
-        "fishfarming"
+        "shellfish"
       ],
       "external_words": [
         {
@@ -5802,7 +5699,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_fish_fishfarming_shell",
       "internal_word_items": [
@@ -5813,16 +5710,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "shellfish",
           "pos": "n./v."
-        },
-        {
-          "word": "fishfarming",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "fish": "n.",
-        "shellfish": "n./v.",
-        "fishfarming": "n."
+        "shellfish": "n./v."
       },
       "external_pos_map": {
         "fishbone": "n./v.",
@@ -7087,12 +6979,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "quality",
         "qualification",
         "qualifier",
-        "unqualified",
         "unequal",
         "equality"
       ],
       "external_words": [],
-      "total_words": 8,
+      "total_words": 7,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_inequality_equality_unequal_unqualified_qualifier",
       "internal_word_items": [
@@ -7117,10 +7008,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unqualified",
-          "pos": "adj."
-        },
-        {
           "word": "unequal",
           "pos": "adj."
         },
@@ -7135,7 +7022,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "quality": "n.",
         "qualification": "n.",
         "qualifier": "n.",
-        "unqualified": "adj.",
         "unequal": "adj.",
         "equality": "n."
       },
@@ -8091,7 +7977,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "margin",
       "confidence": "review",
       "internal_words": [
-        "marginalised",
         "marginalize",
         "margin",
         "marginalises"
@@ -8116,14 +8001,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_marginalised_marginalises_margin_marginal_marginalize",
       "internal_word_items": [
-        {
-          "word": "marginalised",
-          "pos": "adj."
-        },
         {
           "word": "marginalize",
           "pos": "v."
@@ -8138,7 +8019,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "marginalised": "adj.",
         "marginalize": "v.",
         "margin": "n.",
         "marginalises": "n."
@@ -8228,15 +8108,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "marketing",
-          "zh": "营销；市场推广",
-          "phrase_1": "marketing strategy for public health",
-          "phrase_1_zh": "公共卫生营销策略",
-          "phrase_2": "marketing data analytics",
-          "phrase_2_zh": "营销数据分析",
-          "pos": "n."
-        },
-        {
           "word": "marketplace",
           "zh": "市场；交易平台",
           "phrase_1": "digital marketplace regulation",
@@ -8246,7 +8117,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_marketer_market_marketgood_supermarket",
       "internal_word_items": [
@@ -8274,7 +8145,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "market": "n."
       },
       "external_pos_map": {
-        "marketing": "n.",
         "marketplace": "n./v."
       }
     },
@@ -8468,8 +8338,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "digest",
-        "congest",
-        "undigested"
+        "congest"
       ],
       "external_words": [
         {
@@ -8500,7 +8369,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_metabolism_digest_undigested_digest_digestible",
       "internal_word_items": [
@@ -8511,16 +8380,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "congest",
           "pos": "v."
-        },
-        {
-          "word": "undigested",
-          "pos": "v."
         }
       ],
       "internal_pos_map": {
         "digest": "n./v.",
-        "congest": "v.",
-        "undigested": "v."
+        "congest": "v."
       },
       "external_pos_map": {
         "gestation": "n.",
@@ -8802,29 +8666,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "stand",
       "confidence": "high",
       "internal_words": [
-        "misunderstanding",
         "standard",
-        "outstanding",
         "withstand",
         "understand",
         "substandardness"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_misunderstanding_outstanding_substandardness_understand_withstand",
       "internal_word_items": [
         {
-          "word": "misunderstanding",
-          "pos": "n."
-        },
-        {
           "word": "standard",
           "pos": "n./v."
-        },
-        {
-          "word": "outstanding",
-          "pos": "adj."
         },
         {
           "word": "withstand",
@@ -8840,9 +8694,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "misunderstanding": "n.",
         "standard": "n./v.",
-        "outstanding": "adj.",
         "withstand": "v.",
         "understand": "v.",
         "substandardness": "n."
@@ -8855,7 +8707,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "understand / state",
       "confidence": "review",
       "internal_words": [
-        "misunderstanding",
         "state",
         "understand",
         "overstate"
@@ -8880,14 +8731,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_misunderstanding_statement_overstate_understand_understanding",
       "internal_word_items": [
-        {
-          "word": "misunderstanding",
-          "pos": "n."
-        },
         {
           "word": "state",
           "pos": "n./v."
@@ -8902,7 +8749,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "misunderstanding": "n.",
         "state": "n./v.",
         "understand": "v.",
         "overstate": "v."
@@ -9781,15 +9627,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "childbearing",
-          "zh": "生育",
-          "phrase_1": "delayed childbearing trend",
-          "phrase_1_zh": "推迟生育趋势",
-          "phrase_2": "childbearing policy incentives",
-          "phrase_2_zh": "生育政策激励",
-          "pos": "n./adj."
-        },
-        {
           "word": "childcare",
           "zh": "儿童照护",
           "phrase_1": "affordable childcare provision",
@@ -9799,7 +9636,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_one_child_childhood_children",
       "internal_word_items": [
@@ -9823,7 +9660,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "childless": "adj.",
-        "childbearing": "n./adj.",
         "childcare": "n./v."
       }
     },
@@ -10109,7 +9945,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "paper",
-        "papermaking",
         "newspaper"
       ],
       "external_words": [
@@ -10132,7 +9967,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_paper_newspaper_papermaking",
       "internal_word_items": [
@@ -10141,17 +9976,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "papermaking",
-          "pos": "v."
-        },
-        {
           "word": "newspaper",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
         "paper": "n.",
-        "papermaking": "v.",
         "newspaper": "n."
       },
       "external_pos_map": {
@@ -12014,15 +11844,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "convoluted",
-          "zh": "复杂曲折的；卷曲的",
-          "phrase_1": "convoluted argument",
-          "phrase_1_zh": "复杂曲折的论证",
-          "phrase_2": "convoluted legal process",
-          "phrase_2_zh": "复杂的法律程序",
-          "pos": "adj."
-        },
-        {
           "word": "voluble",
           "zh": "健谈的；流利的",
           "phrase_1": "voluble speaker",
@@ -12032,7 +11853,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_revolve_revolution_evolution_evolve_revolt",
       "internal_word_items": [
@@ -12060,7 +11881,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "revolution": "n."
       },
       "external_pos_map": {
-        "convoluted": "adj.",
         "voluble": "n./v."
       }
     },
@@ -12196,15 +12016,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "sabrewing",
-          "zh": "弯刀翅蜂鸟",
-          "phrase_1": "sabrewing hummingbird habitat",
-          "phrase_1_zh": "弯刀翅蜂鸟栖息地",
-          "phrase_2": "sabrewing flight pattern",
-          "phrase_2_zh": "弯刀翅蜂鸟飞行模式",
-          "pos": "n./adj."
-        },
-        {
           "word": "sabretooth",
           "zh": "剑齿动物",
           "phrase_1": "sabretooth fossil record",
@@ -12214,7 +12025,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_sabre_sabre_toothed",
       "internal_word_items": [
@@ -12233,7 +12044,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "sabreur": "n./v.",
-        "sabrewing": "n./adj.",
         "sabretooth": "n./v."
       }
     },
@@ -12244,19 +12054,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "sabre-toothed",
-        "toothed",
         "sabre"
       ],
       "external_words": [
-        {
-          "word": "sabrewing",
-          "zh": "弯刀翅蜂鸟",
-          "phrase_1": "sabrewing hummingbird habitat",
-          "phrase_1_zh": "弯刀翅蜂鸟栖息地",
-          "phrase_2": "sabrewing flight pattern",
-          "phrase_2_zh": "弯刀翅蜂鸟飞行模式",
-          "pos": "n./adj."
-        },
         {
           "word": "sabretooth",
           "zh": "剑齿动物",
@@ -12267,7 +12067,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_sabre_toothed_sabre_toothed",
       "internal_word_items": [
@@ -12276,21 +12076,15 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./adj."
         },
         {
-          "word": "toothed",
-          "pos": "n."
-        },
-        {
           "word": "sabre",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
         "sabre-toothed": "n./adj.",
-        "toothed": "n.",
         "sabre": "n."
       },
       "external_pos_map": {
-        "sabrewing": "n./adj.",
         "sabretooth": "n./v."
       }
     },
@@ -12724,18 +12518,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "steelworker safety standard",
           "phrase_2_zh": "钢铁工人安全标准",
           "pos": "n."
-        },
-        {
-          "word": "steelmaking",
-          "zh": "炼钢",
-          "phrase_1": "low-carbon steelmaking process",
-          "phrase_1_zh": "低碳炼钢工艺",
-          "phrase_2": "steelmaking capacity reduction",
-          "phrase_2_zh": "炼钢产能削减",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_steel_steel_skeleton",
       "internal_word_items": [
@@ -12754,8 +12539,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "steelwork": "n./v.",
-        "steelworker": "n.",
-        "steelmaking": "n./adj."
+        "steelworker": "n."
       }
     },
     {
@@ -12778,18 +12562,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "moral stricture in society",
           "phrase_2_zh": "社会中的道德约束",
           "pos": "n."
-        },
-        {
-          "word": "unrestricted",
-          "zh": "不受限制的",
-          "phrase_1": "unrestricted research funding",
-          "phrase_1_zh": "不受限制的研究经费",
-          "phrase_2": "unrestricted access to archives",
-          "phrase_2_zh": "不受限制地查阅档案",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_stricter_restrict_restrict_restricted_unrestricted",
       "internal_word_items": [
@@ -12817,8 +12592,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "strict": "adj."
       },
       "external_pos_map": {
-        "stricture": "n.",
-        "unrestricted": "adj."
+        "stricture": "n."
       }
     },
     {
@@ -12827,7 +12601,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "string",
       "confidence": "review",
       "internal_words": [
-        "string",
         "stringency",
         "stringent",
         "astringent",
@@ -12844,14 +12617,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_string_astringent_stringent_stringency",
       "internal_word_items": [
-        {
-          "word": "string",
-          "pos": "n."
-        },
         {
           "word": "stringency",
           "pos": "n."
@@ -12870,7 +12639,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "string": "n.",
         "stringency": "n.",
         "stringent": "adj.",
         "astringent": "n./adj.",
@@ -13574,11 +13342,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "testify",
         "detest",
         "protest",
-        "attest",
-        "designtesting"
+        "attest"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_test_attest_designtesting_protest_detest",
       "internal_word_items": [
@@ -13601,10 +13368,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "attest",
           "pos": "v."
-        },
-        {
-          "word": "designtesting",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
@@ -13612,8 +13375,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "testify": "v.",
         "detest": "v.",
         "protest": "n./v.",
-        "attest": "v.",
-        "designtesting": "n."
+        "attest": "v."
       },
       "external_pos_map": {}
     },
@@ -15150,7 +14912,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "cover",
         "recover",
-        "discovered",
         "coverage"
       ],
       "external_words": [
@@ -15173,7 +14934,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_cover_coverage_discovered_recover",
       "internal_word_items": [
@@ -15186,10 +14947,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "discovered",
-          "pos": "v."
-        },
-        {
           "word": "coverage",
           "pos": "n."
         }
@@ -15197,7 +14954,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "cover": "n.",
         "recover": "n.",
-        "discovered": "v.",
         "coverage": "n."
       },
       "external_pos_map": {
@@ -17262,7 +17018,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "high",
       "internal_words": [
         "equal",
-        "unqualified",
         "unequal",
         "quality",
         "qualitative",
@@ -17273,16 +17028,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "equality"
       ],
       "external_words": [],
-      "total_words": 10,
+      "total_words": 9,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_equal_equality_inequality_qualification",
       "internal_word_items": [
         {
           "word": "equal",
-          "pos": "adj."
-        },
-        {
-          "word": "unqualified",
           "pos": "adj."
         },
         {
@@ -17320,7 +17071,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "equal": "adj.",
-        "unqualified": "adj.",
         "unequal": "adj.",
         "quality": "n.",
         "qualitative": "adj.",
@@ -17414,27 +17164,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "unreasonable search and seizure",
           "phrase_2_zh": "不合理搜查与扣押",
           "pos": "adj."
-        },
-        {
-          "word": "reasoned",
-          "zh": "有理有据的",
-          "phrase_1": "reasoned public debate",
-          "phrase_1_zh": "有理有据的公共辩论",
-          "phrase_2": "reasoned judicial opinion",
-          "phrase_2_zh": "有理有据的司法意见",
-          "pos": "adj."
-        },
-        {
-          "word": "reasoning",
-          "zh": "推理；论证",
-          "phrase_1": "reasoning from empirical evidence",
-          "phrase_1_zh": "基于经验证据推理",
-          "phrase_2": "legal reasoning in court",
-          "phrase_2_zh": "法庭法律推理",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_reason_reasonable_treason",
       "internal_word_items": [
@@ -17457,9 +17189,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "reasonable": "adj."
       },
       "external_pos_map": {
-        "unreasonable": "adj.",
-        "reasoned": "adj.",
-        "reasoning": "n./adj."
+        "unreasonable": "adj."
       }
     },
     {
@@ -17544,27 +17274,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "resourcefulness under budget pressure",
           "phrase_2_zh": "预算压力下的资源利用能力",
           "pos": "n."
-        },
-        {
-          "word": "outsourcing",
-          "zh": "外包",
-          "phrase_1": "outsourcing public services",
-          "phrase_1_zh": "公共服务外包",
-          "phrase_2": "outsourcing risk management",
-          "phrase_2_zh": "外包风险管理",
-          "pos": "n."
-        },
-        {
-          "word": "resourcing",
-          "zh": "资源配置",
-          "phrase_1": "school resourcing inequality",
-          "phrase_1_zh": "学校资源配置不平等",
-          "phrase_2": "resourcing public health systems",
-          "phrase_2_zh": "为公共卫生系统配置资源",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_resource_resourceful",
       "internal_word_items": [
@@ -17587,9 +17299,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resourceful": "adj."
       },
       "external_pos_map": {
-        "resourcefulness": "n.",
-        "outsourcing": "n.",
-        "resourcing": "n./adj."
+        "resourcefulness": "n."
       }
     },
     {
@@ -18913,15 +18623,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "fabricated",
-          "zh": "捏造的；制造的",
-          "phrase_1": "fabricated research data",
-          "phrase_1_zh": "捏造的研究数据",
-          "phrase_2": "fabricated metal structure",
-          "phrase_2_zh": "制造的金属结构",
-          "pos": "adj."
-        },
-        {
           "word": "prefabricate",
           "zh": "预制",
           "phrase_1": "prefabricate housing components",
@@ -18931,7 +18632,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_fabricate_fabricator",
       "internal_word_items": [
@@ -18959,7 +18660,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "fabricator": "n."
       },
       "external_pos_map": {
-        "fabricated": "adj.",
         "prefabricate": "v."
       }
     },
@@ -19091,18 +18791,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "facility",
         "facilitator"
       ],
-      "external_words": [
-        {
-          "word": "facilitated",
-          "zh": "被促进的；便利化的",
-          "phrase_1": "facilitated communication session",
-          "phrase_1_zh": "有引导的交流会议",
-          "phrase_2": "facilitated access to services",
-          "phrase_2_zh": "便利化服务获取",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_facilitate_facilitator_facility",
       "internal_word_items": [
@@ -19134,9 +18824,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "facility": "n.",
         "facilitator": "n."
       },
-      "external_pos_map": {
-        "facilitated": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_package_repackage",
@@ -19166,18 +18854,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "backpack weight limit",
           "phrase_2_zh": "背包重量限制",
           "pos": "n./v."
-        },
-        {
-          "word": "packaging",
-          "zh": "包装；包装方式",
-          "phrase_1": "sustainable packaging design",
-          "phrase_1_zh": "可持续包装设计",
-          "phrase_2": "packaging waste regulation",
-          "phrase_2_zh": "包装废弃物监管",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_package_repackage",
       "internal_word_items": [
@@ -19201,8 +18880,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "packhorse": "n./v.",
-        "backpack": "n./v.",
-        "packaging": "n./adj."
+        "backpack": "n./v."
       }
     },
     {
@@ -20170,15 +19848,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "uncontaminated",
-          "zh": "未污染的",
-          "phrase_1": "uncontaminated control sample",
-          "phrase_1_zh": "未污染对照样本",
-          "phrase_2": "uncontaminated groundwater source",
-          "phrase_2_zh": "未污染地下水源",
-          "pos": "adj."
-        },
-        {
           "word": "decontaminate",
           "zh": "去污；净化",
           "phrase_1": "decontaminate medical equipment",
@@ -20188,7 +19857,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_contaminant_contaminate_examine",
       "internal_word_items": [
@@ -20216,7 +19885,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "contaminate": "v."
       },
       "external_pos_map": {
-        "uncontaminated": "adj.",
         "decontaminate": "v."
       }
     },
@@ -20229,18 +19897,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "advance",
         "advancement"
       ],
-      "external_words": [
-        {
-          "word": "advanced",
-          "zh": "先进的；高级的",
-          "phrase_1": "advanced statistical method",
-          "phrase_1_zh": "高级统计方法",
-          "phrase_2": "advanced manufacturing technology",
-          "phrase_2_zh": "先进制造技术",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_advance_enhancement",
       "internal_word_items": [
@@ -20257,9 +19915,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "advance": "v.",
         "advancement": "n."
       },
-      "external_pos_map": {
-        "advanced": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_advance_enhancement_part_2",
@@ -20495,18 +20151,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "dangerously dependent on imports",
           "phrase_2_zh": "危险地依赖进口",
           "pos": "adv."
-        },
-        {
-          "word": "endangered",
-          "zh": "濒危的",
-          "phrase_1": "endangered language preservation",
-          "phrase_1_zh": "濒危语言保护",
-          "phrase_2": "endangered species habitat",
-          "phrase_2_zh": "濒危物种栖息地",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_danger_endangerment",
       "internal_word_items": [
@@ -20534,8 +20181,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "endangerment": "n."
       },
       "external_pos_map": {
-        "dangerously": "adv.",
-        "endangered": "adj."
+        "dangerously": "adv."
       }
     },
     {
@@ -21067,15 +20713,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "paralysing",
-          "zh": "使瘫痪的；令人无法行动的",
-          "phrase_1": "paralysing uncertainty in markets",
-          "phrase_1_zh": "市场中令人无法行动的不确定性",
-          "phrase_2": "paralysing effect of trauma",
-          "phrase_2_zh": "创伤的麻痹作用",
-          "pos": "n./adj."
-        },
-        {
           "word": "paralyzer",
           "zh": "麻痹因素；致瘫物",
           "phrase_1": "bureaucratic paralyzer of reform",
@@ -21094,7 +20731,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_paralyse_paralysis",
       "internal_word_items": [
@@ -21113,7 +20750,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "paralyze": "n./v.",
-        "paralysing": "n./adj.",
         "paralyzer": "n.",
         "paralytic": "adj."
       }
@@ -22093,7 +21729,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "lateral",
-        "lateralized",
         "lateralization",
         "lateralisation"
       ],
@@ -22117,16 +21752,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_lateral_lateralisation_lateralization_lateralized",
       "internal_word_items": [
         {
           "word": "lateral",
-          "pos": "adj."
-        },
-        {
-          "word": "lateralized",
           "pos": "adj."
         },
         {
@@ -22140,7 +21771,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "lateral": "adj.",
-        "lateralized": "adj.",
         "lateralization": "n.",
         "lateralisation": "n."
       },
@@ -22963,15 +22593,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "obliged",
-          "zh": "被迫的；有义务的",
-          "phrase_1": "obliged to provide evidence",
-          "phrase_1_zh": "有义务提供证据",
-          "phrase_2": "obliged under international law",
-          "phrase_2_zh": "受国际法约束",
-          "pos": "adj."
-        },
-        {
           "word": "obligor",
           "zh": "债务人；义务人",
           "phrase_1": "obligor in debt contract",
@@ -22981,7 +22602,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_oblige_obligatory",
       "internal_word_items": [
@@ -23005,7 +22626,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "obligate": "v.",
-        "obliged": "adj.",
         "obligor": "n."
       }
     },
@@ -23614,18 +23234,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "upscale a pilot project",
           "phrase_2_zh": "升级试点项目",
           "pos": "n./v."
-        },
-        {
-          "word": "scaling",
-          "zh": "扩展；缩放",
-          "phrase_1": "scaling renewable energy systems",
-          "phrase_1_zh": "扩展可再生能源系统",
-          "phrase_2": "scaling problem in computation",
-          "phrase_2_zh": "计算中的缩放问题",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_scalability_scalable",
       "internal_word_items": [
@@ -23649,8 +23260,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "downscale": "n./v.",
-        "upscale": "n./v.",
-        "scaling": "n./adj."
+        "upscale": "n./v."
       }
     },
     {
@@ -23736,18 +23346,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "scatterplot visualization method",
           "phrase_2_zh": "散点图可视化方法",
           "pos": "n./v."
-        },
-        {
-          "word": "scattering",
-          "zh": "散射；分散",
-          "phrase_1": "light scattering experiment",
-          "phrase_1_zh": "光散射实验",
-          "phrase_2": "scattering of rural settlements",
-          "phrase_2_zh": "农村聚落分散",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_scatter_scatterer",
       "internal_word_items": [
@@ -23767,8 +23368,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "scattershot": "n./v.",
         "backscatter": "n.",
-        "scatterplot": "n./v.",
-        "scattering": "n./adj."
+        "scatterplot": "n./v."
       }
     },
     {
@@ -23915,18 +23515,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "accomplisher in project delivery",
           "phrase_2_zh": "项目交付完成者",
           "pos": "n."
-        },
-        {
-          "word": "accomplished",
-          "zh": "有成就的；完成的",
-          "phrase_1": "accomplished legal scholar",
-          "phrase_1_zh": "有成就的法学家",
-          "phrase_2": "accomplished diplomatic mission",
-          "phrase_2_zh": "完成的外交任务",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_accomplish_accomplishment",
       "internal_word_items": [
@@ -23950,8 +23541,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "accomplishmentrecord": "n./v.",
-        "accomplisher": "n.",
-        "accomplished": "adj."
+        "accomplisher": "n."
       }
     },
     {
@@ -23974,15 +23564,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "accounting",
-          "zh": "会计；说明",
-          "phrase_1": "environmental accounting method",
-          "phrase_1_zh": "环境会计方法",
-          "phrase_2": "accounting for historical injustice",
-          "phrase_2_zh": "说明历史不公",
-          "pos": "n./adj."
-        },
-        {
           "word": "accountant",
           "zh": "会计师",
           "phrase_1": "accountant audit responsibility",
@@ -24001,7 +23582,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_account_accountability",
       "internal_word_items": [
@@ -24020,7 +23601,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "counteraccount": "n./v.",
-        "accounting": "n./adj.",
         "accountant": "adj.",
         "accountable": "adj."
       }
@@ -24109,15 +23689,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "preoccupied",
-          "zh": "全神贯注的；被占据的",
-          "phrase_1": "preoccupied with economic survival",
-          "phrase_1_zh": "被经济生存问题占据",
-          "phrase_2": "preoccupied public debate",
-          "phrase_2_zh": "被某议题占据的公共讨论",
-          "pos": "adj."
-        },
-        {
           "word": "occupational",
           "zh": "职业的；占领的",
           "phrase_1": "occupational health risk",
@@ -24127,7 +23698,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_occupant_occupation",
       "internal_word_items": [
@@ -24151,7 +23722,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "occupancy": "n.",
-        "preoccupied": "adj.",
         "occupational": "adj."
       }
     },
@@ -24928,24 +24498,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "scheduling",
-          "zh": "排程；调度",
-          "phrase_1": "scheduling conflict in trials",
-          "phrase_1_zh": "审判排期冲突",
-          "phrase_2": "scheduling algorithm design",
-          "phrase_2_zh": "调度算法设计",
-          "pos": "n./adj."
-        },
-        {
-          "word": "scheduled",
-          "zh": "预定的；按计划的",
-          "phrase_1": "scheduled maintenance window",
-          "phrase_1_zh": "预定维护窗口",
-          "phrase_2": "scheduled public hearing",
-          "phrase_2_zh": "预定公开听证会",
-          "pos": "adj."
-        },
-        {
           "word": "scheduler",
           "zh": "调度器；排程者",
           "phrase_1": "scheduler algorithm efficiency",
@@ -24955,7 +24507,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_reschedule_schedule",
       "internal_word_items": [
@@ -24974,8 +24526,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "deschedule": "n./v.",
-        "scheduling": "n./adj.",
-        "scheduled": "adj.",
         "scheduler": "n."
       }
     },
@@ -25648,7 +25198,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "accountability",
         "counter",
         "account",
-        "uncounted",
         "encounter"
       ],
       "external_words": [
@@ -25662,7 +25211,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_accountability_encounter_uncounted",
       "internal_word_items": [
@@ -25679,10 +25228,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "uncounted",
-          "pos": "v."
-        },
-        {
           "word": "encounter",
           "pos": "v."
         }
@@ -25691,7 +25236,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "accountability": "n.",
         "counter": "n./v.",
         "account": "n./v.",
-        "uncounted": "v.",
         "encounter": "v."
       },
       "external_pos_map": {
@@ -25951,15 +25495,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "scrutinized",
-          "zh": "被仔细审查的",
-          "phrase_1": "scrutinized corporate disclosure",
-          "phrase_1_zh": "被审查的公司披露",
-          "phrase_2": "scrutinized election procedure",
-          "phrase_2_zh": "被审查的选举程序",
-          "pos": "adj."
-        },
-        {
           "word": "scrutinise",
           "zh": "仔细审查",
           "phrase_1": "scrutinise procurement contracts",
@@ -25987,7 +25522,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_scrutinize_scrutiny",
       "internal_word_items": [
@@ -26005,7 +25540,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "scrutiny": "n."
       },
       "external_pos_map": {
-        "scrutinized": "adj.",
         "scrutinise": "v.",
         "scrutinizer": "n.",
         "scrutineer": "n."
@@ -27372,24 +26906,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "disadvantaged",
-          "zh": "处于不利地位的",
-          "phrase_1": "disadvantaged rural communities",
-          "phrase_1_zh": "弱势农村社区",
-          "phrase_2": "disadvantaged students support",
-          "phrase_2_zh": "弱势学生支持",
-          "pos": "adj."
-        },
-        {
-          "word": "advantaged",
-          "zh": "有利的；占优势的",
-          "phrase_1": "advantaged social groups",
-          "phrase_1_zh": "优势社会群体",
-          "phrase_2": "advantaged access to education",
-          "phrase_2_zh": "有利的教育机会",
-          "pos": "adj."
-        },
-        {
           "word": "disadvantage",
           "zh": "劣势；不利条件",
           "phrase_1": "socioeconomic disadvantage index",
@@ -27408,7 +26924,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_advantage_advantageous",
       "internal_word_items": [
@@ -27426,8 +26942,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "advantageous": "adj."
       },
       "external_pos_map": {
-        "disadvantaged": "adj.",
-        "advantaged": "adj.",
         "disadvantage": "n.",
         "vantage": "n."
       }
@@ -27491,7 +27005,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "eache",
       "confidence": "review",
       "internal_words": [
-        "bleached",
         "treachery",
         "treason",
         "treacherousness",
@@ -27499,14 +27012,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "teacher"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_bleached_teacher_treacherous_treacherousness",
       "internal_word_items": [
-        {
-          "word": "bleached",
-          "pos": "v."
-        },
         {
           "word": "treachery",
           "pos": "n."
@@ -27529,7 +27038,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "bleached": "v.",
         "treachery": "n.",
         "treason": "n.",
         "treacherousness": "n.",
@@ -28103,15 +27611,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "undeclared",
-          "zh": "未申报的；未宣布的",
-          "phrase_1": "undeclared income investigation",
-          "phrase_1_zh": "未申报收入调查",
-          "phrase_2": "undeclared conflict of interest",
-          "phrase_2_zh": "未申报利益冲突",
-          "pos": "adj."
-        },
-        {
           "word": "declarer",
           "zh": "声明者",
           "phrase_1": "declarer of financial interests",
@@ -28130,7 +27629,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_declaration_declare",
       "internal_word_items": [
@@ -28149,7 +27648,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "declaratory": "adj.",
-        "undeclared": "adj.",
         "declarer": "n.",
         "declarative": "adj."
       }
@@ -28647,15 +28145,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "cycling",
-          "zh": "骑行；循环",
-          "phrase_1": "urban cycling network",
-          "phrase_1_zh": "城市骑行网络",
-          "phrase_2": "nutrient cycling in forests",
-          "phrase_2_zh": "森林中的养分循环",
-          "pos": "n./adj."
-        },
-        {
           "word": "upcycle",
           "zh": "升级再造",
           "phrase_1": "upcycle industrial waste",
@@ -28665,7 +28154,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_recyclable_recycle",
       "internal_word_items": [
@@ -28693,7 +28182,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "recycle": "v."
       },
       "external_pos_map": {
-        "cycling": "n./adj.",
         "upcycle": "n./v."
       }
     },
@@ -28931,24 +28419,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "backfeed",
-          "zh": "反向供电；回馈",
-          "phrase_1": "backfeed power into the grid",
-          "phrase_1_zh": "向电网反向供电",
-          "phrase_2": "backfeed signal interference",
-          "phrase_2_zh": "回馈信号干扰",
-          "pos": "adj."
-        },
-        {
-          "word": "feeding",
-          "zh": "喂养；供给",
-          "phrase_1": "feeding program evaluation",
-          "phrase_1_zh": "供餐项目评估",
-          "phrase_2": "feeding behavior in infants",
-          "phrase_2_zh": "婴儿进食行为",
-          "pos": "n./adj."
-        },
-        {
           "word": "feed",
           "zh": "供给；反馈输入",
           "phrase_1": "feed data into a model",
@@ -28958,7 +28428,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_feedback_feedbackloop",
       "internal_word_items": [
@@ -28977,8 +28447,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "feedstock": "n./v.",
-        "backfeed": "adj.",
-        "feeding": "n./adj.",
         "feed": "adj."
       }
     },
@@ -29181,18 +28649,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "gold fineness standard",
           "phrase_2_zh": "黄金纯度标准",
           "pos": "n."
-        },
-        {
-          "word": "refined",
-          "zh": "精炼的；精致的",
-          "phrase_1": "refined statistical model",
-          "phrase_1_zh": "精细统计模型",
-          "phrase_2": "refined sugar consumption",
-          "phrase_2_zh": "精制糖消费",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_refine_refinery",
       "internal_word_items": [
@@ -29220,8 +28679,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "refinery": "n."
       },
       "external_pos_map": {
-        "fineness": "n.",
-        "refined": "adj."
+        "fineness": "n."
       }
     },
     {
@@ -29755,15 +29213,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "neglected",
-          "zh": "被忽视的",
-          "phrase_1": "neglected tropical disease",
-          "phrase_1_zh": "被忽视的热带病",
-          "phrase_2": "neglected urban neighborhood",
-          "phrase_2_zh": "被忽视的城市社区",
-          "pos": "adj."
-        },
-        {
           "word": "neglecter",
           "zh": "疏忽者",
           "phrase_1": "neglecter of public duty",
@@ -29782,7 +29231,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_neglect_neglectful",
       "internal_word_items": [
@@ -29801,7 +29250,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "neglectfulness": "n.",
-        "neglected": "adj.",
         "neglecter": "n.",
         "negligent": "adj."
       }
@@ -30046,8 +29494,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "shareholder",
         "share",
-        "stakeholder",
-        "shareholding"
+        "stakeholder"
       ],
       "external_words": [
         {
@@ -30069,7 +29516,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_shareholder_shareholding_stakeholder",
       "internal_word_items": [
@@ -30084,17 +29531,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "stakeholder",
           "pos": "n."
-        },
-        {
-          "word": "shareholding",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "shareholder": "n.",
         "share": "v.",
-        "stakeholder": "n.",
-        "shareholding": "n."
+        "stakeholder": "n."
       },
       "external_pos_map": {
         "sharemarket": "n./v.",
@@ -30129,18 +29571,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "neighbourhood social cohesion",
           "phrase_2_zh": "邻里社会凝聚力",
           "pos": "n."
-        },
-        {
-          "word": "neighboring",
-          "zh": "邻近的",
-          "phrase_1": "neighboring coastal communities",
-          "phrase_1_zh": "邻近沿海社区",
-          "phrase_2": "neighboring countries cooperation",
-          "phrase_2_zh": "邻国合作",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_neighbor_neighborhood",
       "internal_word_items": [
@@ -30164,8 +29597,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "neighborly": "adv.",
-        "neighbourhood": "n.",
-        "neighboring": "n./adj."
+        "neighbourhood": "n."
       }
     },
     {
@@ -30240,15 +29672,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "celebrated",
-          "zh": "著名的；受赞颂的",
-          "phrase_1": "celebrated legal scholar",
-          "phrase_1_zh": "著名法学家",
-          "phrase_2": "celebrated conservation success",
-          "phrase_2_zh": "受赞颂的保护成功案例",
-          "pos": "adj."
-        },
-        {
           "word": "celebrant",
           "zh": "庆祝者；司仪",
           "phrase_1": "celebrant in public ceremony",
@@ -30258,7 +29681,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_celebrate_celebratory_celebrity",
       "internal_word_items": [
@@ -30286,7 +29709,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "celebratory": "adj."
       },
       "external_pos_map": {
-        "celebrated": "adj.",
         "celebrant": "adj."
       }
     },
@@ -30765,18 +30187,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "remarkability in cultural memory",
           "phrase_2_zh": "文化记忆中的显著性",
           "pos": "n."
-        },
-        {
-          "word": "remarked",
-          "zh": "被评论的；显著的",
-          "phrase_1": "often remarked historical irony",
-          "phrase_1_zh": "常被评论的历史讽刺",
-          "phrase_2": "remarked difference in outcomes",
-          "phrase_2_zh": "被指出的结果差异",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_remarkable_remarkably_unremarkable",
       "internal_word_items": [
@@ -30804,8 +30217,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "remarkably": "adv."
       },
       "external_pos_map": {
-        "remarkability": "n.",
-        "remarked": "adj."
+        "remarkability": "n."
       }
     },
     {
@@ -31703,15 +31115,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "renewed",
-          "zh": "重新开始的；更新的",
-          "phrase_1": "renewed diplomatic effort",
-          "phrase_1_zh": "重新展开的外交努力",
-          "phrase_2": "renewed interest in local history",
-          "phrase_2_zh": "对地方史重新产生兴趣",
-          "pos": "adj."
-        },
-        {
           "word": "renewability",
           "zh": "可更新性",
           "phrase_1": "renewability of natural resources",
@@ -31730,7 +31133,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_renewable_renew",
       "internal_word_items": [
@@ -31753,7 +31156,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "renew": "v."
       },
       "external_pos_map": {
-        "renewed": "adj.",
         "renewability": "n.",
         "renewalenergy": "n./v."
       }
@@ -32155,59 +31557,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "extension": "n.",
         "tension": "n."
-      },
-      "external_pos_map": {}
-    },
-    {
-      "cluster_id": "kin_head_density_immensity_intensity_sensitivity",
-      "cluster_label": "density intensify intensity immensity dense sensitivity",
-      "anchor": "ensit",
-      "confidence": "review",
-      "internal_words": [
-        "density",
-        "intensify",
-        "intensity",
-        "immensity",
-        "dense",
-        "sensitivity"
-      ],
-      "external_words": [],
-      "total_words": 6,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_density_immensity_intensity_sensitivity",
-      "internal_word_items": [
-        {
-          "word": "density",
-          "pos": "n."
-        },
-        {
-          "word": "intensify",
-          "pos": "v."
-        },
-        {
-          "word": "intensity",
-          "pos": "n."
-        },
-        {
-          "word": "immensity",
-          "pos": "n."
-        },
-        {
-          "word": "dense",
-          "pos": "adj."
-        },
-        {
-          "word": "sensitivity",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "density": "n.",
-        "intensify": "v.",
-        "intensity": "n.",
-        "immensity": "n.",
-        "dense": "adj.",
-        "sensitivity": "n."
       },
       "external_pos_map": {}
     },
@@ -32949,8 +32298,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "reportage",
-        "reportedly",
-        "reporting"
+        "reportedly"
       ],
       "external_words": [
         {
@@ -32981,7 +32329,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_reportage_reporting",
       "internal_word_items": [
@@ -32992,16 +32340,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "reportedly",
           "pos": "adv."
-        },
-        {
-          "word": "reporting",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "reportage": "n.",
-        "reportedly": "adv.",
-        "reporting": "n."
+        "reportedly": "adv."
       },
       "external_pos_map": {
         "reportorial": "adj.",
@@ -33016,24 +32359,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "misrepresent",
-        "underrepresented",
         "representative",
         "representation",
         "represent",
         "misrepresentation"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_misrepresent_misrepresentation_represent_representation",
       "internal_word_items": [
         {
           "word": "misrepresent",
           "pos": "v."
-        },
-        {
-          "word": "underrepresented",
-          "pos": "adj."
         },
         {
           "word": "representative",
@@ -33054,7 +32392,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "misrepresent": "v.",
-        "underrepresented": "adj.",
         "representative": "n./adj.",
         "representation": "n.",
         "represent": "v.",
@@ -33295,12 +32632,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "generalize",
         "literalistic",
         "liberalism",
-        "lateralized",
         "lateralization",
         "lateralisation"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_generalize_lateralisation_lateralization_lateralized",
       "internal_word_items": [
@@ -33317,10 +32653,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "lateralized",
-          "pos": "adj."
-        },
-        {
           "word": "lateralization",
           "pos": "n."
         },
@@ -33333,7 +32665,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "generalize": "v.",
         "literalistic": "adj.",
         "liberalism": "n.",
-        "lateralized": "adj.",
         "lateralization": "n.",
         "lateralisation": "n."
       },
@@ -34705,15 +34036,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "resembling",
-          "zh": "相似的",
-          "phrase_1": "resembling earlier legal precedent",
-          "phrase_1_zh": "类似早期法律先例",
-          "phrase_2": "resembling natural selection",
-          "phrase_2_zh": "类似自然选择",
-          "pos": "n./adj."
-        },
-        {
           "word": "resemblant",
           "zh": "相似的",
           "phrase_1": "resemblant cultural motifs",
@@ -34723,7 +34045,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_resemblance_resemble",
       "internal_word_items": [
@@ -34747,7 +34069,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "dissemble": "n./v.",
-        "resembling": "n./adj.",
         "resemblant": "adj."
       }
     },
@@ -34758,24 +34079,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "misrepresentation",
-        "underrepresented",
         "representation",
         "presentation",
         "resentment",
         "representative"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_misrepresentation_presentation_representation_representative",
       "internal_word_items": [
         {
           "word": "misrepresentation",
           "pos": "n."
-        },
-        {
-          "word": "underrepresented",
-          "pos": "adj."
         },
         {
           "word": "representation",
@@ -34796,7 +34112,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "misrepresentation": "n.",
-        "underrepresented": "adj.",
         "representation": "n.",
         "presentation": "n.",
         "resentment": "n.",
@@ -34975,15 +34290,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "resiliencybuilding",
-          "zh": "韧性建设",
-          "phrase_1": "resiliencybuilding in coastal cities",
-          "phrase_1_zh": "沿海城市韧性建设",
-          "phrase_2": "resiliencybuilding through education",
-          "phrase_2_zh": "通过教育建设韧性",
-          "pos": "n./adj."
-        },
-        {
           "word": "resiliently",
           "zh": "有韧性地",
           "phrase_1": "resiliently adapt to drought",
@@ -35002,7 +34308,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_resilience_resiliency_resilient",
       "internal_word_items": [
@@ -35025,7 +34331,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resiliency": "n."
       },
       "external_pos_map": {
-        "resiliencybuilding": "n./adj.",
         "resiliently": "adv.",
         "resile": "adj."
       }
@@ -35513,15 +34818,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "undetected",
-          "zh": "未被发现的",
-          "phrase_1": "undetected disease transmission",
-          "phrase_1_zh": "未被发现的疾病传播",
-          "phrase_2": "undetected bias in data",
-          "phrase_2_zh": "数据中未发现的偏差",
-          "pos": "adj."
-        },
-        {
           "word": "detective",
           "zh": "侦探；侦查的",
           "phrase_1": "detective investigation method",
@@ -35531,7 +34827,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_detectable_detect",
       "internal_word_items": [
@@ -35559,7 +34855,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "detect": "v."
       },
       "external_pos_map": {
-        "undetected": "adj.",
         "detective": "adj."
       }
     },
@@ -35968,15 +35263,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "underdeveloped",
-          "zh": "欠发达的",
-          "phrase_1": "underdeveloped rural infrastructure",
-          "phrase_1_zh": "欠发达农村基础设施",
-          "phrase_2": "underdeveloped theoretical framework",
-          "phrase_2_zh": "不成熟理论框架",
-          "pos": "adj."
-        },
-        {
           "word": "development",
           "zh": "发展；开发",
           "phrase_1": "sustainable development goals",
@@ -35995,7 +35281,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_develop_developmental_redevelop",
       "internal_word_items": [
@@ -36018,7 +35304,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "developmental": "adj."
       },
       "external_pos_map": {
-        "underdeveloped": "adj.",
         "development": "n.",
         "developer": "n."
       }
@@ -36096,15 +35381,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "revenuegenerating",
-          "zh": "创收的",
-          "phrase_1": "revenuegenerating public asset",
-          "phrase_1_zh": "创收公共资产",
-          "phrase_2": "revenuegenerating service model",
-          "phrase_2_zh": "创收服务模式",
-          "pos": "n./adj."
-        },
-        {
           "word": "revenuebase",
           "zh": "收入基础",
           "phrase_1": "revenuebase of local government",
@@ -36123,7 +35399,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_revenue_revenuer",
       "internal_word_items": [
@@ -36142,7 +35418,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "revenuecode": "n./v.",
-        "revenuegenerating": "n./adj.",
         "revenuebase": "n./v.",
         "revenuestream": "n./v."
       }
@@ -37250,7 +36525,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "fundi",
       "confidence": "review",
       "internal_words": [
-        "crowdfunding",
         "fundamental",
         "foundation",
         "profound",
@@ -37258,14 +36532,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "profundity"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_crowdfunding_profundity",
       "internal_word_items": [
-        {
-          "word": "crowdfunding",
-          "pos": "n./adj."
-        },
         {
           "word": "fundamental",
           "pos": "adj."
@@ -37288,7 +36558,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "crowdfunding": "n./adj.",
         "fundamental": "adj.",
         "foundation": "n.",
         "profound": "adj.",
@@ -38149,24 +37418,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "wholesale",
-        "wholehearted",
         "wholeness",
         "wholly",
         "whole",
         "wholesome"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_wholesale_wholesome",
       "internal_word_items": [
         {
           "word": "wholesale",
           "pos": "n."
-        },
-        {
-          "word": "wholehearted",
-          "pos": "adj."
         },
         {
           "word": "wholeness",
@@ -38187,7 +37451,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "wholesale": "n.",
-        "wholehearted": "adj.",
         "wholeness": "n.",
         "wholly": "adv.",
         "whole": "adj.",
@@ -39903,7 +39166,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "inanc",
       "confidence": "review",
       "internal_words": [
-        "debtfinancing",
         "financial",
         "finance",
         "dominance"
@@ -39928,14 +39190,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_debtfinancing_dominance_finance_financial",
       "internal_word_items": [
-        {
-          "word": "debtfinancing",
-          "pos": "n."
-        },
         {
           "word": "financial",
           "pos": "adj."
@@ -39950,7 +39208,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "debtfinancing": "n.",
         "financial": "adj.",
         "finance": "n./v.",
         "dominance": "n."
@@ -40616,18 +39873,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "discloser of corporate misconduct",
           "phrase_2_zh": "企业不当行为披露者",
           "pos": "n."
-        },
-        {
-          "word": "undisclosed",
-          "zh": "未公开的",
-          "phrase_1": "undisclosed financial interest",
-          "phrase_1_zh": "未披露财务利益",
-          "phrase_2": "undisclosed political donation",
-          "phrase_2_zh": "未公开政治捐款",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_disclose_disclosure",
       "internal_word_items": [
@@ -40647,8 +39895,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "selfdisclosure": "n.",
         "nondisclosure": "n.",
-        "discloser": "n.",
-        "undisclosed": "adj."
+        "discloser": "n."
       }
     },
     {
@@ -40810,15 +40057,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "undismissed",
-          "zh": "未被驳回的",
-          "phrase_1": "undismissed legal claim",
-          "phrase_1_zh": "未被驳回法律请求",
-          "phrase_2": "undismissed public concern",
-          "phrase_2_zh": "未被打消的公众担忧",
-          "pos": "adj."
-        },
-        {
           "word": "dismissively",
           "zh": "轻蔑地",
           "phrase_1": "dismissively reject criticism",
@@ -40828,7 +40066,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_dismiss_dismissive",
       "internal_word_items": [
@@ -40852,7 +40090,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "dismissible": "adj.",
-        "undismissed": "adj.",
         "dismissively": "adv."
       }
     },
@@ -40884,18 +40121,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "reorder historical evidence",
           "phrase_2_zh": "重新排列历史证据",
           "pos": "n."
-        },
-        {
-          "word": "ordered",
-          "zh": "有序的",
-          "phrase_1": "ordered evacuation process",
-          "phrase_1_zh": "有序疏散流程",
-          "phrase_2": "ordered arrangement of data",
-          "phrase_2_zh": "数据有序排列",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_disorder_disorderliness",
       "internal_word_items": [
@@ -40919,8 +40147,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "orderly": "adv.",
-        "reorder": "n.",
-        "ordered": "adj."
+        "reorder": "n."
       }
     },
     {
@@ -41545,15 +40772,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "withstanding",
-          "zh": "抵抗；承受",
-          "phrase_1": "withstanding intense public pressure",
-          "phrase_1_zh": "承受强烈公众压力",
-          "phrase_2": "withstanding climate stress",
-          "phrase_2_zh": "承受气候压力",
-          "pos": "n./adj."
-        },
-        {
           "word": "standpoint",
           "zh": "立场；观点",
           "phrase_1": "standpoint theory in sociology",
@@ -41563,7 +40781,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_withstand_withstood",
       "internal_word_items": [
@@ -41591,7 +40809,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "withstood": "adj."
       },
       "external_pos_map": {
-        "withstanding": "n./adj.",
         "standpoint": "n./v."
       }
     },
@@ -42313,15 +41530,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "glaciated",
-          "zh": "冰川覆盖的；受冰川作用的",
-          "phrase_1": "glaciated mountain valley",
-          "phrase_1_zh": "受冰川作用的山谷",
-          "phrase_2": "glaciated terrain mapping",
-          "phrase_2_zh": "冰川地形制图",
-          "pos": "adj."
-        },
-        {
           "word": "glaciology",
           "zh": "冰川学",
           "phrase_1": "glaciology field station",
@@ -42340,7 +41548,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_glacial_glaciation",
       "internal_word_items": [
@@ -42363,7 +41571,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "glaciation": "n."
       },
       "external_pos_map": {
-        "glaciated": "adj.",
         "glaciology": "n.",
         "interglacial": "adj."
       }
@@ -42497,15 +41704,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "classified",
-          "zh": "分类的；机密的",
-          "phrase_1": "classified government document",
-          "phrase_1_zh": "机密政府文件",
-          "phrase_2": "classified advertising section",
-          "phrase_2_zh": "分类广告栏目",
-          "pos": "adj."
-        },
-        {
           "word": "classifiable",
           "zh": "可分类的",
           "phrase_1": "classifiable survey response",
@@ -42515,7 +41713,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_classical_classification_classify",
       "internal_word_items": [
@@ -42543,7 +41741,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "classification": "n."
       },
       "external_pos_map": {
-        "classified": "adj.",
         "classifiable": "adj."
       }
     },
@@ -43212,8 +42409,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "climate",
-        "climatic",
-        "climatewarming"
+        "climatic"
       ],
       "external_words": [
         {
@@ -43244,7 +42440,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_climate_climatewarming_climatic",
       "internal_word_items": [
@@ -43255,16 +42451,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "climatic",
           "pos": "adj."
-        },
-        {
-          "word": "climatewarming",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "climate": "n.",
-        "climatic": "adj.",
-        "climatewarming": "n."
+        "climatic": "adj."
       },
       "external_pos_map": {
         "climatologist": "n.",
@@ -43510,8 +42701,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "loodin",
       "confidence": "review",
       "internal_words": [
-        "coastalflooding",
-        "flooding",
         "floodplain"
       ],
       "external_words": [
@@ -43543,26 +42732,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_coastalflooding_flooding",
       "internal_word_items": [
-        {
-          "word": "coastalflooding",
-          "pos": "n."
-        },
-        {
-          "word": "flooding",
-          "pos": "n."
-        },
         {
           "word": "floodplain",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "coastalflooding": "n.",
-        "flooding": "n.",
         "floodplain": "n."
       },
       "external_pos_map": {
@@ -43707,18 +42886,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "alternative",
         "alteration"
       ],
-      "external_words": [
-        {
-          "word": "unaltered",
-          "zh": "未改变的",
-          "phrase_1": "unaltered historical record",
-          "phrase_1_zh": "未改动的历史记录",
-          "phrase_2": "unaltered ecological baseline",
-          "phrase_2_zh": "未改变的生态基线",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_alter_alteration",
       "internal_word_items": [
@@ -43750,9 +42919,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "alternative": "adj.",
         "alteration": "n."
       },
-      "external_pos_map": {
-        "unaltered": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_ultimacy_ultimate_ultimatum",
@@ -43945,18 +43112,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "amalgamative cultural process",
           "phrase_2_zh": "融合型文化过程",
           "pos": "adj."
-        },
-        {
-          "word": "amalgamated",
-          "zh": "合并的；混合的",
-          "phrase_1": "amalgamated labor union",
-          "phrase_1_zh": "合并后的工会",
-          "phrase_2": "amalgamated dataset analysis",
-          "phrase_2_zh": "合并数据集分析",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_amalgam_amalgamate",
       "internal_word_items": [
@@ -43980,8 +43138,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "amalgamator": "n.",
-        "amalgamative": "adj.",
-        "amalgamated": "adj."
+        "amalgamative": "adj."
       }
     },
     {
@@ -44781,15 +43938,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "emphasized",
-          "zh": "被强调的",
-          "phrase_1": "emphasized policy priority",
-          "phrase_1_zh": "被强调的政策重点",
-          "phrase_2": "emphasized syllable in speech",
-          "phrase_2_zh": "语音中被强调的音节",
-          "pos": "adj."
-        },
-        {
           "word": "emphatically",
           "zh": "强调地；断然地",
           "phrase_1": "emphatically deny allegations",
@@ -44799,7 +43947,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_emphasis_emphasize",
       "internal_word_items": [
@@ -44823,7 +43971,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "overemphasize": "v.",
-        "emphasized": "adj.",
         "emphatically": "adv."
       }
     },
@@ -45016,11 +44163,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deploy",
         "employment",
         "unemployment",
-        "unemployed",
         "employ"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_employer_employ_unemployed_unemployment",
       "internal_word_items": [
@@ -45041,10 +44187,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unemployed",
-          "pos": "n./adj."
-        },
-        {
           "word": "employ",
           "pos": "v."
         }
@@ -45054,7 +44196,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deploy": "v.",
         "employment": "n.",
         "unemployment": "n.",
-        "unemployed": "n./adj.",
         "employ": "v."
       },
       "external_pos_map": {}
@@ -45287,12 +44428,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "marginalises",
         "sensationalism",
         "rationalism",
-        "marginalised",
         "marginalisation",
         "journalist"
       ],
       "external_words": [],
-      "total_words": 7,
+      "total_words": 6,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_journalism_journalist_marginalisation_marginalised",
       "internal_word_items": [
@@ -45313,10 +44453,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "marginalised",
-          "pos": "adj."
-        },
-        {
           "word": "marginalisation",
           "pos": "n."
         },
@@ -45330,7 +44466,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "marginalises": "n.",
         "sensationalism": "n.",
         "rationalism": "n.",
-        "marginalised": "adj.",
         "marginalisation": "n.",
         "journalist": "n."
       },
@@ -45641,36 +44776,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "inclosure of common land",
           "phrase_2_zh": "公共土地圈占",
           "pos": "n."
-        },
-        {
-          "word": "unenclosed",
-          "zh": "未封闭的",
-          "phrase_1": "unenclosed grazing land",
-          "phrase_1_zh": "未圈围牧地",
-          "phrase_2": "unenclosed public space",
-          "phrase_2_zh": "未封闭公共空间",
-          "pos": "adj."
-        },
-        {
-          "word": "enclosing",
-          "zh": "围合；封入",
-          "phrase_1": "enclosing agricultural land",
-          "phrase_1_zh": "圈占农业土地",
-          "phrase_2": "enclosing public commons",
-          "phrase_2_zh": "圈占公共共有地",
-          "pos": "n./adj."
-        },
-        {
-          "word": "enclosed",
-          "zh": "封闭的；随附的",
-          "phrase_1": "enclosed urban courtyard",
-          "phrase_1_zh": "封闭城市庭院",
-          "phrase_2": "enclosed evidence packet",
-          "phrase_2_zh": "随附证据包",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_enclose_enclosure",
       "internal_word_items": [
@@ -45688,10 +44796,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "enclosure": "n."
       },
       "external_pos_map": {
-        "inclosure": "n.",
-        "unenclosed": "adj.",
-        "enclosing": "n./adj.",
-        "enclosed": "adj."
+        "inclosure": "n."
       }
     },
     {
@@ -45702,13 +44807,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "inconsistency",
         "consciousness",
-        "unconstrained",
         "unconscious",
         "inconspicuous",
         "inconsistent"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_inconsistency_inconsistent_inconspicuous_unconscious",
       "internal_word_items": [
@@ -45719,10 +44823,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "consciousness",
           "pos": "n."
-        },
-        {
-          "word": "unconstrained",
-          "pos": "adj."
         },
         {
           "word": "unconscious",
@@ -45740,7 +44840,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "inconsistency": "n.",
         "consciousness": "n.",
-        "unconstrained": "adj.",
         "unconscious": "n.",
         "inconspicuous": "adj.",
         "inconsistent": "adj."
@@ -45957,15 +45056,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "undermining",
-          "zh": "削弱；破坏",
-          "phrase_1": "undermining democratic trust",
-          "phrase_1_zh": "削弱民主信任",
-          "phrase_2": "undermining slope stability",
-          "phrase_2_zh": "破坏边坡稳定",
-          "pos": "n./adj."
-        },
-        {
           "word": "landmine",
           "zh": "地雷",
           "phrase_1": "landmine clearance operation",
@@ -45973,18 +45063,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "landmine contamination map",
           "phrase_2_zh": "地雷污染地图",
           "pos": "n./v."
-        },
-        {
-          "word": "mining",
-          "zh": "采矿；挖掘",
-          "phrase_1": "mining environmental impact",
-          "phrase_1_zh": "采矿环境影响",
-          "phrase_2": "data mining technique",
-          "phrase_2_zh": "数据挖掘技术",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_undermine_underminer",
       "internal_word_items": [
@@ -46007,9 +45088,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "mine": "n./v."
       },
       "external_pos_map": {
-        "undermining": "n./adj.",
-        "landmine": "n./v.",
-        "mining": "n./adj."
+        "landmine": "n./v."
       }
     },
     {
@@ -46018,7 +45097,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "nderst",
       "confidence": "review",
       "internal_words": [
-        "misunderstanding",
         "understandable",
         "understand",
         "thunderstorm"
@@ -46032,25 +45110,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "thunder in oral tradition",
           "phrase_2_zh": "口头传统中的雷声",
           "pos": "n."
-        },
-        {
-          "word": "understanding",
-          "zh": "理解；共识",
-          "phrase_1": "mutual understanding between groups",
-          "phrase_1_zh": "群体间相互理解",
-          "phrase_2": "understanding of causal mechanisms",
-          "phrase_2_zh": "对因果机制的理解",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_misunderstanding_thunderstorm_understand",
       "internal_word_items": [
-        {
-          "word": "misunderstanding",
-          "pos": "n."
-        },
         {
           "word": "understandable",
           "pos": "adj."
@@ -46065,14 +45130,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "misunderstanding": "n.",
         "understandable": "adj.",
         "understand": "v.",
         "thunderstorm": "n./v."
       },
       "external_pos_map": {
-        "thunder": "n.",
-        "understanding": "n./adj."
+        "thunder": "n."
       }
     },
     {
@@ -46158,18 +45221,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "endure",
         "endurance"
       ],
-      "external_words": [
-        {
-          "word": "enduring",
-          "zh": "持久的",
-          "phrase_1": "enduring cultural influence",
-          "phrase_1_zh": "持久文化影响",
-          "phrase_2": "enduring economic inequality",
-          "phrase_2_zh": "长期经济不平等",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_endurable_endurance",
       "internal_word_items": [
@@ -46201,9 +45254,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "endure": "v.",
         "endurance": "n."
       },
-      "external_pos_map": {
-        "enduring": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_industrial_industrialise_industry",
@@ -46489,15 +45540,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "conflicted",
-          "zh": "矛盾的；冲突的",
-          "phrase_1": "conflicted identity",
-          "phrase_1_zh": "矛盾身份",
-          "phrase_2": "conflicted political loyalty",
-          "phrase_2_zh": "冲突的政治忠诚",
-          "pos": "adj."
-        },
-        {
           "word": "infliction",
           "zh": "施加；造成",
           "phrase_1": "infliction of harm",
@@ -46516,7 +45558,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_conflict_inflict",
       "internal_word_items": [
@@ -46539,7 +45581,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "inflict": "v."
       },
       "external_pos_map": {
-        "conflicted": "adj.",
         "infliction": "n.",
         "afflict": "n./v."
       }
@@ -46551,7 +45592,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "infrasound",
-        "infrared",
         "infrastructure",
         "infrastructural"
       ],
@@ -46575,17 +45615,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_infrasound_infrastructural_infrastructure",
       "internal_word_items": [
         {
           "word": "infrasound",
           "pos": "n."
-        },
-        {
-          "word": "infrared",
-          "pos": "n./adj."
         },
         {
           "word": "infrastructure",
@@ -46598,7 +45634,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "infrasound": "n.",
-        "infrared": "n./adj.",
         "infrastructure": "n.",
         "infrastructural": "adj."
       },
@@ -46627,15 +45662,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "enhanced",
-          "zh": "增强的",
-          "phrase_1": "enhanced public scrutiny",
-          "phrase_1_zh": "增强的公众监督",
-          "phrase_2": "enhanced imaging technique",
-          "phrase_2_zh": "增强成像技术",
-          "pos": "adj."
-        },
-        {
           "word": "enhancer",
           "zh": "增强剂；增强子",
           "phrase_1": "gene enhancer region",
@@ -46645,7 +45671,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_enhance_enhancement",
       "internal_word_items": [
@@ -46664,7 +45690,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "enhanceable": "adj.",
-        "enhanced": "adj.",
         "enhancer": "n."
       }
     },
@@ -46994,8 +46019,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "nnounce",
       "confidence": "review",
       "internal_words": [
-        "announcement",
-        "unannounced"
+        "announcement"
       ],
       "external_words": [
         {
@@ -47026,22 +46050,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_announcement_unannounced",
       "internal_word_items": [
         {
           "word": "announcement",
           "pos": "n."
-        },
-        {
-          "word": "unannounced",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "announcement": "n.",
-        "unannounced": "adj."
+        "announcement": "n."
       },
       "external_pos_map": {
         "reannounce": "n./v.",
@@ -48496,7 +47515,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "ntiqu",
       "confidence": "review",
       "internal_words": [
-        "antiquated",
         "antiquity",
         "antique"
       ],
@@ -48520,14 +47538,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_antiquated_antique_antiquity",
       "internal_word_items": [
-        {
-          "word": "antiquated",
-          "pos": "adj."
-        },
         {
           "word": "antiquity",
           "pos": "n."
@@ -48538,7 +47552,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "antiquated": "adj.",
         "antiquity": "n.",
         "antique": "n./v."
       },
@@ -48891,24 +47904,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "coalescing",
-          "zh": "正在合并的；聚合的",
-          "phrase_1": "coalescing community networks",
-          "phrase_1_zh": "正在融合的社区网络",
-          "phrase_2": "coalescing evidence from studies",
-          "phrase_2_zh": "汇合多项研究证据",
-          "pos": "n./adj."
-        },
-        {
-          "word": "coalesced",
-          "zh": "合并的；融合后的",
-          "phrase_1": "coalesced political interests",
-          "phrase_1_zh": "融合后的政治利益",
-          "phrase_2": "coalesced particles in solution",
-          "phrase_2_zh": "溶液中聚合的颗粒",
-          "pos": "adj."
-        },
-        {
           "word": "coalescent",
           "zh": "合并的；融合的",
           "phrase_1": "coalescent social movements",
@@ -48918,7 +47913,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_coalesce_coalescence",
       "internal_word_items": [
@@ -48941,8 +47936,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "coalescence": "n."
       },
       "external_pos_map": {
-        "coalescing": "n./adj.",
-        "coalesced": "adj.",
         "coalescent": "adj."
       }
     },
@@ -48954,8 +47947,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "coastal",
         "coastline",
-        "coast",
-        "coastalflooding"
+        "coast"
       ],
       "external_words": [
         {
@@ -48977,7 +47969,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_coastal_coastalflooding",
       "internal_word_items": [
@@ -48992,17 +47984,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "coast",
           "pos": "n."
-        },
-        {
-          "word": "coastalflooding",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "coastal": "adj.",
         "coastline": "n.",
-        "coast": "n.",
-        "coastalflooding": "n."
+        "coast": "n."
       },
       "external_pos_map": {
         "intercoastal": "adj.",
@@ -49797,24 +48784,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unpolluted",
-          "zh": "未受污染的",
-          "phrase_1": "unpolluted groundwater source",
-          "phrase_1_zh": "未受污染地下水源",
-          "phrase_2": "unpolluted reference site",
-          "phrase_2_zh": "未污染参照地点",
-          "pos": "adj."
-        },
-        {
-          "word": "polluted",
-          "zh": "受污染的",
-          "phrase_1": "polluted river sediment",
-          "phrase_1_zh": "受污染河流沉积物",
-          "phrase_2": "polluted urban air",
-          "phrase_2_zh": "受污染城市空气",
-          "pos": "adj."
-        },
-        {
           "word": "polluter",
           "zh": "污染者",
           "phrase_1": "polluter pays principle",
@@ -49833,7 +48802,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_pollutant_pollute",
       "internal_word_items": [
@@ -49851,8 +48820,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "pollute": "v."
       },
       "external_pos_map": {
-        "unpolluted": "adj.",
-        "polluted": "adj.",
         "polluter": "n.",
         "pollution": "n."
       }
@@ -50430,15 +49397,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "undomesticated",
-          "zh": "未驯化的",
-          "phrase_1": "undomesticated plant species",
-          "phrase_1_zh": "未驯化植物物种",
-          "phrase_2": "undomesticated political anger",
-          "phrase_2_zh": "未被驯化的政治愤怒",
-          "pos": "adj."
-        },
-        {
           "word": "domesticity",
           "zh": "家庭生活；家政性",
           "phrase_1": "domesticity in Victorian culture",
@@ -50457,7 +49415,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_domestic_domesticate",
       "internal_word_items": [
@@ -50480,7 +49438,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "domesticate": "v."
       },
       "external_pos_map": {
-        "undomesticated": "adj.",
         "domesticity": "n.",
         "domestically": "adv."
       }
@@ -51242,8 +50199,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "omput",
       "confidence": "review",
       "internal_words": [
-        "cloudcomputing",
-        "computing",
         "computational",
         "computer",
         "computation"
@@ -51259,18 +50214,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_cloudcomputing_computation_computer_computing",
       "internal_word_items": [
-        {
-          "word": "cloudcomputing",
-          "pos": "n."
-        },
-        {
-          "word": "computing",
-          "pos": "n."
-        },
         {
           "word": "computational",
           "pos": "adj."
@@ -51285,8 +50232,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "cloudcomputing": "n.",
-        "computing": "n.",
         "computational": "adj.",
         "computer": "n.",
         "computation": "n."
@@ -51585,59 +50530,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       }
     },
     {
-      "cluster_id": "kin_head_condense_condenser_correspond_despondent",
-      "cluster_label": "condense despondent sponsor respond correspond condenser",
-      "anchor": "onden",
-      "confidence": "review",
-      "internal_words": [
-        "condense",
-        "despondent",
-        "sponsor",
-        "respond",
-        "correspond",
-        "condenser"
-      ],
-      "external_words": [],
-      "total_words": 6,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_condense_condenser_correspond_despondent",
-      "internal_word_items": [
-        {
-          "word": "condense",
-          "pos": "v."
-        },
-        {
-          "word": "despondent",
-          "pos": "adj."
-        },
-        {
-          "word": "sponsor",
-          "pos": "n./v."
-        },
-        {
-          "word": "respond",
-          "pos": "v."
-        },
-        {
-          "word": "correspond",
-          "pos": "v."
-        },
-        {
-          "word": "condenser",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "condense": "v.",
-        "despondent": "adj.",
-        "sponsor": "n./v.",
-        "respond": "v.",
-        "correspond": "v.",
-        "condenser": "n."
-      },
-      "external_pos_map": {}
-    },
-    {
       "cluster_id": "kin_head_confirm_confirmation_confirmatory",
       "cluster_label": "confirm confirmatory confirmation disconfirm reconfirm confirmable",
       "anchor": "onfir",
@@ -51863,15 +50755,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "congested",
-          "zh": "拥堵的；充血的",
-          "phrase_1": "congested metropolitan corridor",
-          "phrase_1_zh": "拥堵的大都市走廊",
-          "phrase_2": "congested public hospital",
-          "phrase_2_zh": "拥挤的公立医院",
-          "pos": "adj."
-        },
-        {
           "word": "decongest",
           "zh": "缓解拥堵",
           "phrase_1": "decongest urban traffic",
@@ -51881,7 +50764,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_congest_congestion_congestive",
       "internal_word_items": [
@@ -51905,7 +50788,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "decongestion": "n.",
-        "congested": "adj.",
         "decongest": "n./v."
       }
     },
@@ -52321,24 +51203,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unconquered",
-          "zh": "未被征服的",
-          "phrase_1": "unconquered indigenous territory",
-          "phrase_1_zh": "未被征服原住民领土",
-          "phrase_2": "unconquered political spirit",
-          "phrase_2_zh": "未被征服的政治精神",
-          "pos": "adj."
-        },
-        {
-          "word": "conquering",
-          "zh": "征服的",
-          "phrase_1": "conquering army occupation",
-          "phrase_1_zh": "征服军占领",
-          "phrase_2": "conquering disease through vaccination",
-          "phrase_2_zh": "通过疫苗征服疾病",
-          "pos": "n./adj."
-        },
-        {
           "word": "reconquer",
           "zh": "重新征服",
           "phrase_1": "reconquer lost territory",
@@ -52348,7 +51212,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_conquer_conquest",
       "internal_word_items": [
@@ -52371,8 +51235,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "conquest": "n."
       },
       "external_pos_map": {
-        "unconquered": "adj.",
-        "conquering": "n./adj.",
         "reconquer": "n."
       }
     },
@@ -52725,24 +51587,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "constrain",
-        "unconstrained",
         "remonstrate",
         "demonstrative",
         "demonstrate",
         "constraint"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_constrain_constraint_demonstrate_demonstrative",
       "internal_word_items": [
         {
           "word": "constrain",
           "pos": "v."
-        },
-        {
-          "word": "unconstrained",
-          "pos": "adj."
         },
         {
           "word": "remonstrate",
@@ -52763,7 +51620,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "constrain": "v.",
-        "unconstrained": "adj.",
         "remonstrate": "v.",
         "demonstrative": "adj.",
         "demonstrate": "v.",
@@ -53311,15 +52167,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "coordinated",
-          "zh": "协调的",
-          "phrase_1": "coordinated emergency response",
-          "phrase_1_zh": "协调的应急响应",
-          "phrase_2": "coordinated fiscal policy",
-          "phrase_2_zh": "协调财政政策",
-          "pos": "adj."
-        },
-        {
           "word": "coordinate system",
           "zh": "坐标系",
           "phrase_1": "coordinate system transformation",
@@ -53329,7 +52176,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_coordinate_coordinator",
       "internal_word_items": [
@@ -53353,7 +52200,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "coordinative": "adj.",
-        "coordinated": "adj.",
         "coordinate system": "n./v."
       }
     },
@@ -54118,15 +52964,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "uncorrelated",
-          "zh": "不相关的",
-          "phrase_1": "uncorrelated risk factors",
-          "phrase_1_zh": "不相关风险因素",
-          "phrase_2": "uncorrelated measurement errors",
-          "phrase_2_zh": "不相关测量误差",
-          "pos": "adj."
-        },
-        {
           "word": "correlator",
           "zh": "相关器；关联因素",
           "phrase_1": "signal correlator algorithm",
@@ -54154,7 +52991,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_correlate_correlation",
       "internal_word_items": [
@@ -54172,7 +53009,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "correlation": "n."
       },
       "external_pos_map": {
-        "uncorrelated": "adj.",
         "correlator": "n.",
         "correlational": "adj.",
         "correlative": "adj."
@@ -54206,18 +53042,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "corrodible alloy surface",
           "phrase_2_zh": "可腐蚀合金表面",
           "pos": "adj."
-        },
-        {
-          "word": "corroded",
-          "zh": "被腐蚀的",
-          "phrase_1": "corroded bridge component",
-          "phrase_1_zh": "被腐蚀的桥梁构件",
-          "phrase_2": "corroded institutional legitimacy",
-          "phrase_2_zh": "被侵蚀的制度合法性",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_corrosion_corrosive",
       "internal_word_items": [
@@ -54241,8 +53068,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "corrosivity": "n.",
-        "corrodible": "adj.",
-        "corroded": "adj."
+        "corrodible": "adj."
       }
     },
     {
@@ -56995,15 +55821,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "breathing",
-          "zh": "呼吸",
-          "phrase_1": "breathing pattern during stress",
-          "phrase_1_zh": "压力下呼吸模式",
-          "phrase_2": "breathing disorder diagnosis",
-          "phrase_2_zh": "呼吸障碍诊断",
-          "pos": "n."
-        },
-        {
           "word": "breathalyzer",
           "zh": "呼气酒精检测仪",
           "phrase_1": "breathalyzer evidence standard",
@@ -57013,7 +55830,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_breathable_breathless",
       "internal_word_items": [
@@ -57041,7 +55858,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "breathless": "adj."
       },
       "external_pos_map": {
-        "breathing": "n.",
         "breathalyzer": "n."
       }
     },
@@ -57053,13 +55869,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "precede",
         "recede",
-        "unprecedented",
         "concede",
         "precedent",
         "precedence"
       ],
       "external_words": [],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_precede_precedence_precedent_unprecedented",
       "internal_word_items": [
@@ -57070,10 +55885,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "recede",
           "pos": "v."
-        },
-        {
-          "word": "unprecedented",
-          "pos": "adj."
         },
         {
           "word": "concede",
@@ -57091,7 +55902,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "precede": "v.",
         "recede": "v.",
-        "unprecedented": "adj.",
         "concede": "v.",
         "precedent": "n.",
         "precedence": "n."
@@ -57302,15 +56112,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "unprejudiced",
-          "zh": "无偏见的",
-          "phrase_1": "unprejudiced evaluation of evidence",
-          "phrase_1_zh": "无偏见评估证据",
-          "phrase_2": "unprejudiced public inquiry",
-          "phrase_2_zh": "无偏见公共调查",
-          "pos": "adj."
-        },
-        {
           "word": "prejudgment",
           "zh": "预判；成见",
           "phrase_1": "prejudgment before evidence review",
@@ -57320,7 +56121,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_prejudge_prejudice_prejudicial",
       "internal_word_items": [
@@ -57344,7 +56145,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "prejudicially": "adv.",
-        "unprejudiced": "adj.",
         "prejudgment": "n."
       }
     },
@@ -57429,18 +56229,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "prevalencerate in survey data",
           "phrase_2_zh": "调查数据中的流行率",
           "pos": "v."
-        },
-        {
-          "word": "prevailing",
-          "zh": "流行的；占优势的",
-          "phrase_1": "prevailing scientific consensus",
-          "phrase_1_zh": "主流科学共识",
-          "phrase_2": "prevailing wind direction",
-          "phrase_2_zh": "盛行风向",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_prevalence_prevalent",
       "internal_word_items": [
@@ -57464,8 +56255,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "prevalently": "adv.",
-        "prevalencerate": "v.",
-        "prevailing": "adj."
+        "prevalencerate": "v."
       }
     },
     {
@@ -57766,8 +56556,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "inferiority",
         "priority",
         "prior",
-        "prioritize",
-        "prioritised"
+        "prioritize"
       ],
       "external_words": [
         {
@@ -57780,7 +56569,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_inferiority_prioritised_prioritize_priority",
       "internal_word_items": [
@@ -57799,18 +56588,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "prioritize",
           "pos": "v."
-        },
-        {
-          "word": "prioritised",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
         "inferiority": "n.",
         "priority": "n.",
         "prior": "adj.",
-        "prioritize": "v.",
-        "prioritised": "adj."
+        "prioritize": "v."
       },
       "external_pos_map": {
         "anterior": "n."
@@ -58235,7 +57019,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "learningprocess",
         "proceed",
-        "unprocessed",
         "processingplant",
         "process"
       ],
@@ -58250,7 +57033,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_learningprocess_process_processingplant_unprocessed",
       "internal_word_items": [
@@ -58261,10 +57044,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "proceed",
           "pos": "v."
-        },
-        {
-          "word": "unprocessed",
-          "pos": "adj."
         },
         {
           "word": "processingplant",
@@ -58278,7 +57057,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "learningprocess": "n.",
         "proceed": "v.",
-        "unprocessed": "adj.",
         "processingplant": "n.",
         "process": "n."
       },
@@ -58366,15 +57144,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "programming",
-          "zh": "编程；节目安排",
-          "phrase_1": "programming language education",
-          "phrase_1_zh": "编程语言教育",
-          "phrase_2": "public broadcasting programming",
-          "phrase_2_zh": "公共广播节目安排",
-          "pos": "n./adj."
-        },
-        {
           "word": "programmatic",
           "zh": "项目化的；纲领性的",
           "phrase_1": "programmatic advertising market",
@@ -58384,7 +57153,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_program_programmer",
       "internal_word_items": [
@@ -58408,7 +57177,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "programmable": "adj.",
-        "programming": "n./adj.",
         "programmatic": "adj."
       }
     },
@@ -58432,15 +57200,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "promising",
-          "zh": "有前途的",
-          "phrase_1": "promising research direction",
-          "phrase_1_zh": "有前途的研究方向",
-          "phrase_2": "promising climate technology",
-          "phrase_2_zh": "有前景的气候技术",
-          "pos": "n./adj."
-        },
-        {
           "word": "promisor",
           "zh": "承诺人",
           "phrase_1": "promisor obligation in contract",
@@ -58459,7 +57218,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_compromise_promise",
       "internal_word_items": [
@@ -58478,7 +57237,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "promisee": "n.",
-        "promising": "n./adj.",
         "promisor": "n.",
         "promissory": "adj."
       }
@@ -58998,15 +57756,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "prospecting",
-          "zh": "勘探；寻找",
-          "phrase_1": "mineral prospecting license",
-          "phrase_1_zh": "矿产勘探许可",
-          "phrase_2": "prospecting for archival evidence",
-          "phrase_2_zh": "寻找档案证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "prospectus",
           "zh": "说明书；招股书",
           "phrase_1": "university prospectus design",
@@ -59025,7 +57774,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_prospect_prospector_prosperity",
       "internal_word_items": [
@@ -59048,7 +57797,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "prospector": "n."
       },
       "external_pos_map": {
-        "prospecting": "n./adj.",
         "prospectus": "n./v.",
         "prospective": "adj."
       }
@@ -59253,8 +58001,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "protocol",
-        "prototype",
-        "protocolized"
+        "prototype"
       ],
       "external_words": [
         {
@@ -59285,7 +58032,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_protocol_protocolized",
       "internal_word_items": [
@@ -59296,16 +58043,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "prototype",
           "pos": "n."
-        },
-        {
-          "word": "protocolized",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
         "protocol": "n./v.",
-        "prototype": "n.",
-        "protocolized": "adj."
+        "prototype": "n."
       },
       "external_pos_map": {
         "proton": "n./v.",
@@ -60268,27 +59010,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resourceful",
         "resource"
       ],
-      "external_words": [
-        {
-          "word": "resourcing",
-          "zh": "资源配置",
-          "phrase_1": "resourcing public schools",
-          "phrase_1_zh": "为公立学校配置资源",
-          "phrase_2": "resourcing climate adaptation",
-          "phrase_2_zh": "为气候适应配置资源",
-          "pos": "n./adj."
-        },
-        {
-          "word": "sourcing",
-          "zh": "采购；溯源",
-          "phrase_1": "ethical sourcing policy",
-          "phrase_1_zh": "道德采购政策",
-          "phrase_2": "data sourcing transparency",
-          "phrase_2_zh": "数据来源透明度",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_outsource_resource_resourceful",
       "internal_word_items": [
@@ -60315,10 +59038,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resourceful": "adj.",
         "resource": "n."
       },
-      "external_pos_map": {
-        "resourcing": "n./adj.",
-        "sourcing": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_afforestation_deforestation_detestation_devastation",
@@ -60751,15 +59471,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "tsunamiwarning",
-          "zh": "海啸预警",
-          "phrase_1": "tsunamiwarning evacuation drill",
-          "phrase_1_zh": "海啸预警疏散演练",
-          "phrase_2": "tsunamiwarning communication system",
-          "phrase_2_zh": "海啸预警通信系统",
-          "pos": "n./adj."
-        },
-        {
           "word": "tsunamimeter",
           "zh": "海啸计",
           "phrase_1": "tsunamimeter early warning data",
@@ -60778,7 +59489,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_tsunami_tsunamic",
       "internal_word_items": [
@@ -60797,7 +59508,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "tsunamirisk": "n./v.",
-        "tsunamiwarning": "n./adj.",
         "tsunamimeter": "n.",
         "tsunamigenic": "adj."
       }
@@ -60920,7 +59630,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "stell / star = star 星",
       "confidence": "high",
       "internal_words": [
-        "constellated",
         "stellar",
         "interstellarcloud",
         "interstellar",
@@ -60937,14 +59646,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_constellated_constellation_interstellar_interstellarcloud",
       "internal_word_items": [
-        {
-          "word": "constellated",
-          "pos": "adj."
-        },
         {
           "word": "stellar",
           "pos": "adj."
@@ -60963,7 +59668,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "constellated": "adj.",
         "stellar": "adj.",
         "interstellarcloud": "n.",
         "interstellar": "adj.",
@@ -62051,18 +60755,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "sequence stratigraphy analysis",
           "phrase_2_zh": "层序地层学分析",
           "pos": "n."
-        },
-        {
-          "word": "stratified",
-          "zh": "分层的",
-          "phrase_1": "stratified random sampling",
-          "phrase_1_zh": "分层随机抽样",
-          "phrase_2": "stratified social structure",
-          "phrase_2_zh": "分层社会结构",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_stratification_stratify",
       "internal_word_items": [
@@ -62090,8 +60785,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "stratify": "v."
       },
       "external_pos_map": {
-        "stratigraphy": "n.",
-        "stratified": "adj."
+        "stratigraphy": "n."
       }
     },
     {
@@ -62458,15 +61152,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "guaranteed",
-          "zh": "有保证的",
-          "phrase_1": "guaranteed minimum income",
-          "phrase_1_zh": "有保障最低收入",
-          "phrase_2": "guaranteed access to education",
-          "phrase_2_zh": "有保障的教育机会",
-          "pos": "adj."
-        },
-        {
           "word": "warranty",
           "zh": "保修；保证",
           "phrase_1": "warranty claim process",
@@ -62485,7 +61170,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_guarantee_guarantor_quarantine",
       "internal_word_items": [
@@ -62508,7 +61193,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "guarantor": "n."
       },
       "external_pos_map": {
-        "guaranteed": "adj.",
         "warranty": "n./v.",
         "guaranty": "n./v."
       }
@@ -63602,18 +62286,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "repurchase public debt",
           "phrase_2_zh": "回购公共债务",
           "pos": "n./v."
-        },
-        {
-          "word": "purchasing",
-          "zh": "采购；购买",
-          "phrase_1": "public purchasing policy",
-          "phrase_1_zh": "公共采购政策",
-          "phrase_2": "purchasing power parity",
-          "phrase_2_zh": "购买力平价",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_purchase_purchaser",
       "internal_word_items": [
@@ -63633,8 +62308,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "purchaseorder": "n.",
         "purchasable": "adj.",
-        "repurchase": "n./v.",
-        "purchasing": "n./adj."
+        "repurchase": "n./v."
       }
     },
     {
@@ -63735,27 +62409,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "surpassingly effective intervention",
           "phrase_2_zh": "极其有效的干预",
           "pos": "adv."
-        },
-        {
-          "word": "unsurpassed",
-          "zh": "无与伦比的",
-          "phrase_1": "unsurpassed biodiversity value",
-          "phrase_1_zh": "无与伦比生物多样性价值",
-          "phrase_2": "unsurpassed literary influence",
-          "phrase_2_zh": "无与伦比文学影响",
-          "pos": "adj."
-        },
-        {
-          "word": "surpassing",
-          "zh": "超越的；卓越的",
-          "phrase_1": "surpassing scientific achievement",
-          "phrase_1_zh": "卓越科学成就",
-          "phrase_2": "surpassing historical significance",
-          "phrase_2_zh": "超越性的历史意义",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_surpass_surpassable",
       "internal_word_items": [
@@ -63774,9 +62430,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "surpasser": "n.",
-        "surpassingly": "adv.",
-        "unsurpassed": "adj.",
-        "surpassing": "n./adj."
+        "surpassingly": "adv."
       }
     },
     {
@@ -64196,18 +62850,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "date",
         "outdatedness"
       ],
-      "external_words": [
-        {
-          "word": "outdated",
-          "zh": "过时的",
-          "phrase_1": "outdated legal framework",
-          "phrase_1_zh": "过时法律框架",
-          "phrase_2": "outdated industrial equipment",
-          "phrase_2_zh": "过时工业设备",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_outdate_outdatedness",
       "internal_word_items": [
@@ -64229,9 +62873,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "date": "n./v.",
         "outdatedness": "n."
       },
-      "external_pos_map": {
-        "outdated": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_authentic_authenticate_authenticity",
@@ -64542,9 +63184,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "vercrowd",
       "confidence": "review",
       "internal_words": [
-        "overcrowded",
-        "crowd",
-        "overcrowding"
+        "crowd"
       ],
       "external_words": [
         {
@@ -64555,52 +63195,22 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "decrowd emergency shelters",
           "phrase_2_zh": "疏解应急避难所拥挤",
           "pos": "n./v."
-        },
-        {
-          "word": "crowding",
-          "zh": "拥挤；群聚",
-          "phrase_1": "crowding effect in classrooms",
-          "phrase_1_zh": "课堂拥挤效应",
-          "phrase_2": "crowding in public transport",
-          "phrase_2_zh": "公共交通拥挤",
-          "pos": "n."
-        },
-        {
-          "word": "crowded",
-          "zh": "拥挤的",
-          "phrase_1": "crowded urban housing",
-          "phrase_1_zh": "拥挤城市住房",
-          "phrase_2": "crowded emergency ward",
-          "phrase_2_zh": "拥挤急诊病房",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_overcrowded_overcrowding",
       "internal_word_items": [
         {
-          "word": "overcrowded",
-          "pos": "adj."
-        },
-        {
           "word": "crowd",
           "pos": "n./v."
-        },
-        {
-          "word": "overcrowding",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "overcrowded": "adj.",
-        "crowd": "n./v.",
-        "overcrowding": "n."
+        "crowd": "n./v."
       },
       "external_pos_map": {
-        "decrowd": "n./v.",
-        "crowding": "n.",
-        "crowded": "adj."
+        "decrowd": "n./v."
       }
     },
     {
@@ -65776,27 +64386,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "abandoner in family law",
           "phrase_2_zh": "家庭法中的遗弃者",
           "pos": "n."
-        },
-        {
-          "word": "unabandoned",
-          "zh": "未被放弃的",
-          "phrase_1": "unabandoned legal claim",
-          "phrase_1_zh": "未放弃的法律主张",
-          "phrase_2": "unabandoned settlement site",
-          "phrase_2_zh": "未被遗弃的定居遗址",
-          "pos": "adj."
-        },
-        {
-          "word": "abandoned",
-          "zh": "被遗弃的；放纵的",
-          "phrase_1": "abandoned industrial site",
-          "phrase_1_zh": "废弃工业场地",
-          "phrase_2": "abandoned children in wartime",
-          "phrase_2_zh": "战时被遗弃儿童",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_abandon",
       "internal_word_items": [
@@ -65815,9 +64407,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "selfabandonment": "n.",
-        "abandoner": "n.",
-        "unabandoned": "adj.",
-        "abandoned": "adj."
+        "abandoner": "n."
       }
     },
     {
@@ -65839,15 +64429,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "bated",
-          "zh": "屏息的；克制的",
-          "phrase_1": "with bated breath",
-          "phrase_1_zh": "屏息以待",
-          "phrase_2": "bated public expectation",
-          "phrase_2_zh": "被压抑的公众期待",
-          "pos": "adj."
-        },
-        {
           "word": "rebate",
           "zh": "返还；折扣",
           "phrase_1": "tax rebate program",
@@ -65864,18 +64445,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "tax abatement program",
           "phrase_2_zh": "减税计划",
           "pos": "n."
-        },
-        {
-          "word": "unabated",
-          "zh": "未减弱的",
-          "phrase_1": "unabated demand",
-          "phrase_1_zh": "未减弱的需求",
-          "phrase_2": "unabated growth",
-          "phrase_2_zh": "持续增长",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_abate",
       "internal_word_items": [
@@ -65889,10 +64461,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "abator": "n.",
-        "bated": "adj.",
         "rebate": "v.",
-        "abatement": "n.",
-        "unabated": "adj."
+        "abatement": "n."
       }
     },
     {
@@ -65914,27 +64484,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "rule abider",
           "phrase_2_zh": "遵守规则者",
           "pos": "n."
-        },
-        {
-          "word": "abided",
-          "zh": "遵守了；忍受了",
-          "phrase_1": "abided by rules",
-          "phrase_1_zh": "遵守了规则",
-          "phrase_2": "abided by agreement",
-          "phrase_2_zh": "遵守了协议",
-          "pos": "adj."
-        },
-        {
-          "word": "abiding",
-          "zh": "持久的；遵守的",
-          "phrase_1": "abiding interest",
-          "phrase_1_zh": "持久兴趣",
-          "phrase_2": "abiding respect",
-          "phrase_2_zh": "持久尊重",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_abidance",
       "internal_word_items": [
@@ -65957,9 +64509,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "abide": "v."
       },
       "external_pos_map": {
-        "abider": "n.",
-        "abided": "adj.",
-        "abiding": "n./adj."
+        "abider": "n."
       }
     },
     {
@@ -65971,18 +64521,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "abide",
         "abidance"
       ],
-      "external_words": [
-        {
-          "word": "abiding",
-          "zh": "持久的；深切的",
-          "phrase_1": "abiding constitutional principle",
-          "phrase_1_zh": "持久的宪法原则",
-          "phrase_2": "abiding concern for equity",
-          "phrase_2_zh": "对公平的持久关切",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_abide",
       "internal_word_items": [
@@ -65999,9 +64539,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "abide": "v.",
         "abidance": "n."
       },
-      "external_pos_map": {
-        "abiding": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_abode",
@@ -66022,18 +64560,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "law abider",
           "phrase_2_zh": "守法者",
           "pos": "n."
-        },
-        {
-          "word": "abiding",
-          "zh": "持久的",
-          "phrase_1": "abiding home",
-          "phrase_1_zh": "长久住所",
-          "phrase_2": "abiding memory",
-          "phrase_2_zh": "持久记忆",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_abode",
       "internal_word_items": [
@@ -66056,8 +64585,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "abide": "v."
       },
       "external_pos_map": {
-        "abider": "n.",
-        "abiding": "n./adj."
+        "abider": "n."
       }
     },
     {
@@ -66489,18 +65017,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "accent"
       ],
-      "external_words": [
-        {
-          "word": "unaccented",
-          "zh": "无重音的",
-          "phrase_1": "unaccented syllable",
-          "phrase_1_zh": "非重读音节",
-          "phrase_2": "unaccented English",
-          "phrase_2_zh": "无明显口音英语",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_accent",
       "internal_word_items": [
@@ -66512,9 +65030,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "accent": "n."
       },
-      "external_pos_map": {
-        "unaccented": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_accept",
@@ -66777,24 +65293,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "accumulating",
-          "zh": "正在积累的",
-          "phrase_1": "accumulating evidence",
-          "phrase_1_zh": "不断积累的证据",
-          "phrase_2": "accumulating pressure",
-          "phrase_2_zh": "不断增加的压力",
-          "pos": "n./adj."
-        },
-        {
-          "word": "accumulated",
-          "zh": "积累的",
-          "phrase_1": "accumulated knowledge",
-          "phrase_1_zh": "积累的知识",
-          "phrase_2": "accumulated debt",
-          "phrase_2_zh": "累积债务",
-          "pos": "adj."
-        },
-        {
           "word": "accumulator",
           "zh": "蓄电池；累加器",
           "phrase_1": "hydraulic accumulator",
@@ -66813,7 +65311,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_accumulation",
       "internal_word_items": [
@@ -66831,8 +65329,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "accumulate": "v."
       },
       "external_pos_map": {
-        "accumulating": "n./adj.",
-        "accumulated": "adj.",
         "accumulator": "n.",
         "accumulative": "adj."
       }
@@ -67251,39 +65747,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unafflicted",
-          "zh": "未受折磨的",
-          "phrase_1": "unafflicted group",
-          "phrase_1_zh": "未受影响群体",
-          "phrase_2": "unafflicted tissue",
-          "phrase_2_zh": "未受损组织",
-          "pos": "adj."
-        },
-        {
           "word": "afflictive",
           "zh": "使痛苦的",
           "phrase_1": "afflictive memory",
           "phrase_1_zh": "痛苦记忆",
           "phrase_2": "afflictive disorder",
           "phrase_2_zh": "折磨人的疾病",
-          "pos": "adj."
-        },
-        {
-          "word": "afflicting",
-          "zh": "折磨人的",
-          "phrase_1": "afflicting disease",
-          "phrase_1_zh": "折磨人的疾病",
-          "phrase_2": "afflicting condition",
-          "phrase_2_zh": "痛苦状况",
-          "pos": "n./adj."
-        },
-        {
-          "word": "afflicted",
-          "zh": "受折磨的",
-          "phrase_1": "afflicted patient",
-          "phrase_1_zh": "受病痛折磨的患者",
-          "phrase_2": "afflicted region",
-          "phrase_2_zh": "受灾地区",
           "pos": "adj."
         },
         {
@@ -67296,7 +65765,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_affliction",
       "internal_word_items": [
@@ -67309,10 +65778,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "affliction": "n."
       },
       "external_pos_map": {
-        "unafflicted": "adj.",
         "afflictive": "adj.",
-        "afflicting": "n./adj.",
-        "afflicted": "adj.",
         "afflict": "n./v."
       }
     },
@@ -67664,41 +66130,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "agoraphobia": "n./v.",
         "agorism": "n.",
         "agorist": "n."
-      }
-    },
-    {
-      "cluster_id": "kin_head_seed_aids",
-      "cluster_label": "unaided aide",
-      "anchor": "aids",
-      "confidence": "review",
-      "internal_words": [
-        "unaided"
-      ],
-      "external_words": [
-        {
-          "word": "aide",
-          "zh": "助手",
-          "phrase_1": "presidential aide",
-          "phrase_1_zh": "总统助手",
-          "phrase_2": "teaching aide",
-          "phrase_2_zh": "教学助手",
-          "pos": "n./v."
-        }
-      ],
-      "total_words": 2,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_aids",
-      "internal_word_items": [
-        {
-          "word": "unaided",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "unaided": "adj."
-      },
-      "external_pos_map": {
-        "aide": "n./v."
       }
     },
     {
@@ -68419,15 +66850,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "massing",
-          "zh": "聚集",
-          "phrase_1": "massing troops",
-          "phrase_1_zh": "集结部队",
-          "phrase_2": "massing clouds",
-          "phrase_2_zh": "聚集的云层",
-          "pos": "n./adj."
-        },
-        {
           "word": "biomass",
           "zh": "生物量",
           "phrase_1": "biomass energy production",
@@ -68446,7 +66868,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_amass",
       "internal_word_items": [
@@ -68469,7 +66891,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "massive": "adj."
       },
       "external_pos_map": {
-        "massing": "n./adj.",
         "biomass": "n./v.",
         "masses": "n."
       }
@@ -69210,18 +67631,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "freezer",
         "freeze"
       ],
-      "external_words": [
-        {
-          "word": "freezing",
-          "zh": "冻结的；极冷的",
-          "phrase_1": "freezing point",
-          "phrase_1_zh": "冰点",
-          "phrase_2": "freezing weather",
-          "phrase_2_zh": "严寒天气",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_antifreeze",
       "internal_word_items": [
@@ -69243,9 +67654,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "freezer": "n.",
         "freeze": "v."
       },
-      "external_pos_map": {
-        "freezing": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_antigen",
@@ -69804,27 +68213,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "arouse"
       ],
-      "external_words": [
-        {
-          "word": "aroused",
-          "zh": "被激起的",
-          "phrase_1": "aroused concern",
-          "phrase_1_zh": "被引发的担忧",
-          "phrase_2": "aroused emotion",
-          "phrase_2_zh": "被激起的情绪",
-          "pos": "adj."
-        },
-        {
-          "word": "arousing",
-          "zh": "激发性的",
-          "phrase_1": "arousing debate",
-          "phrase_1_zh": "引发辩论的",
-          "phrase_2": "arousing stimulus",
-          "phrase_2_zh": "激发性刺激",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_arousal",
       "internal_word_items": [
@@ -69836,10 +68226,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "arouse": "v."
       },
-      "external_pos_map": {
-        "aroused": "adj.",
-        "arousing": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_arousal_part_2",
@@ -69849,18 +68236,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "rouse"
       ],
-      "external_words": [
-        {
-          "word": "rousing",
-          "zh": "激动人心的",
-          "phrase_1": "rousing speech",
-          "phrase_1_zh": "振奋人心的演讲",
-          "phrase_2": "rousing support",
-          "phrase_2_zh": "热烈支持",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_arousal",
       "internal_word_items": [
@@ -69872,9 +68249,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "rouse": "v."
       },
-      "external_pos_map": {
-        "rousing": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_arouse",
@@ -69895,15 +68270,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "rousing",
-          "zh": "振奋人心的",
-          "phrase_1": "rousing call",
-          "phrase_1_zh": "振奋人心的号召",
-          "phrase_2": "rousing music",
-          "phrase_2_zh": "激昂音乐",
-          "pos": "n./adj."
-        },
-        {
           "word": "rouser",
           "zh": "鼓动者；唤醒者",
           "phrase_1": "crowd rouser at rallies",
@@ -69913,7 +68279,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_arouse",
       "internal_word_items": [
@@ -69927,7 +68293,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "rousement": "n.",
-        "rousing": "n./adj.",
         "rouser": "n."
       }
     },
@@ -69941,15 +68306,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "range"
       ],
       "external_words": [
-        {
-          "word": "arranged",
-          "zh": "安排好的",
-          "phrase_1": "arranged marriage",
-          "phrase_1_zh": "包办婚姻",
-          "phrase_2": "arranged schedule",
-          "phrase_2_zh": "安排好的日程",
-          "pos": "adj."
-        },
         {
           "word": "arranger",
           "zh": "安排者；编曲者",
@@ -69978,7 +68334,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_arrangement",
       "internal_word_items": [
@@ -69996,7 +68352,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "range": "n./v."
       },
       "external_pos_map": {
-        "arranged": "adj.",
         "arranger": "n.",
         "rearrange": "n./v.",
         "arrange": "v."
@@ -70012,15 +68367,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "arrangement"
       ],
       "external_words": [
-        {
-          "word": "arrayed",
-          "zh": "排列的；部署的",
-          "phrase_1": "arrayed evidence in a report",
-          "phrase_1_zh": "报告中排列好的证据",
-          "phrase_2": "arrayed sensors in a network",
-          "phrase_2_zh": "网络中排列的传感器",
-          "pos": "adj."
-        },
         {
           "word": "disarray",
           "zh": "混乱；紊乱",
@@ -70040,7 +68386,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_array",
       "internal_word_items": [
@@ -70058,7 +68404,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "arrangement": "n."
       },
       "external_pos_map": {
-        "arrayed": "adj.",
         "disarray": "n./v.",
         "arrange": "v."
       }
@@ -70071,8 +68416,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "arrival",
         "derivative",
-        "arrived",
-        "arriving",
         "arrive"
       ],
       "external_words": [
@@ -70086,7 +68429,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_arrival",
       "internal_word_items": [
@@ -70099,14 +68442,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "arrived",
-          "pos": "adj."
-        },
-        {
-          "word": "arriving",
-          "pos": "n./adj."
-        },
-        {
           "word": "arrive",
           "pos": "adj."
         }
@@ -70114,8 +68449,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "arrival": "adj.",
         "derivative": "n.",
-        "arrived": "adj.",
-        "arriving": "n./adj.",
         "arrive": "adj."
       },
       "external_pos_map": {
@@ -70794,18 +69127,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "retire from office",
           "phrase_2_zh": "离任",
           "pos": "n./v."
-        },
-        {
-          "word": "attired",
-          "zh": "穿着……的",
-          "phrase_1": "formally attired delegates",
-          "phrase_1_zh": "穿正式服装的代表",
-          "phrase_2": "traditionally attired performers",
-          "phrase_2_zh": "穿传统服饰的表演者",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_attire",
       "internal_word_items": [
@@ -70824,8 +69148,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "attirement": "n.",
-        "retire": "n./v.",
-        "attired": "adj."
+        "retire": "n./v."
       }
     },
     {
@@ -71468,15 +69791,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "bamboo scaffolding",
-          "zh": "竹脚手架",
-          "phrase_1": "bamboo scaffolding safety",
-          "phrase_1_zh": "竹脚手架安全",
-          "phrase_2": "bamboo scaffolding tradition",
-          "phrase_2_zh": "竹脚手架传统",
-          "pos": "n./adj."
-        },
-        {
           "word": "bamboo fiber",
           "zh": "竹纤维",
           "phrase_1": "bamboo fiber composite",
@@ -71513,7 +69827,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bamboo",
       "internal_word_items": [
@@ -71526,7 +69840,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bamboo": "n."
       },
       "external_pos_map": {
-        "bamboo scaffolding": "n./adj.",
         "bamboo fiber": "n.",
         "bamboo charcoal": "adj.",
         "bamboo grove": "n./v.",
@@ -71686,15 +69999,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "baobabseed",
-          "zh": "猴面包树种子",
-          "phrase_1": "baobabseed oil extraction",
-          "phrase_1_zh": "猴面包树籽油提取",
-          "phrase_2": "baobabseed germination rate",
-          "phrase_2_zh": "猴面包树种子发芽率",
-          "pos": "adj."
-        },
-        {
           "word": "baobabfruit",
           "zh": "猴面包树果",
           "phrase_1": "baobabfruit powder market",
@@ -71704,7 +70008,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_baobab",
       "internal_word_items": [
@@ -71718,7 +70022,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "baobableaf": "n./v.",
-        "baobabseed": "adj.",
         "baobabfruit": "n./v."
       }
     },
@@ -71727,9 +70030,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "bargaining overbargain bargained bargainable bargainer bargain",
       "anchor": "bargaining",
       "confidence": "review",
-      "internal_words": [
-        "bargaining"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "overbargain",
@@ -71739,15 +70040,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "overbargain in trade",
           "phrase_2_zh": "交易中过度议价",
           "pos": "n./v."
-        },
-        {
-          "word": "bargained",
-          "zh": "谈判达成的",
-          "phrase_1": "bargained agreement",
-          "phrase_1_zh": "谈判达成的协议",
-          "phrase_2": "bargained wage",
-          "phrase_2_zh": "谈判工资",
-          "pos": "adj."
         },
         {
           "word": "bargainable",
@@ -71777,21 +70069,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bargaining",
-      "internal_word_items": [
-        {
-          "word": "bargaining",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "bargaining": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "overbargain": "n./v.",
-        "bargained": "adj.",
         "bargainable": "adj.",
         "bargainer": "n.",
         "bargain": "n./v."
@@ -71932,18 +70216,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "beaklike projection in anatomy",
           "phrase_2_zh": "解剖中的喙状突起",
           "pos": "n./v."
-        },
-        {
-          "word": "beaked",
-          "zh": "有喙的；鹰钩状的",
-          "phrase_1": "beaked whale migration",
-          "phrase_1_zh": "喙鲸迁徙",
-          "phrase_2": "beaked tool design",
-          "phrase_2_zh": "鹰钩状工具设计",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_beak",
       "internal_word_items": [
@@ -71957,8 +70232,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "beakhead": "n./v.",
-        "beaklike": "n./v.",
-        "beaked": "adj."
+        "beaklike": "n./v."
       }
     },
     {
@@ -72042,15 +70316,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "bearing",
-          "zh": "关系；方位；举止",
-          "phrase_1": "bearing on policy outcomes",
-          "phrase_1_zh": "与政策结果有关",
-          "phrase_2": "compass bearing error",
-          "phrase_2_zh": "罗盘方位误差",
-          "pos": "n./adj."
-        },
-        {
           "word": "forbear",
           "zh": "忍耐；克制",
           "phrase_1": "forbear from military action",
@@ -72069,7 +70334,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bear",
       "internal_word_items": [
@@ -72082,7 +70347,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bear": "n."
       },
       "external_pos_map": {
-        "bearing": "n./adj.",
         "forbear": "n./v.",
         "unbearable": "adj."
       }
@@ -72307,15 +70571,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "benchmarking",
-          "zh": "基准比较",
-          "phrase_1": "benchmarking public service performance",
-          "phrase_1_zh": "公共服务绩效基准比较",
-          "phrase_2": "benchmarking against global standards",
-          "phrase_2_zh": "对照全球标准做基准比较",
-          "pos": "n./adj."
-        },
-        {
           "word": "marker",
           "zh": "标志物；标记",
           "phrase_1": "biological marker of disease",
@@ -72334,7 +70589,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_benchmark",
       "internal_word_items": [
@@ -72357,7 +70612,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "mark": "v."
       },
       "external_pos_map": {
-        "benchmarking": "n./adj.",
         "marker": "n.",
         "bench": "n./v."
       }
@@ -72486,8 +70740,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "bias",
       "confidence": "review",
       "internal_words": [
-        "bias",
-        "unbiased"
+        "bias"
       ],
       "external_words": [
         {
@@ -72507,48 +70760,23 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "debias survey responses",
           "phrase_2_zh": "减少调查回答偏差",
           "pos": "n."
-        },
-        {
-          "word": "biased",
-          "zh": "有偏见的；有偏的",
-          "phrase_1": "biased sampling method",
-          "phrase_1_zh": "有偏抽样方法",
-          "phrase_2": "biased media coverage",
-          "phrase_2_zh": "有偏见的媒体报道",
-          "pos": "adj."
-        },
-        {
-          "word": "debiasing",
-          "zh": "去偏处理",
-          "phrase_1": "algorithmic debiasing",
-          "phrase_1_zh": "算法去偏",
-          "phrase_2": "debiasing training",
-          "phrase_2_zh": "去偏训练",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bias",
       "internal_word_items": [
         {
           "word": "bias",
           "pos": "n."
-        },
-        {
-          "word": "unbiased",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "bias": "n.",
-        "unbiased": "adj."
+        "bias": "n."
       },
       "external_pos_map": {
         "bias correction": "n.",
-        "debias": "n.",
-        "biased": "adj.",
-        "debiasing": "n./adj."
+        "debias": "n."
       }
     },
     {
@@ -72558,19 +70786,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "biasedly",
-        "unbiased",
         "bias"
       ],
       "external_words": [
-        {
-          "word": "debiasing",
-          "zh": "去偏处理",
-          "phrase_1": "algorithmic debiasing",
-          "phrase_1_zh": "算法去偏",
-          "phrase_2": "debiasing method",
-          "phrase_2_zh": "去偏方法",
-          "pos": "n./adj."
-        },
         {
           "word": "debias",
           "zh": "去偏",
@@ -72579,18 +70797,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "debias decision",
           "phrase_2_zh": "减少决策偏差",
           "pos": "n."
-        },
-        {
-          "word": "biased",
-          "zh": "有偏见的",
-          "phrase_1": "biased sample",
-          "phrase_1_zh": "有偏样本",
-          "phrase_2": "biased judgement",
-          "phrase_2_zh": "有偏判断",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_biasedly",
       "internal_word_items": [
@@ -72599,23 +70808,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "unbiased",
-          "pos": "adj."
-        },
-        {
           "word": "bias",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
         "biasedly": "adv.",
-        "unbiased": "adj.",
         "bias": "n."
       },
       "external_pos_map": {
-        "debiasing": "n./adj.",
-        "debias": "n.",
-        "biased": "adj."
+        "debias": "n."
       }
     },
     {
@@ -72635,18 +70837,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "abidingly influential tradition",
           "phrase_2_zh": "影响深远的传统",
           "pos": "adv."
-        },
-        {
-          "word": "abiding",
-          "zh": "持久的",
-          "phrase_1": "abiding influence",
-          "phrase_1_zh": "持久影响",
-          "phrase_2": "abiding concern",
-          "phrase_2_zh": "长期关切",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bide",
       "internal_word_items": [
@@ -72659,8 +70852,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "abidance": "n."
       },
       "external_pos_map": {
-        "abidingly": "adv.",
-        "abiding": "n./adj."
+        "abidingly": "adv."
       }
     },
     {
@@ -72707,18 +70899,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "billable consulting work",
           "phrase_2_zh": "可计费咨询工作",
           "pos": "adj."
-        },
-        {
-          "word": "billing",
-          "zh": "账单处理；计费",
-          "phrase_1": "medical billing system",
-          "phrase_1_zh": "医疗计费系统",
-          "phrase_2": "billing dispute resolution",
-          "phrase_2_zh": "账单纠纷解决",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bill",
       "internal_word_items": [
@@ -72734,8 +70917,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "billfold": "n./v.",
         "bill of rights": "n.",
         "billboard": "n./v.",
-        "billable": "adj.",
-        "billing": "n./adj."
+        "billable": "adj."
       }
     },
     {
@@ -72799,27 +70981,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "quadrupedal animal",
           "phrase_2_zh": "四足动物",
           "pos": "adj."
-        },
-        {
-          "word": "quadruped",
-          "zh": "四足动物",
-          "phrase_1": "quadruped locomotion",
-          "phrase_1_zh": "四足运动",
-          "phrase_2": "quadruped gait analysis",
-          "phrase_2_zh": "四足步态分析",
-          "pos": "adj."
-        },
-        {
-          "word": "biped",
-          "zh": "两足动物",
-          "phrase_1": "early biped",
-          "phrase_1_zh": "早期两足动物",
-          "phrase_2": "biped robot",
-          "phrase_2_zh": "双足机器人",
-          "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bipedal",
       "internal_word_items": [
@@ -72833,9 +70997,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "pedal": "adj.",
-        "quadrupedal": "adj.",
-        "quadruped": "adj.",
-        "biped": "n."
+        "quadrupedal": "adj."
       }
     },
     {
@@ -72968,15 +71130,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "bivouacking",
-          "zh": "临时扎营",
-          "phrase_1": "bivouacking near a glacier",
-          "phrase_1_zh": "在冰川附近临时扎营",
-          "phrase_2": "bivouacking during field research",
-          "phrase_2_zh": "田野研究期间临时扎营",
-          "pos": "n./adj."
-        },
-        {
           "word": "bivouacker",
           "zh": "露营者；临时扎营者",
           "phrase_1": "bivouacker survival equipment",
@@ -72986,7 +71139,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bivouac",
       "internal_word_items": [
@@ -72999,7 +71152,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bivouac": "n."
       },
       "external_pos_map": {
-        "bivouacking": "n./adj.",
         "bivouacker": "n."
       }
     },
@@ -73031,15 +71183,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "blasting",
-          "zh": "爆破；猛烈批评",
-          "phrase_1": "controlled blasting operation",
-          "phrase_1_zh": "控制爆破作业",
-          "phrase_2": "media blasting of policy failures",
-          "phrase_2_zh": "媒体猛烈批评政策失败",
-          "pos": "n./adj."
-        },
-        {
           "word": "blast wave",
           "zh": "爆炸冲击波",
           "phrase_1": "blast wave injury pattern",
@@ -73058,7 +71201,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_blast",
       "internal_word_items": [
@@ -73073,7 +71216,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "blast radius": "n./v.",
         "blastocyst": "n./v.",
-        "blasting": "n./adj.",
         "blast wave": "n./v.",
         "blast furnace": "n./v."
       }
@@ -73122,18 +71264,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "blight resistant potato breeding",
           "phrase_2_zh": "抗病马铃薯育种",
           "pos": "adj."
-        },
-        {
-          "word": "blighted",
-          "zh": "受损的；衰败的",
-          "phrase_1": "blighted urban neighborhood",
-          "phrase_1_zh": "衰败城市社区",
-          "phrase_2": "blighted crop fields",
-          "phrase_2_zh": "受病害影响的农田",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_blight",
       "internal_word_items": [
@@ -73149,8 +71282,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "blight control": "n./v.",
         "late blight": "n./v.",
         "urban blight": "n./v.",
-        "blight resistant": "adj.",
-        "blighted": "adj."
+        "blight resistant": "adj."
       }
     },
     {
@@ -73181,24 +71313,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "blitzing",
-          "zh": "突袭；猛烈行动",
-          "phrase_1": "blitzing media campaign",
-          "phrase_1_zh": "猛烈媒体宣传",
-          "phrase_2": "blitzing defensive tactic",
-          "phrase_2_zh": "突袭式防守策略",
-          "pos": "n./adj."
-        },
-        {
-          "word": "blitzed",
-          "zh": "遭轰炸的；醉的",
-          "phrase_1": "blitzed urban district",
-          "phrase_1_zh": "遭轰炸的城区",
-          "phrase_2": "blitzed memory in war testimony",
-          "phrase_2_zh": "战争证词中被轰炸的记忆",
-          "pos": "adj."
-        },
-        {
           "word": "blitzkrieg",
           "zh": "闪电战",
           "phrase_1": "blitzkrieg military strategy",
@@ -73208,7 +71322,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_blitz",
       "internal_word_items": [
@@ -73223,8 +71337,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "airblitz": "n./v.",
         "blitzer": "n.",
-        "blitzing": "n./adj.",
-        "blitzed": "adj.",
         "blitzkrieg": "n./v."
       }
     },
@@ -73257,15 +71369,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "darting",
-          "zh": "飞快移动的",
-          "phrase_1": "darting eye movements",
-          "phrase_1_zh": "快速的眼球运动",
-          "phrase_2": "darting fish in shallow water",
-          "phrase_2_zh": "浅水中快速游动的鱼",
-          "pos": "n./adj."
-        },
-        {
           "word": "blowgun",
           "zh": "吹箭筒",
           "phrase_1": "use a blowgun for hunting",
@@ -73275,7 +71378,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_blowdart",
       "internal_word_items": [
@@ -73295,7 +71398,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "dartboard": "n./v.",
         "blowpipe": "n.",
-        "darting": "n./adj.",
         "blowgun": "n./v."
       }
     },
@@ -73408,18 +71510,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "political thunderbolt in elections",
           "phrase_2_zh": "选举中的政治震动",
           "pos": "n./v."
-        },
-        {
-          "word": "bolted",
-          "zh": "用螺栓固定的；逃跑的",
-          "phrase_1": "bolted steel connection",
-          "phrase_1_zh": "螺栓钢连接",
-          "phrase_2": "bolted from public scrutiny",
-          "phrase_2_zh": "逃避公众审查",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bolt",
       "internal_word_items": [
@@ -73435,8 +71528,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bolt cutter": "n.",
         "unbolt": "n./v.",
         "crossbow bolt": "n./v.",
-        "thunderbolt": "n./v.",
-        "bolted": "adj."
+        "thunderbolt": "n./v."
       }
     },
     {
@@ -73467,24 +71559,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "boosting",
-          "zh": "提升",
-          "phrase_1": "boosting performance",
-          "phrase_1_zh": "提升性能",
-          "phrase_2": "boosting demand",
-          "phrase_2_zh": "刺激需求",
-          "pos": "n./adj."
-        },
-        {
-          "word": "boosted",
-          "zh": "被提高的",
-          "phrase_1": "boosted signal",
-          "phrase_1_zh": "增强信号",
-          "phrase_2": "boosted immunity",
-          "phrase_2_zh": "增强免疫力",
-          "pos": "adj."
-        },
-        {
           "word": "boost",
           "zh": "提高；推动",
           "phrase_1": "boost confidence",
@@ -73494,7 +71568,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_booster",
       "internal_word_items": [
@@ -73509,8 +71583,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "boostable": "adj.",
         "boosterism": "n.",
-        "boosting": "n./adj.",
-        "boosted": "adj.",
         "boost": "n./v."
       }
     },
@@ -73523,15 +71595,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bottleneck"
       ],
       "external_words": [
-        {
-          "word": "necking",
-          "zh": "颈缩；缩窄",
-          "phrase_1": "necking in metal samples",
-          "phrase_1_zh": "金属样本颈缩",
-          "phrase_2": "necking phenomenon",
-          "phrase_2_zh": "颈缩现象",
-          "pos": "n./adj."
-        },
         {
           "word": "neck",
           "zh": "颈部；狭窄处",
@@ -73551,15 +71614,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "debottlenecking",
-          "zh": "瓶颈消除",
-          "phrase_1": "process debottlenecking",
-          "phrase_1_zh": "流程瓶颈消除",
-          "phrase_2": "factory debottlenecking",
-          "phrase_2_zh": "工厂瓶颈消除",
-          "pos": "n./adj."
-        },
-        {
           "word": "bottle",
           "zh": "瓶子；装瓶",
           "phrase_1": "glass bottle",
@@ -73569,7 +71623,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_bottleneck",
       "internal_word_items": [
@@ -73582,10 +71636,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bottleneck": "n."
       },
       "external_pos_map": {
-        "necking": "n./adj.",
         "neck": "n./v.",
         "neckline": "n./v.",
-        "debottlenecking": "n./adj.",
         "bottle": "n./v."
       }
     },
@@ -73740,15 +71792,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "brickmaking",
-          "zh": "制砖",
-          "phrase_1": "traditional brickmaking technique",
-          "phrase_1_zh": "传统制砖技术",
-          "phrase_2": "brickmaking industry emissions",
-          "phrase_2_zh": "制砖业排放",
-          "pos": "n./adj."
-        },
-        {
           "word": "brickyard",
           "zh": "砖厂",
           "phrase_1": "brickyard pollution control",
@@ -73776,7 +71819,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_brick",
       "internal_word_items": [
@@ -73790,7 +71833,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "brick kiln": "n./v.",
-        "brickmaking": "n./adj.",
         "brickyard": "n./v.",
         "bricklayer": "n.",
         "brickwork": "n./v."
@@ -73813,18 +71855,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "debrief participants after experiments",
           "phrase_2_zh": "实验后向参与者说明",
           "pos": "n./v."
-        },
-        {
-          "word": "briefing",
-          "zh": "简报；情况介绍",
-          "phrase_1": "security briefing for officials",
-          "phrase_1_zh": "官员安全简报",
-          "phrase_2": "briefing on climate risks",
-          "phrase_2_zh": "气候风险简报",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_brief",
       "internal_word_items": [
@@ -73837,8 +71870,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "brief": "adj."
       },
       "external_pos_map": {
-        "debrief": "n./v.",
-        "briefing": "n./adj."
+        "debrief": "n./v."
       }
     },
     {
@@ -73885,18 +71917,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "brood parasite host defense",
           "phrase_2_zh": "巢寄生宿主防御",
           "pos": "n./v."
-        },
-        {
-          "word": "brooding",
-          "zh": "忧思的；孵卵",
-          "phrase_1": "brooding political resentment",
-          "phrase_1_zh": "郁积的政治怨恨",
-          "phrase_2": "brooding behavior in birds",
-          "phrase_2_zh": "鸟类孵卵行为",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_brood",
       "internal_word_items": [
@@ -73912,8 +71935,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "brood chamber": "n.",
         "broody": "n./v.",
         "broodstock": "n./v.",
-        "brood parasite": "n./v.",
-        "brooding": "n./adj."
+        "brood parasite": "n./v."
       }
     },
     {
@@ -74094,15 +72116,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "buckling",
-          "zh": "屈曲；弯曲失稳",
-          "phrase_1": "buckling failure in columns",
-          "phrase_1_zh": "柱体屈曲失稳",
-          "phrase_2": "buckling analysis of shells",
-          "phrase_2_zh": "壳体屈曲分析",
-          "pos": "n./adj."
-        },
-        {
           "word": "unbuckle",
           "zh": "解开扣子",
           "phrase_1": "unbuckle a safety harness",
@@ -74121,7 +72134,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_buckle",
       "internal_word_items": [
@@ -74136,7 +72149,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "buckleplate": "v.",
         "beltbuckle": "n./v.",
-        "buckling": "n./adj.",
         "unbuckle": "v.",
         "buckler": "n."
       }
@@ -74150,15 +72162,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "buffalo"
       ],
       "external_words": [
-        {
-          "word": "buffaloed",
-          "zh": "被吓住的；被迷惑的",
-          "phrase_1": "buffaloed voters by misinformation",
-          "phrase_1_zh": "被错误信息迷惑的选民",
-          "phrase_2": "buffaloed witnesses in court",
-          "phrase_2_zh": "法庭上被吓住的证人",
-          "pos": "adj."
-        },
         {
           "word": "buffalofish",
           "zh": "牛胭脂鱼",
@@ -74178,7 +72181,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_buffalo",
       "internal_word_items": [
@@ -74191,7 +72194,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "buffalo": "n."
       },
       "external_pos_map": {
-        "buffaloed": "adj.",
         "buffalofish": "n./v.",
         "buffalograss": "n./v."
       }
@@ -74407,7 +72409,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "burning",
       "confidence": "review",
       "internal_words": [
-        "burning",
         "burnt"
       ],
       "external_words": [
@@ -74448,21 +72449,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_burning",
       "internal_word_items": [
-        {
-          "word": "burning",
-          "pos": "n."
-        },
         {
           "word": "burnt",
           "pos": "n./v."
         }
       ],
       "internal_pos_map": {
-        "burning": "n.",
         "burnt": "n./v."
       },
       "external_pos_map": {
@@ -74758,15 +72754,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "cached",
-          "zh": "缓存的；隐藏的",
-          "phrase_1": "cached browser data",
-          "phrase_1_zh": "浏览器缓存数据",
-          "phrase_2": "cached food by animals",
-          "phrase_2_zh": "动物储藏的食物",
-          "pos": "adj."
-        },
-        {
           "word": "geocache",
           "zh": "地理藏宝点",
           "phrase_1": "geocache trail in parks",
@@ -74794,7 +72781,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cache",
       "internal_word_items": [
@@ -74808,7 +72795,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "cachememory": "adj.",
-        "cached": "adj.",
         "geocache": "n./v.",
         "cacheable": "adj.",
         "cachet": "n./v."
@@ -74914,27 +72900,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "encage dissent through law",
           "phrase_2_zh": "用法律限制异议",
           "pos": "n."
-        },
-        {
-          "word": "cageling",
-          "zh": "笼中物；受困者",
-          "phrase_1": "cageling image in poetry",
-          "phrase_1_zh": "诗歌中的笼中物意象",
-          "phrase_2": "cageling metaphor for captivity",
-          "phrase_2_zh": "囚禁的笼中物隐喻",
-          "pos": "n./adj."
-        },
-        {
-          "word": "caged",
-          "zh": "被关住的；受限制的",
-          "phrase_1": "caged bird behavior",
-          "phrase_1_zh": "笼中鸟行为",
-          "phrase_2": "caged political expression",
-          "phrase_2_zh": "受限制的政治表达",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cage",
       "internal_word_items": [
@@ -74949,9 +72917,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "cagework": "n./v.",
         "birdcage": "n.",
-        "encage": "n.",
-        "cageling": "n./adj.",
-        "caged": "adj."
+        "encage": "n."
       }
     },
     {
@@ -75126,18 +73092,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "calver health monitoring",
           "phrase_2_zh": "产犊母牛健康监测",
           "pos": "n."
-        },
-        {
-          "word": "calving",
-          "zh": "产犊；冰川崩解",
-          "phrase_1": "glacier calving event",
-          "phrase_1_zh": "冰川崩解事件",
-          "phrase_2": "calving season in cattle",
-          "phrase_2_zh": "牛的产犊季",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_calve",
       "internal_word_items": [
@@ -75151,8 +73108,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "calvish": "n./v.",
-        "calver": "n.",
-        "calving": "n./adj."
+        "calver": "n."
       }
     },
     {
@@ -75720,15 +73676,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "canoeing",
-          "zh": "划独木舟",
-          "phrase_1": "canoeing tourism impact",
-          "phrase_1_zh": "独木舟旅游影响",
-          "phrase_2": "canoeing tradition in river cultures",
-          "phrase_2_zh": "河流文化中的独木舟传统",
-          "pos": "n./adj."
-        },
-        {
           "word": "canoeist",
           "zh": "划独木舟者",
           "phrase_1": "canoeist route planning",
@@ -75738,7 +73685,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_canoe",
       "internal_word_items": [
@@ -75751,7 +73698,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "canoe": "n."
       },
       "external_pos_map": {
-        "canoeing": "n./adj.",
         "canoeist": "n."
       }
     },
@@ -75799,18 +73745,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "canopier craft in tent making",
           "phrase_2_zh": "帐篷制作中的搭篷工艺",
           "pos": "n."
-        },
-        {
-          "word": "canopied",
-          "zh": "有顶篷的；被树冠覆盖的",
-          "phrase_1": "canopied forest trail",
-          "phrase_1_zh": "树冠覆盖的森林小径",
-          "phrase_2": "canopied market street",
-          "phrase_2_zh": "有顶棚的市场街",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_canopy",
       "internal_word_items": [
@@ -75826,8 +73763,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "canopycover": "n.",
         "overstory": "adj.",
         "understory": "adj.",
-        "canopier": "n.",
-        "canopied": "adj."
+        "canopier": "n."
       }
     },
     {
@@ -76045,15 +73981,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "caravaning",
-          "zh": "结队旅行；房车旅行",
-          "phrase_1": "caravaning culture in retirement",
-          "phrase_1_zh": "退休生活中的房车旅行文化",
-          "phrase_2": "caravaning route across deserts",
-          "phrase_2_zh": "穿越沙漠的结队旅行路线",
-          "pos": "n./adj."
-        },
-        {
           "word": "caravanner",
           "zh": "乘房车旅行者；商队成员",
           "phrase_1": "caravanner route planning",
@@ -76081,7 +74008,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_caravan",
       "internal_word_items": [
@@ -76094,7 +74021,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "caravan": "n."
       },
       "external_pos_map": {
-        "caravaning": "n./adj.",
         "caravanner": "n.",
         "caravanserai": "n./v.",
         "caravansary": "adj."
@@ -76218,18 +74144,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "carve"
       ],
-      "external_words": [
-        {
-          "word": "uncarved",
-          "zh": "未雕刻的",
-          "phrase_1": "uncarved block",
-          "phrase_1_zh": "未雕琢木块",
-          "phrase_2": "uncarved stone",
-          "phrase_2_zh": "未雕刻石头",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_carve",
       "internal_word_items": [
@@ -76241,9 +74157,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "carve": "v."
       },
-      "external_pos_map": {
-        "uncarved": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_cashflow",
@@ -76381,7 +74295,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "catching",
       "confidence": "review",
       "internal_words": [
-        "catching",
         "catchment"
       ],
       "external_words": [
@@ -76413,21 +74326,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_catching",
       "internal_word_items": [
-        {
-          "word": "catching",
-          "pos": "v."
-        },
         {
           "word": "catchment",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "catching": "v.",
         "catchment": "n."
       },
       "external_pos_map": {
@@ -76442,9 +74350,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "catchment",
       "confidence": "review",
       "internal_words": [
-        "catchment",
-        "watershed",
-        "catching"
+        "catchment"
       ],
       "external_words": [
         {
@@ -76475,27 +74381,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_catchment",
       "internal_word_items": [
         {
           "word": "catchment",
           "pos": "n."
-        },
-        {
-          "word": "watershed",
-          "pos": "n."
-        },
-        {
-          "word": "catching",
-          "pos": "v."
         }
       ],
       "internal_pos_map": {
-        "catchment": "n.",
-        "watershed": "n.",
-        "catching": "v."
+        "catchment": "n."
       },
       "external_pos_map": {
         "catchwater": "n.",
@@ -76531,18 +74427,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "caterwaul as comic exaggeration",
           "phrase_2_zh": "作为喜剧夸张的哀号",
           "pos": "n./v."
-        },
-        {
-          "word": "catering",
-          "zh": "餐饮服务；满足需求",
-          "phrase_1": "catering service regulation",
-          "phrase_1_zh": "餐饮服务监管",
-          "phrase_2": "catering to diverse learners",
-          "phrase_2_zh": "满足不同学习者需求",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cater",
       "internal_word_items": [
@@ -76566,8 +74453,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "catercorner": "n.",
-        "caterwaul": "n./v.",
-        "catering": "n./adj."
+        "caterwaul": "n./v."
       }
     },
     {
@@ -76589,27 +74475,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "caterwaul outside",
           "phrase_2_zh": "在外面尖叫",
           "pos": "n./v."
-        },
-        {
-          "word": "catered",
-          "zh": "提供餐饮的",
-          "phrase_1": "fully catered event",
-          "phrase_1_zh": "全餐饮活动",
-          "phrase_2": "catered meeting",
-          "phrase_2_zh": "提供餐饮的会议",
-          "pos": "adj."
-        },
-        {
-          "word": "catering",
-          "zh": "餐饮服务",
-          "phrase_1": "school catering",
-          "phrase_1_zh": "学校餐饮",
-          "phrase_2": "catering company",
-          "phrase_2_zh": "餐饮公司",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_caterer",
       "internal_word_items": [
@@ -76632,9 +74500,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "cater": "v."
       },
       "external_pos_map": {
-        "caterwaul": "n./v.",
-        "catered": "adj.",
-        "catering": "n./adj."
+        "caterwaul": "n./v."
       }
     },
     {
@@ -77304,15 +75170,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "chambered",
-          "zh": "有腔室的",
-          "phrase_1": "chambered fossil shell",
-          "phrase_1_zh": "有腔室的化石贝壳",
-          "phrase_2": "chambered combustion system",
-          "phrase_2_zh": "分腔燃烧系统",
-          "pos": "adj."
-        },
-        {
           "word": "antechamber",
           "zh": "前厅；接待室",
           "phrase_1": "antechamber to political power",
@@ -77322,7 +75179,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_chamber",
       "internal_word_items": [
@@ -77336,7 +75193,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "chamberlain": "n./v.",
-        "chambered": "adj.",
         "antechamber": "n."
       }
     },
@@ -77431,18 +75287,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "championer of civil rights",
           "phrase_2_zh": "民权捍卫者",
           "pos": "n."
-        },
-        {
-          "word": "championing",
-          "zh": "倡导；支持",
-          "phrase_1": "championing human rights",
-          "phrase_1_zh": "倡导人权",
-          "phrase_2": "championing evidence-based policy",
-          "phrase_2_zh": "倡导循证政策",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_champion",
       "internal_word_items": [
@@ -77462,8 +75309,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "championize": "v.",
         "championless": "adj.",
-        "championer": "n.",
-        "championing": "n./adj."
+        "championer": "n."
       }
     },
     {
@@ -77550,15 +75396,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "chanting",
-          "zh": "吟唱；反复呼喊",
-          "phrase_1": "protest chanting in streets",
-          "phrase_1_zh": "街头抗议口号吟喊",
-          "phrase_2": "monastic chanting practice",
-          "phrase_2_zh": "修道院吟唱实践",
-          "pos": "n./adj."
-        },
-        {
           "word": "enchant",
           "zh": "使着迷；施魔法",
           "phrase_1": "enchant urban audiences",
@@ -77577,7 +75414,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_chant",
       "internal_word_items": [
@@ -77591,7 +75428,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "chanter": "n.",
-        "chanting": "n./adj.",
         "enchant": "adj.",
         "enchantment": "n."
       }
@@ -77897,15 +75733,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "chartered",
-          "zh": "特许的；包租的",
-          "phrase_1": "chartered financial analyst",
-          "phrase_1_zh": "特许金融分析师",
-          "phrase_2": "chartered flight arrangement",
-          "phrase_2_zh": "包机安排",
-          "pos": "adj."
-        },
-        {
           "word": "cartel",
           "zh": "卡特尔；垄断联盟",
           "phrase_1": "cartel price fixing",
@@ -77915,7 +75742,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_charter",
       "internal_word_items": [
@@ -77943,7 +75770,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "chart": "n./v."
       },
       "external_pos_map": {
-        "chartered": "adj.",
         "cartel": "n./v."
       }
     },
@@ -77967,15 +75793,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "chasing",
-          "zh": "追逐；雕镂",
-          "phrase_1": "chasing technique in metalwork",
-          "phrase_1_zh": "金属工艺中的錾刻技术",
-          "phrase_2": "chasing political advantage",
-          "phrase_2_zh": "追逐政治优势",
-          "pos": "n./adj."
-        },
-        {
           "word": "chaseable",
           "zh": "可追踪的；可追赶的",
           "phrase_1": "chaseable signal in data",
@@ -77994,7 +75811,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_chase",
       "internal_word_items": [
@@ -78013,7 +75830,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "enchase": "n./v.",
-        "chasing": "n./adj.",
         "chaseable": "adj.",
         "chaser": "n."
       }
@@ -78100,15 +75916,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "chested",
-          "zh": "有胸部的",
-          "phrase_1": "broad-chested skeletal remains",
-          "phrase_1_zh": "宽胸骨骼遗骸",
-          "phrase_2": "white-chested bird species",
-          "phrase_2_zh": "白胸鸟类",
-          "pos": "adj."
-        },
-        {
           "word": "chestnut",
           "zh": "栗子；栗色",
           "phrase_1": "chestnut blight disease",
@@ -78118,7 +75925,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_chest",
       "internal_word_items": [
@@ -78134,7 +75941,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "chest wall": "n./v.",
         "chest pain": "n./v.",
         "chest cavity": "n.",
-        "chested": "adj.",
         "chestnut": "n./v."
       }
     },
@@ -78340,15 +76146,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "childbearing",
-          "zh": "生育",
-          "phrase_1": "delayed childbearing trend",
-          "phrase_1_zh": "推迟生育趋势",
-          "phrase_2": "childbearing policy incentives",
-          "phrase_2_zh": "生育政策激励",
-          "pos": "n./adj."
-        },
-        {
           "word": "childcare",
           "zh": "儿童照护",
           "phrase_1": "affordable childcare access",
@@ -78358,7 +76155,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_child",
       "internal_word_items": [
@@ -78382,7 +76179,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "childless": "adj.",
-        "childbearing": "n./adj.",
         "childcare": "n./v."
       }
     },
@@ -78677,15 +76473,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "Christening",
-          "zh": "洗礼；命名仪式",
-          "phrase_1": "royal christening ceremony",
-          "phrase_1_zh": "王室洗礼仪式",
-          "phrase_2": "christening of a research vessel",
-          "phrase_2_zh": "研究船命名仪式",
-          "pos": "n./adj."
-        },
-        {
           "word": "Christendom",
           "zh": "基督教世界",
           "phrase_1": "medieval Christendom politics",
@@ -78695,7 +76482,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_christen",
       "internal_word_items": [
@@ -78708,7 +76495,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "christen": "v."
       },
       "external_pos_map": {
-        "Christening": "n./adj.",
         "Christendom": "n."
       }
     },
@@ -78740,18 +76526,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "cincture around a column",
           "phrase_2_zh": "柱身环带",
           "pos": "n."
-        },
-        {
-          "word": "uncinctured",
-          "zh": "未束带的",
-          "phrase_1": "uncinctured garment",
-          "phrase_1_zh": "未束带衣物",
-          "phrase_2": "uncinctured robe",
-          "phrase_2_zh": "未束带长袍",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cinct",
       "internal_word_items": [
@@ -78775,8 +76552,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "cinch": "n./v.",
-        "cincture": "n.",
-        "uncinctured": "adj."
+        "cincture": "n."
       }
     },
     {
@@ -78792,15 +76568,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "ciphering",
-          "zh": "密码运算；计算",
-          "phrase_1": "ciphering method in cryptography",
-          "phrase_1_zh": "密码学中的加密方法",
-          "phrase_2": "ciphering exercise in arithmetic",
-          "phrase_2_zh": "算术计算练习",
-          "pos": "n./adj."
-        },
-        {
           "word": "ciphertext",
           "zh": "密文",
           "phrase_1": "ciphertext security analysis",
@@ -78810,7 +76577,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cipher",
       "internal_word_items": [
@@ -78838,7 +76605,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "decipherable": "adj."
       },
       "external_pos_map": {
-        "ciphering": "n./adj.",
         "ciphertext": "n./v."
       }
     },
@@ -79450,18 +77216,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "strategic clashpoint in negotiations",
           "phrase_2_zh": "谈判中的战略冲突点",
           "pos": "n./v."
-        },
-        {
-          "word": "clashing",
-          "zh": "冲突的；不协调的",
-          "phrase_1": "clashing institutional priorities",
-          "phrase_1_zh": "相冲突的制度优先事项",
-          "phrase_2": "clashing color symbolism",
-          "phrase_2_zh": "冲突的色彩象征",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_clash",
       "internal_word_items": [
@@ -79477,8 +77234,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "clashcourse": "n./v.",
         "backlash": "n./v.",
         "culture clash": "n./v.",
-        "clashpoint": "n./v.",
-        "clashing": "n./adj."
+        "clashpoint": "n./v."
       }
     },
     {
@@ -79507,27 +77263,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "unclasp a safety hook",
           "phrase_2_zh": "松开安全钩",
           "pos": "n./v."
-        },
-        {
-          "word": "clasped",
-          "zh": "扣住的；紧握的",
-          "phrase_1": "clasped hands in ritual",
-          "phrase_1_zh": "仪式中紧握的双手",
-          "phrase_2": "clasped related evidence",
-          "phrase_2_zh": "与扣住的；紧握的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "clasping",
-          "zh": "扣合；抱握",
-          "phrase_1": "clasping mechanism",
-          "phrase_1_zh": "扣合机制",
-          "phrase_2": "clasping root structure",
-          "phrase_2_zh": "抱握根结构",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_clasp",
       "internal_word_items": [
@@ -79541,9 +77279,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "clasper": "n.",
-        "unclasp": "n./v.",
-        "clasped": "adj.",
-        "clasping": "n./adj."
+        "unclasp": "n./v."
       }
     },
     {
@@ -80054,15 +77790,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "climbing",
-          "zh": "攀登；上升",
-          "phrase_1": "climbing inequality trend",
-          "phrase_1_zh": "不平等上升趋势",
-          "phrase_2": "climbing route assessment",
-          "phrase_2_zh": "攀登路线评估",
-          "pos": "n./adj."
-        },
-        {
           "word": "climbdown",
           "zh": "让步；退让",
           "phrase_1": "government climbdown after protests",
@@ -80081,7 +77808,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_climb",
       "internal_word_items": [
@@ -80096,7 +77823,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "hillclimb": "n./v.",
         "overclimb": "n./v.",
-        "climbing": "n./adj.",
         "climbdown": "n./v.",
         "climber": "n."
       }
@@ -80205,15 +77931,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "clipping",
-          "zh": "剪报；剪下物",
-          "phrase_1": "newspaper clipping",
-          "phrase_1_zh": "剪报",
-          "phrase_2": "grass clipping",
-          "phrase_2_zh": "草屑",
-          "pos": "n./adj."
-        },
-        {
           "word": "clip",
           "zh": "夹住；剪短",
           "phrase_1": "clip paper",
@@ -80223,7 +77940,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_clipper",
       "internal_word_items": [
@@ -80239,7 +77956,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "clipperton": "n./v.",
         "clippage": "n.",
         "paperclip": "n./v.",
-        "clipping": "n./adj.",
         "clip": "n./v."
       }
     },
@@ -80280,15 +77996,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "cloning",
-          "zh": "克隆",
-          "phrase_1": "therapeutic cloning debate",
-          "phrase_1_zh": "治疗性克隆争论",
-          "phrase_2": "cloning technology regulation",
-          "phrase_2_zh": "克隆技术监管",
-          "pos": "n./adj."
-        },
-        {
           "word": "clonal",
           "zh": "克隆的；无性系的",
           "phrase_1": "clonal expansion of cells",
@@ -80298,7 +78005,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_clone",
       "internal_word_items": [
@@ -80314,7 +78021,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "monoclonal": "adj.",
         "cloneable": "adj.",
         "clonotype": "n./v.",
-        "cloning": "n./adj.",
         "clonal": "adj."
       }
     },
@@ -80387,7 +78093,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "clothing",
       "confidence": "review",
       "internal_words": [
-        "clothing",
         "cloth"
       ],
       "external_words": [
@@ -80410,15 +78115,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "clothed",
-          "zh": "穿着衣服的",
-          "phrase_1": "warmly clothed child",
-          "phrase_1_zh": "穿得暖和的孩子",
-          "phrase_2": "clothed figure",
-          "phrase_2_zh": "着衣人物",
-          "pos": "adj."
-        },
-        {
           "word": "clothe",
           "zh": "给穿衣",
           "phrase_1": "clothe children",
@@ -80428,27 +78124,21 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_clothing",
       "internal_word_items": [
-        {
-          "word": "clothing",
-          "pos": "n."
-        },
         {
           "word": "cloth",
           "pos": "n./v."
         }
       ],
       "internal_pos_map": {
-        "clothing": "n.",
         "cloth": "n./v."
       },
       "external_pos_map": {
         "clothesline": "n./v.",
         "clothier": "n.",
-        "clothed": "adj.",
         "clothe": "n./v."
       }
     },
@@ -80472,15 +78162,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "cloud computing",
-          "zh": "云计算",
-          "phrase_1": "cloud computing infrastructure",
-          "phrase_1_zh": "云计算基础设施",
-          "phrase_2": "cloud computing security",
-          "phrase_2_zh": "云计算安全",
-          "pos": "n./adj."
-        },
-        {
           "word": "cloudscape",
           "zh": "云景",
           "phrase_1": "cloudscape in landscape painting",
@@ -80499,7 +78180,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cloud",
       "internal_word_items": [
@@ -80518,7 +78199,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "cloud cover": "n.",
-        "cloud computing": "n./adj.",
         "cloudscape": "n./v.",
         "cloudburst": "n./v."
       }
@@ -80778,18 +78458,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "cocoonlike private space",
           "phrase_2_zh": "茧状私人空间",
           "pos": "n./v."
-        },
-        {
-          "word": "cocooning",
-          "zh": "茧居；自我封闭",
-          "phrase_1": "cocooning behavior after crisis",
-          "phrase_1_zh": "危机后的茧居行为",
-          "phrase_2": "cocooning effect of social media",
-          "phrase_2_zh": "社交媒体的茧房效应",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cocoon",
       "internal_word_items": [
@@ -80804,8 +78475,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "cocoonery": "n./v.",
         "silkcocoon": "n./v.",
-        "cocoonlike": "n./v.",
-        "cocooning": "n./adj."
+        "cocoonlike": "n./v."
       }
     },
     {
@@ -81193,15 +78863,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "colliding",
-          "zh": "碰撞的",
-          "phrase_1": "colliding galaxies",
-          "phrase_1_zh": "碰撞星系",
-          "phrase_2": "colliding vehicles",
-          "phrase_2_zh": "碰撞车辆",
-          "pos": "n./adj."
-        },
-        {
           "word": "collider",
           "zh": "对撞机",
           "phrase_1": "large collider",
@@ -81220,7 +78881,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_collision",
       "internal_word_items": [
@@ -81238,7 +78899,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "collide": "v."
       },
       "external_pos_map": {
-        "colliding": "n./adj.",
         "collider": "n.",
         "elide": "n./v."
       }
@@ -81438,18 +79098,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "income"
       ],
-      "external_words": [
-        {
-          "word": "incoming",
-          "zh": "进入的；新任的",
-          "phrase_1": "incoming data stream",
-          "phrase_1_zh": "传入数据流",
-          "phrase_2": "incoming administration",
-          "phrase_2_zh": "新任政府",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_come",
       "internal_word_items": [
@@ -81461,9 +79111,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "income": "n."
       },
-      "external_pos_map": {
-        "incoming": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_comet",
@@ -81600,15 +79248,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "commencing",
-          "zh": "开始的；起始的",
-          "phrase_1": "commencing phase of treatment",
-          "phrase_1_zh": "治疗起始阶段",
-          "phrase_2": "commencing date of contract",
-          "phrase_2_zh": "合同开始日期",
-          "pos": "n./adj."
-        },
-        {
           "word": "recommence",
           "zh": "重新开始",
           "phrase_1": "recommence peace negotiations",
@@ -81627,7 +79266,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_commence",
       "internal_word_items": [
@@ -81645,7 +79284,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "commencement": "n."
       },
       "external_pos_map": {
-        "commencing": "n./adj.",
         "recommence": "n.",
         "commencer": "n."
       }
@@ -81989,15 +79627,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unconcealed",
-          "zh": "未隐藏的；明显的",
-          "phrase_1": "unconcealed political bias",
-          "phrase_1_zh": "明显政治偏见",
-          "phrase_2": "unconcealed related evidence",
-          "phrase_2_zh": "与未隐藏的；明显的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "concealment",
           "zh": "隐藏；隐瞒",
           "phrase_1": "concealment of financial interests",
@@ -82007,7 +79636,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_conceal",
       "internal_word_items": [
@@ -82020,7 +79649,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "conceal": "v."
       },
       "external_pos_map": {
-        "unconcealed": "adj.",
         "concealment": "n."
       }
     },
@@ -82066,15 +79694,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unconcerned",
-          "zh": "不担心的；不相关的",
-          "phrase_1": "unconcerned attitude",
-          "phrase_1_zh": "漠不关心态度",
-          "phrase_2": "unconcerned observer",
-          "phrase_2_zh": "无关观察者",
-          "pos": "adj."
-        },
-        {
           "word": "discreet",
           "zh": "谨慎的；审慎的",
           "phrase_1": "discreet inquiry",
@@ -82084,7 +79703,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_concern",
       "internal_word_items": [
@@ -82112,7 +79731,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "discernment": "n."
       },
       "external_pos_map": {
-        "unconcerned": "adj.",
         "discreet": "n./v."
       }
     },
@@ -82195,18 +79813,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "condemnation of unsafe buildings",
           "phrase_2_zh": "判定建筑不安全",
           "pos": "n."
-        },
-        {
-          "word": "uncondemned",
-          "zh": "未被谴责的",
-          "phrase_1": "uncondemned practice",
-          "phrase_1_zh": "未被谴责的做法",
-          "phrase_2": "uncondemned action",
-          "phrase_2_zh": "未被谴责的行动",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_condemn",
       "internal_word_items": [
@@ -82220,8 +79829,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "condemnable": "adj.",
-        "condemnation": "n.",
-        "uncondemned": "adj."
+        "condemnation": "n."
       }
     },
     {
@@ -82252,15 +79860,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "confessed",
-          "zh": "承认的",
-          "phrase_1": "confessed error",
-          "phrase_1_zh": "承认的错误",
-          "phrase_2": "confessed criminal",
-          "phrase_2_zh": "认罪罪犯",
-          "pos": "adj."
-        },
-        {
           "word": "confessor",
           "zh": "忏悔者；听告解神父",
           "phrase_1": "religious confessor",
@@ -82279,7 +79878,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_confession",
       "internal_word_items": [
@@ -82294,7 +79893,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "profess": "n./v.",
         "professional": "adj.",
-        "confessed": "adj.",
         "confessor": "n.",
         "confess": "v."
       }
@@ -83807,15 +81405,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "cottonseed",
-          "zh": "棉籽",
-          "phrase_1": "cottonseed oil production",
-          "phrase_1_zh": "棉籽油生产",
-          "phrase_2": "cottonseed market volatility",
-          "phrase_2_zh": "棉籽市场波动",
-          "pos": "adj."
-        },
-        {
           "word": "cottony",
           "zh": "棉絮状的",
           "phrase_1": "cottony cloud texture",
@@ -83825,7 +81414,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cotton",
       "internal_word_items": [
@@ -83841,7 +81430,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "cottonmill": "n./v.",
         "cottonmouth": "n./v.",
         "cottonwood": "n./v.",
-        "cottonseed": "adj.",
         "cottony": "n./v."
       }
     },
@@ -84201,15 +81789,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "cratering",
-          "zh": "成坑作用；陨击坑形成",
-          "phrase_1": "impact cratering process",
-          "phrase_1_zh": "陨击坑形成过程",
-          "phrase_2": "cratering rate on planetary surfaces",
-          "phrase_2_zh": "行星表面成坑率",
-          "pos": "n./adj."
-        },
-        {
           "word": "crateriform",
           "zh": "杯状的；火山口形的",
           "phrase_1": "crateriform volcanic depression",
@@ -84228,7 +81807,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_crater",
       "internal_word_items": [
@@ -84242,7 +81821,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "craterous": "adj.",
-        "cratering": "n./adj.",
         "crateriform": "n./v.",
         "craterlet": "n./v."
       }
@@ -84494,18 +82072,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "crosswise pattern",
           "phrase_2_zh": "交叉图案",
           "pos": "v."
-        },
-        {
-          "word": "crossing",
-          "zh": "交叉；过境",
-          "phrase_1": "railway crossing",
-          "phrase_1_zh": "铁路道口",
-          "phrase_2": "border crossing",
-          "phrase_2_zh": "边境过境",
-          "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_crisscross",
       "internal_word_items": [
@@ -84524,8 +82093,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "crosshatch": "n./v.",
-        "crosswise": "v.",
-        "crossing": "n."
+        "crosswise": "v."
       }
     },
     {
@@ -84731,20 +82299,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "crossbreed",
       "confidence": "review",
       "internal_words": [
-        "crossbreed",
-        "interbreed",
         "cross"
       ],
       "external_words": [
-        {
-          "word": "crossbred",
-          "zh": "杂交的",
-          "phrase_1": "crossbred sheep",
-          "phrase_1_zh": "杂交绵羊",
-          "phrase_2": "crossbred crop",
-          "phrase_2_zh": "杂交作物",
-          "pos": "adj."
-        },
         {
           "word": "breed",
           "zh": "繁殖；品种",
@@ -84755,30 +82312,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_crossbreed",
       "internal_word_items": [
-        {
-          "word": "crossbreed",
-          "pos": "n./v."
-        },
-        {
-          "word": "interbreed",
-          "pos": "adj."
-        },
         {
           "word": "cross",
           "pos": "v."
         }
       ],
       "internal_pos_map": {
-        "crossbreed": "n./v.",
-        "interbreed": "adj.",
         "cross": "v."
       },
       "external_pos_map": {
-        "crossbred": "adj.",
         "breed": "v."
       }
     },
@@ -84847,8 +82393,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "crowd",
       "confidence": "review",
       "internal_words": [
-        "crowd",
-        "crowdfunding"
+        "crowd"
       ],
       "external_words": [
         {
@@ -84861,15 +82406,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "crowdsourcing",
-          "zh": "众包",
-          "phrase_1": "crowdsourcing scientific data",
-          "phrase_1_zh": "众包科学数据",
-          "phrase_2": "crowdsourcing policy ideas",
-          "phrase_2_zh": "众包政策想法",
-          "pos": "n./adj."
-        },
-        {
           "word": "overcrowd",
           "zh": "使过度拥挤",
           "phrase_1": "overcrowd public hospitals",
@@ -84877,39 +82413,23 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "overcrowd informal settlements",
           "phrase_2_zh": "使非正式住区过度拥挤",
           "pos": "n./v."
-        },
-        {
-          "word": "crowded",
-          "zh": "拥挤的",
-          "phrase_1": "crowded urban housing",
-          "phrase_1_zh": "拥挤的城市住房",
-          "phrase_2": "crowded classroom environment",
-          "phrase_2_zh": "拥挤的课堂环境",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_crowd",
       "internal_word_items": [
         {
           "word": "crowd",
           "pos": "n./v."
-        },
-        {
-          "word": "crowdfunding",
-          "pos": "n./adj."
         }
       ],
       "internal_pos_map": {
-        "crowd": "n./v.",
-        "crowdfunding": "n./adj."
+        "crowd": "n./v."
       },
       "external_pos_map": {
         "crowdsource": "n./v.",
-        "crowdsourcing": "n./adj.",
-        "overcrowd": "n./v.",
-        "crowded": "adj."
+        "overcrowd": "n./v."
       }
     },
     {
@@ -84979,15 +82499,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "crushing",
-          "zh": "压倒性的；破碎",
-          "phrase_1": "crushing debt burden",
-          "phrase_1_zh": "沉重债务负担",
-          "phrase_2": "crushing strength of materials",
-          "phrase_2_zh": "材料抗压强度",
-          "pos": "n./adj."
-        },
-        {
           "word": "crushability",
           "zh": "可压碎性",
           "phrase_1": "crushability test for concrete",
@@ -85024,7 +82535,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_crush",
       "internal_word_items": [
@@ -85037,7 +82548,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "crush": "n./v."
       },
       "external_pos_map": {
-        "crushing": "n./adj.",
         "crushability": "n.",
         "crushproof": "n./v.",
         "crushable": "adj.",
@@ -85238,15 +82748,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "uncumbered",
-          "zh": "无负担的",
-          "phrase_1": "uncumbered land",
-          "phrase_1_zh": "无负担土地",
-          "phrase_2": "uncumbered movement",
-          "phrase_2_zh": "无阻碍移动",
-          "pos": "adj."
-        },
-        {
           "word": "encumbrance",
           "zh": "负担；障碍",
           "phrase_1": "legal encumbrance",
@@ -85256,7 +82757,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_cumber",
       "internal_word_items": [
@@ -85280,7 +82781,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "incumbrance": "n.",
-        "uncumbered": "adj.",
         "encumbrance": "n."
       }
     },
@@ -85521,18 +83021,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "curbstone repair contract",
           "phrase_2_zh": "路缘石维修合同",
           "pos": "n./v."
-        },
-        {
-          "word": "uncurbed",
-          "zh": "未受控制的",
-          "phrase_1": "uncurbed growth",
-          "phrase_1_zh": "未受控制增长",
-          "phrase_2": "uncurbed power",
-          "phrase_2_zh": "不受约束的权力",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_curb",
       "internal_word_items": [
@@ -85548,8 +83039,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "curbcut": "n./v.",
         "curbline": "n./v.",
         "curbside": "n./v.",
-        "curbstone": "n./v.",
-        "uncurbed": "adj."
+        "curbstone": "n./v."
       }
     },
     {
@@ -85807,15 +83297,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "darting",
-          "zh": "飞快移动的",
-          "phrase_1": "darting eye movement",
-          "phrase_1_zh": "快速眼动",
-          "phrase_2": "darting fish behavior",
-          "phrase_2_zh": "鱼类快速游动行为",
-          "pos": "n./adj."
-        },
-        {
           "word": "dartboard",
           "zh": "飞镖靶",
           "phrase_1": "dartboard scoring system",
@@ -85825,7 +83306,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dart",
       "internal_word_items": [
@@ -85845,7 +83326,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "dartoise": "v.",
         "darter": "n.",
-        "darting": "n./adj.",
         "dartboard": "n./v."
       }
     },
@@ -86156,27 +83636,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "misdeem the legal effect",
           "phrase_2_zh": "误判法律效力",
           "pos": "n./v."
-        },
-        {
-          "word": "deemed",
-          "zh": "被视为；被认定为",
-          "phrase_1": "deemed consent in medical law",
-          "phrase_1_zh": "医学法中的推定同意",
-          "phrase_2": "deemed resident for taxation",
-          "phrase_2_zh": "税务上被视为居民",
-          "pos": "adj."
-        },
-        {
-          "word": "deeming",
-          "zh": "认定；视为",
-          "phrase_1": "deeming provision in law",
-          "phrase_1_zh": "法律中的认定条款",
-          "phrase_2": "deeming rule for income",
-          "phrase_2_zh": "收入认定规则",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_deem",
       "internal_word_items": [
@@ -86195,9 +83657,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "deemster": "n.",
-        "misdeem": "n./v.",
-        "deemed": "adj.",
-        "deeming": "n./adj."
+        "misdeem": "n./v."
       }
     },
     {
@@ -86227,27 +83687,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "deemworthy evidence",
           "phrase_2_zh": "值得认定的证据",
           "pos": "n./v."
-        },
-        {
-          "word": "deeming",
-          "zh": "认定；视为",
-          "phrase_1": "deeming provision",
-          "phrase_1_zh": "认定条款",
-          "phrase_2": "deeming rule in tax law",
-          "phrase_2_zh": "税法中的认定规则",
-          "pos": "n./adj."
-        },
-        {
-          "word": "deemed",
-          "zh": "被视为的",
-          "phrase_1": "deemed consent",
-          "phrase_1_zh": "推定同意",
-          "phrase_2": "deemed income",
-          "phrase_2_zh": "视同收入",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_deemable",
       "internal_word_items": [
@@ -86266,9 +83708,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "misdeem": "n./v.",
-        "deemworthy": "n./v.",
-        "deeming": "n./adj.",
-        "deemed": "adj."
+        "deemworthy": "n./v."
       }
     },
     {
@@ -86281,18 +83721,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deepwater",
         "deepen"
       ],
-      "external_words": [
-        {
-          "word": "deepening",
-          "zh": "加深；深化",
-          "phrase_1": "deepening regional inequality",
-          "phrase_1_zh": "日益加深的地区不平等",
-          "phrase_2": "deepening democratic participation",
-          "phrase_2_zh": "深化民主参与",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_deep",
       "internal_word_items": [
@@ -86314,9 +83744,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deepwater": "n.",
         "deepen": "v."
       },
-      "external_pos_map": {
-        "deepening": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_deer",
@@ -86568,15 +83996,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "undefied",
-          "zh": "未受挑战的；未被反抗的",
-          "phrase_1": "undefied authority in remote regions",
-          "phrase_1_zh": "偏远地区未受挑战的权威",
-          "phrase_2": "undefied legal assumption",
-          "phrase_2_zh": "未被挑战的法律假设",
-          "pos": "adj."
-        },
-        {
           "word": "defier",
           "zh": "反抗者",
           "phrase_1": "defier of social convention",
@@ -86604,7 +84023,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_defy",
       "internal_word_items": [
@@ -86617,7 +84036,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "defiance": "n."
       },
       "external_pos_map": {
-        "undefied": "adj.",
         "defier": "n.",
         "defiantly": "adv.",
         "defiant": "adj."
@@ -86634,15 +84052,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "delayed",
-          "zh": "延迟的；推迟的",
-          "phrase_1": "delayed policy implementation",
-          "phrase_1_zh": "政策实施延迟",
-          "phrase_2": "delayed immune response",
-          "phrase_2_zh": "免疫反应延迟",
-          "pos": "adj."
-        },
-        {
           "word": "belay",
           "zh": "保护；固定",
           "phrase_1": "belay system in climbing",
@@ -86652,7 +84061,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_delay",
       "internal_word_items": [
@@ -86670,7 +84079,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "relay": "n."
       },
       "external_pos_map": {
-        "delayed": "adj.",
         "belay": "n./v."
       }
     },
@@ -86694,15 +84102,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "deltawing",
-          "zh": "三角翼",
-          "phrase_1": "deltawing aircraft",
-          "phrase_1_zh": "三角翼飞机",
-          "phrase_2": "deltawing design",
-          "phrase_2_zh": "三角翼设计",
-          "pos": "n./adj."
-        },
-        {
           "word": "deltaplain",
           "zh": "三角洲平原",
           "phrase_1": "deltaplain deposits",
@@ -86721,7 +84120,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_delta",
       "internal_word_items": [
@@ -86740,7 +84139,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "deltoid": "adj.",
-        "deltawing": "n./adj.",
         "deltaplain": "n./v.",
         "deltic": "adj."
       }
@@ -86817,24 +84215,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unspoiled",
-          "zh": "未受破坏的",
-          "phrase_1": "unspoiled coastal landscape",
-          "phrase_1_zh": "未受破坏的海岸景观",
-          "phrase_2": "unspoiled archival record",
-          "phrase_2_zh": "完整未损的档案记录",
-          "pos": "adj."
-        },
-        {
-          "word": "spoiled",
-          "zh": "被破坏的；宠坏的",
-          "phrase_1": "spoiled food",
-          "phrase_1_zh": "变质食物",
-          "phrase_2": "spoiled child",
-          "phrase_2_zh": "宠坏的孩子",
-          "pos": "adj."
-        },
-        {
           "word": "spoil",
           "zh": "破坏；战利品",
           "phrase_1": "spoil habitat",
@@ -86844,7 +84224,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_despoil",
       "internal_word_items": [
@@ -86858,8 +84238,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "spoilsman": "n.",
-        "unspoiled": "adj.",
-        "spoiled": "adj.",
         "spoil": "n./v."
       }
     },
@@ -86875,18 +84253,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deterrence",
         "deterrent"
       ],
-      "external_words": [
-        {
-          "word": "undeterred",
-          "zh": "未被吓阻的",
-          "phrase_1": "undeterred effort",
-          "phrase_1_zh": "未受阻努力",
-          "phrase_2": "undeterred protesters",
-          "phrase_2_zh": "未被吓阻的抗议者",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_deter",
       "internal_word_items": [
@@ -86918,9 +84286,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deterrence": "n.",
         "deterrent": "adj."
       },
-      "external_pos_map": {
-        "undeterred": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_deviant",
@@ -86933,15 +84299,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deviate"
       ],
       "external_words": [
-        {
-          "word": "undeviating",
-          "zh": "不偏离的",
-          "phrase_1": "undeviating path",
-          "phrase_1_zh": "不偏离路径",
-          "phrase_2": "undeviating loyalty",
-          "phrase_2_zh": "坚定忠诚",
-          "pos": "n./adj."
-        },
         {
           "word": "deviancy",
           "zh": "偏常性",
@@ -86961,7 +84318,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_deviant",
       "internal_word_items": [
@@ -86984,7 +84341,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "deviate": "v."
       },
       "external_pos_map": {
-        "undeviating": "n./adj.",
         "deviancy": "n.",
         "deviance": "n."
       }
@@ -86999,15 +84355,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "devise"
       ],
       "external_words": [
-        {
-          "word": "devised",
-          "zh": "被设计出的",
-          "phrase_1": "devised method",
-          "phrase_1_zh": "设计出的方法",
-          "phrase_2": "devised plan",
-          "phrase_2_zh": "设计出的计划",
-          "pos": "adj."
-        },
         {
           "word": "devisable",
           "zh": "可设计的；可想出的",
@@ -87027,7 +84374,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_device",
       "internal_word_items": [
@@ -87045,7 +84392,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "devise": "v."
       },
       "external_pos_map": {
-        "devised": "adj.",
         "devisable": "adj.",
         "deviser": "n."
       }
@@ -87178,8 +84524,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "dign = worth 价值；尊严",
       "confidence": "high",
       "internal_words": [
-        "dignity",
-        "dignified"
+        "dignity"
       ],
       "external_words": [
         {
@@ -87219,22 +84564,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dignity",
       "internal_word_items": [
         {
           "word": "dignity",
           "pos": "n."
-        },
-        {
-          "word": "dignified",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "dignity": "n.",
-        "dignified": "adj."
+        "dignity": "n."
       },
       "external_pos_map": {
         "indignant": "adj.",
@@ -87263,24 +84603,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "diminishing",
-          "zh": "递减的",
-          "phrase_1": "diminishing returns",
-          "phrase_1_zh": "收益递减",
-          "phrase_2": "diminishing supply",
-          "phrase_2_zh": "供应减少",
-          "pos": "n./adj."
-        },
-        {
-          "word": "diminished",
-          "zh": "减少的；减弱的",
-          "phrase_1": "diminished capacity",
-          "phrase_1_zh": "能力减弱",
-          "phrase_2": "diminished return",
-          "phrase_2_zh": "收益递减",
-          "pos": "adj."
-        },
-        {
           "word": "diminutive",
           "zh": "小的；昵称",
           "phrase_1": "diminutive form",
@@ -87290,7 +84612,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_diminution",
       "internal_word_items": [
@@ -87309,8 +84631,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "diminishable": "adj.",
-        "diminishing": "n./adj.",
-        "diminished": "adj.",
         "diminutive": "adj."
       }
     },
@@ -87661,18 +84981,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "ceramic dishware production",
           "phrase_2_zh": "陶瓷餐具生产",
           "pos": "n./v."
-        },
-        {
-          "word": "dished",
-          "zh": "盘状的；凹陷的",
-          "phrase_1": "dished metal surface",
-          "phrase_1_zh": "盘状金属表面",
-          "phrase_2": "dished antenna reflector",
-          "phrase_2_zh": "盘形天线反射器",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dish",
       "internal_word_items": [
@@ -87686,8 +84997,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "dishonest": "n./v.",
-        "dishware": "n./v.",
-        "dished": "adj."
+        "dishware": "n./v."
       }
     },
     {
@@ -87710,15 +85020,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "mantled",
-          "zh": "被覆盖的；披着的",
-          "phrase_1": "snow mantled landscape",
-          "phrase_1_zh": "积雪覆盖的景观",
-          "phrase_2": "mantled related evidence",
-          "phrase_2_zh": "与被覆盖的；披着的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "remantle",
           "zh": "重新覆盖；重新装配",
           "phrase_1": "remantle equipment",
@@ -87737,7 +85038,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dismantle",
       "internal_word_items": [
@@ -87756,7 +85057,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "demantel": "n./v.",
-        "mantled": "adj.",
         "remantle": "n./v.",
         "mantel": "n./v."
       }
@@ -87826,15 +85126,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "undisputed",
-          "zh": "无争议的",
-          "phrase_1": "undisputed fact",
-          "phrase_1_zh": "无争议事实",
-          "phrase_2": "undisputed leader",
-          "phrase_2_zh": "公认领导者",
-          "pos": "adj."
-        },
-        {
           "word": "impute",
           "zh": "归因；归咎",
           "phrase_1": "impute motives to opponents",
@@ -87862,7 +85153,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dispute",
       "internal_word_items": [
@@ -87875,7 +85166,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "dispute": "n./v."
       },
       "external_pos_map": {
-        "undisputed": "adj.",
         "impute": "n./v.",
         "compute": "n./v.",
         "repute": "n./v."
@@ -87907,18 +85197,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "dissipation of political momentum",
           "phrase_2_zh": "政治势头消散",
           "pos": "n."
-        },
-        {
-          "word": "undissipated",
-          "zh": "未消散的",
-          "phrase_1": "undissipated heat",
-          "phrase_1_zh": "未散失热量",
-          "phrase_2": "undissipated tension",
-          "phrase_2_zh": "未消散紧张",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dissipate",
       "internal_word_items": [
@@ -87932,8 +85213,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "dissipative": "adj.",
-        "dissipation": "n.",
-        "undissipated": "adj."
+        "dissipation": "n."
       }
     },
     {
@@ -88318,15 +85598,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "drifting",
-          "zh": "漂移；流动",
-          "phrase_1": "drifting population after conflict",
-          "phrase_1_zh": "冲突后的流动人口",
-          "phrase_2": "drifting ice hazard",
-          "phrase_2_zh": "漂冰危险",
-          "pos": "n./adj."
-        },
-        {
           "word": "driftwood",
           "zh": "浮木",
           "phrase_1": "driftwood accumulation on beaches",
@@ -88354,7 +85625,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_drift",
       "internal_word_items": [
@@ -88368,7 +85639,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "genetic drift": "n./v.",
-        "drifting": "n./adj.",
         "driftwood": "n./v.",
         "snowdrift": "n./v.",
         "drifter": "n."
@@ -88393,15 +85663,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "droning",
-          "zh": "嗡嗡声；单调说话",
-          "phrase_1": "droning machinery noise",
-          "phrase_1_zh": "机器嗡嗡噪声",
-          "phrase_2": "droning lecture delivery",
-          "phrase_2_zh": "单调讲课方式",
-          "pos": "n./adj."
-        },
-        {
           "word": "dronecraft",
           "zh": "无人机技术；无人机",
           "phrase_1": "dronecraft surveillance ethics",
@@ -88411,7 +85672,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_drone",
       "internal_word_items": [
@@ -88425,7 +85686,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "antidrone": "n./v.",
-        "droning": "n./adj.",
         "dronecraft": "n./v."
       }
     },
@@ -88504,24 +85764,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "drowned",
-          "zh": "淹死的；被淹没的",
-          "phrase_1": "drowned river valley",
-          "phrase_1_zh": "被淹没的河谷",
-          "phrase_2": "drowned settlement archaeology",
-          "phrase_2_zh": "被淹定居点考古",
-          "pos": "adj."
-        },
-        {
-          "word": "near drowning",
-          "zh": "濒溺",
-          "phrase_1": "near drowning emergency care",
-          "phrase_1_zh": "濒溺急救护理",
-          "phrase_2": "near drowning case report",
-          "phrase_2_zh": "濒溺病例报告",
-          "pos": "n./adj."
-        },
-        {
           "word": "drownproof",
           "zh": "防溺水的",
           "phrase_1": "drownproof safety training",
@@ -88529,18 +85771,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "drownproof flotation device",
           "phrase_2_zh": "防溺水漂浮装置",
           "pos": "n./v."
-        },
-        {
-          "word": "drowning",
-          "zh": "溺水；淹没",
-          "phrase_1": "drowning prevention program",
-          "phrase_1_zh": "溺水预防项目",
-          "phrase_2": "drowning in administrative paperwork",
-          "phrase_2_zh": "淹没在行政文书中",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_drown",
       "internal_word_items": [
@@ -88553,10 +85786,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "drown": "v."
       },
       "external_pos_map": {
-        "drowned": "adj.",
-        "near drowning": "n./adj.",
-        "drownproof": "n./v.",
-        "drowning": "n./adj."
+        "drownproof": "n./v."
       }
     },
     {
@@ -88568,15 +85798,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "drug"
       ],
       "external_words": [
-        {
-          "word": "drugged",
-          "zh": "被下药的；服药的",
-          "phrase_1": "drugged driving offense",
-          "phrase_1_zh": "药后驾驶违法",
-          "phrase_2": "drugged patient monitoring",
-          "phrase_2_zh": "服药患者监测",
-          "pos": "adj."
-        },
         {
           "word": "antidrug",
           "zh": "禁毒的；反毒品的",
@@ -88605,7 +85826,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_drug",
       "internal_word_items": [
@@ -88618,7 +85839,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "drug": "n."
       },
       "external_pos_map": {
-        "drugged": "adj.",
         "antidrug": "n./v.",
         "drugstore": "n./v.",
         "druggist": "n."
@@ -89168,18 +86388,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "dwine in harsh climate",
           "phrase_2_zh": "恶劣气候中衰弱",
           "pos": "n./v."
-        },
-        {
-          "word": "dwindling",
-          "zh": "逐渐减少的",
-          "phrase_1": "dwindling water supplies",
-          "phrase_1_zh": "日益减少的水供应",
-          "phrase_2": "dwindling political support",
-          "phrase_2_zh": "逐渐减少的政治支持",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_dwindle",
       "internal_word_items": [
@@ -89197,8 +86408,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "dwindlement": "n."
       },
       "external_pos_map": {
-        "dwine": "n./v.",
-        "dwindling": "n./adj."
+        "dwine": "n./v."
       }
     },
     {
@@ -89352,27 +86562,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "earner related evidence",
           "phrase_2_zh": "与挣钱者；收入者相关的证据",
           "pos": "n."
-        },
-        {
-          "word": "earning",
-          "zh": "收入；收益",
-          "phrase_1": "earning potential of graduates",
-          "phrase_1_zh": "毕业生收入潜力",
-          "phrase_2": "earning inequality by region",
-          "phrase_2_zh": "地区收入不平等",
-          "pos": "n./adj."
-        },
-        {
-          "word": "unearned",
-          "zh": "非劳动所得的",
-          "phrase_1": "unearned income",
-          "phrase_1_zh": "非劳动收入",
-          "phrase_2": "unearned privilege",
-          "phrase_2_zh": "非应得特权",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_earn",
       "internal_word_items": [
@@ -89395,9 +86587,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "earnest": "n./v."
       },
       "external_pos_map": {
-        "earner": "n.",
-        "earning": "n./adj.",
-        "unearned": "adj."
+        "earner": "n."
       }
     },
     {
@@ -89963,24 +87153,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "embalmed",
-          "zh": "经过防腐处理的",
-          "phrase_1": "embalmed body",
-          "phrase_1_zh": "防腐处理遗体",
-          "phrase_2": "embalmed memory",
-          "phrase_2_zh": "保存的记忆",
-          "pos": "adj."
-        },
-        {
-          "word": "embalming",
-          "zh": "遗体防腐",
-          "phrase_1": "embalming fluid",
-          "phrase_1_zh": "防腐液",
-          "phrase_2": "embalming process",
-          "phrase_2_zh": "防腐处理过程",
-          "pos": "n./adj."
-        },
-        {
           "word": "embalm",
           "zh": "防腐处理；保存",
           "phrase_1": "embalm a body",
@@ -89990,7 +87162,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_embalmer",
       "internal_word_items": [
@@ -90005,8 +87177,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "balmy": "n./v.",
         "balm": "n./v.",
-        "embalmed": "adj.",
-        "embalming": "n./adj.",
         "embalm": "n./v."
       }
     },
@@ -90029,24 +87199,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "embarrassed",
-          "zh": "尴尬的",
-          "phrase_1": "embarrassed response to criticism",
-          "phrase_1_zh": "面对批评的尴尬回应",
-          "phrase_2": "embarrassed silence in court",
-          "phrase_2_zh": "法庭上的尴尬沉默",
-          "pos": "adj."
-        },
-        {
-          "word": "embarrassing",
-          "zh": "令人尴尬的",
-          "phrase_1": "embarrassing statistical error",
-          "phrase_1_zh": "令人尴尬的统计错误",
-          "phrase_2": "embarrassing policy reversal",
-          "phrase_2_zh": "尴尬的政策逆转",
-          "pos": "n./adj."
-        },
-        {
           "word": "embarrassment",
           "zh": "尴尬；难堪",
           "phrase_1": "public embarrassment after failure",
@@ -90054,18 +87206,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "avoid diplomatic embarrassment",
           "phrase_2_zh": "避免外交难堪",
           "pos": "n."
-        },
-        {
-          "word": "unembarrassed",
-          "zh": "不尴尬的",
-          "phrase_1": "unembarrassed confidence",
-          "phrase_1_zh": "从容自信",
-          "phrase_2": "unembarrassed manner",
-          "phrase_2_zh": "不尴尬举止",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_embarrass",
       "internal_word_items": [
@@ -90079,10 +87222,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "disembarrass": "n./v.",
-        "embarrassed": "adj.",
-        "embarrassing": "n./adj.",
-        "embarrassment": "n.",
-        "unembarrassed": "adj."
+        "embarrassment": "n."
       }
     },
     {
@@ -90266,18 +87406,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "deemphasize cost",
           "phrase_2_zh": "弱化成本",
           "pos": "v."
-        },
-        {
-          "word": "emphasized",
-          "zh": "被强调的",
-          "phrase_1": "emphasized point",
-          "phrase_1_zh": "被强调要点",
-          "phrase_2": "emphasized role",
-          "phrase_2_zh": "被强调作用",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_emphatic",
       "internal_word_items": [
@@ -90305,8 +87436,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "emphasis": "n."
       },
       "external_pos_map": {
-        "deemphasize": "v.",
-        "emphasized": "adj."
+        "deemphasize": "v."
       }
     },
     {
@@ -90463,27 +87593,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "enabler",
         "enable"
       ],
-      "external_words": [
-        {
-          "word": "enabling",
-          "zh": "使能的",
-          "phrase_1": "enabling environment",
-          "phrase_1_zh": "赋能环境",
-          "phrase_2": "enabling policy",
-          "phrase_2_zh": "促进性政策",
-          "pos": "n./adj."
-        },
-        {
-          "word": "enabled",
-          "zh": "被启用的",
-          "phrase_1": "enabled device",
-          "phrase_1_zh": "启用设备",
-          "phrase_2": "enabled service",
-          "phrase_2_zh": "可用服务",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_enabler",
       "internal_word_items": [
@@ -90500,10 +87611,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "enabler": "n.",
         "enable": "v."
       },
-      "external_pos_map": {
-        "enabling": "n./adj.",
-        "enabled": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_encampment",
@@ -90534,15 +87642,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "camping",
-          "zh": "露营",
-          "phrase_1": "camping trip",
-          "phrase_1_zh": "露营旅行",
-          "phrase_2": "camping equipment",
-          "phrase_2_zh": "露营装备",
-          "pos": "n./adj."
-        },
-        {
           "word": "encamp",
           "zh": "扎营",
           "phrase_1": "encamp near river",
@@ -90552,7 +87651,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_encampment",
       "internal_word_items": [
@@ -90572,7 +87671,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "campground": "n./v.",
         "camper": "n.",
-        "camping": "n./adj.",
         "encamp": "n./v."
       }
     },
@@ -90650,15 +87748,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unencumbered",
-          "zh": "无负担的",
-          "phrase_1": "unencumbered property",
-          "phrase_1_zh": "无负担财产",
-          "phrase_2": "unencumbered movement",
-          "phrase_2_zh": "自由移动",
-          "pos": "adj."
-        },
-        {
           "word": "encumbrance",
           "zh": "负担；障碍",
           "phrase_1": "legal encumbrance",
@@ -90668,7 +87757,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_encumber",
       "internal_word_items": [
@@ -90692,7 +87781,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "incumbrance": "n.",
-        "unencumbered": "adj.",
         "encumbrance": "n."
       }
     },
@@ -90715,15 +87803,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "endeavouring",
-          "zh": "努力；尝试",
-          "phrase_1": "endeavouring to reduce inequality",
-          "phrase_1_zh": "努力减少不平等",
-          "phrase_2": "endeavouring under resource limits",
-          "phrase_2_zh": "在资源限制下努力",
-          "pos": "n./adj."
-        },
-        {
           "word": "endeavorer",
           "zh": "努力者；尝试者",
           "phrase_1": "endeavorer in social reform",
@@ -90742,7 +87821,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_endeavour",
       "internal_word_items": [
@@ -90756,7 +87835,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "endeavourless": "adj.",
-        "endeavouring": "n./adj.",
         "endeavorer": "n.",
         "endeavor": "n."
       }
@@ -90854,15 +87932,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "endowed",
-          "zh": "被赋予的；有捐赠基金的",
-          "phrase_1": "well endowed university",
-          "phrase_1_zh": "资金充足的大学",
-          "phrase_2": "endowed chair",
-          "phrase_2_zh": "捐赠讲席",
-          "pos": "adj."
-        },
-        {
           "word": "endow",
           "zh": "捐赠；赋予",
           "phrase_1": "endow scholarship",
@@ -90872,7 +87941,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_endowment",
       "internal_word_items": [
@@ -90887,7 +87956,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "endower": "n.",
         "dower": "n.",
-        "endowed": "adj.",
         "endow": "n./v."
       }
     },
@@ -91016,15 +88084,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "engaged",
-          "zh": "参与的；订婚的",
-          "phrase_1": "engaged citizenship education",
-          "phrase_1_zh": "参与式公民教育",
-          "phrase_2": "engaged research partnership",
-          "phrase_2_zh": "参与式研究伙伴关系",
-          "pos": "adj."
-        },
-        {
           "word": "disengage",
           "zh": "脱离；解除",
           "phrase_1": "disengage from armed conflict",
@@ -91034,7 +88093,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_engage",
       "internal_word_items": [
@@ -91052,7 +88111,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "engagement": "n."
       },
       "external_pos_map": {
-        "engaged": "adj.",
         "disengage": "n."
       }
     },
@@ -91213,18 +88271,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "tailor instruction for learners",
           "phrase_2_zh": "为学习者调整教学",
           "pos": "n."
-        },
-        {
-          "word": "tailed",
-          "zh": "有尾的",
-          "phrase_1": "long tailed bird",
-          "phrase_1_zh": "长尾鸟",
-          "phrase_2": "tailed distribution",
-          "phrase_2_zh": "有尾分布",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_entail",
       "internal_word_items": [
@@ -91252,8 +88301,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "entailment": "n."
       },
       "external_pos_map": {
-        "tailor": "n.",
-        "tailed": "adj."
+        "tailor": "n."
       }
     },
     {
@@ -91628,15 +88676,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "epochmaking",
-          "zh": "开创新纪元的",
-          "phrase_1": "epochmaking scientific advance",
-          "phrase_1_zh": "开创新纪元的科学进展",
-          "phrase_2": "epochmaking political transition",
-          "phrase_2_zh": "划时代的政治转型",
-          "pos": "n./adj."
-        },
-        {
           "word": "epochal",
           "zh": "划时代的",
           "phrase_1": "epochal change in governance",
@@ -91646,7 +88685,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_epoch",
       "internal_word_items": [
@@ -91659,7 +88698,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "epoch": "n."
       },
       "external_pos_map": {
-        "epochmaking": "n./adj.",
         "epochal": "adj."
       }
     },
@@ -92770,18 +89808,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "exact",
         "transaction"
       ],
-      "external_words": [
-        {
-          "word": "exacting",
-          "zh": "严格的；苛求的",
-          "phrase_1": "exacting standard",
-          "phrase_1_zh": "严格标准",
-          "phrase_2": "exacting research design",
-          "phrase_2_zh": "严谨研究设计",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_exact",
       "internal_word_items": [
@@ -92798,9 +89826,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "exact": "adj.",
         "transaction": "n."
       },
-      "external_pos_map": {
-        "exacting": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_exactness",
@@ -92812,18 +89838,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "exactly",
         "exact"
       ],
-      "external_words": [
-        {
-          "word": "exacting",
-          "zh": "严格的",
-          "phrase_1": "exacting requirement",
-          "phrase_1_zh": "严格要求",
-          "phrase_2": "exacting teacher",
-          "phrase_2_zh": "严苛老师",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_exactness",
       "internal_word_items": [
@@ -92845,9 +89861,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "exactly": "adv.",
         "exact": "adj."
       },
-      "external_pos_map": {
-        "exacting": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_exaggerate",
@@ -93132,30 +90146,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "changeling",
-          "zh": "被调换者；变化者",
-          "phrase_1": "changeling motif in folklore",
-          "phrase_1_zh": "民俗中的换子母题",
-          "phrase_2": "changeling identity narrative",
-          "phrase_2_zh": "身份变化叙事",
-          "pos": "n./adj."
-        },
-        {
           "word": "changeable",
           "zh": "多变的；可改变的",
           "phrase_1": "changeable climate",
           "phrase_1_zh": "多变气候",
           "phrase_2": "changeable policy environment",
           "phrase_2_zh": "多变政策环境",
-          "pos": "adj."
-        },
-        {
-          "word": "unchanged",
-          "zh": "未改变的",
-          "phrase_1": "unchanged condition",
-          "phrase_1_zh": "未变状态",
-          "phrase_2": "unchanged policy",
-          "phrase_2_zh": "未变政策",
           "pos": "adj."
         },
         {
@@ -93177,7 +90173,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_exchange",
       "internal_word_items": [
@@ -93190,9 +90186,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "exchange": "n./v."
       },
       "external_pos_map": {
-        "changeling": "n./adj.",
         "changeable": "adj.",
-        "unchanged": "adj.",
         "interchange": "n.",
         "change": "n./v."
       }
@@ -93755,15 +90749,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "fading",
-          "zh": "衰退的；褪色的",
-          "phrase_1": "fading memory of conflict",
-          "phrase_1_zh": "冲突记忆逐渐淡去",
-          "phrase_2": "fading pigment in manuscripts",
-          "phrase_2_zh": "手稿颜料褪色",
-          "pos": "adj."
-        },
-        {
           "word": "fadeout",
           "zh": "淡出；逐渐消失",
           "phrase_1": "fadeout effect in film",
@@ -93771,18 +90756,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "fadeout of public attention",
           "phrase_2_zh": "公众注意力逐渐消退",
           "pos": "n./v."
-        },
-        {
-          "word": "unfaded",
-          "zh": "未褪色的",
-          "phrase_1": "unfaded fabric",
-          "phrase_1_zh": "未褪色织物",
-          "phrase_2": "unfaded memory",
-          "phrase_2_zh": "未淡去记忆",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_fade",
       "internal_word_items": [
@@ -93797,9 +90773,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "fadeless": "adj.",
         "fadeaway": "n./v.",
-        "fading": "adj.",
-        "fadeout": "n./v.",
-        "unfaded": "adj."
+        "fadeout": "n./v."
       }
     },
     {
@@ -93830,15 +90804,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "fainthearted",
-          "zh": "胆怯的",
-          "phrase_1": "fainthearted response to reform",
-          "phrase_1_zh": "对改革的胆怯回应",
-          "phrase_2": "fainthearted leadership under pressure",
-          "phrase_2_zh": "压力下胆怯领导",
-          "pos": "adj."
-        },
-        {
           "word": "faintness",
           "zh": "微弱；昏厥感",
           "phrase_1": "faintness after dehydration",
@@ -93848,7 +90813,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_faint",
       "internal_word_items": [
@@ -93863,7 +90828,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "fainter": "n.",
         "faintly": "adv.",
-        "fainthearted": "adj.",
         "faintness": "n."
       }
     },
@@ -93913,15 +90877,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unfaltering",
-          "zh": "坚定不移的",
-          "phrase_1": "unfaltering commitment to justice",
-          "phrase_1_zh": "对正义坚定承诺",
-          "phrase_2": "unfaltering scientific curiosity",
-          "phrase_2_zh": "坚定的科学好奇心",
-          "pos": "n./adj."
-        },
-        {
           "word": "falterer",
           "zh": "犹豫者；踌躇者",
           "phrase_1": "falterer in political leadership",
@@ -93929,18 +90884,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "falterer under public pressure",
           "phrase_2_zh": "公众压力下的犹豫者",
           "pos": "n."
-        },
-        {
-          "word": "faltering",
-          "zh": "摇摆的；衰弱的",
-          "phrase_1": "faltering economic recovery",
-          "phrase_1_zh": "摇摆不定的经济复苏",
-          "phrase_2": "faltering public confidence",
-          "phrase_2_zh": "衰弱的公众信心",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_falter",
       "internal_word_items": [
@@ -93958,9 +90904,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "falteringly": "adv."
       },
       "external_pos_map": {
-        "unfaltering": "n./adj.",
-        "falterer": "n.",
-        "faltering": "n./adj."
+        "falterer": "n."
       }
     },
     {
@@ -93982,15 +90926,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "famished",
-          "zh": "极饿的",
-          "phrase_1": "famished child",
-          "phrase_1_zh": "饥饿儿童",
-          "phrase_2": "famished refugee",
-          "phrase_2_zh": "饥饿难民",
-          "pos": "adj."
-        },
-        {
           "word": "famish",
           "zh": "使饥饿",
           "phrase_1": "famish population",
@@ -94000,7 +90935,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_famine",
       "internal_word_items": [
@@ -94014,7 +90949,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "famishment": "n.",
-        "famished": "adj.",
         "famish": "n./v."
       }
     },
@@ -94313,15 +91247,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "faulting",
-          "zh": "断层作用",
-          "phrase_1": "normal faulting",
-          "phrase_1_zh": "正断层作用",
-          "phrase_2": "active faulting",
-          "phrase_2_zh": "活动断层作用",
-          "pos": "n./adj."
-        },
-        {
           "word": "faulty",
           "zh": "有缺陷的",
           "phrase_1": "faulty logic",
@@ -94331,7 +91256,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_faultline",
       "internal_word_items": [
@@ -94351,7 +91276,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "lineament": "n.",
         "faultless": "adj.",
-        "faulting": "n./adj.",
         "faulty": "n./v."
       }
     },
@@ -94427,18 +91351,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "fellable trees in managed forest",
           "phrase_2_zh": "经营林中的可砍伐树木",
           "pos": "adj."
-        },
-        {
-          "word": "felled",
-          "zh": "被砍倒的；倒下的",
-          "phrase_1": "felled forest area",
-          "phrase_1_zh": "被砍伐森林区域",
-          "phrase_2": "felled trees after storm",
-          "phrase_2_zh": "风暴后倒下的树木",
-          "pos": "adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_fell",
       "internal_word_items": [
@@ -94451,8 +91366,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "fell": "v."
       },
       "external_pos_map": {
-        "fellable": "adj.",
-        "felled": "adj."
+        "fellable": "adj."
       }
     },
     {
@@ -94536,18 +91450,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "fermenter contamination risk",
           "phrase_2_zh": "发酵罐污染风险",
           "pos": "n."
-        },
-        {
-          "word": "unfermented",
-          "zh": "未发酵的",
-          "phrase_1": "unfermented juice",
-          "phrase_1_zh": "未发酵果汁",
-          "phrase_2": "unfermented dough",
-          "phrase_2_zh": "未发酵面团",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ferment",
       "internal_word_items": [
@@ -94567,8 +91472,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "fermentable": "adj.",
         "fermentative": "adj.",
-        "fermenter": "n.",
-        "unfermented": "adj."
+        "fermenter": "n."
       }
     },
     {
@@ -95011,15 +91915,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "unfiltered",
-          "zh": "未过滤的",
-          "phrase_1": "unfiltered data",
-          "phrase_1_zh": "未过滤数据",
-          "phrase_2": "unfiltered water",
-          "phrase_2_zh": "未过滤水",
-          "pos": "adj."
-        },
-        {
           "word": "filtrate",
           "zh": "滤液；过滤",
           "phrase_1": "collect filtrate",
@@ -95038,7 +91933,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_filter",
       "internal_word_items": [
@@ -95052,7 +91947,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "infiltrate": "v.",
-        "unfiltered": "adj.",
         "filtrate": "v.",
         "filtration": "n."
       }
@@ -95279,18 +92173,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "military infirmary system",
           "phrase_2_zh": "军队医务室系统",
           "pos": "adj."
-        },
-        {
-          "word": "confirmed",
-          "zh": "确认的；坚定的",
-          "phrase_1": "confirmed case",
-          "phrase_1_zh": "确诊病例",
-          "phrase_2": "confirmed belief",
-          "phrase_2_zh": "坚定信念",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_firm",
       "internal_word_items": [
@@ -95318,8 +92203,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "confirmation": "n."
       },
       "external_pos_map": {
-        "infirmary": "adj.",
-        "confirmed": "adj."
+        "infirmary": "adj."
       }
     },
     {
@@ -95561,18 +92445,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "pursuit of flawlessness",
           "phrase_2_zh": "追求完美无瑕",
           "pos": "n."
-        },
-        {
-          "word": "flawed",
-          "zh": "有缺陷的",
-          "phrase_1": "flawed statistical model",
-          "phrase_1_zh": "有缺陷统计模型",
-          "phrase_2": "flawed policy assumption",
-          "phrase_2_zh": "有缺陷政策假设",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_flaw",
       "internal_word_items": [
@@ -95591,8 +92466,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "flawfinder": "n.",
-        "flawlessness": "n.",
-        "flawed": "adj."
+        "flawlessness": "n."
       }
     },
     {
@@ -95604,18 +92478,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "flawless",
         "flaw"
       ],
-      "external_words": [
-        {
-          "word": "flawed",
-          "zh": "有缺陷的",
-          "phrase_1": "flawed method",
-          "phrase_1_zh": "有缺陷方法",
-          "phrase_2": "flawed evidence",
-          "phrase_2_zh": "有缺陷证据",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_flawless",
       "internal_word_items": [
@@ -95632,9 +92496,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "flawless": "adj.",
         "flaw": "n."
       },
-      "external_pos_map": {
-        "flawed": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_flee",
@@ -95684,24 +92546,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "fleeting",
-          "zh": "短暂的",
-          "phrase_1": "fleeting opportunity for reform",
-          "phrase_1_zh": "短暂的改革机会",
-          "phrase_2": "fleeting memory trace",
-          "phrase_2_zh": "短暂记忆痕迹",
-          "pos": "n./adj."
-        },
-        {
-          "word": "fleetfooted",
-          "zh": "脚步轻快的",
-          "phrase_1": "fleetfooted political maneuver",
-          "phrase_1_zh": "迅速灵活的政治操作",
-          "phrase_2": "fleetfooted predator pursuit",
-          "phrase_2_zh": "捕食者快速追击",
-          "pos": "adj."
-        },
-        {
           "word": "fleetness",
           "zh": "迅速；轻快",
           "phrase_1": "fleetness of military response",
@@ -95711,7 +92555,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_fleet",
       "internal_word_items": [
@@ -95725,8 +92569,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "fleetwide": "n./v.",
-        "fleeting": "n./adj.",
-        "fleetfooted": "adj.",
         "fleetness": "n."
       }
     },
@@ -95758,15 +92600,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "flickering",
-          "zh": "闪烁的；不稳定的",
-          "phrase_1": "flickering power supply",
-          "phrase_1_zh": "不稳定电力供应",
-          "phrase_2": "flickering confidence in markets",
-          "phrase_2_zh": "市场中摇摆的信心",
-          "pos": "n./adj."
-        },
-        {
           "word": "flick",
           "zh": "轻弹；快速移动",
           "phrase_1": "flick switch",
@@ -95776,7 +92609,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_flicker",
       "internal_word_items": [
@@ -95791,7 +92624,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "flickerlight": "n./v.",
         "flickery": "n./v.",
-        "flickering": "n./adj.",
         "flick": "n./v."
       }
     },
@@ -95857,7 +92689,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "floodplain",
-        "flooding",
         "plain"
       ],
       "external_words": [
@@ -95880,16 +92711,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_floodplain",
       "internal_word_items": [
         {
           "word": "floodplain",
-          "pos": "n."
-        },
-        {
-          "word": "flooding",
           "pos": "n."
         },
         {
@@ -95899,7 +92726,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "floodplain": "n.",
-        "flooding": "n.",
         "plain": "n."
       },
       "external_pos_map": {
@@ -96188,15 +93014,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "foliated",
-          "zh": "有叶的；片理状的",
-          "phrase_1": "foliated rock",
-          "phrase_1_zh": "片理岩石",
-          "phrase_2": "foliated plant",
-          "phrase_2_zh": "有叶植物",
-          "pos": "adj."
-        },
-        {
           "word": "defoliate",
           "zh": "使落叶",
           "phrase_1": "defoliate forest",
@@ -96224,7 +93041,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_foliage",
       "internal_word_items": [
@@ -96237,7 +93054,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "foliage": "n."
       },
       "external_pos_map": {
-        "foliated": "adj.",
         "defoliate": "v.",
         "foliar": "adj.",
         "folio": "n./v."
@@ -96319,10 +93135,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "following followed unfollow followup follower follow",
       "anchor": "following",
       "confidence": "review",
-      "internal_words": [
-        "following",
-        "followed"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "unfollow",
@@ -96361,23 +93174,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_following",
-      "internal_word_items": [
-        {
-          "word": "following",
-          "pos": "adj."
-        },
-        {
-          "word": "followed",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "following": "adj.",
-        "followed": "adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "unfollow": "n./v.",
         "followup": "n./v.",
@@ -96540,15 +93341,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "footing",
-          "zh": "基础；立足点",
-          "phrase_1": "legal footing for reform",
-          "phrase_1_zh": "改革的法律基础",
-          "phrase_2": "financial footing of institutions",
-          "phrase_2_zh": "机构的财务基础",
-          "pos": "n./adj."
-        },
-        {
           "word": "footwork",
           "zh": "步法",
           "phrase_1": "quick footwork",
@@ -96567,7 +93359,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_football",
       "internal_word_items": [
@@ -96581,7 +93373,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "footprint": "n./v.",
-        "footing": "n./adj.",
         "footwork": "n./v.",
         "foot": "n./v."
       }
@@ -96614,15 +93405,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "foraging",
-          "zh": "觅食；采集",
-          "phrase_1": "foraging strategy in birds",
-          "phrase_1_zh": "鸟类觅食策略",
-          "phrase_2": "human foraging society",
-          "phrase_2_zh": "人类采集社会",
-          "pos": "n./adj."
-        },
-        {
           "word": "forager",
           "zh": "觅食者；采集者",
           "phrase_1": "forager mobility pattern",
@@ -96632,7 +93414,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_forage",
       "internal_word_items": [
@@ -96647,7 +93429,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "foragecrop": "n./v.",
         "foragefish": "n./v.",
-        "foraging": "n./adj.",
         "forager": "n."
       }
     },
@@ -96717,18 +93498,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "recast economic policy",
           "phrase_2_zh": "重塑经济政策",
           "pos": "n./v."
-        },
-        {
-          "word": "forewarning",
-          "zh": "预警",
-          "phrase_1": "early forewarning",
-          "phrase_1_zh": "早期预警",
-          "phrase_2": "storm forewarning",
-          "phrase_2_zh": "风暴预警",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_forecast",
       "internal_word_items": [
@@ -96751,8 +93523,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "foresee": "v."
       },
       "external_pos_map": {
-        "recast": "n./v.",
-        "forewarning": "n./adj."
+        "recast": "n./v."
       }
     },
     {
@@ -96818,15 +93589,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "forged",
-          "zh": "锻造的；伪造的",
-          "phrase_1": "forged steel component",
-          "phrase_1_zh": "锻造钢构件",
-          "phrase_2": "forged identity document",
-          "phrase_2_zh": "伪造身份证件",
-          "pos": "adj."
-        },
-        {
           "word": "forgemaster",
           "zh": "锻造师傅",
           "phrase_1": "forgemaster skill transmission",
@@ -96863,7 +93625,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_forge",
       "internal_word_items": [
@@ -96876,7 +93638,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "forge": "n./v."
       },
       "external_pos_map": {
-        "forged": "adj.",
         "forgemaster": "n.",
         "forgework": "n./v.",
         "forger": "n.",
@@ -96892,18 +93653,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "forgive",
         "forgiveness"
       ],
-      "external_words": [
-        {
-          "word": "unforgiving",
-          "zh": "不宽容的；严酷的",
-          "phrase_1": "unforgiving climate",
-          "phrase_1_zh": "严酷气候",
-          "phrase_2": "unforgiving judge",
-          "phrase_2_zh": "严厉法官",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_forgive",
       "internal_word_items": [
@@ -96920,18 +93671,14 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "forgive": "v.",
         "forgiveness": "n."
       },
-      "external_pos_map": {
-        "unforgiving": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_forthcoming",
       "cluster_label": "forthcoming henceforth forthwith forthcome forth",
       "anchor": "forthcoming",
       "confidence": "review",
-      "internal_words": [
-        "forthcoming"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "henceforth",
@@ -96970,18 +93717,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_forthcoming",
-      "internal_word_items": [
-        {
-          "word": "forthcoming",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "forthcoming": "adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "henceforth": "n./v.",
         "forthwith": "n./v.",
@@ -97135,18 +93875,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "foundry worker",
           "phrase_2_zh": "铸造厂工人",
           "pos": "n./v."
-        },
-        {
-          "word": "founding",
-          "zh": "创立的",
-          "phrase_1": "founding document",
-          "phrase_1_zh": "创立文件",
-          "phrase_2": "founding generation",
-          "phrase_2_zh": "开国一代",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_founder",
       "internal_word_items": [
@@ -97174,8 +93905,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "found": "v."
       },
       "external_pos_map": {
-        "foundry": "n./v.",
-        "founding": "n./adj."
+        "foundry": "n./v."
       }
     },
     {
@@ -97239,15 +93969,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "framing",
-          "zh": "框定；构架",
-          "phrase_1": "media framing of migration",
-          "phrase_1_zh": "媒体对迁徙的框定",
-          "phrase_2": "framing effect in decision making",
-          "phrase_2_zh": "决策中的框架效应",
-          "pos": "n./adj."
-        },
-        {
           "word": "frameable",
           "zh": "可装框的；可构建框架的",
           "phrase_1": "frameable archival photograph",
@@ -97266,7 +93987,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_frame",
       "internal_word_items": [
@@ -97285,7 +94006,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "framehouse": "n./v.",
-        "framing": "n./adj.",
         "frameable": "adj.",
         "reframe": "n./v."
       }
@@ -97317,27 +94037,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "reframe narrative",
           "phrase_2_zh": "重构叙事",
           "pos": "n./v."
-        },
-        {
-          "word": "framed",
-          "zh": "框定的；有框的",
-          "phrase_1": "framed policy",
-          "phrase_1_zh": "被框定政策",
-          "phrase_2": "framed image",
-          "phrase_2_zh": "有框图像",
-          "pos": "adj."
-        },
-        {
-          "word": "framing",
-          "zh": "框架化",
-          "phrase_1": "framing device",
-          "phrase_1_zh": "框架手法",
-          "phrase_2": "framing strategy",
-          "phrase_2_zh": "框架策略",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_framework",
       "internal_word_items": [
@@ -97356,9 +94058,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "workframe": "n./v.",
-        "reframe": "n./v.",
-        "framed": "adj.",
-        "framing": "n./adj."
+        "reframe": "n./v."
       }
     },
     {
@@ -97755,18 +94455,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "deepfreeze policy on hiring",
           "phrase_2_zh": "招聘冻结政策",
           "pos": "n./v."
-        },
-        {
-          "word": "freezing",
-          "zh": "冻结；冰冻的",
-          "phrase_1": "freezing point depression",
-          "phrase_1_zh": "冰点降低",
-          "phrase_2": "freezing of public assets",
-          "phrase_2_zh": "公共资产冻结",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_freeze",
       "internal_word_items": [
@@ -97790,8 +94481,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "freezeout": "n./v.",
-        "deepfreeze": "n./v.",
-        "freezing": "adj."
+        "deepfreeze": "n./v."
       }
     },
     {
@@ -97866,21 +94556,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "freshwater",
-        "watershed",
         "water",
         "fresh"
       ],
       "external_words": [],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_freshwater",
       "internal_word_items": [
         {
           "word": "freshwater",
-          "pos": "n."
-        },
-        {
-          "word": "watershed",
           "pos": "n."
         },
         {
@@ -97894,7 +94579,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "freshwater": "n.",
-        "watershed": "n.",
         "water": "n.",
         "fresh": "n./v."
       },
@@ -98186,18 +94870,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "infill housing policy",
           "phrase_2_zh": "填充式住房政策",
           "pos": "n./v."
-        },
-        {
-          "word": "unfulfilled",
-          "zh": "未实现的",
-          "phrase_1": "unfulfilled promise",
-          "phrase_1_zh": "未履行承诺",
-          "phrase_2": "unfulfilled potential",
-          "phrase_2_zh": "未实现潜力",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_fulfill",
       "internal_word_items": [
@@ -98221,8 +94896,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "filler": "n.",
-        "infill": "n./v.",
-        "unfulfilled": "adj."
+        "infill": "n./v."
       }
     },
     {
@@ -98920,15 +95594,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "gardening",
-          "zh": "园艺；栽培",
-          "phrase_1": "urban gardening",
-          "phrase_1_zh": "城市园艺",
-          "phrase_2": "gardening program",
-          "phrase_2_zh": "园艺项目",
-          "pos": "n./adj."
-        },
-        {
           "word": "gardener",
           "zh": "园丁；园艺者",
           "phrase_1": "community gardener",
@@ -98938,7 +95603,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_garden",
       "internal_word_items": [
@@ -98951,7 +95616,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "garden": "n./v."
       },
       "external_pos_map": {
-        "gardening": "n./adj.",
         "gardener": "n."
       }
     },
@@ -99051,15 +95715,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "gendering",
-          "zh": "性别化过程",
-          "phrase_1": "gendering of occupations",
-          "phrase_1_zh": "职业的性别化",
-          "phrase_2": "gendering in childhood socialization",
-          "phrase_2_zh": "儿童社会化中的性别化",
-          "pos": "n./adj."
-        },
-        {
           "word": "engender",
           "zh": "产生；造成",
           "phrase_1": "engender public distrust",
@@ -99067,18 +95722,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "engender social solidarity",
           "phrase_2_zh": "产生社会团结",
           "pos": "n."
-        },
-        {
-          "word": "gendered",
-          "zh": "带有性别属性的",
-          "phrase_1": "gendered division of labor",
-          "phrase_1_zh": "性别化劳动分工",
-          "phrase_2": "gendered language in textbooks",
-          "phrase_2_zh": "教材中的性别化语言",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_gender",
       "internal_word_items": [
@@ -99097,9 +95743,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "genderqueer": "n.",
-        "gendering": "n./adj.",
-        "engender": "n.",
-        "gendered": "adj."
+        "engender": "n."
       }
     },
     {
@@ -100112,24 +96756,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "glided",
-          "zh": "滑行过的",
-          "phrase_1": "glided silently",
-          "phrase_1_zh": "无声滑过",
-          "phrase_2": "glided over ice",
-          "phrase_2_zh": "在冰上滑过",
-          "pos": "adj."
-        },
-        {
-          "word": "gliding",
-          "zh": "滑翔；滑动",
-          "phrase_1": "gliding flight",
-          "phrase_1_zh": "滑翔飞行",
-          "phrase_2": "gliding motion",
-          "phrase_2_zh": "滑动运动",
-          "pos": "n./adj."
-        },
-        {
           "word": "glide",
           "zh": "滑行",
           "phrase_1": "glide smoothly",
@@ -100139,7 +96765,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_glider",
       "internal_word_items": [
@@ -100153,8 +96779,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "glidepath": "n./v.",
-        "glided": "adj.",
-        "gliding": "n./adj.",
         "glide": "v."
       }
     },
@@ -100177,15 +96801,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "glimpsing",
-          "zh": "瞥见；短暂观察",
-          "phrase_1": "glimpsing social change",
-          "phrase_1_zh": "短暂观察社会变化",
-          "phrase_2": "glimpsing patterns in data",
-          "phrase_2_zh": "从数据中瞥见模式",
-          "pos": "n./adj."
-        },
-        {
           "word": "glimpseable",
           "zh": "可瞥见的",
           "phrase_1": "glimpseable pattern in data",
@@ -100204,7 +96819,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_glimpse",
       "internal_word_items": [
@@ -100218,7 +96833,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "glimpseful": "adj.",
-        "glimpsing": "n./adj.",
         "glimpseable": "adj.",
         "glimmer": "n."
       }
@@ -100777,15 +97391,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "grantmaking",
-          "zh": "拨款发放",
-          "phrase_1": "grantmaking foundation strategy",
-          "phrase_1_zh": "基金会拨款策略",
-          "phrase_2": "grantmaking transparency standard",
-          "phrase_2_zh": "拨款透明度标准",
-          "pos": "n./adj."
-        },
-        {
           "word": "grantee",
           "zh": "受让人；受资助者",
           "phrase_1": "grantee reporting requirement",
@@ -100804,7 +97409,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_grant",
       "internal_word_items": [
@@ -100819,7 +97424,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "grantable": "adj.",
         "grantsmanship": "n.",
-        "grantmaking": "n./adj.",
         "grantee": "n.",
         "grantor": "n."
       }
@@ -101402,18 +98006,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "gripper strength test",
           "phrase_2_zh": "夹持器强度测试",
           "pos": "n."
-        },
-        {
-          "word": "gripping",
-          "zh": "扣人心弦的；抓紧",
-          "phrase_1": "gripping courtroom testimony",
-          "phrase_1_zh": "扣人心弦的法庭证词",
-          "phrase_2": "gripping force measurement",
-          "phrase_2_zh": "抓握力测量",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_grip",
       "internal_word_items": [
@@ -101428,8 +98023,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "griphold": "n./v.",
         "handgrip": "n./v.",
-        "gripper": "n.",
-        "gripping": "n./adj."
+        "gripper": "n."
       }
     },
     {
@@ -101460,18 +98054,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "grossly unequal distribution",
           "phrase_2_zh": "严重不平等分配",
           "pos": "adv."
-        },
-        {
-          "word": "engrossed",
-          "zh": "全神贯注的",
-          "phrase_1": "engrossed audience",
-          "phrase_1_zh": "全神贯注观众",
-          "phrase_2": "engrossed student",
-          "phrase_2_zh": "专注学生",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_gross",
       "internal_word_items": [
@@ -101495,8 +98080,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "grossout": "n./v.",
-        "grossly": "adv.",
-        "engrossed": "adj."
+        "grossly": "adv."
       }
     },
     {
@@ -101527,18 +98111,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "grossly exaggerated",
           "phrase_2_zh": "严重夸大",
           "pos": "adv."
-        },
-        {
-          "word": "engrossing",
-          "zh": "引人入胜的",
-          "phrase_1": "engrossing novel",
-          "phrase_1_zh": "引人入胜小说",
-          "phrase_2": "engrossing lecture",
-          "phrase_2_zh": "吸引人的讲座",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_grossness",
       "internal_word_items": [
@@ -101562,8 +98137,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "grossular": "n./v.",
-        "grossly": "adv.",
-        "engrossing": "n./adj."
+        "grossly": "adv."
       }
     },
     {
@@ -101594,18 +98168,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "outgroup comparison in evolution",
           "phrase_2_zh": "演化中的外群体比较",
           "pos": "n./v."
-        },
-        {
-          "word": "grouping",
-          "zh": "分组；组合",
-          "phrase_1": "grouping students by proficiency",
-          "phrase_1_zh": "按熟练度给学生分组",
-          "phrase_2": "grouping variables in analysis",
-          "phrase_2_zh": "分析中变量分组",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_group",
       "internal_word_items": [
@@ -101629,8 +98194,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "ingroup": "n./v.",
-        "outgroup": "n./v.",
-        "grouping": "n./adj."
+        "outgroup": "n./v."
       }
     },
     {
@@ -101694,15 +98258,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "guarded",
-          "zh": "谨慎的；受保护的",
-          "phrase_1": "guarded optimism",
-          "phrase_1_zh": "谨慎乐观",
-          "phrase_2": "guarded area",
-          "phrase_2_zh": "守卫区域",
-          "pos": "adj."
-        },
-        {
           "word": "safeguard",
           "zh": "保护",
           "phrase_1": "safeguard children",
@@ -101712,7 +98267,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_guardian",
       "internal_word_items": [
@@ -101731,7 +98286,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "guardrail": "n./v.",
-        "guarded": "adj.",
         "safeguard": "n./v."
       }
     },
@@ -101809,15 +98363,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "guillotining",
-          "zh": "断头台处决；强行终止",
-          "phrase_1": "guillotining of debate",
-          "phrase_1_zh": "辩论被强行终止",
-          "phrase_2": "parliamentary guillotining procedure",
-          "phrase_2_zh": "议会限时终止程序",
-          "pos": "n./adj."
-        },
-        {
           "word": "guillotinism",
           "zh": "断头台政治；处刑主义",
           "phrase_1": "guillotinism in radical politics",
@@ -101836,7 +98381,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_guillotine",
       "internal_word_items": [
@@ -101850,7 +98395,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "guillotinade": "n./v.",
-        "guillotining": "n./adj.",
         "guillotinism": "n.",
         "guillotiner": "n."
       }
@@ -101966,15 +98510,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "hailstorming",
-          "zh": "冰雹式攻击；密集冲击",
-          "phrase_1": "hailstorming of media criticism",
-          "phrase_1_zh": "媒体批评的密集冲击",
-          "phrase_2": "hailstorming damage to crops",
-          "phrase_2_zh": "冰雹对作物的密集损害",
-          "pos": "n./adj."
-        },
-        {
           "word": "hailstone",
           "zh": "冰雹粒",
           "phrase_1": "large hailstone",
@@ -101993,7 +98528,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hailstorm",
       "internal_word_items": [
@@ -102011,7 +98546,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "storm": "n."
       },
       "external_pos_map": {
-        "hailstorming": "n./adj.",
         "hailstone": "n./v.",
         "hail": "n./v."
       }
@@ -102036,18 +98570,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "imperceptible movement",
           "phrase_2_zh": "难以察觉的运动",
           "pos": "adj."
-        },
-        {
-          "word": "perceived",
-          "zh": "被感知的；被认为的",
-          "phrase_1": "perceived threat",
-          "phrase_1_zh": "感知到的威胁",
-          "phrase_2": "perceived quality of service",
-          "phrase_2_zh": "被认为的服务质量",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_half_perceived",
       "internal_word_items": [
@@ -102075,8 +98600,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "perceive": "v."
       },
       "external_pos_map": {
-        "imperceptible": "adj.",
-        "perceived": "adj."
+        "imperceptible": "adj."
       }
     },
     {
@@ -102161,18 +98685,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "hamperer in supply chains",
           "phrase_2_zh": "供应链中的阻碍因素",
           "pos": "n."
-        },
-        {
-          "word": "unhampered",
-          "zh": "不受阻碍的",
-          "phrase_1": "unhampered access",
-          "phrase_1_zh": "无阻碍访问",
-          "phrase_2": "unhampered movement",
-          "phrase_2_zh": "自由移动",
-          "pos": "adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hamper",
       "internal_word_items": [
@@ -102185,8 +98700,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hamper": "v."
       },
       "external_pos_map": {
-        "hamperer": "n.",
-        "unhampered": "adj."
+        "hamperer": "n."
       }
     },
     {
@@ -102441,18 +98955,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "serial harasser investigation",
           "phrase_2_zh": "连续骚扰者调查",
           "pos": "n."
-        },
-        {
-          "word": "unharassed",
-          "zh": "未受骚扰的",
-          "phrase_1": "unharassed access",
-          "phrase_1_zh": "无骚扰访问",
-          "phrase_2": "unharassed life",
-          "phrase_2_zh": "未受骚扰的生活",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_harass",
       "internal_word_items": [
@@ -102472,8 +98977,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "harassable": "adj.",
         "antiharassment": "n.",
-        "harasser": "n.",
-        "unharassed": "adj."
+        "harasser": "n."
       }
     },
     {
@@ -102651,18 +99155,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "harmful",
         "harm"
       ],
-      "external_words": [
-        {
-          "word": "unharmed",
-          "zh": "未受伤害的",
-          "phrase_1": "remain unharmed",
-          "phrase_1_zh": "保持未受伤",
-          "phrase_2": "unharmed animal",
-          "phrase_2_zh": "未受伤动物",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_harmless",
       "internal_word_items": [
@@ -102684,9 +99178,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "harmful": "adj.",
         "harm": "n./v."
       },
-      "external_pos_map": {
-        "unharmed": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_harpoon",
@@ -102960,24 +99452,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unhealed",
-          "zh": "未愈合的",
-          "phrase_1": "unhealed wound",
-          "phrase_1_zh": "未愈合伤口",
-          "phrase_2": "unhealed trauma",
-          "phrase_2_zh": "未愈合创伤",
-          "pos": "adj."
-        },
-        {
-          "word": "healing",
-          "zh": "治愈；康复",
-          "phrase_1": "healing process",
-          "phrase_1_zh": "愈合过程",
-          "phrase_2": "healing ritual",
-          "phrase_2_zh": "疗愈仪式",
-          "pos": "n./adj."
-        },
-        {
           "word": "heal",
           "zh": "治愈",
           "phrase_1": "heal wound",
@@ -102987,7 +99461,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_healer",
       "internal_word_items": [
@@ -103010,8 +99484,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "health": "n."
       },
       "external_pos_map": {
-        "unhealed": "adj.",
-        "healing": "n./adj.",
         "heal": "adj."
       }
     },
@@ -103594,15 +100066,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unhesitating",
-          "zh": "毫不犹豫的",
-          "phrase_1": "unhesitating support",
-          "phrase_1_zh": "毫不犹豫的支持",
-          "phrase_2": "unhesitating action",
-          "phrase_2_zh": "果断行动",
-          "pos": "n./adj."
-        },
-        {
           "word": "hesitantly",
           "zh": "犹豫地",
           "phrase_1": "speak hesitantly",
@@ -103630,7 +100093,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hesitate",
       "internal_word_items": [
@@ -103644,7 +100107,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "hesitation": "n.",
-        "unhesitating": "n./adj.",
         "hesitantly": "adv.",
         "hesitancy": "n.",
         "hesitant": "adj."
@@ -103661,15 +100123,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "hiding",
-          "zh": "隐藏；藏身处",
-          "phrase_1": "hiding place",
-          "phrase_1_zh": "藏身处",
-          "phrase_2": "hiding behavior",
-          "phrase_2_zh": "隐藏行为",
-          "pos": "n."
-        },
-        {
           "word": "unhide",
           "zh": "取消隐藏",
           "phrase_1": "unhide file",
@@ -103679,7 +100132,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hidden",
       "internal_word_items": [
@@ -103697,7 +100150,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hideout": "n./v."
       },
       "external_pos_map": {
-        "hiding": "n.",
         "unhide": "n./v."
       }
     },
@@ -103710,18 +100162,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hide",
         "hideout"
       ],
-      "external_words": [
-        {
-          "word": "hiding",
-          "zh": "隐藏；躲藏",
-          "phrase_1": "hiding sensitive information",
-          "phrase_1_zh": "隐藏敏感信息",
-          "phrase_2": "in hiding after persecution",
-          "phrase_2_zh": "遭迫害后躲藏中",
-          "pos": "n."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hide",
       "internal_word_items": [
@@ -103738,9 +100180,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hide": "v.",
         "hideout": "n./v."
       },
-      "external_pos_map": {
-        "hiding": "n."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_hieroglyph",
@@ -103842,18 +100282,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "rise"
       ],
-      "external_words": [
-        {
-          "word": "rising",
-          "zh": "上升的",
-          "phrase_1": "rising demand",
-          "phrase_1_zh": "增长的需求",
-          "phrase_2": "rising temperature",
-          "phrase_2_zh": "上升温度",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_high_rise",
       "internal_word_items": [
@@ -103865,9 +100295,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "rise": "v."
       },
-      "external_pos_map": {
-        "rising": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_hilltop",
@@ -103970,18 +100398,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "major hinderer of cooperation",
           "phrase_2_zh": "合作的主要阻碍因素",
           "pos": "n."
-        },
-        {
-          "word": "unhindered",
-          "zh": "不受阻碍的",
-          "phrase_1": "unhindered access",
-          "phrase_1_zh": "畅通无阻的进入",
-          "phrase_2": "unhindered movement",
-          "phrase_2_zh": "不受阻碍的移动",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hinder",
       "internal_word_items": [
@@ -104001,8 +100420,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "hindbrain": "n./v.",
         "hindmost": "n./v.",
-        "hinderer": "n.",
-        "unhindered": "adj."
+        "hinderer": "n."
       }
     },
     {
@@ -104016,15 +100434,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "hindering",
-          "zh": "妨碍的",
-          "phrase_1": "hindering condition",
-          "phrase_1_zh": "妨碍条件",
-          "phrase_2": "hindering influence",
-          "phrase_2_zh": "阻碍性影响",
-          "pos": "n./adj."
-        },
-        {
           "word": "hinderance",
           "zh": "阻碍；hindrance异体拼法",
           "phrase_1": "administrative hinderance",
@@ -104032,27 +100441,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "hinderance to reform",
           "phrase_2_zh": "改革的阻碍",
           "pos": "n."
-        },
-        {
-          "word": "hindered",
-          "zh": "受阻的",
-          "phrase_1": "hindered access",
-          "phrase_1_zh": "受阻的进入",
-          "phrase_2": "hindered growth",
-          "phrase_2_zh": "受阻的增长",
-          "pos": "adj."
-        },
-        {
-          "word": "unhindered",
-          "zh": "不受阻碍的",
-          "phrase_1": "unhindered trade",
-          "phrase_1_zh": "不受阻碍的贸易",
-          "phrase_2": "unhindered flow",
-          "phrase_2_zh": "畅通流动",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hindrance",
       "internal_word_items": [
@@ -104070,10 +100461,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hinder": "n."
       },
       "external_pos_map": {
-        "hindering": "n./adj.",
-        "hinderance": "n.",
-        "hindered": "adj.",
-        "unhindered": "adj."
+        "hinderance": "n."
       }
     },
     {
@@ -104088,18 +100476,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "insight",
         "foresight"
       ],
-      "external_words": [
-        {
-          "word": "sighted",
-          "zh": "有视力的；看得见的",
-          "phrase_1": "sighted observer",
-          "phrase_1_zh": "有视力的观察者",
-          "phrase_2": "newly sighted object",
-          "phrase_2_zh": "新发现的物体",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hindsight",
       "internal_word_items": [
@@ -104131,9 +100509,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "insight": "n.",
         "foresight": "n."
       },
-      "external_pos_map": {
-        "sighted": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_hippopotamus",
@@ -104255,15 +100631,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "hoaxing",
-          "zh": "制造骗局",
-          "phrase_1": "hoaxing on social media",
-          "phrase_1_zh": "社交媒体造假",
-          "phrase_2": "hoaxing as political manipulation",
-          "phrase_2_zh": "作为政治操纵的骗局制造",
-          "pos": "n./adj."
-        },
-        {
           "word": "pseudohoax",
           "zh": "疑似骗局",
           "phrase_1": "pseudohoax narrative online",
@@ -104291,7 +100658,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hoax",
       "internal_word_items": [
@@ -104304,7 +100671,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hoax": "n./v."
       },
       "external_pos_map": {
-        "hoaxing": "n./adj.",
         "pseudohoax": "n./v.",
         "antihoax": "n./v.",
         "hoaxer": "n."
@@ -104429,18 +100795,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "persistent hollerer at a rally",
           "phrase_2_zh": "集会中持续喊叫的人",
           "pos": "n."
-        },
-        {
-          "word": "hollering",
-          "zh": "喊叫；呼喊",
-          "phrase_1": "hollering across the valley",
-          "phrase_1_zh": "在山谷间呼喊",
-          "phrase_2": "hollering crowd outside court",
-          "phrase_2_zh": "法院外呼喊的人群",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_holler",
       "internal_word_items": [
@@ -104456,8 +100813,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "hollow": "n./v.",
         "fieldholler": "n.",
         "hollersong": "n./v.",
-        "hollerer": "n.",
-        "hollering": "n./adj."
+        "hollerer": "n."
       }
     },
     {
@@ -104582,18 +100938,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "homestead records in genealogy",
           "phrase_2_zh": "家谱中的宅地记录",
           "pos": "n./v."
-        },
-        {
-          "word": "rehomed",
-          "zh": "被重新安置的",
-          "phrase_1": "rehomed family",
-          "phrase_1_zh": "重新安置的家庭",
-          "phrase_2": "rehomed residents",
-          "phrase_2_zh": "重新安置的居民",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_homeless",
       "internal_word_items": [
@@ -104621,8 +100968,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "home": "n."
       },
       "external_pos_map": {
-        "homestead": "n./v.",
-        "rehomed": "adj."
+        "homestead": "n./v."
       }
     },
     {
@@ -104706,41 +101052,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {}
     },
     {
-      "cluster_id": "kin_head_seed_housing",
-      "cluster_label": "housing housed",
-      "anchor": "housing",
-      "confidence": "review",
-      "internal_words": [
-        "housing"
-      ],
-      "external_words": [
-        {
-          "word": "housed",
-          "zh": "被安置的；有住处的",
-          "phrase_1": "newly housed families",
-          "phrase_1_zh": "新安置家庭",
-          "phrase_2": "housed population",
-          "phrase_2_zh": "有住所人口",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 2,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_housing",
-      "internal_word_items": [
-        {
-          "word": "housing",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "housing": "n."
-      },
-      "external_pos_map": {
-        "housed": "adj."
-      }
-    },
-    {
       "cluster_id": "kin_head_seed_housing_part_2",
       "cluster_label": "household householder",
       "anchor": "housing",
@@ -104810,27 +101121,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "huddle room video system",
           "phrase_2_zh": "小型会议室视频系统",
           "pos": "n./v."
-        },
-        {
-          "word": "huddling",
-          "zh": "挤作一团；密谈",
-          "phrase_1": "huddling behavior in penguins",
-          "phrase_1_zh": "企鹅抱团行为",
-          "phrase_2": "political huddling before a vote",
-          "phrase_2_zh": "投票前的政治密谈",
-          "pos": "n./adj."
-        },
-        {
-          "word": "unhuddled",
-          "zh": "未聚拢的",
-          "phrase_1": "unhuddled players",
-          "phrase_1_zh": "没有聚拢的球员",
-          "phrase_2": "unhuddled crowd",
-          "phrase_2_zh": "未聚集的人群",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_huddle",
       "internal_word_items": [
@@ -104845,9 +101138,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "rehuddle": "n./v.",
         "huddleboard": "n./v.",
-        "huddle room": "n./v.",
-        "huddling": "n./adj.",
-        "unhuddled": "adj."
+        "huddle room": "n./v."
       }
     },
     {
@@ -105124,24 +101415,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "humpbacked",
-          "zh": "驼背的；隆起的",
-          "phrase_1": "humpbacked bridge structure",
-          "phrase_1_zh": "拱起桥梁结构",
-          "phrase_2": "humpbacked whale morphology",
-          "phrase_2_zh": "座头鲸形态",
-          "pos": "adj."
-        },
-        {
-          "word": "humped",
-          "zh": "有隆起的",
-          "phrase_1": "humped back",
-          "phrase_1_zh": "隆起的背",
-          "phrase_2": "humped surface",
-          "phrase_2_zh": "隆起表面",
-          "pos": "adj."
-        },
-        {
           "word": "hump",
           "zh": "隆起；驼峰",
           "phrase_1": "back hump",
@@ -105151,7 +101424,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_humpback",
       "internal_word_items": [
@@ -105166,8 +101439,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "humpback whale": "n./v.",
         "hunchback": "n./v.",
-        "humpbacked": "adj.",
-        "humped": "adj.",
         "hump": "n./v."
       }
     },
@@ -105206,27 +101477,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "hurriedly evacuate residents",
           "phrase_2_zh": "匆忙疏散居民",
           "pos": "adv."
-        },
-        {
-          "word": "hurried",
-          "zh": "匆忙的",
-          "phrase_1": "hurried policy announcement",
-          "phrase_1_zh": "匆忙政策宣布",
-          "phrase_2": "hurried evacuation order",
-          "phrase_2_zh": "仓促疏散命令",
-          "pos": "adj."
-        },
-        {
-          "word": "unhurried",
-          "zh": "不慌不忙的",
-          "phrase_1": "unhurried pace",
-          "phrase_1_zh": "不慌不忙的步调",
-          "phrase_2": "unhurried conversation",
-          "phrase_2_zh": "从容的谈话",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_hurry",
       "internal_word_items": [
@@ -105241,9 +101494,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "hurryproof": "n./v.",
         "hurryup": "n./v.",
-        "hurriedly": "adv.",
-        "hurried": "adj.",
-        "unhurried": "adj."
+        "hurriedly": "adv."
       }
     },
     {
@@ -105669,18 +101920,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "habitual idler",
           "phrase_2_zh": "惯常懒散者",
           "pos": "n."
-        },
-        {
-          "word": "idled",
-          "zh": "被闲置的",
-          "phrase_1": "idled workers",
-          "phrase_1_zh": "被闲置的工人",
-          "phrase_2": "idled capacity",
-          "phrase_2_zh": "闲置产能",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_idly",
       "internal_word_items": [
@@ -105698,8 +101940,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "idleness": "n."
       },
       "external_pos_map": {
-        "idler": "n.",
-        "idled": "adj."
+        "idler": "n."
       }
     },
     {
@@ -106515,18 +102756,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "soil impaction",
           "phrase_2_zh": "土壤压实",
           "pos": "n."
-        },
-        {
-          "word": "impacted",
-          "zh": "受影响的",
-          "phrase_1": "impacted area",
-          "phrase_1_zh": "受影响地区",
-          "phrase_2": "impacted group",
-          "phrase_2_zh": "受影响群体",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_impactful",
       "internal_word_items": [
@@ -106546,8 +102778,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "impactite": "n./v.",
         "impactor": "n.",
-        "impaction": "n.",
-        "impacted": "adj."
+        "impaction": "n."
       }
     },
     {
@@ -106586,18 +102817,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "impeder in traffic flow",
           "phrase_2_zh": "交通流中的阻碍因素",
           "pos": "n."
-        },
-        {
-          "word": "unimpeded",
-          "zh": "不受阻碍的",
-          "phrase_1": "unimpeded access",
-          "phrase_1_zh": "畅通无阻的进入",
-          "phrase_2": "unimpeded flow",
-          "phrase_2_zh": "不受阻碍的流动",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_impede",
       "internal_word_items": [
@@ -106617,8 +102839,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "unimpededly": "adv.",
         "impedance": "n.",
-        "impeder": "n.",
-        "unimpeded": "adj."
+        "impeder": "n."
       }
     },
     {
@@ -106779,18 +103000,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "implicitly assume",
           "phrase_2_zh": "隐含假设",
           "pos": "adv."
-        },
-        {
-          "word": "implied",
-          "zh": "暗示的；默示的",
-          "phrase_1": "implied meaning",
-          "phrase_1_zh": "隐含意义",
-          "phrase_2": "implied consent",
-          "phrase_2_zh": "默示同意",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_impliedly",
       "internal_word_items": [
@@ -106818,8 +103030,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "imply": "v."
       },
       "external_pos_map": {
-        "implicitly": "adv.",
-        "implied": "adj."
+        "implicitly": "adv."
       }
     },
     {
@@ -106913,15 +103124,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unimproved",
-          "zh": "未改良的",
-          "phrase_1": "unimproved land value",
-          "phrase_1_zh": "未改良土地价值",
-          "phrase_2": "unimproved sanitation facilities",
-          "phrase_2_zh": "未改善的卫生设施",
-          "pos": "adj."
-        },
-        {
           "word": "improvisation",
           "zh": "即兴创作；临场处理",
           "phrase_1": "improvisation in jazz performance",
@@ -106949,7 +103151,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_improve",
       "internal_word_items": [
@@ -106967,7 +103169,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "improvement": "n."
       },
       "external_pos_map": {
-        "unimproved": "adj.",
         "improvisation": "n.",
         "improvise": "v.",
         "improver": "n."
@@ -107051,15 +103252,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "incarcerated",
-          "zh": "被监禁的",
-          "phrase_1": "incarcerated people",
-          "phrase_1_zh": "被监禁者",
-          "phrase_2": "incarcerated population",
-          "phrase_2_zh": "在押人口",
-          "pos": "adj."
-        },
-        {
           "word": "incarcerate",
           "zh": "监禁；关押",
           "phrase_1": "incarcerate offenders",
@@ -107069,7 +103261,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_incarceration",
       "internal_word_items": [
@@ -107085,7 +103277,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "carcerality": "n.",
         "decarceration": "n.",
         "carceral": "adj.",
-        "incarcerated": "adj.",
         "incarcerate": "v."
       }
     },
@@ -107109,15 +103300,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "increasing",
-          "zh": "增加的",
-          "phrase_1": "increasing climate instability",
-          "phrase_1_zh": "日益增加的气候不稳定",
-          "phrase_2": "increasing demand for housing",
-          "phrase_2_zh": "不断增长的住房需求",
-          "pos": "n./adj."
-        },
-        {
           "word": "decrease",
           "zh": "减少；下降",
           "phrase_1": "decrease sharply",
@@ -107127,7 +103309,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_increase",
       "internal_word_items": [
@@ -107146,7 +103328,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "crescendo": "n./v.",
-        "increasing": "n./adj.",
         "decrease": "n./v."
       }
     },
@@ -107676,7 +103857,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "infrared",
       "confidence": "review",
       "internal_words": [
-        "infrared",
         "infrastructure"
       ],
       "external_words": [
@@ -107708,21 +103888,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_infrared",
       "internal_word_items": [
-        {
-          "word": "infrared",
-          "pos": "n./adj."
-        },
         {
           "word": "infrastructure",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "infrared": "n./adj.",
         "infrastructure": "n."
       },
       "external_pos_map": {
@@ -107862,15 +104037,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "injured",
-          "zh": "受伤的；受损的",
-          "phrase_1": "injured patient",
-          "phrase_1_zh": "受伤患者",
-          "phrase_2": "injured party",
-          "phrase_2_zh": "受损方",
-          "pos": "adj."
-        },
-        {
           "word": "injure",
           "zh": "伤害；损害",
           "phrase_1": "injure a worker",
@@ -107880,7 +104046,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_injury",
       "internal_word_items": [
@@ -107896,7 +104062,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "injurant": "adj.",
         "injuria": "n./v.",
         "injurious": "adj.",
-        "injured": "adj.",
         "injure": "v."
       }
     },
@@ -107911,15 +104076,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "landscape"
       ],
       "external_words": [
-        {
-          "word": "landlocked",
-          "zh": "内陆的；被陆地包围的",
-          "phrase_1": "landlocked developing country",
-          "phrase_1_zh": "内陆发展中国家",
-          "phrase_2": "landlocked regional economy",
-          "phrase_2_zh": "内陆区域经济",
-          "pos": "adj."
-        },
         {
           "word": "upland",
           "zh": "高地",
@@ -107939,7 +104095,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_inland",
       "internal_word_items": [
@@ -107962,7 +104118,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "landscape": "n./v."
       },
       "external_pos_map": {
-        "landlocked": "adj.",
         "upland": "n./v.",
         "lowland": "n./v."
       }
@@ -108510,18 +104665,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "insultingly low wage offer",
           "phrase_2_zh": "侮辱性低薪报价",
           "pos": "adv."
-        },
-        {
-          "word": "insulting",
-          "zh": "侮辱性的",
-          "phrase_1": "insulting language in parliament",
-          "phrase_1_zh": "议会中的侮辱性语言",
-          "phrase_2": "insulting stereotype in media",
-          "phrase_2_zh": "媒体中的侮辱性刻板印象",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_insult",
       "internal_word_items": [
@@ -108540,8 +104686,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "insulter": "n.",
-        "insultingly": "adv.",
-        "insulting": "n./adj."
+        "insultingly": "adv."
       }
     },
     {
@@ -108556,18 +104701,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "integrate",
         "integral"
       ],
-      "external_words": [
-        {
-          "word": "integrated",
-          "zh": "整合的；一体化的",
-          "phrase_1": "integrated system",
-          "phrase_1_zh": "整合系统",
-          "phrase_2": "integrated approach",
-          "phrase_2_zh": "综合方法",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_integer",
       "internal_word_items": [
@@ -108599,9 +104734,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "integrate": "v.",
         "integral": "adj."
       },
-      "external_pos_map": {
-        "integrated": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_intend",
@@ -108774,15 +104907,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "intriguing",
-          "zh": "引人入胜的；复杂的",
-          "phrase_1": "intriguing pattern in data",
-          "phrase_1_zh": "数据中引人注意的模式",
-          "phrase_2": "intriguing historical puzzle",
-          "phrase_2_zh": "引人入胜的历史谜题",
-          "pos": "n./adj."
-        },
-        {
           "word": "extricate",
           "zh": "解救；摆脱",
           "phrase_1": "extricate communities from debt",
@@ -108792,7 +104916,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_intrigue",
       "internal_word_items": [
@@ -108812,7 +104936,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "intrigant": "adj.",
         "intriguer": "n.",
-        "intriguing": "n./adj.",
         "extricate": "v."
       }
     },
@@ -109276,15 +105399,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "ivoried",
-          "zh": "象牙色的；饰象牙的",
-          "phrase_1": "ivoried manuscript cover",
-          "phrase_1_zh": "象牙装饰手稿封面",
-          "phrase_2": "ivoried handle in museum collections",
-          "phrase_2_zh": "博物馆藏品中的象牙柄",
-          "pos": "adj."
-        },
-        {
           "word": "ivorine",
           "zh": "象牙质的；似象牙的",
           "phrase_1": "ivorine carving material",
@@ -109294,7 +105408,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ivory",
       "internal_word_items": [
@@ -109310,7 +105424,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "ivorytrade": "n./v.",
         "ivorybill": "n./v.",
         "ivorist": "n.",
-        "ivoried": "adj.",
         "ivorine": "n./v."
       }
     },
@@ -109498,18 +105611,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "traditional jewellery craftsmanship",
           "phrase_2_zh": "传统珠宝工艺",
           "pos": "n./v."
-        },
-        {
-          "word": "bejewelled",
-          "zh": "饰有珠宝的",
-          "phrase_1": "bejewelled crown",
-          "phrase_1_zh": "珠宝装饰的王冠",
-          "phrase_2": "bejewelled object",
-          "phrase_2_zh": "饰有珠宝的物件",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_jewel",
       "internal_word_items": [
@@ -109525,8 +105629,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "jewelbox": "n./v.",
         "jeweller": "n.",
         "jewelry": "n./v.",
-        "jewellery": "n./v.",
-        "bejewelled": "adj."
+        "jewellery": "n./v."
       }
     },
     {
@@ -109668,18 +105771,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "political jouster in debates",
           "phrase_2_zh": "辩论中的政治竞争者",
           "pos": "n."
-        },
-        {
-          "word": "jousting",
-          "zh": "马上比武；竞争",
-          "phrase_1": "jousting tournament culture",
-          "phrase_1_zh": "马上比武竞赛文化",
-          "phrase_2": "jousting over budget priorities",
-          "phrase_2_zh": "围绕预算优先级的竞争",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_joust",
       "internal_word_items": [
@@ -109692,8 +105786,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "joust": "n."
       },
       "external_pos_map": {
-        "jouster": "n.",
-        "jousting": "n./adj."
+        "jouster": "n."
       }
     },
     {
@@ -109887,15 +105980,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "kangarooing",
-          "zh": "袋鼠式跳跃；袋鼠相关行为",
-          "phrase_1": "kangarooing movement in robotics",
-          "phrase_1_zh": "机器人学中的袋鼠式运动",
-          "phrase_2": "kangarooing behavior in marsupials",
-          "phrase_2_zh": "有袋类动物的袋鼠式行为",
-          "pos": "n./adj."
-        },
-        {
           "word": "kangarooer",
           "zh": "袋鼠猎人；袋鼠相关从业者",
           "phrase_1": "kangarooer records in colonial Australia",
@@ -109905,7 +105989,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_kangaroo",
       "internal_word_items": [
@@ -109918,7 +106002,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "kangaroo": "n."
       },
       "external_pos_map": {
-        "kangarooing": "n./adj.",
         "kangarooer": "n."
       }
     },
@@ -109951,15 +106034,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "keensighted",
-          "zh": "目光敏锐的",
-          "phrase_1": "keensighted analysis of policy",
-          "phrase_1_zh": "敏锐的政策分析",
-          "phrase_2": "keensighted observer of culture",
-          "phrase_2_zh": "敏锐的文化观察者",
-          "pos": "adj."
-        },
-        {
           "word": "keenly",
           "zh": "敏锐地；强烈地",
           "phrase_1": "keenly observe social change",
@@ -109969,7 +106043,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_keen",
       "internal_word_items": [
@@ -109989,7 +106063,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "keenedge": "n./v.",
         "overkeen": "v.",
-        "keensighted": "adj.",
         "keenly": "adv."
       }
     },
@@ -110068,15 +106141,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "kernelized",
-          "zh": "核化的",
-          "phrase_1": "kernelized machine learning method",
-          "phrase_1_zh": "核化机器学习方法",
-          "phrase_2": "kernelized optimization model",
-          "phrase_2_zh": "核化优化模型",
-          "pos": "adj."
-        },
-        {
           "word": "kernelize",
           "zh": "核化；内核化",
           "phrase_1": "kernelize a computational problem",
@@ -110095,7 +106159,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_kernel",
       "internal_word_items": [
@@ -110110,7 +106174,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "kernelpanic": "adj.",
         "cornkernel": "n./v.",
-        "kernelized": "adj.",
         "kernelize": "v.",
         "kern": "n./v."
       }
@@ -110245,15 +106308,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "kindhearted",
-          "zh": "善良的",
-          "phrase_1": "kindhearted community response",
-          "phrase_1_zh": "善良的社区回应",
-          "phrase_2": "kindhearted donor network",
-          "phrase_2_zh": "善心捐赠者网络",
-          "pos": "adj."
-        },
-        {
           "word": "mankind",
           "zh": "人类",
           "phrase_1": "mankind's impact on climate",
@@ -110279,18 +106333,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "kindness as civic virtue",
           "phrase_2_zh": "作为公民美德的善意",
           "pos": "n."
-        },
-        {
-          "word": "kindred",
-          "zh": "同族的；亲属",
-          "phrase_1": "kindred languages in comparison",
-          "phrase_1_zh": "比较中的同源语言",
-          "phrase_2": "kindred social groups",
-          "phrase_2_zh": "同族社会群体",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_kind",
       "internal_word_items": [
@@ -110303,11 +106348,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "kind": "n./adj."
       },
       "external_pos_map": {
-        "kindhearted": "adj.",
         "mankind": "n./v.",
         "unkind": "n./v.",
-        "kindness": "n.",
-        "kindred": "adj."
+        "kindness": "n."
       }
     },
     {
@@ -110337,27 +106380,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "kindler in seizure research",
           "phrase_2_zh": "癫痫研究中的点燃因素",
           "pos": "n."
-        },
-        {
-          "word": "kindling",
-          "zh": "引火物；点燃",
-          "phrase_1": "kindling material moisture",
-          "phrase_1_zh": "引火物含水量",
-          "phrase_2": "kindling effect in neuroscience",
-          "phrase_2_zh": "神经科学中的点燃效应",
-          "pos": "n./adj."
-        },
-        {
-          "word": "unkindled",
-          "zh": "未点燃的；未激发的",
-          "phrase_1": "unkindled fire",
-          "phrase_1_zh": "未点燃的火",
-          "phrase_2": "unkindled ambition",
-          "phrase_2_zh": "未激发的雄心",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_kindle",
       "internal_word_items": [
@@ -110376,9 +106401,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "enkindle": "n./v.",
-        "kindler": "n.",
-        "kindling": "n./adj.",
-        "unkindled": "adj."
+        "kindler": "n."
       }
     },
     {
@@ -110552,15 +106575,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "knotweed",
-          "zh": "虎杖；蓼科植物",
-          "phrase_1": "knotweed invasion management",
-          "phrase_1_zh": "虎杖入侵管理",
-          "phrase_2": "knotweed root system",
-          "phrase_2_zh": "虎杖根系",
-          "pos": "adj."
-        },
-        {
           "word": "unknot",
           "zh": "解开；解结",
           "phrase_1": "unknot a legal dispute",
@@ -110597,7 +106611,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_knot",
       "internal_word_items": [
@@ -110610,7 +106624,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "knot": "n./v."
       },
       "external_pos_map": {
-        "knotweed": "adj.",
         "unknot": "v.",
         "knotless": "adj.",
         "knotwork": "n./v.",
@@ -111154,18 +107167,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "late",
         "latent"
       ],
-      "external_words": [
-        {
-          "word": "belated",
-          "zh": "迟来的",
-          "phrase_1": "belated response",
-          "phrase_1_zh": "迟来的回应",
-          "phrase_2": "belated recognition",
-          "phrase_2_zh": "迟来的认可",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 5,
+      "external_words": [],
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_latency",
       "internal_word_items": [
@@ -111192,9 +107195,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "late": "adj./adv.",
         "latent": "adj."
       },
-      "external_pos_map": {
-        "belated": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_latent",
@@ -111216,18 +107217,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "latentcy of disease expression",
           "phrase_2_zh": "疾病表现的潜伏性",
           "pos": "n."
-        },
-        {
-          "word": "belated",
-          "zh": "迟来的",
-          "phrase_1": "belated apology",
-          "phrase_1_zh": "迟来的道歉",
-          "phrase_2": "belated action",
-          "phrase_2_zh": "迟来的行动",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_latent",
       "internal_word_items": [
@@ -111255,8 +107247,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "latency": "n."
       },
       "external_pos_map": {
-        "latentcy": "n.",
-        "belated": "adj."
+        "latentcy": "n."
       }
     },
     {
@@ -111354,15 +107345,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "launching",
-          "zh": "发射；推出",
-          "phrase_1": "launching a public campaign",
-          "phrase_1_zh": "发起公共活动",
-          "phrase_2": "launching satellite missions",
-          "phrase_2_zh": "发射卫星任务",
-          "pos": "n./adj."
-        },
-        {
           "word": "launchpad",
           "zh": "发射台；起点",
           "phrase_1": "launchpad for innovation",
@@ -111381,7 +107363,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_launch",
       "internal_word_items": [
@@ -111396,7 +107378,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "relaunch": "n./v.",
         "prelaunch": "n./v.",
-        "launching": "n./adj.",
         "launchpad": "n./v.",
         "launcher": "n."
       }
@@ -111496,15 +107477,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "leading",
-          "zh": "领先的；主要的",
-          "phrase_1": "leading cause of mortality",
-          "phrase_1_zh": "主要死亡原因",
-          "phrase_2": "leading indicator of inflation",
-          "phrase_2_zh": "通胀先行指标",
-          "pos": "n./adj."
-        },
-        {
           "word": "leadership",
           "zh": "领导力；领导层",
           "phrase_1": "leadership transition crisis",
@@ -111514,7 +107486,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_lead",
       "internal_word_items": [
@@ -111538,7 +107510,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "leadfree": "n.",
-        "leading": "n./adj.",
         "leadership": "n."
       }
     },
@@ -111561,27 +107532,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "leadership accountability mechanism",
           "phrase_2_zh": "领导问责机制",
           "pos": "n."
-        },
-        {
-          "word": "misleading",
-          "zh": "误导性的",
-          "phrase_1": "misleading claim",
-          "phrase_1_zh": "误导性说法",
-          "phrase_2": "misleading data",
-          "phrase_2_zh": "误导性数据",
-          "pos": "n./adj."
-        },
-        {
-          "word": "leading",
-          "zh": "领先的；主导的",
-          "phrase_1": "leading company",
-          "phrase_1_zh": "领先公司",
-          "phrase_2": "leading indicator",
-          "phrase_2_zh": "先行指标",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_leader",
       "internal_word_items": [
@@ -111604,9 +107557,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "lead": "n./v."
       },
       "external_pos_map": {
-        "leadership": "n.",
-        "misleading": "n./adj.",
-        "leading": "n./adj."
+        "leadership": "n."
       }
     },
     {
@@ -112062,18 +108013,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "lesion"
       ],
-      "external_words": [
-        {
-          "word": "lesioning",
-          "zh": "造成损伤；损伤法",
-          "phrase_1": "lesioning experiment in neuroscience",
-          "phrase_1_zh": "神经科学中的损伤实验",
-          "phrase_2": "lesioning procedure in animal models",
-          "phrase_2_zh": "动物模型中的损伤程序",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_lesion",
       "internal_word_items": [
@@ -112085,9 +108026,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "lesion": "n."
       },
-      "external_pos_map": {
-        "lesioning": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_lethal",
@@ -112265,18 +108204,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "leveret habitat protection",
           "phrase_2_zh": "小野兔栖息地保护",
           "pos": "n./v."
-        },
-        {
-          "word": "leveraged",
-          "zh": "杠杆化的",
-          "phrase_1": "leveraged finance market",
-          "phrase_1_zh": "杠杆融资市场",
-          "phrase_2": "leveraged buyout transaction",
-          "phrase_2_zh": "杠杆收购交易",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_lever",
       "internal_word_items": [
@@ -112296,8 +108226,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "leverman": "n.",
         "leverarm": "n./v.",
-        "leveret": "n./v.",
-        "leveraged": "adj."
+        "leveret": "n./v."
       }
     },
     {
@@ -113254,15 +109183,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "limbed",
-          "zh": "有肢的；有枝的",
-          "phrase_1": "limbed vertebrate anatomy",
-          "phrase_1_zh": "有肢脊椎动物解剖",
-          "phrase_2": "limbed tree structure",
-          "phrase_2_zh": "有枝树结构",
-          "pos": "adj."
-        },
-        {
           "word": "limbectomy",
           "zh": "肢体切除术",
           "phrase_1": "limbectomy rehabilitation outcome",
@@ -113272,7 +109192,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_limb",
       "internal_word_items": [
@@ -113288,7 +109208,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "limbless": "adj.",
         "hindlimb": "n./v.",
         "forelimb": "n./v.",
-        "limbed": "adj.",
         "limbectomy": "n./v."
       }
     },
@@ -113417,18 +109336,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "delimit maritime boundaries",
           "phrase_2_zh": "划定海洋边界",
           "pos": "n./v."
-        },
-        {
-          "word": "unlimited",
-          "zh": "无限的；不受限制的",
-          "phrase_1": "unlimited access",
-          "phrase_1_zh": "无限访问",
-          "phrase_2": "unlimited potential",
-          "phrase_2_zh": "无限潜力",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_limit",
       "internal_word_items": [
@@ -113451,8 +109361,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "liminal": "adj."
       },
       "external_pos_map": {
-        "delimit": "n./v.",
-        "unlimited": "adj."
+        "delimit": "n./v."
       }
     },
     {
@@ -113694,15 +109603,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "lingering",
-          "zh": "持续不去的；徘徊的",
-          "phrase_1": "lingering effects of trauma",
-          "phrase_1_zh": "创伤的持续影响",
-          "phrase_2": "lingering doubt about evidence",
-          "phrase_2_zh": "对证据挥之不去的怀疑",
-          "pos": "n./adj."
-        },
-        {
           "word": "lingerer",
           "zh": "逗留者；迟疑者",
           "phrase_1": "lingerer in migration records",
@@ -113730,7 +109630,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_linger",
       "internal_word_items": [
@@ -113748,7 +109648,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "longer": "n."
       },
       "external_pos_map": {
-        "lingering": "n./adj.",
         "lingerer": "n.",
         "prolong": "n./v.",
         "lingerlong": "n./v."
@@ -113763,15 +109662,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "lion"
       ],
       "external_words": [
-        {
-          "word": "lionhearted",
-          "zh": "勇敢的",
-          "phrase_1": "lionhearted resistance movement",
-          "phrase_1_zh": "勇敢的抵抗运动",
-          "phrase_2": "lionhearted public defense",
-          "phrase_2_zh": "勇敢的公开辩护",
-          "pos": "adj."
-        },
         {
           "word": "lionize",
           "zh": "把某人奉为名人",
@@ -113791,7 +109681,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_lion",
       "internal_word_items": [
@@ -113804,7 +109694,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "lion": "n."
       },
       "external_pos_map": {
-        "lionhearted": "adj.",
         "lionize": "v.",
         "lioness": "n."
       }
@@ -113897,15 +109786,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "liquefied",
-          "zh": "液化的",
-          "phrase_1": "liquefied petroleum gas",
-          "phrase_1_zh": "液化石油气",
-          "phrase_2": "liquefied sample",
-          "phrase_2_zh": "液化样品",
-          "pos": "adj."
-        },
-        {
           "word": "liquefaction",
           "zh": "液化",
           "phrase_1": "earthquake liquefaction",
@@ -113915,7 +109795,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_liquid",
       "internal_word_items": [
@@ -113939,7 +109819,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "liquidate": "v.",
-        "liquefied": "adj.",
         "liquefaction": "n."
       }
     },
@@ -114028,15 +109907,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "loadbearing",
-          "zh": "承重的",
-          "phrase_1": "loadbearing wall structure",
-          "phrase_1_zh": "承重墙结构",
-          "phrase_2": "loadbearing capacity of bridges",
-          "phrase_2_zh": "桥梁承重能力",
-          "pos": "n./adj."
-        },
-        {
           "word": "overload",
           "zh": "过载；负担过重",
           "phrase_1": "overload public hospitals",
@@ -114073,7 +109943,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_load",
       "internal_word_items": [
@@ -114086,7 +109956,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "load": "n."
       },
       "external_pos_map": {
-        "loadbearing": "n./adj.",
         "overload": "n./v.",
         "payload": "n./v.",
         "upload": "n./v.",
@@ -114103,15 +109972,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "load"
       ],
       "external_words": [
-        {
-          "word": "loading",
-          "zh": "加载；装载",
-          "phrase_1": "loading condition",
-          "phrase_1_zh": "加载条件",
-          "phrase_2": "loading stress",
-          "phrase_2_zh": "加载应力",
-          "pos": "n./adj."
-        },
         {
           "word": "payload",
           "zh": "载荷",
@@ -114131,7 +109991,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_load_bearing",
       "internal_word_items": [
@@ -114149,7 +110009,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "load": "n."
       },
       "external_pos_map": {
-        "loading": "n./adj.",
         "payload": "n./v.",
         "overload": "n./v."
       }
@@ -114181,18 +110040,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "loather of empty rhetoric",
           "phrase_2_zh": "厌恶空洞修辞的人",
           "pos": "n."
-        },
-        {
-          "word": "loathing",
-          "zh": "厌恶；憎恶",
-          "phrase_1": "loathing of corruption",
-          "phrase_1_zh": "对腐败的厌恶",
-          "phrase_2": "self loathing after failure",
-          "phrase_2_zh": "失败后的自我厌恶",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_loathe",
       "internal_word_items": [
@@ -114211,8 +110061,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "loath": "n./v.",
-        "loather": "n.",
-        "loathing": "n./adj."
+        "loather": "n."
       }
     },
     {
@@ -114235,15 +110084,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "loathed",
-          "zh": "被憎恶的",
-          "phrase_1": "loathed regime",
-          "phrase_1_zh": "被憎恶的政权",
-          "phrase_2": "loathed practice",
-          "phrase_2_zh": "令人厌恶的做法",
-          "pos": "adj."
-        },
-        {
           "word": "loath",
           "zh": "不情愿的",
           "phrase_1": "loath to speak",
@@ -114251,18 +110091,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "loath to cooperate",
           "phrase_2_zh": "不愿合作",
           "pos": "n./v."
-        },
-        {
-          "word": "loathing",
-          "zh": "厌恶；憎恶",
-          "phrase_1": "mutual loathing",
-          "phrase_1_zh": "相互厌恶",
-          "phrase_2": "intense loathing",
-          "phrase_2_zh": "强烈憎恶",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_loathsome",
       "internal_word_items": [
@@ -114281,9 +110112,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "loathly": "adv.",
-        "loathed": "adj.",
-        "loath": "n./v.",
-        "loathing": "n./adj."
+        "loath": "n./v."
       }
     },
     {
@@ -114314,15 +110143,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "lobbying",
-          "zh": "游说",
-          "phrase_1": "lobbying expenditure report",
-          "phrase_1_zh": "游说支出报告",
-          "phrase_2": "grassroots lobbying campaign",
-          "phrase_2_zh": "基层游说行动",
-          "pos": "n./adj."
-        },
-        {
           "word": "lobbyist",
           "zh": "游说者",
           "phrase_1": "lobbyist disclosure rule",
@@ -114330,18 +110150,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "corporate lobbyist influence",
           "phrase_2_zh": "企业游说者影响",
           "pos": "n."
-        },
-        {
-          "word": "antilobbying",
-          "zh": "反游说的",
-          "phrase_1": "antilobbying rule",
-          "phrase_1_zh": "反游说规则",
-          "phrase_2": "antilobbying reform",
-          "phrase_2_zh": "反游说改革",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_lobby",
       "internal_word_items": [
@@ -114356,9 +110167,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "lobbygroup": "n./v.",
         "antilobby": "n./v.",
-        "lobbying": "n./adj.",
-        "lobbyist": "n.",
-        "antilobbying": "n./adj."
+        "lobbyist": "n."
       }
     },
     {
@@ -114699,15 +110508,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "chained",
-          "zh": "被链接的；成链的",
-          "phrase_1": "chained reaction",
-          "phrase_1_zh": "链式反应",
-          "phrase_2": "chained molecules",
-          "phrase_2_zh": "成链分子",
-          "pos": "adj."
-        },
-        {
           "word": "longchain",
           "zh": "长链的",
           "phrase_1": "longchain polymer",
@@ -114717,7 +110517,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_long_chain",
       "internal_word_items": [
@@ -114740,7 +110540,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "long": "adj."
       },
       "external_pos_map": {
-        "chained": "adj.",
         "longchain": "n./v."
       }
     },
@@ -115231,9 +111030,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "lynching lynchpin lynch mob lyncher lynch law lynch",
       "anchor": "lynching",
       "confidence": "review",
-      "internal_words": [
-        "lynching"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "lynchpin",
@@ -115281,18 +111078,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_lynching",
-      "internal_word_items": [
-        {
-          "word": "lynching",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "lynching": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "lynchpin": "n./v.",
         "lynch mob": "n./v.",
@@ -115452,18 +111242,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "madden"
       ],
-      "external_words": [
-        {
-          "word": "maddening",
-          "zh": "令人恼火的",
-          "phrase_1": "maddening bureaucratic delay",
-          "phrase_1_zh": "令人恼火的官僚拖延",
-          "phrase_2": "maddening inconsistency in data",
-          "phrase_2_zh": "数据中令人恼火的不一致",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_madden",
       "internal_word_items": [
@@ -115475,9 +111255,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "madden": "v."
       },
-      "external_pos_map": {
-        "maddening": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_magma",
@@ -116127,15 +111905,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "mantling",
-          "zh": "覆盖；披覆",
-          "phrase_1": "mantling vegetation over ruins",
-          "phrase_1_zh": "覆盖废墟的植被",
-          "phrase_2": "mantling plume in geology",
-          "phrase_2_zh": "地质学中的地幔柱",
-          "pos": "n./adj."
-        },
-        {
           "word": "mantlet",
           "zh": "小斗篷；防护盾",
           "phrase_1": "mantlet in siege warfare",
@@ -116154,7 +111923,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_mantle",
       "internal_word_items": [
@@ -116173,7 +111942,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "remantle": "n./v.",
-        "mantling": "n./adj.",
         "mantlet": "n./v.",
         "mantlepiece": "n./v."
       }
@@ -116253,18 +112021,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "marginality in labor markets",
           "phrase_2_zh": "劳动力市场中的边缘性",
           "pos": "n."
-        },
-        {
-          "word": "marginated",
-          "zh": "有边缘的；带边的",
-          "phrase_1": "marginated leaf",
-          "phrase_1_zh": "有边叶片",
-          "phrase_2": "marginated pattern",
-          "phrase_2_zh": "带边图案",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_marginal",
       "internal_word_items": [
@@ -116288,8 +112047,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "marginate": "v.",
-        "marginality": "n.",
-        "marginated": "adj."
+        "marginality": "n."
       }
     },
     {
@@ -116406,8 +112164,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "marriage",
       "confidence": "review",
       "internal_words": [
-        "marriage",
-        "married"
+        "marriage"
       ],
       "external_words": [
         {
@@ -116438,22 +112195,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_marriage",
       "internal_word_items": [
         {
           "word": "marriage",
           "pos": "n."
-        },
-        {
-          "word": "married",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "marriage": "n.",
-        "married": "adj."
+        "marriage": "n."
       },
       "external_pos_map": {
         "remarry": "n./v.",
@@ -116555,15 +112307,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "marsupiated",
-          "zh": "有袋的",
-          "phrase_1": "marsupiated reproductive anatomy",
-          "phrase_1_zh": "有袋生殖解剖",
-          "phrase_2": "marsupiated mammal evolution",
-          "phrase_2_zh": "有袋哺乳动物演化",
-          "pos": "adj."
-        },
-        {
           "word": "marsupium",
           "zh": "育儿袋",
           "phrase_1": "marsupium development",
@@ -116573,7 +112316,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_marsupial",
       "internal_word_items": [
@@ -116587,7 +112330,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "marsupialization": "n.",
-        "marsupiated": "adj.",
         "marsupium": "n./v."
       }
     },
@@ -116610,15 +112352,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "massacring",
-          "zh": "屠杀行为",
-          "phrase_1": "massacring of civilians",
-          "phrase_1_zh": "屠杀平民",
-          "phrase_2": "massacring in wartime records",
-          "phrase_2_zh": "战时记录中的屠杀行为",
-          "pos": "n./adj."
-        },
-        {
           "word": "massacrer",
           "zh": "屠杀者",
           "phrase_1": "massacrer accountability trial",
@@ -116626,18 +112359,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "identify the massacrer group",
           "phrase_2_zh": "识别屠杀者群体",
           "pos": "n."
-        },
-        {
-          "word": "mass killing",
-          "zh": "大规模杀戮",
-          "phrase_1": "mass killing prevention",
-          "phrase_1_zh": "防止大规模杀戮",
-          "phrase_2": "document mass killing",
-          "phrase_2_zh": "记录大规模杀戮",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_massacre",
       "internal_word_items": [
@@ -116651,9 +112375,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "massacre site": "n./v.",
-        "massacring": "n./adj.",
-        "massacrer": "n.",
-        "mass killing": "n./adj."
+        "massacrer": "n."
       }
     },
     {
@@ -118115,18 +113837,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "mineshaft collapse risk",
           "phrase_2_zh": "矿井坍塌风险",
           "pos": "n./v."
-        },
-        {
-          "word": "mining",
-          "zh": "采矿",
-          "phrase_1": "mining labor conditions",
-          "phrase_1_zh": "采矿劳动条件",
-          "phrase_2": "mining pollution remediation",
-          "phrase_2_zh": "采矿污染修复",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_mine",
       "internal_word_items": [
@@ -118146,8 +113859,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "miner": "n.",
         "minefield": "n./v.",
-        "mineshaft": "n./v.",
-        "mining": "n./adj."
+        "mineshaft": "n./v."
       }
     },
     {
@@ -118463,7 +114175,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "mislead",
         "lead",
         "misleader",
-        "misled",
         "leader"
       ],
       "external_words": [
@@ -118477,7 +114188,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_mislead",
       "internal_word_items": [
@@ -118494,10 +114205,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "misled",
-          "pos": "adj."
-        },
-        {
           "word": "leader",
           "pos": "n."
         }
@@ -118506,7 +114213,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "mislead": "v.",
         "lead": "n./v.",
         "misleader": "n.",
-        "misled": "adj.",
         "leader": "n."
       },
       "external_pos_map": {
@@ -118519,39 +114225,15 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "misled",
       "confidence": "review",
       "internal_words": [
-        "misled",
         "leader",
         "lead",
         "mislead"
       ],
-      "external_words": [
-        {
-          "word": "misleading",
-          "zh": "误导性的",
-          "phrase_1": "misleading evidence",
-          "phrase_1_zh": "误导性证据",
-          "phrase_2": "misleading headline",
-          "phrase_2_zh": "误导性标题",
-          "pos": "n./adj."
-        },
-        {
-          "word": "leading",
-          "zh": "领先的；主要的",
-          "phrase_1": "leading expert",
-          "phrase_1_zh": "顶尖专家",
-          "phrase_2": "leading cause",
-          "phrase_2_zh": "主要原因",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_misled",
       "internal_word_items": [
-        {
-          "word": "misled",
-          "pos": "adj."
-        },
         {
           "word": "leader",
           "pos": "n."
@@ -118566,15 +114248,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "misled": "adj.",
         "leader": "n.",
         "lead": "n./v.",
         "mislead": "v."
       },
-      "external_pos_map": {
-        "misleading": "n./adj.",
-        "leading": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_missile",
@@ -118633,41 +114311,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "missive": "adj."
-      }
-    },
-    {
-      "cluster_id": "kin_head_seed_mixed",
-      "cluster_label": "mixed mixer",
-      "anchor": "mixed",
-      "confidence": "review",
-      "internal_words": [
-        "mixed"
-      ],
-      "external_words": [
-        {
-          "word": "mixer",
-          "zh": "搅拌器；混合者",
-          "phrase_1": "electric mixer",
-          "phrase_1_zh": "电动搅拌器",
-          "phrase_2": "audio mixer",
-          "phrase_2_zh": "调音台",
-          "pos": "n."
-        }
-      ],
-      "total_words": 2,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_mixed",
-      "internal_word_items": [
-        {
-          "word": "mixed",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "mixed": "adj."
-      },
-      "external_pos_map": {
-        "mixer": "n."
       }
     },
     {
@@ -119401,15 +115044,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "mosquebased",
-          "zh": "以清真寺为基础的",
-          "phrase_1": "mosquebased education program",
-          "phrase_1_zh": "清真寺基础教育项目",
-          "phrase_2": "mosquebased charity network",
-          "phrase_2_zh": "清真寺慈善网络",
-          "pos": "adj."
-        },
-        {
           "word": "mosquegoer",
           "zh": "清真寺礼拜者",
           "phrase_1": "mosquegoer attendance pattern",
@@ -119419,7 +115053,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_mosque",
       "internal_word_items": [
@@ -119434,7 +115068,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "mosquelibrary": "adj.",
         "mosquearchitecture": "n.",
-        "mosquebased": "adj.",
         "mosquegoer": "n."
       }
     },
@@ -119560,18 +115193,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "motivate",
         "motive"
       ],
-      "external_words": [
-        {
-          "word": "motivated",
-          "zh": "有动机的；被激励的",
-          "phrase_1": "highly motivated learner",
-          "phrase_1_zh": "高度主动的学习者",
-          "phrase_2": "politically motivated act",
-          "phrase_2_zh": "出于政治动机的行为",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_motif",
       "internal_word_items": [
@@ -119603,9 +115226,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "motivate": "v.",
         "motive": "adj."
       },
-      "external_pos_map": {
-        "motivated": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_motivic",
@@ -119685,15 +115306,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "mounded",
-          "zh": "隆起的；成丘的",
-          "phrase_1": "mounded burial site",
-          "phrase_1_zh": "隆起墓葬遗址",
-          "phrase_2": "mounded soil structure",
-          "phrase_2_zh": "成丘土壤结构",
-          "pos": "adj."
-        },
-        {
           "word": "moundbuilder",
           "zh": "筑丘人；筑丘动物",
           "phrase_1": "moundbuilder culture in archaeology",
@@ -119703,7 +115315,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_mound",
       "internal_word_items": [
@@ -119717,7 +115329,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "moundfield": "n./v.",
-        "mounded": "adj.",
         "moundbuilder": "n."
       }
     },
@@ -120994,24 +116605,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "niching",
-          "zh": "定位；寻找生态位",
-          "phrase_1": "niching strategy in markets",
-          "phrase_1_zh": "市场定位策略",
-          "phrase_2": "niching behavior in ecosystems",
-          "phrase_2_zh": "生态系统中的生态位选择行为",
-          "pos": "n./adj."
-        },
-        {
-          "word": "nichepartitioning",
-          "zh": "生态位分割",
-          "phrase_1": "nichepartitioning among species",
-          "phrase_1_zh": "物种间生态位分割",
-          "phrase_2": "nichepartitioning in urban economies",
-          "phrase_2_zh": "城市经济中的细分定位",
-          "pos": "n./adj."
-        },
-        {
           "word": "ecologicalniche",
           "zh": "生态位",
           "phrase_1": "ecologicalniche modelling",
@@ -121039,7 +116632,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_niche",
       "internal_word_items": [
@@ -121052,8 +116645,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "niche": "n."
       },
       "external_pos_map": {
-        "niching": "n./adj.",
-        "nichepartitioning": "n./adj.",
         "ecologicalniche": "n./v.",
         "nichemarket": "n./v.",
         "nicheconstruction": "n."
@@ -121570,15 +117161,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "unnoticed",
-          "zh": "未被注意的",
-          "phrase_1": "go unnoticed",
-          "phrase_1_zh": "未被注意",
-          "phrase_2": "unnoticed error",
-          "phrase_2_zh": "未被注意的错误",
-          "pos": "adj."
-        },
-        {
           "word": "notification",
           "zh": "通知",
           "phrase_1": "email notification",
@@ -121588,7 +117170,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_notice",
       "internal_word_items": [
@@ -121607,7 +117189,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "notitia": "n./v.",
-        "unnoticed": "adj.",
         "notification": "n."
       }
     },
@@ -121889,15 +117470,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "nuanced",
-          "zh": "有细微差别的",
-          "phrase_1": "nuanced interpretation of evidence",
-          "phrase_1_zh": "对证据的细致解释",
-          "phrase_2": "nuanced view of inequality",
-          "phrase_2_zh": "对不平等的细致看法",
-          "pos": "adj."
-        },
-        {
           "word": "nuancer",
           "zh": "细分者；强调细微差异者",
           "phrase_1": "nuancer of ethical arguments",
@@ -121907,7 +117479,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_nuance",
       "internal_word_items": [
@@ -121920,7 +117492,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "nuance": "n."
       },
       "external_pos_map": {
-        "nuanced": "adj.",
         "nuancer": "n."
       }
     },
@@ -122202,15 +117773,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "oathmaking",
-          "zh": "宣誓",
-          "phrase_1": "oathmaking ceremony",
-          "phrase_1_zh": "宣誓仪式",
-          "phrase_2": "oathmaking in constitutional practice",
-          "phrase_2_zh": "宪政实践中的宣誓",
-          "pos": "n./adj."
-        },
-        {
           "word": "oathbreaker",
           "zh": "背誓者",
           "phrase_1": "oathbreaker in medieval law",
@@ -122229,7 +117791,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_oath",
       "internal_word_items": [
@@ -122242,7 +117804,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "oath": "n."
       },
       "external_pos_map": {
-        "oathmaking": "n./adj.",
         "oathbreaker": "n.",
         "oathbound": "n./v."
       }
@@ -123005,18 +118566,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "offsettable",
         "offset"
       ],
-      "external_words": [
-        {
-          "word": "offsetting",
-          "zh": "抵消；补偿",
-          "phrase_1": "carbon offsetting scheme",
-          "phrase_1_zh": "碳抵消方案",
-          "phrase_2": "offsetting fiscal measures",
-          "phrase_2_zh": "抵消性财政措施",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_offsettable",
       "internal_word_items": [
@@ -123033,9 +118584,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "offsettable": "adj.",
         "offset": "v."
       },
-      "external_pos_map": {
-        "offsetting": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_offspring",
@@ -123083,18 +118632,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "unfashionable",
         "fashion"
       ],
-      "external_words": [
-        {
-          "word": "fashioned",
-          "zh": "制成的；形成的",
-          "phrase_1": "carefully fashioned argument",
-          "phrase_1_zh": "精心构建的论证",
-          "phrase_2": "fashioned from local materials",
-          "phrase_2_zh": "由当地材料制成",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 5,
+      "external_words": [],
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_old_fashioned",
       "internal_word_items": [
@@ -123121,9 +118660,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "unfashionable": "adj.",
         "fashion": "n."
       },
-      "external_pos_map": {
-        "fashioned": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_omit",
@@ -123310,15 +118847,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "openended",
-          "zh": "开放式的",
-          "phrase_1": "openended survey question",
-          "phrase_1_zh": "开放式调查问题",
-          "phrase_2": "openended learning task",
-          "phrase_2_zh": "开放式学习任务",
-          "pos": "adj."
-        },
-        {
           "word": "openness",
           "zh": "开放性",
           "phrase_1": "openness to migration",
@@ -123326,18 +118854,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "openness in scientific data",
           "phrase_2_zh": "科学数据开放性",
           "pos": "n."
-        },
-        {
-          "word": "opening",
-          "zh": "开口；机会",
-          "phrase_1": "opening for political reform",
-          "phrase_1_zh": "政治改革机会",
-          "phrase_2": "opening statement in court",
-          "phrase_2_zh": "法庭开场陈述",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_open",
       "internal_word_items": [
@@ -123352,9 +118871,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "openaccess": "n./v.",
         "reopen": "v.",
-        "openended": "adj.",
-        "openness": "n.",
-        "opening": "n./adj."
+        "openness": "n."
       }
     },
     {
@@ -123367,15 +118884,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "opinionated",
-          "zh": "固执己见的",
-          "phrase_1": "opinionated commentary",
-          "phrase_1_zh": "立场强烈的评论",
-          "phrase_2": "opinionated media host",
-          "phrase_2_zh": "固执己见的媒体主持人",
-          "pos": "adj."
-        },
-        {
           "word": "opinion",
           "zh": "观点；舆论",
           "phrase_1": "public opinion survey",
@@ -123385,7 +118893,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_opinionpiece",
       "internal_word_items": [
@@ -123398,7 +118906,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "opinionpiece": "n."
       },
       "external_pos_map": {
-        "opinionated": "adj.",
         "opinion": "n./v."
       }
     },
@@ -123721,15 +119228,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "orcharding",
-          "zh": "果园经营；果树栽培",
-          "phrase_1": "orcharding practice in valleys",
-          "phrase_1_zh": "谷地果园经营实践",
-          "phrase_2": "orcharding labor calendar",
-          "phrase_2_zh": "果园劳动日历",
-          "pos": "n./adj."
-        },
-        {
           "word": "orchardist",
           "zh": "果园主；果树栽培者",
           "phrase_1": "orchardist pest management",
@@ -123739,7 +119237,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_orchard",
       "internal_word_items": [
@@ -123755,7 +119253,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "orchardland": "n./v.",
         "appleorchard": "n./v.",
         "orchardgrass": "n./v.",
-        "orcharding": "n./adj.",
         "orchardist": "n."
       }
     },
@@ -123885,15 +119382,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "orphaned",
-          "zh": "成为孤儿的；失去依托的",
-          "phrase_1": "orphaned children after conflict",
-          "phrase_1_zh": "冲突后成为孤儿的儿童",
-          "phrase_2": "orphaned data record",
-          "phrase_2_zh": "失去关联的数据记录",
-          "pos": "adj."
-        },
-        {
           "word": "orphanhood",
           "zh": "孤儿状态",
           "phrase_1": "orphanhood after epidemic disease",
@@ -123912,7 +119400,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_orphan",
       "internal_word_items": [
@@ -123927,44 +119415,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "orphan drug": "n./v.",
         "orphanet": "n./v.",
-        "orphaned": "adj.",
         "orphanhood": "n.",
         "orphanage": "n."
-      }
-    },
-    {
-      "cluster_id": "kin_head_seed_outgoing",
-      "cluster_label": "outgoing outgo",
-      "anchor": "outgoing",
-      "confidence": "review",
-      "internal_words": [
-        "outgoing"
-      ],
-      "external_words": [
-        {
-          "word": "outgo",
-          "zh": "支出；流出",
-          "phrase_1": "monthly outgo",
-          "phrase_1_zh": "每月支出",
-          "phrase_2": "cash outgo",
-          "phrase_2_zh": "现金流出",
-          "pos": "n./v."
-        }
-      ],
-      "total_words": 2,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_outgoing",
-      "internal_word_items": [
-        {
-          "word": "outgoing",
-          "pos": "n./adj."
-        }
-      ],
-      "internal_pos_map": {
-        "outgoing": "n./adj."
-      },
-      "external_pos_map": {
-        "outgo": "n./v."
       }
     },
     {
@@ -124373,24 +119825,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unshadowed",
-          "zh": "无阴影的；未被遮蔽的",
-          "phrase_1": "unshadowed area",
-          "phrase_1_zh": "无阴影区域",
-          "phrase_2": "unshadowed view",
-          "phrase_2_zh": "无遮蔽视野",
-          "pos": "adj."
-        },
-        {
-          "word": "shadowing",
-          "zh": "跟随；遮蔽",
-          "phrase_1": "speech shadowing",
-          "phrase_1_zh": "语音跟读",
-          "phrase_2": "job shadowing",
-          "phrase_2_zh": "岗位见习",
-          "pos": "n./adj."
-        },
-        {
           "word": "shadowy",
           "zh": "阴暗的；模糊的",
           "phrase_1": "shadowy figure",
@@ -124409,7 +119843,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_overshadow",
       "internal_word_items": [
@@ -124427,8 +119861,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "shadow": "n."
       },
       "external_pos_map": {
-        "unshadowed": "adj.",
-        "shadowing": "n./adj.",
         "shadowy": "n./v.",
         "foreshadow": "n./v."
       }
@@ -124506,15 +119938,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "underwhelming",
-          "zh": "令人失望的；未达预期的",
-          "phrase_1": "underwhelming policy response",
-          "phrase_1_zh": "令人失望的政策响应",
-          "phrase_2": "underwhelming experimental result",
-          "phrase_2_zh": "未达预期的实验结果",
-          "pos": "n./adj."
-        },
-        {
           "word": "whelk",
           "zh": "海螺；螺类",
           "phrase_1": "whelk fishery regulation",
@@ -124533,15 +119956,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "whelming",
-          "zh": "压倒性的；淹没的",
-          "phrase_1": "whelming pressure",
-          "phrase_1_zh": "压倒性压力",
-          "phrase_2": "whelming wave",
-          "phrase_2_zh": "淹没性浪潮",
-          "pos": "n./adj."
-        },
-        {
           "word": "whelm",
           "zh": "淹没；覆盖",
           "phrase_1": "whelm a shore",
@@ -124551,7 +119965,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_overwhelm",
       "internal_word_items": [
@@ -124564,10 +119978,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "overwhelm": "v."
       },
       "external_pos_map": {
-        "underwhelming": "n./adj.",
         "whelk": "n./v.",
         "underwhelm": "n./v.",
-        "whelming": "n./adj.",
         "whelm": "n./v."
       }
     },
@@ -124607,18 +120019,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "winterize equipment",
           "phrase_2_zh": "给设备做防寒处理",
           "pos": "v."
-        },
-        {
-          "word": "wintering",
-          "zh": "越冬；过冬",
-          "phrase_1": "wintering habitat",
-          "phrase_1_zh": "越冬栖息地",
-          "phrase_2": "wintering population",
-          "phrase_2_zh": "越冬种群",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_overwinter",
       "internal_word_items": [
@@ -124638,8 +120041,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "wintergreen": "v.",
         "wintry": "n./v.",
-        "winterize": "v.",
-        "wintering": "n./adj."
+        "winterize": "v."
       }
     },
     {
@@ -124731,15 +120133,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "owned",
-          "zh": "被拥有的；自有的",
-          "phrase_1": "foreign owned firm",
-          "phrase_1_zh": "外资企业",
-          "phrase_2": "family owned business",
-          "phrase_2_zh": "家族企业",
-          "pos": "adj."
-        },
-        {
           "word": "owner",
           "zh": "所有者",
           "phrase_1": "legal owner",
@@ -124749,7 +120142,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ownership",
       "internal_word_items": [
@@ -124763,7 +120156,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "coowner": "n.",
-        "owned": "adj.",
         "owner": "n."
       }
     },
@@ -124977,18 +120369,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "backpack water filtration",
           "phrase_2_zh": "背包式滤水",
           "pos": "n./v."
-        },
-        {
-          "word": "packaging",
-          "zh": "包装；包装业",
-          "phrase_1": "sustainable packaging material",
-          "phrase_1_zh": "可持续包装材料",
-          "phrase_2": "packaging waste regulation",
-          "phrase_2_zh": "包装废弃物监管",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pack",
       "internal_word_items": [
@@ -125012,8 +120395,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "packhorse": "n./v.",
-        "backpack": "n./v.",
-        "packaging": "n./adj."
+        "backpack": "n./v."
       }
     },
     {
@@ -125035,27 +120417,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "packager responsibility for safety",
           "phrase_2_zh": "包装者安全责任",
           "pos": "n."
-        },
-        {
-          "word": "packaging",
-          "zh": "包装",
-          "phrase_1": "food packaging",
-          "phrase_1_zh": "食品包装",
-          "phrase_2": "packaging design",
-          "phrase_2_zh": "包装设计",
-          "pos": "n./adj."
-        },
-        {
-          "word": "packing",
-          "zh": "包装；填充",
-          "phrase_1": "packing list",
-          "phrase_1_zh": "装箱单",
-          "phrase_2": "packing material",
-          "phrase_2_zh": "包装材料",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_packet",
       "internal_word_items": [
@@ -125078,9 +120442,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "pack": "n."
       },
       "external_pos_map": {
-        "packager": "n.",
-        "packaging": "n./adj.",
-        "packing": "n./adj."
+        "packager": "n."
       }
     },
     {
@@ -125184,18 +120546,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "paddockland conversion pressure",
           "phrase_2_zh": "牧场地转用压力",
           "pos": "n./v."
-        },
-        {
-          "word": "paddocked",
-          "zh": "围在小牧场的",
-          "phrase_1": "paddocked livestock management",
-          "phrase_1_zh": "围栏牲畜管理",
-          "phrase_2": "paddocked grazing rotation",
-          "phrase_2_zh": "围场轮牧",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_paddock",
       "internal_word_items": [
@@ -125211,8 +120564,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "grazing paddock": "n./v.",
         "horse paddock": "n./v.",
         "paddocktree": "n.",
-        "paddockland": "n./v.",
-        "paddocked": "adj."
+        "paddockland": "n./v."
       }
     },
     {
@@ -125593,18 +120945,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "parrotfish role in coral recovery",
           "phrase_2_zh": "鹦嘴鱼在珊瑚恢复中的作用",
           "pos": "n./v."
-        },
-        {
-          "word": "parroting",
-          "zh": "机械重复",
-          "phrase_1": "parroting official slogans",
-          "phrase_1_zh": "机械重复官方口号",
-          "phrase_2": "parroting without comprehension",
-          "phrase_2_zh": "不理解地机械重复",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_parrot",
       "internal_word_items": [
@@ -125617,8 +120960,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "parrot": "n."
       },
       "external_pos_map": {
-        "parrotfish": "n./v.",
-        "parroting": "n./adj."
+        "parrotfish": "n./v."
       }
     },
     {
@@ -125780,15 +121122,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unpatented",
-          "zh": "未获专利的",
-          "phrase_1": "unpatented design",
-          "phrase_1_zh": "未获专利设计",
-          "phrase_2": "unpatented product",
-          "phrase_2_zh": "未获专利产品",
-          "pos": "adj."
-        },
-        {
           "word": "patency",
           "zh": "开放性；通畅",
           "phrase_1": "airway patency",
@@ -125798,7 +121131,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_patent",
       "internal_word_items": [
@@ -125814,7 +121147,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "patentability": "n.",
         "patently": "adv.",
         "patentee": "n.",
-        "unpatented": "adj.",
         "patency": "n."
       }
     },
@@ -125875,15 +121207,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unpaved",
-          "zh": "未铺设的",
-          "phrase_1": "unpaved road",
-          "phrase_1_zh": "未铺装道路",
-          "phrase_2": "unpaved path",
-          "phrase_2_zh": "未铺小路",
-          "pos": "adj."
-        },
-        {
           "word": "paver",
           "zh": "铺路工；铺路石",
           "phrase_1": "concrete paver",
@@ -125891,15 +121214,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "paver machine",
           "phrase_2_zh": "铺路机",
           "pos": "n."
-        },
-        {
-          "word": "paved",
-          "zh": "铺好的",
-          "phrase_1": "paved road",
-          "phrase_1_zh": "铺好的道路",
-          "phrase_2": "paved surface",
-          "phrase_2_zh": "铺装表面",
-          "pos": "adj."
         },
         {
           "word": "pave",
@@ -125911,7 +121225,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pavement",
       "internal_word_items": [
@@ -125924,9 +121238,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "pavement": "n."
       },
       "external_pos_map": {
-        "unpaved": "adj.",
         "paver": "n.",
-        "paved": "adj.",
         "pave": "v."
       }
     },
@@ -125974,18 +121286,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "peakload management strategy",
           "phrase_2_zh": "峰值负荷管理策略",
           "pos": "n./v."
-        },
-        {
-          "word": "peaked",
-          "zh": "尖顶的；达到高峰的",
-          "phrase_1": "peaked roof structure",
-          "phrase_1_zh": "尖顶屋顶结构",
-          "phrase_2": "peaked demand for electricity",
-          "phrase_2_zh": "电力需求达到峰值",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_peak",
       "internal_word_items": [
@@ -126001,8 +121304,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "peakland": "n./v.",
         "peaktime": "n./v.",
         "peakflow": "n./v.",
-        "peakload": "n./v.",
-        "peaked": "adj."
+        "peakload": "n./v."
       }
     },
     {
@@ -126301,15 +121603,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "peerreviewed",
-          "zh": "同行评审过的",
-          "phrase_1": "peerreviewed article",
-          "phrase_1_zh": "同行评审论文",
-          "phrase_2": "peerreviewed evidence",
-          "phrase_2_zh": "同行评审证据",
-          "pos": "adj."
-        },
-        {
           "word": "peerdom",
           "zh": "贵族阶层；同辈领域",
           "phrase_1": "British peerdom",
@@ -126328,7 +121621,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_peerage",
       "internal_word_items": [
@@ -126347,7 +121640,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "peership": "n.",
-        "peerreviewed": "adj.",
         "peerdom": "n.",
         "peerless": "adj."
       }
@@ -126575,15 +121867,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "cussed",
-          "zh": "顽固的；别扭的",
-          "phrase_1": "cussed resistance to evidence",
-          "phrase_1_zh": "对证据的顽固抵抗",
-          "phrase_2": "cussed complexity of institutions",
-          "phrase_2_zh": "制度令人头疼的复杂性",
-          "pos": "adj."
-        },
-        {
           "word": "repercussion",
           "zh": "后果；反响",
           "phrase_1": "political repercussions of reform",
@@ -126611,7 +121894,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_percussion",
       "internal_word_items": [
@@ -126629,7 +121912,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "percussive": "adj."
       },
       "external_pos_map": {
-        "cussed": "adj.",
         "repercussion": "n.",
         "concussion": "n.",
         "percuss": "n./v."
@@ -126644,15 +121926,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "perish"
       ],
       "external_words": [
-        {
-          "word": "perishing",
-          "zh": "垂死的；极冷的",
-          "phrase_1": "perishing cold conditions",
-          "phrase_1_zh": "严寒条件",
-          "phrase_2": "perishing species under pressure",
-          "phrase_2_zh": "压力下濒危物种",
-          "pos": "n./adj."
-        },
         {
           "word": "perishability",
           "zh": "易腐性；短暂性",
@@ -126690,7 +121963,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_perish",
       "internal_word_items": [
@@ -126703,7 +121976,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "perish": "v."
       },
       "external_pos_map": {
-        "perishing": "n./adj.",
         "perishability": "n.",
         "imperishability": "n.",
         "perishable": "adj.",
@@ -127108,18 +122380,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "phaseout schedule",
           "phrase_2_zh": "淘汰时间表",
           "pos": "n./v."
-        },
-        {
-          "word": "phasing",
-          "zh": "分阶段；调相",
-          "phrase_1": "project phasing",
-          "phrase_1_zh": "项目分阶段",
-          "phrase_2": "signal phasing",
-          "phrase_2_zh": "信号调相",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_phasic",
       "internal_word_items": [
@@ -127139,8 +122402,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "phase transition": "n.",
         "metaphase": "n./v.",
-        "phaseout": "n./v.",
-        "phasing": "n./adj."
+        "phaseout": "n./v."
       }
     },
     {
@@ -127579,18 +122841,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "autopilot decision making",
           "phrase_2_zh": "自动化决策状态",
           "pos": "n./v."
-        },
-        {
-          "word": "piloting",
-          "zh": "驾驶；试点实施",
-          "phrase_1": "piloting a new curriculum",
-          "phrase_1_zh": "试点新课程",
-          "phrase_2": "piloting unmanned aircraft",
-          "phrase_2_zh": "驾驶无人机",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pilot",
       "internal_word_items": [
@@ -127610,8 +122863,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "copilot": "n./v.",
         "pilotage": "n.",
-        "autopilot": "n./v.",
-        "piloting": "n./adj."
+        "autopilot": "n./v."
       }
     },
     {
@@ -127625,15 +122877,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unpiloted",
-          "zh": "无人驾驶的",
-          "phrase_1": "unpiloted aerial vehicle",
-          "phrase_1_zh": "无人驾驶飞行器",
-          "phrase_2": "unpiloted space mission",
-          "phrase_2_zh": "无人航天任务",
-          "pos": "adj."
-        },
-        {
           "word": "autopilot",
           "zh": "自动驾驶仪；自动模式",
           "phrase_1": "autopilot navigation system",
@@ -127641,27 +122884,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "operate on autopilot",
           "phrase_2_zh": "机械地自动运转",
           "pos": "n./v."
-        },
-        {
-          "word": "piloting",
-          "zh": "驾驶；试点",
-          "phrase_1": "piloting a drone system",
-          "phrase_1_zh": "试飞无人机系统",
-          "phrase_2": "piloting a curriculum reform",
-          "phrase_2_zh": "试点课程改革",
-          "pos": "n./adj."
-        },
-        {
-          "word": "piloted",
-          "zh": "有人驾驶的；被试点的",
-          "phrase_1": "piloted aircraft",
-          "phrase_1_zh": "有人驾驶飞机",
-          "phrase_2": "piloted reform program",
-          "phrase_2_zh": "试点改革项目",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pilotless",
       "internal_word_items": [
@@ -127679,10 +122904,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "pilot": "v."
       },
       "external_pos_map": {
-        "unpiloted": "adj.",
-        "autopilot": "n./v.",
-        "piloting": "n./adj.",
-        "piloted": "adj."
+        "autopilot": "n./v."
       }
     },
     {
@@ -127782,18 +123004,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "pivotable policy approach",
           "phrase_2_zh": "可转向政策方法",
           "pos": "adj."
-        },
-        {
-          "word": "pivoting",
-          "zh": "转向；枢轴运动",
-          "phrase_1": "pivoting strategy after crisis",
-          "phrase_1_zh": "危机后的转向策略",
-          "phrase_2": "pivoting joint movement",
-          "phrase_2_zh": "枢轴关节运动",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pivot",
       "internal_word_items": [
@@ -127813,8 +123026,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "pivotman": "n.",
         "pivotpoint": "n./v.",
-        "pivotable": "adj.",
-        "pivoting": "n./adj."
+        "pivotable": "adj."
       }
     },
     {
@@ -128053,15 +123265,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "plating",
-          "zh": "镀层；装盘",
-          "phrase_1": "zinc plating corrosion resistance",
-          "phrase_1_zh": "镀锌耐腐蚀性",
-          "phrase_2": "plating technique in microbiology",
-          "phrase_2_zh": "微生物学中的平板涂布技术",
-          "pos": "n./adj."
-        },
-        {
           "word": "platelet",
           "zh": "血小板",
           "phrase_1": "platelet activation pathway",
@@ -128071,7 +123274,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_plate",
       "internal_word_items": [
@@ -128091,7 +123294,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "plateware": "n./v.",
         "tectonicplate": "v.",
-        "plating": "n./adj.",
         "platelet": "n./v."
       }
     },
@@ -128106,15 +123308,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "plateaued",
-          "zh": "达到平台期的",
-          "phrase_1": "plateaued economic growth",
-          "phrase_1_zh": "进入平台期的经济增长",
-          "phrase_2": "plateaued learning curve",
-          "phrase_2_zh": "进入平台期的学习曲线",
-          "pos": "adj."
-        },
-        {
           "word": "platy",
           "zh": "板状的；扁平的",
           "phrase_1": "platy mineral structure",
@@ -128124,7 +123317,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_plateau",
       "internal_word_items": [
@@ -128142,7 +123335,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "plate": "n."
       },
       "external_pos_map": {
-        "plateaued": "adj.",
         "platy": "n./v."
       }
     },
@@ -128559,15 +123751,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "plumed",
-          "zh": "有羽饰的；羽状的",
-          "phrase_1": "plumed helmet in ceremonies",
-          "phrase_1_zh": "仪式中的羽饰头盔",
-          "phrase_2": "plumed seed dispersal",
-          "phrase_2_zh": "羽状种子传播",
-          "pos": "adj."
-        },
-        {
           "word": "plumage",
           "zh": "鸟羽；羽衣",
           "phrase_1": "plumage coloration in birds",
@@ -128577,7 +123760,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_plume",
       "internal_word_items": [
@@ -128593,7 +123776,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "plumelet": "n./v.",
         "plumule": "n./v.",
         "plumose": "n./v.",
-        "plumed": "adj.",
         "plumage": "n."
       }
     },
@@ -128606,15 +123788,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "plunge"
       ],
       "external_words": [
-        {
-          "word": "plunged",
-          "zh": "骤降的；陷入的",
-          "phrase_1": "plunged economy after crisis",
-          "phrase_1_zh": "危机后骤降的经济",
-          "phrase_2": "plunged into political uncertainty",
-          "phrase_2_zh": "陷入政治不确定",
-          "pos": "adj."
-        },
         {
           "word": "plungecut",
           "zh": "插入式切割",
@@ -128634,15 +123807,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "plunging",
-          "zh": "急剧下降的；跳入的",
-          "phrase_1": "plunging birth rate",
-          "phrase_1_zh": "急剧下降的出生率",
-          "phrase_2": "plunging neckline in fashion history",
-          "phrase_2_zh": "服装史中的深V领",
-          "pos": "n./adj."
-        },
-        {
           "word": "plunger",
           "zh": "柱塞；潜水者",
           "phrase_1": "plunger pump mechanism",
@@ -128652,7 +123816,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_plunge",
       "internal_word_items": [
@@ -128665,10 +123829,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "plunge": "n./v."
       },
       "external_pos_map": {
-        "plunged": "adj.",
         "plungecut": "n./v.",
         "plungepool": "n./v.",
-        "plunging": "n./adj.",
         "plunger": "n."
       }
     },
@@ -128980,18 +124142,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "antipoison kit in fieldwork",
           "phrase_2_zh": "野外工作中的解毒包",
           "pos": "n./v."
-        },
-        {
-          "word": "poisoning",
-          "zh": "中毒；毒害",
-          "phrase_1": "lead poisoning prevention",
-          "phrase_1_zh": "铅中毒预防",
-          "phrase_2": "poisoning of public discourse",
-          "phrase_2_zh": "公共话语被毒化",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_poison",
       "internal_word_items": [
@@ -129011,8 +124164,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "poisonwood": "n./v.",
         "poisoner": "n.",
-        "antipoison": "n./v.",
-        "poisoning": "n./adj."
+        "antipoison": "n./v."
       }
     },
     {
@@ -129024,27 +124176,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "poisonous",
         "poison"
       ],
-      "external_words": [
-        {
-          "word": "poisoned",
-          "zh": "中毒的；被毒害的",
-          "phrase_1": "poisoned well",
-          "phrase_1_zh": "被投毒的井",
-          "phrase_2": "poisoned relationship",
-          "phrase_2_zh": "被破坏的关系",
-          "pos": "adj."
-        },
-        {
-          "word": "poisoning",
-          "zh": "中毒；投毒",
-          "phrase_1": "mercury poisoning",
-          "phrase_1_zh": "汞中毒",
-          "phrase_2": "food poisoning outbreak",
-          "phrase_2_zh": "食物中毒暴发",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_poisonous",
       "internal_word_items": [
@@ -129061,10 +124194,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "poisonous": "adj.",
         "poison": "n."
       },
-      "external_pos_map": {
-        "poisoned": "adj.",
-        "poisoning": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_polar",
@@ -129362,15 +124492,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "polishing",
-          "zh": "抛光；润色",
-          "phrase_1": "polishing archaeological metal",
-          "phrase_1_zh": "抛光考古金属",
-          "phrase_2": "polishing academic prose",
-          "phrase_2_zh": "润色学术文章",
-          "pos": "n./adj."
-        },
-        {
           "word": "polisher",
           "zh": "抛光工；抛光机",
           "phrase_1": "industrial polisher safety",
@@ -129378,18 +124499,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "stone polisher technique",
           "phrase_2_zh": "石材抛光技术",
           "pos": "n."
-        },
-        {
-          "word": "unpolished",
-          "zh": "未打磨的；不成熟的",
-          "phrase_1": "unpolished stone",
-          "phrase_1_zh": "未打磨石头",
-          "phrase_2": "unpolished style",
-          "phrase_2_zh": "不成熟的风格",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_polish",
       "internal_word_items": [
@@ -129404,9 +124516,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "repolish": "n./v.",
         "polishable": "adj.",
-        "polishing": "n./adj.",
-        "polisher": "n.",
-        "unpolished": "adj."
+        "polisher": "n."
       }
     },
     {
@@ -129747,15 +124857,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "impoverished",
-          "zh": "贫困的；贫瘠的",
-          "phrase_1": "impoverished community",
-          "phrase_1_zh": "贫困社区",
-          "phrase_2": "impoverished land",
-          "phrase_2_zh": "贫瘠土地",
-          "pos": "adj."
-        },
-        {
           "word": "pauperism",
           "zh": "贫困状态；贫民问题",
           "phrase_1": "pauperism in industrial cities",
@@ -129765,7 +124866,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_poor",
       "internal_word_items": [
@@ -129783,7 +124884,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "impoverish": "v."
       },
       "external_pos_map": {
-        "impoverished": "adj.",
         "pauperism": "n."
       }
     },
@@ -130348,18 +125448,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "pouchful measure in trade",
           "phrase_2_zh": "贸易中的一袋量",
           "pos": "adj."
-        },
-        {
-          "word": "pouched",
-          "zh": "有袋的；袋状的",
-          "phrase_1": "pouched mammal reproduction",
-          "phrase_1_zh": "有袋哺乳动物繁殖",
-          "phrase_2": "pouched packaging design",
-          "phrase_2_zh": "袋状包装设计",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pouch",
       "internal_word_items": [
@@ -130373,8 +125464,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "mailpouch": "n./v.",
-        "pouchful": "adj.",
-        "pouched": "adj."
+        "pouchful": "adj."
       }
     },
     {
@@ -130388,15 +125478,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "impoverished",
-          "zh": "贫困的；贫瘠的",
-          "phrase_1": "impoverished region",
-          "phrase_1_zh": "贫困地区",
-          "phrase_2": "impoverished vocabulary",
-          "phrase_2_zh": "贫乏词汇",
-          "pos": "adj."
-        },
-        {
           "word": "impoverishment",
           "zh": "贫困化；贫瘠化",
           "phrase_1": "economic impoverishment",
@@ -130406,7 +125487,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_poverty",
       "internal_word_items": [
@@ -130424,7 +125505,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "impoverish": "v."
       },
       "external_pos_map": {
-        "impoverished": "adj.",
         "impoverishment": "n."
       }
     },
@@ -130502,18 +125582,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "powerless response",
           "phrase_2_zh": "无力回应",
           "pos": "adj."
-        },
-        {
-          "word": "empowered",
-          "zh": "被赋权的；有能力的",
-          "phrase_1": "empowered citizen",
-          "phrase_1_zh": "被赋权公民",
-          "phrase_2": "empowered team",
-          "phrase_2_zh": "有自主权的团队",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_powerful",
       "internal_word_items": [
@@ -130536,8 +125607,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "power": "n."
       },
       "external_pos_map": {
-        "powerless": "adj.",
-        "empowered": "adj."
+        "powerless": "adj."
       }
     },
     {
@@ -131030,18 +126100,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "prevision of demographic change",
           "phrase_2_zh": "对人口变化的预见",
           "pos": "n."
-        },
-        {
-          "word": "prevailing",
-          "zh": "占主导的；流行的",
-          "phrase_1": "prevailing economic conditions",
-          "phrase_1_zh": "当前主导经济状况",
-          "phrase_2": "prevailing wind direction",
-          "phrase_2_zh": "盛行风向",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_previous",
       "internal_word_items": [
@@ -131061,8 +126122,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "prevenient": "adj.",
         "preview": "n./v.",
-        "prevision": "n.",
-        "prevailing": "adj."
+        "prevision": "n."
       }
     },
     {
@@ -131112,7 +126172,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "pricing",
       "confidence": "review",
       "internal_words": [
-        "pricing",
         "price"
       ],
       "external_words": [
@@ -131142,39 +126201,24 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "priceless advice",
           "phrase_2_zh": "宝贵建议",
           "pos": "adj."
-        },
-        {
-          "word": "priced",
-          "zh": "定价的；有价的",
-          "phrase_1": "reasonably priced goods",
-          "phrase_1_zh": "定价合理的商品",
-          "phrase_2": "priced risk",
-          "phrase_2_zh": "已定价风险",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pricing",
       "internal_word_items": [
-        {
-          "word": "pricing",
-          "pos": "n."
-        },
         {
           "word": "price",
           "pos": "n./v."
         }
       ],
       "internal_pos_map": {
-        "pricing": "n.",
         "price": "n./v."
       },
       "external_pos_map": {
         "underprice": "n./v.",
         "overprice": "n./v.",
-        "priceless": "adj.",
-        "priced": "adj."
+        "priceless": "adj."
       }
     },
     {
@@ -131374,15 +126418,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "printmaking",
-          "zh": "版画制作",
-          "phrase_1": "traditional printmaking",
-          "phrase_1_zh": "传统版画制作",
-          "phrase_2": "printmaking technique",
-          "phrase_2_zh": "版画技术",
-          "pos": "n./adj."
-        },
-        {
           "word": "fingerprint",
           "zh": "指纹；特征",
           "phrase_1": "digital fingerprint",
@@ -131401,7 +126436,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_print",
       "internal_word_items": [
@@ -131424,7 +126459,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "blueprint": "n."
       },
       "external_pos_map": {
-        "printmaking": "n./adj.",
         "fingerprint": "n./v.",
         "imprint": "n./v."
       }
@@ -131637,18 +126671,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "academic probation policy",
           "phrase_2_zh": "学业试读政策",
           "pos": "n."
-        },
-        {
-          "word": "probing",
-          "zh": "深入调查的；探测",
-          "phrase_1": "probing journalistic question",
-          "phrase_1_zh": "深入的新闻提问",
-          "phrase_2": "probing signal in physics",
-          "phrase_2_zh": "物理中的探测信号",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_probe",
       "internal_word_items": [
@@ -131667,8 +126692,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "probative": "adj.",
-        "probation": "n.",
-        "probing": "n./adj."
+        "probation": "n."
       }
     },
     {
@@ -131767,15 +126791,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "proceeding",
-          "zh": "程序；诉讼",
-          "phrase_1": "legal proceeding",
-          "phrase_1_zh": "法律程序",
-          "phrase_2": "court proceeding",
-          "phrase_2_zh": "庭审程序",
-          "pos": "n./adj."
-        },
-        {
           "word": "procedure",
           "zh": "程序；步骤",
           "phrase_1": "legal procedure",
@@ -131785,7 +126800,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_procedural",
       "internal_word_items": [
@@ -131809,7 +126824,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "procession": "n.",
-        "proceeding": "n./adj.",
         "procedure": "n."
       }
     },
@@ -132108,15 +127122,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "professed",
-          "zh": "公开声称的",
-          "phrase_1": "professed commitment to equality",
-          "phrase_1_zh": "公开宣称的平等承诺",
-          "phrase_2": "professed belief in reform",
-          "phrase_2_zh": "公开表明的改革信念",
-          "pos": "adj."
-        },
-        {
           "word": "professorial",
           "zh": "教授的",
           "phrase_1": "professorial authority in academia",
@@ -132153,7 +127158,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_professor",
       "internal_word_items": [
@@ -132166,7 +127171,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "professor": "n."
       },
       "external_pos_map": {
-        "professed": "adj.",
         "professorial": "adj.",
         "professional": "adj.",
         "profession": "n.",
@@ -133450,15 +128454,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "pyramidbuilding",
-          "zh": "金字塔建造",
-          "phrase_1": "pyramidbuilding labor organization",
-          "phrase_1_zh": "金字塔建造劳动组织",
-          "phrase_2": "pyramidbuilding logistics in Egypt",
-          "phrase_2_zh": "埃及金字塔建造物流",
-          "pos": "n./adj."
-        },
-        {
           "word": "pyramidscheme",
           "zh": "金字塔骗局",
           "phrase_1": "pyramidscheme prosecution",
@@ -133495,7 +128490,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_pyramid",
       "internal_word_items": [
@@ -133508,7 +128503,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "pyramid": "n."
       },
       "external_pos_map": {
-        "pyramidbuilding": "n./adj.",
         "pyramidscheme": "n./v.",
         "pyramidology": "n.",
         "pyramidion": "n./v.",
@@ -133763,18 +128757,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "proof",
         "rabbit"
       ],
-      "external_words": [
-        {
-          "word": "proofing",
-          "zh": "防护处理；校样",
-          "phrase_1": "rabbit proofing farmland",
-          "phrase_1_zh": "农田防兔处理",
-          "phrase_2": "proofing an academic article",
-          "phrase_2_zh": "校对学术文章",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 4,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rabbit_proof",
       "internal_word_items": [
@@ -133796,9 +128780,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "proof": "n.",
         "rabbit": "n."
       },
-      "external_pos_map": {
-        "proofing": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_rabies",
@@ -134013,15 +128995,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "radishseed",
-          "zh": "萝卜籽",
-          "phrase_1": "radishseed germination test",
-          "phrase_1_zh": "萝卜籽发芽测试",
-          "phrase_2": "radishseed oil extraction",
-          "phrase_2_zh": "萝卜籽油提取",
-          "pos": "adj."
-        },
-        {
           "word": "horseradish",
           "zh": "辣根",
           "phrase_1": "horseradish cultivation method",
@@ -134031,7 +129004,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_radish",
       "internal_word_items": [
@@ -134046,7 +129019,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "radishroot": "n./v.",
         "radishsprout": "n./v.",
-        "radishseed": "adj.",
         "horseradish": "n./v."
       }
     },
@@ -134220,15 +129192,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "rafting",
-          "zh": "漂流；筏运",
-          "phrase_1": "rafting tourism regulation",
-          "phrase_1_zh": "漂流旅游监管",
-          "phrase_2": "timber rafting history",
-          "phrase_2_zh": "木材筏运史",
-          "pos": "n./adj."
-        },
-        {
           "word": "rafter",
           "zh": "椽子；漂流者",
           "phrase_1": "rafter roof structure",
@@ -134238,7 +129201,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_raft",
       "internal_word_items": [
@@ -134253,7 +129216,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "raftman": "n.",
         "liferaft": "n./v.",
-        "rafting": "n./adj.",
         "rafter": "n."
       }
     },
@@ -134294,15 +129256,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "raiding",
-          "zh": "突袭；掠夺",
-          "phrase_1": "raiding party in frontier history",
-          "phrase_1_zh": "边疆史中的袭击队",
-          "phrase_2": "raiding behavior in warfare",
-          "phrase_2_zh": "战争中的突袭行为",
-          "pos": "n./adj."
-        },
-        {
           "word": "raider",
           "zh": "袭击者；掠夺者",
           "phrase_1": "raider attack on settlements",
@@ -134312,7 +129265,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_raid",
       "internal_word_items": [
@@ -134328,7 +129281,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "raidproof": "n./v.",
         "counterraid": "n./v.",
         "airraid": "n./v.",
-        "raiding": "n./adj.",
         "raider": "n."
       }
     },
@@ -134360,18 +129312,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "railcar manufacturing standard",
           "phrase_2_zh": "轨道车制造标准",
           "pos": "n./v."
-        },
-        {
-          "word": "railing",
-          "zh": "栏杆；强烈责骂",
-          "phrase_1": "bridge railing safety",
-          "phrase_1_zh": "桥梁栏杆安全",
-          "phrase_2": "railing against corruption",
-          "phrase_2_zh": "强烈谴责腐败",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rail",
       "internal_word_items": [
@@ -134395,8 +129338,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "railhead": "n./v.",
-        "railcar": "n./v.",
-        "railing": "n./adj."
+        "railcar": "n./v."
       }
     },
     {
@@ -134477,15 +129419,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "rainfed",
-          "zh": "雨养的",
-          "phrase_1": "rainfed agriculture",
-          "phrase_1_zh": "雨养农业",
-          "phrase_2": "rainfed crop",
-          "phrase_2_zh": "雨养作物",
-          "pos": "adj."
-        },
-        {
           "word": "rainstorm",
           "zh": "暴雨",
           "phrase_1": "severe rainstorm",
@@ -134513,7 +129446,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rainfall",
       "internal_word_items": [
@@ -134531,7 +129464,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "rain": "n."
       },
       "external_pos_map": {
-        "rainfed": "adj.",
         "rainstorm": "n./v.",
         "rainwater": "n.",
         "rainy": "n./v."
@@ -134641,15 +129573,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "ranching",
-          "zh": "牧场经营",
-          "phrase_1": "ranching economy in drylands",
-          "phrase_1_zh": "旱地牧场经济",
-          "phrase_2": "ranching conflict with wildlife",
-          "phrase_2_zh": "牧场经营与野生动物冲突",
-          "pos": "n./adj."
-        },
-        {
           "word": "ranchland",
           "zh": "牧场地",
           "phrase_1": "ranchland conservation easement",
@@ -134668,7 +129591,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ranch",
       "internal_word_items": [
@@ -134683,7 +129606,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "duderanch": "n./v.",
         "ranchhouse": "n./v.",
-        "ranching": "n./adj.",
         "ranchland": "n./v.",
         "rancher": "n."
       }
@@ -134884,15 +129806,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "ratified",
-          "zh": "已批准的",
-          "phrase_1": "ratified convention on labor rights",
-          "phrase_1_zh": "已批准的劳工权利公约",
-          "phrase_2": "ratified amendment record",
-          "phrase_2_zh": "已批准修正案记录",
-          "pos": "adj."
-        },
-        {
           "word": "ratifiable",
           "zh": "可批准的",
           "phrase_1": "ratifiable treaty text",
@@ -134911,7 +129824,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ratify",
       "internal_word_items": [
@@ -134929,7 +129842,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "ratification": "n."
       },
       "external_pos_map": {
-        "ratified": "adj.",
         "ratifiable": "adj.",
         "ratifier": "n."
       }
@@ -135613,15 +130525,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "recordkeeping",
-          "zh": "档案记录管理",
-          "phrase_1": "recordkeeping compliance standard",
-          "phrase_1_zh": "记录管理合规标准",
-          "phrase_2": "digital recordkeeping system",
-          "phrase_2_zh": "数字记录管理系统",
-          "pos": "n./adj."
-        },
-        {
           "word": "recordist",
           "zh": "录音师；记录者",
           "phrase_1": "field recordist archive",
@@ -135647,18 +130550,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "recordation of oral testimony",
           "phrase_2_zh": "口头证词记录",
           "pos": "n."
-        },
-        {
-          "word": "prerecorded",
-          "zh": "预先录制的",
-          "phrase_1": "prerecorded message",
-          "phrase_1_zh": "预录信息",
-          "phrase_2": "prerecorded lecture",
-          "phrase_2_zh": "预录讲座",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_record",
       "internal_word_items": [
@@ -135671,11 +130565,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "record": "n./v."
       },
       "external_pos_map": {
-        "recordkeeping": "n./adj.",
         "recordist": "n.",
         "recorder": "n.",
-        "recordation": "n.",
-        "prerecorded": "adj."
+        "recordation": "n."
       }
     },
     {
@@ -135697,15 +130589,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "recruited",
-          "zh": "被招募的",
-          "phrase_1": "recruited study participants",
-          "phrase_1_zh": "被招募的研究参与者",
-          "phrase_2": "newly recruited staff",
-          "phrase_2_zh": "新招聘员工",
-          "pos": "adj."
-        },
-        {
           "word": "recruiter",
           "zh": "招聘者；征募者",
           "phrase_1": "recruiter screening interview",
@@ -135722,18 +130605,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "military recruitment campaign",
           "phrase_2_zh": "军事征兵行动",
           "pos": "n."
-        },
-        {
-          "word": "unrecruited",
-          "zh": "未被招募的",
-          "phrase_1": "unrecruited group",
-          "phrase_1_zh": "未招募群体",
-          "phrase_2": "unrecruited volunteer",
-          "phrase_2_zh": "未招募志愿者",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_recruit",
       "internal_word_items": [
@@ -135747,10 +130621,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "rerecruit": "n./v.",
-        "recruited": "adj.",
         "recruiter": "n.",
-        "recruitment": "n.",
-        "unrecruited": "adj."
+        "recruitment": "n."
       }
     },
     {
@@ -135825,15 +130697,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unredeemed",
-          "zh": "未赎回的；未弥补的",
-          "phrase_1": "unredeemed bond",
-          "phrase_1_zh": "未赎回债券",
-          "phrase_2": "unredeemed promise",
-          "phrase_2_zh": "未兑现承诺",
-          "pos": "adj."
-        },
-        {
           "word": "redemption",
           "zh": "赎回；救赎",
           "phrase_1": "debt redemption",
@@ -135843,7 +130706,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_redeem",
       "internal_word_items": [
@@ -135859,7 +130722,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "redemptive": "adj.",
         "redeemable": "adj.",
         "redeemer": "n.",
-        "unredeemed": "adj.",
         "redemption": "n."
       }
     },
@@ -135900,15 +130762,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "reefbuilding",
-          "zh": "造礁的",
-          "phrase_1": "reefbuilding coral species",
-          "phrase_1_zh": "造礁珊瑚物种",
-          "phrase_2": "reefbuilding process in warm seas",
-          "phrase_2_zh": "暖海中的造礁过程",
-          "pos": "n./adj."
-        },
-        {
           "word": "reefal",
           "zh": "礁的；礁相的",
           "phrase_1": "reefal limestone formation",
@@ -135918,7 +130771,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_reef",
       "internal_word_items": [
@@ -135934,7 +130787,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "reefless": "adj.",
         "barrierreef": "n./v.",
         "coralreef": "n./v.",
-        "reefbuilding": "n./adj.",
         "reefal": "adj."
       }
     },
@@ -136080,24 +130932,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "filled",
-          "zh": "填满的",
-          "phrase_1": "filled container",
-          "phrase_1_zh": "装满的容器",
-          "phrase_2": "filled position",
-          "phrase_2_zh": "已有人任职的岗位",
-          "pos": "adj."
-        },
-        {
-          "word": "filling",
-          "zh": "填充物；馅料",
-          "phrase_1": "dental filling",
-          "phrase_1_zh": "补牙材料",
-          "phrase_2": "pie filling",
-          "phrase_2_zh": "派馅",
-          "pos": "n./adj."
-        },
-        {
           "word": "filler",
           "zh": "填充物；补白",
           "phrase_1": "filler material",
@@ -136107,7 +130941,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_refill",
       "internal_word_items": [
@@ -136130,8 +130964,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "fulfillment": "n."
       },
       "external_pos_map": {
-        "filled": "adj.",
-        "filling": "n./adj.",
         "filler": "n."
       }
     },
@@ -136469,18 +131301,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "ingroup loyalty",
           "phrase_2_zh": "内群体忠诚",
           "pos": "n./v."
-        },
-        {
-          "word": "grouping",
-          "zh": "分组；归类",
-          "phrase_1": "statistical grouping method",
-          "phrase_1_zh": "统计分组方法",
-          "phrase_2": "social grouping pattern",
-          "phrase_2_zh": "社会分组模式",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_regroup",
       "internal_word_items": [
@@ -136500,8 +131323,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "grouplet": "n./v.",
         "outgroup": "n./v.",
-        "ingroup": "n./v.",
-        "grouping": "n./adj."
+        "ingroup": "n./v."
       }
     },
     {
@@ -136709,36 +131531,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "kindler in combustion testing",
           "phrase_2_zh": "燃烧测试中的点燃器",
           "pos": "n."
-        },
-        {
-          "word": "unkindled",
-          "zh": "未点燃的",
-          "phrase_1": "unkindled fire",
-          "phrase_1_zh": "未点燃的火",
-          "phrase_2": "unkindled interest",
-          "phrase_2_zh": "未被激起的兴趣",
-          "pos": "adj."
-        },
-        {
-          "word": "kindled",
-          "zh": "被点燃的",
-          "phrase_1": "kindled enthusiasm",
-          "phrase_1_zh": "被激起的热情",
-          "phrase_2": "kindled flame",
-          "phrase_2_zh": "点燃的火焰",
-          "pos": "adj."
-        },
-        {
-          "word": "kindling",
-          "zh": "引火物；点燃",
-          "phrase_1": "dry kindling",
-          "phrase_1_zh": "干引火物",
-          "phrase_2": "kindling effect",
-          "phrase_2_zh": "点燃效应",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rekindle",
       "internal_word_items": [
@@ -136756,10 +131551,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "kindle": "v."
       },
       "external_pos_map": {
-        "kindler": "n.",
-        "unkindled": "adj.",
-        "kindled": "adj.",
-        "kindling": "n./adj."
+        "kindler": "n."
       }
     },
     {
@@ -136837,24 +131629,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unreleased",
-          "zh": "未发布的",
-          "phrase_1": "unreleased data",
-          "phrase_1_zh": "未发布数据",
-          "phrase_2": "unreleased film",
-          "phrase_2_zh": "未上映电影",
-          "pos": "adj."
-        },
-        {
-          "word": "leasing",
-          "zh": "租赁",
-          "phrase_1": "equipment leasing",
-          "phrase_1_zh": "设备租赁",
-          "phrase_2": "leasing market",
-          "phrase_2_zh": "租赁市场",
-          "pos": "n./adj."
-        },
-        {
           "word": "lease",
           "zh": "租约；租赁",
           "phrase_1": "lease agreement",
@@ -136864,7 +131638,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_release",
       "internal_word_items": [
@@ -136877,8 +131651,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "release": "n./v."
       },
       "external_pos_map": {
-        "unreleased": "adj.",
-        "leasing": "n./adj.",
         "lease": "n./v."
       }
     },
@@ -137140,19 +131912,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "relief",
       "confidence": "review",
       "internal_words": [
-        "relief",
-        "relieved"
+        "relief"
       ],
       "external_words": [
-        {
-          "word": "unrelieved",
-          "zh": "未缓解的；单调的",
-          "phrase_1": "unrelieved pain",
-          "phrase_1_zh": "未缓解的疼痛",
-          "phrase_2": "unrelieved tension",
-          "phrase_2_zh": "持续紧张",
-          "pos": "adj."
-        },
         {
           "word": "reliever",
           "zh": "缓解物；替换者",
@@ -137161,15 +131923,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "stress reliever",
           "phrase_2_zh": "减压物",
           "pos": "n."
-        },
-        {
-          "word": "relieving",
-          "zh": "缓解的",
-          "phrase_1": "relieving effect",
-          "phrase_1_zh": "缓解效果",
-          "phrase_2": "relieving treatment",
-          "phrase_2_zh": "缓解治疗",
-          "pos": "n./adj."
         },
         {
           "word": "relieve",
@@ -137181,27 +131934,20 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_relief",
       "internal_word_items": [
         {
           "word": "relief",
           "pos": "n."
-        },
-        {
-          "word": "relieved",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "relief": "n.",
-        "relieved": "adj."
+        "relief": "n."
       },
       "external_pos_map": {
-        "unrelieved": "adj.",
         "reliever": "n.",
-        "relieving": "n./adj.",
         "relieve": "n./v."
       }
     },
@@ -137294,15 +132040,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "remanding",
-          "zh": "还押；发回",
-          "phrase_1": "remanding a case for retrial",
-          "phrase_1_zh": "将案件发回重审",
-          "phrase_2": "remanding suspect to custody",
-          "phrase_2_zh": "将嫌疑人还押",
-          "pos": "n./adj."
-        },
-        {
           "word": "remandee",
           "zh": "还押候审者",
           "phrase_1": "remandee legal protection",
@@ -137312,7 +132049,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_remand",
       "internal_word_items": [
@@ -137327,7 +132064,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "remandhome": "n./v.",
         "remandment": "n.",
-        "remanding": "n./adj.",
         "remandee": "n."
       }
     },
@@ -137352,15 +132088,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "marked",
-          "zh": "明显的；有标记的",
-          "phrase_1": "marked difference",
-          "phrase_1_zh": "明显差异",
-          "phrase_2": "marked improvement",
-          "phrase_2_zh": "明显改善",
-          "pos": "adj."
-        },
-        {
           "word": "marker",
           "zh": "标志物；记号笔",
           "phrase_1": "genetic marker",
@@ -137370,7 +132097,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_remark",
       "internal_word_items": [
@@ -137394,7 +132121,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "demarcate": "v.",
-        "marked": "adj.",
         "marker": "n."
       }
     },
@@ -137509,15 +132235,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "rendering",
-          "zh": "呈现；渲染",
-          "phrase_1": "architectural rendering software",
-          "phrase_1_zh": "建筑渲染软件",
-          "phrase_2": "rendering of legal meaning",
-          "phrase_2_zh": "法律意义的呈现",
-          "pos": "n./adj."
-        },
-        {
           "word": "rendition",
           "zh": "呈现；演绎",
           "phrase_1": "visual rendition",
@@ -137527,7 +132244,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_render",
       "internal_word_items": [
@@ -137547,7 +132264,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "renderable": "adj.",
         "renderer": "n.",
-        "rendering": "n./adj.",
         "rendition": "n."
       }
     },
@@ -137740,15 +132456,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unreprieved",
-          "zh": "未获缓刑的",
-          "phrase_1": "unreprieved prisoner case",
-          "phrase_1_zh": "未获缓刑囚犯案件",
-          "phrase_2": "unreprieved execution order",
-          "phrase_2_zh": "未暂缓的执行命令",
-          "pos": "adj."
-        },
-        {
           "word": "repriever",
           "zh": "缓刑者；救助者",
           "phrase_1": "repriever in legal process",
@@ -137767,7 +132474,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_reprieve",
       "internal_word_items": [
@@ -137780,7 +132487,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "reprieve": "n./v."
       },
       "external_pos_map": {
-        "unreprieved": "adj.",
         "repriever": "n.",
         "reprieval": "adj."
       }
@@ -137915,15 +132621,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "required",
-          "zh": "必需的；规定的",
-          "phrase_1": "required disclosure statement",
-          "phrase_1_zh": "规定披露声明",
-          "phrase_2": "required sample size calculation",
-          "phrase_2_zh": "所需样本量计算",
-          "pos": "adj."
-        },
-        {
           "word": "requisition",
           "zh": "征用；申请",
           "phrase_1": "purchase requisition",
@@ -137942,7 +132639,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_require",
       "internal_word_items": [
@@ -137965,7 +132662,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "inquire": "v."
       },
       "external_pos_map": {
-        "required": "adj.",
         "requisition": "n.",
         "requisite": "n./v."
       }
@@ -137980,24 +132676,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "research"
       ],
       "external_words": [
-        {
-          "word": "researched",
-          "zh": "经过研究的",
-          "phrase_1": "well researched report",
-          "phrase_1_zh": "充分研究的报告",
-          "phrase_2": "researched topic",
-          "phrase_2_zh": "被研究的主题",
-          "pos": "adj."
-        },
-        {
-          "word": "searching",
-          "zh": "搜索的；深入的",
-          "phrase_1": "searching question",
-          "phrase_1_zh": "深入问题",
-          "phrase_2": "searching process",
-          "phrase_2_zh": "搜索过程",
-          "pos": "n./adj."
-        },
         {
           "word": "searcher",
           "zh": "搜索者；搜寻者",
@@ -138017,7 +132695,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_researcher",
       "internal_word_items": [
@@ -138035,8 +132713,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "research": "n."
       },
       "external_pos_map": {
-        "researched": "adj.",
-        "searching": "n./adj.",
         "searcher": "n.",
         "searchable": "adj."
       }
@@ -138047,8 +132723,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "reshape",
       "confidence": "review",
       "internal_words": [
-        "reshape",
-        "shaped"
+        "reshape"
       ],
       "external_words": [
         {
@@ -138079,22 +132754,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_reshape",
       "internal_word_items": [
         {
           "word": "reshape",
           "pos": "v."
-        },
-        {
-          "word": "shaped",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "reshape": "v.",
-        "shaped": "adj."
+        "reshape": "v."
       },
       "external_pos_map": {
         "shapeless": "adj.",
@@ -138180,15 +132850,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "resonating",
-          "zh": "共鸣的；共振的",
-          "phrase_1": "resonating chamber",
-          "phrase_1_zh": "共鸣腔",
-          "phrase_2": "resonating idea",
-          "phrase_2_zh": "引发共鸣的想法",
-          "pos": "n./adj."
-        },
-        {
           "word": "resonator",
           "zh": "共振器",
           "phrase_1": "optical resonator",
@@ -138216,7 +132877,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_resonance",
       "internal_word_items": [
@@ -138230,7 +132891,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "resonantly": "adv.",
-        "resonating": "n./adj.",
         "resonator": "n.",
         "resonant": "adj.",
         "resonate": "v."
@@ -138381,18 +133041,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "resulthood in evaluation logic",
           "phrase_2_zh": "评估逻辑中的结果阶段",
           "pos": "n."
-        },
-        {
-          "word": "resulting",
-          "zh": "由此产生的",
-          "phrase_1": "resulting economic instability",
-          "phrase_1_zh": "由此产生的经济不稳定",
-          "phrase_2": "resulting pattern in data",
-          "phrase_2_zh": "数据中产生的模式",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_result",
       "internal_word_items": [
@@ -138415,8 +133066,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resultant": "adj."
       },
       "external_pos_map": {
-        "resulthood": "n.",
-        "resulting": "n./adj."
+        "resulthood": "n."
       }
     },
     {
@@ -138824,15 +133474,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "veiling",
-          "zh": "遮蔽；覆盖",
-          "phrase_1": "veiling of political motives",
-          "phrase_1_zh": "政治动机的遮蔽",
-          "phrase_2": "veiling practice in cultural history",
-          "phrase_2_zh": "文化史中的遮面习俗",
-          "pos": "n./adj."
-        },
-        {
           "word": "unveil",
           "zh": "揭开；公布",
           "phrase_1": "unveil a plan",
@@ -138840,18 +133481,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "unveil a statue",
           "phrase_2_zh": "揭幕雕像",
           "pos": "n./v."
-        },
-        {
-          "word": "unveiling",
-          "zh": "揭幕；公布",
-          "phrase_1": "official unveiling",
-          "phrase_1_zh": "正式揭幕",
-          "phrase_2": "product unveiling",
-          "phrase_2_zh": "产品发布",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_reveal",
       "internal_word_items": [
@@ -138864,9 +133496,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "veil": "n."
       },
       "external_pos_map": {
-        "veiling": "n./adj.",
-        "unveil": "n./v.",
-        "unveiling": "n./adj."
+        "unveil": "n./v."
       }
     },
     {
@@ -138882,15 +133512,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "revived",
-          "zh": "复兴的；恢复的",
-          "phrase_1": "revived tradition",
-          "phrase_1_zh": "复兴传统",
-          "phrase_2": "revived demand",
-          "phrase_2_zh": "恢复的需求",
-          "pos": "adj."
-        },
-        {
           "word": "revivify",
           "zh": "使复活；使振兴",
           "phrase_1": "revivify culture",
@@ -138900,7 +133521,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_revival",
       "internal_word_items": [
@@ -138928,7 +133549,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "revive": "v."
       },
       "external_pos_map": {
-        "revived": "adj.",
         "revivify": "v."
       }
     },
@@ -139077,15 +133697,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "handwriting",
-          "zh": "笔迹；手写",
-          "phrase_1": "clear handwriting",
-          "phrase_1_zh": "清楚笔迹",
-          "phrase_2": "handwriting analysis",
-          "phrase_2_zh": "笔迹分析",
-          "pos": "n./adj."
-        },
-        {
           "word": "writer",
           "zh": "作者",
           "phrase_1": "science writer",
@@ -139104,7 +133715,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rewrite",
       "internal_word_items": [
@@ -139122,7 +133733,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "written": "v."
       },
       "external_pos_map": {
-        "handwriting": "n./adj.",
         "writer": "n.",
         "write": "n./v."
       }
@@ -139301,15 +133911,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "ridged",
-          "zh": "有脊的；起皱的",
-          "phrase_1": "ridged ceramic surface",
-          "phrase_1_zh": "有脊陶瓷表面",
-          "phrase_2": "ridged agricultural field",
-          "phrase_2_zh": "起垄农田",
-          "pos": "adj."
-        },
-        {
           "word": "ridgecrest",
           "zh": "山脊顶；脊顶",
           "phrase_1": "ridgecrest trail erosion",
@@ -139328,7 +133929,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ridge",
       "internal_word_items": [
@@ -139343,7 +133944,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "ridgeway": "n./v.",
         "midridge": "n./v.",
-        "ridged": "adj.",
         "ridgecrest": "n./v.",
         "ridgeline": "n./v."
       }
@@ -139374,18 +133974,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "riftzone seismic monitoring",
           "phrase_2_zh": "裂谷带地震监测",
           "pos": "n./v."
-        },
-        {
-          "word": "rifting",
-          "zh": "裂谷形成；裂开",
-          "phrase_1": "continental rifting process",
-          "phrase_1_zh": "大陆裂谷形成过程",
-          "phrase_2": "rifting in political coalitions",
-          "phrase_2_zh": "政治联盟中的分裂",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rift",
       "internal_word_items": [
@@ -139399,8 +133990,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "riftvalley": "n./v.",
-        "riftzone": "n./v.",
-        "rifting": "n./adj."
+        "riftzone": "n./v."
       }
     },
     {
@@ -139676,18 +134266,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "sunrise over the coast",
           "phrase_2_zh": "海岸日出",
           "pos": "v."
-        },
-        {
-          "word": "rising",
-          "zh": "上升的；新兴的",
-          "phrase_1": "rising inflation pressure",
-          "phrase_1_zh": "不断上升的通胀压力",
-          "phrase_2": "rising political power",
-          "phrase_2_zh": "新兴政治力量",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_risen",
       "internal_word_items": [
@@ -139710,8 +134291,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "rise": "v."
       },
       "external_pos_map": {
-        "sunrise": "v.",
-        "rising": "n./adj."
+        "sunrise": "v."
       }
     },
     {
@@ -139778,18 +134358,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "rival",
         "rivalry"
       ],
-      "external_words": [
-        {
-          "word": "unrivaled",
-          "zh": "无可匹敌的",
-          "phrase_1": "unrivaled expertise",
-          "phrase_1_zh": "无可匹敌的专业能力",
-          "phrase_2": "unrivaled influence",
-          "phrase_2_zh": "无可匹敌的影响力",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rival",
       "internal_word_items": [
@@ -139806,9 +134376,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "rival": "n.",
         "rivalry": "n./v."
       },
-      "external_pos_map": {
-        "unrivaled": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_road",
@@ -140239,15 +134807,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "rousing",
-          "zh": "激动人心的",
-          "phrase_1": "rousing campaign speech",
-          "phrase_1_zh": "激动人心的竞选演说",
-          "phrase_2": "rousing public response",
-          "phrase_2_zh": "热烈公众反应",
-          "pos": "n./adj."
-        },
-        {
           "word": "rouser",
           "zh": "唤醒者；鼓动者",
           "phrase_1": "crowd rouser at rallies",
@@ -140257,7 +134816,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rouse",
       "internal_word_items": [
@@ -140270,7 +134829,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "rouse": "v."
       },
       "external_pos_map": {
-        "rousing": "n./adj.",
         "rouser": "n."
       }
     },
@@ -140293,15 +134851,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "rovering",
-          "zh": "漫游；流动探索",
-          "phrase_1": "rovering survey method",
-          "phrase_1_zh": "流动调查方法",
-          "phrase_2": "rovering across desert terrain",
-          "phrase_2_zh": "穿越沙漠地形漫游",
-          "pos": "n./adj."
-        },
-        {
           "word": "rovercraft",
           "zh": "漫游器技术",
           "phrase_1": "rovercraft navigation system",
@@ -140320,7 +134869,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_rover",
       "internal_word_items": [
@@ -140334,7 +134883,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "roverdom": "n.",
-        "rovering": "n./adj.",
         "rovercraft": "n./v.",
         "rove": "n./v."
       }
@@ -140647,15 +135195,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "ruined",
-          "zh": "毁坏的；破产的",
-          "phrase_1": "ruined city",
-          "phrase_1_zh": "毁坏城市",
-          "phrase_2": "ruined reputation",
-          "phrase_2_zh": "毁掉的名声",
-          "pos": "adj."
-        },
-        {
           "word": "ruin",
           "zh": "毁灭；废墟",
           "phrase_1": "economic ruin",
@@ -140665,7 +135204,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_ruinous",
       "internal_word_items": [
@@ -140680,7 +135219,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "ruiniform": "n./v.",
         "ruination": "n.",
-        "ruined": "adj.",
         "ruin": "n."
       }
     },
@@ -140849,18 +135387,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "runner"
       ],
-      "external_words": [
-        {
-          "word": "running",
-          "zh": "运行；跑步",
-          "phrase_1": "running cost",
-          "phrase_1_zh": "运营成本",
-          "phrase_2": "running water",
-          "phrase_2_zh": "自来水",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_runner",
       "internal_word_items": [
@@ -140872,9 +135400,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "runner": "n."
       },
-      "external_pos_map": {
-        "running": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_sable",
@@ -140885,24 +135411,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "sable"
       ],
       "external_words": [
-        {
-          "word": "sabling",
-          "zh": "黑貂皮；黑色纹饰",
-          "phrase_1": "sabling in heraldic design",
-          "phrase_1_zh": "纹章设计中的黑色纹饰",
-          "phrase_2": "sabling trade in fur markets",
-          "phrase_2_zh": "毛皮市场中的黑貂皮贸易",
-          "pos": "n./adj."
-        },
-        {
-          "word": "sablecolored",
-          "zh": "黑色的；深褐色的",
-          "phrase_1": "sablecolored animal fur",
-          "phrase_1_zh": "黑色动物皮毛",
-          "phrase_2": "sablecolored ceramic glaze",
-          "phrase_2_zh": "深色陶瓷釉",
-          "pos": "adj."
-        },
         {
           "word": "sablecoat",
           "zh": "黑貂皮衣；黑色毛皮",
@@ -140922,7 +135430,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sable",
       "internal_word_items": [
@@ -140935,8 +135443,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "sable": "n."
       },
       "external_pos_map": {
-        "sabling": "n./adj.",
-        "sablecolored": "adj.",
         "sablecoat": "n./v.",
         "sablefish": "n./v."
       }
@@ -141209,18 +135715,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "salarywoman career path",
           "phrase_2_zh": "职业女性职业路径",
           "pos": "n."
-        },
-        {
-          "word": "salaried",
-          "zh": "领薪水的",
-          "phrase_1": "salaried employee benefits",
-          "phrase_1_zh": "领薪员工福利",
-          "phrase_2": "salaried professional class",
-          "phrase_2_zh": "领薪专业阶层",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_salaryman",
       "internal_word_items": [
@@ -141238,8 +135735,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "salary": "n."
       },
       "external_pos_map": {
-        "salarywoman": "n.",
-        "salaried": "adj."
+        "salarywoman": "n."
       }
     },
     {
@@ -141459,18 +135955,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "sampler in music production",
           "phrase_2_zh": "音乐制作中的采样器",
           "pos": "n."
-        },
-        {
-          "word": "sampling",
-          "zh": "抽样；采样",
-          "phrase_1": "sampling bias in surveys",
-          "phrase_1_zh": "调查中的抽样偏差",
-          "phrase_2": "water sampling protocol",
-          "phrase_2_zh": "水样采集流程",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sample",
       "internal_word_items": [
@@ -141485,8 +135972,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "resample": "n./v.",
         "sample size": "v.",
-        "sampler": "n.",
-        "sampling": "n./adj."
+        "sampler": "n."
       }
     },
     {
@@ -141785,15 +136271,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "scandalmongering",
-          "zh": "散布丑闻",
-          "phrase_1": "scandalmongering media practice",
-          "phrase_1_zh": "散布丑闻的媒体做法",
-          "phrase_2": "scandalmongering in election campaigns",
-          "phrase_2_zh": "选举中的丑闻攻击",
-          "pos": "n./adj."
-        },
-        {
           "word": "scandalmonger",
           "zh": "传播丑闻者",
           "phrase_1": "media scandalmonger",
@@ -141801,15 +136278,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "political scandalmonger",
           "phrase_2_zh": "政治丑闻散播者",
           "pos": "n."
-        },
-        {
-          "word": "scandalized",
-          "zh": "震惊的；反感的",
-          "phrase_1": "scandalized public",
-          "phrase_1_zh": "震惊的公众",
-          "phrase_2": "scandalized reaction",
-          "phrase_2_zh": "反感反应",
-          "pos": "adj."
         },
         {
           "word": "scandalize",
@@ -141830,7 +136298,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_scandalous",
       "internal_word_items": [
@@ -141843,9 +136311,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "scandalous": "adj."
       },
       "external_pos_map": {
-        "scandalmongering": "n./adj.",
         "scandalmonger": "n.",
-        "scandalized": "adj.",
         "scandalize": "v.",
         "scandal": "n."
       }
@@ -141859,15 +136325,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "scapegoat"
       ],
       "external_words": [
-        {
-          "word": "scapegoating",
-          "zh": "找替罪羊；甩锅",
-          "phrase_1": "scapegoating during economic crisis",
-          "phrase_1_zh": "经济危机中的甩锅",
-          "phrase_2": "scapegoating rhetoric in politics",
-          "phrase_2_zh": "政治中的替罪羊话术",
-          "pos": "n./adj."
-        },
         {
           "word": "goat",
           "zh": "山羊",
@@ -141905,7 +136362,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_scapegoat",
       "internal_word_items": [
@@ -141918,7 +136375,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "scapegoat": "n./v."
       },
       "external_pos_map": {
-        "scapegoating": "n./adj.",
         "goat": "n./v.",
         "scapegoater": "n.",
         "scapegrace": "n./v.",
@@ -142004,24 +136460,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "scavenged",
-          "zh": "被清除的；被拾取的",
-          "phrase_1": "scavenged metal scraps",
-          "phrase_1_zh": "被拾取的金属废料",
-          "phrase_2": "scavenged pollutants",
-          "phrase_2_zh": "被清除的污染物",
-          "pos": "adj."
-        },
-        {
-          "word": "scavenging",
-          "zh": "清除；拾荒",
-          "phrase_1": "scavenging behavior",
-          "phrase_1_zh": "清道夫行为",
-          "phrase_2": "scavenging free radicals",
-          "phrase_2_zh": "清除自由基",
-          "pos": "n./adj."
-        },
-        {
           "word": "scavenge",
           "zh": "搜寻；清除腐食",
           "phrase_1": "scavenge for recyclable materials",
@@ -142031,7 +136469,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_scavenger",
       "internal_word_items": [
@@ -142046,8 +136484,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "scavengery": "n./v.",
         "scavengeable": "adj.",
-        "scavenged": "adj.",
-        "scavenging": "n./adj.",
         "scavenge": "n./v."
       }
     },
@@ -142060,15 +136496,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "scheme"
       ],
       "external_words": [
-        {
-          "word": "scheming",
-          "zh": "谋划；诡计多端的",
-          "phrase_1": "scheming faction in politics",
-          "phrase_1_zh": "政治中谋划的派系",
-          "phrase_2": "scheming behavior in organizations",
-          "phrase_2_zh": "组织中的算计行为",
-          "pos": "n./adj."
-        },
         {
           "word": "schematize",
           "zh": "图式化；系统化",
@@ -142106,7 +136533,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_scheme",
       "internal_word_items": [
@@ -142119,7 +136546,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "scheme": "n./v."
       },
       "external_pos_map": {
-        "scheming": "n./adj.",
         "schematize": "v.",
         "schemer": "n.",
         "schematic": "adj.",
@@ -142336,15 +136762,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "sculpted",
-          "zh": "雕刻的；塑造的",
-          "phrase_1": "sculpted landscape",
-          "phrase_1_zh": "塑造的景观",
-          "phrase_2": "sculpted stone surface",
-          "phrase_2_zh": "雕刻石面",
-          "pos": "adj."
-        },
-        {
           "word": "sculptural",
           "zh": "雕塑的；雕塑般的",
           "phrase_1": "sculptural form",
@@ -142363,7 +136780,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sculpt",
       "internal_word_items": [
@@ -142381,7 +136798,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "sculpture": "n."
       },
       "external_pos_map": {
-        "sculpted": "adj.",
         "sculptural": "adj.",
         "sculptor": "n."
       }
@@ -142415,15 +136831,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "sculpted",
-          "zh": "雕塑般的；塑造出的",
-          "phrase_1": "sculpted body",
-          "phrase_1_zh": "雕塑般身材",
-          "phrase_2": "sculpted stone",
-          "phrase_2_zh": "雕刻石头",
-          "pos": "adj."
-        },
-        {
           "word": "sculptor",
           "zh": "雕塑家",
           "phrase_1": "Renaissance sculptor",
@@ -142433,7 +136840,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sculpture",
       "internal_word_items": [
@@ -142453,43 +136860,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "sculptural": "adj.",
         "sculptress": "n./v.",
-        "sculpted": "adj.",
         "sculptor": "n."
-      }
-    },
-    {
-      "cluster_id": "kin_head_seed_sea",
-      "cluster_label": "seabed seaborne",
-      "anchor": "sea",
-      "confidence": "review",
-      "internal_words": [
-        "seabed"
-      ],
-      "external_words": [
-        {
-          "word": "seaborne",
-          "zh": "海运的；海上传播的",
-          "phrase_1": "seaborne trade",
-          "phrase_1_zh": "海运贸易",
-          "phrase_2": "seaborne invasion",
-          "phrase_2_zh": "海上入侵",
-          "pos": "n./v."
-        }
-      ],
-      "total_words": 2,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_sea",
-      "internal_word_items": [
-        {
-          "word": "seabed",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "seabed": "adj."
-      },
-      "external_pos_map": {
-        "seaborne": "n./v."
       }
     },
     {
@@ -142628,15 +136999,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "sealed",
-          "zh": "密封的；封闭的",
-          "phrase_1": "sealed evidence bag",
-          "phrase_1_zh": "密封证据袋",
-          "phrase_2": "sealed archival record",
-          "phrase_2_zh": "封存档案记录",
-          "pos": "adj."
-        },
-        {
           "word": "sealife",
           "zh": "海洋生物",
           "phrase_1": "sealife conservation education",
@@ -142673,7 +137035,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_seal",
       "internal_word_items": [
@@ -142686,7 +137048,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "seal": "n./v."
       },
       "external_pos_map": {
-        "sealed": "adj.",
         "sealife": "n./v.",
         "sealskin": "n./v.",
         "sealant": "adj.",
@@ -142793,15 +137154,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "seasoned",
-          "zh": "有经验的；调味的",
-          "phrase_1": "seasoned researcher",
-          "phrase_1_zh": "经验丰富的研究者",
-          "phrase_2": "seasoned food",
-          "phrase_2_zh": "调味食物",
-          "pos": "adj."
-        },
-        {
           "word": "offseason",
           "zh": "淡季；非赛季",
           "phrase_1": "offseason training",
@@ -142811,7 +137163,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_seasonal",
       "internal_word_items": [
@@ -142831,7 +137183,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "seasonable": "adj.",
         "seasonality": "n.",
-        "seasoned": "adj.",
         "offseason": "n./v."
       }
     },
@@ -143003,27 +137354,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "soil seedbank diversity",
           "phrase_2_zh": "土壤种子库多样性",
           "pos": "n./v."
-        },
-        {
-          "word": "seedbed",
-          "zh": "苗床；温床",
-          "phrase_1": "seedbed preparation method",
-          "phrase_1_zh": "苗床准备方法",
-          "phrase_2": "seedbed of political reform",
-          "phrase_2_zh": "政治改革的温床",
-          "pos": "adj."
-        },
-        {
-          "word": "seedling",
-          "zh": "幼苗",
-          "phrase_1": "seedling survival rate",
-          "phrase_1_zh": "幼苗存活率",
-          "phrase_2": "seedling response to drought",
-          "phrase_2_zh": "幼苗对干旱的响应",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_seed",
       "internal_word_items": [
@@ -143038,9 +137371,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "seedcoat": "n./v.",
         "seedpod": "n./v.",
-        "seedbank": "n./v.",
-        "seedbed": "adj.",
-        "seedling": "n./adj."
+        "seedbank": "n./v."
       }
     },
     {
@@ -143461,8 +137792,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "settlement",
       "confidence": "review",
       "internal_words": [
-        "settlement",
-        "settled"
+        "settlement"
       ],
       "external_words": [
         {
@@ -143502,22 +137832,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_settlement",
       "internal_word_items": [
         {
           "word": "settlement",
           "pos": "n."
-        },
-        {
-          "word": "settled",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "settlement": "n.",
-        "settled": "adj."
+        "settlement": "n."
       },
       "external_pos_map": {
         "settleable": "adj.",
@@ -143902,15 +138227,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "shackling",
-          "zh": "束缚；上镣铐",
-          "phrase_1": "shackling of prisoners",
-          "phrase_1_zh": "给囚犯上镣铐",
-          "phrase_2": "institutional shackling of innovation",
-          "phrase_2_zh": "制度对创新的束缚",
-          "pos": "n./adj."
-        },
-        {
           "word": "shackles",
           "zh": "镣铐；束缚",
           "phrase_1": "shackles of inherited debt",
@@ -143918,18 +138234,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "remove physical shackles",
           "phrase_2_zh": "去除实体镣铐",
           "pos": "n."
-        },
-        {
-          "word": "unshackled",
-          "zh": "不受束缚的",
-          "phrase_1": "unshackled market forces",
-          "phrase_1_zh": "不受束缚的市场力量",
-          "phrase_2": "unshackled movement after release",
-          "phrase_2_zh": "释放后不受束缚的行动",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shackle",
       "internal_word_items": [
@@ -143944,9 +138251,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "shacklebolt": "n./v.",
         "unshackle": "v.",
-        "shackling": "n./adj.",
-        "shackles": "n.",
-        "unshackled": "adj."
+        "shackles": "n."
       }
     },
     {
@@ -143977,18 +138282,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "portable sunshade structure",
           "phrase_2_zh": "便携遮阳结构",
           "pos": "n./v."
-        },
-        {
-          "word": "shading",
-          "zh": "遮阴；明暗处理",
-          "phrase_1": "shading effect on crop yield",
-          "phrase_1_zh": "遮阴对作物产量影响",
-          "phrase_2": "shading technique in drawing",
-          "phrase_2_zh": "绘画中的明暗技巧",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shade",
       "internal_word_items": [
@@ -144012,8 +138308,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "shadeless": "adj.",
-        "sunshade": "n./v.",
-        "shading": "n./adj."
+        "sunshade": "n./v."
       }
     },
     {
@@ -144124,15 +138419,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "shafting",
-          "zh": "轴系；传动轴",
-          "phrase_1": "shafting system in factories",
-          "phrase_1_zh": "工厂中的轴系系统",
-          "phrase_2": "shafting alignment error",
-          "phrase_2_zh": "轴系对准误差",
-          "pos": "n./adj."
-        },
-        {
           "word": "mineshaft",
           "zh": "矿井竖井",
           "phrase_1": "mineshaft safety inspection",
@@ -144142,7 +138428,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shaft",
       "internal_word_items": [
@@ -144158,7 +138444,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "driveshaft": "n./v.",
         "shaftless": "adj.",
         "airshaft": "n./v.",
-        "shafting": "n./adj.",
         "mineshaft": "n./v."
       }
     },
@@ -144172,24 +138457,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "shallowminded",
-          "zh": "肤浅的",
-          "phrase_1": "shallowminded policy debate",
-          "phrase_1_zh": "肤浅的政策辩论",
-          "phrase_2": "shallowminded media commentary",
-          "phrase_2_zh": "肤浅的媒体评论",
-          "pos": "adj."
-        },
-        {
-          "word": "shallowrooted",
-          "zh": "浅根的",
-          "phrase_1": "shallowrooted crops under drought",
-          "phrase_1_zh": "干旱下浅根作物",
-          "phrase_2": "shallowrooted tree instability",
-          "phrase_2_zh": "浅根树木不稳定",
-          "pos": "adj."
-        },
-        {
           "word": "shallowwater",
           "zh": "浅水的",
           "phrase_1": "shallowwater coral reef",
@@ -144197,15 +138464,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "shallowwater acoustic propagation",
           "phrase_2_zh": "浅水声传播",
           "pos": "n."
-        },
-        {
-          "word": "shallowing",
-          "zh": "变浅；浅化",
-          "phrase_1": "shallowing of coastal lagoons",
-          "phrase_1_zh": "沿海潟湖变浅",
-          "phrase_2": "shallowing trend in lakes",
-          "phrase_2_zh": "湖泊浅化趋势",
-          "pos": "n./adj."
         },
         {
           "word": "shallows",
@@ -144217,7 +138475,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shallow",
       "internal_word_items": [
@@ -144230,10 +138488,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "shallow": "adj."
       },
       "external_pos_map": {
-        "shallowminded": "adj.",
-        "shallowrooted": "adj.",
         "shallowwater": "n.",
-        "shallowing": "n./adj.",
         "shallows": "n."
       }
     },
@@ -144319,15 +138574,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "shared",
-          "zh": "共享的；共同的",
-          "phrase_1": "shared responsibility for climate action",
-          "phrase_1_zh": "气候行动的共同责任",
-          "phrase_2": "shared database infrastructure",
-          "phrase_2_zh": "共享数据库基础设施",
-          "pos": "adj."
-        },
-        {
           "word": "shareware",
           "zh": "共享软件",
           "phrase_1": "shareware distribution model",
@@ -144355,7 +138601,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_share",
       "internal_word_items": [
@@ -144373,7 +138619,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "shareholder": "n."
       },
       "external_pos_map": {
-        "shared": "adj.",
         "shareware": "n./v.",
         "timeshare": "n./v.",
         "sharecropper": "n."
@@ -144407,15 +138652,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "sheeting",
-          "zh": "床单布；薄板材",
-          "phrase_1": "sheeting material in construction",
-          "phrase_1_zh": "建筑中的板材",
-          "phrase_2": "sheeting fabric production",
-          "phrase_2_zh": "床单布生产",
-          "pos": "n./adj."
-        },
-        {
           "word": "bedsheet",
           "zh": "床单",
           "phrase_1": "bedsheet textile quality",
@@ -144434,7 +138670,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sheet",
       "internal_word_items": [
@@ -144449,7 +138685,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "datasheet": "n./v.",
         "sheetmetal": "adj.",
-        "sheeting": "n./adj.",
         "bedsheet": "n./v.",
         "worksheet": "n./v."
       }
@@ -144482,24 +138717,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "shelving",
-          "zh": "搁置；架子",
-          "phrase_1": "industrial shelving system",
-          "phrase_1_zh": "工业货架系统",
-          "phrase_2": "shelving a controversial bill",
-          "phrase_2_zh": "搁置有争议法案",
-          "pos": "n./adj."
-        },
-        {
-          "word": "shelved",
-          "zh": "被搁置的；上架的",
-          "phrase_1": "shelved infrastructure plan",
-          "phrase_1_zh": "被搁置的基础设施计划",
-          "phrase_2": "shelved library collection",
-          "phrase_2_zh": "上架的图书馆藏书",
-          "pos": "adj."
-        },
-        {
           "word": "shelve",
           "zh": "搁置；放上架",
           "phrase_1": "shelve a reform proposal",
@@ -144509,7 +138726,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shelf",
       "internal_word_items": [
@@ -144524,8 +138741,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "continental shelf": "n./v.",
         "bookshelf": "n./v.",
-        "shelving": "n./adj.",
-        "shelved": "adj.",
         "shelve": "n./v."
       }
     },
@@ -144672,15 +138887,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "shelled",
-          "zh": "有壳的",
-          "phrase_1": "shelled marine organism",
-          "phrase_1_zh": "有壳海洋生物",
-          "phrase_2": "shelled mollusk remains",
-          "phrase_2_zh": "有壳软体动物遗骸",
-          "pos": "adj."
-        },
-        {
           "word": "seashell",
           "zh": "海贝壳",
           "phrase_1": "seashell fragment",
@@ -144690,7 +138896,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shellfish",
       "internal_word_items": [
@@ -144708,7 +138914,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "shell": "n."
       },
       "external_pos_map": {
-        "shelled": "adj.",
         "seashell": "n./v."
       }
     },
@@ -144747,18 +138952,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "shelterbelt design in drylands",
           "phrase_2_zh": "旱地防护林设计",
           "pos": "n./v."
-        },
-        {
-          "word": "sheltering",
-          "zh": "庇护；遮蔽",
-          "phrase_1": "sheltering refugees during conflict",
-          "phrase_1_zh": "冲突中庇护难民",
-          "phrase_2": "sheltering effect of forests",
-          "phrase_2_zh": "森林的遮蔽效应",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shelter",
       "internal_word_items": [
@@ -144773,8 +138969,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "shelterhouse": "n./v.",
         "shelterless": "adj.",
-        "shelterbelt": "n./v.",
-        "sheltering": "n./adj."
+        "shelterbelt": "n./v."
       }
     },
     {
@@ -144812,18 +139007,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "legal shieldbearer for rights",
           "phrase_2_zh": "权利的法律保护者",
           "pos": "n."
-        },
-        {
-          "word": "shielding",
-          "zh": "屏蔽；保护",
-          "phrase_1": "radiation shielding material",
-          "phrase_1_zh": "辐射屏蔽材料",
-          "phrase_2": "shielding vulnerable communities",
-          "phrase_2_zh": "保护脆弱社区",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shield",
       "internal_word_items": [
@@ -144838,8 +139024,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "shieldwall": "n./v.",
         "windshield": "n./v.",
-        "shieldbearer": "n.",
-        "shielding": "n./adj."
+        "shieldbearer": "n."
       }
     },
     {
@@ -144984,18 +139169,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "shockwave therapy trial",
           "phrase_2_zh": "冲击波治疗试验",
           "pos": "n./v."
-        },
-        {
-          "word": "shocking",
-          "zh": "令人震惊的；冲击的",
-          "phrase_1": "shocking inequality data",
-          "phrase_1_zh": "令人震惊的不平等数据",
-          "phrase_2": "shocking treatment of prisoners",
-          "phrase_2_zh": "令人震惊的囚犯待遇",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_shock",
       "internal_word_items": [
@@ -145015,8 +139191,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "shellshock": "n./v.",
         "shockproof": "n./v.",
-        "shockwave": "n./v.",
-        "shocking": "n./adj."
+        "shockwave": "n./v."
       }
     },
     {
@@ -145138,18 +139313,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "besieger in medieval warfare",
           "phrase_2_zh": "中世纪战争中的围攻者",
           "pos": "n."
-        },
-        {
-          "word": "besieged",
-          "zh": "被围困的",
-          "phrase_1": "besieged civilian population",
-          "phrase_1_zh": "被围困的平民人口",
-          "phrase_2": "besieged by financial pressure",
-          "phrase_2_zh": "受财务压力困扰",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_siege",
       "internal_word_items": [
@@ -145165,8 +139331,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "siegeline": "n./v.",
         "siegeworks": "n.",
         "siegecraft": "n./v.",
-        "besieger": "n.",
-        "besieged": "adj."
+        "besieger": "n."
       }
     },
     {
@@ -145235,18 +139400,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "political silencer of dissent",
           "phrase_2_zh": "压制异议的政治手段",
           "pos": "n."
-        },
-        {
-          "word": "unsilenced",
-          "zh": "未被压制发声的",
-          "phrase_1": "unsilenced voices",
-          "phrase_1_zh": "未被压制的声音",
-          "phrase_2": "unsilenced testimony",
-          "phrase_2_zh": "未被压制的证词",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_silence",
       "internal_word_items": [
@@ -145269,8 +139425,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "silent": "adj."
       },
       "external_pos_map": {
-        "silencer": "n.",
-        "unsilenced": "adj."
+        "silencer": "n."
       }
     },
     {
@@ -145285,15 +139440,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "silencing",
-          "zh": "沉默化；压制",
-          "phrase_1": "social silencing",
-          "phrase_1_zh": "社会性沉默化",
-          "phrase_2": "silencing effect",
-          "phrase_2_zh": "压制效应",
-          "pos": "n."
-        },
-        {
           "word": "silencer",
           "zh": "消音器；沉默因素",
           "phrase_1": "political silencer",
@@ -145303,7 +139449,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_silently",
       "internal_word_items": [
@@ -145326,7 +139472,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "silent": "adj."
       },
       "external_pos_map": {
-        "silencing": "n.",
         "silencer": "n."
       }
     },
@@ -145391,15 +139536,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "screen printing",
-          "zh": "丝网印刷",
-          "phrase_1": "screen printing workshop",
-          "phrase_1_zh": "丝网印刷工作坊",
-          "phrase_2": "screen printing ink quality",
-          "phrase_2_zh": "丝网印刷油墨质量",
-          "pos": "n./adj."
-        },
-        {
           "word": "silkscreen",
           "zh": "丝网印刷；丝印图案",
           "phrase_1": "silkscreen technique",
@@ -145418,7 +139554,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_silk_screening",
       "internal_word_items": [
@@ -145431,7 +139567,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "silk-screening": "n./adj."
       },
       "external_pos_map": {
-        "screen printing": "n./adj.",
         "silkscreen": "v.",
         "silk screen": "v."
       }
@@ -145552,15 +139687,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "silvered",
-          "zh": "镀银的；银化的",
-          "phrase_1": "silvered mirror backing",
-          "phrase_1_zh": "镀银镜背",
-          "phrase_2": "silvered glass surface",
-          "phrase_2_zh": "镀银玻璃表面",
-          "pos": "adj."
-        },
-        {
           "word": "silvery",
           "zh": "银色的；银铃般的",
           "phrase_1": "silvery leaf surface",
@@ -145570,7 +139696,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_silver",
       "internal_word_items": [
@@ -145583,7 +139709,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "silver": "n."
       },
       "external_pos_map": {
-        "silvered": "adj.",
         "silvery": "n./v."
       }
     },
@@ -145606,15 +139731,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "sinewed",
-          "zh": "有腱的；强健的",
-          "phrase_1": "sinewed arm in sculpture",
-          "phrase_1_zh": "雕塑中强健的手臂",
-          "phrase_2": "sinewed body in anatomy",
-          "phrase_2_zh": "解剖学中的有腱身体",
-          "pos": "adj."
-        },
-        {
           "word": "sinewy",
           "zh": "强健的；腱状的",
           "phrase_1": "sinewy prose style",
@@ -145624,7 +139740,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sinew",
       "internal_word_items": [
@@ -145638,7 +139754,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "sinewless": "adj.",
-        "sinewed": "adj.",
         "sinewy": "n./v."
       }
     },
@@ -145662,15 +139777,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "skinned",
-          "zh": "剥皮的；去皮的",
-          "phrase_1": "skinned fruit sample",
-          "phrase_1_zh": "去皮水果样本",
-          "phrase_2": "skinned animal hide",
-          "phrase_2_zh": "剥皮动物皮张",
-          "pos": "adj."
-        },
-        {
           "word": "Skinner",
           "zh": "斯金纳",
           "phrase_1": "Skinner box experiment",
@@ -145680,7 +139786,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_skinner_s",
       "internal_word_items": [
@@ -145699,7 +139805,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "skinnerian": "n.",
-        "skinned": "adj.",
         "Skinner": "n."
       }
     },
@@ -145788,9 +139893,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "sled sledrunner bobsled sledding sledge",
       "anchor": "sled",
       "confidence": "review",
-      "internal_words": [
-        "sled"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "sledrunner",
@@ -145802,24 +139905,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "bobsled",
-          "zh": "有舵雪橇",
-          "phrase_1": "bobsled track safety",
-          "phrase_1_zh": "有舵雪橇赛道安全",
-          "phrase_2": "bobsled team training",
-          "phrase_2_zh": "有舵雪橇队训练",
-          "pos": "adj."
-        },
-        {
-          "word": "sledding",
-          "zh": "乘雪橇；滑行",
-          "phrase_1": "sledding accident prevention",
-          "phrase_1_zh": "雪橇事故预防",
-          "phrase_2": "sledding tourism in winter",
-          "phrase_2_zh": "冬季雪橇旅游",
-          "pos": "n./adj."
-        },
-        {
           "word": "sledge",
           "zh": "雪橇；大锤",
           "phrase_1": "sledge transport in polar regions",
@@ -145829,22 +139914,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sled",
-      "internal_word_items": [
-        {
-          "word": "sled",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "sled": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "sledrunner": "n.",
-        "bobsled": "adj.",
-        "sledding": "n./adj.",
         "sledge": "n./v."
       }
     },
@@ -145940,15 +140016,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "smashing",
-          "zh": "极好的；粉碎性的",
-          "phrase_1": "smashing victory in elections",
-          "phrase_1_zh": "选举中的压倒性胜利",
-          "phrase_2": "smashing impact in crash tests",
-          "phrase_2_zh": "碰撞测试中的粉碎性冲击",
-          "pos": "n./adj."
-        },
-        {
           "word": "smasher",
           "zh": "粉碎者；猛击者",
           "phrase_1": "smasher in labor protest rhetoric",
@@ -145958,7 +140025,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_smash",
       "internal_word_items": [
@@ -145974,7 +140041,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "smashproof": "n./v.",
         "mash": "n./v.",
         "smashup": "n./v.",
-        "smashing": "n./adj.",
         "smasher": "n."
       }
     },
@@ -146006,15 +140072,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "smelting",
-          "zh": "冶炼",
-          "phrase_1": "iron smelting technology",
-          "phrase_1_zh": "炼铁技术",
-          "phrase_2": "smelting pollution control",
-          "phrase_2_zh": "冶炼污染控制",
-          "pos": "n./adj."
-        },
-        {
           "word": "smelter",
           "zh": "冶炼厂；冶炼工",
           "phrase_1": "copper smelter emissions",
@@ -146024,7 +140081,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_smelt",
       "internal_word_items": [
@@ -146039,7 +140096,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "smeltwater": "n.",
         "resmelt": "n./v.",
-        "smelting": "n./adj.",
         "smelter": "n."
       }
     },
@@ -146053,15 +140109,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "smuggling",
-          "zh": "走私",
-          "phrase_1": "human smuggling operation",
-          "phrase_1_zh": "人口走私行动",
-          "phrase_2": "smuggling of cultural artifacts",
-          "phrase_2_zh": "文物走私",
-          "pos": "n./adj."
-        },
-        {
           "word": "smuggler",
           "zh": "走私者",
           "phrase_1": "smuggler network investigation",
@@ -146069,18 +140116,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "smuggler route across borders",
           "phrase_2_zh": "跨境走私路线",
           "pos": "n."
-        },
-        {
-          "word": "antismuggling",
-          "zh": "反走私的",
-          "phrase_1": "antismuggling operation",
-          "phrase_1_zh": "反走私行动",
-          "phrase_2": "antismuggling customs unit",
-          "phrase_2_zh": "海关反走私部门",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_smuggle",
       "internal_word_items": [
@@ -146093,9 +140131,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "smuggle": "v."
       },
       "external_pos_map": {
-        "smuggling": "n./adj.",
-        "smuggler": "n.",
-        "antismuggling": "n./adj."
+        "smuggler": "n."
       }
     },
     {
@@ -146259,15 +140295,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "waterlogged",
-          "zh": "浸水的",
-          "phrase_1": "waterlogged soil condition",
-          "phrase_1_zh": "土壤渍水状态",
-          "phrase_2": "waterlogged archaeological wood",
-          "phrase_2_zh": "浸水考古木材",
-          "pos": "adj."
-        },
-        {
           "word": "soddenness",
           "zh": "湿透状态",
           "phrase_1": "soddenness of floodplain soil",
@@ -146277,7 +140304,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sodden",
       "internal_word_items": [
@@ -146291,7 +140318,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "watersodden": "v.",
-        "waterlogged": "adj.",
         "soddenness": "n."
       }
     },
@@ -146383,15 +140409,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unsolicited",
-          "zh": "未经请求的",
-          "phrase_1": "unsolicited advice",
-          "phrase_1_zh": "未经请求的建议",
-          "phrase_2": "unsolicited commercial email",
-          "phrase_2_zh": "垃圾商业邮件",
-          "pos": "adj."
-        },
-        {
           "word": "excite",
           "zh": "激发；使兴奋",
           "phrase_1": "excite public interest",
@@ -146401,7 +140418,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_solicit",
       "internal_word_items": [
@@ -146424,7 +140441,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "recite": "v."
       },
       "external_pos_map": {
-        "unsolicited": "adj.",
         "excite": "n./v."
       }
     },
@@ -146607,15 +140623,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "sorting",
-          "zh": "分类；排序",
-          "phrase_1": "waste sorting policy",
-          "phrase_1_zh": "垃圾分类政策",
-          "phrase_2": "sorting algorithm efficiency",
-          "phrase_2_zh": "排序算法效率",
-          "pos": "n./adj."
-        },
-        {
           "word": "resort",
           "zh": "诉诸；度假地",
           "phrase_1": "resort to legal action",
@@ -146652,7 +140659,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sort",
       "internal_word_items": [
@@ -146665,7 +140672,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "sort": "n./v."
       },
       "external_pos_map": {
-        "sorting": "n./adj.",
         "resort": "n./v.",
         "sorter": "n.",
         "sortable": "adj.",
@@ -146743,19 +140749,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "soundproofed",
       "confidence": "review",
       "internal_words": [
-        "soundproofed",
         "proof"
       ],
       "external_words": [
-        {
-          "word": "soundproofing",
-          "zh": "隔音处理",
-          "phrase_1": "soundproofing material",
-          "phrase_1_zh": "隔音材料",
-          "phrase_2": "soundproofing urban apartments",
-          "phrase_2_zh": "给城市公寓做隔音",
-          "pos": "n./adj."
-        },
         {
           "word": "soundproof",
           "zh": "隔音的",
@@ -146775,25 +140771,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_soundproofed",
       "internal_word_items": [
-        {
-          "word": "soundproofed",
-          "pos": "adj."
-        },
         {
           "word": "proof",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "soundproofed": "adj.",
         "proof": "n."
       },
       "external_pos_map": {
-        "soundproofing": "n./adj.",
         "soundproof": "n./v.",
         "sound": "n."
       }
@@ -146901,18 +140891,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "sourcebook of primary documents",
           "phrase_2_zh": "原始文献资料汇编",
           "pos": "n./v."
-        },
-        {
-          "word": "sourcing",
-          "zh": "采购；来源寻找",
-          "phrase_1": "ethical sourcing standard",
-          "phrase_1_zh": "伦理采购标准",
-          "phrase_2": "data sourcing transparency",
-          "phrase_2_zh": "数据来源透明度",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_source",
       "internal_word_items": [
@@ -146936,8 +140917,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "sourcecode": "n./v.",
-        "sourcebook": "n./v.",
-        "sourcing": "n./adj."
+        "sourcebook": "n./v."
       }
     },
     {
@@ -147304,18 +141284,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "overspend public budget",
           "phrase_2_zh": "公共预算超支",
           "pos": "n./v."
-        },
-        {
-          "word": "spending",
-          "zh": "支出",
-          "phrase_1": "government spending review",
-          "phrase_1_zh": "政府支出审查",
-          "phrase_2": "consumer spending pattern",
-          "phrase_2_zh": "消费者支出模式",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_spent",
       "internal_word_items": [
@@ -147343,8 +141314,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "spend": "v."
       },
       "external_pos_map": {
-        "overspend": "n./v.",
-        "spending": "n./adj."
+        "overspend": "n./v."
       }
     },
     {
@@ -148252,15 +142222,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "stakeholding",
-          "zh": "持股；利益参与",
-          "phrase_1": "stakeholding democracy model",
-          "phrase_1_zh": "利益参与民主模型",
-          "phrase_2": "stakeholding pension fund",
-          "phrase_2_zh": "持股型养老金基金",
-          "pos": "n./adj."
-        },
-        {
           "word": "stakeout",
           "zh": "监视；蹲守",
           "phrase_1": "police stakeout operation",
@@ -148279,7 +142240,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_stake",
       "internal_word_items": [
@@ -148298,7 +142259,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "stakes": "n.",
-        "stakeholding": "n./adj.",
         "stakeout": "n./v.",
         "mistake": "n./v."
       }
@@ -148862,24 +142822,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "steadyhanded",
-          "zh": "沉稳的；手稳的",
-          "phrase_1": "steadyhanded crisis management",
-          "phrase_1_zh": "沉稳的危机管理",
-          "phrase_2": "steadyhanded surgical technique",
-          "phrase_2_zh": "手稳的外科技法",
-          "pos": "adj."
-        },
-        {
-          "word": "steadying",
-          "zh": "稳定作用；使稳定",
-          "phrase_1": "steadying influence on markets",
-          "phrase_1_zh": "对市场的稳定影响",
-          "phrase_2": "steadying device in surgery",
-          "phrase_2_zh": "手术中的稳定装置",
-          "pos": "n./adj."
-        },
-        {
           "word": "steadily",
           "zh": "稳定地",
           "phrase_1": "steadily rising sea level",
@@ -148889,7 +142831,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_steady",
       "internal_word_items": [
@@ -148912,8 +142854,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "unsteady": "adj."
       },
       "external_pos_map": {
-        "steadyhanded": "adj.",
-        "steadying": "n./adj.",
         "steadily": "adv."
       }
     },
@@ -149054,51 +142994,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       }
     },
     {
-      "cluster_id": "kin_head_seed_sting",
-      "cluster_label": "sting stinging stinger",
-      "anchor": "sting",
-      "confidence": "review",
-      "internal_words": [
-        "sting"
-      ],
-      "external_words": [
-        {
-          "word": "stinging",
-          "zh": "刺痛的；尖刻的",
-          "phrase_1": "stinging criticism of policy",
-          "phrase_1_zh": "对政策的尖锐批评",
-          "phrase_2": "stinging insect allergy",
-          "phrase_2_zh": "刺虫过敏",
-          "pos": "n./adj."
-        },
-        {
-          "word": "stinger",
-          "zh": "刺；刺痛物",
-          "phrase_1": "stinger missile system",
-          "phrase_1_zh": "毒刺导弹系统",
-          "phrase_2": "stinger injury in marine tourism",
-          "phrase_2_zh": "海洋旅游中的刺伤",
-          "pos": "n."
-        }
-      ],
-      "total_words": 3,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_sting",
-      "internal_word_items": [
-        {
-          "word": "sting",
-          "pos": "n./v."
-        }
-      ],
-      "internal_pos_map": {
-        "sting": "n./v."
-      },
-      "external_pos_map": {
-        "stinging": "n./adj.",
-        "stinger": "n."
-      }
-    },
-    {
       "cluster_id": "kin_head_seed_stock",
       "cluster_label": "stock livestock stocktaking stockyard stockholder stockpile",
       "anchor": "stock",
@@ -149108,15 +143003,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "livestock"
       ],
       "external_words": [
-        {
-          "word": "stocktaking",
-          "zh": "盘点；反思",
-          "phrase_1": "stocktaking of policy outcomes",
-          "phrase_1_zh": "政策结果盘点",
-          "phrase_2": "stocktaking exercise after reform",
-          "phrase_2_zh": "改革后的盘点行动",
-          "pos": "n./adj."
-        },
         {
           "word": "stockyard",
           "zh": "牲畜市场；仓储场",
@@ -149145,7 +143031,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_stock",
       "internal_word_items": [
@@ -149163,7 +143049,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "livestock": "n."
       },
       "external_pos_map": {
-        "stocktaking": "n./adj.",
         "stockyard": "n./v.",
         "stockholder": "n.",
         "stockpile": "adj."
@@ -149175,7 +143060,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "stockbreeding",
       "confidence": "review",
       "internal_words": [
-        "stockbreeding",
         "livestock",
         "stock"
       ],
@@ -149188,25 +143072,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "stockbreeder cooperative",
           "phrase_2_zh": "种畜饲养者合作社",
           "pos": "n."
-        },
-        {
-          "word": "breeding",
-          "zh": "繁育；育种",
-          "phrase_1": "selective breeding program",
-          "phrase_1_zh": "选择性育种项目",
-          "phrase_2": "breeding season timing",
-          "phrase_2_zh": "繁殖季节时间",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_stockbreeding",
       "internal_word_items": [
-        {
-          "word": "stockbreeding",
-          "pos": "n."
-        },
         {
           "word": "livestock",
           "pos": "n."
@@ -149217,13 +143088,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "stockbreeding": "n.",
         "livestock": "n.",
         "stock": "n."
       },
       "external_pos_map": {
-        "stockbreeder": "n.",
-        "breeding": "n./adj."
+        "stockbreeder": "n."
       }
     },
     {
@@ -149244,27 +143113,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "stockinette textile structure",
           "phrase_2_zh": "弹力针织物结构",
           "pos": "n./v."
-        },
-        {
-          "word": "restocking",
-          "zh": "重新补货；重新放养",
-          "phrase_1": "restocking depleted fisheries",
-          "phrase_1_zh": "重新放养枯竭渔场",
-          "phrase_2": "restocking warehouse inventory",
-          "phrase_2_zh": "补充仓库库存",
-          "pos": "n./adj."
-        },
-        {
-          "word": "stocking",
-          "zh": "长袜；放养",
-          "phrase_1": "fish stocking program",
-          "phrase_1_zh": "鱼类放养项目",
-          "phrase_2": "compression stocking therapy",
-          "phrase_2_zh": "压力袜治疗",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_stockings",
       "internal_word_items": [
@@ -149282,9 +143133,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "stock": "n."
       },
       "external_pos_map": {
-        "stockinette": "n./v.",
-        "restocking": "n./adj.",
-        "stocking": "n./adj."
+        "stockinette": "n./v."
       }
     },
     {
@@ -149386,18 +143235,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "storable hydrogen fuel",
           "phrase_2_zh": "可储存氢燃料",
           "pos": "adj."
-        },
-        {
-          "word": "stored",
-          "zh": "储存的",
-          "phrase_1": "stored energy system",
-          "phrase_1_zh": "储能系统",
-          "phrase_2": "stored grain pests",
-          "phrase_2_zh": "储粮害虫",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_storage",
       "internal_word_items": [
@@ -149421,8 +143261,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "storeroom": "n./v.",
-        "storable": "adj.",
-        "stored": "adj."
+        "storable": "adj."
       }
     },
     {
@@ -149619,18 +143458,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "storyline",
         "story"
       ],
-      "external_words": [
-        {
-          "word": "storytelling",
-          "zh": "叙事",
-          "phrase_1": "storytelling technique",
-          "phrase_1_zh": "叙事技巧",
-          "phrase_2": "storytelling for social change",
-          "phrase_2_zh": "推动社会改变的叙事",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_storyline",
       "internal_word_items": [
@@ -149647,9 +143476,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "storyline": "n.",
         "story": "n."
       },
-      "external_pos_map": {
-        "storytelling": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_strain",
@@ -149662,15 +143489,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "straining",
-          "zh": "拉紧；尽力",
-          "phrase_1": "straining under fiscal pressure",
-          "phrase_1_zh": "在财政压力下吃紧",
-          "phrase_2": "straining to hear testimony",
-          "phrase_2_zh": "努力听证词",
-          "pos": "n./adj."
-        },
-        {
           "word": "overstrain",
           "zh": "过度紧张；过劳",
           "phrase_1": "overstrain public resources",
@@ -149678,15 +143496,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "overstrain a muscle",
           "phrase_2_zh": "过度拉伤肌肉",
           "pos": "n./v."
-        },
-        {
-          "word": "strained",
-          "zh": "紧张的；勉强的",
-          "phrase_1": "strained diplomatic relations",
-          "phrase_1_zh": "紧张外交关系",
-          "phrase_2": "strained interpretation of evidence",
-          "phrase_2_zh": "牵强解释证据",
-          "pos": "adj."
         },
         {
           "word": "strainer",
@@ -149698,7 +143507,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_strain",
       "internal_word_items": [
@@ -149716,9 +143525,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "constraint": "n."
       },
       "external_pos_map": {
-        "straining": "n./adj.",
         "overstrain": "n./v.",
-        "strained": "adj.",
         "strainer": "n."
       }
     },
@@ -149751,15 +143558,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "straitened",
-          "zh": "拮据的；受限的",
-          "phrase_1": "straitened public finances",
-          "phrase_1_zh": "拮据公共财政",
-          "phrase_2": "straitened living conditions",
-          "phrase_2_zh": "困窘生活条件",
-          "pos": "adj."
-        },
-        {
           "word": "straiten",
           "zh": "使变窄；使困窘",
           "phrase_1": "straiten economic options",
@@ -149769,7 +143567,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_strait",
       "internal_word_items": [
@@ -149789,7 +143587,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "straitgate": "v.",
         "straitjacket": "n./v.",
-        "straitened": "adj.",
         "straiten": "v."
       }
     },
@@ -149813,18 +143610,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "sequence stratigraphy model",
           "phrase_2_zh": "层序地层学模型",
           "pos": "n."
-        },
-        {
-          "word": "stratified",
-          "zh": "分层的",
-          "phrase_1": "stratified random sampling",
-          "phrase_1_zh": "分层随机抽样",
-          "phrase_2": "stratified social structure",
-          "phrase_2_zh": "分层社会结构",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_strata",
       "internal_word_items": [
@@ -149852,8 +143640,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "stratum": "n."
       },
       "external_pos_map": {
-        "stratigraphy": "n.",
-        "stratified": "adj."
+        "stratigraphy": "n."
       }
     },
     {
@@ -149867,15 +143654,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "mainstream"
       ],
       "external_words": [
-        {
-          "word": "streambed",
-          "zh": "河床",
-          "phrase_1": "streambed sediment transport",
-          "phrase_1_zh": "河床沉积物输送",
-          "phrase_2": "streambed restoration project",
-          "phrase_2_zh": "河床修复项目",
-          "pos": "adj."
-        },
         {
           "word": "upstream",
           "zh": "上游的；前端的",
@@ -149895,7 +143673,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_stream",
       "internal_word_items": [
@@ -149918,7 +143696,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "mainstream": "adj."
       },
       "external_pos_map": {
-        "streambed": "adj.",
         "upstream": "n./v.",
         "streamflow": "n./v."
       }
@@ -150169,15 +143946,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "striped",
-          "zh": "有条纹的",
-          "phrase_1": "striped animal camouflage",
-          "phrase_1_zh": "条纹动物伪装",
-          "phrase_2": "striped sediment layer",
-          "phrase_2_zh": "条纹沉积层",
-          "pos": "adj."
-        },
-        {
           "word": "stripe",
           "zh": "条纹；带",
           "phrase_1": "stripe pattern recognition",
@@ -150187,7 +143955,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_strip",
       "internal_word_items": [
@@ -150203,7 +143971,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "stripmall": "n./v.",
         "striptease": "n./v.",
         "stripmine": "n./v.",
-        "striped": "adj.",
         "stripe": "n./v."
       }
     },
@@ -150383,36 +144150,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "restuff archival packaging",
           "phrase_2_zh": "重新填充档案包装",
           "pos": "n./v."
-        },
-        {
-          "word": "stuffed",
-          "zh": "塞满的；填充的",
-          "phrase_1": "stuffed archive boxes",
-          "phrase_1_zh": "塞满的档案箱",
-          "phrase_2": "stuffed ballot allegation",
-          "phrase_2_zh": "塞票指控",
-          "pos": "adj."
-        },
-        {
-          "word": "stuffing",
-          "zh": "填充物；填料",
-          "phrase_1": "insulation stuffing material",
-          "phrase_1_zh": "绝缘填充材料",
-          "phrase_2": "data stuffing attack",
-          "phrase_2_zh": "数据填塞攻击",
-          "pos": "n./adj."
-        },
-        {
-          "word": "overstuffed",
-          "zh": "过度填塞的",
-          "phrase_1": "overstuffed curriculum",
-          "phrase_1_zh": "过度塞满的课程",
-          "phrase_2": "overstuffed public agenda",
-          "phrase_2_zh": "过度拥挤的公共议程",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_stuff",
       "internal_word_items": [
@@ -150426,10 +144166,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "stuffiness": "n.",
-        "restuff": "n./v.",
-        "stuffed": "adj.",
-        "stuffing": "n./adj.",
-        "overstuffed": "adj."
+        "restuff": "n./v."
       }
     },
     {
@@ -151183,15 +144920,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "summering",
-          "zh": "避暑；度夏",
-          "phrase_1": "summering grounds for whales",
-          "phrase_1_zh": "鲸类度夏地",
-          "phrase_2": "summering practice among elites",
-          "phrase_2_zh": "精英阶层的避暑习惯",
-          "pos": "n./adj."
-        },
-        {
           "word": "summertime",
           "zh": "夏季",
           "phrase_1": "summertime electricity demand",
@@ -151210,7 +144938,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_summer",
       "internal_word_items": [
@@ -151229,7 +144957,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "summerhouse": "n./v.",
-        "summering": "n./adj.",
         "summertime": "n./v.",
         "summery": "n./v."
       }
@@ -151472,27 +145199,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "supplyer contract dispute",
           "phrase_2_zh": "供应者合同争议",
           "pos": "n."
-        },
-        {
-          "word": "supplied",
-          "zh": "被供应的",
-          "phrase_1": "externally supplied funding",
-          "phrase_1_zh": "外部提供的资金",
-          "phrase_2": "supplied water quality",
-          "phrase_2_zh": "供应水质",
-          "pos": "adj."
-        },
-        {
-          "word": "supplying",
-          "zh": "供应",
-          "phrase_1": "supplying renewable energy",
-          "phrase_1_zh": "供应可再生能源",
-          "phrase_2": "supplying evidence to investigators",
-          "phrase_2_zh": "向调查者提供证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_supplier",
       "internal_word_items": [
@@ -151511,9 +145220,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "resupply": "adv.",
-        "supplyer": "n.",
-        "supplied": "adj.",
-        "supplying": "n./adj."
+        "supplyer": "n."
       }
     },
     {
@@ -151736,15 +145443,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "surfacing",
-          "zh": "表面处理；浮现",
-          "phrase_1": "road surfacing material",
-          "phrase_1_zh": "道路铺面材料",
-          "phrase_2": "surfacing of hidden evidence",
-          "phrase_2_zh": "隐藏证据浮现",
-          "pos": "n./adj."
-        },
-        {
           "word": "resurface",
           "zh": "重新出现；重铺表面",
           "phrase_1": "resurface historical controversy",
@@ -151763,7 +145461,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_surface",
       "internal_word_items": [
@@ -151777,7 +145475,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "subsurface": "n./v.",
-        "surfacing": "n./adj.",
         "resurface": "n./v.",
         "surficial": "adj."
       }
@@ -152127,15 +145824,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "sweeping",
-          "zh": "全面的；扫除",
-          "phrase_1": "sweeping institutional reform",
-          "phrase_1_zh": "全面制度改革",
-          "phrase_2": "sweeping claims without evidence",
-          "phrase_2_zh": "缺乏证据的笼统说法",
-          "pos": "n./adj."
-        },
-        {
           "word": "sweeper",
           "zh": "清扫工；扫雷器",
           "phrase_1": "street sweeper emission standard",
@@ -152145,7 +145833,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_sweep",
       "internal_word_items": [
@@ -152160,7 +145848,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "upsweep": "n./v.",
         "sweepstakes": "n.",
-        "sweeping": "n./adj.",
         "sweeper": "n."
       }
     },
@@ -153300,18 +146987,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "intemperate consumption pattern",
           "phrase_2_zh": "无节制消费模式",
           "pos": "v."
-        },
-        {
-          "word": "tempering",
-          "zh": "回火；调和",
-          "phrase_1": "steel tempering process",
-          "phrase_1_zh": "钢材回火工艺",
-          "phrase_2": "tempering public anger",
-          "phrase_2_zh": "缓和公众愤怒",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_temper",
       "internal_word_items": [
@@ -153339,8 +147017,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "temperature": "n."
       },
       "external_pos_map": {
-        "intemperate": "v.",
-        "tempering": "n./adj."
+        "intemperate": "v."
       }
     },
     {
@@ -153553,9 +147230,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "tenured tenacious tenure track tenurial tenurable tenure",
       "anchor": "tenured",
       "confidence": "review",
-      "internal_words": [
-        "tenured"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "tenacious",
@@ -153603,18 +147278,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_tenured",
-      "internal_word_items": [
-        {
-          "word": "tenured",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "tenured": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "tenacious": "adj.",
         "tenure track": "n./v.",
@@ -153711,15 +147379,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "terrifying",
-          "zh": "令人恐惧的",
-          "phrase_1": "terrifying rate of decline",
-          "phrase_1_zh": "令人恐惧的下降速度",
-          "phrase_2": "terrifying personal testimony",
-          "phrase_2_zh": "令人恐惧的个人证词",
-          "pos": "n./adj."
-        },
-        {
           "word": "terrify",
           "zh": "使恐惧",
           "phrase_1": "terrify civilian communities",
@@ -153729,7 +147388,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_terror",
       "internal_word_items": [
@@ -153749,7 +147408,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "terrorize": "v.",
         "terrorism": "n.",
-        "terrifying": "n./adj.",
         "terrify": "v."
       }
     },
@@ -154115,15 +147773,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "threaded",
-          "zh": "有螺纹的；串联的",
-          "phrase_1": "threaded discussion forum",
-          "phrase_1_zh": "串联讨论论坛",
-          "phrase_2": "threaded metal fastener",
-          "phrase_2_zh": "有螺纹金属紧固件",
-          "pos": "adj."
-        },
-        {
           "word": "threadworm",
           "zh": "蛲虫",
           "phrase_1": "threadworm infection control",
@@ -154160,7 +147809,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_thread",
       "internal_word_items": [
@@ -154173,7 +147822,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "thread": "n."
       },
       "external_pos_map": {
-        "threaded": "adj.",
         "threadworm": "n./v.",
         "threadcount": "n./v.",
         "threadwork": "n./v.",
@@ -154199,15 +147847,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "threshing",
-          "zh": "打谷；脱粒",
-          "phrase_1": "threshing technology in agriculture",
-          "phrase_1_zh": "农业中的脱粒技术",
-          "phrase_2": "threshing floor archaeology",
-          "phrase_2_zh": "打谷场考古",
-          "pos": "n./adj."
-        },
-        {
           "word": "thresher",
           "zh": "打谷机；长尾鲨",
           "phrase_1": "thresher machine safety",
@@ -154215,15 +147854,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "thresher shark conservation",
           "phrase_2_zh": "长尾鲨保护",
           "pos": "n."
-        },
-        {
-          "word": "thresholding",
-          "zh": "阈值处理",
-          "phrase_1": "image thresholding algorithm",
-          "phrase_1_zh": "图像阈值处理算法",
-          "phrase_2": "thresholding method in segmentation",
-          "phrase_2_zh": "分割中的阈值处理方法",
-          "pos": "n./adj."
         },
         {
           "word": "thresh",
@@ -154235,7 +147865,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_threshold",
       "internal_word_items": [
@@ -154249,9 +147879,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "thresholdless": "adj.",
-        "threshing": "n./adj.",
         "thresher": "n.",
-        "thresholding": "n./adj.",
         "thresh": "n./v."
       }
     },
@@ -154272,27 +147900,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "throngful festival scene",
           "phrase_2_zh": "拥挤的节日场景",
           "pos": "adj."
-        },
-        {
-          "word": "thronged",
-          "zh": "挤满的",
-          "phrase_1": "thronged urban thoroughfare",
-          "phrase_1_zh": "挤满人的城市大道",
-          "phrase_2": "thronged public square",
-          "phrase_2_zh": "拥挤的公共广场",
-          "pos": "adj."
-        },
-        {
-          "word": "thronging",
-          "zh": "拥挤；蜂拥",
-          "phrase_1": "thronging crowd at the station",
-          "phrase_1_zh": "车站蜂拥的人群",
-          "phrase_2": "thronging visitors during festival",
-          "phrase_2_zh": "节日期间蜂拥的游客",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_throng",
       "internal_word_items": [
@@ -154305,9 +147915,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "throng": "n./v."
       },
       "external_pos_map": {
-        "throngful": "adj.",
-        "thronged": "adj.",
-        "thronging": "n./adj."
+        "throngful": "adj."
       }
     },
     {
@@ -154501,15 +148109,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "untilled",
-          "zh": "未耕作的",
-          "phrase_1": "untilled field margin",
-          "phrase_1_zh": "未耕作田边",
-          "phrase_2": "untilled soil carbon storage",
-          "phrase_2_zh": "未耕作土壤碳储量",
-          "pos": "adj."
-        },
-        {
           "word": "tiller",
           "zh": "分蘖；耕作机",
           "phrase_1": "rice tiller density",
@@ -154528,7 +148127,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_till",
       "internal_word_items": [
@@ -154546,7 +148145,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "until": "n./v."
       },
       "external_pos_map": {
-        "untilled": "adj.",
         "tiller": "n.",
         "tillage": "n."
       }
@@ -154570,15 +148168,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "untilted",
-          "zh": "未倾斜的",
-          "phrase_1": "untilted sediment layer",
-          "phrase_1_zh": "未倾斜沉积层",
-          "phrase_2": "untilted baseline measurement",
-          "phrase_2_zh": "未倾斜基线测量",
-          "pos": "adj."
-        },
-        {
           "word": "tiltyard",
           "zh": "比武场",
           "phrase_1": "tiltyard tournament culture",
@@ -154595,18 +148184,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "tiltmeter data interpretation",
           "phrase_2_zh": "倾斜仪数据解释",
           "pos": "n."
-        },
-        {
-          "word": "tilting",
-          "zh": "倾斜；偏向",
-          "phrase_1": "tilting sensor calibration",
-          "phrase_1_zh": "倾斜传感器校准",
-          "phrase_2": "tilting policy toward industry",
-          "phrase_2_zh": "政策向产业倾斜",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_tilt",
       "internal_word_items": [
@@ -154620,10 +148200,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "tiltrotor": "n.",
-        "untilted": "adj.",
         "tiltyard": "n./v.",
-        "tiltmeter": "n.",
-        "tilting": "n./adj."
+        "tiltmeter": "n."
       }
     },
     {
@@ -154817,15 +148395,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "titling",
-          "zh": "命名；产权登记",
-          "phrase_1": "titling land rights",
-          "phrase_1_zh": "登记土地权利",
-          "phrase_2": "titling strategy in publishing",
-          "phrase_2_zh": "出版中的命名策略",
-          "pos": "n./adj."
-        },
-        {
           "word": "titleholder",
           "zh": "头衔持有者",
           "phrase_1": "titleholder responsibility in sport",
@@ -154853,7 +148422,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_title",
       "internal_word_items": [
@@ -154866,7 +148435,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "title": "n./v."
       },
       "external_pos_map": {
-        "titling": "n./adj.",
         "titleholder": "n.",
         "subtitle": "n./v.",
         "entitle": "v."
@@ -155345,18 +148913,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "contact tracer training",
           "phrase_2_zh": "接触者追踪员培训",
           "pos": "n."
-        },
-        {
-          "word": "retracing",
-          "zh": "重新追溯；折返",
-          "phrase_1": "retracing archival records",
-          "phrase_1_zh": "重新追溯档案记录",
-          "phrase_2": "retracing a trade route",
-          "phrase_2_zh": "沿贸易路线折返",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_trace",
       "internal_word_items": [
@@ -155372,8 +148931,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "traceability": "n.",
         "traceless": "adj.",
         "traceable": "adj.",
-        "tracer": "n.",
-        "retracing": "n./adj."
+        "tracer": "n."
       }
     },
     {
@@ -155413,15 +148971,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "trackbed",
-          "zh": "轨道路基",
-          "phrase_1": "trackbed maintenance standard",
-          "phrase_1_zh": "轨道路基维护标准",
-          "phrase_2": "trackbed vibration monitoring",
-          "phrase_2_zh": "轨道路基振动监测",
-          "pos": "adj."
-        },
-        {
           "word": "trackway",
           "zh": "足迹道；轨道",
           "phrase_1": "dinosaur trackway evidence",
@@ -155431,7 +148980,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_track",
       "internal_word_items": [
@@ -155447,7 +148996,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "backtrack": "n./v.",
         "sidetrack": "n./v.",
         "tracker": "n.",
-        "trackbed": "adj.",
         "trackway": "n./v."
       }
     },
@@ -155488,15 +149036,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "training",
-          "zh": "训练；培养",
-          "phrase_1": "training program evaluation",
-          "phrase_1_zh": "培训项目评估",
-          "phrase_2": "training data bias",
-          "phrase_2_zh": "训练数据偏差",
-          "pos": "n./adj."
-        },
-        {
           "word": "trainer",
           "zh": "训练者；训练器",
           "phrase_1": "trainer certification standard",
@@ -155506,7 +149045,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_train",
       "internal_word_items": [
@@ -155522,7 +149061,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "trainload": "n./v.",
         "trainable": "adj.",
         "trainee": "n.",
-        "training": "n./adj.",
         "trainer": "n."
       }
     },
@@ -155611,15 +149149,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "entrancing",
-          "zh": "迷人的",
-          "phrase_1": "entrancing narrative style",
-          "phrase_1_zh": "迷人的叙事风格",
-          "phrase_2": "entrancing visual rhythm",
-          "phrase_2_zh": "迷人的视觉节奏",
-          "pos": "n./adj."
-        },
-        {
           "word": "trancestate",
           "zh": "出神状态",
           "phrase_1": "trancestate during ritual practice",
@@ -155645,18 +149174,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "entrancement through rhythmic music",
           "phrase_2_zh": "节奏音乐带来的出神",
           "pos": "n."
-        },
-        {
-          "word": "entranced",
-          "zh": "入迷的；出神的",
-          "phrase_1": "entranced by ritual music",
-          "phrase_1_zh": "被仪式音乐迷住",
-          "phrase_2": "entranced audience response",
-          "phrase_2_zh": "入迷的观众反应",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_trance",
       "internal_word_items": [
@@ -155669,11 +149189,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "trance": "n."
       },
       "external_pos_map": {
-        "entrancing": "n./adj.",
         "trancestate": "v.",
         "trancework": "n./v.",
-        "entrancement": "n.",
-        "entranced": "adj."
+        "entrancement": "n."
       }
     },
     {
@@ -155825,8 +149343,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "traveller",
-        "travelled",
-        "travelling",
         "travel"
       ],
       "external_words": [
@@ -155849,7 +149365,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_traveller",
       "internal_word_items": [
@@ -155858,22 +149374,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "travelled",
-          "pos": "adj."
-        },
-        {
-          "word": "travelling",
-          "pos": "n./adj."
-        },
-        {
           "word": "travel",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
         "traveller": "n.",
-        "travelled": "adj.",
-        "travelling": "n./adj.",
         "travel": "n."
       },
       "external_pos_map": {
@@ -155889,8 +149395,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "treatment",
         "treaty",
-        "retreat",
-        "treated"
+        "retreat"
       ],
       "external_words": [
         {
@@ -155912,7 +149417,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_treatment",
       "internal_word_items": [
@@ -155927,17 +149432,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "retreat",
           "pos": "n./v."
-        },
-        {
-          "word": "treated",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
         "treatment": "n.",
         "treaty": "n.",
-        "retreat": "n./v.",
-        "treated": "adj."
+        "retreat": "n./v."
       },
       "external_pos_map": {
         "treatable": "adj.",
@@ -156055,18 +149555,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "trencher in medieval banquets",
           "phrase_2_zh": "中世纪宴会中的餐盘",
           "pos": "n."
-        },
-        {
-          "word": "entrenched",
-          "zh": "根深蒂固的",
-          "phrase_1": "entrenched institutional bias",
-          "phrase_1_zh": "根深蒂固的制度偏见",
-          "phrase_2": "entrenched defensive position",
-          "phrase_2_zh": "稳固防御阵地",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_trench",
       "internal_word_items": [
@@ -156082,8 +149573,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "trenchline": "n./v.",
         "trenchfoot": "n./v.",
         "trenchcoat": "n./v.",
-        "trencher": "n.",
-        "entrenched": "adj."
+        "trencher": "n."
       }
     },
     {
@@ -156619,15 +150109,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "trilobed",
-          "zh": "三叶状的",
-          "phrase_1": "trilobed fossil form",
-          "phrase_1_zh": "三叶状化石形态",
-          "phrase_2": "trilobed leaf morphology",
-          "phrase_2_zh": "三裂叶形态",
-          "pos": "adj."
-        },
-        {
           "word": "lobite",
           "zh": "叶状结构相关",
           "phrase_1": "lobite fossil morphology",
@@ -156646,7 +150127,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_trilobite",
       "internal_word_items": [
@@ -156660,7 +150141,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "trilobitic": "adj.",
-        "trilobed": "adj.",
         "lobite": "n./v.",
         "trilobation": "n."
       }
@@ -156809,18 +150289,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "truncate a historical narrative",
           "phrase_2_zh": "截断历史叙事",
           "pos": "v."
-        },
-        {
-          "word": "truncated",
-          "zh": "截短的",
-          "phrase_1": "truncated data distribution",
-          "phrase_1_zh": "截断数据分布",
-          "phrase_2": "truncated cone shape",
-          "phrase_2_zh": "截头圆锥形",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_trunk",
       "internal_word_items": [
@@ -156836,8 +150307,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "truncus": "n./v.",
         "truncal": "adj.",
         "truncation": "n.",
-        "truncate": "v.",
-        "truncated": "adj."
+        "truncate": "v."
       }
     },
     {
@@ -157038,18 +150508,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "turtlegrass habitat quality",
           "phrase_2_zh": "龟草栖息地质量",
           "pos": "n./v."
-        },
-        {
-          "word": "turtling",
-          "zh": "龟缩；翻覆保护姿态",
-          "phrase_1": "turtling behavior in strategy games",
-          "phrase_1_zh": "策略游戏中的龟缩行为",
-          "phrase_2": "turtling response after market shock",
-          "phrase_2_zh": "市场冲击后的保守反应",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_turtle",
       "internal_word_items": [
@@ -157062,8 +150523,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "turtle": "n."
       },
       "external_pos_map": {
-        "turtlegrass": "n./v.",
-        "turtling": "n./adj."
+        "turtlegrass": "n./v."
       }
     },
     {
@@ -157076,15 +150536,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "tusked",
-          "zh": "有獠牙的",
-          "phrase_1": "tusked mammal fossil",
-          "phrase_1_zh": "有獠牙哺乳动物化石",
-          "phrase_2": "tusked skull morphology",
-          "phrase_2_zh": "有獠牙颅骨形态",
-          "pos": "adj."
-        },
-        {
           "word": "tusker",
           "zh": "有长牙的动物",
           "phrase_1": "tusker population decline",
@@ -157094,7 +150545,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_tusk",
       "internal_word_items": [
@@ -157107,7 +150558,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "tusk": "n."
       },
       "external_pos_map": {
-        "tusked": "adj.",
         "tusker": "n."
       }
     },
@@ -157251,51 +150701,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       }
     },
     {
-      "cluster_id": "kin_head_seed_unaided",
-      "cluster_label": "unaided self aided aided",
-      "anchor": "unaided",
-      "confidence": "review",
-      "internal_words": [
-        "unaided"
-      ],
-      "external_words": [
-        {
-          "word": "self aided",
-          "zh": "自助的",
-          "phrase_1": "self aided learning strategy",
-          "phrase_1_zh": "自助学习策略",
-          "phrase_2": "self aided recovery process",
-          "phrase_2_zh": "自助恢复过程",
-          "pos": "adj."
-        },
-        {
-          "word": "aided",
-          "zh": "受援助的",
-          "phrase_1": "computer aided design",
-          "phrase_1_zh": "计算机辅助设计",
-          "phrase_2": "aided migration program",
-          "phrase_2_zh": "受援助迁徙项目",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_unaided",
-      "internal_word_items": [
-        {
-          "word": "unaided",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "unaided": "adj."
-      },
-      "external_pos_map": {
-        "self aided": "adj.",
-        "aided": "adj."
-      }
-    },
-    {
       "cluster_id": "kin_head_seed_unanimous",
       "cluster_label": "unanimous animacy magnanimous unanimity animate animus",
       "anchor": "unanimous",
@@ -157371,41 +150776,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       }
     },
     {
-      "cluster_id": "kin_head_seed_unarmed",
-      "cluster_label": "unarmed armed",
-      "anchor": "unarmed",
-      "confidence": "review",
-      "internal_words": [
-        "unarmed",
-        "armed"
-      ],
-      "external_words": [],
-      "total_words": 2,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_seed_unarmed",
-      "internal_word_items": [
-        {
-          "word": "unarmed",
-          "pos": "adj."
-        },
-        {
-          "word": "armed",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "unarmed": "adj.",
-        "armed": "adj."
-      },
-      "external_pos_map": {}
-    },
-    {
       "cluster_id": "kin_head_seed_unbiased",
       "cluster_label": "unbiased bias debias biasfree antibias biased",
       "anchor": "unbiased",
       "confidence": "review",
       "internal_words": [
-        "unbiased",
         "bias"
       ],
       "external_words": [
@@ -157435,39 +150810,24 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "antibias hiring policy",
           "phrase_2_zh": "反偏见招聘政策",
           "pos": "n."
-        },
-        {
-          "word": "biased",
-          "zh": "有偏见的；有偏的",
-          "phrase_1": "biased media coverage",
-          "phrase_1_zh": "有偏见的媒体报道",
-          "phrase_2": "biased statistical sample",
-          "phrase_2_zh": "有偏统计样本",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unbiased",
       "internal_word_items": [
-        {
-          "word": "unbiased",
-          "pos": "adj."
-        },
         {
           "word": "bias",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "unbiased": "adj.",
         "bias": "n."
       },
       "external_pos_map": {
         "debias": "n.",
         "biasfree": "n.",
-        "antibias": "n.",
-        "biased": "adj."
+        "antibias": "n."
       }
     },
     {
@@ -157475,9 +150835,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "unchecked checkup recheck checklist checkpoint check",
       "anchor": "unchecked",
       "confidence": "review",
-      "internal_words": [
-        "unchecked"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "checkup",
@@ -157525,18 +150883,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unchecked",
-      "internal_word_items": [
-        {
-          "word": "unchecked",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "unchecked": "adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "checkup": "n./v.",
         "recheck": "n./v.",
@@ -157597,9 +150948,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "undamaged damageproof damages damageable damaging damage",
       "anchor": "undamaged",
       "confidence": "review",
-      "internal_words": [
-        "undamaged"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "damageproof",
@@ -157629,15 +150978,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "damaging",
-          "zh": "有害的",
-          "phrase_1": "damaging environmental impact",
-          "phrase_1_zh": "有害环境影响",
-          "phrase_2": "damaging political allegation",
-          "phrase_2_zh": "有害政治指控",
-          "pos": "adj."
-        },
-        {
           "word": "damage",
           "zh": "损害",
           "phrase_1": "damage assessment report",
@@ -157647,23 +150987,15 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_undamaged",
-      "internal_word_items": [
-        {
-          "word": "undamaged",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "undamaged": "adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "damageproof": "n./v.",
         "damages": "n.",
         "damageable": "adj.",
-        "damaging": "adj.",
         "damage": "n."
       }
     },
@@ -157673,8 +151005,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "underwater",
       "confidence": "review",
       "internal_words": [
-        "underwater",
-        "watershed"
+        "underwater"
       ],
       "external_words": [
         {
@@ -157714,22 +151045,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_underwater",
       "internal_word_items": [
         {
           "word": "underwater",
           "pos": "adj./adv."
-        },
-        {
-          "word": "watershed",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "underwater": "adj./adv.",
-        "watershed": "n."
+        "underwater": "adj./adv."
       },
       "external_pos_map": {
         "waterproof": "n./v.",
@@ -157841,15 +151167,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "fairminded",
-          "zh": "公正的",
-          "phrase_1": "fairminded evaluation of evidence",
-          "phrase_1_zh": "公正评估证据",
-          "phrase_2": "fairminded public debate",
-          "phrase_2_zh": "公正公共辩论",
-          "pos": "adj."
-        },
-        {
           "word": "fairplay",
           "zh": "公平竞争",
           "phrase_1": "fairplay rule in sport",
@@ -157859,7 +151176,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unfair",
       "internal_word_items": [
@@ -157883,7 +151200,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "fairgoer": "n.",
-        "fairminded": "adj.",
         "fairplay": "n./v."
       }
     },
@@ -157896,15 +151212,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "uniform"
       ],
       "external_words": [
-        {
-          "word": "uniformed",
-          "zh": "穿制服的",
-          "phrase_1": "uniformed public service",
-          "phrase_1_zh": "穿制服的公共服务人员",
-          "phrase_2": "uniformed security presence",
-          "phrase_2_zh": "制服安保力量",
-          "pos": "adj."
-        },
         {
           "word": "nonuniform",
           "zh": "不均匀的；不一致的",
@@ -157942,7 +151249,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_uniform",
       "internal_word_items": [
@@ -157955,7 +151262,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "uniform": "n./adj."
       },
       "external_pos_map": {
-        "uniformed": "adj.",
         "nonuniform": "n./v.",
         "uniformitarianism": "n.",
         "uniformitarian": "n.",
@@ -157972,15 +151278,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "unification"
       ],
       "external_words": [
-        {
-          "word": "unified",
-          "zh": "统一的；一致的",
-          "phrase_1": "unified theoretical framework",
-          "phrase_1_zh": "统一理论框架",
-          "phrase_2": "unified national curriculum",
-          "phrase_2_zh": "统一国家课程",
-          "pos": "adj."
-        },
         {
           "word": "disunify",
           "zh": "使分裂",
@@ -158000,7 +151297,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unify",
       "internal_word_items": [
@@ -158018,7 +151315,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "unification": "n."
       },
       "external_pos_map": {
-        "unified": "adj.",
         "disunify": "v.",
         "reunify": "v."
       }
@@ -158080,15 +151376,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "leashed",
-          "zh": "拴住的；受控的",
-          "phrase_1": "leashed pet policy",
-          "phrase_1_zh": "拴绳宠物政策",
-          "phrase_2": "leashed political ambition",
-          "phrase_2_zh": "受控制的政治野心",
-          "pos": "adj."
-        },
-        {
           "word": "leashless",
           "zh": "无绳的；不受约束的",
           "phrase_1": "leashless dog regulation",
@@ -158107,7 +151394,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unleash",
       "internal_word_items": [
@@ -158122,7 +151409,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "leashhold": "n./v.",
         "unleashment": "n.",
-        "leashed": "adj.",
         "leashless": "adj.",
         "leash": "n."
       }
@@ -158133,7 +151419,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "unspeaking",
       "confidence": "review",
       "internal_words": [
-        "unspeaking",
         "speak"
       ],
       "external_words": [
@@ -158156,21 +151441,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unspeaking",
       "internal_word_items": [
-        {
-          "word": "unspeaking",
-          "pos": "v."
-        },
         {
           "word": "speak",
           "pos": "v."
         }
       ],
       "internal_pos_map": {
-        "unspeaking": "v.",
         "speak": "v."
       },
       "external_pos_map": {
@@ -158254,9 +151534,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "untouched touchless retouch touchscreen touchstone touch",
       "anchor": "untouched",
       "confidence": "review",
-      "internal_words": [
-        "untouched"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "touchless",
@@ -158304,18 +151582,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_untouched",
-      "internal_word_items": [
-        {
-          "word": "untouched",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "untouched": "adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "touchless": "adj.",
         "retouch": "n./v.",
@@ -158336,15 +151607,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "wielding",
-          "zh": "运用；行使",
-          "phrase_1": "wielding cultural authority",
-          "phrase_1_zh": "行使文化权威",
-          "phrase_2": "wielding market power",
-          "phrase_2_zh": "运用市场力量",
-          "pos": "n./adj."
-        },
-        {
           "word": "wieldable",
           "zh": "可运用的",
           "phrase_1": "wieldable institutional power",
@@ -158363,7 +151625,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_unwieldy",
       "internal_word_items": [
@@ -158386,7 +151648,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "wield": "v."
       },
       "external_pos_map": {
-        "wielding": "n./adj.",
         "wieldable": "adj.",
         "wielder": "n."
       }
@@ -158428,15 +151689,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "heaving",
-          "zh": "起伏；隆起",
-          "phrase_1": "heaving ground surface",
-          "phrase_1_zh": "隆起的地表",
-          "phrase_2": "heaving sea during a storm",
-          "phrase_2_zh": "暴风雨中起伏的海面",
-          "pos": "n./adj."
-        },
-        {
           "word": "heave",
           "zh": "举起；起伏",
           "phrase_1": "heave a heavy stone",
@@ -158446,7 +151698,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_upheaval",
       "internal_word_items": [
@@ -158462,7 +151714,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "frostheave": "n./v.",
         "earthheave": "n./v.",
         "heaver": "n.",
-        "heaving": "n./adj.",
         "heave": "v."
       }
     },
@@ -158539,7 +151790,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "rise = rise 上升；起义",
       "confidence": "high",
       "internal_words": [
-        "uprising",
         "rise",
         "arise"
       ],
@@ -158561,25 +151811,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "sunrise industry",
           "phrase_2_zh": "朝阳产业",
           "pos": "v."
-        },
-        {
-          "word": "rising",
-          "zh": "上升的；起义的",
-          "phrase_1": "rising temperature",
-          "phrase_1_zh": "上升温度",
-          "phrase_2": "rising social tension",
-          "phrase_2_zh": "上升的社会紧张",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_uprising",
       "internal_word_items": [
-        {
-          "word": "uprising",
-          "pos": "n."
-        },
         {
           "word": "rise",
           "pos": "v."
@@ -158590,14 +151827,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "uprising": "n.",
         "rise": "v.",
         "arise": "v."
       },
       "external_pos_map": {
         "uprisen": "v.",
-        "sunrise": "v.",
-        "rising": "n./adj."
+        "sunrise": "v."
       }
     },
     {
@@ -158619,15 +151854,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "wellspring",
-          "zh": "源泉；泉源",
-          "phrase_1": "wellspring of social innovation",
-          "phrase_1_zh": "社会创新的源泉",
-          "phrase_2": "wellspring of cultural memory",
-          "phrase_2_zh": "文化记忆的源泉",
-          "pos": "n./adj."
-        },
-        {
           "word": "wellhead",
           "zh": "井口",
           "phrase_1": "wellhead pressure control",
@@ -158635,18 +151861,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "wellhead protection area",
           "phrase_2_zh": "井口保护区",
           "pos": "n./v."
-        },
-        {
-          "word": "upwelling",
-          "zh": "上升流",
-          "phrase_1": "coastal upwelling system",
-          "phrase_1_zh": "沿海上升流系统",
-          "phrase_2": "nutrient-rich upwelling zone",
-          "phrase_2_zh": "富营养盐上升流区",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_upwell",
       "internal_word_items": [
@@ -158660,9 +151877,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "wellbore": "n./v.",
-        "wellspring": "n./adj.",
-        "wellhead": "n./v.",
-        "upwelling": "n./adj."
+        "wellhead": "n./v."
       }
     },
     {
@@ -159183,18 +152398,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "vanish",
         "vanity"
       ],
-      "external_words": [
-        {
-          "word": "vanishing",
-          "zh": "消失中的",
-          "phrase_1": "vanishing species",
-          "phrase_1_zh": "濒临消失的物种",
-          "phrase_2": "vanishing tradition",
-          "phrase_2_zh": "消失中的传统",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_vanish",
       "internal_word_items": [
@@ -159211,9 +152416,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "vanish": "v.",
         "vanity": "n."
       },
-      "external_pos_map": {
-        "vanishing": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_vanity",
@@ -159335,15 +152538,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "variegated",
-          "zh": "杂色的；多样的",
-          "phrase_1": "variegated leaf pattern",
-          "phrase_1_zh": "杂色叶片图案",
-          "phrase_2": "variegated social landscape",
-          "phrase_2_zh": "多样化社会景观",
-          "pos": "adj."
-        },
-        {
           "word": "invariant",
           "zh": "不变的",
           "phrase_1": "invariant property in physics",
@@ -159353,7 +152547,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_variation",
       "internal_word_items": [
@@ -159376,7 +152570,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "variable": "n./adj."
       },
       "external_pos_map": {
-        "variegated": "adj.",
         "invariant": "adj."
       }
     },
@@ -159457,15 +152650,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "variegated",
-          "zh": "杂色的；多样的",
-          "phrase_1": "variegated landscape",
-          "phrase_1_zh": "多样景观",
-          "phrase_2": "variegated leaves",
-          "phrase_2_zh": "斑驳叶片",
-          "pos": "adj."
-        },
-        {
           "word": "invariant",
           "zh": "不变量；不变的",
           "phrase_1": "mathematical invariant",
@@ -159475,7 +152659,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_vary",
       "internal_word_items": [
@@ -159498,7 +152682,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "variety": "n."
       },
       "external_pos_map": {
-        "variegated": "adj.",
         "invariant": "adj."
       }
     },
@@ -159541,15 +152724,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "veiling",
-          "zh": "遮蔽；蒙面习俗",
-          "phrase_1": "veiling practice in social history",
-          "phrase_1_zh": "社会史中的蒙面习俗",
-          "phrase_2": "veiling effect in optical data",
-          "phrase_2_zh": "光学数据中的遮蔽效应",
-          "pos": "n./adj."
-        },
-        {
           "word": "unveil",
           "zh": "揭开；公布",
           "phrase_1": "unveil a public health strategy",
@@ -159557,18 +152731,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "unveil hidden archival evidence",
           "phrase_2_zh": "揭开隐藏档案证据",
           "pos": "n./v."
-        },
-        {
-          "word": "veiled",
-          "zh": "遮掩的；含蓄的",
-          "phrase_1": "veiled criticism of authority",
-          "phrase_1_zh": "对权威的含蓄批评",
-          "phrase_2": "veiled threat in diplomacy",
-          "phrase_2_zh": "外交中的隐晦威胁",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_veil",
       "internal_word_items": [
@@ -159581,9 +152746,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "veil": "n."
       },
       "external_pos_map": {
-        "veiling": "n./adj.",
-        "unveil": "n./v.",
-        "veiled": "adj."
+        "unveil": "n./v."
       }
     },
     {
@@ -160692,15 +153855,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "voyaging",
-          "zh": "远航；航行",
-          "phrase_1": "voyaging tradition in Polynesia",
-          "phrase_1_zh": "波利尼西亚远航传统",
-          "phrase_2": "voyaging technology in navigation",
-          "phrase_2_zh": "航海中的远航技术",
-          "pos": "n./adj."
-        },
-        {
           "word": "voyageur",
           "zh": "船夫；远行者",
           "phrase_1": "voyageur trade route",
@@ -160710,7 +153864,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_voyager",
       "internal_word_items": [
@@ -160728,7 +153882,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "voyage": "n."
       },
       "external_pos_map": {
-        "voyaging": "n./adj.",
         "voyageur": "n./v."
       }
     },
@@ -161012,15 +154165,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "walkshed",
-          "zh": "步行可达区",
-          "phrase_1": "walkshed analysis for transit",
-          "phrase_1_zh": "公交步行可达区分析",
-          "phrase_2": "school walkshed boundary",
-          "phrase_2_zh": "学校步行可达边界",
-          "pos": "adj."
-        },
-        {
           "word": "sidewalk",
           "zh": "人行道",
           "phrase_1": "sidewalk accessibility standard",
@@ -161057,7 +154201,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_walkability",
       "internal_word_items": [
@@ -161070,7 +154214,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "walkability": "n."
       },
       "external_pos_map": {
-        "walkshed": "adj.",
         "sidewalk": "n./v.",
         "walkscore": "n./v.",
         "walkway": "n./v.",
@@ -161180,15 +154323,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "unwarned",
-          "zh": "未被警告的",
-          "phrase_1": "unwarned coastal communities",
-          "phrase_1_zh": "未被预警的沿海社区",
-          "phrase_2": "unwarned exposure to chemicals",
-          "phrase_2_zh": "未被警告的化学品暴露",
-          "pos": "adj."
-        },
-        {
           "word": "warner",
           "zh": "警告者；报警装置",
           "phrase_1": "automatic warner device",
@@ -161196,18 +154330,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "public warner role",
           "phrase_2_zh": "公共警告者角色",
           "pos": "n."
-        },
-        {
-          "word": "warning",
-          "zh": "警告；预警",
-          "phrase_1": "early warning system",
-          "phrase_1_zh": "早期预警系统",
-          "phrase_2": "warning signs of recession",
-          "phrase_2_zh": "经济衰退警告信号",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_warn",
       "internal_word_items": [
@@ -161222,9 +154347,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "warnable": "adj.",
         "forewarn": "n./v.",
-        "unwarned": "adj.",
-        "warner": "n.",
-        "warning": "n./adj."
+        "warner": "n."
       }
     },
     {
@@ -161264,15 +154387,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "warping",
-          "zh": "翘曲；扭曲",
-          "phrase_1": "warping of historical memory",
-          "phrase_1_zh": "历史记忆的扭曲",
-          "phrase_2": "wood warping after drying",
-          "phrase_2_zh": "木材干燥后的翘曲",
-          "pos": "n./adj."
-        },
-        {
           "word": "warpage",
           "zh": "翘曲；变形",
           "phrase_1": "warpage in plastic components",
@@ -161282,7 +154396,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_warp",
       "internal_word_items": [
@@ -161298,7 +154412,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "warpknit": "n./v.",
         "warpwise": "v.",
         "warpdrive": "adj.",
-        "warping": "n./adj.",
         "warpage": "n."
       }
     },
@@ -161339,15 +154452,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "warranted",
-          "zh": "有正当理由的；获授权的",
-          "phrase_1": "warranted search procedure",
-          "phrase_1_zh": "有授权的搜查程序",
-          "phrase_2": "warranted confidence in evidence",
-          "phrase_2_zh": "对证据有根据的信心",
-          "pos": "adj."
-        },
-        {
           "word": "warranty",
           "zh": "担保；保修",
           "phrase_1": "product warranty claim",
@@ -161357,7 +154461,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_warrant",
       "internal_word_items": [
@@ -161373,7 +154477,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "warrantless": "adj.",
         "warrantee": "n.",
         "warrantor": "n.",
-        "warranted": "adj.",
         "warranty": "n./v."
       }
     },
@@ -161822,15 +154925,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "weakling",
-          "zh": "弱者；虚弱者",
-          "phrase_1": "weakling stereotype in fiction",
-          "phrase_1_zh": "小说中的弱者刻板印象",
-          "phrase_2": "political weakling accusation",
-          "phrase_2_zh": "政治上的懦弱指控",
-          "pos": "n./adj."
-        },
-        {
           "word": "weakness",
           "zh": "弱点；虚弱",
           "phrase_1": "methodological weakness in research",
@@ -161849,7 +154943,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_weak",
       "internal_word_items": [
@@ -161864,7 +154958,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "weakly": "adv.",
         "weakpoint": "n./v.",
-        "weakling": "n./adj.",
         "weakness": "n.",
         "weaken": "v."
       }
@@ -161979,27 +155072,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "weatherproof data infrastructure",
           "phrase_2_zh": "抗天气影响的数据基础设施",
           "pos": "n./v."
-        },
-        {
-          "word": "weathered",
-          "zh": "风化的；经受过考验的",
-          "phrase_1": "weathered rock surface",
-          "phrase_1_zh": "风化岩石表面",
-          "phrase_2": "weathered political institution",
-          "phrase_2_zh": "经受考验的政治机构",
-          "pos": "adj."
-        },
-        {
-          "word": "weathering",
-          "zh": "风化；经受",
-          "phrase_1": "chemical weathering process",
-          "phrase_1_zh": "化学风化过程",
-          "phrase_2": "weathering of public trust",
-          "phrase_2_zh": "公众信任的消磨",
-          "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_weather",
       "internal_word_items": [
@@ -162014,9 +155089,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "weatherboard": "n./v.",
         "weatherwise": "v.",
-        "weatherproof": "n./v.",
-        "weathered": "adj.",
-        "weathering": "n."
+        "weatherproof": "n./v."
       }
     },
     {
@@ -162138,15 +155211,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "weighting",
-          "zh": "加权；权重设置",
-          "phrase_1": "survey weighting method",
-          "phrase_1_zh": "调查加权方法",
-          "phrase_2": "weighting of policy priorities",
-          "phrase_2_zh": "政策优先级权重设置",
-          "pos": "n./adj."
-        },
-        {
           "word": "counterweight",
           "zh": "配重；平衡力量",
           "phrase_1": "counterweight in elevator design",
@@ -162163,18 +155227,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "weightless particle behavior",
           "phrase_2_zh": "无重量粒子行为",
           "pos": "adj."
-        },
-        {
-          "word": "weighted",
-          "zh": "加权的；有重量的",
-          "phrase_1": "weighted average calculation",
-          "phrase_1_zh": "加权平均计算",
-          "phrase_2": "weighted evidence in evaluation",
-          "phrase_2_zh": "评估中的加权证据",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_weight",
       "internal_word_items": [
@@ -162192,10 +155247,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "overweight": "adj."
       },
       "external_pos_map": {
-        "weighting": "n./adj.",
         "counterweight": "n./v.",
-        "weightless": "adj.",
-        "weighted": "adj."
+        "weightless": "adj."
       }
     },
     {
@@ -162219,15 +155272,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "weighting",
-          "zh": "加权",
-          "phrase_1": "statistical weighting method",
-          "phrase_1_zh": "统计加权方法",
-          "phrase_2": "survey weighting adjustment",
-          "phrase_2_zh": "调查加权调整",
-          "pos": "n./adj."
-        },
-        {
           "word": "weightless",
           "zh": "失重的；无重量的",
           "phrase_1": "weightless environment experiment",
@@ -162237,7 +155281,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_weighty",
       "internal_word_items": [
@@ -162261,7 +155305,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "counterweight": "n./v.",
-        "weighting": "n./adj.",
         "weightless": "adj."
       }
     },
@@ -162282,15 +155325,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "wellwater supply reliability",
           "phrase_2_zh": "井水供应可靠性",
           "pos": "n."
-        },
-        {
-          "word": "wellspring",
-          "zh": "源泉",
-          "phrase_1": "wellspring of democratic reform",
-          "phrase_1_zh": "民主改革的源泉",
-          "phrase_2": "wellspring of artistic innovation",
-          "phrase_2_zh": "艺术创新的源泉",
-          "pos": "n./adj."
         },
         {
           "word": "wellfield",
@@ -162320,7 +155354,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_well",
       "internal_word_items": [
@@ -162334,7 +155368,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "wellwater": "n.",
-        "wellspring": "n./adj.",
         "wellfield": "n./v.",
         "wellbore": "n./v.",
         "wellhead": "n./v."
@@ -162358,18 +155391,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "wellcare insurance plan",
           "phrase_2_zh": "健康护理保险计划",
           "pos": "n./v."
-        },
-        {
-          "word": "wellbeing",
-          "zh": "福祉",
-          "phrase_1": "student wellbeing framework",
-          "phrase_1_zh": "学生福祉框架",
-          "phrase_2": "community wellbeing indicator",
-          "phrase_2_zh": "社区福祉指标",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_well_being",
       "internal_word_items": [
@@ -162387,8 +155411,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "wellness": "n."
       },
       "external_pos_map": {
-        "wellcare": "n./v.",
-        "wellbeing": "n./adj."
+        "wellcare": "n./v."
       }
     },
     {
@@ -162426,18 +155449,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "wellnessprogram participation rate",
           "phrase_2_zh": "健康项目参与率",
           "pos": "n./v."
-        },
-        {
-          "word": "wellbeing",
-          "zh": "福祉",
-          "phrase_1": "wellbeing policy dashboard",
-          "phrase_1_zh": "福祉政策仪表盘",
-          "phrase_2": "mental wellbeing intervention",
-          "phrase_2_zh": "心理福祉干预",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_wellness",
       "internal_word_items": [
@@ -162452,8 +155466,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "wellcare": "n./v.",
         "wellnesscenter": "n.",
-        "wellnessprogram": "n./v.",
-        "wellbeing": "n./adj."
+        "wellnessprogram": "n./v."
       }
     },
     {
@@ -162465,15 +155478,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "whale"
       ],
       "external_words": [
-        {
-          "word": "whaling",
-          "zh": "捕鲸",
-          "phrase_1": "commercial whaling moratorium",
-          "phrase_1_zh": "商业捕鲸禁令",
-          "phrase_2": "whaling community transition",
-          "phrase_2_zh": "捕鲸社区转型",
-          "pos": "n./adj."
-        },
         {
           "word": "whalebone",
           "zh": "鲸须",
@@ -162493,7 +155497,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_whale",
       "internal_word_items": [
@@ -162506,7 +155510,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "whale": "n."
       },
       "external_pos_map": {
-        "whaling": "n./adj.",
         "whalebone": "n./v.",
         "whaler": "n."
       }
@@ -162518,22 +155521,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "wholeness",
-        "wholehearted",
         "wholesale",
         "whole"
       ],
       "external_words": [],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_wholeness",
       "internal_word_items": [
         {
           "word": "wholeness",
           "pos": "n."
-        },
-        {
-          "word": "wholehearted",
-          "pos": "adj."
         },
         {
           "word": "wholesale",
@@ -162546,7 +155544,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "wholeness": "n.",
-        "wholehearted": "adj.",
         "wholesale": "n.",
         "whole": "adj."
       },
@@ -162559,22 +155556,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "wholly",
-        "wholehearted",
         "wholesale",
         "whole"
       ],
       "external_words": [],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_wholly",
       "internal_word_items": [
         {
           "word": "wholly",
           "pos": "adv."
-        },
-        {
-          "word": "wholehearted",
-          "pos": "adj."
         },
         {
           "word": "wholesale",
@@ -162587,7 +155579,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "wholly": "adv.",
-        "wholehearted": "adj.",
         "wholesale": "n.",
         "whole": "adj."
       },
@@ -163021,18 +156012,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "winterize energy infrastructure",
           "phrase_2_zh": "能源基础设施越冬化",
           "pos": "v."
-        },
-        {
-          "word": "wintering",
-          "zh": "越冬",
-          "phrase_1": "wintering bird habitat",
-          "phrase_1_zh": "越冬鸟类栖息地",
-          "phrase_2": "wintering strategy in insects",
-          "phrase_2_zh": "昆虫越冬策略",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_winter",
       "internal_word_items": [
@@ -163048,8 +156030,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "wintertide": "n./v.",
         "midwinter": "n.",
         "wintry": "n./v.",
-        "winterize": "v.",
-        "wintering": "n./adj."
+        "winterize": "v."
       }
     },
     {
@@ -163368,15 +156349,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "woodcutting",
-          "zh": "木刻；伐木",
-          "phrase_1": "woodcutting tool design",
-          "phrase_1_zh": "木刻工具设计",
-          "phrase_2": "woodcutting in forest management",
-          "phrase_2_zh": "森林管理中的伐木",
-          "pos": "n./adj."
-        },
-        {
           "word": "woodwork",
           "zh": "木工；木制品",
           "phrase_1": "woodwork restoration project",
@@ -163395,7 +156367,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_woodblock",
       "internal_word_items": [
@@ -163410,7 +156382,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "woodprint": "n./v.",
         "woodgrain": "n./v.",
-        "woodcutting": "n./adj.",
         "woodwork": "n./v.",
         "woodcut": "n."
       }
@@ -163443,15 +156414,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "woolgathering",
-          "zh": "走神；空想",
-          "phrase_1": "woolgathering during lectures",
-          "phrase_1_zh": "上课时走神",
-          "phrase_2": "accuse critics of woolgathering",
-          "phrase_2_zh": "指责批评者空想",
-          "pos": "n./adj."
-        },
-        {
           "word": "woolen",
           "zh": "羊毛的；毛织的",
           "phrase_1": "woolen garment production",
@@ -163470,7 +156432,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_woolly",
       "internal_word_items": [
@@ -163485,7 +156447,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "woolworker": "n.",
         "woolsack": "n./v.",
-        "woolgathering": "n./adj.",
         "woolen": "v.",
         "wool": "n./v."
       }
@@ -163791,24 +156752,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "woundhealing",
-          "zh": "伤口愈合",
-          "phrase_1": "woundhealing biomaterial",
-          "phrase_1_zh": "伤口愈合生物材料",
-          "phrase_2": "woundhealing response in tissue",
-          "phrase_2_zh": "组织中的伤口愈合反应",
-          "pos": "n./adj."
-        },
-        {
-          "word": "wounding",
-          "zh": "伤害；创伤",
-          "phrase_1": "wounding effect of discrimination",
-          "phrase_1_zh": "歧视的伤害作用",
-          "phrase_2": "wounding mechanism in ballistics",
-          "phrase_2_zh": "弹道学中的致伤机制",
-          "pos": "n./adj."
-        },
-        {
           "word": "woundless",
           "zh": "无伤的；未受伤的",
           "phrase_1": "woundless recovery after surgery",
@@ -163836,7 +156779,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_wound",
       "internal_word_items": [
@@ -163849,8 +156792,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "wound": "n."
       },
       "external_pos_map": {
-        "woundhealing": "n./adj.",
-        "wounding": "n./adj.",
         "woundless": "adj.",
         "woundwort": "n./v.",
         "woundcare": "n./v."
@@ -163884,24 +156825,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "wrongheaded",
-          "zh": "判断错误的；固执错误的",
-          "phrase_1": "wrongheaded policy assumption",
-          "phrase_1_zh": "错误政策假设",
-          "phrase_2": "wrongheaded economic strategy",
-          "phrase_2_zh": "错误经济策略",
-          "pos": "adj."
-        },
-        {
-          "word": "wrongdoing",
-          "zh": "不法行为",
-          "phrase_1": "financial wrongdoing investigation",
-          "phrase_1_zh": "金融不法行为调查",
-          "phrase_2": "evidence of official wrongdoing",
-          "phrase_2_zh": "官员不当行为证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "wrongdoer",
           "zh": "不法行为者",
           "phrase_1": "hold a wrongdoer accountable",
@@ -163911,7 +156834,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_wrongful",
       "internal_word_items": [
@@ -163926,8 +156849,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "wrongness": "n.",
         "wrongly": "adv.",
-        "wrongheaded": "adj.",
-        "wrongdoing": "n./adj.",
         "wrongdoer": "n."
       }
     },
@@ -164026,18 +156947,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "overyield effect",
           "phrase_2_zh": "超产效应",
           "pos": "n./v."
-        },
-        {
-          "word": "yielding",
-          "zh": "屈服的；产出的",
-          "phrase_1": "yielding material",
-          "phrase_1_zh": "可变形材料",
-          "phrase_2": "yielding response",
-          "phrase_2_zh": "让步回应",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_yield",
       "internal_word_items": [
@@ -164053,8 +156965,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "yield curve": "n./v.",
         "yieldable": "adj.",
         "underyield": "n./v.",
-        "overyield": "n./v.",
-        "yielding": "n./adj."
+        "overyield": "n./v."
       }
     },
     {
@@ -164130,18 +157041,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "zone"
       ],
-      "external_words": [
-        {
-          "word": "zoning",
-          "zh": "分区；区划",
-          "phrase_1": "urban zoning",
-          "phrase_1_zh": "城市分区",
-          "phrase_2": "zoning regulation",
-          "phrase_2_zh": "分区法规",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_seed_zone",
       "internal_word_items": [
@@ -164153,9 +157054,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "zone": "n."
       },
-      "external_pos_map": {
-        "zoning": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_seed_zoo",
@@ -164430,18 +157329,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "social readjustment",
           "phrase_2_zh": "社会再适应",
           "pos": "n."
-        },
-        {
-          "word": "maladjusted",
-          "zh": "适应不良的",
-          "phrase_1": "maladjusted child",
-          "phrase_1_zh": "适应不良的孩子",
-          "phrase_2": "maladjusted behaviour",
-          "phrase_2_zh": "适应不良行为",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_adjust",
       "internal_word_items": [
@@ -164465,8 +157355,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "readjust": "n./v.",
-        "readjustment": "n.",
-        "maladjusted": "adj."
+        "readjustment": "n."
       }
     },
     {
@@ -164627,15 +157516,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unaligned",
-          "zh": "未结盟的；未对齐的",
-          "phrase_1": "unaligned voting bloc",
-          "phrase_1_zh": "未结盟投票集团",
-          "phrase_2": "unaligned data columns",
-          "phrase_2_zh": "未对齐数据列",
-          "pos": "adj."
-        },
-        {
           "word": "realign",
           "zh": "重新调整；重新结盟",
           "phrase_1": "realign political coalitions",
@@ -164654,7 +157534,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_align",
       "internal_word_items": [
@@ -164673,7 +157553,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "aligner": "n.",
-        "unaligned": "adj.",
         "realign": "n./v.",
         "misalignment": "n."
       }
@@ -164704,36 +157583,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "alloyage standard in metallurgy",
           "phrase_2_zh": "冶金合金成分标准",
           "pos": "n."
-        },
-        {
-          "word": "alloyed",
-          "zh": "合金化的；混杂的",
-          "phrase_1": "alloyed steel component",
-          "phrase_1_zh": "合金钢部件",
-          "phrase_2": "alloyed political motive",
-          "phrase_2_zh": "混杂政治动机",
-          "pos": "adj."
-        },
-        {
-          "word": "alloying",
-          "zh": "合金化",
-          "phrase_1": "alloying element concentration",
-          "phrase_1_zh": "合金元素浓度",
-          "phrase_2": "alloying process in metallurgy",
-          "phrase_2_zh": "冶金中的合金化过程",
-          "pos": "n./adj."
-        },
-        {
-          "word": "dealloying",
-          "zh": "脱合金化",
-          "phrase_1": "dealloying process",
-          "phrase_1_zh": "脱合金化过程",
-          "phrase_2": "selective dealloying",
-          "phrase_2_zh": "选择性脱合金化",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_alloy",
       "internal_word_items": [
@@ -164747,10 +157599,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "superalloy": "n./v.",
-        "alloyage": "n.",
-        "alloyed": "adj.",
-        "alloying": "n./adj.",
-        "dealloying": "n./adj."
+        "alloyage": "n."
       }
     },
     {
@@ -164884,15 +157733,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "amplified",
-          "zh": "放大的",
-          "phrase_1": "amplified political message",
-          "phrase_1_zh": "被放大的政治信息",
-          "phrase_2": "amplified genetic fragment",
-          "phrase_2_zh": "扩增遗传片段",
-          "pos": "adj."
-        },
-        {
           "word": "amplifier",
           "zh": "放大器；扩大者",
           "phrase_1": "audio amplifier design",
@@ -164920,7 +157760,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_amplify",
       "internal_word_items": [
@@ -164934,7 +157774,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "amplificatory": "adj.",
-        "amplified": "adj.",
         "amplifier": "n.",
         "amplification": "n.",
         "amplitude": "n."
@@ -165278,7 +158117,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "back / date",
       "confidence": "high",
       "internal_words": [
-        "backdated",
         "antedate"
       ],
       "external_words": [
@@ -165292,15 +158130,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "dated",
-          "zh": "过时的；标日期的",
-          "phrase_1": "dated assumption",
-          "phrase_1_zh": "过时假设",
-          "phrase_2": "dated document",
-          "phrase_2_zh": "标日期文件",
-          "pos": "adj."
-        },
-        {
           "word": "backdate",
           "zh": "倒填日期；追溯生效",
           "phrase_1": "backdate a contract",
@@ -165310,26 +158139,20 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_backdated_antedate",
       "internal_word_items": [
-        {
-          "word": "backdated",
-          "pos": "adj."
-        },
         {
           "word": "antedate",
           "pos": "v."
         }
       ],
       "internal_pos_map": {
-        "backdated": "adj.",
         "antedate": "v."
       },
       "external_pos_map": {
         "dateline": "n./v.",
-        "dated": "adj.",
         "backdate": "v."
       }
     },
@@ -165491,18 +158314,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "historic bindery equipment",
           "phrase_2_zh": "历史装订设备",
           "pos": "n./v."
-        },
-        {
-          "word": "binding",
-          "zh": "有约束力的；装订",
-          "phrase_1": "binding legal agreement",
-          "phrase_1_zh": "有约束力法律协议",
-          "phrase_2": "binding energy in physics",
-          "phrase_2_zh": "物理中的结合能",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_bind_bond",
       "internal_word_items": [
@@ -165515,8 +158329,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bind": "v."
       },
       "external_pos_map": {
-        "bindery": "n./v.",
-        "binding": "n./adj."
+        "bindery": "n./v."
       }
     },
     {
@@ -165850,15 +158663,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "buffered",
-          "zh": "缓冲的",
-          "phrase_1": "buffered chemical solution",
-          "phrase_1_zh": "缓冲化学溶液",
-          "phrase_2": "buffered economic shock",
-          "phrase_2_zh": "被缓冲的经济冲击",
-          "pos": "adj."
-        },
-        {
           "word": "bufferzone",
           "zh": "缓冲区",
           "phrase_1": "bufferzone around wetlands",
@@ -165866,27 +158670,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "bufferzone in conflict regions",
           "phrase_2_zh": "冲突地区缓冲区",
           "pos": "n./v."
-        },
-        {
-          "word": "buffering",
-          "zh": "缓冲",
-          "phrase_1": "buffering effect of savings",
-          "phrase_1_zh": "储蓄缓冲效应",
-          "phrase_2": "buffering coastal storm surge",
-          "phrase_2_zh": "缓冲沿海风暴潮",
-          "pos": "n./adj."
-        },
-        {
-          "word": "unbuffered",
-          "zh": "未缓冲的",
-          "phrase_1": "unbuffered data",
-          "phrase_1_zh": "未缓冲数据",
-          "phrase_2": "unbuffered solution",
-          "phrase_2_zh": "未缓冲溶液",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_buffer",
       "internal_word_items": [
@@ -165900,10 +158686,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "bufferstock": "n./v.",
-        "buffered": "adj.",
-        "bufferzone": "n./v.",
-        "buffering": "n./adj.",
-        "unbuffered": "adj."
+        "bufferzone": "n./v."
       }
     },
     {
@@ -166275,18 +159058,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "careful risk assessment",
           "phrase_2_zh": "仔细风险评估",
           "pos": "adj."
-        },
-        {
-          "word": "caregiving",
-          "zh": "照护",
-          "phrase_1": "caregiving burden in families",
-          "phrase_1_zh": "家庭照护负担",
-          "phrase_2": "caregiving workforce shortage",
-          "phrase_2_zh": "照护劳动力短缺",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_care_caregiver",
       "internal_word_items": [
@@ -166310,8 +159084,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "careless": "adj.",
-        "careful": "adj.",
-        "caregiving": "n./adj."
+        "careful": "adj."
       }
     },
     {
@@ -166586,18 +159359,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "counterdebate against misinformation",
           "phrase_2_zh": "针对错误信息的反辩论",
           "pos": "v."
-        },
-        {
-          "word": "debating",
-          "zh": "辩论的；辩论活动",
-          "phrase_1": "debating society tradition",
-          "phrase_1_zh": "辩论社传统",
-          "phrase_2": "debating evidence in court",
-          "phrase_2_zh": "法庭辩论证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_debate_debatable_debater",
       "internal_word_items": [
@@ -166621,8 +159385,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "debatability": "n.",
-        "counterdebate": "v.",
-        "debating": "n./adj."
+        "counterdebate": "v."
       }
     },
     {
@@ -166651,18 +159414,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "public indebtedness",
           "phrase_2_zh": "公共债务",
           "pos": "n."
-        },
-        {
-          "word": "indebted",
-          "zh": "负债的；感激的",
-          "phrase_1": "highly indebted",
-          "phrase_1_zh": "高度负债的",
-          "phrase_2": "indebted country",
-          "phrase_2_zh": "负债国家",
-          "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_debt",
       "internal_word_items": [
@@ -166676,8 +159430,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "debtor": "n.",
-        "indebtedness": "n.",
-        "indebted": "adj."
+        "indebtedness": "n."
       }
     },
     {
@@ -166958,73 +159711,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       }
     },
     {
-      "cluster_id": "kin_head_curated_dense_density_condense",
-      "cluster_label": "dense condense density condensed densify condensation",
-      "anchor": "dense / condense",
-      "confidence": "review",
-      "internal_words": [
-        "dense",
-        "condense",
-        "density"
-      ],
-      "external_words": [
-        {
-          "word": "condensed",
-          "zh": "浓缩的；凝聚的",
-          "phrase_1": "condensed matter physics",
-          "phrase_1_zh": "凝聚态物理",
-          "phrase_2": "condensed policy summary",
-          "phrase_2_zh": "浓缩政策摘要",
-          "pos": "adj."
-        },
-        {
-          "word": "densify",
-          "zh": "使密集化",
-          "phrase_1": "densify urban neighborhoods",
-          "phrase_1_zh": "使城市社区密集化",
-          "phrase_2": "densify transport networks",
-          "phrase_2_zh": "加密交通网络",
-          "pos": "v."
-        },
-        {
-          "word": "condensation",
-          "zh": "凝结；浓缩",
-          "phrase_1": "condensation in climate systems",
-          "phrase_1_zh": "气候系统中的凝结",
-          "phrase_2": "condensation of complex arguments",
-          "phrase_2_zh": "复杂论证的浓缩",
-          "pos": "n."
-        }
-      ],
-      "total_words": 6,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
-      "source_cluster_id": "kin_head_curated_dense_density_condense",
-      "internal_word_items": [
-        {
-          "word": "dense",
-          "pos": "adj."
-        },
-        {
-          "word": "condense",
-          "pos": "v."
-        },
-        {
-          "word": "density",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "dense": "adj.",
-        "condense": "v.",
-        "density": "n."
-      },
-      "external_pos_map": {
-        "condensed": "adj.",
-        "densify": "v.",
-        "condensation": "n."
-      }
-    },
-    {
       "cluster_id": "kin_head_curated_depart_partition",
       "cluster_label": "depart apart partition apartment compartmentalize compartment",
       "anchor": "part",
@@ -167285,15 +159971,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "underprivileged",
-          "zh": "弱势的",
-          "phrase_1": "underprivileged children",
-          "phrase_1_zh": "弱势儿童",
-          "phrase_2": "underprivileged community",
-          "phrase_2_zh": "弱势社区",
-          "pos": "adj."
-        },
-        {
           "word": "privilege",
           "zh": "特权",
           "phrase_1": "social privilege",
@@ -167303,7 +159980,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_deprive_private",
       "internal_word_items": [
@@ -167327,7 +160004,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "privation": "n.",
-        "underprivileged": "adj.",
         "privilege": "n./v."
       }
     },
@@ -167623,15 +160299,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "concerning",
-          "zh": "令人担忧的；关于",
-          "phrase_1": "concerning pattern of decline",
-          "phrase_1_zh": "令人担忧的下降模式",
-          "phrase_2": "evidence concerning migration",
-          "phrase_2_zh": "关于迁移的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "indiscernible",
           "zh": "难以辨别的",
           "phrase_1": "indiscernible signal",
@@ -167641,7 +160308,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_discern_concern",
       "internal_word_items": [
@@ -167669,7 +160336,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "discernment": "n."
       },
       "external_pos_map": {
-        "concerning": "n./adj.",
         "indiscernible": "adj."
       }
     },
@@ -167735,18 +160401,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "doubt",
         "doubtful"
       ],
-      "external_words": [
-        {
-          "word": "undoubted",
-          "zh": "无疑的",
-          "phrase_1": "undoubted success",
-          "phrase_1_zh": "无疑的成功",
-          "phrase_2": "undoubted value",
-          "phrase_2_zh": "无疑价值",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_head_curated_doubt_doubtful_dubiety_dubious",
       "internal_word_items": [
@@ -167763,9 +160419,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "doubt": "n.",
         "doubtful": "adj."
       },
-      "external_pos_map": {
-        "undoubted": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_head_curated_draft_draw_withdraw",
@@ -168135,15 +160789,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "bourgeoning",
-          "zh": "萌发的；兴起的",
-          "phrase_1": "bourgeoning civic culture",
-          "phrase_1_zh": "兴起的公民文化",
-          "phrase_2": "bourgeoning artistic movement",
-          "phrase_2_zh": "萌发中的艺术运动",
-          "pos": "n./adj."
-        },
-        {
           "word": "bourgeon",
           "zh": "发芽；萌发",
           "phrase_1": "bourgeon in spring vegetation",
@@ -168151,18 +160796,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "bourgeon of new institutions",
           "phrase_2_zh": "新制度萌芽",
           "pos": "n./v."
-        },
-        {
-          "word": "burgeoning",
-          "zh": "迅速发展的",
-          "phrase_1": "burgeoning technology sector",
-          "phrase_1_zh": "迅速发展的技术部门",
-          "phrase_2": "burgeoning demand for housing",
-          "phrase_2_zh": "快速增长的住房需求",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_burgeon",
       "internal_word_items": [
@@ -168181,9 +160817,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "burgeon growth": "n./v.",
-        "bourgeoning": "n./adj.",
-        "bourgeon": "n./v.",
-        "burgeoning": "n./adj."
+        "bourgeon": "n./v."
       }
     },
     {
@@ -168351,7 +160985,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "teach",
       "confidence": "review",
       "internal_words": [
-        "teaching",
         "teachingmethod",
         "teacher"
       ],
@@ -168375,14 +161008,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_teach",
       "internal_word_items": [
-        {
-          "word": "teaching",
-          "pos": "v."
-        },
         {
           "word": "teachingmethod",
           "pos": "n."
@@ -168393,7 +161022,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "teaching": "v.",
         "teachingmethod": "n.",
         "teacher": "n."
       },
@@ -168408,7 +161036,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "machine",
       "confidence": "review",
       "internal_words": [
-        "machining",
         "machinery",
         "machine"
       ],
@@ -168423,14 +161050,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_machine",
       "internal_word_items": [
-        {
-          "word": "machining",
-          "pos": "n."
-        },
         {
           "word": "machinery",
           "pos": "n./v."
@@ -168441,7 +161064,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "machining": "n.",
         "machinery": "n./v.",
         "machine": "n./v."
       },
@@ -168515,7 +161137,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "commendable",
-        "commended",
         "commendation",
         "commendably"
       ],
@@ -168539,16 +161160,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_commen",
       "internal_word_items": [
         {
           "word": "commendable",
-          "pos": "adj."
-        },
-        {
-          "word": "commended",
           "pos": "adj."
         },
         {
@@ -168562,7 +161179,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "internal_pos_map": {
         "commendable": "adj.",
-        "commended": "adj.",
         "commendation": "n.",
         "commendably": "adv."
       },
@@ -168743,10 +161359,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "bleaching bleached bleachery unbleached bleacher bleach",
       "anchor": "",
       "confidence": "review",
-      "internal_words": [
-        "bleaching",
-        "bleached"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "bleachery",
@@ -168756,15 +161369,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "bleachery wastewater treatment",
           "phrase_2_zh": "漂白厂废水处理",
           "pos": "n./v."
-        },
-        {
-          "word": "unbleached",
-          "zh": "未漂白的",
-          "phrase_1": "unbleached cotton fabric",
-          "phrase_1_zh": "未漂白棉织物",
-          "phrase_2": "unbleached flour market",
-          "phrase_2_zh": "未漂白面粉市场",
-          "pos": "adj."
         },
         {
           "word": "bleacher",
@@ -168785,26 +161389,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_bleach",
-      "internal_word_items": [
-        {
-          "word": "bleaching",
-          "pos": "n."
-        },
-        {
-          "word": "bleached",
-          "pos": "v."
-        }
-      ],
-      "internal_pos_map": {
-        "bleaching": "n.",
-        "bleached": "v."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "bleachery": "n./v.",
-        "unbleached": "adj.",
         "bleacher": "n.",
         "bleach": "n./v."
       }
@@ -168955,24 +161546,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "unpasteurized",
-          "zh": "未经巴氏杀菌的",
-          "phrase_1": "unpasteurized cheese risk",
-          "phrase_1_zh": "未杀菌奶酪风险",
-          "phrase_2": "unpasteurized milk outbreak",
-          "phrase_2_zh": "未杀菌牛奶疫情",
-          "pos": "adj."
-        },
-        {
-          "word": "pasteurized",
-          "zh": "经过巴氏杀菌的",
-          "phrase_1": "pasteurized milk supply",
-          "phrase_1_zh": "巴氏杀菌牛奶供应",
-          "phrase_2": "pasteurized juice standard",
-          "phrase_2_zh": "巴氏杀菌果汁标准",
-          "pos": "adj."
-        },
-        {
           "word": "pasteurize",
           "zh": "对……巴氏杀菌",
           "phrase_1": "pasteurize liquid foods",
@@ -168991,7 +161564,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_pasteur",
       "internal_word_items": [
@@ -169005,8 +161578,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "pasteurism": "n.",
-        "unpasteurized": "adj.",
-        "pasteurized": "adj.",
         "pasteurize": "v.",
         "pasteurization": "n."
       }
@@ -169017,19 +161588,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "",
       "confidence": "review",
       "internal_words": [
-        "nourish",
-        "malnourished"
+        "nourish"
       ],
       "external_words": [
-        {
-          "word": "undernourished",
-          "zh": "营养不良的",
-          "phrase_1": "undernourished rural population",
-          "phrase_1_zh": "营养不良的农村人口",
-          "phrase_2": "undernourished children survey",
-          "phrase_2_zh": "营养不良儿童调查",
-          "pos": "adj."
-        },
         {
           "word": "nourishment",
           "zh": "营养；滋养",
@@ -169040,25 +161601,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_nourish",
       "internal_word_items": [
         {
           "word": "nourish",
           "pos": "v."
-        },
-        {
-          "word": "malnourished",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "nourish": "v.",
-        "malnourished": "adj."
+        "nourish": "v."
       },
       "external_pos_map": {
-        "undernourished": "adj.",
         "nourishment": "n."
       }
     },
@@ -169957,11 +162512,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "constellation",
         "interstellar",
-        "stellar",
-        "constellated"
+        "stellar"
       ],
       "external_words": [],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_constell",
       "internal_word_items": [
@@ -169976,17 +162530,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "stellar",
           "pos": "adj."
-        },
-        {
-          "word": "constellated",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
         "constellation": "n.",
         "interstellar": "adj.",
-        "stellar": "adj.",
-        "constellated": "adj."
+        "stellar": "adj."
       },
       "external_pos_map": {}
     },
@@ -170254,18 +162803,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "unsustainable related evidence",
           "phrase_2_zh": "与不可持续的相关的证据",
           "pos": "adj."
-        },
-        {
-          "word": "sustained",
-          "zh": "持续的",
-          "phrase_1": "sustained policy commitment",
-          "phrase_1_zh": "持续的政策承诺",
-          "phrase_2": "sustained cognitive effort",
-          "phrase_2_zh": "持续认知努力",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_sustain",
       "internal_word_items": [
@@ -170289,8 +162829,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "sustenance": "n.",
-        "unsustainable": "adj.",
-        "sustained": "adj."
+        "unsustainable": "adj."
       }
     },
     {
@@ -170469,15 +163008,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "silvered",
-          "zh": "镀银的",
-          "phrase_1": "silvered mirror coating",
-          "phrase_1_zh": "镀银镜面涂层",
-          "phrase_2": "silvered related evidence",
-          "phrase_2_zh": "与镀银的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "silvery",
           "zh": "银色的",
           "phrase_1": "silvery reflective surface",
@@ -170487,7 +163017,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_silver",
       "internal_word_items": [
@@ -170507,7 +163037,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "silversmith": "n./v.",
         "quicksilver": "n.",
-        "silvered": "adj.",
         "silvery": "n./v."
       }
     },
@@ -170522,15 +163051,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "profitable"
       ],
       "external_words": [
-        {
-          "word": "profiteering",
-          "zh": "牟取暴利",
-          "phrase_1": "profiteering during shortages",
-          "phrase_1_zh": "短缺时期牟取暴利",
-          "phrase_2": "profiteering related evidence",
-          "phrase_2_zh": "与牟取暴利相关的证据",
-          "pos": "n./adj."
-        },
         {
           "word": "nonprofit",
           "zh": "非营利组织；非营利的",
@@ -170550,7 +163070,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_rebuilt_profit_extend",
       "internal_word_items": [
@@ -170573,7 +163093,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "profitable": "adj."
       },
       "external_pos_map": {
-        "profiteering": "n./adj.",
         "nonprofit": "n./v.",
         "profiteer": "n."
       }
@@ -170923,7 +163442,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "",
       "confidence": "review",
       "internal_words": [
-        "toothed",
         "sabre-toothed"
       ],
       "external_words": [
@@ -170964,21 +163482,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_tooth",
       "internal_word_items": [
-        {
-          "word": "toothed",
-          "pos": "n."
-        },
         {
           "word": "sabre-toothed",
           "pos": "n./adj."
         }
       ],
       "internal_pos_map": {
-        "toothed": "n.",
         "sabre-toothed": "n./adj."
       },
       "external_pos_map": {
@@ -171068,15 +163581,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "resourcing",
-          "zh": "资源配置",
-          "phrase_1": "school resourcing model",
-          "phrase_1_zh": "学校资源配置模式",
-          "phrase_2": "resourcing related evidence",
-          "phrase_2_zh": "与资源配置相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "resources",
           "zh": "资源",
           "phrase_1": "allocate scarce resources",
@@ -171086,7 +163590,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_resource",
       "internal_word_items": [
@@ -171110,7 +163614,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "overresource": "n./v.",
-        "resourcing": "n./adj.",
         "resources": "n."
       }
     },
@@ -171268,24 +163771,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "unchallenged",
-          "zh": "未受挑战的",
-          "phrase_1": "unchallenged authority structure",
-          "phrase_1_zh": "未受挑战的权威结构",
-          "phrase_2": "unchallenged related evidence",
-          "phrase_2_zh": "与未受挑战的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "challenging",
-          "zh": "有挑战性的",
-          "phrase_1": "challenging research question",
-          "phrase_1_zh": "有挑战性的研究问题",
-          "phrase_2": "challenging economic conditions",
-          "phrase_2_zh": "严峻经济环境",
-          "pos": "n./adj."
-        },
-        {
           "word": "challenger",
           "zh": "挑战者",
           "phrase_1": "political challenger campaign",
@@ -171295,7 +163780,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_challenge",
       "internal_word_items": [
@@ -171314,8 +163799,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "counterchallenge": "n./v.",
-        "unchallenged": "adj.",
-        "challenging": "n./adj.",
         "challenger": "n."
       }
     },
@@ -172504,15 +164987,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "bridging",
-          "zh": "桥接；弥合",
-          "phrase_1": "bridging social capital",
-          "phrase_1_zh": "桥接型社会资本",
-          "phrase_2": "bridging related evidence",
-          "phrase_2_zh": "与桥接；弥合相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "bridgehead",
           "zh": "桥头堡",
           "phrase_1": "strategic bridgehead position",
@@ -172540,7 +165014,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_bridge",
       "internal_word_items": [
@@ -172554,7 +165028,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "bridgeable": "adj.",
-        "bridging": "n./adj.",
         "bridgehead": "n./v.",
         "footbridge": "n./v.",
         "drawbridge": "n./v."
@@ -172710,15 +165183,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "driving",
-          "zh": "驱动性的；驾驶",
-          "phrase_1": "driving force behind reform",
-          "phrase_1_zh": "改革背后的驱动力",
-          "phrase_2": "driving behavior data",
-          "phrase_2_zh": "驾驶行为数据",
-          "pos": "n./adj."
-        },
-        {
           "word": "drivetrain",
           "zh": "传动系统",
           "phrase_1": "electric vehicle drivetrain",
@@ -172755,7 +165219,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_drive",
       "internal_word_items": [
@@ -172768,7 +165232,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "drive": "n./v."
       },
       "external_pos_map": {
-        "driving": "n./adj.",
         "drivetrain": "n./v.",
         "driveway": "n./v.",
         "overdrive": "adj.",
@@ -172794,15 +165257,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "indwelling",
-          "zh": "内置的；内在的",
-          "phrase_1": "indwelling medical device",
-          "phrase_1_zh": "内置医疗器械",
-          "phrase_2": "indwelling related evidence",
-          "phrase_2_zh": "与内置的；内在的相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "indwell",
           "zh": "存在于内；内在",
           "phrase_1": "indwell in cultural memory",
@@ -172819,18 +165273,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "cave dweller remains",
           "phrase_2_zh": "穴居者遗迹",
           "pos": "n."
-        },
-        {
-          "word": "dwelling",
-          "zh": "住所",
-          "phrase_1": "informal dwelling settlement",
-          "phrase_1_zh": "非正式住所聚落",
-          "phrase_2": "dwelling density regulation",
-          "phrase_2_zh": "住宅密度监管",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_dwell",
       "internal_word_items": [
@@ -172844,10 +165289,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "dwell time": "n./v.",
-        "indwelling": "n./adj.",
         "indwell": "n./v.",
-        "dweller": "n.",
-        "dwelling": "n./adj."
+        "dweller": "n."
       }
     },
     {
@@ -172860,15 +165303,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "dietary"
       ],
       "external_words": [
-        {
-          "word": "dieting",
-          "zh": "节食",
-          "phrase_1": "dieting behavior survey",
-          "phrase_1_zh": "节食行为调查",
-          "phrase_2": "dieting related evidence",
-          "phrase_2_zh": "与节食相关的证据",
-          "pos": "n./adj."
-        },
         {
           "word": "Mediterranean diet",
           "zh": "地中海饮食",
@@ -172897,7 +165331,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_strict_diet",
       "internal_word_items": [
@@ -172915,7 +165349,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "dietary": "adj."
       },
       "external_pos_map": {
-        "dieting": "n./adj.",
         "Mediterranean diet": "n./v.",
         "dietitian": "n.",
         "dietetics": "n."
@@ -173068,15 +165501,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "uncensored",
-          "zh": "未经审查的",
-          "phrase_1": "uncensored historical archive",
-          "phrase_1_zh": "未经审查的历史档案",
-          "phrase_2": "uncensored related evidence",
-          "phrase_2_zh": "与未经审查的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "censorious",
           "zh": "爱挑剔的；审查式的",
           "phrase_1": "censorious public climate",
@@ -173104,7 +165528,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_censor_census",
       "internal_word_items": [
@@ -173122,7 +165546,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "censorship": "n."
       },
       "external_pos_map": {
-        "uncensored": "adj.",
         "censorious": "adj.",
         "censure": "n.",
         "census": "n./v."
@@ -173379,15 +165802,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "excruciating",
-          "zh": "极痛苦的",
-          "phrase_1": "excruciating moral dilemma",
-          "phrase_1_zh": "极痛苦的道德困境",
-          "phrase_2": "excruciating related evidence",
-          "phrase_2_zh": "与极痛苦的相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "crucify",
           "zh": "钉十字架；严厉批评",
           "phrase_1": "crucify a public figure",
@@ -173397,7 +165811,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_cruc",
       "internal_word_items": [
@@ -173415,7 +165829,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "crucible": "n."
       },
       "external_pos_map": {
-        "excruciating": "n./adj.",
         "crucify": "v."
       }
     },
@@ -173870,18 +166283,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "found",
         "foundational"
       ],
-      "external_words": [
-        {
-          "word": "founding",
-          "zh": "创立的",
-          "phrase_1": "founding constitutional principle",
-          "phrase_1_zh": "建国宪法原则",
-          "phrase_2": "founding related evidence",
-          "phrase_2_zh": "与创立的相关的证据",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_found",
       "internal_word_items": [
@@ -173913,9 +166316,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "found": "v.",
         "foundational": "adj."
       },
-      "external_pos_map": {
-        "founding": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_supp_found_part_2",
@@ -174031,15 +166432,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "aggrieved",
-          "zh": "受委屈的",
-          "phrase_1": "aggrieved minority group",
-          "phrase_1_zh": "受委屈的少数群体",
-          "phrase_2": "aggrieved related evidence",
-          "phrase_2_zh": "与受委屈的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "aggrieve",
           "zh": "使受委屈",
           "phrase_1": "aggrieve affected communities",
@@ -174058,7 +166450,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_griev",
       "internal_word_items": [
@@ -174073,7 +166465,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "grievously": "adv.",
         "grievous": "adj.",
-        "aggrieved": "adj.",
         "aggrieve": "n./v.",
         "grieve": "n./v."
       }
@@ -174428,15 +166819,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "leveraging",
-          "zh": "利用；杠杆化",
-          "phrase_1": "leveraging digital infrastructure",
-          "phrase_1_zh": "利用数字基础设施",
-          "phrase_2": "leveraging related evidence",
-          "phrase_2_zh": "与利用；杠杆化相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "deleverage",
           "zh": "去杠杆",
           "phrase_1": "deleverage the banking sector",
@@ -174444,18 +166826,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "deleverage related evidence",
           "phrase_2_zh": "与去杠杆相关的证据",
           "pos": "n."
-        },
-        {
-          "word": "leveraged",
-          "zh": "杠杆化的",
-          "phrase_1": "leveraged financial position",
-          "phrase_1_zh": "杠杆化金融头寸",
-          "phrase_2": "leveraged buyout deal",
-          "phrase_2_zh": "杠杆收购交易",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_lever",
       "internal_word_items": [
@@ -174474,9 +166847,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "leveret": "n./v.",
-        "leveraging": "n./adj.",
-        "deleverage": "n.",
-        "leveraged": "adj."
+        "deleverage": "n."
       }
     },
     {
@@ -174554,15 +166925,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "streaming",
-          "zh": "流媒体；流动",
-          "phrase_1": "streaming platform regulation",
-          "phrase_1_zh": "流媒体平台监管",
-          "phrase_2": "streaming related evidence",
-          "phrase_2_zh": "与流媒体；流动相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "streamline",
           "zh": "简化；流线型化",
           "phrase_1": "streamline administrative procedure",
@@ -174581,7 +166943,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_stream",
       "internal_word_items": [
@@ -174604,7 +166966,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "stream": "n./v."
       },
       "external_pos_map": {
-        "streaming": "n./adj.",
         "streamline": "n./v.",
         "upstream": "n./v."
       }
@@ -174621,15 +166982,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "painted",
-          "zh": "绘制的；涂漆的",
-          "phrase_1": "painted historical manuscript",
-          "phrase_1_zh": "彩绘历史手稿",
-          "phrase_2": "painted related evidence",
-          "phrase_2_zh": "与绘制的；涂漆的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "paintwork",
           "zh": "漆面",
           "phrase_1": "paintwork preservation method",
@@ -174637,18 +166989,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "paintwork related evidence",
           "phrase_2_zh": "与漆面相关的证据",
           "pos": "n./v."
-        },
-        {
-          "word": "painting",
-          "zh": "绘画；画作",
-          "phrase_1": "landscape painting tradition",
-          "phrase_1_zh": "风景画传统",
-          "phrase_2": "painting related evidence",
-          "phrase_2_zh": "与绘画；画作相关的证据",
-          "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_paint",
       "internal_word_items": [
@@ -174671,9 +167014,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "paintings": "n."
       },
       "external_pos_map": {
-        "painted": "adj.",
-        "paintwork": "n./v.",
-        "painting": "n."
+        "paintwork": "n./v."
       }
     },
     {
@@ -175302,8 +167643,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "spreadsheet",
         "spread",
-        "widespread",
-        "riskspreading"
+        "widespread"
       ],
       "external_words": [
         {
@@ -175334,7 +167674,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 7,
+      "total_words": 6,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_spread",
       "internal_word_items": [
@@ -175349,17 +167689,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "widespread",
           "pos": "adj."
-        },
-        {
-          "word": "riskspreading",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "spreadsheet": "n./v.",
         "spread": "v.",
-        "widespread": "adj.",
-        "riskspreading": "n."
+        "widespread": "adj."
       },
       "external_pos_map": {
         "spreader": "n.",
@@ -175514,18 +167849,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "trigonometry related evidence",
           "phrase_2_zh": "与三角学相关的证据",
           "pos": "n./v."
-        },
-        {
-          "word": "triggering",
-          "zh": "触发性的",
-          "phrase_1": "triggering event in migration",
-          "phrase_1_zh": "迁移中的触发事件",
-          "phrase_2": "triggering related evidence",
-          "phrase_2_zh": "与触发性的相关的证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_trigger",
       "internal_word_items": [
@@ -175548,8 +167874,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "outrigger": "n."
       },
       "external_pos_map": {
-        "trigonometry": "n./v.",
-        "triggering": "n./adj."
+        "trigonometry": "n./v."
       }
     },
     {
@@ -175757,8 +168082,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "waterfall",
         "water",
-        "water-table",
-        "watershed"
+        "water-table"
       ],
       "external_words": [
         {
@@ -175789,7 +168113,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 7,
+      "total_words": 6,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_water",
       "internal_word_items": [
@@ -175804,17 +168128,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "water-table",
           "pos": "n."
-        },
-        {
-          "word": "watershed",
-          "pos": "n."
         }
       ],
       "internal_pos_map": {
         "waterfall": "n./v.",
         "water": "n.",
-        "water-table": "n.",
-        "watershed": "n."
+        "water-table": "n."
       },
       "external_pos_map": {
         "waterborne": "n./v.",
@@ -176005,8 +168324,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "",
       "confidence": "review",
       "internal_words": [
-        "underlie",
-        "underlying"
+        "underlie"
       ],
       "external_words": [
         {
@@ -176046,22 +168364,17 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_underlie",
       "internal_word_items": [
         {
           "word": "underlie",
           "pos": "v."
-        },
-        {
-          "word": "underlying",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
-        "underlie": "v.",
-        "underlying": "adj."
+        "underlie": "v."
       },
       "external_pos_map": {
         "underpin": "n./v.",
@@ -176338,18 +168651,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "shockproof related evidence",
           "phrase_2_zh": "与防震的相关的证据",
           "pos": "n./v."
-        },
-        {
-          "word": "shocking",
-          "zh": "令人震惊的",
-          "phrase_1": "shocking inequality data",
-          "phrase_1_zh": "令人震惊的不平等数据",
-          "phrase_2": "shocking related evidence",
-          "phrase_2_zh": "与令人震惊的相关的证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_shock",
       "internal_word_items": [
@@ -176369,8 +168673,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "shockwave": "n./v.",
         "shell shock": "n./v.",
-        "shockproof": "n./v.",
-        "shocking": "n./adj."
+        "shockproof": "n./v."
       }
     },
     {
@@ -176635,15 +168938,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "battering",
-          "zh": "连续打击",
-          "phrase_1": "battering storm surge",
-          "phrase_1_zh": "猛烈风暴潮",
-          "phrase_2": "battering related evidence",
-          "phrase_2_zh": "与连续打击相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "battalion",
           "zh": "营；部队",
           "phrase_1": "artillery battalion deployment",
@@ -176651,15 +168945,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "battalion related evidence",
           "phrase_2_zh": "与营；部队相关的证据",
           "pos": "n./v."
-        },
-        {
-          "word": "battered",
-          "zh": "受重创的",
-          "phrase_1": "battered economy after crisis",
-          "phrase_1_zh": "危机后受重创的经济",
-          "phrase_2": "battered related evidence",
-          "phrase_2_zh": "与受重创的相关的证据",
-          "pos": "adj."
         },
         {
           "word": "batter",
@@ -176671,7 +168956,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_batter_battery",
       "internal_word_items": [
@@ -176689,9 +168974,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "battle": "n./v."
       },
       "external_pos_map": {
-        "battering": "n./adj.",
         "battalion": "n./v.",
-        "battered": "adj.",
         "batter": "n."
       }
     },
@@ -176826,18 +169109,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "boundless related evidence",
           "phrase_2_zh": "与无限的相关的证据",
           "pos": "adj."
-        },
-        {
-          "word": "bounded",
-          "zh": "有界的；受限的",
-          "phrase_1": "bounded rationality model",
-          "phrase_1_zh": "有限理性模型",
-          "phrase_2": "bounded related evidence",
-          "phrase_2_zh": "与有界的；受限的相关的证据",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_bound",
       "internal_word_items": [
@@ -176856,8 +169130,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "rebound": "n./v.",
-        "boundless": "adj.",
-        "bounded": "adj."
+        "boundless": "adj."
       }
     },
     {
@@ -177002,15 +169275,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "burgeoning",
-          "zh": "迅速发展的",
-          "phrase_1": "burgeoning digital economy",
-          "phrase_1_zh": "迅速发展的数字经济",
-          "phrase_2": "burgeoning related evidence",
-          "phrase_2_zh": "与迅速发展的相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "bourgeoisie",
           "zh": "资产阶级",
           "phrase_1": "urban bourgeoisie expansion",
@@ -177029,7 +169293,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_burgeon",
       "internal_word_items": [
@@ -177052,7 +169316,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "once-burgeoning": "n./adj."
       },
       "external_pos_map": {
-        "burgeoning": "n./adj.",
         "bourgeoisie": "n./v.",
         "bourgeon": "n./v."
       }
@@ -177067,24 +169330,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "burrowed",
-          "zh": "挖洞的；藏身的",
-          "phrase_1": "burrowed nest structure",
-          "phrase_1_zh": "洞穴巢结构",
-          "phrase_2": "burrowed related evidence",
-          "phrase_2_zh": "与挖洞的；藏身的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "burrowing",
-          "zh": "掘洞的",
-          "phrase_1": "burrowing animal adaptation",
-          "phrase_1_zh": "掘洞动物适应",
-          "phrase_2": "burrowing related evidence",
-          "phrase_2_zh": "与掘洞的相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "burrower",
           "zh": "掘洞动物；挖掘者",
           "phrase_1": "burrower species behavior",
@@ -177094,7 +169339,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_burrow",
       "internal_word_items": [
@@ -177107,8 +169352,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "burrow": "n."
       },
       "external_pos_map": {
-        "burrowed": "adj.",
-        "burrowing": "n./adj.",
         "burrower": "n."
       }
     },
@@ -177280,15 +169523,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "choking",
-          "zh": "令人窒息的；堵塞",
-          "phrase_1": "choking air pollution",
-          "phrase_1_zh": "令人窒息的空气污染",
-          "phrase_2": "choking related evidence",
-          "phrase_2_zh": "与令人窒息的；堵塞相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "choker",
           "zh": "项圈；阻塞物",
           "phrase_1": "choker necklace fashion",
@@ -177307,7 +169541,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_choke",
       "internal_word_items": [
@@ -177322,7 +169556,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "choke point": "n./v.",
         "unchoke": "n./v.",
-        "choking": "n./adj.",
         "choker": "n.",
         "choke": "v."
       }
@@ -177333,20 +169566,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "",
       "confidence": "review",
       "internal_words": [
-        "civilized",
         "civilization",
         "civil"
       ],
       "external_words": [
-        {
-          "word": "uncivilized",
-          "zh": "未开化的；野蛮的",
-          "phrase_1": "uncivilized stereotype in empire",
-          "phrase_1_zh": "帝国叙事中的野蛮刻板印象",
-          "phrase_2": "uncivilized related evidence",
-          "phrase_2_zh": "与未开化的；野蛮的相关的证据",
-          "pos": "adj."
-        },
         {
           "word": "civilian",
           "zh": "平民；文职人员",
@@ -177366,14 +169589,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_civil",
       "internal_word_items": [
-        {
-          "word": "civilized",
-          "pos": "adj."
-        },
         {
           "word": "civilization",
           "pos": "n."
@@ -177384,12 +169603,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "civilized": "adj.",
         "civilization": "n.",
         "civil": "n."
       },
       "external_pos_map": {
-        "uncivilized": "adj.",
         "civilian": "n.",
         "civility": "n."
       }
@@ -177627,15 +169844,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "interred",
-          "zh": "被埋葬的",
-          "phrase_1": "interred human remains",
-          "phrase_1_zh": "被埋葬的人类遗骸",
-          "phrase_2": "interred related evidence",
-          "phrase_2_zh": "与被埋葬的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "interment",
           "zh": "埋葬；拘禁",
           "phrase_1": "wartime interment camp",
@@ -177654,7 +169862,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_inter",
       "internal_word_items": [
@@ -177669,7 +169877,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "disinterment": "n.",
         "reinter": "n.",
-        "interred": "adj.",
         "interment": "n.",
         "inter": "v."
       }
@@ -177694,18 +169901,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "regardless related evidence",
           "phrase_2_zh": "与不管；无论相关的证据",
           "pos": "adj."
-        },
-        {
-          "word": "regarding",
-          "zh": "关于",
-          "phrase_1": "regarding climate adaptation",
-          "phrase_1_zh": "关于气候适应",
-          "phrase_2": "regarding related evidence",
-          "phrase_2_zh": "与关于相关的证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_regard_guard",
       "internal_word_items": [
@@ -177733,8 +169931,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "regard": "v."
       },
       "external_pos_map": {
-        "regardless": "adj.",
-        "regarding": "n./adj."
+        "regardless": "adj."
       }
     },
     {
@@ -177892,15 +170089,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "unearned",
-          "zh": "非劳动所得的",
-          "phrase_1": "unearned income advantage",
-          "phrase_1_zh": "非劳动收入优势",
-          "phrase_2": "unearned related evidence",
-          "phrase_2_zh": "与非劳动所得的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "earner",
           "zh": "收入者",
           "phrase_1": "low earner tax burden",
@@ -177910,7 +170098,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 7,
+      "total_words": 6,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_earn",
       "internal_word_items": [
@@ -177939,7 +170127,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "earnestly": "adv.",
-        "unearned": "adj.",
         "earner": "n."
       }
     },
@@ -178164,7 +170351,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "",
       "confidence": "review",
       "internal_words": [
-        "enlarged",
         "largely",
         "large",
         "second-largest"
@@ -178189,14 +170375,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_large",
       "internal_word_items": [
-        {
-          "word": "enlarged",
-          "pos": "v."
-        },
         {
           "word": "largely",
           "pos": "adv."
@@ -178211,7 +170393,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "enlarged": "v.",
         "largely": "adv.",
         "large": "n.",
         "second-largest": "n."
@@ -178223,7 +170404,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
     },
     {
       "cluster_id": "kin_supp_tangle",
-      "cluster_label": "entangle disentangle tangled untangle entanglement tangle",
+      "cluster_label": "entangle disentangle untangle entanglement tangle",
       "anchor": "",
       "confidence": "review",
       "internal_words": [
@@ -178232,44 +170413,35 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "tangled",
-          "zh": "纠缠的；复杂的",
-          "phrase_1": "tangled historical relationship",
-          "phrase_1_zh": "复杂历史关系",
-          "phrase_2": "tangled related evidence",
-          "phrase_2_zh": "与纠缠的；复杂的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "untangle",
-          "zh": "解开；整理",
+          "pos": "v.",
+          "zh": "解开；理顺",
           "phrase_1": "untangle bureaucratic procedures",
           "phrase_1_zh": "理顺官僚程序",
-          "phrase_2": "untangle related evidence",
-          "phrase_2_zh": "与解开；整理相关的证据",
-          "pos": "n./v."
+          "phrase_2": "untangle conflicting evidence",
+          "phrase_2_zh": "理清相互冲突的证据"
         },
         {
           "word": "entanglement",
+          "pos": "n.",
           "zh": "纠缠；牵连",
           "phrase_1": "quantum entanglement experiment",
           "phrase_1_zh": "量子纠缠实验",
           "phrase_2": "political entanglement with business",
-          "phrase_2_zh": "政治与商业牵连",
-          "pos": "n."
+          "phrase_2_zh": "政治与商业牵连"
         },
         {
           "word": "tangle",
+          "pos": "n./v.",
           "zh": "缠结；混乱",
-          "phrase_1": "tangle of legal obligations",
-          "phrase_1_zh": "法律义务纠缠",
+          "phrase_1": "a tangle of legal obligations",
+          "phrase_1_zh": "一团法律义务纠葛",
           "phrase_2": "tangle fishing nets",
-          "phrase_2_zh": "缠住渔网",
-          "pos": "n./v."
+          "phrase_2_zh": "缠住渔网"
         }
       ],
-      "total_words": 6,
-      "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
+      "total_words": 5,
+      "anchor_note": "manual_clean_tangle_family_repair_v18",
       "source_cluster_id": "kin_supp_tangle",
       "internal_word_items": [
         {
@@ -178278,16 +170450,15 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         },
         {
           "word": "disentangle",
-          "pos": "n./v."
+          "pos": "v."
         }
       ],
       "internal_pos_map": {
         "entangle": "v.",
-        "disentangle": "n./v."
+        "disentangle": "v."
       },
       "external_pos_map": {
-        "tangled": "adj.",
-        "untangle": "n./v.",
+        "untangle": "v.",
         "entanglement": "n.",
         "tangle": "n./v."
       }
@@ -178351,18 +170522,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "enterprise"
       ],
-      "external_words": [
-        {
-          "word": "enterprising",
-          "zh": "有进取心的",
-          "phrase_1": "enterprising local community",
-          "phrase_1_zh": "有进取心的地方社区",
-          "phrase_2": "enterprising related evidence",
-          "phrase_2_zh": "与有进取心的相关的证据",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_enterprise_entrepreneur",
       "internal_word_items": [
@@ -178374,9 +170535,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "enterprise": "n."
       },
-      "external_pos_map": {
-        "enterprising": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_supp_err",
@@ -178652,9 +170811,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "flavouring flavourless flavorful flavored flavonoid flavor",
       "anchor": "",
       "confidence": "review",
-      "internal_words": [
-        "flavouring"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "flavourless",
@@ -178672,15 +170829,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_1_zh": "有风味的植物性饮食",
           "phrase_2": "flavorful related evidence",
           "phrase_2_zh": "与有风味的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "flavored",
-          "zh": "调味的",
-          "phrase_1": "flavored tobacco regulation",
-          "phrase_1_zh": "调味烟草监管",
-          "phrase_2": "flavored related evidence",
-          "phrase_2_zh": "与调味的相关的证据",
           "pos": "adj."
         },
         {
@@ -178702,22 +170850,14 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_flavor",
-      "internal_word_items": [
-        {
-          "word": "flavouring",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "flavouring": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "flavourless": "adj.",
         "flavorful": "adj.",
-        "flavored": "adj.",
         "flavonoid": "adj.",
         "flavor": "n."
       }
@@ -178741,18 +170881,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "flawlessly related evidence",
           "phrase_2_zh": "与完美地相关的证据",
           "pos": "adv."
-        },
-        {
-          "word": "flawed",
-          "zh": "有缺陷的",
-          "phrase_1": "flawed statistical method",
-          "phrase_1_zh": "有缺陷的统计方法",
-          "phrase_2": "flawed related evidence",
-          "phrase_2_zh": "与有缺陷的相关的证据",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_flaw",
       "internal_word_items": [
@@ -178775,8 +170906,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "flaw": "n."
       },
       "external_pos_map": {
-        "flawlessly": "adv.",
-        "flawed": "adj."
+        "flawlessly": "adv."
       }
     },
     {
@@ -179021,24 +171151,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "humiliating",
-          "zh": "羞辱性的",
-          "phrase_1": "humiliating public defeat",
-          "phrase_1_zh": "羞辱性的公开失败",
-          "phrase_2": "humiliating related evidence",
-          "phrase_2_zh": "与羞辱性的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "humbling",
-          "zh": "令人谦卑的",
-          "phrase_1": "humbling historical lesson",
-          "phrase_1_zh": "令人谦卑的历史教训",
-          "phrase_2": "humbling related evidence",
-          "phrase_2_zh": "与令人谦卑的相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "humiliate",
           "zh": "羞辱",
           "phrase_1": "humiliate defeated opponents",
@@ -179066,7 +171178,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_humil_humble",
       "internal_word_items": [
@@ -179079,8 +171191,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "humiliation": "n."
       },
       "external_pos_map": {
-        "humiliating": "adj.",
-        "humbling": "n./adj.",
         "humiliate": "v.",
         "humility": "n.",
         "humble": "n./v."
@@ -179685,18 +171795,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "miner related evidence",
           "phrase_2_zh": "与矿工相关的证据",
           "pos": "n."
-        },
-        {
-          "word": "mining",
-          "zh": "采矿",
-          "phrase_1": "mining rights dispute",
-          "phrase_1_zh": "采矿权争端",
-          "phrase_2": "mining related evidence",
-          "phrase_2_zh": "与采矿相关的证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_mine_mineral",
       "internal_word_items": [
@@ -179716,8 +171817,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "mineralize": "v.",
         "mineralogy": "n.",
-        "miner": "n.",
-        "mining": "n./adj."
+        "miner": "n."
       }
     },
     {
@@ -180088,15 +172188,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "orienteering",
-          "zh": "定向越野",
-          "phrase_1": "orienteering navigation skill",
-          "phrase_1_zh": "定向越野导航技能",
-          "phrase_2": "orienteering related evidence",
-          "phrase_2_zh": "与定向越野相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "orientate",
           "zh": "确定方向；适应",
           "phrase_1": "orientate new students",
@@ -180106,7 +172197,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 7,
+      "total_words": 6,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_orient",
       "internal_word_items": [
@@ -180127,7 +172218,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "reorient": "adj.",
         "disorient": "adj.",
         "Oriental": "adj.",
-        "orienteering": "n./adj.",
         "orientate": "v."
       }
     },
@@ -180150,15 +172240,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "ungrazed",
-          "zh": "未放牧的",
-          "phrase_1": "ungrazed grassland plot",
-          "phrase_1_zh": "未放牧草地样方",
-          "phrase_2": "ungrazed related evidence",
-          "phrase_2_zh": "与未放牧的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "grazer",
           "zh": "食草动物；放牧者",
           "phrase_1": "large grazer population",
@@ -180166,15 +172247,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "grazer related evidence",
           "phrase_2_zh": "与食草动物；放牧者相关的证据",
           "pos": "n."
-        },
-        {
-          "word": "grazing",
-          "zh": "放牧",
-          "phrase_1": "overgrazing and soil erosion",
-          "phrase_1_zh": "过度放牧与土壤侵蚀",
-          "phrase_2": "grazing related evidence",
-          "phrase_2_zh": "与放牧相关的证据",
-          "pos": "n./adj."
         },
         {
           "word": "graze",
@@ -180186,7 +172258,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_graze",
       "internal_word_items": [
@@ -180200,9 +172272,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "grazier": "n.",
-        "ungrazed": "adj.",
         "grazer": "n.",
-        "grazing": "n./adj.",
         "graze": "v."
       }
     },
@@ -180658,18 +172728,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resultant",
         "result"
       ],
-      "external_words": [
-        {
-          "word": "resulting",
-          "zh": "由此产生的",
-          "phrase_1": "resulting economic pressure",
-          "phrase_1_zh": "由此产生的经济压力",
-          "phrase_2": "resulting related evidence",
-          "phrase_2_zh": "与由此产生的相关的证据",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_supp_result",
       "internal_word_items": [
@@ -180686,9 +172746,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "resultant": "adj.",
         "result": "n."
       },
-      "external_pos_map": {
-        "resulting": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_supp_result_part_2",
@@ -180923,18 +172981,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bolster",
         "bolsterpillow"
       ],
-      "external_words": [
-        {
-          "word": "bolstering",
-          "zh": "支撑；加强",
-          "phrase_1": "bolstering institutional legitimacy",
-          "phrase_1_zh": "增强制度合法性",
-          "phrase_2": "bolstering related evidence",
-          "phrase_2_zh": "与支撑；加强相关的证据",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_bolster",
       "internal_word_items": [
@@ -180951,9 +172999,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bolster": "v.",
         "bolsterpillow": "n."
       },
-      "external_pos_map": {
-        "bolstering": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_final_bovine",
@@ -181191,15 +173237,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "uncontrolled",
-          "zh": "失控的",
-          "phrase_1": "uncontrolled urban expansion",
-          "phrase_1_zh": "失控城市扩张",
-          "phrase_2": "uncontrolled related evidence",
-          "phrase_2_zh": "与失控的相关的证据",
-          "pos": "adj."
-        },
-        {
           "word": "controllable",
           "zh": "可控制的",
           "phrase_1": "controllable risk factor",
@@ -181218,7 +173255,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_control",
       "internal_word_items": [
@@ -181233,7 +173270,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "remote control": "n./v.",
         "countercontrol": "n./v.",
-        "uncontrolled": "adj.",
         "controllable": "adj.",
         "controller": "n."
       }
@@ -181487,18 +173523,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "engender related evidence",
           "phrase_2_zh": "与产生；造成相关的证据",
           "pos": "n."
-        },
-        {
-          "word": "gendered",
-          "zh": "带有性别色彩的",
-          "phrase_1": "gendered division of labor",
-          "phrase_1_zh": "性别化劳动分工",
-          "phrase_2": "gendered related evidence",
-          "phrase_2_zh": "与带有性别色彩的相关的证据",
-          "pos": "adj."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_gender",
       "internal_word_items": [
@@ -181521,8 +173548,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "gender": "n."
       },
       "external_pos_map": {
-        "engender": "n.",
-        "gendered": "adj."
+        "engender": "n."
       }
     },
     {
@@ -181533,18 +173559,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "harness"
       ],
-      "external_words": [
-        {
-          "word": "harnessing",
-          "zh": "利用；控制",
-          "phrase_1": "harnessing community knowledge",
-          "phrase_1_zh": "利用社区知识",
-          "phrase_2": "harnessing related evidence",
-          "phrase_2_zh": "与利用；控制相关的证据",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_harness",
       "internal_word_items": [
@@ -181556,9 +173572,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "harness": "v."
       },
-      "external_pos_map": {
-        "harnessing": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_final_hermit",
@@ -181876,18 +173890,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "latest related evidence",
           "phrase_2_zh": "与最新的相关的证据",
           "pos": "n./v."
-        },
-        {
-          "word": "belated",
-          "zh": "迟来的",
-          "phrase_1": "belated policy response",
-          "phrase_1_zh": "迟来的政策回应",
-          "phrase_2": "belated related evidence",
-          "phrase_2_zh": "与迟来的相关的证据",
-          "pos": "adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_late",
       "internal_word_items": [
@@ -181907,8 +173912,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "lateness": "n.",
         "lately": "adv.",
-        "latest": "n./v.",
-        "belated": "adj."
+        "latest": "n./v."
       }
     },
     {
@@ -181919,18 +173923,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "linger"
       ],
-      "external_words": [
-        {
-          "word": "lingering",
-          "zh": "挥之不去的",
-          "phrase_1": "lingering social tension",
-          "phrase_1_zh": "挥之不去的社会紧张",
-          "phrase_2": "lingering related evidence",
-          "phrase_2_zh": "与挥之不去的相关的证据",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_linger",
       "internal_word_items": [
@@ -181942,9 +173936,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "linger": "v."
       },
-      "external_pos_map": {
-        "lingering": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_final_mangrove",
@@ -182289,27 +174281,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "pattern"
       ],
-      "external_words": [
-        {
-          "word": "patterning",
-          "zh": "模式形成",
-          "phrase_1": "patterning in urban growth",
-          "phrase_1_zh": "城市增长中的模式形成",
-          "phrase_2": "patterning related evidence",
-          "phrase_2_zh": "与模式形成相关的证据",
-          "pos": "n./adj."
-        },
-        {
-          "word": "patterned",
-          "zh": "有图案的；模式化的",
-          "phrase_1": "patterned social behavior",
-          "phrase_1_zh": "模式化社会行为",
-          "phrase_2": "patterned related evidence",
-          "phrase_2_zh": "与有图案的；模式化的相关的证据",
-          "pos": "adj."
-        }
-      ],
-      "total_words": 3,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_pattern",
       "internal_word_items": [
@@ -182321,10 +174294,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "pattern": "n."
       },
-      "external_pos_map": {
-        "patterning": "n./adj.",
-        "patterned": "adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_final_sever_persevere",
@@ -183038,15 +175008,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "surprising",
-          "zh": "令人惊讶的",
-          "phrase_1": "surprising empirical result",
-          "phrase_1_zh": "令人惊讶的实证结果",
-          "phrase_2": "surprising related evidence",
-          "phrase_2_zh": "与令人惊讶的相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "apprise",
           "zh": "通知；告知",
           "phrase_1": "apprise officials of risk",
@@ -183065,7 +175026,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_surprise",
       "internal_word_items": [
@@ -183088,7 +175049,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "enterprise": "n."
       },
       "external_pos_map": {
-        "surprising": "n./adj.",
         "apprise": "v.",
         "prise": "v."
       }
@@ -183098,9 +175058,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "targeting targetable targeted retarget target",
       "anchor": "",
       "confidence": "review",
-      "internal_words": [
-        "targeting"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "targetable",
@@ -183109,15 +175067,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_1_zh": "可定位选民群体",
           "phrase_2": "targetable related evidence",
           "phrase_2_zh": "与可定位的；可瞄准的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "targeted",
-          "zh": "有针对性的",
-          "phrase_1": "targeted poverty relief",
-          "phrase_1_zh": "精准扶贫",
-          "phrase_2": "targeted related evidence",
-          "phrase_2_zh": "与有针对性的相关的证据",
           "pos": "adj."
         },
         {
@@ -183139,21 +175088,13 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_target",
-      "internal_word_items": [
-        {
-          "word": "targeting",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "targeting": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "targetable": "adj.",
-        "targeted": "adj.",
         "retarget": "n./v.",
         "target": "n./v."
       }
@@ -183245,18 +175186,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "trafficable related evidence",
           "phrase_2_zh": "与可通行的相关的证据",
           "pos": "adj."
-        },
-        {
-          "word": "trafficking",
-          "zh": "非法交易；贩运",
-          "phrase_1": "human trafficking network",
-          "phrase_1_zh": "人口贩运网络",
-          "phrase_2": "trafficking related evidence",
-          "phrase_2_zh": "与非法交易；贩运相关的证据",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_traffic",
       "internal_word_items": [
@@ -183270,8 +175202,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "trafficker": "n.",
-        "trafficable": "adj.",
-        "trafficking": "n./adj."
+        "trafficable": "adj."
       }
     },
     {
@@ -183538,24 +175469,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "unwarned",
-          "zh": "未受警告的",
-          "phrase_1": "unwarned coastal population",
-          "phrase_1_zh": "未获预警的沿海人口",
-          "phrase_2": "unwarned related evidence",
-          "phrase_2_zh": "与未受警告的相关的证据",
-          "pos": "adj."
-        },
-        {
-          "word": "warning",
-          "zh": "警告；预警",
-          "phrase_1": "early warning system",
-          "phrase_1_zh": "早期预警系统",
-          "phrase_2": "warning related evidence",
-          "phrase_2_zh": "与警告；预警相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "forewarn",
           "zh": "预先警告",
           "phrase_1": "forewarn communities of risk",
@@ -183565,7 +175478,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_warn",
       "internal_word_items": [
@@ -183583,8 +175496,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "warn": "v."
       },
       "external_pos_map": {
-        "unwarned": "adj.",
-        "warning": "n./adj.",
         "forewarn": "n./v."
       }
     },
@@ -183649,7 +175560,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "",
       "confidence": "review",
       "internal_words": [
-        "wholehearted",
         "wholesome",
         "wholly",
         "whole"
@@ -183674,14 +175584,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_whole_heart",
       "internal_word_items": [
-        {
-          "word": "wholehearted",
-          "pos": "adj."
-        },
         {
           "word": "wholesome",
           "pos": "n./v."
@@ -183696,7 +175602,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         }
       ],
       "internal_pos_map": {
-        "wholehearted": "adj.",
         "wholesome": "n./v.",
         "wholly": "adv.",
         "whole": "adj."
@@ -183723,18 +175628,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "yearnful related evidence",
           "phrase_2_zh": "与渴望的相关的证据",
           "pos": "adj."
-        },
-        {
-          "word": "yearning",
-          "zh": "渴望",
-          "phrase_1": "yearning for political freedom",
-          "phrase_1_zh": "对政治自由的渴望",
-          "phrase_2": "yearning for social belonging",
-          "phrase_2_zh": "对社会归属的渴望",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_final_yearn",
       "internal_word_items": [
@@ -183747,8 +175643,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "yearn": "v."
       },
       "external_pos_map": {
-        "yearnful": "adj.",
-        "yearning": "n./adj."
+        "yearnful": "adj."
       }
     },
     {
@@ -183760,15 +175655,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "acquaintance"
       ],
       "external_words": [
-        {
-          "word": "acquainted",
-          "zh": "熟悉的",
-          "phrase_1": "well acquainted with local conditions",
-          "phrase_1_zh": "熟悉地方情况",
-          "phrase_2": "acquainted related evidence",
-          "phrase_2_zh": "与熟悉的相关的证据",
-          "pos": "adj."
-        },
         {
           "word": "acquaintanceship",
           "zh": "相识关系",
@@ -183788,7 +175674,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_touch_acquaint",
       "internal_word_items": [
@@ -183801,7 +175687,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "acquaintance": "n."
       },
       "external_pos_map": {
-        "acquainted": "adj.",
         "acquaintanceship": "n.",
         "acquaint": "v."
       }
@@ -183878,18 +175763,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "disability related evidence",
           "phrase_2_zh": "与残障；无能力相关的证据",
           "pos": "n."
-        },
-        {
-          "word": "disabled",
-          "zh": "残障的；失效的",
-          "phrase_1": "disabled access requirement",
-          "phrase_1_zh": "无障碍通行要求",
-          "phrase_2": "disabled related evidence",
-          "phrase_2_zh": "与残障的；失效的相关的证据",
-          "pos": "adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_touch_able_disable",
       "internal_word_items": [
@@ -183902,8 +175778,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "disable": "v."
       },
       "external_pos_map": {
-        "disability": "n.",
-        "disabled": "adj."
+        "disability": "n."
       }
     },
     {
@@ -184052,15 +175927,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "scouring",
-          "zh": "冲刷；擦洗",
-          "phrase_1": "scouring effect of floods",
-          "phrase_1_zh": "洪水冲刷作用",
-          "phrase_2": "scouring related evidence",
-          "phrase_2_zh": "与冲刷；擦洗相关的证据",
-          "pos": "n./adj."
-        },
-        {
           "word": "scour",
           "zh": "冲刷；彻底搜寻",
           "phrase_1": "scour historical archives",
@@ -184070,7 +175936,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "repaired_keep_good_cluster_promote_existing_external_to_internal",
       "source_cluster_id": "kin_touch_scourge",
       "internal_word_items": [
@@ -184084,7 +175950,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "scourer": "n.",
-        "scouring": "n./adj.",
         "scour": "n./v."
       }
     },
@@ -184955,9 +176820,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "falling fall fallen",
       "anchor": "fell",
       "confidence": "review",
-      "internal_words": [
-        "falling"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "fall",
@@ -184978,18 +176841,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "coverage_supplement_from_prior_material_review",
       "source_cluster_id": "kin_head_seed_fell",
-      "internal_word_items": [
-        {
-          "word": "falling",
-          "pos": "n./adj."
-        }
-      ],
-      "internal_pos_map": {
-        "falling": "n./adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "fall": "n./v.",
         "fallen": "v."
@@ -185034,15 +176890,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "gauging",
-          "zh": "测量；判断",
-          "phrase_1": "gauging inflation expectations",
-          "phrase_1_zh": "衡量通胀预期",
-          "phrase_2": "river gauging station",
-          "phrase_2_zh": "河流水位测量站",
-          "pos": "n./adj."
-        },
-        {
           "word": "gauger",
           "zh": "计量员",
           "phrase_1": "gauger inspection record",
@@ -185052,7 +176899,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "coverage_supplement_from_prior_material_review",
       "source_cluster_id": "kin_head_seed_gage",
       "internal_word_items": [
@@ -185065,7 +176912,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "gauge": "v."
       },
       "external_pos_map": {
-        "gauging": "n./adj.",
         "gauger": "n."
       }
     },
@@ -185345,18 +177191,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "prey"
       ],
-      "external_words": [
-        {
-          "word": "preying",
-          "zh": "捕食；掠夺",
-          "phrase_1": "preying behavior in marine ecosystems",
-          "phrase_1_zh": "海洋生态系统中的捕食行为",
-          "phrase_2": "preying on vulnerable consumers",
-          "phrase_2_zh": "掠夺弱势消费者",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 2,
+      "external_words": [],
+      "total_words": 1,
       "anchor_note": "coverage_supplement_from_prior_material_review",
       "source_cluster_id": "kin_head_seed_prey",
       "internal_word_items": [
@@ -185368,9 +177204,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_pos_map": {
         "prey": "n."
       },
-      "external_pos_map": {
-        "preying": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_coverage_supp_pride",
@@ -185897,8 +177731,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "aids",
-        "aid",
-        "unaided"
+        "aid"
       ],
       "external_words": [
         {
@@ -185911,15 +177744,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "aiding",
-          "zh": "帮助；协助",
-          "phrase_1": "aiding recovery",
-          "phrase_1_zh": "帮助恢复",
-          "phrase_2": "aiding development",
-          "phrase_2_zh": "援助发展",
-          "pos": "n./adj."
-        },
-        {
           "word": "firstaid",
           "zh": "急救",
           "phrase_1": "firstaid training",
@@ -185929,7 +177753,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_aids",
       "internal_word_items": [
@@ -185940,20 +177764,14 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "aid",
           "pos": "n."
-        },
-        {
-          "word": "unaided",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
         "aids": "n.",
-        "aid": "n.",
-        "unaided": "adj."
+        "aid": "n."
       },
       "external_pos_map": {
         "aide": "n./v.",
-        "aiding": "n./adj.",
         "firstaid": "n./v."
       }
     },
@@ -186326,30 +178144,10 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "internal_words": [
         "bed",
         "bedroom",
-        "bedrock",
-        "seabed"
+        "bedrock"
       ],
-      "external_words": [
-        {
-          "word": "riverbed",
-          "zh": "河床",
-          "phrase_1": "dry riverbed",
-          "phrase_1_zh": "干河床",
-          "phrase_2": "riverbed sediment",
-          "phrase_2_zh": "河床沉积物",
-          "pos": "adj."
-        },
-        {
-          "word": "bedding",
-          "zh": "寝具；垫层",
-          "phrase_1": "bedding material hygiene",
-          "phrase_1_zh": "寝具材料卫生",
-          "phrase_2": "sedimentary bedding plane",
-          "phrase_2_zh": "沉积层理面",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 6,
+      "external_words": [],
+      "total_words": 3,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_bed",
       "internal_word_items": [
@@ -186364,22 +178162,14 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         {
           "word": "bedrock",
           "pos": "n./v."
-        },
-        {
-          "word": "seabed",
-          "pos": "adj."
         }
       ],
       "internal_pos_map": {
         "bed": "n.",
         "bedroom": "n./v.",
-        "bedrock": "n./v.",
-        "seabed": "adj."
+        "bedrock": "n./v."
       },
-      "external_pos_map": {
-        "riverbed": "adj.",
-        "bedding": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_exact_seed_supp_being",
@@ -186390,36 +178180,8 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "being",
         "be"
       ],
-      "external_words": [
-        {
-          "word": "wellbeing",
-          "zh": "幸福；福祉",
-          "phrase_1": "subjective wellbeing survey",
-          "phrase_1_zh": "主观幸福感调查",
-          "phrase_2": "community wellbeing indicator",
-          "phrase_2_zh": "社区福祉指标",
-          "pos": "n./adj."
-        },
-        {
-          "word": "human being",
-          "zh": "人；人类",
-          "phrase_1": "human being as moral subject",
-          "phrase_1_zh": "作为道德主体的人",
-          "phrase_2": "human being in legal theory",
-          "phrase_2_zh": "法律理论中的人",
-          "pos": "n./adj."
-        },
-        {
-          "word": "sentient being",
-          "zh": "有感知能力的生命",
-          "phrase_1": "sentient being in ethics",
-          "phrase_1_zh": "伦理学中的有感知生命",
-          "phrase_2": "sentient being welfare",
-          "phrase_2_zh": "有感知生命福利",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 5,
+      "external_words": [],
+      "total_words": 2,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_being",
       "internal_word_items": [
@@ -186436,11 +178198,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "being": "n.",
         "be": "v."
       },
-      "external_pos_map": {
-        "wellbeing": "n./adj.",
-        "human being": "n./adj.",
-        "sentient being": "n./adj."
-      }
+      "external_pos_map": {}
     },
     {
       "cluster_id": "kin_exact_seed_supp_cat",
@@ -186694,15 +178452,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "dogged",
-          "zh": "顽强的",
-          "phrase_1": "dogged pursuit of evidence",
-          "phrase_1_zh": "顽强追寻证据",
-          "phrase_2": "dogged resistance to reform",
-          "phrase_2_zh": "顽强抵制改革",
-          "pos": "adj."
-        },
-        {
           "word": "watchdog",
           "zh": "监督者；看门狗",
           "phrase_1": "watchdog agency investigation",
@@ -186712,7 +178461,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_dog",
       "internal_word_items": [
@@ -186727,7 +178476,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "doghouse": "n./v.",
         "dogwood": "n./v.",
-        "dogged": "adj.",
         "watchdog": "n./v."
       }
     },
@@ -186839,15 +178587,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "undyed",
-          "zh": "未染色的",
-          "phrase_1": "undyed wool",
-          "phrase_1_zh": "未染色羊毛",
-          "phrase_2": "undyed cloth",
-          "phrase_2_zh": "未染色布料",
-          "pos": "adj."
-        },
-        {
           "word": "dyewood",
           "zh": "染料木",
           "phrase_1": "dyewood trade history",
@@ -186866,7 +178605,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_dye",
       "internal_word_items": [
@@ -186881,7 +178620,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "dyestuff": "n./v.",
         "dyer": "n.",
-        "undyed": "adj.",
         "dyewood": "n./v.",
         "dyebath": "n./v."
       }
@@ -186892,7 +178630,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "earring",
       "confidence": "review",
       "internal_words": [
-        "earring",
         "ring"
       ],
       "external_words": [
@@ -186906,21 +178643,16 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_earring",
       "internal_word_items": [
-        {
-          "word": "earring",
-          "pos": "n."
-        },
         {
           "word": "ring",
           "pos": "n./v."
         }
       ],
       "internal_pos_map": {
-        "earring": "n.",
         "ring": "n./v."
       },
       "external_pos_map": {
@@ -187273,15 +179005,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "fingerling",
-          "zh": "小鱼苗；小指状物",
-          "phrase_1": "fingerling survival rate",
-          "phrase_1_zh": "鱼苗存活率",
-          "phrase_2": "fingerling stocking program",
-          "phrase_2_zh": "鱼苗投放项目",
-          "pos": "n./adj."
-        },
-        {
           "word": "fingerboard",
           "zh": "指板",
           "phrase_1": "fingerboard technique in violin",
@@ -187291,7 +179014,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 5,
+      "total_words": 4,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_finger",
       "internal_word_items": [
@@ -187306,7 +179029,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "fingerprint": "n./v.",
         "fingertip": "n./v.",
-        "fingerling": "n./adj.",
         "fingerboard": "n./v."
       }
     },
@@ -188050,27 +179772,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "bell jar vacuum chamber",
           "phrase_2_zh": "钟形罩真空室",
           "pos": "n./v."
-        },
-        {
-          "word": "jarred",
-          "zh": "震动的；受刺激的",
-          "phrase_1": "jarred public confidence",
-          "phrase_1_zh": "受冲击的公众信心",
-          "phrase_2": "jarred by sudden policy change",
-          "phrase_2_zh": "被突然政策变化震动",
-          "pos": "adj."
-        },
-        {
-          "word": "jarring",
-          "zh": "刺耳的；不协调的",
-          "phrase_1": "jarring social contrast",
-          "phrase_1_zh": "刺眼的社会反差",
-          "phrase_2": "jarring inconsistency in evidence",
-          "phrase_2_zh": "证据中刺眼的不一致",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_jar",
       "internal_word_items": [
@@ -188085,9 +179789,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "external_pos_map": {
         "jarful": "adj.",
         "jarware": "n./v.",
-        "bell jar": "n./v.",
-        "jarred": "adj.",
-        "jarring": "n./adj."
+        "bell jar": "n./v."
       }
     },
     {
@@ -188100,15 +179802,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "kinship"
       ],
       "external_words": [
-        {
-          "word": "kindred",
-          "zh": "亲属；同类的",
-          "phrase_1": "kindred spirit",
-          "phrase_1_zh": "志趣相投的人",
-          "phrase_2": "kindred group",
-          "phrase_2_zh": "亲族群体",
-          "pos": "adj."
-        },
         {
           "word": "kinsman",
           "zh": "男性亲属",
@@ -188137,7 +179830,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_kin",
       "internal_word_items": [
@@ -188155,7 +179848,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "kinship": "n."
       },
       "external_pos_map": {
-        "kindred": "adj.",
         "kinsman": "n.",
         "kinswoman": "n.",
         "kinfolk": "n./v."
@@ -188497,25 +180189,19 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "offspring",
       "confidence": "review",
       "internal_words": [
-        "offspring",
         "spring"
       ],
       "external_words": [],
-      "total_words": 2,
+      "total_words": 1,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_offspring",
       "internal_word_items": [
-        {
-          "word": "offspring",
-          "pos": "v."
-        },
         {
           "word": "spring",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
-        "offspring": "v.",
         "spring": "n."
       },
       "external_pos_map": {}
@@ -188539,15 +180225,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adv."
         },
         {
-          "word": "oilseed",
-          "zh": "油料种子",
-          "phrase_1": "oilseed crop",
-          "phrase_1_zh": "油料作物",
-          "phrase_2": "oilseed production",
-          "phrase_2_zh": "油料生产",
-          "pos": "adj."
-        },
-        {
           "word": "oilfield",
           "zh": "油田",
           "phrase_1": "offshore oilfield",
@@ -188557,7 +180234,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_oil",
       "internal_word_items": [
@@ -188571,7 +180248,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "oily": "adv.",
-        "oilseed": "adj.",
         "oilfield": "n./v."
       }
     },
@@ -188593,18 +180269,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "oregrade analysis",
           "phrase_2_zh": "矿石品位分析",
           "pos": "n./v."
-        },
-        {
-          "word": "oreforming",
-          "zh": "成矿的",
-          "phrase_1": "oreforming fluid",
-          "phrase_1_zh": "成矿流体",
-          "phrase_2": "oreforming process",
-          "phrase_2_zh": "成矿过程",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_ore",
       "internal_word_items": [
@@ -188622,8 +180289,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "orebody": "n./v."
       },
       "external_pos_map": {
-        "oregrade": "n./v.",
-        "oreforming": "n./adj."
+        "oregrade": "n./v."
       }
     },
     {
@@ -189234,15 +180900,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "tree ring",
-          "zh": "年轮",
-          "phrase_1": "tree ring climate reconstruction",
-          "phrase_1_zh": "年轮气候重建",
-          "phrase_2": "tree ring growth anomaly",
-          "phrase_2_zh": "年轮生长异常",
-          "pos": "n./adj."
-        },
-        {
           "word": "ringfence",
           "zh": "隔离保护；圈定",
           "phrase_1": "ringfence public health funding",
@@ -189252,7 +180909,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_ring",
       "internal_word_items": [
@@ -189268,7 +180925,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "ringlet": "n./v.",
         "ringroad": "n./v.",
         "ringside": "n./v.",
-        "tree ring": "n./adj.",
         "ringfence": "n."
       }
     },
@@ -189292,15 +180948,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "riverbed",
-          "zh": "河床",
-          "phrase_1": "riverbed sediment sampling",
-          "phrase_1_zh": "河床沉积物采样",
-          "phrase_2": "dry riverbed erosion",
-          "phrase_2_zh": "干河床侵蚀",
-          "pos": "adj."
-        },
-        {
           "word": "riverfront",
           "zh": "滨河地区",
           "phrase_1": "riverfront redevelopment plan",
@@ -189319,7 +180966,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_river",
       "internal_word_items": [
@@ -189338,7 +180985,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "riverine": "n./v.",
-        "riverbed": "adj.",
         "riverfront": "n./v.",
         "riverland": "n./v."
       }
@@ -189421,7 +181067,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "confidence": "review",
       "internal_words": [
         "sea",
-        "seabed",
         "seawater"
       ],
       "external_words": [
@@ -189453,7 +181098,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 6,
+      "total_words": 5,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_sea",
       "internal_word_items": [
@@ -189462,17 +181107,12 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "seabed",
-          "pos": "adj."
-        },
-        {
           "word": "seawater",
           "pos": "n."
         }
       ],
       "internal_pos_map": {
         "sea": "n.",
-        "seabed": "adj.",
         "seawater": "n."
       },
       "external_pos_map": {
@@ -189589,8 +181229,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "anchor": "spring",
       "confidence": "review",
       "internal_words": [
-        "spring",
-        "offspring"
+        "spring"
       ],
       "external_words": [
         {
@@ -189619,39 +181258,24 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "springwater source protection",
           "phrase_2_zh": "泉水水源保护",
           "pos": "n."
-        },
-        {
-          "word": "wellspring",
-          "zh": "源泉",
-          "phrase_1": "wellspring of civic trust",
-          "phrase_1_zh": "公民信任的源泉",
-          "phrase_2": "wellspring of cultural identity",
-          "phrase_2_zh": "文化身份的源泉",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 6,
+      "total_words": 4,
       "anchor_note": "exact_head_seed_supplement_visible_filtered",
       "source_cluster_id": "kin_head_seed_spring",
       "internal_word_items": [
         {
           "word": "spring",
           "pos": "n."
-        },
-        {
-          "word": "offspring",
-          "pos": "v."
         }
       ],
       "internal_pos_map": {
-        "spring": "n.",
-        "offspring": "v."
+        "spring": "n."
       },
       "external_pos_map": {
         "springtime": "n./v.",
         "springboard": "n./v.",
-        "springwater": "n.",
-        "wellspring": "n./adj."
+        "springwater": "n."
       }
     },
     {
@@ -190651,15 +182275,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       ],
       "external_words": [
         {
-          "word": "banking",
-          "zh": "银行业；河岸形成",
-          "phrase_1": "banking regulation reform",
-          "phrase_1_zh": "银行监管改革",
-          "phrase_2": "river banking erosion",
-          "phrase_2_zh": "河岸侵蚀",
-          "pos": "n./adj."
-        },
-        {
           "word": "bankruptcy",
           "zh": "破产",
           "phrase_1": "bankruptcy protection filing",
@@ -190669,7 +182284,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "curated_final_supplement_for_remaining_uncovered",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -190682,7 +182297,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "bank": "n."
       },
       "external_pos_map": {
-        "banking": "n./adj.",
         "bankruptcy": "n."
       }
     },
@@ -192955,15 +184569,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "v."
         },
         {
-          "word": "abiding",
-          "zh": "持久的",
-          "phrase_1": "abiding cultural influence",
-          "phrase_1_zh": "持久文化影响",
-          "phrase_2": "abiding respect for law",
-          "phrase_2_zh": "对法律的持久尊重",
-          "pos": "n./adj."
-        },
-        {
           "word": "abidance",
           "zh": "遵守",
           "phrase_1": "abidance by treaty obligations",
@@ -192973,7 +184578,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -192987,7 +184592,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "abide": "v.",
-        "abiding": "n./adj.",
         "abidance": "n."
       }
     },
@@ -193591,9 +185195,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "ended end endless endpoint",
       "anchor": "ended",
       "confidence": "review",
-      "internal_words": [
-        "ended"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "end",
@@ -193623,18 +185225,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
-      "internal_word_items": [
-        {
-          "word": "ended",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "ended": "adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "end": "n./v.",
         "endless": "adj.",
@@ -193646,9 +185241,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "ending end endless endpoint",
       "anchor": "ending",
       "confidence": "review",
-      "internal_words": [
-        "ending"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "end",
@@ -193678,18 +185271,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
-      "internal_word_items": [
-        {
-          "word": "ending",
-          "pos": "n./adj."
-        }
-      ],
-      "internal_pos_map": {
-        "ending": "n./adj."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "end": "n./v.",
         "endless": "adj.",
@@ -193846,9 +185432,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "fled flee flight fugitive",
       "anchor": "fled",
       "confidence": "review",
-      "internal_words": [
-        "fled"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "flee",
@@ -193878,18 +185462,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
-      "internal_word_items": [
-        {
-          "word": "fled",
-          "pos": "v-ed."
-        }
-      ],
-      "internal_pos_map": {
-        "fled": "v-ed."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "flee": "v.",
         "flight": "n.",
@@ -193913,18 +185490,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "football club ownership",
           "phrase_2_zh": "足球俱乐部所有权",
           "pos": "n."
-        },
-        {
-          "word": "footballing",
-          "zh": "足球的",
-          "phrase_1": "footballing culture in Europe",
-          "phrase_1_zh": "欧洲足球文化",
-          "phrase_2": "footballing talent pipeline",
-          "phrase_2_zh": "足球人才培养链",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -193937,8 +185505,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "footballer": "n."
       },
       "external_pos_map": {
-        "football": "n.",
-        "footballing": "n./adj."
+        "football": "n."
       }
     },
     {
@@ -194442,61 +186009,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       }
     },
     {
-      "cluster_id": "kin_rework_final_ingoing",
-      "cluster_label": "ingoing ongoing outgoing incoming",
-      "anchor": "ingoing",
-      "confidence": "review",
-      "internal_words": [
-        "ingoing"
-      ],
-      "external_words": [
-        {
-          "word": "ongoing",
-          "zh": "正在进行的",
-          "phrase_1": "ongoing policy evaluation",
-          "phrase_1_zh": "持续政策评估",
-          "phrase_2": "ongoing ecological restoration",
-          "phrase_2_zh": "正在进行的生态恢复",
-          "pos": "adj."
-        },
-        {
-          "word": "outgoing",
-          "zh": "外向的；即将离任的",
-          "phrase_1": "outgoing administration policy",
-          "phrase_1_zh": "离任政府政策",
-          "phrase_2": "outgoing migration flow",
-          "phrase_2_zh": "外流迁徙",
-          "pos": "n./adj."
-        },
-        {
-          "word": "incoming",
-          "zh": "进入的；新任的",
-          "phrase_1": "incoming government agenda",
-          "phrase_1_zh": "新政府议程",
-          "phrase_2": "incoming data stream",
-          "phrase_2_zh": "传入数据流",
-          "pos": "n./adj."
-        }
-      ],
-      "total_words": 4,
-      "anchor_note": "final_rework_real_visible_or_root_kin",
-      "source_cluster_id": null,
-      "internal_word_items": [
-        {
-          "word": "ingoing",
-          "pos": "adj."
-        }
-      ],
-      "internal_pos_map": {
-        "ingoing": "adj."
-      },
-      "external_pos_map": {
-        "ongoing": "adj.",
-        "outgoing": "n./adj.",
-        "incoming": "n./adj."
-      }
-    },
-    {
       "cluster_id": "kin_rework_final_insect",
       "cluster_label": "insect section dissect intersection",
       "anchor": "insect",
@@ -194766,9 +186278,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       "cluster_label": "mapmaking map mapper remap",
       "anchor": "mapmaking",
       "confidence": "review",
-      "internal_words": [
-        "mapmaking"
-      ],
+      "internal_words": [],
       "external_words": [
         {
           "word": "map",
@@ -194798,18 +186308,11 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
-      "internal_word_items": [
-        {
-          "word": "mapmaking",
-          "pos": "n."
-        }
-      ],
-      "internal_pos_map": {
-        "mapmaking": "n."
-      },
+      "internal_word_items": [],
+      "internal_pos_map": {},
       "external_pos_map": {
         "map": "n./v.",
         "mapper": "n.",
@@ -194890,15 +186393,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n."
         },
         {
-          "word": "messaging",
-          "zh": "信息传播",
-          "phrase_1": "public health messaging",
-          "phrase_1_zh": "公共卫生信息传播",
-          "phrase_2": "political messaging campaign",
-          "phrase_2_zh": "政治宣传活动",
-          "pos": "n./adj."
-        },
-        {
           "word": "messenger RNA",
           "zh": "信使RNA",
           "phrase_1": "messenger RNA vaccine platform",
@@ -194908,7 +186402,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -194922,7 +186416,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "message": "n.",
-        "messaging": "n./adj.",
         "messenger RNA": "n./v."
       }
     },
@@ -195097,18 +186590,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "impair ecosystem resilience",
           "phrase_2_zh": "削弱生态系统韧性",
           "pos": "n./v."
-        },
-        {
-          "word": "pairing",
-          "zh": "配对",
-          "phrase_1": "student pairing strategy",
-          "phrase_1_zh": "学生配对策略",
-          "phrase_2": "genetic base pairing",
-          "phrase_2_zh": "基因碱基配对",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -195122,8 +186606,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "repair": "n./v.",
-        "impair": "n./v.",
-        "pairing": "n./adj."
+        "impair": "n./v."
       }
     },
     {
@@ -195300,15 +186783,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "pronounced",
-          "zh": "明显的；发音的",
-          "phrase_1": "pronounced regional inequality",
-          "phrase_1_zh": "明显区域不平等",
-          "phrase_2": "pronounced vowel shift",
-          "phrase_2_zh": "明显元音变化",
-          "pos": "adj."
-        },
-        {
           "word": "pronounceable",
           "zh": "可发音的",
           "phrase_1": "pronounceable scientific name",
@@ -195318,7 +186792,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -195332,7 +186806,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "pronounce": "n./v.",
-        "pronounced": "adj.",
         "pronounceable": "adj."
       }
     },
@@ -195520,15 +186993,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         },
         {
-          "word": "rewarding",
-          "zh": "有回报的",
-          "phrase_1": "rewarding academic career",
-          "phrase_1_zh": "有回报的学术职业",
-          "phrase_2": "rewarding community work",
-          "phrase_2_zh": "有成就感的社区工作",
-          "pos": "n./adj."
-        },
-        {
           "word": "rewardable",
           "zh": "可奖励的",
           "phrase_1": "rewardable public service",
@@ -195538,7 +187002,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -195552,7 +187016,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "award": "adj.",
-        "rewarding": "n./adj.",
         "rewardable": "adj."
       }
     },
@@ -195628,18 +187091,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "skullcap protective gear",
           "phrase_2_zh": "头盖保护装备",
           "pos": "n./v."
-        },
-        {
-          "word": "skulled",
-          "zh": "有头骨的",
-          "phrase_1": "thick skulled specimen",
-          "phrase_1_zh": "厚颅标本",
-          "phrase_2": "skulled anatomical model",
-          "phrase_2_zh": "头骨解剖模型",
-          "pos": "adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -195652,8 +187106,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "skull": "n."
       },
       "external_pos_map": {
-        "skullcap": "n./v.",
-        "skulled": "adj."
+        "skullcap": "n./v."
       }
     },
     {
@@ -196060,15 +187513,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         },
         {
-          "word": "sweeping",
-          "zh": "广泛的；彻底的",
-          "phrase_1": "sweeping institutional reform",
-          "phrase_1_zh": "全面制度改革",
-          "phrase_2": "sweeping demographic change",
-          "phrase_2_zh": "广泛人口变化",
-          "pos": "n./adj."
-        },
-        {
           "word": "sweepstake",
           "zh": "抽奖；赌金",
           "phrase_1": "sweepstake regulation debate",
@@ -196078,7 +187522,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "pos": "n./v."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -196092,7 +187536,6 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "sweep": "n./v.",
-        "sweeping": "n./adj.",
         "sweepstake": "n./v."
       }
     },
@@ -196113,18 +187556,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "undergo clinical evaluation",
           "phrase_2_zh": "接受临床评估",
           "pos": "v."
-        },
-        {
-          "word": "undergoing",
-          "zh": "正在经历",
-          "phrase_1": "undergoing structural transformation",
-          "phrase_1_zh": "正在经历结构转型",
-          "phrase_2": "undergoing medical treatment",
-          "phrase_2_zh": "正在接受医疗治疗",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -196137,8 +187571,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "undergone": "v."
       },
       "external_pos_map": {
-        "undergo": "v.",
-        "undergoing": "n./adj."
+        "undergo": "v."
       }
     },
     {
@@ -196158,18 +187591,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "undergo clinical evaluation",
           "phrase_2_zh": "接受临床评估",
           "pos": "v."
-        },
-        {
-          "word": "undergoing",
-          "zh": "正在经历",
-          "phrase_1": "undergoing structural transformation",
-          "phrase_1_zh": "正在经历结构转型",
-          "phrase_2": "undergoing medical treatment",
-          "phrase_2_zh": "正在接受医疗治疗",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 3,
+      "total_words": 2,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -196182,8 +187606,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "underwent": "v."
       },
       "external_pos_map": {
-        "undergo": "v.",
-        "undergoing": "n./adj."
+        "undergo": "v."
       }
     },
     {
@@ -196377,18 +187800,9 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
           "phrase_2": "warrior burial practice",
           "phrase_2_zh": "战士葬俗",
           "pos": "n."
-        },
-        {
-          "word": "warring",
-          "zh": "交战的",
-          "phrase_1": "warring political factions",
-          "phrase_1_zh": "交战政治派别",
-          "phrase_2": "warring states tradition",
-          "phrase_2_zh": "战国传统",
-          "pos": "n./adj."
         }
       ],
-      "total_words": 4,
+      "total_words": 3,
       "anchor_note": "final_rework_real_visible_or_root_kin",
       "source_cluster_id": null,
       "internal_word_items": [
@@ -196402,8 +187816,7 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
       },
       "external_pos_map": {
         "war": "n./v.",
-        "warrior": "n.",
-        "warring": "n./adj."
+        "warrior": "n."
       }
     },
     {
@@ -196459,6 +187872,79 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
         "wide": "n./v.",
         "widen": "v.",
         "widely": "adv."
+      }
+    },
+    {
+      "cluster_id": "kin_clean_condense_dense_density",
+      "cluster_label": "condense dense density condenser condensation densify condensate",
+      "anchor": "dense / condense",
+      "confidence": "high",
+      "internal_words": [
+        "condense",
+        "dense",
+        "density",
+        "condenser"
+      ],
+      "external_words": [
+        {
+          "word": "condensation",
+          "pos": "n.",
+          "zh": "凝结；浓缩",
+          "phrase_1": "condensation reaction",
+          "phrase_1_zh": "缩合反应",
+          "phrase_2": "condensation on cold surfaces",
+          "phrase_2_zh": "冷表面凝结"
+        },
+        {
+          "word": "densify",
+          "pos": "v.",
+          "zh": "使密集；使致密",
+          "phrase_1": "densify urban development",
+          "phrase_1_zh": "提高城市开发密度",
+          "phrase_2": "densify ceramic material",
+          "phrase_2_zh": "使陶瓷材料致密"
+        },
+        {
+          "word": "condensate",
+          "pos": "n./v.",
+          "zh": "冷凝物；凝析液",
+          "phrase_1": "natural gas condensate",
+          "phrase_1_zh": "天然气凝析液",
+          "phrase_2": "condensate recovery system",
+          "phrase_2_zh": "冷凝液回收系统"
+        }
+      ],
+      "total_words": 7,
+      "anchor_note": "manual_clean_fix_no_spond_no_condensed",
+      "source_cluster_id": "manual_v16_condense_fix",
+      "internal_word_items": [
+        {
+          "word": "condense",
+          "pos": "v."
+        },
+        {
+          "word": "dense",
+          "pos": "adj."
+        },
+        {
+          "word": "density",
+          "pos": "n."
+        },
+        {
+          "word": "condenser",
+          "pos": "n."
+        }
+      ],
+      "internal_pos_map": {
+        "condense": "v.",
+        "dense": "adj.",
+        "density": "n.",
+        "condenser": "n."
+      },
+      "external_pos_map": {
+        "condensation": "n.",
+        "densify": "v.",
+        "condensate": "n./v."
       }
     }
   ],
@@ -196776,5 +188262,5180 @@ window.VOCAB_KIN_CLUSTER_MASTER_FINAL = {
     "family_merged": 208,
     "clusters_out": 3381,
     "missing_curated": []
+  },
+  "v16_cleanup": {
+    "removed_clusters": [
+      {
+        "cluster_id": "kin_head_density_immensity_intensity_sensitivity",
+        "reason": "known dirty machine-fragment cluster"
+      },
+      {
+        "cluster_id": "kin_head_condense_condenser_correspond_despondent",
+        "reason": "known dirty machine-fragment cluster"
+      }
+    ],
+    "removed_inflection_words": [
+      {
+        "cluster_id": "kin_adaptable_adaptably_adapt_adaptive_adaptation",
+        "word": "maladapted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_challenge_challengingly_challenging_challenger_unchallenged",
+        "word": "challenging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_challenge_challengingly_challenging_challenger_unchallenged",
+        "word": "unchallenged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_constraint_restrain_unconstrained",
+        "word": "unconstrained",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_coverage_resilience_recover_discovered",
+        "word": "discovered",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_deconstructivist_deconstructivism_reconstruct_unconstrained_construct",
+        "word": "unconstrained",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_described_descriptive_scribe_inscribe",
+        "word": "described",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_described_inscription_scribe_subscribers_transcription",
+        "word": "described",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_described_subscribers",
+        "word": "described",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_design_signal_designate_designator_designspecification",
+        "word": "designtesting",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_editing_gene_editing",
+        "word": "editing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_farm_fishfarming",
+        "word": "fishfarming",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_farm_fishfarming",
+        "word": "farming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_finned_lobe_finned",
+        "word": "finned",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_fish_fishfarming_shell",
+        "word": "fishfarming",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_inequality_equality_unequal_unqualified_qualifier",
+        "word": "unqualified",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_marginalised_marginalises_margin_marginal_marginalize",
+        "word": "marginalised",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_marketer_market_marketgood_supermarket",
+        "word": "marketing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_metabolism_digest_undigested_digest_digestible",
+        "word": "undigested",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_misunderstanding_outstanding_substandardness_understand_withstand",
+        "word": "misunderstanding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_misunderstanding_outstanding_substandardness_understand_withstand",
+        "word": "outstanding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_misunderstanding_statement_overstate_understand_understanding",
+        "word": "misunderstanding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_one_child_childhood_children",
+        "word": "childbearing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_paper_newspaper_papermaking",
+        "word": "papermaking",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_revolve_revolution_evolution_evolve_revolt",
+        "word": "convoluted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_sabre_sabre_toothed",
+        "word": "sabrewing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_sabre_toothed_sabre_toothed",
+        "word": "toothed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_sabre_toothed_sabre_toothed",
+        "word": "sabrewing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_steel_steel_skeleton",
+        "word": "steelmaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_stricter_restrict_restrict_restricted_unrestricted",
+        "word": "unrestricted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_string_astringent_stringent_stringency",
+        "word": "string",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_test_attest_designtesting_protest_detest",
+        "word": "designtesting",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_cover_coverage_discovered_recover",
+        "word": "discovered",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_equal_equality_inequality_qualification",
+        "word": "unqualified",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_reason_reasonable_treason",
+        "word": "reasoned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_reason_reasonable_treason",
+        "word": "reasoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_resource_resourceful",
+        "word": "outsourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_resource_resourceful",
+        "word": "resourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_fabricate_fabricator",
+        "word": "fabricated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_facilitate_facilitator_facility",
+        "word": "facilitated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_package_repackage",
+        "word": "packaging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_contaminant_contaminate_examine",
+        "word": "uncontaminated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_advance_enhancement",
+        "word": "advanced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_danger_endangerment",
+        "word": "endangered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_paralyse_paralysis",
+        "word": "paralysing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_lateral_lateralisation_lateralization_lateralized",
+        "word": "lateralized",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_oblige_obligatory",
+        "word": "obliged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_scalability_scalable",
+        "word": "scaling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_scatter_scatterer",
+        "word": "scattering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_accomplish_accomplishment",
+        "word": "accomplished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_account_accountability",
+        "word": "accounting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_occupant_occupation",
+        "word": "preoccupied",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_reschedule_schedule",
+        "word": "scheduling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_reschedule_schedule",
+        "word": "scheduled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_accountability_encounter_uncounted",
+        "word": "uncounted",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_scrutinize_scrutiny",
+        "word": "scrutinized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_advantage_advantageous",
+        "word": "disadvantaged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_advantage_advantageous",
+        "word": "advantaged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_bleached_teacher_treacherous_treacherousness",
+        "word": "bleached",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_declaration_declare",
+        "word": "undeclared",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_recyclable_recycle",
+        "word": "cycling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_feedback_feedbackloop",
+        "word": "backfeed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_feedback_feedbackloop",
+        "word": "feeding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_refine_refinery",
+        "word": "refined",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_neglect_neglectful",
+        "word": "neglected",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_shareholder_shareholding_stakeholder",
+        "word": "shareholding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_neighbor_neighborhood",
+        "word": "neighboring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_celebrate_celebratory_celebrity",
+        "word": "celebrated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_remarkable_remarkably_unremarkable",
+        "word": "remarked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_renewable_renew",
+        "word": "renewed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_reportage_reporting",
+        "word": "reporting",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_misrepresent_misrepresentation_represent_representation",
+        "word": "underrepresented",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_generalize_lateralisation_lateralization_lateralized",
+        "word": "lateralized",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_resemblance_resemble",
+        "word": "resembling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_misrepresentation_presentation_representation_representative",
+        "word": "underrepresented",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_resilience_resiliency_resilient",
+        "word": "resiliencybuilding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_detectable_detect",
+        "word": "undetected",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_develop_developmental_redevelop",
+        "word": "underdeveloped",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_revenue_revenuer",
+        "word": "revenuegenerating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_crowdfunding_profundity",
+        "word": "crowdfunding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_wholesale_wholesome",
+        "word": "wholehearted",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_debtfinancing_dominance_finance_financial",
+        "word": "debtfinancing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_disclose_disclosure",
+        "word": "undisclosed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_dismiss_dismissive",
+        "word": "undismissed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_disorder_disorderliness",
+        "word": "ordered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_withstand_withstood",
+        "word": "withstanding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_glacial_glaciation",
+        "word": "glaciated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_classical_classification_classify",
+        "word": "classified",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_climate_climatewarming_climatic",
+        "word": "climatewarming",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_coastalflooding_flooding",
+        "word": "coastalflooding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_coastalflooding_flooding",
+        "word": "flooding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_alter_alteration",
+        "word": "unaltered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_amalgam_amalgamate",
+        "word": "amalgamated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_emphasis_emphasize",
+        "word": "emphasized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_employer_employ_unemployed_unemployment",
+        "word": "unemployed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_journalism_journalist_marginalisation_marginalised",
+        "word": "marginalised",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_enclose_enclosure",
+        "word": "unenclosed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_enclose_enclosure",
+        "word": "enclosing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_enclose_enclosure",
+        "word": "enclosed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_inconsistency_inconsistent_inconspicuous_unconscious",
+        "word": "unconstrained",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_undermine_underminer",
+        "word": "undermining",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_undermine_underminer",
+        "word": "mining",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_misunderstanding_thunderstorm_understand",
+        "word": "misunderstanding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_misunderstanding_thunderstorm_understand",
+        "word": "understanding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_endurable_endurance",
+        "word": "enduring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_conflict_inflict",
+        "word": "conflicted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_infrasound_infrastructural_infrastructure",
+        "word": "infrared",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_enhance_enhancement",
+        "word": "enhanced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_announcement_unannounced",
+        "word": "unannounced",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_antiquated_antique_antiquity",
+        "word": "antiquated",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_coalesce_coalescence",
+        "word": "coalescing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_coalesce_coalescence",
+        "word": "coalesced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_coastal_coastalflooding",
+        "word": "coastalflooding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_pollutant_pollute",
+        "word": "unpolluted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_pollutant_pollute",
+        "word": "polluted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_domestic_domesticate",
+        "word": "undomesticated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_cloudcomputing_computation_computer_computing",
+        "word": "cloudcomputing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_cloudcomputing_computation_computer_computing",
+        "word": "computing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_congest_congestion_congestive",
+        "word": "congested",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_conquer_conquest",
+        "word": "unconquered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_conquer_conquest",
+        "word": "conquering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_constrain_constraint_demonstrate_demonstrative",
+        "word": "unconstrained",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_coordinate_coordinator",
+        "word": "coordinated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_correlate_correlation",
+        "word": "uncorrelated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_corrosion_corrosive",
+        "word": "corroded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_breathable_breathless",
+        "word": "breathing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_precede_precedence_precedent_unprecedented",
+        "word": "unprecedented",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_prejudge_prejudice_prejudicial",
+        "word": "unprejudiced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_prevalence_prevalent",
+        "word": "prevailing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_inferiority_prioritised_prioritize_priority",
+        "word": "prioritised",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_learningprocess_process_processingplant_unprocessed",
+        "word": "unprocessed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_program_programmer",
+        "word": "programming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_compromise_promise",
+        "word": "promising",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_prospect_prospector_prosperity",
+        "word": "prospecting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_protocol_protocolized",
+        "word": "protocolized",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_outsource_resource_resourceful",
+        "word": "resourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_outsource_resource_resourceful",
+        "word": "sourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_tsunami_tsunamic",
+        "word": "tsunamiwarning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_constellated_constellation_interstellar_interstellarcloud",
+        "word": "constellated",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_stratification_stratify",
+        "word": "stratified",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_guarantee_guarantor_quarantine",
+        "word": "guaranteed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_purchase_purchaser",
+        "word": "purchasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_surpass_surpassable",
+        "word": "unsurpassed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_surpass_surpassable",
+        "word": "surpassing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_outdate_outdatedness",
+        "word": "outdated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_overcrowded_overcrowding",
+        "word": "overcrowded",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_overcrowded_overcrowding",
+        "word": "overcrowding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_overcrowded_overcrowding",
+        "word": "crowding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_overcrowded_overcrowding",
+        "word": "crowded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abandon",
+        "word": "unabandoned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abandon",
+        "word": "abandoned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abate",
+        "word": "bated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abate",
+        "word": "unabated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abidance",
+        "word": "abided",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abidance",
+        "word": "abiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abide",
+        "word": "abiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_abode",
+        "word": "abiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_accent",
+        "word": "unaccented",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_accumulation",
+        "word": "accumulating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_accumulation",
+        "word": "accumulated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_affliction",
+        "word": "unafflicted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_affliction",
+        "word": "afflicting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_affliction",
+        "word": "afflicted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_aids",
+        "word": "unaided",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_amass",
+        "word": "massing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_antifreeze",
+        "word": "freezing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_arousal",
+        "word": "aroused",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_arousal",
+        "word": "arousing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_arousal_part_2",
+        "word": "rousing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_arouse",
+        "word": "rousing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_arrangement",
+        "word": "arranged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_array",
+        "word": "arrayed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_arrival",
+        "word": "arrived",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_arrival",
+        "word": "arriving",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_attire",
+        "word": "attired",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bamboo",
+        "word": "bamboo scaffolding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_baobab",
+        "word": "baobabseed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bargaining",
+        "word": "bargaining",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_bargaining",
+        "word": "bargained",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_beak",
+        "word": "beaked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bear",
+        "word": "bearing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_benchmark",
+        "word": "benchmarking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bias",
+        "word": "unbiased",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_bias",
+        "word": "biased",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bias",
+        "word": "debiasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_biasedly",
+        "word": "unbiased",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_biasedly",
+        "word": "debiasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_biasedly",
+        "word": "biased",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bide",
+        "word": "abiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bill",
+        "word": "billing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bipedal",
+        "word": "quadruped",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bipedal",
+        "word": "biped",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bivouac",
+        "word": "bivouacking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_blast",
+        "word": "blasting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_blight",
+        "word": "blighted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_blitz",
+        "word": "blitzing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_blitz",
+        "word": "blitzed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_blowdart",
+        "word": "darting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bolt",
+        "word": "bolted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_booster",
+        "word": "boosting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_booster",
+        "word": "boosted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bottleneck",
+        "word": "necking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_bottleneck",
+        "word": "debottlenecking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_brick",
+        "word": "brickmaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_brief",
+        "word": "briefing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_brood",
+        "word": "brooding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_buckle",
+        "word": "buckling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_buffalo",
+        "word": "buffaloed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_burning",
+        "word": "burning",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_cache",
+        "word": "cached",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cage",
+        "word": "cageling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cage",
+        "word": "caged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_calve",
+        "word": "calving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_canoe",
+        "word": "canoeing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_canopy",
+        "word": "canopied",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_caravan",
+        "word": "caravaning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_carve",
+        "word": "uncarved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_catching",
+        "word": "catching",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_catchment",
+        "word": "watershed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_catchment",
+        "word": "catching",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_cater",
+        "word": "catering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_caterer",
+        "word": "catered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_caterer",
+        "word": "catering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_chamber",
+        "word": "chambered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_champion",
+        "word": "championing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_chant",
+        "word": "chanting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_charter",
+        "word": "chartered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_chase",
+        "word": "chasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_chest",
+        "word": "chested",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_child",
+        "word": "childbearing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_christen",
+        "word": "Christening",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cinct",
+        "word": "uncinctured",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cipher",
+        "word": "ciphering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_clash",
+        "word": "clashing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_clasp",
+        "word": "clasped",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_clasp",
+        "word": "clasping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_climb",
+        "word": "climbing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_clipper",
+        "word": "clipping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_clone",
+        "word": "cloning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_clothing",
+        "word": "clothing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_clothing",
+        "word": "clothed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cloud",
+        "word": "cloud computing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cocoon",
+        "word": "cocooning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_collision",
+        "word": "colliding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_come",
+        "word": "incoming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_commence",
+        "word": "commencing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_conceal",
+        "word": "unconcealed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_concern",
+        "word": "unconcerned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_condemn",
+        "word": "uncondemned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_confession",
+        "word": "confessed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cotton",
+        "word": "cottonseed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_crater",
+        "word": "cratering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_crisscross",
+        "word": "crossing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_crossbreed",
+        "word": "crossbreed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_crossbreed",
+        "word": "interbreed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_crossbreed",
+        "word": "crossbred",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_crowd",
+        "word": "crowdfunding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_crowd",
+        "word": "crowdsourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_crowd",
+        "word": "crowded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_crush",
+        "word": "crushing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_cumber",
+        "word": "uncumbered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_curb",
+        "word": "uncurbed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dart",
+        "word": "darting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deem",
+        "word": "deemed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deem",
+        "word": "deeming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deemable",
+        "word": "deeming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deemable",
+        "word": "deemed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deep",
+        "word": "deepening",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_defy",
+        "word": "undefied",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_delay",
+        "word": "delayed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_delta",
+        "word": "deltawing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_despoil",
+        "word": "unspoiled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_despoil",
+        "word": "spoiled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deter",
+        "word": "undeterred",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_deviant",
+        "word": "undeviating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_device",
+        "word": "devised",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dignity",
+        "word": "dignified",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_diminution",
+        "word": "diminishing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_diminution",
+        "word": "diminished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dish",
+        "word": "dished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dismantle",
+        "word": "mantled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dispute",
+        "word": "undisputed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dissipate",
+        "word": "undissipated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_drift",
+        "word": "drifting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_drone",
+        "word": "droning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_drown",
+        "word": "drowned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_drown",
+        "word": "near drowning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_drown",
+        "word": "drowning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_drug",
+        "word": "drugged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_dwindle",
+        "word": "dwindling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_earn",
+        "word": "earning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_earn",
+        "word": "unearned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_embalmer",
+        "word": "embalmed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_embalmer",
+        "word": "embalming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_embarrass",
+        "word": "embarrassed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_embarrass",
+        "word": "embarrassing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_embarrass",
+        "word": "unembarrassed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_emphatic",
+        "word": "emphasized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_enabler",
+        "word": "enabling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_enabler",
+        "word": "enabled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_encampment",
+        "word": "camping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_encumber",
+        "word": "unencumbered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_endeavour",
+        "word": "endeavouring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_endowment",
+        "word": "endowed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_engage",
+        "word": "engaged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_entail",
+        "word": "tailed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_epoch",
+        "word": "epochmaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_exact",
+        "word": "exacting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_exactness",
+        "word": "exacting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_exchange",
+        "word": "changeling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_exchange",
+        "word": "unchanged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_fade",
+        "word": "fading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_fade",
+        "word": "unfaded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_faint",
+        "word": "fainthearted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_falter",
+        "word": "unfaltering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_falter",
+        "word": "faltering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_famine",
+        "word": "famished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_faultline",
+        "word": "faulting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_fell",
+        "word": "felled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ferment",
+        "word": "unfermented",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_filter",
+        "word": "unfiltered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_firm",
+        "word": "confirmed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_flaw",
+        "word": "flawed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_flawless",
+        "word": "flawed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_fleet",
+        "word": "fleeting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_fleet",
+        "word": "fleetfooted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_flicker",
+        "word": "flickering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_floodplain",
+        "word": "flooding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_foliage",
+        "word": "foliated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_following",
+        "word": "following",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_following",
+        "word": "followed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_football",
+        "word": "footing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_forage",
+        "word": "foraging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_forecast",
+        "word": "forewarning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_forge",
+        "word": "forged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_forgive",
+        "word": "unforgiving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_forthcoming",
+        "word": "forthcoming",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_founder",
+        "word": "founding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_frame",
+        "word": "framing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_framework",
+        "word": "framed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_framework",
+        "word": "framing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_freeze",
+        "word": "freezing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_freshwater",
+        "word": "watershed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_fulfill",
+        "word": "unfulfilled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_garden",
+        "word": "gardening",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_gender",
+        "word": "gendering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_gender",
+        "word": "gendered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_glider",
+        "word": "glided",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_glider",
+        "word": "gliding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_glimpse",
+        "word": "glimpsing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_grant",
+        "word": "grantmaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_grip",
+        "word": "gripping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_gross",
+        "word": "engrossed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_grossness",
+        "word": "engrossing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_group",
+        "word": "grouping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_guardian",
+        "word": "guarded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_guillotine",
+        "word": "guillotining",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hailstorm",
+        "word": "hailstorming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_half_perceived",
+        "word": "perceived",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hamper",
+        "word": "unhampered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_harass",
+        "word": "unharassed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_harmless",
+        "word": "unharmed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_healer",
+        "word": "unhealed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_healer",
+        "word": "healing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hesitate",
+        "word": "unhesitating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hidden",
+        "word": "hiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hide",
+        "word": "hiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_high_rise_part_2",
+        "word": "rising",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hinder",
+        "word": "unhindered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hindrance",
+        "word": "hindering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hindrance",
+        "word": "hindered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hindrance",
+        "word": "unhindered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hindsight",
+        "word": "sighted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hoax",
+        "word": "hoaxing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_holler",
+        "word": "hollering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_homeless",
+        "word": "rehomed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_housing",
+        "word": "housing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_housing",
+        "word": "housed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_huddle",
+        "word": "huddling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_huddle",
+        "word": "unhuddled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_humpback",
+        "word": "humpbacked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_humpback",
+        "word": "humped",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hurry",
+        "word": "hurried",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_hurry",
+        "word": "unhurried",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_idly",
+        "word": "idled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_impactful",
+        "word": "impacted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_impede",
+        "word": "unimpeded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_impliedly",
+        "word": "implied",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_improve",
+        "word": "unimproved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_incarceration",
+        "word": "incarcerated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_increase",
+        "word": "increasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_infrared",
+        "word": "infrared",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_injury",
+        "word": "injured",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_inland",
+        "word": "landlocked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_insult",
+        "word": "insulting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_integer",
+        "word": "integrated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_intrigue",
+        "word": "intriguing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ivory",
+        "word": "ivoried",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_jewel",
+        "word": "bejewelled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_joust",
+        "word": "jousting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_kangaroo",
+        "word": "kangarooing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_keen",
+        "word": "keensighted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_kernel",
+        "word": "kernelized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_kind",
+        "word": "kindhearted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_kind",
+        "word": "kindred",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_kindle",
+        "word": "kindling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_kindle",
+        "word": "unkindled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_knot",
+        "word": "knotweed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_latency",
+        "word": "belated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_latent",
+        "word": "belated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_launch",
+        "word": "launching",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lead",
+        "word": "leading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_leader",
+        "word": "misleading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_leader",
+        "word": "leading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lesion",
+        "word": "lesioning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lever",
+        "word": "leveraged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_limb",
+        "word": "limbed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_limit",
+        "word": "unlimited",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_linger",
+        "word": "lingering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lion",
+        "word": "lionhearted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_liquid",
+        "word": "liquefied",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_load",
+        "word": "loadbearing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_load_bearing",
+        "word": "loading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_loathe",
+        "word": "loathing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_loathsome",
+        "word": "loathed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_loathsome",
+        "word": "loathing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lobby",
+        "word": "lobbying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lobby",
+        "word": "antilobbying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_long_chain",
+        "word": "chained",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_lynching",
+        "word": "lynching",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_madden",
+        "word": "maddening",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_mantle",
+        "word": "mantling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_marginal",
+        "word": "marginated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_marriage",
+        "word": "married",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_marsupial",
+        "word": "marsupiated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_massacre",
+        "word": "massacring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_massacre",
+        "word": "mass killing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_mine",
+        "word": "mining",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_mislead",
+        "word": "misled",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_misled",
+        "word": "misled",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_misled",
+        "word": "misleading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_misled",
+        "word": "leading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_mixed",
+        "word": "mixed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_mosque",
+        "word": "mosquebased",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_motif",
+        "word": "motivated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_mound",
+        "word": "mounded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_niche",
+        "word": "niching",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_niche",
+        "word": "nichepartitioning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_notice",
+        "word": "unnoticed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_nuance",
+        "word": "nuanced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_oath",
+        "word": "oathmaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_offsettable",
+        "word": "offsetting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_old_fashioned",
+        "word": "fashioned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_open",
+        "word": "openended",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_open",
+        "word": "opening",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_opinionpiece",
+        "word": "opinionated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_orchard",
+        "word": "orcharding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_orphan",
+        "word": "orphaned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_outgoing",
+        "word": "outgoing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_overshadow",
+        "word": "unshadowed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_overshadow",
+        "word": "shadowing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_overwhelm",
+        "word": "underwhelming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_overwhelm",
+        "word": "whelming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_overwinter",
+        "word": "wintering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ownership",
+        "word": "owned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pack",
+        "word": "packaging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_packet",
+        "word": "packaging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_packet",
+        "word": "packing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_paddock",
+        "word": "paddocked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_parrot",
+        "word": "parroting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_patent",
+        "word": "unpatented",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pavement",
+        "word": "unpaved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pavement",
+        "word": "paved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_peak",
+        "word": "peaked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_peerage",
+        "word": "peerreviewed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_percussion",
+        "word": "cussed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_perish",
+        "word": "perishing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_phasic",
+        "word": "phasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pilot",
+        "word": "piloting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pilotless",
+        "word": "unpiloted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pilotless",
+        "word": "piloting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pilotless",
+        "word": "piloted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pivot",
+        "word": "pivoting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_plate",
+        "word": "plating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_plateau",
+        "word": "plateaued",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_plume",
+        "word": "plumed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_plunge",
+        "word": "plunged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_plunge",
+        "word": "plunging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_poison",
+        "word": "poisoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_poisonous",
+        "word": "poisoned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_poisonous",
+        "word": "poisoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_polish",
+        "word": "polishing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_polish",
+        "word": "unpolished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_poor",
+        "word": "impoverished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pouch",
+        "word": "pouched",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_poverty",
+        "word": "impoverished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_powerful",
+        "word": "empowered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_previous",
+        "word": "prevailing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pricing",
+        "word": "pricing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_pricing",
+        "word": "priced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_print",
+        "word": "printmaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_probe",
+        "word": "probing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_procedural",
+        "word": "proceeding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_professor",
+        "word": "professed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_pyramid",
+        "word": "pyramidbuilding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rabbit_proof",
+        "word": "proofing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_radish",
+        "word": "radishseed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_raft",
+        "word": "rafting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_raid",
+        "word": "raiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rail",
+        "word": "railing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rainfall",
+        "word": "rainfed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ranch",
+        "word": "ranching",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ratify",
+        "word": "ratified",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_record",
+        "word": "recordkeeping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_record",
+        "word": "prerecorded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_recruit",
+        "word": "recruited",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_recruit",
+        "word": "unrecruited",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_redeem",
+        "word": "unredeemed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_reef",
+        "word": "reefbuilding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_refill",
+        "word": "filled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_refill",
+        "word": "filling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_regroup",
+        "word": "grouping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rekindle",
+        "word": "unkindled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rekindle",
+        "word": "kindled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rekindle",
+        "word": "kindling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_release",
+        "word": "unreleased",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_release",
+        "word": "leasing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_relief",
+        "word": "relieved",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_relief",
+        "word": "unrelieved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_relief",
+        "word": "relieving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_remand",
+        "word": "remanding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_remark",
+        "word": "marked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_render",
+        "word": "rendering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_reprieve",
+        "word": "unreprieved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_require",
+        "word": "required",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_researcher",
+        "word": "researched",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_researcher",
+        "word": "searching",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_reshape",
+        "word": "shaped",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_resonance",
+        "word": "resonating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_result",
+        "word": "resulting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_reveal",
+        "word": "veiling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_reveal",
+        "word": "unveiling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_revival",
+        "word": "revived",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rewrite",
+        "word": "handwriting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ridge",
+        "word": "ridged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rift",
+        "word": "rifting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_risen",
+        "word": "rising",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rival",
+        "word": "unrivaled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rouse",
+        "word": "rousing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_rover",
+        "word": "rovering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_ruinous",
+        "word": "ruined",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_runner",
+        "word": "running",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sable",
+        "word": "sabling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sable",
+        "word": "sablecolored",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_salaryman",
+        "word": "salaried",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sample",
+        "word": "sampling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_scandalous",
+        "word": "scandalmongering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_scandalous",
+        "word": "scandalized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_scapegoat",
+        "word": "scapegoating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_scavenger",
+        "word": "scavenged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_scavenger",
+        "word": "scavenging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_scheme",
+        "word": "scheming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sculpt",
+        "word": "sculpted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sculpture",
+        "word": "sculpted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sea",
+        "word": "seabed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_seal",
+        "word": "sealed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_seasonal",
+        "word": "seasoned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_seed",
+        "word": "seedbed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_seed",
+        "word": "seedling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_settlement",
+        "word": "settled",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_shackle",
+        "word": "shackling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shackle",
+        "word": "unshackled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shade",
+        "word": "shading",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shaft",
+        "word": "shafting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shallow",
+        "word": "shallowminded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shallow",
+        "word": "shallowrooted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shallow",
+        "word": "shallowing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_share",
+        "word": "shared",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sheet",
+        "word": "sheeting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shelf",
+        "word": "shelving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shelf",
+        "word": "shelved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shellfish",
+        "word": "shelled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shelter",
+        "word": "sheltering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shield",
+        "word": "shielding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_shock",
+        "word": "shocking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_siege",
+        "word": "besieged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_silence",
+        "word": "unsilenced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_silently",
+        "word": "silencing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_silk_screening",
+        "word": "screen printing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_silver",
+        "word": "silvered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sinew",
+        "word": "sinewed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_skinner_s",
+        "word": "skinned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sled",
+        "word": "sled",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_sled",
+        "word": "bobsled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sled",
+        "word": "sledding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_smash",
+        "word": "smashing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_smelt",
+        "word": "smelting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_smuggle",
+        "word": "smuggling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_smuggle",
+        "word": "antismuggling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sodden",
+        "word": "waterlogged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_solicit",
+        "word": "unsolicited",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sort",
+        "word": "sorting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_soundproofed",
+        "word": "soundproofed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_soundproofed",
+        "word": "soundproofing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_source",
+        "word": "sourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_spent",
+        "word": "spending",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stake",
+        "word": "stakeholding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_steady",
+        "word": "steadyhanded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_steady",
+        "word": "steadying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sting",
+        "word": "sting",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_sting",
+        "word": "stinging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stock",
+        "word": "stocktaking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stockbreeding",
+        "word": "stockbreeding",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_stockbreeding",
+        "word": "breeding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stockings",
+        "word": "restocking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stockings",
+        "word": "stocking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_storage",
+        "word": "stored",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_storyline",
+        "word": "storytelling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_strain",
+        "word": "straining",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_strain",
+        "word": "strained",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_strait",
+        "word": "straitened",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_strata",
+        "word": "stratified",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stream",
+        "word": "streambed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_strip",
+        "word": "striped",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stuff",
+        "word": "stuffed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stuff",
+        "word": "stuffing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_stuff",
+        "word": "overstuffed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_summer",
+        "word": "summering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_supplier",
+        "word": "supplied",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_supplier",
+        "word": "supplying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_surface",
+        "word": "surfacing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_sweep",
+        "word": "sweeping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_temper",
+        "word": "tempering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_tenured",
+        "word": "tenured",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_terror",
+        "word": "terrifying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_thread",
+        "word": "threaded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_threshold",
+        "word": "threshing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_threshold",
+        "word": "thresholding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_throng",
+        "word": "thronged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_throng",
+        "word": "thronging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_till",
+        "word": "untilled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_tilt",
+        "word": "untilted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_tilt",
+        "word": "tilting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_title",
+        "word": "titling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_trace",
+        "word": "retracing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_track",
+        "word": "trackbed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_train",
+        "word": "training",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_trance",
+        "word": "entrancing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_trance",
+        "word": "entranced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_traveller",
+        "word": "travelled",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_traveller",
+        "word": "travelling",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_treatment",
+        "word": "treated",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_trench",
+        "word": "entrenched",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_trilobite",
+        "word": "trilobed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_trunk",
+        "word": "truncated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_turtle",
+        "word": "turtling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_tusk",
+        "word": "tusked",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unaided",
+        "word": "unaided",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_unaided",
+        "word": "self aided",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unaided",
+        "word": "aided",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unarmed",
+        "word": "unarmed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_unarmed",
+        "word": "armed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_unbiased",
+        "word": "unbiased",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_unbiased",
+        "word": "biased",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unchecked",
+        "word": "unchecked",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_undamaged",
+        "word": "undamaged",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_undamaged",
+        "word": "damaging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_underwater",
+        "word": "watershed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_unfair",
+        "word": "fairminded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_uniform",
+        "word": "uniformed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unify",
+        "word": "unified",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unleash",
+        "word": "leashed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_unspeaking",
+        "word": "unspeaking",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_untouched",
+        "word": "untouched",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_unwieldy",
+        "word": "wielding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_upheaval",
+        "word": "heaving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_uprising",
+        "word": "uprising",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_uprising",
+        "word": "rising",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_upwell",
+        "word": "wellspring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_upwell",
+        "word": "upwelling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_vanish",
+        "word": "vanishing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_variation",
+        "word": "variegated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_vary",
+        "word": "variegated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_veil",
+        "word": "veiling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_veil",
+        "word": "veiled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_voyager",
+        "word": "voyaging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_walkability",
+        "word": "walkshed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_warn",
+        "word": "unwarned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_warn",
+        "word": "warning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_warp",
+        "word": "warping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_warrant",
+        "word": "warranted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_weak",
+        "word": "weakling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_weather",
+        "word": "weathered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_weather",
+        "word": "weathering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_weight",
+        "word": "weighting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_weight",
+        "word": "weighted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_weighty",
+        "word": "weighting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_well",
+        "word": "wellspring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_well_being",
+        "word": "wellbeing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_wellness",
+        "word": "wellbeing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_whale",
+        "word": "whaling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_wholeness",
+        "word": "wholehearted",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_wholly",
+        "word": "wholehearted",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_seed_winter",
+        "word": "wintering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_woodblock",
+        "word": "woodcutting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_woolly",
+        "word": "woolgathering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_wound",
+        "word": "woundhealing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_wound",
+        "word": "wounding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_wrongful",
+        "word": "wrongheaded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_wrongful",
+        "word": "wrongdoing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_yield",
+        "word": "yielding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_seed_zone",
+        "word": "zoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_adjust",
+        "word": "maladjusted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_align",
+        "word": "unaligned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_alloy",
+        "word": "alloyed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_alloy",
+        "word": "alloying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_alloy",
+        "word": "dealloying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_amplify",
+        "word": "amplified",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_backdated_antedate",
+        "word": "backdated",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_head_curated_backdated_antedate",
+        "word": "dated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_bind_bond",
+        "word": "binding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_buffer",
+        "word": "buffered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_buffer",
+        "word": "buffering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_buffer",
+        "word": "unbuffered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_care_caregiver",
+        "word": "caregiving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_debate_debatable_debater",
+        "word": "debating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_debt",
+        "word": "indebted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_dense_density_condense",
+        "word": "condensed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_deprive_private",
+        "word": "underprivileged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_discern_concern",
+        "word": "concerning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_head_curated_doubt_doubtful_dubiety_dubious",
+        "word": "undoubted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_burgeon",
+        "word": "bourgeoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_burgeon",
+        "word": "burgeoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_teach",
+        "word": "teaching",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_machine",
+        "word": "machining",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_commen",
+        "word": "commended",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_bleach",
+        "word": "bleaching",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_bleach",
+        "word": "bleached",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_bleach",
+        "word": "unbleached",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_pasteur",
+        "word": "unpasteurized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_pasteur",
+        "word": "pasteurized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_nourish",
+        "word": "malnourished",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_nourish",
+        "word": "undernourished",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_constell",
+        "word": "constellated",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rebuilt_sustain",
+        "word": "sustained",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_silver",
+        "word": "silvered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rebuilt_profit_extend",
+        "word": "profiteering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_tooth",
+        "word": "toothed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_strict_resource",
+        "word": "resourcing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_challenge",
+        "word": "unchallenged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_challenge",
+        "word": "challenging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_bridge",
+        "word": "bridging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_drive",
+        "word": "driving",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_dwell",
+        "word": "indwelling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_dwell",
+        "word": "dwelling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_strict_diet",
+        "word": "dieting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_censor_census",
+        "word": "uncensored",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_cruc",
+        "word": "excruciating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_found",
+        "word": "founding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_griev",
+        "word": "aggrieved",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_lever",
+        "word": "leveraging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_lever",
+        "word": "leveraged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_stream",
+        "word": "streaming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_paint",
+        "word": "painted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_paint",
+        "word": "painting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_spread",
+        "word": "riskspreading",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_supp_trigger",
+        "word": "triggering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_water",
+        "word": "watershed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_supp_underlie",
+        "word": "underlying",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_supp_shock",
+        "word": "shocking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_batter_battery",
+        "word": "battering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_batter_battery",
+        "word": "battered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_bound",
+        "word": "bounded",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_burgeon",
+        "word": "burgeoning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_burrow",
+        "word": "burrowed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_burrow",
+        "word": "burrowing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_choke",
+        "word": "choking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_civil",
+        "word": "civilized",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_supp_civil",
+        "word": "uncivilized",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_inter",
+        "word": "interred",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_regard_guard",
+        "word": "regarding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_earn",
+        "word": "unearned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_large",
+        "word": "enlarged",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_supp_tangle",
+        "word": "tangled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_enterprise_entrepreneur_part_2",
+        "word": "enterprising",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_flavor",
+        "word": "flavouring",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_supp_flavor",
+        "word": "flavored",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_flaw",
+        "word": "flawed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_humil_humble",
+        "word": "humiliating",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_humil_humble",
+        "word": "humbling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_mine_mineral",
+        "word": "mining",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_orient",
+        "word": "orienteering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_graze",
+        "word": "ungrazed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_graze",
+        "word": "grazing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_supp_result",
+        "word": "resulting",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_bolster",
+        "word": "bolstering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_control",
+        "word": "uncontrolled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_gender",
+        "word": "gendered",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_harness",
+        "word": "harnessing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_late",
+        "word": "belated",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_linger",
+        "word": "lingering",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_pattern",
+        "word": "patterning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_pattern",
+        "word": "patterned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_surprise",
+        "word": "surprising",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_target",
+        "word": "targeting",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_final_target",
+        "word": "targeted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_traffic",
+        "word": "trafficking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_warn",
+        "word": "unwarned",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_warn",
+        "word": "warning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_final_whole_heart",
+        "word": "wholehearted",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_final_yearn",
+        "word": "yearning",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_touch_acquaint",
+        "word": "acquainted",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_touch_able_disable",
+        "word": "disabled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_touch_scourge",
+        "word": "scouring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_coverage_supp_falling",
+        "word": "falling",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_coverage_supp_gauge",
+        "word": "gauging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_coverage_supp_prey",
+        "word": "preying",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_aid",
+        "word": "unaided",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_aid",
+        "word": "aiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_bed",
+        "word": "seabed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_bed",
+        "word": "riverbed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_bed",
+        "word": "bedding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_being",
+        "word": "wellbeing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_being",
+        "word": "human being",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_being",
+        "word": "sentient being",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_dog",
+        "word": "dogged",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_dye",
+        "word": "undyed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_earring",
+        "word": "earring",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_finger",
+        "word": "fingerling",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_jar",
+        "word": "jarred",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_jar",
+        "word": "jarring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_kin",
+        "word": "kindred",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_offspring",
+        "word": "offspring",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_oil",
+        "word": "oilseed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_ore",
+        "word": "oreforming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_ring",
+        "word": "tree ring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_river",
+        "word": "riverbed",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_sea",
+        "word": "seabed",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_spring",
+        "word": "offspring",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_exact_seed_supp_spring",
+        "word": "wellspring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_curated_final_bank",
+        "word": "banking",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_abode",
+        "word": "abiding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_ended",
+        "word": "ended",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rework_final_ending",
+        "word": "ending",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rework_final_fled",
+        "word": "fled",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rework_final_footballer",
+        "word": "footballing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_ingoing",
+        "word": "ingoing",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rework_final_ingoing",
+        "word": "ongoing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_ingoing",
+        "word": "outgoing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_ingoing",
+        "word": "incoming",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_mapmaking",
+        "word": "mapmaking",
+        "location": "internal",
+        "reason": "ed/ing form removed from kin"
+      },
+      {
+        "cluster_id": "kin_rework_final_messenger",
+        "word": "messaging",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_pair",
+        "word": "pairing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_pronunciation",
+        "word": "pronounced",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_reward",
+        "word": "rewarding",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_skull",
+        "word": "skulled",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_swept",
+        "word": "sweeping",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_undergone",
+        "word": "undergoing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_underwent",
+        "word": "undergoing",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      },
+      {
+        "cluster_id": "kin_rework_final_warfare",
+        "word": "warring",
+        "location": "external",
+        "reason": "ed/ing form removed from kin; should be phrase/family usage"
+      }
+    ],
+    "fixed_condense_cluster": "kin_clean_condense_dense_density"
   }
 };

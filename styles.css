@@ -7408,10 +7408,33 @@ body { background: transparent !important; }
   flex: 0 1 auto;
   min-width: 0;
 }
+/* v=110 — currently-reading row: a soft persistent warm glow while
+   the line's TTS is speaking.  No more text-rewrite animation that
+   blinked the highlight in and out between lines.  Per user: "正在
+   读的那句话 给一个小小的发光特效就行了 你现在出现了然后又没了
+   又出现 这样看的眼睛有点累".                                      */
+.pc-row.is-playing,
+.pc-line.is-playing,
+.pc-play-row.is-playing {
+  background: rgba(255, 244, 200, 0.42);
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(232, 196, 138, 0.45);
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+.pc-row,
+.pc-line,
+.pc-play-row {
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
 .pc-row.is-playing .pc-line-phrase,
 .pc-row.is-playing .pc-line-word,
-.pc-row.is-playing .pc-line-zh {
-  animation: pc-ink-write 0.65s ease-out;
+.pc-row.is-playing .pc-line-zh,
+.pc-line.is-playing .pc-line-phrase,
+.pc-line.is-playing .pc-line-zh,
+.pc-play-row.is-playing .pc-play-phrase,
+.pc-play-row.is-playing .pc-play-zh,
+.pc-play-row.is-playing .pc-ex-en {
+  animation: none !important;
 }
 /* v=73 — UNIFIED TYPOGRAPHY FOR PARCHMENT.  Whole parchment switches
    to EB Garamond (the same family the match cards use) for clearer
@@ -7475,7 +7498,7 @@ body { background: transparent !important; }
 }
 .pc-line.is-playing .pc-line-phrase,
 .pc-line.is-playing .pc-line-zh {
-  animation: pc-ink-write 0.65s ease-out;
+  /* steady glow — animation removed in v=110 */
 }
 /* writing-reveal — when a ♪ row goes is-playing, the phrase text
    re-draws left → right via a clip-path inset animation.  Result:
@@ -8867,29 +8890,32 @@ body.bg-stage0 #screen-stage0-quiz {
   flex-direction: column;
   gap: 0;
   overflow: hidden;
-  font-size: calc(13px * var(--s0-fit-scale, 1));
-  line-height: 1.16;
+  /* v=110 — bigger reading text now that PWA fullscreen frees ~80px
+     of safe-area on top.  Reading was 13 px (tiny on mobile); 16 px
+     base reads comfortably and gives a wider tap target for the
+     in-text underlined word links.                                 */
+  font-size: calc(16px * var(--s0-fit-scale, 1));
+  line-height: 1.28;
 }
 .s0-para {
-  /* v=98 — justified WITHOUT hyphenation, so each line fills the
-     column to the right margin but no word is broken across lines.
-     Per user: "每行最后一个单词不要换行 … 保持差不多右边尽头 竖着
-     看是整齐的".                                                  */
   display: block;
-  margin: 3px 0;
+  margin: 4px 0;
   padding: 0;
   background: transparent;
   font-family: var(--f-reading);
   font-size: inherit;
-  line-height: 1.18;
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: none;
-  -webkit-hyphens: none;
+  line-height: 1.28;
+  /* v=110 — true justified.  word-spacing left flexible so the
+     justify engine has room to balance lines without splitting
+     words.                                                       */
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  text-align-last: left;
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
   word-break: keep-all;
   overflow-wrap: normal;
-  letter-spacing: -0.015em;
-  word-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: #1f1004;
 }
 /* v=92 — drop cap removed.  User: "开头不用加大首字母啦 我有点看不
