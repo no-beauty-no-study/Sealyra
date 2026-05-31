@@ -1219,6 +1219,16 @@ function resolveReadingWord(rawToken) {
   return null;
 }
 
+function _splitPosZh(blob) {
+  // patch + family/kin lines sometimes pack pos into zh:
+  //   "n. 联邦"   "v./n. 反对；物体"   "adj. 古代的".
+  // Pull the pos prefix off so the header / row pos column reads
+  // correctly without polluting the gloss.
+  const s = String(blob || '').trim();
+  const m = s.match(/^([a-zA-Z][a-zA-Z./]*?\.)\s+(.+)$/);
+  if (m) return { pos: m[1], zh: m[2] };
+  return { pos: '', zh: s };
+}
 function _patchToParchmentCard(w, p) {
   // PATCH cards store phrases as a flat ["en1","zh1","en2","zh2",…]
   // array and examples as a flat string array.  Normalize into the
@@ -1230,6 +1240,7 @@ function _patchToParchmentCard(w, p) {
     if (en) friends.push(`${en} | ${zh}`);
   }
   const ex = (p.examples && p.examples[0]) || '';
+  const split = _splitPosZh(p.zh);
   // Patch-only words usually share kin/family with the matched
   // network word — fold those in by looking up the network parent
   // through VocabRuntime when present.
@@ -1249,8 +1260,8 @@ function _patchToParchmentCard(w, p) {
   }
   return {
     h: p.word || w,
-    pos: '',
-    zh: p.zh || '',
+    pos: split.pos,
+    zh:  split.zh,
     family: extras.family,
     kin: extras.kin,
     group: extras.group,
@@ -1603,44 +1614,65 @@ function showParchment(word) {
   // any rule + section-label that sits immediately before it, so the
   // user doesn't have to tap empty dividers separately.
   let revealIdx = 1;
-  // v=75 — reveal kinds that play audio on reveal.  Every "content"
-  // row (family / kin / phrase / colloc / group / example) is in
-  // here so every tap speaks the line that just appeared.
+  // v=107 — reveal SECTION-by-SECTION, not row-by-row.  One tap
+  // unfurls every item up to (but not including) the NEXT section
+  // label (which starts with the dotted-rule above its title).
+  // Every speaking row in the revealed batch is queued for
+  // sequential TTS — the user reads the whole section, then hears
+  // each line in order.  Per user: "现在的羊皮纸由于内容提升 不能
+  // 一句一句的显现了 看得很累 改成一个区一个区的显示+音频播放".
   const SPEAKING_KINDS = new Set([
     'fam', 'fam-ph', 'kin', 'kin-ph', 'colloc', 'example',
     'group', 'group-ph', 'neighbor'
   ]);
+  let _sectionPlayToken = 0;          // monotonically increasing so a
+                                       // new tap cancels any in-flight
+                                       // playback queue from the prior
+                                       // section.
+  function _playSequence(rows) {
+    const myToken = ++_sectionPlayToken;
+    let i = 0;
+    const next = () => {
+      if (myToken !== _sectionPlayToken) return;
+      if (i >= rows.length) {
+        veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+        return;
+      }
+      const { node, sp } = rows[i++];
+      veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+      const playRow = node.querySelector('.pc-play-row') || node;
+      if (playRow) playRow.classList.add('is-playing');
+      if (!sp) return next();
+      speak(sp).then(() => setTimeout(next, 80));
+    };
+    next();
+  }
   function advanceReveal() {
     if (revealIdx >= nodes.length) return false;
-    // Reveal everything from revealIdx until the next "content" kind
-    // (a row with audio) inclusive.  Rules + labels are taken along
-    // for the ride.
+    const startIdx = revealIdx;
+    const queued = [];
+    // Walk until we hit the start of the NEXT section.  A new section
+    // is marked by a `rule` followed by a `label` (the dotted-divider
+    // + smallcaps section title).  Reveal everything before that.
     while (revealIdx < nodes.length) {
       const it = items[revealIdx];
+      // Stop *before* the next rule, but not on the very first item
+      // of THIS batch — otherwise an empty advance would happen when
+      // two rules sit adjacent.
+      if (it.kind === 'rule' && revealIdx > startIdx && queued.length > 0) break;
       nodes[revealIdx].classList.remove('is-staged');
       nodes[revealIdx].classList.add('is-revealed');
-      const isContent = SPEAKING_KINDS.has(it.kind);
+      if (SPEAKING_KINDS.has(it.kind)) {
+        const node = nodes[revealIdx];
+        const sp = node.getAttribute('data-sp') ||
+                   node.querySelector('[data-sp]')?.getAttribute('data-sp');
+        queued.push({ node, sp });
+      }
       revealIdx++;
-      if (isContent) break;
     }
-    // Most recently revealed content row → play its audio.
-    const lastContent = [...nodes].slice(0, revealIdx).reverse()
-      .find(n => Array.from(n.classList).some(cls =>
-        cls.startsWith('pc-kind-') && SPEAKING_KINDS.has(cls.slice('pc-kind-'.length))
-      ));
-    if (lastContent) {
-      const sp = lastContent.getAttribute('data-sp')
-              || lastContent.querySelector('[data-sp]')?.getAttribute('data-sp');
-      const playRow = lastContent.querySelector('.pc-play-row') || lastContent;
-      veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
-      playRow.classList.add('is-playing');
-      if (sp) speak(sp);
-    }
-    // v=78 — parchment reveal now uses the soft ink-scratch sound
-    // (pencil on paper) so the reveal feels like writing rather than
-    // a generic page-turn.
     (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
     veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
+    if (queued.length) _playSequence(queued);
     const justRevealed = nodes[revealIdx - 1];
     if (justRevealed) {
       requestAnimationFrame(() => justRevealed.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
