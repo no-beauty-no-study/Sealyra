@@ -1144,12 +1144,133 @@ let _activeParchment = null;
 //   focus_word stays on the clicked word, family / kin / group
 //   are inherited from its family_head per the runtime helpers.
 // ============================================================
+// ============================================================
+//   v=107 — resolveReadingWord(rawToken)
+//   Match order per the user's spec:
+//     1. raw lowercased + punctuation-stripped (exact)
+//     2. patch (552 reading-overlap supplement cards)
+//     3. word master
+//     4. lemma candidates (plural / past / -ing / -ly / -er / -est
+//        / -ies → y / -ied → y / -ically → ic / -ally → al)
+//     5. family-head map fallback
+//     6. proper / place small card
+//   Returns { raw, resolvedWord, source, matchType } or null.
+//   `source` is one of: 'patch' | 'word_master' | 'proper' so
+//   downstream code knows which table to pull display data from.
+// ============================================================
+function _lemmaCandidates(w) {
+  const out = new Set();
+  if (/ies$/.test(w))           out.add(w.replace(/ies$/, 'y'));
+  if (/ied$/.test(w))           out.add(w.replace(/ied$/, 'y'));
+  if (/ically$/.test(w))        out.add(w.replace(/ically$/, 'ic'));
+  if (/ally$/.test(w))          out.add(w.replace(/ally$/, 'al'));
+  if (/ly$/.test(w) && w.length > 4)  out.add(w.replace(/ly$/, ''));
+  if (/ing$/.test(w) && w.length > 4) { out.add(w.replace(/ing$/, '')); out.add(w.replace(/ing$/, 'e')); }
+  if (/ed$/.test(w)  && w.length > 3) { out.add(w.replace(/ed$/, ''));  out.add(w.replace(/ed$/, 'e')); }
+  if (/d$/.test(w)   && w.length > 4 && !/[aeiou]d$/.test(w.slice(-2))) out.add(w.replace(/d$/, ''));
+  if (/es$/.test(w)  && w.length > 4) { out.add(w.replace(/es$/, 'e')); out.add(w.replace(/es$/, '')); }
+  if (/s$/.test(w)   && w.length > 3) out.add(w.replace(/s$/, ''));
+  if (/est$/.test(w) && w.length > 4) out.add(w.replace(/est$/, ''));
+  if (/er$/.test(w)  && w.length > 4) out.add(w.replace(/er$/, ''));
+  return Array.from(out).filter(c => c && c.length >= 3);
+}
+function _patchCard(w) {
+  const P = window.VOCAB_READING_NETWORK_PATCH_V2_FULL;
+  if (!P || !P.cards) return null;
+  return P.cards[w] || null;
+}
+function resolveReadingWord(rawToken) {
+  const VR = window.VocabRuntime;
+  const raw = String(rawToken || '');
+  const clean = raw.toLowerCase().replace(/^['"`]+|['"`.,;:!?)]+$/g, '').replace(/'s$/, '');
+  if (clean.length < 3) return null;
+
+  // 1. Exact in patch (the reading-overlap supplement wins; user
+  //    explicitly wants `properties / defies / drastically` etc.
+  //    to show their OWN supplement card, not jump to the lemma).
+  if (_patchCard(clean)) {
+    return { raw, resolvedWord: clean, source: 'patch', matchType: 'exact' };
+  }
+  // 2. Exact in word master
+  if (VR && VR.getWordCard(clean)) {
+    return { raw, resolvedWord: clean, source: 'word_master', matchType: 'exact' };
+  }
+  // 3. Lemma candidates — first hit wins
+  const cands = _lemmaCandidates(clean);
+  for (const cand of cands) {
+    if (_patchCard(cand)) {
+      return { raw, resolvedWord: cand, source: 'patch', matchType: 'lemma' };
+    }
+    if (VR && VR.getWordCard(cand)) {
+      return { raw, resolvedWord: cand, source: 'word_master', matchType: 'lemma' };
+    }
+  }
+  // 4. Family-head map
+  if (VR) {
+    const head = VR.getFamilyHead(clean);
+    if (head && head !== clean && VR.getWordCard(head)) {
+      return { raw, resolvedWord: head, source: 'word_master', matchType: 'family_head' };
+    }
+  }
+  // 5. Proper / place small card
+  if (VR && VR.getProperSmallCard && VR.getProperSmallCard(clean)) {
+    return { raw, resolvedWord: clean, source: 'proper', matchType: 'exact' };
+  }
+  return null;
+}
+
+function _patchToParchmentCard(w, p) {
+  // PATCH cards store phrases as a flat ["en1","zh1","en2","zh2",…]
+  // array and examples as a flat string array.  Normalize into the
+  // legacy c-shape the parchment renderer expects.
+  const friends = [];
+  for (let i = 0; i + 1 < (p.phrases || []).length; i += 2) {
+    const en = (p.phrases[i] || '').trim();
+    const zh = (p.phrases[i + 1] || '').trim();
+    if (en) friends.push(`${en} | ${zh}`);
+  }
+  const ex = (p.examples && p.examples[0]) || '';
+  // Patch-only words usually share kin/family with the matched
+  // network word — fold those in by looking up the network parent
+  // through VocabRuntime when present.
+  const VR = window.VocabRuntime;
+  let extras = { family: [], kin: [], group: [] };
+  const parent = p.matched_network_word || p.family_head;
+  if (VR && parent) {
+    const head = VR.getBigCard(parent);
+    if (head) {
+      const synth = _bigToParchmentCard(head);
+      // Strip the patch word itself from the inherited rows so it
+      // doesn't show up under its own family list.
+      const drop = w.toLowerCase();
+      const not = arr => (arr || []).filter(L => ((L.split('|')[0] || '').trim().toLowerCase()) !== drop);
+      extras = { family: not(synth.family), kin: not(synth.kin), group: not(synth.group) };
+    }
+  }
+  return {
+    h: p.word || w,
+    pos: '',
+    zh: p.zh || '',
+    family: extras.family,
+    kin: extras.kin,
+    group: extras.group,
+    friends,
+    example:    /[A-Za-z]/.test(ex) ? ex : '',
+    example_zh: /[一-鿿]/.test(ex) ? ex : '',
+  };
+}
 function _vocabRuntimeCard(word) {
   const VR = window.VocabRuntime;
+  const w = (word || '').toLowerCase();
+  // v=107 — patch wins ahead of word master so reading-overlap
+  // supplements (e.g. `existence`, `federation`, `modernist`)
+  // show their own zh / phrases / example.
+  const patch = _patchCard(w);
+  if (patch) return _patchToParchmentCard(w, patch);
   if (!VR) return null;
-  const big = VR.getBigCard(word);
+  const big = VR.getBigCard(w);
   if (big) return _bigToParchmentCard(big);
-  const small = VR.getSmallCard(word);
+  const small = VR.getSmallCard(w);
   if (small) return _smallToParchmentCard(small);
   return null;
 }
@@ -1329,8 +1450,12 @@ function showParchment(word) {
       const lw = w.toLowerCase();
       if (lw === _selfWord) return m;
       if (_VR) {
-        if (_VR.isClickableWord(lw) || _VR.getSmallCard(lw)) {
-          return `<a class="pc-jump" data-jump="${escapeAttr(lw)}">${m}</a>`;
+        // v=107 — same lemma chain as the stage 0 reading.  data-
+        // jump is the resolved form so the next scroll opens the
+        // right entry.
+        const r = resolveReadingWord(lw);
+        if (r && r.resolvedWord !== _selfWord) {
+          return `<a class="pc-jump" data-jump="${escapeAttr(r.resolvedWord)}">${m}</a>`;
         }
         return m;
       }
@@ -1596,9 +1721,11 @@ function showParchment(word) {
       if (!target) return;
       // v=104 — accept either a VocabRuntime word or a legacy
       // PARCHMENT_CARDS head.
+      // v=107 — accept patch words, VR words, or legacy heads.
+      const knownByPatch = !!_patchCard(target);
       const knownByVR = window.VocabRuntime &&
         (window.VocabRuntime.isClickableWord(target) || window.VocabRuntime.getSmallCard(target));
-      if (!knownByVR && !PARCHMENT_CARDS[target]) return;
+      if (!knownByPatch && !knownByVR && !PARCHMENT_CARDS[target]) return;
       SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
       closeParchment();
       setTimeout(() => showParchment(target), 280);
@@ -2292,9 +2419,13 @@ const Screens = {
         const VR = window.VocabRuntime;
         return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
           if (VR) {
-            if (VR.isClickableWord(w) || VR.getSmallCard(w)) {
-              return `<a class="s0-jump" data-jump="${escapeAttr(w.toLowerCase())}">${m}</a>`;
-            }
+            // v=107 — resolveReadingWord handles lemma fallback
+            // (properties → property, defies → defy, erupted →
+            // erupt, drastically → drastic, etc.) and the patch
+            // override.  The data-jump payload is the RESOLVED
+            // word, so clicking opens the right card directly.
+            const r = resolveReadingWord(w);
+            if (r) return `<a class="s0-jump" data-jump="${escapeAttr(r.resolvedWord)}">${m}</a>`;
             return m;
           }
           const k = linkFor(w);
@@ -3621,7 +3752,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // window.saved / window.state.  No behaviour change for users.
 try {
   Object.assign(window, {
-    go, saved, state, showParchment,
+    go, saved, state, showParchment, resolveReadingWord,
     PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
   });
 } catch {}
