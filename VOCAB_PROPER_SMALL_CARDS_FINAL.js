@@ -1,9 +1,10 @@
 window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
   "metadata": {
-    "name": "PROPER_PLACE_SPECIAL_SMALL_CARD_FINAL_V4_WITH_SMALL_ONLY",
+    "name": "PROPER_PLACE_SPECIAL_SMALL_CARD_FINAL_V15_POS",
     "purpose": "Small cards for proper/place/culture/special words that should answer reading clicks but do not need family/kin.",
     "note": "Person names are not included here; they are removed.",
-    "added_from_v14_small_only": 26
+    "added_from_v14_small_only": 26,
+    "pos_added": true
   },
   "small_cards": [
     {
@@ -25,7 +26,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "crimean",
@@ -50,7 +52,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "adj."
     },
     {
       "word": "fallingwater",
@@ -75,7 +78,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "moai",
@@ -96,7 +100,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "quipu",
@@ -121,7 +126,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "rafflesia",
@@ -151,7 +157,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         }
       ],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "samurai",
@@ -172,7 +179,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "turkey",
@@ -193,7 +201,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "yang",
@@ -214,7 +223,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "yin",
@@ -235,7 +245,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "zen",
@@ -261,7 +272,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         }
       ],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n./adj."
     },
     {
       "word": "altiplano",
@@ -291,7 +303,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         }
       ],
       "category": "proper_place_culture_special",
-      "note": "Small card only; no family/kin required."
+      "note": "Small card only; no family/kin required.",
+      "pos": "n."
     },
     {
       "word": "ape",
@@ -310,7 +323,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word ape appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "blade",
@@ -329,7 +343,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word blade appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n./v."
     },
     {
       "word": "blood",
@@ -348,7 +363,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word blood appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "dawn",
@@ -367,7 +383,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word dawn appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n./v."
     },
     {
       "word": "ddt",
@@ -388,7 +405,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "dive",
@@ -407,7 +425,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word dive appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "v."
     },
     {
       "word": "dna",
@@ -428,7 +447,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "doctor",
@@ -447,7 +467,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word doctor appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "go",
@@ -466,7 +487,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word go appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "v."
     },
     {
       "word": "grey",
@@ -487,7 +509,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "hiv",
@@ -508,7 +531,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "lithium-ion",
@@ -527,7 +551,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word lithium-ion appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "adj."
     },
     {
       "word": "map",
@@ -546,7 +571,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word map appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n./v."
     },
     {
       "word": "night",
@@ -567,7 +593,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "poor",
@@ -580,7 +607,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "adj."
     },
     {
       "word": "same",
@@ -601,7 +629,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "star",
@@ -622,7 +651,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "tube",
@@ -643,7 +673,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
       ],
       "examples": [],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n."
     },
     {
       "word": "van",
@@ -662,7 +693,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word van appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n./v."
     },
     {
       "word": "web",
@@ -681,7 +713,8 @@ window.VOCAB_PROPER_SMALL_CARDS_FINAL = {
         "The word web appears in reading contexts where a learner needs both meaning and usage."
       ],
       "category": "small_only_no_family_kin",
-      "note": "Small card only; no big family/kin card required."
+      "note": "Small card only; no big family/kin card required.",
+      "pos": "n./v."
     }
   ]
 };

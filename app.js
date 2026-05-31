@@ -51,30 +51,12 @@ function escapeHtml(s) {
 }
 function escapeAttr(s) { return escapeHtml(s); }
 
-// v=103 — voice picker, default Ava per user request.  We pick once
-// (lazily) when voices first load; Apple's "Ava" is the macOS / iOS
-// premium en-US voice, but on browsers without it we fall back to
-// another softer en-US choice rather than the platform default.
-let _voiceCache = null;
-function _pickVoice() {
-  if (_voiceCache) return _voiceCache;
-  if (!window.speechSynthesis) return null;
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices || voices.length === 0) return null;
-  const want = ['Ava', 'Ava (Enhanced)', 'Ava (Premium)', 'Samantha', 'Karen', 'Allison', 'Susan'];
-  for (const name of want) {
-    const v = voices.find(x => x.name && x.name.toLowerCase().includes(name.toLowerCase()) && /en[-_]?(US|GB|AU)/i.test(x.lang));
-    if (v) { _voiceCache = v; return v; }
-  }
-  // Generic en-US female fallback if name match fails.
-  const v = voices.find(x => /female/i.test(x.name) && x.lang.startsWith('en')) ||
-            voices.find(x => x.lang === 'en-US') ||
-            voices.find(x => x.lang.startsWith('en'));
-  if (v) { _voiceCache = v; return v; }
-  return null;
-}
+// v=109 — voice picker retired.  User: "你不要使用你的语音 使用no
+// voice（我自己系统的声音）".  We let the platform pick its own
+// default voice (the user has a high-quality female installed).
+function _pickVoice() { return null; }
 if (window.speechSynthesis && typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
-  window.speechSynthesis.onvoiceschanged = () => { _voiceCache = null; _pickVoice(); };
+  window.speechSynthesis.onvoiceschanged = () => {};
 }
 // v=105 — block speak() until voices have been enumerated.  iOS
 // returns an empty list synchronously and only populates after the
@@ -87,7 +69,7 @@ function _waitForVoices(timeoutMs = 1500) {
     if (have()) return resolve();
     const t0 = Date.now();
     const tick = () => {
-      if (have()) { _pickVoice(); return resolve(); }
+      if (have()) return resolve();
       if (Date.now() - t0 > timeoutMs) return resolve();
       setTimeout(tick, 90);
     };
@@ -101,10 +83,9 @@ function speak(text, lang = 'en-US') {
   return new Promise(resolve => {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
-    u.rate = 0.92;
+    u.rate = 0.82;            // v=109 — slower per user "速度可以再慢点"
     u.pitch = 1.0;
-    const v = _pickVoice();
-    if (v) u.voice = v;
+    // No voice override — uses the platform default (user's preferred system voice).
     u.onend   = () => resolve();
     u.onerror = () => resolve();
     window.speechSynthesis.speak(u);
@@ -1219,6 +1200,13 @@ function resolveReadingWord(rawToken) {
   return null;
 }
 
+// v=109 — VOCAB_POS_REGISTRY_FINAL lookup.  Returns "" if the word
+// has no pos entry (registry doesn't cover proper nouns / numbers).
+function posOf(word) {
+  const reg = window.VOCAB_POS_REGISTRY_FINAL;
+  if (!reg || !reg.word_pos) return '';
+  return reg.word_pos[(word || '').toLowerCase()] || '';
+}
 function _splitPosZh(blob) {
   // patch + family/kin lines sometimes pack pos into zh:
   //   "n. 联邦"   "v./n. 反对；物体"   "adj. 古代的".
@@ -1291,12 +1279,28 @@ function _pipe(parts) {
   return parts.map(p => (p == null ? '' : String(p))).join(' | ');
 }
 function _memberToFamilyLine(m) {
-  const p = (m.phrases && m.phrases[0]) || {};
-  // pack "pos zh" into the single posZh field that the legacy
-  // splitter expects; VocabRuntime members usually don't carry a
-  // pos so we just emit zh (the splitter tolerates missing pos).
-  const posZh = m.zh || '';
-  return _pipe([m.word, posZh, p.phrase || '', p.phrase_zh || '']);
+  // VocabRuntime returns kin-cluster external-word rows as
+  //   { word, zh, phrase_1, phrase_1_zh, phrase_2, phrase_2_zh }
+  // and internal-word rows as
+  //   { word, zh, phrases: [{phrase, phrase_zh}, …], examples: … }
+  // Coalesce both into the same { phrase, phrase_zh } shape.
+  let phrase = '', phraseZh = '';
+  if (m.phrases && m.phrases[0]) {
+    phrase   = m.phrases[0].phrase || m.phrases[0].en || '';
+    phraseZh = m.phrases[0].phrase_zh || m.phrases[0].zh || '';
+  } else if (m.phrase_1) {
+    phrase   = m.phrase_1;
+    phraseZh = m.phrase_1_zh || '';
+  }
+  // v=109 — every member row carries a pos pulled from the POS
+  // registry so the parchment renders "word  pos.  zh" with three
+  // distinct columns.  Falls back to whatever pos was packed into
+  // zh (legacy patch shape) when the registry has no entry.
+  const split = _splitPosZh(m.zh || '');
+  const pos = posOf(m.word) || split.pos;
+  const zhClean = pos ? split.zh : (m.zh || '');
+  const posZh = pos ? `${pos} ${zhClean}`.trim() : zhClean;
+  return _pipe([m.word, posZh, phrase, phraseZh]);
 }
 function _bigToParchmentCard(big) {
   const friends = (big.phrases || []).slice(0, 6).map(p =>
@@ -1642,8 +1646,10 @@ function showParchment(word) {
       veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
       const playRow = node.querySelector('.pc-play-row') || node;
       if (playRow) playRow.classList.add('is-playing');
-      if (!sp) return next();
-      speak(sp).then(() => setTimeout(next, 80));
+      // v=109 — slower beat between spoken lines so the user has
+      // time to follow each phrase.  Was 80 ms.
+      if (!sp) return setTimeout(next, 380);
+      speak(sp).then(() => setTimeout(next, 380));
     };
     next();
   }
@@ -1651,17 +1657,15 @@ function showParchment(word) {
     if (revealIdx >= nodes.length) return false;
     const startIdx = revealIdx;
     const queued = [];
-    // Walk until we hit the start of the NEXT section.  A new section
-    // is marked by a `rule` followed by a `label` (the dotted-divider
-    // + smallcaps section title).  Reveal everything before that.
+    const toStagger = [];                // nodes that will fade in
+    // Walk until we hit the start of the NEXT section.
     while (revealIdx < nodes.length) {
       const it = items[revealIdx];
-      // Stop *before* the next rule, but not on the very first item
-      // of THIS batch — otherwise an empty advance would happen when
-      // two rules sit adjacent.
       if (it.kind === 'rule' && revealIdx > startIdx && queued.length > 0) break;
-      nodes[revealIdx].classList.remove('is-staged');
-      nodes[revealIdx].classList.add('is-revealed');
+      // v=109 — stagger.  Mark for staged-in, the loop below adds
+      // is-revealed with a small per-row delay so the user sees
+      // them appear top-down rather than all at once.
+      toStagger.push(nodes[revealIdx]);
       if (SPEAKING_KINDS.has(it.kind)) {
         const node = nodes[revealIdx];
         const sp = node.getAttribute('data-sp') ||
@@ -1670,12 +1674,23 @@ function showParchment(word) {
       }
       revealIdx++;
     }
+    // v=109 — slow visual stagger: 130 ms between each row's reveal.
+    // Per user: "显示文字的速度可以再慢点".
+    toStagger.forEach((n, k) => {
+      setTimeout(() => {
+        n.classList.remove('is-staged');
+        n.classList.add('is-revealed');
+        if (k === toStagger.length - 1) {
+          requestAnimationFrame(() => n.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+        }
+      }, k * 130);
+    });
     (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
     veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
-    if (queued.length) _playSequence(queued);
-    const justRevealed = nodes[revealIdx - 1];
-    if (justRevealed) {
-      requestAnimationFrame(() => justRevealed.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+    // Start the TTS queue right after the stagger finishes so a row
+    // is fully painted before its line is spoken.
+    if (queued.length) {
+      setTimeout(() => _playSequence(queued), Math.max(180, toStagger.length * 130 + 60));
     }
     return revealIdx < nodes.length;
   }
@@ -3784,7 +3799,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // window.saved / window.state.  No behaviour change for users.
 try {
   Object.assign(window, {
-    go, saved, state, showParchment, resolveReadingWord,
+    go, saved, state, showParchment, resolveReadingWord, posOf,
     PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
   });
 } catch {}

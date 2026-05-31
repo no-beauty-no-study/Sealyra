@@ -7318,9 +7318,37 @@ body { background: transparent !important; }
        xxxx cccc    ← phrase 2     (tight against phrase 1)
                     ← gap kept
        aaa          ← next word head                              */
+/* v=109 — phrase row gets a hanging indent + ✦ bullet, English
+   on the left, Chinese pushed to the FAR right.  Per user diagram:
+       xxxx adj. 翻译
+           ✦ xxxx to xxxx                            中文翻译         */
 .pc-row--phrase {
-  padding-left: 18px;
+  padding-left: 20px;
   margin-top: -2px;
+  display: flex !important;
+  align-items: baseline !important;
+  flex-wrap: nowrap !important;
+  gap: 12px;
+  position: relative;
+}
+.pc-row--phrase::before {
+  content: '✦';
+  position: absolute;
+  left: 4px;
+  top: 0.05em;
+  font-family: 'Cinzel', serif;
+  font-size: 9.5px;
+  line-height: 1;
+  color: rgba(110, 63, 18, 0.55);
+}
+.pc-row--phrase .pc-line-phrase { flex: 1 1 auto; min-width: 0; }
+.pc-row--phrase .pc-line-zh,
+.pc-row--phrase .pc-line-word-zh {
+  margin-left: auto !important;
+  text-align: right !important;
+  flex: 0 0 auto !important;
+  white-space: normal !important;
+  max-width: 50%;
 }
 .pc-row--head + .pc-row--head,
 .pc-row--phrase + .pc-row--head {
