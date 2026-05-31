@@ -1118,6 +1118,156 @@ function flipToCard(tile, word, from) {
 // (sized to the cream paper's safe zone via padding on .parchment-card),
 // so no glyph ever lands on a scroll roll or quill decoration.
 let _activeParchment = null;
+// ============================================================
+//   VOCAB CARD (v=104) — opens VocabRuntime.getBigCard(word) in a
+//   parchment overlay.  Focus stays on the clicked word; family /
+//   kin / group rows are clickable when their word lives in the
+//   master table and tap-through re-renders the overlay with
+//   that word as the new focus.
+//   Returns true if it opened a card, false if the runtime isn't
+//   loaded (caller falls back to legacy showParchment).
+// ============================================================
+let _activeVocabVeil = null;
+function closeVocabCard() {
+  if (!_activeVocabVeil) return;
+  const v = _activeVocabVeil;
+  _activeVocabVeil = null;
+  v.classList.add('is-leaving');
+  setTimeout(() => v.remove(), 220);
+}
+function openVocabCard(word) {
+  const VR = window.VocabRuntime;
+  if (!VR) return false;
+  const big = VR.getBigCard(word);
+  if (big) { _renderVocabBigCard(big); return true; }
+  const small = VR.getSmallCard(word);
+  if (small) { _renderVocabSmallCard(small); return true; }
+  return false;
+}
+function _phraseLine(p) {
+  if (!p) return '';
+  const phrase = escapeHtml(p.phrase || p.en || '');
+  const zh     = escapeHtml(p.phrase_zh || p.zh || '');
+  return `<div class="vc-phrase">
+    <span class="vc-phrase-en">${phrase}</span>
+    <span class="vc-phrase-zh">${zh}</span>
+  </div>`;
+}
+function _memberRow(m, kind) {
+  const w = m.word || '';
+  const zh = escapeHtml(m.zh || '');
+  const ph = (m.phrases && m.phrases[0]) || null;
+  const phEn = ph ? escapeHtml(ph.phrase || ph.en || '') : '';
+  const phZh = ph ? escapeHtml(ph.phrase_zh || ph.zh || '') : '';
+  const cls  = 'vc-row' + (m.clickable ? ' is-clickable' : '');
+  const attr = m.clickable ? ` data-jump-word="${escapeAttr(w)}"` : '';
+  return `<div class="${cls}"${attr}>
+    <span class="vc-row-word">${escapeHtml(w)}</span>
+    <span class="vc-row-zh">${zh}</span>
+    ${phEn ? `<span class="vc-row-phrase">${phEn}</span><span class="vc-row-phrase-zh">${phZh}</span>` : ''}
+  </div>`;
+}
+function _renderVocabBigCard(big) {
+  if (_activeVocabVeil) closeVocabCard();
+  const veil = document.createElement('div');
+  veil.className = 'parchment-veil vc-veil';
+
+  const phrases  = (big.phrases  || []).slice(0, 4).map(_phraseLine).join('');
+  const examples = (big.examples || []).slice(0, 2).map(ex => `
+    <div class="vc-example">
+      <span class="vc-ex-en">${escapeHtml(ex.example || ex.en || '')}</span>
+      <span class="vc-ex-zh">${escapeHtml(ex.example_zh || ex.zh || '')}</span>
+    </div>
+  `).join('');
+
+  const family = (big.family_members || []).filter(m => (m.word||'').toLowerCase() !== (big.focus_word||'').toLowerCase());
+  const group  = big.group || [];
+  const kinAll = [];
+  (big.kin_clusters || []).forEach(cl => {
+    (cl.internal_words || []).forEach(w => { if (w) kinAll.push({ ...w, clickable: w.clickable }); });
+    (cl.external_words || []).forEach(w => { if (w) kinAll.push({ ...w, clickable: w.clickable }); });
+  });
+  const seenKin = new Set([(big.focus_word||'').toLowerCase()]);
+  const kin = kinAll.filter(m => {
+    const k = (m.word||'').toLowerCase();
+    if (!k || seenKin.has(k)) return false;
+    seenKin.add(k);
+    return true;
+  });
+
+  const sec = (label, rows) => rows.length
+    ? `<hr class="vc-rule"><div class="vc-section-label">${label}</div>${rows.map(r => _memberRow(r)).join('')}`
+    : '';
+
+  veil.innerHTML = `
+    <div class="parchment-card vc-card" data-sp="${escapeAttr(big.word)}">
+      <button class="vc-close" aria-label="close">×</button>
+      <div class="vc-head">
+        <button class="vc-play" aria-label="speak">♪</button>
+        <span class="vc-word">${escapeHtml(big.word)}</span>
+        <span class="vc-zh">${escapeHtml(big.zh || '')}</span>
+      </div>
+      ${big.family_head && big.family_head !== big.focus_word
+        ? `<div class="vc-head-meta">↳ family of <span class="vc-head-meta-word" data-jump-word="${escapeAttr(big.family_head)}">${escapeHtml(big.family_head)}</span></div>`
+        : ''}
+      ${phrases ? `<div class="vc-phrases">${phrases}</div>` : ''}
+      ${examples ? `<div class="vc-examples">${examples}</div>` : ''}
+      ${sec('her family', family)}
+      ${sec('her group',  group)}
+      ${sec('her kin',    kin)}
+    </div>
+  `;
+  document.body.appendChild(veil);
+  _activeVocabVeil = veil;
+  requestAnimationFrame(() => veil.classList.add('is-open'));
+
+  veil.addEventListener('click', (ev) => {
+    if (ev.target === veil || ev.target.classList.contains('vc-close')) {
+      closeVocabCard();
+      return;
+    }
+    const jump = ev.target.closest('[data-jump-word]');
+    if (jump) {
+      const w = jump.getAttribute('data-jump-word');
+      (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
+      openVocabCard(w);
+      return;
+    }
+    const playRow = ev.target.closest('.vc-phrase, .vc-example, .vc-row, .vc-head');
+    if (playRow) {
+      const txt = (playRow.querySelector('.vc-phrase-en, .vc-ex-en, .vc-row-phrase, .vc-word, .vc-row-word') || {}).textContent;
+      if (txt) speak(txt);
+    }
+  });
+}
+function _renderVocabSmallCard(small) {
+  if (_activeVocabVeil) closeVocabCard();
+  const veil = document.createElement('div');
+  veil.className = 'parchment-veil vc-veil';
+  const phrases = (small.phrases || []).slice(0, 3).map(_phraseLine).join('');
+  veil.innerHTML = `
+    <div class="parchment-card vc-card vc-card--small" data-sp="${escapeAttr(small.word)}">
+      <button class="vc-close" aria-label="close">×</button>
+      <div class="vc-head">
+        <button class="vc-play" aria-label="speak">♪</button>
+        <span class="vc-word">${escapeHtml(small.word)}</span>
+        <span class="vc-zh">${escapeHtml(small.zh || '')}</span>
+      </div>
+      ${phrases ? `<div class="vc-phrases">${phrases}</div>` : ''}
+    </div>
+  `;
+  document.body.appendChild(veil);
+  _activeVocabVeil = veil;
+  requestAnimationFrame(() => veil.classList.add('is-open'));
+  veil.addEventListener('click', (ev) => {
+    if (ev.target === veil || ev.target.classList.contains('vc-close')) closeVocabCard();
+    else if (ev.target.closest('.vc-phrase, .vc-head')) {
+      const txt = (ev.target.closest('.vc-phrase, .vc-head').querySelector('.vc-phrase-en, .vc-word') || {}).textContent;
+      if (txt) speak(txt);
+    }
+  });
+}
+
 function showParchment(word) {
   if (_activeParchment) closeParchment();
   const c = PARCHMENT_CARDS[word];
@@ -2157,10 +2307,24 @@ const Screens = {
       // (so `fraction` reaches `fragile`, `compression` reaches
       // `compressive`, etc.), then a prefix-strip pass (in-/un-/non-/
       // dis-/re-) for things like `incomprehensible → comprehensible`.
+      // v=104 — reading linkify: when the new VocabRuntime is loaded,
+      // any word it recognises (whether as a word-master entry or as
+      // a proper / place / culture small card) becomes clickable, and
+      // the data-jump payload is the SURFACE form itself — the card
+      // opens with that exact word as the focus, family/kin then
+      // inherit from its family_head.  Falls back to the legacy
+      // PARCHMENT_CARDS lookup if VocabRuntime hasn't loaded.
       const linkFor = (window._buildLinkLookup || _buildLinkLookup)();
       function linkify(text) {
         if (!text) return '';
+        const VR = window.VocabRuntime;
         return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+          if (VR) {
+            if (VR.isClickableWord(w) || VR.getSmallCard(w)) {
+              return `<a class="s0-jump" data-jump="${escapeAttr(w.toLowerCase())}">${m}</a>`;
+            }
+            return m;
+          }
           const k = linkFor(w);
           if (k) return `<a class="s0-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
           return m;
@@ -2213,14 +2377,17 @@ const Screens = {
       } else {
         el.appendChild(closeCorner({ to: 'cover' }));
       }
-      // Word-jump links → parchment.
+      // v=104 — Word-jump links go through the new VocabRuntime
+      // first so the card displayed is THE CLICKED WORD itself
+      // (focus stays on the surface form), with family/kin
+      // inherited from its family_head.  Falls back to the old
+      // PARCHMENT_CARDS parchment if VocabRuntime isn't loaded
+      // or doesn't know the word.
       $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const w = a.getAttribute('data-jump');
-        if (PARCHMENT_CARDS[w]) {
-          (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
-          showParchment(w);
-        }
+        (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
+        if (!openVocabCard(w) && PARCHMENT_CARDS[w]) showParchment(w);
       }));
       // v=99 — wire the in-header "next page" link to advance to
       // the quiz.  Arms (gold pulse) once every sentence is
@@ -3481,7 +3648,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // window.saved / window.state.  No behaviour change for users.
 try {
   Object.assign(window, {
-    go, saved, state, showParchment,
+    go, saved, state, showParchment, openVocabCard, closeVocabCard,
     PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
   });
 } catch {}

@@ -3,7 +3,7 @@
    silently retires the old cache entry, and the second open of any
    given version is INSTANT (no re-download).  Old caches are pruned
    on activate.                                                        */
-const VERSION = 'v102';
+const VERSION = 'v104';
 const CACHE = `sealyra-${VERSION}`;
 
 /* v=89 — PRECACHE LIST.  Every asset the user might hit before the
