@@ -2483,14 +2483,16 @@ const Screens = {
 
       const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
       let _failed = false;
-      // v=105 — back to all 3 questions on ONE page (user: "选择题
-      // 三题在同一页上就行 分了三页有点累").  Each block answered
-      // independently; first wrong answer still bounces back to
-      // stage 0 after speaking the picked option.  When all three
-      // are correct the bottom "next page" link arms.
+      let _completed = false;
+      // v=106 — all 3 correct → auto-celebrate + auto-advance.
+      // Per user: "回答完三题之后应该自动弹窗+音效 恭喜用户 然后
+      // 自动跳转到下一关 我现在卡住了 没法跳转".  No more "tap the
+      // next-page link" gate — the link only exists as a
+      // mid-stage escape hatch in case the celebration overlay's
+      // auto-advance ever stalls.
       const LETTERS = ['A', 'B', 'C', 'D'];
       $$('.s0q-block', el).forEach((block, qi) => {
-        block.classList.add('is-active');     // always shown
+        block.classList.add('is-active');
         const q = picks[qi];
         const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
         const options = shuffle([q.a, ...distractors]);
@@ -2501,7 +2503,7 @@ const Screens = {
           b.innerHTML = `<span class="qa-letter">${LETTERS[oi]}.</span><span class="qa-text">${escapeHtml(opt)}</span>`;
           b.addEventListener('click', (ev) => {
             ev.stopPropagation();
-            if (answered[qi] !== null || _failed) return;
+            if (answered[qi] !== null || _failed || _completed) return;
             (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
             const isRight = opt.toLowerCase() === q.a.toLowerCase();
             speak(opt);
@@ -2510,7 +2512,8 @@ const Screens = {
               b.classList.add('is-right');
               SFX.right();
               if (answered.every(v => v === 'right')) {
-                setTimeout(() => armKey(), 700);
+                _completed = true;
+                _celebrateAndAdvance(el);
               }
             } else {
               answered[qi] = 'wrong';
@@ -2523,6 +2526,30 @@ const Screens = {
           optsHost.appendChild(b);
         });
       });
+
+      function _celebrateAndAdvance(rootEl) {
+        try { SFX.bling && SFX.bling(); } catch {}
+        try { SFX.right && SFX.right(); } catch {}
+        const veil = document.createElement('div');
+        veil.className = 's0q-celebrate-veil';
+        veil.innerHTML = `
+          <div class="s0q-celebrate">
+            <div class="s0q-celebrate-glyph">✦</div>
+            <div class="s0q-celebrate-title">well done</div>
+            <div class="s0q-celebrate-sub">turning the page…</div>
+          </div>
+        `;
+        document.body.appendChild(veil);
+        requestAnimationFrame(() => veil.classList.add('is-open'));
+        if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
+        setTimeout(() => {
+          veil.classList.add('is-leaving');
+          setTimeout(() => veil.remove(), 320);
+        }, 1300);
+        setTimeout(() => {
+          _stage0AdvanceFromQuiz();
+        }, 1500);
+      }
 
       function armKey() {
         const link = $('.s0-next-link', el);
