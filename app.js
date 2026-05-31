@@ -76,6 +76,24 @@ function _pickVoice() {
 if (window.speechSynthesis && typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
   window.speechSynthesis.onvoiceschanged = () => { _voiceCache = null; _pickVoice(); };
 }
+// v=105 — block speak() until voices have been enumerated.  iOS
+// returns an empty list synchronously and only populates after the
+// onvoiceschanged event; without this wait the first speak() on a
+// cold page silently drops because the synth has no voice.
+function _waitForVoices(timeoutMs = 1500) {
+  return new Promise(resolve => {
+    if (!window.speechSynthesis) return resolve();
+    const have = () => (window.speechSynthesis.getVoices() || []).length > 0;
+    if (have()) return resolve();
+    const t0 = Date.now();
+    const tick = () => {
+      if (have()) { _pickVoice(); return resolve(); }
+      if (Date.now() - t0 > timeoutMs) return resolve();
+      setTimeout(tick, 90);
+    };
+    tick();
+  });
+}
 
 function speak(text, lang = 'en-US') {
   if (!window.speechSynthesis) return Promise.resolve();
@@ -2295,10 +2313,10 @@ const Screens = {
         <div class="s0-para" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
       `).join('');
       const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
-      // v=99 — header gets the "next page" link directly under the
-      // chapter title (filling the dead-space between title and body
-      // the user had been complaining about).  Foot becomes the
-      // pure decorative folio digit in the bottom-right corner.
+      // v=105 — "next page" link moved back to the bottom of the
+      // page (user changed their mind: "next page还是放在下面吧").
+      // Folio stays as a small Pinyon Script digit in the
+      // bottom-right floral corner.
       const _pageNum = ((saved.chapter || 1) - 1) * 2 + 1;
       el.innerHTML = `
         <div class="s0-page">
@@ -2306,9 +2324,9 @@ const Screens = {
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-              <button class="s0-next-link s0-next-link--inhead" aria-label="turn page to quiz">next page</button>
             </header>
             <section class="s0-section">${paraHtml}</section>
+            <button class="s0-next-link" aria-label="turn page to quiz">next page</button>
           </div>
           <span class="s0-folio">${_pageNum}</span>
         </div>
@@ -2378,17 +2396,22 @@ const Screens = {
         }
         _revealNext();
       });
-      // Fit text into the painted page region without overflow.
+      // v=105 — auto-reveal + speak: first the chapter title, then
+      // the first sentence.  Per user: "阅读的每章第一句话（包括
+      // chapter 1:….）都没有声音".
       requestAnimationFrame(() => _s0FitToPage(el));
-      // Auto-reveal + speak the first sentence on entry.
-      setTimeout(() => {
-        const firstPara = el.querySelector('.s0-para[data-idx="0"]');
-        if (firstPara) {
-          firstPara.classList.add('is-revealed');
-          speak(firstPara.getAttribute('data-sp'));
-          _armKeyIfDone();
-        }
-      }, 400);
+      const _titleLine = `${article.title}. ${section.id}. ${section.title}.`;
+      _waitForVoices().then(() => {
+        speak(_titleLine);
+        setTimeout(() => {
+          const firstPara = el.querySelector('.s0-para[data-idx="0"]');
+          if (firstPara) {
+            firstPara.classList.add('is-revealed');
+            speak(firstPara.getAttribute('data-sp'));
+            _armKeyIfDone();
+          }
+        }, Math.max(900, _titleLine.length * 55));
+      });
     }
   },
 
@@ -2449,9 +2472,9 @@ const Screens = {
             <header class="s0-header">
               <div class="s0-chip">${escapeHtml(article.title)}</div>
               <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
-              <button class="s0-next-link s0-next-link--inhead is-hidden" aria-label="begin stage 1">next page</button>
             </header>
             <div class="s0q-stack">${qBlocks}</div>
+            <button class="s0-next-link is-hidden" aria-label="begin stage 1">next page</button>
           </div>
           <span class="s0-folio">${_qpage}</span>
         </div>
@@ -2460,18 +2483,14 @@ const Screens = {
 
       const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
       let _failed = false;
-      let _activeQi = -1;            // -1 = none revealed yet
-      // v=98 — quiz pedagogy rewritten per user:
-      //   "每一个问题都要点击任意部分出来一个题和四个答案+自动播
-      //    放语音.  选错了播放用户选择的单词语音后直接返回.
-      //    选对了播放语音自动浮现下一题".
-      // Only ONE question visible at a time; tap anywhere to reveal
-      // the next.  After the LAST question is answered correctly the
-      // "next page" link arms (in the foot) instead of advancing
-      // straight to stage 1 — that gives the user a single tap to
-      // turn the page consciously.
+      // v=105 — back to all 3 questions on ONE page (user: "选择题
+      // 三题在同一页上就行 分了三页有点累").  Each block answered
+      // independently; first wrong answer still bounces back to
+      // stage 0 after speaking the picked option.  When all three
+      // are correct the bottom "next page" link arms.
       const LETTERS = ['A', 'B', 'C', 'D'];
       $$('.s0q-block', el).forEach((block, qi) => {
+        block.classList.add('is-active');     // always shown
         const q = picks[qi];
         const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
         const options = shuffle([q.a, ...distractors]);
@@ -2492,8 +2511,6 @@ const Screens = {
               SFX.right();
               if (answered.every(v => v === 'right')) {
                 setTimeout(() => armKey(), 700);
-              } else {
-                setTimeout(() => _revealNextQ(), 850);
               }
             } else {
               answered[qi] = 'wrong';
@@ -2506,37 +2523,14 @@ const Screens = {
           optsHost.appendChild(b);
         });
       });
-      // Hide all questions on entry — wait for a page tap to reveal Q1.
-      $$('.s0q-block', el).forEach(b => b.classList.remove('is-active'));
-      function _revealNextQ() {
-        const blocks = $$('.s0q-block', el);
-        const nextIdx = blocks.findIndex((b, i) => !b.classList.contains('is-active') && i > _activeQi);
-        if (nextIdx < 0) return;
-        // Hide all previous active questions; show this one.
-        blocks.forEach(b => b.classList.remove('is-active'));
-        const block = blocks[nextIdx];
-        block.classList.add('is-active');
-        _activeQi = nextIdx;
-        setTimeout(() => speak(picks[nextIdx].q), 250);
-      }
-      // Tap anywhere on the page = reveal next question (until one is
-      // already showing and unanswered, in which case taps do nothing
-      // except option clicks).
-      $('.s0-page', el).addEventListener('click', (ev) => {
-        if (ev.target.closest('.qa-row')) return;
-        if (ev.target.closest('.s0-next-link')) return;
-        if (ev.target.closest('.s0-corner-close')) return;
-        if (_activeQi < 0 || (_activeQi >= 0 && answered[_activeQi] !== null && !_failed)) {
-          _revealNextQ();
-        }
-      });
 
       function armKey() {
         const link = $('.s0-next-link', el);
         if (!link || link.classList.contains('is-armed')) return;
         link.classList.remove('is-hidden');
         link.classList.add('is-armed');
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (ev) => {
+          ev.stopPropagation();
           (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
           if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
           _stage0AdvanceFromQuiz();

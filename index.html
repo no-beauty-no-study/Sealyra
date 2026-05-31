@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<!-- v=104 — allow normal HTTP caching; cache-busting is handled per-asset
+<!-- v=105 — allow normal HTTP caching; cache-busting is handled per-asset
      by the ?v= query string below so a fresh push still invalidates.  -->
 <meta name="theme-color" content="#0E0B1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,17 +17,17 @@
 
 <!-- Preload every background illustration in parallel so the
      screen-swap doesn't pause on a fresh download.                -->
-<link rel="preload" as="image" href="assets/bg-cover.jpg?v=104">
-<link rel="preload" as="image" href="assets/bg-stage.jpg?v=104">
-<link rel="preload" as="image" href="assets/bg-result.jpg?v=104">
-<link rel="preload" as="image" href="assets/bg-note.jpg?v=104">
-<link rel="preload" as="image" href="assets/bg-stage0.jpg?v=104">
-<link rel="preload" as="image" href="assets/banner.png?v=104">
-<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=104">
-<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=104">
-<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=104">
+<link rel="preload" as="image" href="assets/bg-cover.jpg?v=105">
+<link rel="preload" as="image" href="assets/bg-stage.jpg?v=105">
+<link rel="preload" as="image" href="assets/bg-result.jpg?v=105">
+<link rel="preload" as="image" href="assets/bg-note.jpg?v=105">
+<link rel="preload" as="image" href="assets/bg-stage0.jpg?v=105">
+<link rel="preload" as="image" href="assets/banner.png?v=105">
+<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=105">
+<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=105">
+<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=105">
 
-<link rel="stylesheet" href="styles.css?v=104">
+<link rel="stylesheet" href="styles.css?v=105">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
 
 <!-- Fixed banner at the very top of every screen. -->
 <header id="banner-top">
-  <img src="assets/banner.png?v=104" alt="Her Little Lexicon">
+  <img src="assets/banner.png?v=105" alt="Her Little Lexicon">
 </header>
 
 <!-- ===== App shell. Each <section> is one screen. =====
@@ -50,7 +50,7 @@
   <!-- Cover hub (the home) -->
   <section id="screen-cover"   class="screen"></section>
 
-  <!-- v=104: stage 0 — pre-game reading article + 3-question quiz -->
+  <!-- v=105: stage 0 — pre-game reading article + 3-question quiz -->
   <section id="screen-stage0"      class="screen"></section>
   <section id="screen-stage0-quiz" class="screen"></section>
 
@@ -71,7 +71,7 @@
   <!-- Vocab card detail (opened from note / index with the tarot flip) -->
   <section id="screen-card" class="screen"></section>
 
-  <!-- v=104: chapter catalog (cover-side; pick a chapter to play) -->
+  <!-- v=105: chapter catalog (cover-side; pick a chapter to play) -->
   <section id="screen-chapter-catalog" class="screen"></section>
 
 </div>
@@ -81,22 +81,22 @@
 
 <!-- Data + BGM + App  ----- loaded in order.  Query-string cache-buster
      forces the CDN edge to fetch the latest after every push.        -->
-<script src="data.js?v=104"></script>
+<script src="data.js?v=105"></script>
 
-<!-- v=104 — the new normalized vocab system (replaces the in-line
+<!-- v=105 — the new normalized vocab system (replaces the in-line
      family/kin strings in PARCHMENT_CARDS for the reading flow).
      Load order matters — RUNTIME_HELPERS reads everything above it. -->
-<script src="VOCAB_WORD_MASTER_FINAL.js?v=104"></script>
-<script src="VOCAB_FAMILY_CONTENT_MASTER_FINAL.js?v=104"></script>
-<script src="VOCAB_FAMILY_HEAD_MAP_FINAL.js?v=104"></script>
-<script src="VOCAB_KIN_CLUSTER_MASTER_FINAL.js?v=104"></script>
-<script src="VOCAB_PROPER_SMALL_CARDS_FINAL.js?v=104"></script>
-<script src="VOCAB_RUNTIME_HELPERS.js?v=104"></script>
+<script src="VOCAB_WORD_MASTER_FINAL.js?v=105"></script>
+<script src="VOCAB_FAMILY_CONTENT_MASTER_FINAL.js?v=105"></script>
+<script src="VOCAB_FAMILY_HEAD_MAP_FINAL.js?v=105"></script>
+<script src="VOCAB_KIN_CLUSTER_MASTER_FINAL.js?v=105"></script>
+<script src="VOCAB_PROPER_SMALL_CARDS_FINAL.js?v=105"></script>
+<script src="VOCAB_RUNTIME_HELPERS.js?v=105"></script>
 
-<script src="bgm.js?v=104"></script>
-<script src="app.js?v=104"></script>
+<script src="bgm.js?v=105"></script>
+<script src="app.js?v=105"></script>
 <script>
-  /* v=104 — service worker for offline-first asset caching.  Without
+  /* v=105 — service worker for offline-first asset caching.  Without
      this the user complained the page re-downloaded every asset on
      every visit; with this, the second open of the same version
      loads instantly from the local cache.                            */
