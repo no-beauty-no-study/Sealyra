@@ -1119,158 +1119,99 @@ function flipToCard(tile, word, from) {
 // so no glyph ever lands on a scroll roll or quill decoration.
 let _activeParchment = null;
 // ============================================================
-//   VOCAB CARD (v=104) — opens VocabRuntime.getBigCard(word) in a
-//   parchment overlay.  Focus stays on the clicked word; family /
-//   kin / group rows are clickable when their word lives in the
-//   master table and tap-through re-renders the overlay with
-//   that word as the new focus.
-//   Returns true if it opened a card, false if the runtime isn't
-//   loaded (caller falls back to legacy showParchment).
+//   v=104 — when VocabRuntime is loaded, synthesise a card-shape
+//   from VocabRuntime.getBigCard(word) that matches what the
+//   legacy showParchment() expects.  Same scroll, same animations,
+//   same per-row reveal — just sourced from the new vocab system.
+//   focus_word stays on the clicked word, family / kin / group
+//   are inherited from its family_head per the runtime helpers.
 // ============================================================
-let _activeVocabVeil = null;
-function closeVocabCard() {
-  if (!_activeVocabVeil) return;
-  const v = _activeVocabVeil;
-  _activeVocabVeil = null;
-  v.classList.add('is-leaving');
-  setTimeout(() => v.remove(), 220);
-}
-function openVocabCard(word) {
+function _vocabRuntimeCard(word) {
   const VR = window.VocabRuntime;
-  if (!VR) return false;
+  if (!VR) return null;
   const big = VR.getBigCard(word);
-  if (big) { _renderVocabBigCard(big); return true; }
+  if (big) return _bigToParchmentCard(big);
   const small = VR.getSmallCard(word);
-  if (small) { _renderVocabSmallCard(small); return true; }
-  return false;
+  if (small) return _smallToParchmentCard(small);
+  return null;
 }
-function _phraseLine(p) {
-  if (!p) return '';
-  const phrase = escapeHtml(p.phrase || p.en || '');
-  const zh     = escapeHtml(p.phrase_zh || p.zh || '');
-  return `<div class="vc-phrase">
-    <span class="vc-phrase-en">${phrase}</span>
-    <span class="vc-phrase-zh">${zh}</span>
-  </div>`;
+function _pipe(parts) {
+  // join with " | " but keep empties so the splitter on the other
+  // side gets the right number of fields.
+  return parts.map(p => (p == null ? '' : String(p))).join(' | ');
 }
-function _memberRow(m, kind) {
-  const w = m.word || '';
-  const zh = escapeHtml(m.zh || '');
-  const ph = (m.phrases && m.phrases[0]) || null;
-  const phEn = ph ? escapeHtml(ph.phrase || ph.en || '') : '';
-  const phZh = ph ? escapeHtml(ph.phrase_zh || ph.zh || '') : '';
-  const cls  = 'vc-row' + (m.clickable ? ' is-clickable' : '');
-  const attr = m.clickable ? ` data-jump-word="${escapeAttr(w)}"` : '';
-  return `<div class="${cls}"${attr}>
-    <span class="vc-row-word">${escapeHtml(w)}</span>
-    <span class="vc-row-zh">${zh}</span>
-    ${phEn ? `<span class="vc-row-phrase">${phEn}</span><span class="vc-row-phrase-zh">${phZh}</span>` : ''}
-  </div>`;
+function _memberToFamilyLine(m) {
+  const p = (m.phrases && m.phrases[0]) || {};
+  // pack "pos zh" into the single posZh field that the legacy
+  // splitter expects; VocabRuntime members usually don't carry a
+  // pos so we just emit zh (the splitter tolerates missing pos).
+  const posZh = m.zh || '';
+  return _pipe([m.word, posZh, p.phrase || '', p.phrase_zh || '']);
 }
-function _renderVocabBigCard(big) {
-  if (_activeVocabVeil) closeVocabCard();
-  const veil = document.createElement('div');
-  veil.className = 'parchment-veil vc-veil';
-
-  const phrases  = (big.phrases  || []).slice(0, 4).map(_phraseLine).join('');
-  const examples = (big.examples || []).slice(0, 2).map(ex => `
-    <div class="vc-example">
-      <span class="vc-ex-en">${escapeHtml(ex.example || ex.en || '')}</span>
-      <span class="vc-ex-zh">${escapeHtml(ex.example_zh || ex.zh || '')}</span>
-    </div>
-  `).join('');
-
-  const family = (big.family_members || []).filter(m => (m.word||'').toLowerCase() !== (big.focus_word||'').toLowerCase());
-  const group  = big.group || [];
-  const kinAll = [];
+function _bigToParchmentCard(big) {
+  const friends = (big.phrases || []).slice(0, 6).map(p =>
+    _pipe([p.phrase || '', p.phrase_zh || ''])
+  );
+  // family — exclude the focus itself
+  const family = (big.family_members || [])
+    .filter(m => (m.word || '').toLowerCase() !== (big.focus_word || '').toLowerCase())
+    .map(_memberToFamilyLine);
+  // kin — flatten clusters' internal + external words; dedup by word.
+  const seenKin = new Set([(big.focus_word || '').toLowerCase()]);
+  const kin = [];
   (big.kin_clusters || []).forEach(cl => {
-    (cl.internal_words || []).forEach(w => { if (w) kinAll.push({ ...w, clickable: w.clickable }); });
-    (cl.external_words || []).forEach(w => { if (w) kinAll.push({ ...w, clickable: w.clickable }); });
+    [...(cl.internal_words || []), ...(cl.external_words || [])].forEach(m => {
+      const k = (m.word || '').toLowerCase();
+      if (!k || seenKin.has(k)) return;
+      seenKin.add(k);
+      kin.push(_memberToFamilyLine(m));
+    });
   });
-  const seenKin = new Set([(big.focus_word||'').toLowerCase()]);
-  const kin = kinAll.filter(m => {
-    const k = (m.word||'').toLowerCase();
-    if (!k || seenKin.has(k)) return false;
-    seenKin.add(k);
-    return true;
-  });
-
-  const sec = (label, rows) => rows.length
-    ? `<hr class="vc-rule"><div class="vc-section-label">${label}</div>${rows.map(r => _memberRow(r)).join('')}`
-    : '';
-
-  veil.innerHTML = `
-    <div class="parchment-card vc-card" data-sp="${escapeAttr(big.word)}">
-      <button class="vc-close" aria-label="close">×</button>
-      <div class="vc-head">
-        <button class="vc-play" aria-label="speak">♪</button>
-        <span class="vc-word">${escapeHtml(big.word)}</span>
-        <span class="vc-zh">${escapeHtml(big.zh || '')}</span>
-      </div>
-      ${big.family_head && big.family_head !== big.focus_word
-        ? `<div class="vc-head-meta">↳ family of <span class="vc-head-meta-word" data-jump-word="${escapeAttr(big.family_head)}">${escapeHtml(big.family_head)}</span></div>`
-        : ''}
-      ${phrases ? `<div class="vc-phrases">${phrases}</div>` : ''}
-      ${examples ? `<div class="vc-examples">${examples}</div>` : ''}
-      ${sec('her family', family)}
-      ${sec('her group',  group)}
-      ${sec('her kin',    kin)}
-    </div>
-  `;
-  document.body.appendChild(veil);
-  _activeVocabVeil = veil;
-  requestAnimationFrame(() => veil.classList.add('is-open'));
-
-  veil.addEventListener('click', (ev) => {
-    if (ev.target === veil || ev.target.classList.contains('vc-close')) {
-      closeVocabCard();
-      return;
-    }
-    const jump = ev.target.closest('[data-jump-word]');
-    if (jump) {
-      const w = jump.getAttribute('data-jump-word');
-      (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
-      openVocabCard(w);
-      return;
-    }
-    const playRow = ev.target.closest('.vc-phrase, .vc-example, .vc-row, .vc-head');
-    if (playRow) {
-      const txt = (playRow.querySelector('.vc-phrase-en, .vc-ex-en, .vc-row-phrase, .vc-word, .vc-row-word') || {}).textContent;
-      if (txt) speak(txt);
-    }
-  });
+  // group — VocabRuntime returns full objects
+  const group = (big.group || []).map(_memberToFamilyLine);
+  const ex = (big.examples && big.examples[0]) || {};
+  return {
+    h: big.word,
+    pos: '',                              // word-master cards do carry pos; pull below
+    zh: big.zh || '',
+    family,
+    kin,
+    group,
+    friends,
+    example:    ex.example || '',
+    example_zh: ex.example_zh || '',
+  };
 }
-function _renderVocabSmallCard(small) {
-  if (_activeVocabVeil) closeVocabCard();
-  const veil = document.createElement('div');
-  veil.className = 'parchment-veil vc-veil';
-  const phrases = (small.phrases || []).slice(0, 3).map(_phraseLine).join('');
-  veil.innerHTML = `
-    <div class="parchment-card vc-card vc-card--small" data-sp="${escapeAttr(small.word)}">
-      <button class="vc-close" aria-label="close">×</button>
-      <div class="vc-head">
-        <button class="vc-play" aria-label="speak">♪</button>
-        <span class="vc-word">${escapeHtml(small.word)}</span>
-        <span class="vc-zh">${escapeHtml(small.zh || '')}</span>
-      </div>
-      ${phrases ? `<div class="vc-phrases">${phrases}</div>` : ''}
-    </div>
-  `;
-  document.body.appendChild(veil);
-  _activeVocabVeil = veil;
-  requestAnimationFrame(() => veil.classList.add('is-open'));
-  veil.addEventListener('click', (ev) => {
-    if (ev.target === veil || ev.target.classList.contains('vc-close')) closeVocabCard();
-    else if (ev.target.closest('.vc-phrase, .vc-head')) {
-      const txt = (ev.target.closest('.vc-phrase, .vc-head').querySelector('.vc-phrase-en, .vc-word') || {}).textContent;
-      if (txt) speak(txt);
-    }
-  });
+function _smallToParchmentCard(small) {
+  // proper / place / culture small card — no family/kin
+  const friends = (small.phrases || []).slice(0, 6).map(p =>
+    _pipe([p.phrase || p.en || '', p.phrase_zh || p.zh || ''])
+  );
+  return {
+    h: small.word,
+    pos: '',
+    zh: small.zh || '',
+    family: [],
+    kin: [],
+    group: [],
+    friends,
+    example: '',
+    example_zh: '',
+  };
 }
 
 function showParchment(word) {
   if (_activeParchment) closeParchment();
-  const c = PARCHMENT_CARDS[word];
+  // v=104 — prefer the new VocabRuntime card.  Falls back to the
+  // legacy PARCHMENT_CARDS row when the runtime hasn't loaded yet
+  // (cold first visit) or doesn't recognise the word.
+  let c = _vocabRuntimeCard(word);
+  if (c) {
+    const raw = window.VocabRuntime && window.VocabRuntime.getWordCard(word);
+    if (raw && raw.pos) c.pos = raw.pos;
+  } else {
+    c = PARCHMENT_CARDS[word];
+  }
   if (!c) return;
 
   const inNote = !!(saved.notes && saved.notes[word]);
@@ -1357,16 +1298,24 @@ function showParchment(word) {
   // (don't link a page to itself).  Underline = jumpable; plain
   // text = not jumpable.  Replaces the v=51 bottom jump-link box.
   const _selfWord = (c.h || '').toLowerCase();
+  const _VR = window.VocabRuntime;
   const _pcLookup = _buildLinkLookup();
   function pcLinkify(text) {
     if (!text) return '';
-    // v=92 — same generous family/kin reverse lookup that stage 0
-    // uses, so e.g. clicking "compression" inside a parchment opens
-    // `compressive` rather than dropping the click on the floor.
+    // v=104 — when VocabRuntime is loaded, prefer the SURFACE form
+    // for data-jump so the next parchment focuses on the word the
+    // user actually tapped (not its parent head).  Falls back to
+    // the legacy reverse lookup when VocabRuntime is missing.
     const escaped = escapeHtml(text);
     return escaped.replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
       const lw = w.toLowerCase();
       if (lw === _selfWord) return m;
+      if (_VR) {
+        if (_VR.isClickableWord(lw) || _VR.getSmallCard(lw)) {
+          return `<a class="pc-jump" data-jump="${escapeAttr(lw)}">${m}</a>`;
+        }
+        return m;
+      }
       const k = _pcLookup(lw);
       if (!k || k === _selfWord) return m;
       return `<a class="pc-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
@@ -1626,7 +1575,12 @@ function showParchment(word) {
     a.addEventListener('click', e => {
       e.stopPropagation();
       const target = a.getAttribute('data-jump');
-      if (!target || !PARCHMENT_CARDS[target]) return;
+      if (!target) return;
+      // v=104 — accept either a VocabRuntime word or a legacy
+      // PARCHMENT_CARDS head.
+      const knownByVR = window.VocabRuntime &&
+        (window.VocabRuntime.isClickableWord(target) || window.VocabRuntime.getSmallCard(target));
+      if (!knownByVR && !PARCHMENT_CARDS[target]) return;
       SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
       closeParchment();
       setTimeout(() => showParchment(target), 280);
@@ -2377,17 +2331,15 @@ const Screens = {
       } else {
         el.appendChild(closeCorner({ to: 'cover' }));
       }
-      // v=104 — Word-jump links go through the new VocabRuntime
-      // first so the card displayed is THE CLICKED WORD itself
-      // (focus stays on the surface form), with family/kin
-      // inherited from its family_head.  Falls back to the old
-      // PARCHMENT_CARDS parchment if VocabRuntime isn't loaded
-      // or doesn't know the word.
+      // v=104 — Word-jump links open the parchment scroll for the
+      // SURFACE word (not the parent head).  showParchment will
+      // synthesise the card from VocabRuntime if loaded; otherwise
+      // it tries legacy PARCHMENT_CARDS.
       $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const w = a.getAttribute('data-jump');
         (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
-        if (!openVocabCard(w) && PARCHMENT_CARDS[w]) showParchment(w);
+        showParchment(w);
       }));
       // v=99 — wire the in-header "next page" link to advance to
       // the quiz.  Arms (gold pulse) once every sentence is
@@ -3648,7 +3600,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // window.saved / window.state.  No behaviour change for users.
 try {
   Object.assign(window, {
-    go, saved, state, showParchment, openVocabCard, closeVocabCard,
+    go, saved, state, showParchment,
     PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
   });
 } catch {}
