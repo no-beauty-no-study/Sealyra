@@ -1173,6 +1173,29 @@ function resolveReadingWord(rawToken) {
   const clean = raw.toLowerCase().replace(/^['"`]+|['"`.,;:!?)]+$/g, '').replace(/'s$/, '');
   if (clean.length < 3) return null;
 
+  // 0. V63 (CLAUDE_PACKAGE) tables win when loaded.
+  if (window.VOCAB_READING_WORD_CARDS_SIMPLE) {
+    if (_v63WordCard(clean)) {
+      return { raw, resolvedWord: clean, source: 'v63_reading', matchType: 'exact' };
+    }
+    // proper-noun small card
+    if (_v63ProperByWord && _v63ProperByWord[clean]) {
+      return { raw, resolvedWord: clean, source: 'v63_proper', matchType: 'exact' };
+    }
+    const cands63 = _lemmaCandidates(clean);
+    for (const cand of cands63) {
+      if (_v63WordCard(cand)) {
+        return { raw, resolvedWord: cand, source: 'v63_reading', matchType: 'lemma' };
+      }
+    }
+    const head = _v63HeadOf(clean);
+    if (head && head !== clean && _v63WordCard(head)) {
+      return { raw, resolvedWord: head, source: 'v63_reading', matchType: 'learning_head' };
+    }
+    return null;     // V63 loaded: if it doesn't know the word, skip
+                     // the legacy lookups entirely.
+  }
+
   // 1. Exact in patch (the reading-overlap supplement wins; user
   //    explicitly wants `properties / defies / drastically` etc.
   //    to show their OWN supplement card, not jump to the lemma).
@@ -1265,12 +1288,196 @@ function _patchToParchmentCard(w, p) {
     example_zh: /[一-鿿]/.test(ex) ? ex : '',
   };
 }
+// ============================================================
+//   v=111 — V63 ("CLAUDE_PACKAGE") direct integration.  The new
+//   data lives in 8 independent browser globals (no shared
+//   runtime helper from the bundle since the one shipped reads
+//   the old V20-era global names).  Layout:
+//
+//     READING_WORD_CARDS_SIMPLE.cards[word]
+//        → small card: word, pos, zh, phrases[], examples[]
+//     READING_TO_LEARNING_HEAD.reading_to_learning_head[word]
+//        → { learning_head }
+//     LEARNING_HEAD_CARDS_SIMPLE.cards[head]
+//        → big head card content (same shape as reading card)
+//     FAMILY_CLEAN_SIMPLE.families        (array, keyed by .word)
+//     KIN_HEAD_BRIDGE.head_to_kin_clusters[head]
+//        → { kin_cluster_ids: [id, …] }
+//     KIN_CLEAN_SIMPLE.kin_clusters       (array, keyed by .cluster_id)
+//     GROUP_CLEAN_SIMPLE.groups[word]     → [ {word, pos, zh, phrase, phrase_zh}, … ]
+//     PROPER_SMALL_CARDS_FINAL.small_cards (array, keyed by .word)
+//
+//   Display sections (per user spec):
+//     focus (word/pos/zh + own phrases + own example)
+//     [head]    — only if learning_head !== focus
+//     family    — members of head's family
+//     kin       — clusters bridged from head
+//     group     — focus's own group entries
+// ============================================================
+let _v63IdxBuilt = false;
+let _v63ReadingCards, _v63ReadingToHead, _v63HeadCards, _v63FamilyByHead,
+    _v63HeadToKinIds, _v63KinById, _v63GroupByWord, _v63ProperByWord;
+function _v63Build() {
+  if (_v63IdxBuilt) return;
+  _v63IdxBuilt = true;
+  _v63ReadingCards   = (window.VOCAB_READING_WORD_CARDS_SIMPLE || {}).cards || {};
+  _v63ReadingToHead  = (window.VOCAB_READING_TO_LEARNING_HEAD  || {}).reading_to_learning_head || {};
+  _v63HeadCards      = (window.VOCAB_LEARNING_HEAD_CARDS_SIMPLE || {}).cards || {};
+  const fams         = (window.VOCAB_FAMILY_CLEAN_SIMPLE || {}).families || [];
+  _v63FamilyByHead   = Object.create(null);
+  fams.forEach(f => { if (f && f.word) _v63FamilyByHead[f.word.toLowerCase()] = f; });
+  _v63HeadToKinIds   = (window.VOCAB_KIN_HEAD_BRIDGE || {}).head_to_kin_clusters || {};
+  const clusters     = (window.VOCAB_KIN_CLEAN_SIMPLE || {}).kin_clusters || [];
+  _v63KinById        = Object.create(null);
+  clusters.forEach(c => { if (c && c.cluster_id) _v63KinById[String(c.cluster_id).toLowerCase()] = c; });
+  _v63GroupByWord    = (window.VOCAB_GROUP_CLEAN_SIMPLE || {}).groups || {};
+  const proper       = (window.VOCAB_PROPER_SMALL_CARDS_FINAL || {}).small_cards || [];
+  _v63ProperByWord   = Object.create(null);
+  proper.forEach(s => { if (s && s.word) _v63ProperByWord[s.word.toLowerCase()] = s; });
+}
+function _v63WordCard(w) {
+  _v63Build();
+  const key = (w || '').toLowerCase();
+  return _v63ReadingCards[key] || null;
+}
+function _v63HeadOf(w) {
+  _v63Build();
+  const key = (w || '').toLowerCase();
+  const entry = _v63ReadingToHead[key];
+  if (entry && entry.learning_head) return entry.learning_head.toLowerCase();
+  return null;
+}
+function _v63HeadCard(head) {
+  _v63Build();
+  const key = (head || '').toLowerCase();
+  return _v63HeadCards[key] || _v63ReadingCards[key] || null;
+}
+function _v63Family(head) {
+  _v63Build();
+  const f = _v63FamilyByHead[(head || '').toLowerCase()];
+  if (!f) return [];
+  return f.family || [];
+}
+function _v63KinClustersOf(head) {
+  _v63Build();
+  const bridge = _v63HeadToKinIds[(head || '').toLowerCase()];
+  const ids = (bridge && bridge.kin_cluster_ids) || [];
+  return ids.map(id => _v63KinById[String(id).toLowerCase()]).filter(Boolean);
+}
+function _v63GroupOf(w) {
+  _v63Build();
+  return _v63GroupByWord[(w || '').toLowerCase()] || [];
+}
+function _v63IsClickable(w) {
+  return !!_v63WordCard(w) || !!_v63HeadCard(w) || !!(_v63ProperByWord && _v63ProperByWord[(w||'').toLowerCase()]);
+}
+// Plain-card builders → emit the legacy parchment row strings.
+function _v63PackMember(m) {
+  const phrase = (m.phrases && m.phrases[0]) || null;
+  const phraseEn = phrase ? (phrase.phrase || '') : (m.phrase || '');
+  const phraseZh = phrase ? (phrase.phrase_zh || '') : (m.phrase_zh || '');
+  const posZh = m.pos ? `${m.pos} ${m.zh || ''}`.trim() : (m.zh || '');
+  return _pipe([m.word, posZh, phraseEn, phraseZh]);
+}
+function _v63BuildCard(word) {
+  const w = (word || '').toLowerCase();
+  let focus = _v63WordCard(w);
+  let isProper = false;
+  if (!focus) {
+    const proper = (_v63ProperByWord && _v63ProperByWord[w]) || null;
+    if (proper) {
+      focus = proper;
+      isProper = true;
+    }
+  }
+  if (!focus) return null;
+
+  // focus's own phrases / first example
+  const friends = (focus.phrases || []).slice(0, 6).map(p =>
+    _pipe([p.phrase || '', p.phrase_zh || ''])
+  );
+  const ex = (focus.examples && focus.examples[0]) || null;
+  const exampleEn = ex ? (ex.example || ex.en || '') : '';
+  const exampleZh = ex ? (ex.example_zh || ex.zh || '') : '';
+
+  if (isProper) {
+    return {
+      h: focus.word || w,
+      pos: focus.pos || '',
+      zh: focus.zh || '',
+      head: null,
+      family: [],
+      kin: [],
+      group: [],
+      friends,
+      example: exampleEn,
+      example_zh: exampleZh,
+    };
+  }
+
+  // head section.  Skip when focus IS the head per user: "如果本身
+  // reading里出现的词就是head则不需要划head区".
+  const headWord = _v63HeadOf(w) || w;
+  let headSection = [];
+  if (headWord && headWord !== w) {
+    const headCard = _v63HeadCard(headWord);
+    if (headCard) headSection.push(_v63PackMember(headCard));
+  }
+
+  // family of the head
+  const familyMembers = _v63Family(headWord).filter(m => (m.word || '').toLowerCase() !== w);
+  const family = familyMembers.map(_v63PackMember);
+
+  // kin clusters bridged from the head
+  const usedInFamily = new Set([w, headWord, ...familyMembers.map(m => (m.word || '').toLowerCase())]);
+  const kin = [];
+  _v63KinClustersOf(headWord).forEach(cl => {
+    (cl.internal_words || []).forEach(iw => {
+      const word = typeof iw === 'string' ? iw : (iw && iw.word);
+      const wk = (word || '').toLowerCase();
+      if (!wk || usedInFamily.has(wk)) return;
+      usedInFamily.add(wk);
+      const card = _v63WordCard(wk) || _v63HeadCard(wk);
+      kin.push(_v63PackMember(card || { word, zh: (typeof iw === 'object' ? iw.zh : '') || '' }));
+    });
+    (cl.external_words || []).forEach(ew => {
+      if (!ew || !ew.word) return;
+      const wk = ew.word.toLowerCase();
+      if (usedInFamily.has(wk)) return;
+      usedInFamily.add(wk);
+      kin.push(_v63PackMember(ew));
+    });
+  });
+
+  // group of the FOCUS word (per user: group is synonyms attached
+  // to the surface reading word, not the family head)
+  const group = _v63GroupOf(w).map(_v63PackMember);
+
+  return {
+    h: focus.word || w,
+    pos: focus.pos || '',
+    zh: focus.zh || '',
+    head: headSection,            // new — surfaced by showParchment
+    family,
+    kin,
+    group,
+    friends,
+    example: exampleEn,
+    example_zh: exampleZh,
+  };
+}
+
 function _vocabRuntimeCard(word) {
+  // v=111 — prefer V63 ("CLAUDE_PACKAGE") if its readings table is
+  // present in the page.  Falls back to the V20 VocabRuntime path
+  // and finally the legacy PARCHMENT_CARDS lookup further down in
+  // showParchment().
+  if (window.VOCAB_READING_WORD_CARDS_SIMPLE) {
+    const c = _v63BuildCard(word);
+    if (c) return c;
+  }
   const VR = window.VocabRuntime;
   const w = (word || '').toLowerCase();
-  // v=107 — patch wins ahead of word master so reading-overlap
-  // supplements (e.g. `existence`, `federation`, `modernist`)
-  // show their own zh / phrases / example.
   const patch = _patchCard(w);
   if (patch) return _patchToParchmentCard(w, patch);
   if (!VR) return null;
@@ -1509,6 +1716,30 @@ function showParchment(word) {
     return out;
   }
 
+  // v=111 — NEW her-head section (V63).  Surfaced ABOVE family so
+  // the user sees the prefix-stripped learning head of the word
+  // they tapped before any derivational variants.  Only emitted
+  // when the focus word's learning head differs from itself.
+  if (c.head && c.head.length) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her head</div>` });
+    groupByLeadingWord(c.head).forEach(g => {
+      items.push({ kind: 'fam', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
+      </div>` });
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh || '')}</span>
+        </div>` });
+      });
+    });
+  }
+
   if (c.family && c.family.length) {
     items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
     items.push({ kind: 'label', html: `<div class="pc-section-label">her family</div>` });
@@ -1522,7 +1753,7 @@ function showParchment(word) {
         if (!p.phrase) return;
         items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
           <button class="pc-play">♪</button>
-          <span class="pc-line-phrase">${pcLinkify(p.phrase)}</span>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
           <span class="pc-line-zh">${escapeHtml(p.phraseZh || '')}</span>
         </div>` });
       });
@@ -1536,14 +1767,14 @@ function showParchment(word) {
       const [phrase, zh] = line.split('|').map(s => s.trim());
       items.push({ kind: 'colloc', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
         <button class="pc-play">♪</button>
-        <span class="pc-line-phrase">${pcLinkify(phrase)}</span>
+        <span class="pc-line-phrase">${escapeHtml(phrase)}</span>
         <span class="pc-line-zh">${escapeHtml(zh || '')}</span>
       </div>` });
     });
     if (c.example) {
       items.push({ kind: 'example', html: `<div class="pc-play-row pc-ex-row" data-sp="${escapeAttr(c.example)}">
         <button class="pc-play">♪</button>
-        <span class="pc-play-phrase pc-ex-en">${pcLinkify(c.example)}</span>
+        <span class="pc-play-phrase pc-ex-en">${escapeHtml(c.example)}</span>
       </div>
       ${c.example_zh ? `<div class="pc-ex-zh">${escapeHtml(c.example_zh)}</div>` : ''}` });
     }
@@ -1565,7 +1796,7 @@ function showParchment(word) {
         if (!p.phrase) return;
         items.push({ kind: 'kin-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
           <button class="pc-play">♪</button>
-          <span class="pc-line-phrase">${pcLinkify(p.phrase)}</span>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
           <span class="pc-line-zh">${escapeHtml(p.phraseZh)}</span>
         </div>` });
       });
@@ -1589,7 +1820,7 @@ function showParchment(word) {
         if (!p.phrase) return;
         items.push({ kind: 'group-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
           <button class="pc-play">♪</button>
-          <span class="pc-line-phrase">${pcLinkify(p.phrase)}</span>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
           <span class="pc-line-zh">${escapeHtml(p.phraseZh)}</span>
         </div>` });
       });
