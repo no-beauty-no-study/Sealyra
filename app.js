@@ -1173,27 +1173,25 @@ function resolveReadingWord(rawToken) {
   const clean = raw.toLowerCase().replace(/^['"`]+|['"`.,;:!?)]+$/g, '').replace(/'s$/, '');
   if (clean.length < 3) return null;
 
-  // 0. V63 (CLAUDE_PACKAGE) tables win when loaded.
-  if (window.VOCAB_READING_WORD_CARDS_SIMPLE) {
-    if (_v63WordCard(clean)) {
-      return { raw, resolvedWord: clean, source: 'v63_reading', matchType: 'exact' };
+  // 0. V73 LITE tables — registry is the canonical source.  Focus
+  //    stays on the surface word per user (the head sits below as
+  //    its own section).  Lemma fallback only when the surface
+  //    isn't in the registry.
+  if (window.VOCAB_WORD_CONTENT_REGISTRY_LITE) {
+    if (_v73Card(clean)) {
+      return { raw, resolvedWord: clean, source: 'v73_registry', matchType: 'exact' };
     }
-    // proper-noun small card
-    if (_v63ProperByWord && _v63ProperByWord[clean]) {
-      return { raw, resolvedWord: clean, source: 'v63_proper', matchType: 'exact' };
-    }
-    const cands63 = _lemmaCandidates(clean);
-    for (const cand of cands63) {
-      if (_v63WordCard(cand)) {
-        return { raw, resolvedWord: cand, source: 'v63_reading', matchType: 'lemma' };
+    const cands = _lemmaCandidates(clean);
+    for (const cand of cands) {
+      if (_v73Card(cand)) {
+        return { raw, resolvedWord: cand, source: 'v73_registry', matchType: 'lemma' };
       }
     }
-    const head = _v63HeadOf(clean);
-    if (head && head !== clean && _v63WordCard(head)) {
-      return { raw, resolvedWord: head, source: 'v63_reading', matchType: 'learning_head' };
+    const head = _v73HeadOf(clean);
+    if (head && head !== clean && _v73Card(head)) {
+      return { raw, resolvedWord: head, source: 'v73_registry', matchType: 'family_head' };
     }
-    return null;     // V63 loaded: if it doesn't know the word, skip
-                     // the legacy lookups entirely.
+    return null;     // V73 loaded: if it doesn't know the word, no link.
   }
 
   // 1. Exact in patch (the reading-overlap supplement wins; user
@@ -1289,175 +1287,162 @@ function _patchToParchmentCard(w, p) {
   };
 }
 // ============================================================
-//   v=111 — V63 ("CLAUDE_PACKAGE") direct integration.  The new
-//   data lives in 8 independent browser globals (no shared
-//   runtime helper from the bundle since the one shipped reads
-//   the old V20-era global names).  Layout:
+//   v=112 — V73 ("NORMALIZED LITE") integration.  Single source
+//   of truth: VOCAB_WORD_CONTENT_REGISTRY_LITE.cards[word].  All
+//   relationship files (family / kin / group / bridge / external)
+//   store only word IDs — when we render a related word's row we
+//   look its content up in the registry.
 //
-//     READING_WORD_CARDS_SIMPLE.cards[word]
-//        → small card: word, pos, zh, phrases[], examples[]
-//     READING_TO_LEARNING_HEAD.reading_to_learning_head[word]
-//        → { learning_head }
-//     LEARNING_HEAD_CARDS_SIMPLE.cards[head]
-//        → big head card content (same shape as reading card)
-//     FAMILY_CLEAN_SIMPLE.families        (array, keyed by .word)
-//     KIN_HEAD_BRIDGE.head_to_kin_clusters[head]
-//        → { kin_cluster_ids: [id, …] }
-//     KIN_CLEAN_SIMPLE.kin_clusters       (array, keyed by .cluster_id)
-//     GROUP_CLEAN_SIMPLE.groups[word]     → [ {word, pos, zh, phrase, phrase_zh}, … ]
-//     PROPER_SMALL_CARDS_FINAL.small_cards (array, keyed by .word)
+//     WORD_CONTENT_REGISTRY_LITE.cards[w]
+//        → { word, pos, zh, phrases[], examples[] }
+//     READING_WORDS_LITE.words: [...]              reading corpus
+//                       .reading_to_learning_head[w]   (unreliable
+//                       for variant words — use word_to_family_head)
+//     FAMILY_SHARED_CLUSTERS_LITE.family_clusters[]
+//                  : [{ family_id, head, words: [...] }]
+//                  .word_to_family_head[w] → head          ← canonical
+//                  .word_to_family_cluster[w] → family_id
+//     KIN_HEAD_BRIDGE_LITE.head_to_kin_clusters[w] → [cluster_id…]
+//                  (despite the name, keyed by ANY word that owns
+//                  a kin cluster, not just family heads)
+//     KIN_CLEAN_LITE.kin_clusters[] : [{ cluster_id, words: [...] }]
+//     GROUP_CLEAN_LITE.groups[w]  → [ synonym_word_id, … ]
+//     EXTERNAL_WORDS_LITE.words: [...]  (external IDs whose
+//                  content still lives in the central registry)
 //
 //   Display sections (per user spec):
-//     focus (word/pos/zh + own phrases + own example)
-//     [head]    — only if learning_head !== focus
-//     family    — members of head's family
-//     kin       — clusters bridged from head
-//     group     — focus's own group entries
+//     head    — focus's family-head, only if head ≠ focus
+//     family  — siblings in the same family cluster (minus focus
+//               and minus head, since head got its own section)
+//     kin     — focus's OWN kin clusters (kin is per-word, not
+//               inherited from head; per user "kin独享")
+//     group   — focus's synonyms
 // ============================================================
-let _v63IdxBuilt = false;
-let _v63ReadingCards, _v63ReadingToHead, _v63HeadCards, _v63FamilyByHead,
-    _v63HeadToKinIds, _v63KinById, _v63GroupByWord, _v63ProperByWord;
-function _v63Build() {
-  if (_v63IdxBuilt) return;
-  _v63IdxBuilt = true;
-  _v63ReadingCards   = (window.VOCAB_READING_WORD_CARDS_SIMPLE || {}).cards || {};
-  _v63ReadingToHead  = (window.VOCAB_READING_TO_LEARNING_HEAD  || {}).reading_to_learning_head || {};
-  _v63HeadCards      = (window.VOCAB_LEARNING_HEAD_CARDS_SIMPLE || {}).cards || {};
-  const fams         = (window.VOCAB_FAMILY_CLEAN_SIMPLE || {}).families || [];
-  _v63FamilyByHead   = Object.create(null);
-  fams.forEach(f => { if (f && f.word) _v63FamilyByHead[f.word.toLowerCase()] = f; });
-  _v63HeadToKinIds   = (window.VOCAB_KIN_HEAD_BRIDGE || {}).head_to_kin_clusters || {};
-  const clusters     = (window.VOCAB_KIN_CLEAN_SIMPLE || {}).kin_clusters || [];
-  _v63KinById        = Object.create(null);
-  clusters.forEach(c => { if (c && c.cluster_id) _v63KinById[String(c.cluster_id).toLowerCase()] = c; });
-  _v63GroupByWord    = (window.VOCAB_GROUP_CLEAN_SIMPLE || {}).groups || {};
-  const proper       = (window.VOCAB_PROPER_SMALL_CARDS_FINAL || {}).small_cards || [];
-  _v63ProperByWord   = Object.create(null);
-  proper.forEach(s => { if (s && s.word) _v63ProperByWord[s.word.toLowerCase()] = s; });
+let _v73IdxBuilt = false;
+let _v73Registry, _v73R2H,
+    _v73ClustersById, _v73WordToHead, _v73WordToCid,
+    _v73KinById, _v73WordToKinIds,
+    _v73GroupByWord, _v73ReadingSet, _v73ExtSet;
+function _v73Build() {
+  if (_v73IdxBuilt) return;
+  _v73IdxBuilt = true;
+  _v73Registry  = (window.VOCAB_WORD_CONTENT_REGISTRY_LITE || {}).cards || {};
+  const reading = window.VOCAB_READING_WORDS_LITE || {};
+  _v73R2H       = reading.reading_to_learning_head || {};
+  _v73ReadingSet = new Set((reading.words || []).map(w => String(w).toLowerCase()));
+  const fam     = window.VOCAB_FAMILY_SHARED_CLUSTERS_LITE || {};
+  _v73WordToHead = fam.word_to_family_head || {};
+  _v73WordToCid  = fam.word_to_family_cluster || {};
+  _v73ClustersById = Object.create(null);
+  (fam.family_clusters || []).forEach(c => { if (c.family_id) _v73ClustersById[c.family_id] = c; });
+  const kinFile = window.VOCAB_KIN_CLEAN_LITE || {};
+  _v73KinById   = Object.create(null);
+  (kinFile.kin_clusters || []).forEach(c => { if (c.cluster_id) _v73KinById[String(c.cluster_id).toLowerCase()] = c; });
+  const bridge  = window.VOCAB_KIN_HEAD_BRIDGE_LITE || {};
+  _v73WordToKinIds = bridge.head_to_kin_clusters || {};
+  _v73GroupByWord  = (window.VOCAB_GROUP_CLEAN_LITE || {}).groups || {};
+  _v73ExtSet    = new Set(((window.VOCAB_EXTERNAL_WORDS_LITE || {}).words || []).map(w => String(w).toLowerCase()));
 }
-function _v63WordCard(w) {
-  _v63Build();
-  const key = (w || '').toLowerCase();
-  return _v63ReadingCards[key] || null;
+function _v73Card(w) {
+  _v73Build();
+  return _v73Registry[(w || '').toLowerCase()] || null;
 }
-function _v63HeadOf(w) {
-  _v63Build();
-  const key = (w || '').toLowerCase();
-  const entry = _v63ReadingToHead[key];
-  if (entry && entry.learning_head) return entry.learning_head.toLowerCase();
+function _v73HeadOf(w) {
+  _v73Build();
+  const lw = (w || '').toLowerCase();
+  // word_to_family_head is the canonical map (per the data).
+  const head = _v73WordToHead[lw];
+  if (head && head !== lw) return head;
   return null;
 }
-function _v63HeadCard(head) {
-  _v63Build();
-  const key = (head || '').toLowerCase();
-  return _v63HeadCards[key] || _v63ReadingCards[key] || null;
+function _v73FamilySiblings(w) {
+  _v73Build();
+  const lw = (w || '').toLowerCase();
+  const cid = _v73WordToCid[lw];
+  if (!cid) return { head: null, members: [] };
+  const cluster = _v73ClustersById[cid];
+  if (!cluster) return { head: null, members: [] };
+  const head = (cluster.head || '').toLowerCase();
+  const members = (cluster.words || [])
+    .map(x => String(x).toLowerCase())
+    .filter(x => x && x !== lw && x !== head);
+  return { head, members };
 }
-function _v63Family(head) {
-  _v63Build();
-  const f = _v63FamilyByHead[(head || '').toLowerCase()];
-  if (!f) return [];
-  return f.family || [];
+function _v73KinFor(w) {
+  _v73Build();
+  const ids = _v73WordToKinIds[(w || '').toLowerCase()] || [];
+  return ids.map(id => _v73KinById[String(id).toLowerCase()]).filter(Boolean);
 }
-function _v63KinClustersOf(head) {
-  _v63Build();
-  const bridge = _v63HeadToKinIds[(head || '').toLowerCase()];
-  const ids = (bridge && bridge.kin_cluster_ids) || [];
-  return ids.map(id => _v63KinById[String(id).toLowerCase()]).filter(Boolean);
+function _v73GroupFor(w) {
+  _v73Build();
+  return _v73GroupByWord[(w || '').toLowerCase()] || [];
 }
-function _v63GroupOf(w) {
-  _v63Build();
-  return _v63GroupByWord[(w || '').toLowerCase()] || [];
+function _v73IsClickable(w) {
+  _v73Build();
+  if (!w) return false;
+  const lw = String(w).toLowerCase();
+  return !!_v73Registry[lw] || _v73ReadingSet.has(lw) || _v73ExtSet.has(lw);
 }
-function _v63IsClickable(w) {
-  return !!_v63WordCard(w) || !!_v63HeadCard(w) || !!(_v63ProperByWord && _v63ProperByWord[(w||'').toLowerCase()]);
+// Pack a word into the legacy "word | pos zh | phrase | phrase_zh"
+// row string — content is fetched from the central registry.  If
+// the word isn't in the registry, emit a degraded row (the word
+// itself with empty other fields) so the parchment still renders
+// SOMETHING; the click handler will simply have nothing to open.
+function _v73PackWord(w) {
+  _v73Build();
+  const lw = String(w || '').toLowerCase();
+  const card = _v73Registry[lw];
+  if (!card) return _pipe([w, '', '', '']);
+  const phrase = (card.phrases && card.phrases[0]) || {};
+  const posZh = card.pos ? `${card.pos} ${card.zh || ''}`.trim() : (card.zh || '');
+  return _pipe([card.word || lw, posZh, phrase.phrase || '', phrase.phrase_zh || '']);
 }
-// Plain-card builders → emit the legacy parchment row strings.
-function _v63PackMember(m) {
-  const phrase = (m.phrases && m.phrases[0]) || null;
-  const phraseEn = phrase ? (phrase.phrase || '') : (m.phrase || '');
-  const phraseZh = phrase ? (phrase.phrase_zh || '') : (m.phrase_zh || '');
-  const posZh = m.pos ? `${m.pos} ${m.zh || ''}`.trim() : (m.zh || '');
-  return _pipe([m.word, posZh, phraseEn, phraseZh]);
-}
-function _v63BuildCard(word) {
+function _v73BuildCard(word) {
+  _v73Build();
   const w = (word || '').toLowerCase();
-  let focus = _v63WordCard(w);
-  let isProper = false;
-  if (!focus) {
-    const proper = (_v63ProperByWord && _v63ProperByWord[w]) || null;
-    if (proper) {
-      focus = proper;
-      isProper = true;
-    }
-  }
+  const focus = _v73Card(w);
   if (!focus) return null;
 
-  // focus's own phrases / first example
   const friends = (focus.phrases || []).slice(0, 6).map(p =>
     _pipe([p.phrase || '', p.phrase_zh || ''])
   );
   const ex = (focus.examples && focus.examples[0]) || null;
-  const exampleEn = ex ? (ex.example || ex.en || '') : '';
-  const exampleZh = ex ? (ex.example_zh || ex.zh || '') : '';
+  const exampleEn = ex ? (ex.example || '') : '';
+  const exampleZh = ex ? (ex.example_zh || '') : '';
 
-  if (isProper) {
-    return {
-      h: focus.word || w,
-      pos: focus.pos || '',
-      zh: focus.zh || '',
-      head: null,
-      family: [],
-      kin: [],
-      group: [],
-      friends,
-      example: exampleEn,
-      example_zh: exampleZh,
-    };
-  }
-
-  // head section.  Skip when focus IS the head per user: "如果本身
-  // reading里出现的词就是head则不需要划head区".
-  const headWord = _v63HeadOf(w) || w;
+  const fam = _v73FamilySiblings(w);
+  // head section: emit only if the family head differs from the focus.
+  // head is part of the family but lifted into its own section so the
+  // user can study the prefix root separately.
   let headSection = [];
-  if (headWord && headWord !== w) {
-    const headCard = _v63HeadCard(headWord);
-    if (headCard) headSection.push(_v63PackMember(headCard));
+  if (fam.head && fam.head !== w) {
+    headSection.push(_v73PackWord(fam.head));
   }
+  const family = fam.members.map(_v73PackWord);
 
-  // family of the head
-  const familyMembers = _v63Family(headWord).filter(m => (m.word || '').toLowerCase() !== w);
-  const family = familyMembers.map(_v63PackMember);
-
-  // kin clusters bridged from the head
-  const usedInFamily = new Set([w, headWord, ...familyMembers.map(m => (m.word || '').toLowerCase())]);
+  // kin: focus's OWN kin clusters (kin is per-word, not via family head).
+  const used = new Set([w, fam.head, ...fam.members]);
   const kin = [];
-  _v63KinClustersOf(headWord).forEach(cl => {
-    (cl.internal_words || []).forEach(iw => {
-      const word = typeof iw === 'string' ? iw : (iw && iw.word);
-      const wk = (word || '').toLowerCase();
-      if (!wk || usedInFamily.has(wk)) return;
-      usedInFamily.add(wk);
-      const card = _v63WordCard(wk) || _v63HeadCard(wk);
-      kin.push(_v63PackMember(card || { word, zh: (typeof iw === 'object' ? iw.zh : '') || '' }));
-    });
-    (cl.external_words || []).forEach(ew => {
-      if (!ew || !ew.word) return;
-      const wk = ew.word.toLowerCase();
-      if (usedInFamily.has(wk)) return;
-      usedInFamily.add(wk);
-      kin.push(_v63PackMember(ew));
+  _v73KinFor(w).forEach(cl => {
+    (cl.words || []).forEach(kw => {
+      const lkw = String(kw).toLowerCase();
+      if (!lkw || used.has(lkw)) return;
+      used.add(lkw);
+      kin.push(_v73PackWord(lkw));
     });
   });
 
-  // group of the FOCUS word (per user: group is synonyms attached
-  // to the surface reading word, not the family head)
-  const group = _v63GroupOf(w).map(_v63PackMember);
+  // group: focus's synonyms (just IDs in the LITE file).
+  const group = _v73GroupFor(w)
+    .map(g => String(g).toLowerCase())
+    .filter(g => !used.has(g))
+    .map(_v73PackWord);
 
   return {
     h: focus.word || w,
     pos: focus.pos || '',
     zh: focus.zh || '',
-    head: headSection,            // new — surfaced by showParchment
+    head: headSection,
     family,
     kin,
     group,
@@ -1468,23 +1453,12 @@ function _v63BuildCard(word) {
 }
 
 function _vocabRuntimeCard(word) {
-  // v=111 — prefer V63 ("CLAUDE_PACKAGE") if its readings table is
-  // present in the page.  Falls back to the V20 VocabRuntime path
-  // and finally the legacy PARCHMENT_CARDS lookup further down in
-  // showParchment().
-  if (window.VOCAB_READING_WORD_CARDS_SIMPLE) {
-    const c = _v63BuildCard(word);
-    if (c) return c;
+  // v=112 — V73 LITE table is the only path.  Returns null when
+  // the word isn't in the registry; showParchment then falls back
+  // to legacy PARCHMENT_CARDS for any legacy game-side openers.
+  if (window.VOCAB_WORD_CONTENT_REGISTRY_LITE) {
+    return _v73BuildCard(word);
   }
-  const VR = window.VocabRuntime;
-  const w = (word || '').toLowerCase();
-  const patch = _patchCard(w);
-  if (patch) return _patchToParchmentCard(w, patch);
-  if (!VR) return null;
-  const big = VR.getBigCard(w);
-  if (big) return _bigToParchmentCard(big);
-  const small = VR.getSmallCard(w);
-  if (small) return _smallToParchmentCard(small);
   return null;
 }
 function _pipe(parts) {
