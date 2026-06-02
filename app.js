@@ -441,6 +441,56 @@ function _errorScore(word) {
   const r = (saved.rights   || {})[word] || 0;
   return m - r;
 }
+// v=115 — replaces the fixed stage-N-result screens.  Per user:
+// "分数现在不固定在结算页面了 也没有笔记了 替换成弹窗显示即可
+// 其他继续 (为了快节奏学习)".  Shows a fullscreen ✦ veil with
+// a short title + the score, auto-dismisses after 1.3 s, then
+// invokes `onAdvance`.  For non-perfect runs the user gets a tap
+// target to retry; nothing auto-advances so they can re-read it.
+function showStageResultPopup({ stage, pass, right, total, onAdvance, onRetry }) {
+  try {
+    if (pass) { SFX.bling && SFX.bling(); SFX.right && SFX.right(); }
+    else      { SFX.wrong && SFX.wrong(); }
+  } catch {}
+  const veil = document.createElement('div');
+  veil.className = 's0q-celebrate-veil';
+  const titleTxt = pass ? 'well done' : 'almost';
+  const subTxt = pass
+    ? (stage === 3 ? 'chapter complete' : `stage ${stage} · ${right} / ${total}`)
+    : `${right} / ${total} · tap to try again`;
+  const glyphTxt = pass ? '✦' : '◌';
+  veil.innerHTML = `
+    <div class="s0q-celebrate">
+      <div class="s0q-celebrate-glyph">${glyphTxt}</div>
+      <div class="s0q-celebrate-title">${titleTxt}</div>
+      <div class="s0q-celebrate-sub">${subTxt}</div>
+    </div>
+  `;
+  document.body.appendChild(veil);
+  requestAnimationFrame(() => veil.classList.add('is-open'));
+  const close = () => {
+    veil.classList.add('is-leaving');
+    setTimeout(() => veil.remove(), 320);
+  };
+  if (pass) {
+    setTimeout(close, 1300);
+    setTimeout(() => { if (typeof onAdvance === 'function') onAdvance(); }, 1500);
+  } else {
+    // Tap anywhere → retry.  Auto-close after 3 s as a safety
+    // (then drops back through the existing result page so the
+    //  user has a fallback if they ignore the popup).
+    veil.addEventListener('click', () => {
+      close();
+      setTimeout(() => { if (typeof onRetry === 'function') onRetry(); }, 280);
+    });
+    setTimeout(() => {
+      if (veil.parentNode) {
+        close();
+        setTimeout(() => { if (typeof onAdvance === 'function') onAdvance(); }, 280);
+      }
+    }, 3000);
+  }
+}
 // v=114 — review walker.  Plays the pool in order, opening each
 // word's parchment.  Close the parchment → walker advances to the
 // next word.  No mainline state is touched; this is pure revision.
@@ -3318,7 +3368,7 @@ const Screens = {
         // Persist the L-side outcome for the chapter summary / mistakes.
         shuffled.forEach((c, i) => {
           if (c.side !== 'L') return;
-          if (cardResult[i]) state.results[c.text].match = true;
+          if (cardResult[i]) { state.results[c.text].match = true; recordRight(c.text); }
           else { state.results[c.text].match = false; recordMistake(c.text); }
         });
         // Persist the full 8-tile result for the dedicated result page —
@@ -3327,10 +3377,24 @@ const Screens = {
         state.session.matchResult = shuffled.map((c, i) => ({
           text: c.text, pairId: c.pairId, tag: tagOf[i], correct: cardResult[i], side: c.side
         }));
-        showModal({
-          title: 'pages flipped',
-          score: { value: correct, total: 4 },
-          actions: [{ label: 'see results', onClick: () => go('stage1-result') }]
+        // v=115 — fast-paced result popup, no fixed result page.
+        const pass = correct >= 4;
+        if (pass) {
+          state.session.pairs.forEach(p => recordRight(p.head));
+          if ((saved.stage || 1) < 2) { saved.stage = 2; Store.save(); }
+          _markStageDone(saved.chapter, 1);
+        }
+        showStageResultPopup({
+          stage: 1, pass, right: correct, total: 4,
+          onAdvance: () => go(_nextStageId(0) || 'cover'),
+          onRetry:   () => {
+            // soft reset of stage 1 state
+            state.session.matchResult = null;
+            state.session.pairs.forEach(p => {
+              if (state.results[p.head]) state.results[p.head].match = null;
+            });
+            go('stage1');
+          }
         });
       }
     }
@@ -3631,6 +3695,7 @@ const Screens = {
           if ((state.sceneFills[i] || '').toLowerCase() === ans.toLowerCase()) {
             if (PARCHMENT_CARDS[ans]) state.results[ans] = state.results[ans] || { match:null, oracle:null, dict:null };
             if (state.results[ans]) state.results[ans].oracle = true;
+            recordRight(ans);                        // v=115
           } else {
             if (!state.results[ans]) state.results[ans] = { match:null, oracle:null, dict:null };
             state.results[ans].oracle = false;
@@ -3676,8 +3741,28 @@ const Screens = {
         SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
         state.sceneIdx++;
         _advanced = false;
-        if (state.sceneIdx >= state.session.scenes.length) go('stage2-result');
-        else drawQ();
+        if (state.sceneIdx >= state.session.scenes.length) {
+          // v=115 — popup result, no full-screen page.
+          const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
+          const total = sceneAnswers.length;
+          const right = sceneAnswers.filter(a => state.results[a] && state.results[a].oracle).length;
+          const pass = right === total && total > 0;
+          if (pass) {
+            if ((saved.stage || 1) < 3) { saved.stage = 3; Store.save(); }
+            _markStageDone(saved.chapter, 2);
+          }
+          showStageResultPopup({
+            stage: 2, pass, right, total,
+            onAdvance: () => go(pass ? (_nextStageId(2) || 'cover') : 'cover'),
+            onRetry:   () => {
+              state.session.scenes.forEach(s => (s.answers || []).forEach(w => {
+                if (state.results[w]) state.results[w].oracle = null;
+              }));
+              state.sceneIdx = 0;
+              go('stage2');
+            }
+          });
+        } else drawQ();
       }
     }
   },
@@ -3802,8 +3887,25 @@ const Screens = {
 
       function advance() {
         state.dictIdx++;
-        if (state.dictIdx >= state.session.dicts.length) go('stage3-result');
-        else drawQ();
+        if (state.dictIdx >= state.session.dicts.length) {
+          // v=115 — popup result, no fixed result page.
+          const dicts = state.session.dicts || [];
+          const total = dicts.length;
+          const right = dicts.filter(d => state.results[d.head] && state.results[d.head].dict).length;
+          const pass = right === total && total > 0;
+          if (pass) _markStageDone(saved.chapter, 3);
+          showStageResultPopup({
+            stage: 3, pass, right, total,
+            onAdvance: () => go('cover'),       // chapter complete → cover
+            onRetry:   () => {
+              state.session.dicts.forEach(d => {
+                if (state.results[d.head]) state.results[d.head].dict = null;
+              });
+              state.dictIdx = 0;
+              go('stage3');
+            }
+          });
+        } else drawQ();
       }
 
       function check() {
@@ -3816,6 +3918,7 @@ const Screens = {
         if (guess === q.answer.toLowerCase()) {
           // right on the first try → flash visible feedback, then advance.
           state.results[q.head].dict = true;
+          recordRight(q.head);                       // v=115
           input.disabled = true;
           input.classList.add('is-right');
           feedback.innerHTML = '<em>✦ inscribed</em>';
@@ -4246,6 +4349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 try {
   Object.assign(window, {
     go, saved, state, showParchment, resolveReadingWord, posOf,
+    showStageResultPopup,
     PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
   });
 } catch {}
