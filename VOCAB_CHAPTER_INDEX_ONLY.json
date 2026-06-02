@@ -1,0 +1,3915 @@
+{
+  "meta": {
+    "purpose": "chapter index only; no embedded questions; use with main vocab runtime JSON",
+    "how_to_use": "For each chapter, read match_group_ids from MATCH_GROUPS, reading_question_ids from SCENE_BLANK_QUESTIONS, and dictation_question_ids from DICTATION_QUESTIONS.",
+    "chapters": 186
+  },
+  "chapters": [
+    {
+      "id": "chapter_001",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        201,
+        163,
+        280,
+        36
+      ],
+      "reading_question_ids": [
+        "R053_ENERGY_THERMAL_PHOTOVOLTAIC",
+        "R139_RES_GEOTHERMAL_OPTIMIZATION",
+        "R328_AGRI_AGRONOMY_AQUACULTURE",
+        "R050_ENERGY_HYDRO_TURBINE"
+      ],
+      "dictation_question_ids": [
+        "DICT_94",
+        "DICT_584",
+        "DICT_323",
+        "DICT_317"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_002",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        80,
+        125,
+        208,
+        9
+      ],
+      "reading_question_ids": [
+        "R112_BIO_ADAPTATION_MUTATION",
+        "R322_NEURO_ATTENTION_MEMORY",
+        "R041_AGRI_CULTIVATION_LIVESTOCK",
+        "R134_RES_RAW_COMMODITY_ORE"
+      ],
+      "dictation_question_ids": [
+        "DICT_350",
+        "DICT_47",
+        "DICT_28"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_003",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        92,
+        131,
+        213,
+        31
+      ],
+      "reading_question_ids": [
+        "R278_SOC_ACCULTURATION_SUBCULTURE",
+        "R352_ANTH_EVOLUTIONARY_GENETIC",
+        "R342_OCEAN_GLACIAL_CONTINENTAL",
+        "R323_NEURO_RETRIEVAL_PLASTICITY"
+      ],
+      "dictation_question_ids": [
+        "DICT_35",
+        "DICT_549",
+        "DICT_419",
+        "DICT_39"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_004",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        191,
+        18,
+        192,
+        159
+      ],
+      "reading_question_ids": [
+        "R033_COMP_ALGORITHM_VARIABLE",
+        "R052_ENERGY_CONSUMPTION_DEPLETION",
+        "R239_DIGITAL_SCALABILITY_VIRTUALIZATION",
+        "R250_LEARN_REINFORCEMENT_RETENTION"
+      ],
+      "dictation_question_ids": [
+        "DICT_556",
+        "DICT_298",
+        "DICT_349",
+        "DICT_120"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_005",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        3,
+        284,
+        227,
+        23
+      ],
+      "reading_question_ids": [
+        "R295_DESC_STRENUOUS_SUBSTANTIAL",
+        "R051_ENERGY_NUCLEAR",
+        "R288_ASTRO_UNIVERSE_PLANET",
+        "R066_MAT_ALLOY_COMPOSITE"
+      ],
+      "dictation_question_ids": [
+        "DICT_447",
+        "DICT_673",
+        "DICT_51",
+        "DICT_104"
+      ],
+      "estimated_unique_words": 17
+    },
+    {
+      "id": "chapter_006",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        94,
+        88,
+        14,
+        47
+      ],
+      "reading_question_ids": [
+        "R060_ARCH_SUSTAINABLE_METRO",
+        "R178_NEURO_PLASTICITY_HIPPOCAMPUS",
+        "R045_CLIMATE_EVAPORATION_CONVECTION",
+        "R183_URBAN_PEDESTRIANIZATION_SANITATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_250",
+        "DICT_63",
+        "DICT_648",
+        "DICT_602"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_007",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        30,
+        243,
+        4,
+        285
+      ],
+      "reading_question_ids": [
+        "R332_CITY_INFRA_LAND",
+        "R158_ENV_PERMEABILITY_SEDIMENTATION",
+        "R028_CHEM_MOLECULE_COMPOUND",
+        "R006_ART_CATHEDRAL_FACADE"
+      ],
+      "dictation_question_ids": [
+        "DICT_569",
+        "DICT_525"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_008",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        168,
+        153,
+        246,
+        38
+      ],
+      "reading_question_ids": [
+        "R335_CITY_REDEV_REVITAL",
+        "R264_HIST_EMPIRE_COLONIZATION",
+        "R152_LOGIC_EXTRINSIC_TEMPORAL",
+        "R086_SOCIAL_INTEGRATION_URBANIZATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_184",
+        "DICT_262",
+        "DICT_37",
+        "DICT_429"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_009",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        155,
+        17,
+        52,
+        177
+      ],
+      "reading_question_ids": [
+        "R020_AST_COMET_METEOR",
+        "R161_TECH_BLUEPRINT_MECHANISM",
+        "R013_LAW_LEGISLATION_CONSTITUTION",
+        "R249_LEARN_METACOGNITION_FEEDBACK"
+      ],
+      "dictation_question_ids": [
+        "DICT_310",
+        "DICT_333",
+        "DICT_412",
+        "DICT_46"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_010",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        134,
+        60,
+        12,
+        269
+      ],
+      "reading_question_ids": [
+        "R238_DIGITAL_CRYPTOGRAPHY_BIOMETRIC",
+        "R082_FOOD_ADDITIVE_PRESERVATIVE",
+        "R305_BUS_MONETIZATION_VALUATION",
+        "R108_PHYS_VELOCITY_ACCELERATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_324",
+        "DICT_394",
+        "DICT_316",
+        "DICT_267"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_011",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        204,
+        244,
+        149,
+        212
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_188",
+        "DICT_185",
+        "DICT_36",
+        "DICT_127"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_012",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new",
+      "match_group_ids": [
+        240,
+        19,
+        217,
+        271
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_77",
+        "DICT_34",
+        "DICT_558"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_013",
+      "theme": "01 Change / Improve / Adapt",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        83,
+        84,
+        63,
+        201
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 8
+    },
+    {
+      "id": "chapter_014",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        226,
+        34,
+        133,
+        105
+      ],
+      "reading_question_ids": [
+        "R096_IND_SPEC_PRECISION_TOLERANCE",
+        "R255_BIO_HOMEOSTASIS_HORMONE",
+        "R172_MODEL_FLUCTUATION_GENERALIZATION",
+        "R121_TECH_CLOUD"
+      ],
+      "dictation_question_ids": [
+        "DICT_373",
+        "DICT_444",
+        "DICT_449",
+        "DICT_40"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_015",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        98,
+        196,
+        275,
+        109
+      ],
+      "reading_question_ids": [
+        "R010_LANG_CURRICULUM_PEDAGOGY",
+        "R346_ANTH_SOCIAL_ANTHROPO",
+        "R203_SOC_AGGLOMERATION_ELITE",
+        "R299_BUS_ENTRE_STAKE"
+      ],
+      "dictation_question_ids": [
+        "DICT_656",
+        "DICT_31",
+        "DICT_395",
+        "DICT_176"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_016",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        129,
+        75,
+        253,
+        228
+      ],
+      "reading_question_ids": [
+        "R098_IND_PROTOTYPE_STANDARDIZATION",
+        "R055_LOGIC_RATIONALISM_SCEPTICISM",
+        "R092_LAW_TESTIMONY_VERDICT",
+        "R117_ANALYSIS_INFERENCE_ANALOGY"
+      ],
+      "dictation_question_ids": [
+        "DICT_535",
+        "DICT_488",
+        "DICT_117",
+        "DICT_336"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_017",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        48,
+        73,
+        233,
+        162
+      ],
+      "reading_question_ids": [
+        "R193_EVAL_DIFFERENTIATE_CORROBORATE",
+        "R262_HIST_EXCAVATION_RELIC",
+        "R325_NEURO_EEG_FUNCTIONAL",
+        "R189_ECO_SPECIMEN_MORPHOLOGY"
+      ],
+      "dictation_question_ids": [
+        "DICT_477",
+        "DICT_529",
+        "DICT_464",
+        "DICT_507"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_018",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        144,
+        178,
+        237,
+        258
+      ],
+      "reading_question_ids": [
+        "R153_LOGIC_CONTRADICTORY_AMBIGUOUS",
+        "R137_RES_VISCOSITY_CONDUCTIVITY",
+        "R069_MAT_OXIDATION_POROSITY",
+        "R312_MAT_CALIBRATION_SIMULATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_603",
+        "DICT_396",
+        "DICT_634"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_019",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        79,
+        137,
+        264,
+        145
+      ],
+      "reading_question_ids": [
+        "R003_GEO_PLATEAU_COORDINATES",
+        "R042_AGRI_RESEARCH_METHODS",
+        "R144_SOCPSY_DOPAMINE_CONFORMITY",
+        "R131_LANG_ANECDOTE_DISCOURSE"
+      ],
+      "dictation_question_ids": [
+        "DICT_155"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_020",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        20,
+        112,
+        273,
+        170
+      ],
+      "reading_question_ids": [
+        "R149_SOCPSY_PEER_EMPOWERMENT",
+        "R140_RES_BYPRODUCT",
+        "R192_EVAL_AMBIGUITY_JUSTIFICATION",
+        "R354_ANTH_PREHISTORIC_ANTHRO"
+      ],
+      "dictation_question_ids": [
+        "DICT_70",
+        "DICT_585",
+        "DICT_166",
+        "DICT_278"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_021",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        270,
+        189,
+        111,
+        128
+      ],
+      "reading_question_ids": [
+        "R297_DESC_SUPPLEMENT_SURMOUNT",
+        "R083_FOOD_OBESITY_FERMENTATION",
+        "R056_LOGIC_SUBJECTIVE_FALLACY",
+        "R015_LAW_DEMOCRACY_AMENDMENT"
+      ],
+      "dictation_question_ids": [
+        "DICT_619",
+        "DICT_321",
+        "DICT_436",
+        "DICT_475"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_022",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        58,
+        221,
+        181,
+        229
+      ],
+      "reading_question_ids": [
+        "R321_NEURO_TRANSMITTER_CORTEX",
+        "R012_LANG_SYLLABUS_ETYMOLOGY",
+        "R245_ECO_BIODIVERSITY_HABITAT",
+        "R176_MODEL_FEASIBILITY_WARRANT"
+      ],
+      "dictation_question_ids": [
+        "DICT_365",
+        "DICT_72",
+        "DICT_151",
+        "DICT_322"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_023",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        194,
+        259,
+        235,
+        35
+      ],
+      "reading_question_ids": [
+        "R254_LEARN_BEHAVIORISM_CONSTRUCTIVISM",
+        "R031_CHEM_VISCOSITY_OXIDATION",
+        "R286_STAT_SAMPLE_POPULATION",
+        "R147_SOCPSY_HIERARCHY_SEGREGATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_492",
+        "DICT_69",
+        "DICT_457",
+        "DICT_96"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_024",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        16,
+        277,
+        199,
+        77
+      ],
+      "reading_question_ids": [
+        "R023_ANT_ARTIFACT_RITUAL",
+        "R314_LANG_PHONOLOGY_SYNTAX",
+        "R141_SOCPSY_COGNITION_NEUROSCIENCE",
+        "R057_LOGIC_DEDUCTION_INDUCTION"
+      ],
+      "dictation_question_ids": [
+        "DICT_146",
+        "DICT_404",
+        "DICT_222",
+        "DICT_455"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_025",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        200,
+        254,
+        250,
+        183
+      ],
+      "reading_question_ids": [
+        "R318_LANG_COHESION_COHERENCE",
+        "R259_BIO_EPIDE_CHRONIC",
+        "R091_LAW_LITIGATION_PARTIES",
+        "R081_NUTRITION_ENZYME_METABOLISM"
+      ],
+      "dictation_question_ids": [
+        "DICT_608",
+        "DICT_265",
+        "DICT_383"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_026",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new",
+      "match_group_ids": [
+        120,
+        252,
+        185,
+        15
+      ],
+      "reading_question_ids": [
+        "R146_SOCPSY_ALTRUISM_NARCISSISM_AGGRESSION",
+        "R251_LEARN_APTITUDE_NUMERACY",
+        "R001_GEO_GLACIER_SEDIMENT",
+        "R195_EVAL_SYNTHESIZE_SOPHISTICATED"
+      ],
+      "dictation_question_ids": [
+        "DICT_613",
+        "DICT_33"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_027",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        257,
+        226,
+        34,
+        133
+      ],
+      "reading_question_ids": [
+        "R227_POLICY_SUFFICIENT_SUPERSEDE"
+      ],
+      "dictation_question_ids": [
+        "DICT_223",
+        "DICT_658",
+        "DICT_650",
+        "DICT_210"
+      ],
+      "estimated_unique_words": 14
+    },
+    {
+      "id": "chapter_028",
+      "theme": "03 Language / Expression / Meaning",
+      "match_mode": "new",
+      "match_group_ids": [
+        86,
+        215,
+        110,
+        116
+      ],
+      "reading_question_ids": [
+        "R182_URBAN_GENTRIFICATION_AMENITIES",
+        "R317_LANG_ARTICULATION_INTONATION",
+        "R345_ANTH_ETHNO_CULTURAL",
+        "R075_MEDIA_MANIPULATE_SENSATIONALISM"
+      ],
+      "dictation_question_ids": [
+        "DICT_432",
+        "DICT_68",
+        "DICT_314",
+        "DICT_53"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_029",
+      "theme": "03 Language / Expression / Meaning",
+      "match_mode": "new",
+      "match_group_ids": [
+        190,
+        263,
+        29,
+        54
+      ],
+      "reading_question_ids": [
+        "R106_DESIGN_REPRODUCTION_EXHIBITION",
+        "R132_LANG_CIRCULATION_INNUENDO",
+        "R241_DIGITAL_TELECOMM_LATENCY",
+        "R253_LEARN_DISTRACTION_COMPREHENSION"
+      ],
+      "dictation_question_ids": [
+        "DICT_512",
+        "DICT_129",
+        "DICT_375",
+        "DICT_236"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_030",
+      "theme": "03 Language / Expression / Meaning",
+      "match_mode": "new",
+      "match_group_ids": [
+        236,
+        26,
+        224,
+        158
+      ],
+      "reading_question_ids": [
+        "R129_LANG_LITERARY_GENRE",
+        "R007_ART_RENAISSANCE_PORTRAIT",
+        "R280_SOC_AGENCY_STRUCTURE",
+        "R199_ENV_HYDROPONICS_NITROGEN"
+      ],
+      "dictation_question_ids": [
+        "DICT_232",
+        "DICT_441",
+        "DICT_361",
+        "DICT_425"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_031",
+      "theme": "03 Language / Expression / Meaning",
+      "match_mode": "new",
+      "match_group_ids": [
+        247,
+        64,
+        219,
+        118
+      ],
+      "reading_question_ids": [
+        "R356_ANTH_COGNITIVE_CULTURAL",
+        "R113_BIO_HEREDITY_GENOME",
+        "R324_NEURO_LATERAL_EXECUTIVE",
+        "R260_BIO_NUCLEUS_GENETIC"
+      ],
+      "dictation_question_ids": [
+        "DICT_109",
+        "DICT_233",
+        "DICT_514",
+        "DICT_220"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_032",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "new",
+      "match_group_ids": [
+        261,
+        150,
+        25,
+        157
+      ],
+      "reading_question_ids": [
+        "R228_POLICY_QUARANTINE_REHABILITATE",
+        "R174_MODEL_ROBUST_VERIFICATION",
+        "R166_GOV_GOVERNANCE_LEGITIMACY",
+        "R242_DIGITAL_ROBOTICS_FRAMEWORK"
+      ],
+      "dictation_question_ids": [
+        "DICT_1",
+        "DICT_245",
+        "DICT_580",
+        "DICT_516"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_033",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "new",
+      "match_group_ids": [
+        44,
+        117,
+        49,
+        173
+      ],
+      "reading_question_ids": [
+        "R165_GOV_BUREAUCRATIC_ENFORCEMENT",
+        "R072_MEDIA_CENSORSHIP_JOURNALISM",
+        "R220_ATT_PRAGMATIC_STRINGENT",
+        "R331_FOOD_DIETARY_CALORIE"
+      ],
+      "dictation_question_ids": [
+        "DICT_653",
+        "DICT_299",
+        "DICT_78",
+        "DICT_132"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_034",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "new",
+      "match_group_ids": [
+        123,
+        0,
+        195,
+        179
+      ],
+      "reading_question_ids": [
+        "R093_LAW_LIABILITY_COMPLIANCE",
+        "R014_LAW_JUDICIAL_JURISDICTION",
+        "R236_DIGITAL_ALGORITHMIC_INTEROPERABILITY",
+        "R118_TECH_PROTOCOL_CONNECTIVITY"
+      ],
+      "dictation_question_ids": [
+        "DICT_506",
+        "DICT_50",
+        "DICT_450",
+        "DICT_589"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_035",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "new",
+      "match_group_ids": [
+        33,
+        46,
+        130,
+        10
+      ],
+      "reading_question_ids": [
+        "R194_EVAL_IMPLEMENT_NEGATE",
+        "R090_MEDIA_SUSTAINABILITY",
+        "R234_ECON_TAXATION_MONOPOLY"
+      ],
+      "dictation_question_ids": [
+        "DICT_576",
+        "DICT_343",
+        "DICT_540",
+        "DICT_494"
+      ],
+      "estimated_unique_words": 17
+    },
+    {
+      "id": "chapter_036",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "new",
+      "match_group_ids": [
+        66,
+        76,
+        165,
+        28
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_158",
+        "DICT_451",
+        "DICT_625",
+        "DICT_616"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_037",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        230,
+        39,
+        261,
+        150
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_259",
+        "DICT_219",
+        "DICT_313",
+        "DICT_290"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_038",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new",
+      "match_group_ids": [
+        249,
+        21,
+        234,
+        182
+      ],
+      "reading_question_ids": [
+        "R145_SOCPSY_ALIENATION_SOLIDARITY",
+        "R355_ANTH_INTERGROUP_SYMBOLIC",
+        "R209_SOC_UTILITARIANISM_VIRTUE",
+        "R186_CULTURE_ASSIMILATION_INDIGENIZATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_631",
+        "DICT_111",
+        "DICT_212",
+        "DICT_118"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_039",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new",
+      "match_group_ids": [
+        127,
+        281,
+        24,
+        43
+      ],
+      "reading_question_ids": [
+        "R252_LEARN_ASSESSMENT_ENGAGEMENT",
+        "R088_MEDIA_IDEOLOGY_DEMOGRAPHICS",
+        "R054_LOGIC_ETHICS_UTILITARIAN"
+      ],
+      "dictation_question_ids": [
+        "DICT_319",
+        "DICT_22",
+        "DICT_186",
+        "DICT_301"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_040",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new",
+      "match_group_ids": [
+        151,
+        59,
+        161,
+        256
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_214",
+        "DICT_421",
+        "DICT_128",
+        "DICT_435"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_041",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new",
+      "match_group_ids": [
+        286,
+        93,
+        55,
+        232
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_487",
+        "DICT_456",
+        "DICT_618",
+        "DICT_496"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_042",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new",
+      "match_group_ids": [
+        1,
+        107,
+        154,
+        106
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_353",
+        "DICT_354",
+        "DICT_307",
+        "DICT_42"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_043",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new",
+      "match_group_ids": [
+        71,
+        65,
+        126,
+        11
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_302",
+        "DICT_458",
+        "DICT_43",
+        "DICT_528"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_044",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        220,
+        249,
+        21,
+        234
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_251",
+        "DICT_215",
+        "DICT_666",
+        "DICT_459"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_045",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "new",
+      "match_group_ids": [
+        115,
+        124,
+        260,
+        146
+      ],
+      "reading_question_ids": [
+        "R222_POLICY_QUOTA_REGULATION",
+        "R037_COMP_RECURSION_SIMULATION",
+        "R079_MARINE_EXTINCTION_SALINITY",
+        "R076_MARINE_CORAL_PLANKTON"
+      ],
+      "dictation_question_ids": [
+        "DICT_38",
+        "DICT_508",
+        "DICT_268",
+        "DICT_363"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_046",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "new",
+      "match_group_ids": [
+        113,
+        41,
+        147,
+        167
+      ],
+      "reading_question_ids": [
+        "R257_BIO_IMMUNITY_VACCINATION",
+        "R114_BIO_SPECIES_TAXONOMY",
+        "R310_MAT_FATIGUE_RESILIENCE",
+        "R337_CITY_FOUNDATION_LOAD"
+      ],
+      "dictation_question_ids": [
+        "DICT_504",
+        "DICT_406",
+        "DICT_623",
+        "DICT_141"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_047",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "new",
+      "match_group_ids": [
+        184,
+        218,
+        122,
+        37
+      ],
+      "reading_question_ids": [
+        "R163_TECH_HARNESS_NANO",
+        "R198_ENV_AFFORESTATION_CATCHMENT",
+        "R343_OCEAN_ABYSSAL_HYDRO",
+        "R048_CLIMATE_BAROMETER"
+      ],
+      "dictation_question_ids": [
+        "DICT_609",
+        "DICT_329",
+        "DICT_74",
+        "DICT_293"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_048",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "new",
+      "match_group_ids": [
+        209,
+        166,
+        119,
+        205
+      ],
+      "reading_question_ids": [
+        "R044_CLIMATE_PRECIPITATION_HUMIDITY",
+        "R070_MAT_TRANSLUCENT_DURABILITY",
+        "R248_ECO_CONTAMINATION_SALINIZATION",
+        "R269_GEO_HEMISPHERE_EQUATOR"
+      ],
+      "dictation_question_ids": [
+        "DICT_206",
+        "DICT_629",
+        "DICT_243",
+        "DICT_360"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_049",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        172,
+        152,
+        266,
+        45
+      ],
+      "reading_question_ids": [
+        "R292_ASTRO_COSMOLOGY_COMET",
+        "R244_ECO_EUTROPHICATION_POLLUTANT",
+        "R302_BUS_LEVERAGE_DIVERSIFICATION",
+        "R119_TECH_INTERFACE_BANDWIDTH"
+      ],
+      "dictation_question_ids": [
+        "DICT_10",
+        "DICT_591",
+        "DICT_32",
+        "DICT_239"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_050",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        231,
+        67,
+        267,
+        6
+      ],
+      "reading_question_ids": [
+        "R287_STAT_SIGNIFICANCE_APPROX",
+        "R167_GOV_MANDATORY_TRANSPARENCY",
+        "R148_SOCPSY_INEQUALITY_NORMALIZATION_STIGMA",
+        "R105_DESIGN_AVANT_MINIMALISM"
+      ],
+      "dictation_question_ids": [
+        "DICT_566",
+        "DICT_247",
+        "DICT_371"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_051",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        40,
+        69,
+        193,
+        262
+      ],
+      "reading_question_ids": [
+        "R349_ANTH_BARTER_KIN",
+        "R348_ANTH_NOMADISM_SUBSISTENCE",
+        "R021_AST_GALAXY_INTERSTELLAR",
+        "R206_SOC_HOSTILITY_XENOPHOBIA"
+      ],
+      "dictation_question_ids": [
+        "DICT_139",
+        "DICT_632",
+        "DICT_122",
+        "DICT_209"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_052",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        91,
+        42,
+        104,
+        2
+      ],
+      "reading_question_ids": [
+        "R229_ECON_OUTSOURCING_REVENUE",
+        "R190_EVAL_PROFOUND_TRIVIAL",
+        "R275_SOC_MARGINALIZATION_DISCRIMINATION",
+        "R016_LAW_SOVEREIGNTY_SANCTION_ADVOCACY"
+      ],
+      "dictation_question_ids": [
+        "DICT_11",
+        "DICT_381",
+        "DICT_55"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_053",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        188,
+        272,
+        241,
+        81
+      ],
+      "reading_question_ids": [
+        "R344_CLIMATE_CYCLONE_HURRICANE",
+        "R351_ANTH_COLLECTIVE_ADAPTIVE",
+        "R032_CHEM_CATALYST",
+        "R087_SOCIAL_DEMOGRAPHIC_GLOBALIZATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_382",
+        "DICT_334",
+        "DICT_216",
+        "DICT_379"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_054",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        61,
+        211,
+        186,
+        138
+      ],
+      "reading_question_ids": [
+        "R300_BUS_SHARE_PROFIT",
+        "R279_SOC_STEREOTYPE_PREJUDICE",
+        "R181_URBAN_ZONING_METROPOLIS",
+        "R089_MEDIA_MARGINALIZE"
+      ],
+      "dictation_question_ids": [
+        "DICT_175",
+        "DICT_25",
+        "DICT_273",
+        "DICT_502"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_055",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        27,
+        87,
+        5,
+        103
+      ],
+      "reading_question_ids": [
+        "R039_AGRI_PESTICIDE_BOTANY",
+        "R283_STAT_DERIVATIVE_INTEGRAL",
+        "R159_ENV_TRIBUTARY_PRISTINE",
+        "R107_PHYS_EQUILIBRIUM_FRICTION"
+      ],
+      "dictation_question_ids": [
+        "DICT_12",
+        "DICT_275",
+        "DICT_657",
+        "DICT_208"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_056",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new",
+      "match_group_ids": [
+        197,
+        169,
+        108,
+        268
+      ],
+      "reading_question_ids": [
+        "R071_MEDIA_BROADCAST_COVERAGE",
+        "R231_ECON_SUBSIDIARY_RETAIL",
+        "R102_EARTH_ABYSS_GLACIATION",
+        "R038_AGRI_WATER_SOIL"
+      ],
+      "dictation_question_ids": [
+        "DICT_90",
+        "DICT_174",
+        "DICT_669"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_057",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        148,
+        50,
+        172,
+        152
+      ],
+      "reading_question_ids": [
+        "R237_DIGITAL_DECENTRALIZATION_DIGITIZATION",
+        "R036_COMP_INTERFACE_BANDWIDTH",
+        "R246_ECO_CONSERVATIONIST_ECOSYSTEM",
+        "R326_AGRI_FERTILIZATION_HERBICIDE"
+      ],
+      "dictation_question_ids": [
+        "DICT_428",
+        "DICT_367",
+        "DICT_377",
+        "DICT_520"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_058",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "new",
+      "match_group_ids": [
+        279,
+        62,
+        22,
+        225
+      ],
+      "reading_question_ids": [
+        "R047_CLIMATE_LAYERS",
+        "R315_LANG_PRAGMATICS_REGISTER",
+        "R110_PHYS_WAVE_SPECTRUM",
+        "R353_ANTH_POP_MIGRATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_467",
+        "DICT_45",
+        "DICT_505",
+        "DICT_524"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_059",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "new",
+      "match_group_ids": [
+        101,
+        214,
+        180,
+        238
+      ],
+      "reading_question_ids": [
+        "R272_GEO_VOLCANO_TECTONIC",
+        "R294_DESC_SPONT_SPORADIC",
+        "R111_PHYS_OSCILLATION",
+        "R319_LANG_VERBAL_NONVERBAL"
+      ],
+      "dictation_question_ids": [
+        "DICT_416",
+        "DICT_328",
+        "DICT_385",
+        "DICT_397"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_060",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "new",
+      "match_group_ids": [
+        175,
+        242,
+        210,
+        207
+      ],
+      "reading_question_ids": [
+        "R019_AST_LUNAR_SOLAR",
+        "R150_LOGIC_ATTRIBUTION",
+        "R065_TRANS_TRANSIT",
+        "R316_LANG_BILINGUAL_MULTILINGUAL"
+      ],
+      "dictation_question_ids": [
+        "DICT_572",
+        "DICT_624",
+        "DICT_366",
+        "DICT_415"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_061",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        206,
+        57,
+        279,
+        62
+      ],
+      "reading_question_ids": [
+        "R011_LANG_COGNITIVE_PROFICIENCY",
+        "R164_TECH_TRANSMISSION_UTILIZATION",
+        "R099_EARTH_TECTONIC_SEISMIC",
+        "R191_EVAL_UNPRECEDENTED_BENEFICIAL"
+      ],
+      "dictation_question_ids": [
+        "DICT_423",
+        "DICT_30",
+        "DICT_58",
+        "DICT_672"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_062",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "new",
+      "match_group_ids": [
+        222,
+        143,
+        278,
+        74
+      ],
+      "reading_question_ids": [
+        "R212_FORMAL_EPISTEMOLOGY_ONTOLOGY",
+        "R109_PHYS_GRAVITY_INERTIA_MOMENTUM",
+        "R233_ECON_INFLATION_RECESSION",
+        "R064_TRANS_RAIL_LOGISTICS"
+      ],
+      "dictation_question_ids": [
+        "DICT_491",
+        "DICT_401",
+        "DICT_393",
+        "DICT_114"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_063",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "new",
+      "match_group_ids": [
+        121,
+        198,
+        251,
+        8
+      ],
+      "reading_question_ids": [
+        "R100_EARTH_MAGMA_CRUST_MANTLE",
+        "R235_ECON_PRODUCTIVITY_ENTREPRENEURSHIP",
+        "R097_IND_AUTOMATION_INVENTORY",
+        "R301_BUS_LIQUID_SOLVENT"
+      ],
+      "dictation_question_ids": [
+        "DICT_420",
+        "DICT_198",
+        "DICT_545"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_064",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "new",
+      "match_group_ids": [
+        203,
+        132,
+        32,
+        78
+      ],
+      "reading_question_ids": [
+        "R266_HIST_CHRONOLOGY_ARCHAEOLOGY",
+        "R024_ANT_MYTH_TOTEM",
+        "R274_SOC_SOCIALIZATION_NORM",
+        "R232_ECON_SUBSIDY_SURPLUS"
+      ],
+      "dictation_question_ids": [
+        "DICT_413",
+        "DICT_453",
+        "DICT_544",
+        "DICT_16"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_065",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        140,
+        255,
+        223,
+        222
+      ],
+      "reading_question_ids": [
+        "R061_TRANS_CONGESTION_COMMUTE",
+        "R215_FORMAL_SYLLOGISM_TAUTOLOGY",
+        "R059_ARCH_SKYSCRAPER_URBAN",
+        "R162_TECH_DIFFUSION_PATENT"
+      ],
+      "dictation_question_ids": [
+        "DICT_2",
+        "DICT_636",
+        "DICT_592",
+        "DICT_499"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_066",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "new",
+      "match_group_ids": [
+        239,
+        114,
+        53,
+        187
+      ],
+      "reading_question_ids": [
+        "R270_GEO_CARTOGRAPHY_TERRAIN",
+        "R004_GEO_ERUPTION_TOPOGRAPHY",
+        "R208_SOC_OPPRESSION_RADICALISM",
+        "R157_ENV_BIOSPHERE_INUNDATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_269",
+        "DICT_481",
+        "DICT_541",
+        "DICT_400"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_067",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "new",
+      "match_group_ids": [
+        274,
+        245,
+        56,
+        202
+      ],
+      "reading_question_ids": [
+        "R084_SOCIAL_WELFARE_BUREAUCRACY",
+        "R169_GOV_PRIVATIZATION_VIABILITY",
+        "R350_ANTH_RITUAL_ANCESTRAL",
+        "R080_NUTRIENT_MACROS"
+      ],
+      "dictation_question_ids": [
+        "DICT_417",
+        "DICT_633",
+        "DICT_229"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_068",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "new",
+      "match_group_ids": [
+        176,
+        156,
+        135,
+        248
+      ],
+      "reading_question_ids": [
+        "R329_FOOD_MALNUTRITION_MICRO",
+        "R124_PSY_TEMPERAMENT_INHIBITION",
+        "R143_SOCPSY_PATHOLOGY_THERAPY_PHOBIA",
+        "R128_LANG_METAPHOR_RHETORIC"
+      ],
+      "dictation_question_ids": [
+        "DICT_24",
+        "DICT_221",
+        "DICT_248"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_069",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "new",
+      "match_group_ids": [
+        7,
+        216,
+        136,
+        68
+      ],
+      "reading_question_ids": [
+        "R258_BIO_INFECTION_DIAGNOSIS",
+        "R127_LANG_TERMINOLOGY_PHONETICS",
+        "R085_SOCIAL_STRATIFICATION_EGALITARIAN",
+        "R240_DIGITAL_CYBERNETIC_COMPUTATIONAL"
+      ],
+      "dictation_question_ids": [
+        "DICT_113",
+        "DICT_446",
+        "DICT_29",
+        "DICT_522"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_070",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "new",
+      "match_group_ids": [
+        72,
+        160,
+        276,
+        282
+      ],
+      "reading_question_ids": [
+        "R219_ATT_METICULOUS_OPAQUE",
+        "R271_GEO_EARTHQUAKE_TSUNAMI",
+        "R243_ECO_DESERTIFICATION_REFORESTATION",
+        "R216_ATT_AMBIVALENT_CATEGORICAL"
+      ],
+      "dictation_question_ids": [
+        "DICT_100",
+        "DICT_552",
+        "DICT_85",
+        "DICT_73"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_071",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        100,
+        239,
+        114,
+        53
+      ],
+      "reading_question_ids": [
+        "R218_ATT_HEURISTIC_JUDICIOUS",
+        "R214_FORMAL_MANIFESTO_NUANCE",
+        "R263_HIST_CIVILIZATION_DYNASTY"
+      ],
+      "dictation_question_ids": [
+        "DICT_510",
+        "DICT_405",
+        "DICT_538",
+        "DICT_153"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_072",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "new",
+      "match_group_ids": [
+        82,
+        89,
+        51,
+        13
+      ],
+      "reading_question_ids": [
+        "R135_RES_REFINING_EXTRACTION",
+        "R213_FORMAL_HYPOTHETICAL_KINETICS",
+        "R217_ATT_DISCERNIBLE_EQUIVOCAL",
+        "R103_DESIGN_COMPOSITION_TEXTURE"
+      ],
+      "dictation_question_ids": [
+        "DICT_171",
+        "DICT_369",
+        "DICT_67",
+        "DICT_384"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_073",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "new",
+      "match_group_ids": [
+        141,
+        174,
+        96,
+        171
+      ],
+      "reading_question_ids": [
+        "R201_ENV_MONOCULTURE_OVERGRAZING",
+        "R226_POLICY_SEQUENTIAL_SUBSEQUENT",
+        "R284_STAT_MEAN_MEDIAN_MODE",
+        "R151_LOGIC_INVARIABLY_CONVERSELY"
+      ],
+      "dictation_question_ids": [
+        "DICT_190",
+        "DICT_103",
+        "DICT_462"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_074",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "new",
+      "match_group_ids": [
+        102,
+        283,
+        95,
+        90
+      ],
+      "reading_question_ids": [
+        "R282_STAT_FUNCTION_EQUATION",
+        "R074_MEDIA_MAINSTREAM_EDITORIAL",
+        "R171_MODEL_ANALOGY_BENCHMARK",
+        "R116_ANALYSIS_DEVIATION_CRITERION"
+      ],
+      "dictation_question_ids": [
+        "DICT_235",
+        "DICT_606",
+        "DICT_277",
+        "DICT_550"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_075",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "new",
+      "match_group_ids": [
+        97,
+        164,
+        139,
+        142
+      ],
+      "reading_question_ids": [
+        "R168_GOV_NEGOTIATION_STAKEHOLDER",
+        "R160_TECH_AUTOMATED_COMPONENT",
+        "R285_STAT_VARIANCE_REGRESSION",
+        "R223_POLICY_DECREE_RATIFY"
+      ],
+      "dictation_question_ids": [
+        "DICT_532",
+        "DICT_164",
+        "DICT_276",
+        "DICT_253"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_076",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "new_plus_review_fill",
+      "match_group_ids": [
+        85,
+        82,
+        89,
+        51
+      ],
+      "reading_question_ids": [
+        "R018_AST_CELESTIAL_ORBIT",
+        "R221_ATT_TENUOUS_SALIENT",
+        "R029_CHEM_SOLVENT_ALKALINE",
+        "R115_BIO_HYBRID_CLONING"
+      ],
+      "dictation_question_ids": [
+        "DICT_376",
+        "DICT_194",
+        "DICT_49",
+        "DICT_285"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_077",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "new",
+      "match_group_ids": [
+        70,
+        99,
+        265
+      ],
+      "reading_question_ids": [
+        "R035_COMP_BINARY_ENCRYPTION",
+        "R034_COMP_MATRIX_THEOREM",
+        "R138_RES_PETROLEUM_HYDRAULIC",
+        "R205_SOC_FEUDALISM_PATRIARCHY"
+      ],
+      "dictation_question_ids": [
+        "DICT_337",
+        "DICT_326",
+        "DICT_667",
+        "DICT_517"
+      ],
+      "estimated_unique_words": 17
+    },
+    {
+      "id": "chapter_078",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        226,
+        34,
+        133,
+        105
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_154",
+        "DICT_168",
+        "DICT_621",
+        "DICT_448"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_079",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        98,
+        196,
+        275,
+        109
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_199",
+        "DICT_9",
+        "DICT_6",
+        "DICT_41"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_080",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        129,
+        75,
+        253,
+        228
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_460",
+        "DICT_368",
+        "DICT_515",
+        "DICT_211"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_081",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        48,
+        73,
+        233,
+        162
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_204",
+        "DICT_497",
+        "DICT_386",
+        "DICT_493"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_082",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        144,
+        178,
+        237,
+        258
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_196",
+        "DICT_357",
+        "DICT_411",
+        "DICT_352"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_083",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        79,
+        137,
+        264,
+        145
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_256",
+        "DICT_539",
+        "DICT_197",
+        "DICT_289"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_084",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        20,
+        112,
+        273,
+        170
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_601",
+        "DICT_126",
+        "DICT_495",
+        "DICT_287"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_085",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        270,
+        189,
+        111,
+        128
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_437",
+        "DICT_564",
+        "DICT_258",
+        "DICT_503"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_086",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        58,
+        221,
+        181,
+        229
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_486",
+        "DICT_288",
+        "DICT_454",
+        "DICT_661"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_087",
+      "theme": "02 Argument / Evidence / Research",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        194,
+        259,
+        235,
+        35
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_598"
+      ],
+      "estimated_unique_words": 9
+    },
+    {
+      "id": "chapter_088",
+      "theme": "03 Language / Expression / Meaning",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        86,
+        215,
+        110,
+        116
+      ],
+      "reading_question_ids": [
+        "R130_LANG_INTERPRETING_ELOQUENCE"
+      ],
+      "dictation_question_ids": [
+        "DICT_483",
+        "DICT_173",
+        "DICT_274",
+        "DICT_433"
+      ],
+      "estimated_unique_words": 13
+    },
+    {
+      "id": "chapter_089",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        261,
+        150,
+        25,
+        157
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_121",
+        "DICT_557",
+        "DICT_628",
+        "DICT_445"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_090",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        44,
+        117,
+        49,
+        173
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_588",
+        "DICT_617",
+        "DICT_21",
+        "DICT_152"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_091",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        123,
+        0,
+        195,
+        179
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_266",
+        "DICT_160",
+        "DICT_93",
+        "DICT_99"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_092",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        33,
+        46,
+        130,
+        10
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_56",
+        "DICT_655",
+        "DICT_92",
+        "DICT_0"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_093",
+      "theme": "04 Policy / Law / Control",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        66,
+        76,
+        165,
+        28
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_172",
+        "DICT_452"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_094",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        249,
+        21,
+        234,
+        182
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_359",
+        "DICT_130",
+        "DICT_500",
+        "DICT_561"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_095",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        127,
+        281,
+        24,
+        43
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_48",
+        "DICT_320",
+        "DICT_434",
+        "DICT_3"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_096",
+      "theme": "05 Society / Emotion / Ethics",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        151,
+        59,
+        161,
+        256
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_638"
+      ],
+      "estimated_unique_words": 9
+    },
+    {
+      "id": "chapter_097",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        115,
+        124,
+        260,
+        146
+      ],
+      "reading_question_ids": [
+        "R196_ENV_COMBUSTION_GREENHOUSE",
+        "R120_TECH_VIRTUAL_SIMULATION",
+        "R309_MAT_CORROSION_DURABILITY",
+        "R002_GEO_EROSION_STRATA"
+      ],
+      "dictation_question_ids": [
+        "DICT_534",
+        "DICT_431",
+        "DICT_670",
+        "DICT_639"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_098",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        113,
+        41,
+        147,
+        167
+      ],
+      "reading_question_ids": [
+        "R188_ECO_PARASITE_HIBERNATION",
+        "R017_LAW_PROHIBIT",
+        "R341_OCEAN_ZOOPLANKTON_CORAL",
+        "R256_BIO_PATHOGEN_ANTIBODY"
+      ],
+      "dictation_question_ids": [
+        "DICT_309",
+        "DICT_563",
+        "DICT_414",
+        "DICT_57"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_099",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        184,
+        218,
+        122,
+        37
+      ],
+      "reading_question_ids": [
+        "R136_RES_TEXTILE_RESILIENCE",
+        "R156_ENV_DESALINATION_EFFLUENT",
+        "R125_PSY_SYNDROME_CONDITIONING",
+        "R200_ENV_INCINERATION_LANDFILL"
+      ],
+      "dictation_question_ids": [
+        "DICT_610",
+        "DICT_630",
+        "DICT_398",
+        "DICT_133"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_100",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        209,
+        166,
+        119,
+        205
+      ],
+      "reading_question_ids": [
+        "R049_ENERGY_FOSSIL_RENEWABLE",
+        "R077_MARINE_AQUATIC_MAMMAL",
+        "R046_CLIMATE_MONSOON_ATMOSPHERIC",
+        "R197_ENV_REFINERY_DESPOIL"
+      ],
+      "dictation_question_ids": [
+        "DICT_238",
+        "DICT_291",
+        "DICT_227",
+        "DICT_213"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_101",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        115,
+        124,
+        260,
+        146
+      ],
+      "reading_question_ids": [
+        "R298_DESC_SUSCEPTIBLE_SYMMETRY"
+      ],
+      "dictation_question_ids": [
+        "DICT_331",
+        "DICT_637",
+        "DICT_83",
+        "DICT_582"
+      ],
+      "estimated_unique_words": 14
+    },
+    {
+      "id": "chapter_102",
+      "theme": "06 Environment / Risk / Damage",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        113,
+        41,
+        147,
+        167
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_305",
+        "DICT_430"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_103",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        172,
+        152,
+        266,
+        45
+      ],
+      "reading_question_ids": [
+        "R207_SOC_LIBERALISM_MERITOCRACY",
+        "R230_ECON_MARGIN_MERGER"
+      ],
+      "dictation_question_ids": [
+        "DICT_237",
+        "DICT_138",
+        "DICT_542",
+        "DICT_189"
+      ],
+      "estimated_unique_words": 16
+    },
+    {
+      "id": "chapter_104",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        231,
+        67,
+        267,
+        6
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_81",
+        "DICT_79",
+        "DICT_523",
+        "DICT_183"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_105",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        40,
+        69,
+        193,
+        262
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_570",
+        "DICT_97",
+        "DICT_20",
+        "DICT_612"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_106",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        91,
+        42,
+        104,
+        2
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_654",
+        "DICT_643",
+        "DICT_101",
+        "DICT_531"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_107",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        188,
+        272,
+        241,
+        81
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_646",
+        "DICT_607",
+        "DICT_182",
+        "DICT_626"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_108",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        61,
+        211,
+        186,
+        138
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_255",
+        "DICT_533",
+        "DICT_86",
+        "DICT_5"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_109",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        27,
+        87,
+        5,
+        103
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_225",
+        "DICT_340",
+        "DICT_627",
+        "DICT_389"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_110",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        197,
+        169,
+        108,
+        268
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_76",
+        "DICT_530",
+        "DICT_479",
+        "DICT_246"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_111",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        148,
+        50,
+        172,
+        152
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_372",
+        "DICT_98",
+        "DICT_18",
+        "DICT_521"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_112",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        266,
+        45,
+        231,
+        67
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_304",
+        "DICT_501",
+        "DICT_551",
+        "DICT_519"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_113",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        267,
+        6,
+        40,
+        69
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_645",
+        "DICT_217",
+        "DICT_590",
+        "DICT_330"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_114",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        193,
+        262,
+        91,
+        42
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_513",
+        "DICT_341",
+        "DICT_579",
+        "DICT_75"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_115",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        104,
+        2,
+        188,
+        272
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_142",
+        "DICT_620",
+        "DICT_380",
+        "DICT_640"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_116",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        241,
+        81,
+        61,
+        211
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_577",
+        "DICT_66",
+        "DICT_388",
+        "DICT_472"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_117",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        186,
+        138,
+        27,
+        87
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_134",
+        "DICT_596",
+        "DICT_177",
+        "DICT_651"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_118",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        5,
+        103,
+        197,
+        169
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_240",
+        "DICT_163",
+        "DICT_59",
+        "DICT_8"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_119",
+      "theme": "07 Economy / Resource / Quantity",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        108,
+        268,
+        148,
+        50
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_88",
+        "DICT_306",
+        "DICT_418"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_120",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        279,
+        62,
+        22,
+        225
+      ],
+      "reading_question_ids": [
+        "R009_LANG_DIALECT_ACQUISITION",
+        "R154_LOGIC_SIMULTANEOUS",
+        "R142_SOCPSY_INTRO_EXTRO",
+        "R022_AST_ASTRONAUT"
+      ],
+      "dictation_question_ids": [
+        "DICT_408",
+        "DICT_230",
+        "DICT_471",
+        "DICT_226"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_121",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        101,
+        214,
+        180,
+        238
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_565",
+        "DICT_509",
+        "DICT_641",
+        "DICT_135"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_122",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        175,
+        242,
+        210,
+        207
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_424",
+        "DICT_95",
+        "DICT_124",
+        "DICT_600"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_123",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        206,
+        57,
+        279,
+        62
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_407",
+        "DICT_150",
+        "DICT_335",
+        "DICT_358"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_124",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        22,
+        225,
+        101,
+        214
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_123",
+        "DICT_125",
+        "DICT_315",
+        "DICT_110"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_125",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        180,
+        238,
+        175,
+        242
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_581",
+        "DICT_44",
+        "DICT_409",
+        "DICT_4"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_126",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        210,
+        207,
+        206,
+        57
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_466",
+        "DICT_443",
+        "DICT_652",
+        "DICT_546"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_127",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        279,
+        62,
+        22,
+        225
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_202",
+        "DICT_476",
+        "DICT_346",
+        "DICT_547"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_128",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        101,
+        214,
+        180,
+        238
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_465",
+        "DICT_294",
+        "DICT_474",
+        "DICT_115"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_129",
+      "theme": "08 Time / Process / Order",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        175,
+        242,
+        210,
+        207
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_548",
+        "DICT_615"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_130",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        222,
+        143,
+        278,
+        74
+      ],
+      "reading_question_ids": [
+        "R062_TRANS_CARGO_VESSEL",
+        "R155_ENV_ARABLE_AQUIFER",
+        "R306_BUS_AUDIT_TRANSPARENCY",
+        "R030_CHEM_POLYMER_CRYSTALLINE"
+      ],
+      "dictation_question_ids": [
+        "DICT_119",
+        "DICT_439",
+        "DICT_23",
+        "DICT_662"
+      ],
+      "estimated_unique_words": 19
+    },
+    {
+      "id": "chapter_131",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        121,
+        198,
+        251,
+        8
+      ],
+      "reading_question_ids": [
+        "R334_CITY_DENSITY_TRANSPORT",
+        "R210_FORMAL_AXIOM_LOGIC",
+        "R338_OCEAN_OCEANOGRAPHY_CURRENT",
+        "R177_NEURO_NEURON_SYNAPSE"
+      ],
+      "dictation_question_ids": [
+        "DICT_378",
+        "DICT_159",
+        "DICT_568",
+        "DICT_89"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_132",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        203,
+        132,
+        32,
+        78
+      ],
+      "reading_question_ids": [
+        "R333_CITY_RES_COMM_IND",
+        "R327_AGRI_CROP_SOIL",
+        "R095_IND_MANUFACTURING_ASSEMBLY",
+        "R067_MAT_POLYMER_ELASTICITY"
+      ],
+      "dictation_question_ids": [
+        "DICT_543",
+        "DICT_264",
+        "DICT_143",
+        "DICT_470"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_133",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        140,
+        255,
+        223,
+        222
+      ],
+      "reading_question_ids": [
+        "R313_MAT_PROTOTYPING_AUTOMATION",
+        "R063_TRANS_AVIATION_TERMINAL",
+        "R058_ARCH_VENTILATION_DWELLING",
+        "R184_URBAN_SUBURB_ARCHITECTURE"
+      ],
+      "dictation_question_ids": [
+        "DICT_490",
+        "DICT_60",
+        "DICT_116",
+        "DICT_148"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_134",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        143,
+        278,
+        74,
+        121
+      ],
+      "reading_question_ids": [
+        "R005_ART_MANUSCRIPT_PIGMENT",
+        "R273_GEO_BASIN_DELTA_WATERSHED",
+        "R303_BUS_PROCUREMENT_INVENTORY",
+        "R336_CITY_SKYLINE_LANDMARK"
+      ],
+      "dictation_question_ids": [
+        "DICT_82",
+        "DICT_583",
+        "DICT_402"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_135",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        198,
+        251,
+        8,
+        203
+      ],
+      "reading_question_ids": [
+        "R040_AGRI_PHOTOSYNTHESIS_VEGETATION",
+        "R122_PSY_PERCEPTION_STIMULUS"
+      ],
+      "dictation_question_ids": [
+        "DICT_193",
+        "DICT_167",
+        "DICT_162",
+        "DICT_518"
+      ],
+      "estimated_unique_words": 16
+    },
+    {
+      "id": "chapter_136",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        132,
+        32,
+        78,
+        140
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_242",
+        "DICT_573",
+        "DICT_17",
+        "DICT_392"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_137",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        255,
+        223,
+        222,
+        143
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_303",
+        "DICT_390",
+        "DICT_482",
+        "DICT_234"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_138",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        278,
+        74,
+        121,
+        198
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_91",
+        "DICT_62",
+        "DICT_102",
+        "DICT_286"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_139",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        251,
+        8,
+        203,
+        132
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_263",
+        "DICT_61",
+        "DICT_280",
+        "DICT_438"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_140",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        32,
+        78,
+        140,
+        255
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_80",
+        "DICT_65",
+        "DICT_332",
+        "DICT_218"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_141",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        223,
+        222,
+        143,
+        278
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_440",
+        "DICT_296",
+        "DICT_244",
+        "DICT_64"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_142",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        74,
+        121,
+        198,
+        251
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_241",
+        "DICT_149",
+        "DICT_279",
+        "DICT_311"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_143",
+      "theme": "09 Space / Physical / Concrete",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        8,
+        203,
+        132,
+        32
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_292"
+      ],
+      "estimated_unique_words": 9
+    },
+    {
+      "id": "chapter_144",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        239,
+        114,
+        53,
+        187
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_644",
+        "DICT_660",
+        "DICT_480",
+        "DICT_442"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_145",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        274,
+        245,
+        56,
+        202
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_136",
+        "DICT_297",
+        "DICT_370",
+        "DICT_605"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_146",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        176,
+        156,
+        135,
+        248
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_562",
+        "DICT_473",
+        "DICT_597",
+        "DICT_347"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_147",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        7,
+        216,
+        136,
+        68
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_200",
+        "DICT_112",
+        "DICT_144",
+        "DICT_489"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_148",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        72,
+        160,
+        276,
+        282
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_252",
+        "DICT_403",
+        "DICT_593",
+        "DICT_270"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_149",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        100,
+        239,
+        114,
+        53
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_260",
+        "DICT_145",
+        "DICT_345",
+        "DICT_169"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_150",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        187,
+        274,
+        245,
+        56
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_560",
+        "DICT_261",
+        "DICT_553",
+        "DICT_498"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_151",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        202,
+        176,
+        156,
+        135
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_635",
+        "DICT_427",
+        "DICT_161",
+        "DICT_107"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_152",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        248,
+        7,
+        216,
+        136
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_526",
+        "DICT_228",
+        "DICT_201",
+        "DICT_52"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_153",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        68,
+        72,
+        160,
+        276
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_15",
+        "DICT_271",
+        "DICT_426",
+        "DICT_668"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_154",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        282,
+        100,
+        239,
+        114
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_469",
+        "DICT_399",
+        "DICT_348",
+        "DICT_664"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_155",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        53,
+        187,
+        274,
+        245
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_318",
+        "DICT_484",
+        "DICT_272",
+        "DICT_649"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_156",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        56,
+        202,
+        176,
+        156
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_300",
+        "DICT_622",
+        "DICT_231",
+        "DICT_665"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_157",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        135,
+        248,
+        7,
+        216
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_559",
+        "DICT_604",
+        "DICT_536",
+        "DICT_137"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_158",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        136,
+        68,
+        72,
+        160
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_374",
+        "DICT_587",
+        "DICT_203",
+        "DICT_14"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_159",
+      "theme": "10 Ability / Quality / Degree",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        276,
+        282,
+        100,
+        239
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_485"
+      ],
+      "estimated_unique_words": 9
+    },
+    {
+      "id": "chapter_160",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        82,
+        89,
+        51,
+        13
+      ],
+      "reading_question_ids": [
+        "R043_AGRI_THEORY",
+        "R073_MEDIA_PROPAGANDA_NARRATIVE",
+        "R126_LANG_LINGUISTICS_SEMANTICS",
+        "R187_ECO_CAMOUFLAGE_SYMBIOSIS"
+      ],
+      "dictation_question_ids": [
+        "DICT_26",
+        "DICT_327",
+        "DICT_257",
+        "DICT_191"
+      ],
+      "estimated_unique_words": 20
+    },
+    {
+      "id": "chapter_161",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        141,
+        174,
+        96,
+        171
+      ],
+      "reading_question_ids": [
+        "R304_BUS_SEGMENTATION_POSITIONING",
+        "R180_NEURO_SENSORY_REFLEX",
+        "R173_MODEL_PARAMETER_NUMERICAL",
+        "R133_LANG_PARADOXICAL"
+      ],
+      "dictation_question_ids": [
+        "DICT_344",
+        "DICT_54",
+        "DICT_195",
+        "DICT_106"
+      ],
+      "estimated_unique_words": 17
+    },
+    {
+      "id": "chapter_162",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        102,
+        283,
+        95,
+        90
+      ],
+      "reading_question_ids": [
+        "R211_FORMAL_CAUSALITY_UNCERTAINTY",
+        "R170_GOV_FRANCHISE_OWNERSHIP"
+      ],
+      "dictation_question_ids": [
+        "DICT_586",
+        "DICT_7",
+        "DICT_187",
+        "DICT_461"
+      ],
+      "estimated_unique_words": 16
+    },
+    {
+      "id": "chapter_163",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        97,
+        164,
+        139,
+        142
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_192",
+        "DICT_295",
+        "DICT_511",
+        "DICT_339"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_164",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        85,
+        82,
+        89,
+        51
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_147",
+        "DICT_87",
+        "DICT_647",
+        "DICT_422"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_165",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        13,
+        141,
+        174,
+        96
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_282",
+        "DICT_468",
+        "DICT_284",
+        "DICT_355"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_166",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        171,
+        102,
+        283,
+        95
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_71",
+        "DICT_84",
+        "DICT_362",
+        "DICT_599"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_167",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        90,
+        97,
+        164,
+        139
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_13",
+        "DICT_575",
+        "DICT_165",
+        "DICT_325"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_168",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        142,
+        85,
+        82,
+        89
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_338",
+        "DICT_131",
+        "DICT_170",
+        "DICT_555"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_169",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        51,
+        13,
+        141,
+        174
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_537",
+        "DICT_181",
+        "DICT_249",
+        "DICT_387"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_170",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        96,
+        171,
+        102,
+        283
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_179",
+        "DICT_27",
+        "DICT_157",
+        "DICT_463"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_171",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        95,
+        90,
+        97,
+        164
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_205",
+        "DICT_254",
+        "DICT_180",
+        "DICT_308"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_172",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        139,
+        142,
+        85,
+        82
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_342",
+        "DICT_554",
+        "DICT_207",
+        "DICT_574"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_173",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        89,
+        51,
+        13,
+        141
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_108",
+        "DICT_283",
+        "DICT_178",
+        "DICT_527"
+      ],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_174",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        174,
+        96,
+        171,
+        102
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_312",
+        "DICT_391",
+        "DICT_156",
+        "DICT_567"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_175",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        283,
+        95,
+        90,
+        97
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_642",
+        "DICT_410",
+        "DICT_356",
+        "DICT_281"
+      ],
+      "estimated_unique_words": 12
+    },
+    {
+      "id": "chapter_176",
+      "theme": "11 Result / Relation / Structure",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        164,
+        139,
+        142,
+        85
+      ],
+      "reading_question_ids": [],
+      "dictation_question_ids": [
+        "DICT_19",
+        "DICT_594"
+      ],
+      "estimated_unique_words": 10
+    },
+    {
+      "id": "chapter_177",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        70,
+        99,
+        265,
+        70
+      ],
+      "reading_question_ids": [
+        "R025_ANT_KINSHIP_TRIBE",
+        "R330_FOOD_ORGANIC_PRESERVATION",
+        "R290_ASTRO_ROT_REV",
+        "R101_EARTH_SEDIMENTARY_FOSSILIZATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_595",
+        "DICT_659",
+        "DICT_105",
+        "DICT_351"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_178",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        99,
+        265,
+        70,
+        99
+      ],
+      "reading_question_ids": [
+        "R225_POLICY_RETROACTIVE_RIGOROUS",
+        "R027_ANT_ETHNOGRAPHY",
+        "R202_ENV_PERMEABLE_WATERTABLE",
+        "R175_MODEL_UNDERLYING_IMPLICATION"
+      ],
+      "dictation_question_ids": [
+        "DICT_364",
+        "DICT_224",
+        "DICT_478",
+        "DICT_663"
+      ],
+      "estimated_unique_words": 17
+    },
+    {
+      "id": "chapter_179",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        265,
+        70,
+        99,
+        265
+      ],
+      "reading_question_ids": [
+        "R267_HIST_HISTORIAN_LEGACY",
+        "R340_OCEAN_THERMOHALINE_CARBON",
+        "R311_MAT_LUBRICATION_MACHINING",
+        "R185_CULTURE_ETHNOGRAPHY_FOLKLORE"
+      ],
+      "dictation_question_ids": [
+        "DICT_671",
+        "DICT_571",
+        "DICT_614",
+        "DICT_611"
+      ],
+      "estimated_unique_words": 18
+    },
+    {
+      "id": "chapter_180",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        70,
+        99,
+        265,
+        70
+      ],
+      "reading_question_ids": [
+        "R204_SOC_BENEVOLENCE_COMMUNAL",
+        "R347_ANTH_PALEO_NEOLITHIC",
+        "R104_DESIGN_MOTIF_ORNAMENTAL",
+        "R247_ECO_DEFORESTATION_EMISSION"
+      ],
+      "dictation_question_ids": [
+        "DICT_140",
+        "DICT_578"
+      ],
+      "estimated_unique_words": 15
+    },
+    {
+      "id": "chapter_181",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        99,
+        265,
+        70,
+        99
+      ],
+      "reading_question_ids": [
+        "R094_LAW_TRIBUNAL",
+        "R265_HIST_MONUMENT_INSCRIPTION",
+        "R268_HIST_PREHISTORIC",
+        "R293_ASTRO_ASTEROID"
+      ],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 11
+    },
+    {
+      "id": "chapter_182",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        265,
+        70,
+        99,
+        265
+      ],
+      "reading_question_ids": [
+        "R339_OCEAN_UPWELLING_PLANKTON",
+        "R291_ASTRO_CONSTELLATION_NEBULA",
+        "R261_BIO_RESP_DIGESTION",
+        "R068_MAT_CERAMIC_INSULATION"
+      ],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 14
+    },
+    {
+      "id": "chapter_183",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        70,
+        99,
+        265,
+        70
+      ],
+      "reading_question_ids": [
+        "R307_MAT_TENSILE_COMPRESSIVE",
+        "R296_DESC_SUBTLE_SUPERFICIAL",
+        "R281_STAT_CONSTANT_COEFFICIENT",
+        "R078_MARINE_CRUSTACEAN_PREDATION"
+      ],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 15
+    },
+    {
+      "id": "chapter_184",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        99,
+        265,
+        70,
+        99
+      ],
+      "reading_question_ids": [
+        "R026_ANT_SHAMAN_FOLKLORE",
+        "R123_PSY_RECEPTION_SUBCONSCIOUS",
+        "R276_SOC_COLLECT_INDIVIDUAL",
+        "R308_MAT_DUCTILITY_FRACTURE"
+      ],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 14
+    },
+    {
+      "id": "chapter_185",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        265,
+        70,
+        99,
+        265
+      ],
+      "reading_question_ids": [
+        "R008_ART_AESTHETIC_SCULPTURE",
+        "R289_ASTRO_SATELLITE_ROTATION",
+        "R320_LANG_TRANSCRIPTION_LEXICON",
+        "R179_NEURO_AMYGDALA_THRESHOLD"
+      ],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 14
+    },
+    {
+      "id": "chapter_186",
+      "theme": "12 General Academic Bridge",
+      "match_mode": "review_repeat",
+      "match_group_ids": [
+        70,
+        99,
+        265,
+        70
+      ],
+      "reading_question_ids": [
+        "R224_POLICY_REGIME_REBUTTAL",
+        "R277_SOC_LINEAGE_RITUALISTIC"
+      ],
+      "dictation_question_ids": [],
+      "estimated_unique_words": 10
+    }
+  ]
+}
