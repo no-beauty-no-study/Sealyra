@@ -441,54 +441,42 @@ function _errorScore(word) {
   const r = (saved.rights   || {})[word] || 0;
   return m - r;
 }
-// v=115 — replaces the fixed stage-N-result screens.  Per user:
-// "分数现在不固定在结算页面了 也没有笔记了 替换成弹窗显示即可
-// 其他继续 (为了快节奏学习)".  Shows a fullscreen ✦ veil with
-// a short title + the score, auto-dismisses after 1.3 s, then
-// invokes `onAdvance`.  For non-perfect runs the user gets a tap
-// target to retry; nothing auto-advances so they can re-read it.
+// v=116 — popup uses the EXISTING scoreBlock frame (the painted
+// score plaque from the matching result page).  Per user: "宝你
+// 的弹窗全错了 你忘了你连连看结算页面的那个score框了吗？直接
+// 移动就行了 之前的结算界面的框删了 保持连连看游戏和结算界面ui
+// 完全一致的布局 score框变成弹窗".  No new visual language — we
+// lift the score frame off its full-page wrapper and float it in
+// a transparent veil instead.
 function showStageResultPopup({ stage, pass, right, total, onAdvance, onRetry }) {
   try {
     if (pass) { SFX.bling && SFX.bling(); SFX.right && SFX.right(); }
     else      { SFX.wrong && SFX.wrong(); }
   } catch {}
+  const stageName = stage === 1 ? 'The Matching'
+                  : stage === 2 ? 'The Reading'
+                  : stage === 3 ? 'The Inscription'
+                                : 'Stage ' + stage;
   const veil = document.createElement('div');
-  veil.className = 's0q-celebrate-veil';
-  const titleTxt = pass ? 'well done' : 'almost';
-  const subTxt = pass
-    ? (stage === 3 ? 'chapter complete' : `stage ${stage} · ${right} / ${total}`)
-    : `${right} / ${total} · tap to try again`;
-  const glyphTxt = pass ? '✦' : '◌';
+  veil.className = 'stage-result-veil';
+  const chapterN = saved.chapter || 1;
   veil.innerHTML = `
-    <div class="s0q-celebrate">
-      <div class="s0q-celebrate-glyph">${glyphTxt}</div>
-      <div class="s0q-celebrate-title">${titleTxt}</div>
-      <div class="s0q-celebrate-sub">${subTxt}</div>
+    <div class="stage-result-card">
+      ${scoreBlock(chapterN, stageName, right, total, encouragement(total > 0 ? right / total : 0))}
+      <div class="match-actions stage-result-actions"></div>
     </div>
   `;
   document.body.appendChild(veil);
   requestAnimationFrame(() => veil.classList.add('is-open'));
-  const close = () => {
+  const dismiss = (after) => {
     veil.classList.add('is-leaving');
-    setTimeout(() => veil.remove(), 320);
+    setTimeout(() => { veil.remove(); if (after) after(); }, 320);
   };
+  const actions = veil.querySelector('.stage-result-actions');
   if (pass) {
-    setTimeout(close, 1300);
-    setTimeout(() => { if (typeof onAdvance === 'function') onAdvance(); }, 1500);
+    actions.appendChild(nextDoor('Next Page', () => dismiss(onAdvance), { confirm: false }));
   } else {
-    // Tap anywhere → retry.  Auto-close after 3 s as a safety
-    // (then drops back through the existing result page so the
-    //  user has a fallback if they ignore the popup).
-    veil.addEventListener('click', () => {
-      close();
-      setTimeout(() => { if (typeof onRetry === 'function') onRetry(); }, 280);
-    });
-    setTimeout(() => {
-      if (veil.parentNode) {
-        close();
-        setTimeout(() => { if (typeof onAdvance === 'function') onAdvance(); }, 280);
-      }
-    }, 3000);
+    actions.appendChild(nextDoor('Try Again', () => dismiss(onRetry)));
   }
 }
 // v=114 — review walker.  Plays the pool in order, opening each

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<!-- v=115 — allow normal HTTP caching; cache-busting is handled per-asset
+<!-- v=116 — allow normal HTTP caching; cache-busting is handled per-asset
      by the ?v= query string below so a fresh push still invalidates.  -->
 <meta name="theme-color" content="#0E0B1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,17 +17,17 @@
 
 <!-- Preload every background illustration in parallel so the
      screen-swap doesn't pause on a fresh download.                -->
-<link rel="preload" as="image" href="assets/bg-cover.jpg?v=115">
-<link rel="preload" as="image" href="assets/bg-stage.jpg?v=115">
-<link rel="preload" as="image" href="assets/bg-result.jpg?v=115">
-<link rel="preload" as="image" href="assets/bg-note.jpg?v=115">
-<link rel="preload" as="image" href="assets/bg-stage0.jpg?v=115">
-<link rel="preload" as="image" href="assets/banner.png?v=115">
-<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=115">
-<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=115">
-<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=115">
+<link rel="preload" as="image" href="assets/bg-cover.jpg?v=116">
+<link rel="preload" as="image" href="assets/bg-stage.jpg?v=116">
+<link rel="preload" as="image" href="assets/bg-result.jpg?v=116">
+<link rel="preload" as="image" href="assets/bg-note.jpg?v=116">
+<link rel="preload" as="image" href="assets/bg-stage0.jpg?v=116">
+<link rel="preload" as="image" href="assets/banner.png?v=116">
+<link rel="preload" as="image" href="assets/3C68C8E6-B3FB-43A6-AE2C-CBDE19872718.png?v=116">
+<link rel="preload" as="image" href="assets/6794E86E-172C-4BB8-ACCB-A167D352E97B.png?v=116">
+<link rel="preload" as="image" href="assets/E993B660-7AD9-4806-AA02-4ADC58F30901.png?v=116">
 
-<link rel="stylesheet" href="styles.css?v=115">
+<link rel="stylesheet" href="styles.css?v=116">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
 
 <!-- Fixed banner at the very top of every screen. -->
 <header id="banner-top">
-  <img src="assets/banner.png?v=115" alt="Her Little Lexicon">
+  <img src="assets/banner.png?v=116" alt="Her Little Lexicon">
 </header>
 
 <!-- ===== App shell. Each <section> is one screen. =====
@@ -50,7 +50,7 @@
   <!-- Cover hub (the home) -->
   <section id="screen-cover"   class="screen"></section>
 
-  <!-- v=115: stage 0 — pre-game reading article + 3-question quiz -->
+  <!-- v=116: stage 0 — pre-game reading article + 3-question quiz -->
   <section id="screen-stage0"      class="screen"></section>
   <section id="screen-stage0-quiz" class="screen"></section>
 
@@ -71,7 +71,7 @@
   <!-- Vocab card detail (opened from note / index with the tarot flip) -->
   <section id="screen-card" class="screen"></section>
 
-  <!-- v=115: chapter catalog (cover-side; pick a chapter to play) -->
+  <!-- v=116: chapter catalog (cover-side; pick a chapter to play) -->
   <section id="screen-chapter-catalog" class="screen"></section>
 
 </div>
@@ -81,28 +81,28 @@
 
 <!-- Data + BGM + App  ----- loaded in order.  Query-string cache-buster
      forces the CDN edge to fetch the latest after every push.        -->
-<script src="data.js?v=115"></script>
+<script src="data.js?v=116"></script>
 
-<!-- v=115 — V147 + V148 vocab (NORMALIZED LITE family).  Content
+<!-- v=116 — V147 + V148 vocab (NORMALIZED LITE family).  Content
      lives once in the registry, all relationships ship word IDs.
      V148 overlays three policy files on top of V147.              -->
-<script src="VOCAB_WORD_CONTENT_REGISTRY_LITE.js?v=115"></script>
-<script src="VOCAB_READING_WORDS_LITE.js?v=115"></script>
-<script src="VOCAB_EXTERNAL_WORDS_LITE.js?v=115"></script>
-<script src="VOCAB_LEARNING_HEAD_WORDS_LITE.js?v=115"></script>
-<script src="VOCAB_FAMILY_SHARED_CLUSTERS_LITE.js?v=115"></script>
-<script src="VOCAB_KIN_CLEAN_LITE.js?v=115"></script>
-<script src="VOCAB_KIN_WORD_SOURCE_HEAD_FAMILY_LITE.js?v=115"></script>
-<script src="VOCAB_KIN_HEAD_BRIDGE_LITE.js?v=115"></script>
-<script src="VOCAB_HEAD_TO_FAMILY_KIN_NAV_LITE.js?v=115"></script>
-<script src="VOCAB_GROUP_CLEAN_LITE.js?v=115"></script>
-<script src="VOCAB_WORD_ENTRY_POLICY_LITE.js?v=115"></script>
-<script src="VOCAB_ENTRY_VISIBILITY_POLICY_LITE.js?v=115"></script>
+<script src="VOCAB_WORD_CONTENT_REGISTRY_LITE.js?v=116"></script>
+<script src="VOCAB_READING_WORDS_LITE.js?v=116"></script>
+<script src="VOCAB_EXTERNAL_WORDS_LITE.js?v=116"></script>
+<script src="VOCAB_LEARNING_HEAD_WORDS_LITE.js?v=116"></script>
+<script src="VOCAB_FAMILY_SHARED_CLUSTERS_LITE.js?v=116"></script>
+<script src="VOCAB_KIN_CLEAN_LITE.js?v=116"></script>
+<script src="VOCAB_KIN_WORD_SOURCE_HEAD_FAMILY_LITE.js?v=116"></script>
+<script src="VOCAB_KIN_HEAD_BRIDGE_LITE.js?v=116"></script>
+<script src="VOCAB_HEAD_TO_FAMILY_KIN_NAV_LITE.js?v=116"></script>
+<script src="VOCAB_GROUP_CLEAN_LITE.js?v=116"></script>
+<script src="VOCAB_WORD_ENTRY_POLICY_LITE.js?v=116"></script>
+<script src="VOCAB_ENTRY_VISIBILITY_POLICY_LITE.js?v=116"></script>
 
-<script src="bgm.js?v=115"></script>
-<script src="app.js?v=115"></script>
+<script src="bgm.js?v=116"></script>
+<script src="app.js?v=116"></script>
 <script>
-  /* v=115 — service worker for offline-first asset caching.  Without
+  /* v=116 — service worker for offline-first asset caching.  Without
      this the user complained the page re-downloaded every asset on
      every visit; with this, the second open of the same version
      loads instantly from the local cache.                            */

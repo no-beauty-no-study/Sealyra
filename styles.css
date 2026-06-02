@@ -7868,6 +7868,47 @@ body.bg-stage0 .scene-veil { display: none; }
 }
 .s0-end-btn--trial:hover { color: #6e3c1a; }
 
+/* v=116 — stage result popup: lifts the existing painted score
+   frame off the (now-retired) full-page result screen and floats
+   it in a centred veil.  Game ui stays identical because the
+   score block / next-door button are the same DOM the result
+   page used.                                                    */
+.stage-result-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(14, 9, 26, 0.66);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  pointer-events: auto;
+}
+.stage-result-veil.is-open    { opacity: 1; }
+.stage-result-veil.is-leaving { opacity: 0; }
+.stage-result-card {
+  width: min(96vw, 460px);
+  max-height: 88vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transform: scale(0.94);
+  transition: transform 0.42s cubic-bezier(.2,.7,.2,1);
+}
+.stage-result-veil.is-open .stage-result-card { transform: scale(1); }
+.stage-result-card .stage-header { margin-top: 0; }
+.stage-result-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 /* v=106 — quiz-completion celebration overlay.  Auto-shown after
    all 3 answers are correct, holds for ~1.3 s, then dissolves
    into the next-stage transition.                              */
