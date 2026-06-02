@@ -424,6 +424,74 @@ function recordMistake(word) {
   saved.mistakes[word] = (saved.mistakes[word] || 0) + 1;
   Store.save();
 }
+// v=114 — symmetric right counter.  errorScore(word) = mistakes -
+// rights.  A word that's been answered correctly more times than
+// wrong drops down the review list; a word that keeps getting
+// missed floats to the top.  Per user: "错的次数大于正确次数最多
+// 的就是最需要复习的词 … 错了之后再写对 这还算错 不算对".  The
+// wrong attempt isn't erased — we just give the right one credit
+// in a separate column.
+function recordRight(word) {
+  saved.rights = saved.rights || {};
+  saved.rights[word] = (saved.rights[word] || 0) + 1;
+  Store.save();
+}
+function _errorScore(word) {
+  const m = (saved.mistakes || {})[word] || 0;
+  const r = (saved.rights   || {})[word] || 0;
+  return m - r;
+}
+// v=114 — review walker.  Plays the pool in order, opening each
+// word's parchment.  Close the parchment → walker advances to the
+// next word.  No mainline state is touched; this is pure revision.
+let _reviewQueue = null;
+function startReview(pool) {
+  if (!pool || !pool.length) return;
+  _reviewQueue = pool.slice();
+  _reviewNext();
+}
+function _reviewNext() {
+  if (!_reviewQueue || _reviewQueue.length === 0) {
+    _reviewQueue = null;
+    return;
+  }
+  const w = _reviewQueue.shift();
+  if (typeof showParchment === 'function') {
+    showParchment(w);
+    // hook the parchment close so we chain onto the next word
+    setTimeout(() => {
+      const veil = document.querySelector('.parchment-veil');
+      if (!veil) { _reviewNext(); return; }
+      const onLeave = () => {
+        veil.removeEventListener('transitionend', onLeave, true);
+        // small delay so the previous veil's leave-out finishes
+        setTimeout(_reviewNext, 240);
+      };
+      // wrap closeParchment with our continuation
+      const origClose = window.closeParchment;
+      if (typeof origClose === 'function') {
+        let consumed = false;
+        const wrapped = function () {
+          if (!consumed) { consumed = true; origClose.apply(this, arguments); setTimeout(_reviewNext, 260); window.closeParchment = origClose; }
+          else origClose.apply(this, arguments);
+        };
+        window.closeParchment = wrapped;
+      }
+    }, 80);
+  } else {
+    _reviewQueue = null;
+  }
+}
+function _reviewPool(limit = 12) {
+  // Pool = every word with at least one mistake OR right recorded,
+  // sorted by errorScore descending (highest = most urgent).
+  const seen = new Set();
+  const arr = [];
+  Object.keys(saved.mistakes || {}).forEach(w => { if (!seen.has(w)) { seen.add(w); arr.push(w); } });
+  Object.keys(saved.rights   || {}).forEach(w => { if (!seen.has(w)) { seen.add(w); arr.push(w); } });
+  arr.sort((a, b) => _errorScore(b) - _errorScore(a));
+  return arr.slice(0, limit);
+}
 function markLearned(word) {
   saved.learned[word] = true;
   Store.save();
@@ -2634,17 +2702,18 @@ const Screens = {
       };
       const fresh = mainline === 1 && (saved.stage == null || saved.stage === 0) && !saved.lastScreen;
       const ctaLabel = fresh ? 'Tonight’s Reading' : (stageLabels[resumeScreen] || 'Continue');
-      $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
+      // v=114 — Menu CTA opens a small dialog with two choices:
+      //   · Continue → existing resume routing
+      //   · Review   → random replay of words sorted by errorScore
+      // Per user: "manu的quiz点击后是弹窗 进入继续还是review随机
+      // 复习已累计的单词 从错的次数最多的开始随机".
+      function _continueFlow() {
         LanBGM.unlock();
         const fade = document.createElement('div');
         fade.className = 'fade-out';
         document.body.appendChild(fade);
         requestAnimationFrame(() => fade.classList.add('show'));
         setTimeout(() => {
-          // v=80 — Continue Reading clears freeMode + resyncs saved.
-          // chapter to mainlineChapter so the linear progression
-          // resumes correctly even if the user had hopped into a
-          // catalog chapter previously.
           saved.freeMode = false;
           saved.chapter = saved.mainlineChapter || saved.chapter || 1;
           if (!saved.mainlineChapter) saved.mainlineChapter = saved.chapter;
@@ -2654,6 +2723,24 @@ const Screens = {
           setTimeout(() => fade.remove(), 700);
           fade.classList.remove('show');
         }, 1000);
+      }
+      $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
+        LanBGM.unlock();
+        const pool = _reviewPool();
+        const reviewBody = pool.length
+          ? `Pick up where you left off, or take a random review pass through ${pool.length} word${pool.length === 1 ? '' : 's'} (most-errored first).`
+          : 'You have no review words yet — accumulate a few before reviewing.';
+        showModal({
+          title: ctaLabel,
+          body: reviewBody,
+          actions: [
+            { label: 'review', variant: 'ghost', onClick: () => {
+              if (pool.length === 0) return;
+              startReview(pool);
+            }},
+            { label: 'continue', variant: '', onClick: _continueFlow }
+          ]
+        });
       }));
 
       // v=63 — small italic "Restart Game · Chapter N" link.  Tap →
