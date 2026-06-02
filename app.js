@@ -594,6 +594,48 @@ function _stageHasData(stageN, ch) {
   if (stageN === 3) return (ch.dictation_question_ids || []).length > 0;
   return true;
 }
+// v=113 — per-section trial progress.  Tracks whether stage 1 / 2 /
+// 3 have been COMPLETED for each chapter (gate: same as the
+// stage-N-result "pass" gate, i.e. perfect score).  Used by:
+//   · cover Menu CTA              → next unfinished mainline stage
+//   · stage 0 reading-end choice  → "Continue Reading" vs "Begin Trial"
+//   · chapter catalog rows        → dot status + tap-to-next
+// Stored as saved.sectionProgress[chapterIdx] = { s1, s2, s3 }
+// (status strings: 'completed' or absent).
+function _ensureSecProgress(chapterIdx) {
+  saved.sectionProgress = saved.sectionProgress || {};
+  const k = String(chapterIdx);
+  saved.sectionProgress[k] = saved.sectionProgress[k] || {};
+  return saved.sectionProgress[k];
+}
+function _markStageDone(chapterIdx, stage) {
+  const p = _ensureSecProgress(chapterIdx);
+  if (p['s' + stage] !== 'completed') {
+    p['s' + stage] = 'completed';
+    try { Store.save(); } catch {}
+  }
+}
+function _isStageDone(chapterIdx, stage) {
+  const p = _ensureSecProgress(chapterIdx);
+  return p['s' + stage] === 'completed';
+}
+function _nextUnfinishedTrialStage(chapterIdx) {
+  const ch = _CHAPTER_PLAN[chapterIdx - 1];
+  if (!ch) return null;
+  for (const s of [1, 2, 3]) {
+    if (!_stageHasData(s, ch)) continue;
+    if (!_isStageDone(chapterIdx, s)) return s;
+  }
+  return null;          // all stages with data have been passed
+}
+function _secStageStatus(chapterIdx, stage) {
+  if (_isStageDone(chapterIdx, stage)) return 'completed';
+  const ch = _CHAPTER_PLAN[chapterIdx - 1];
+  if (!_stageHasData(stage, ch)) return 'unavailable';
+  // in-progress = the section's mainline marker has reached this stage
+  if ((saved.chapter || 0) === chapterIdx && (saved.stage || 0) >= stage) return 'in-progress';
+  return 'not-started';
+}
 function _nextStageId(currentStage) {
   const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
   for (let s = currentStage + 1; s <= 3; s++) {
@@ -2551,21 +2593,35 @@ const Screens = {
       // tracks the true linear position.  Hitting Continue Reading
       // syncs saved.chapter back to mainlineChapter and clears
       // freeMode.
-      let resumeStage = (saved.stage == null) ? 0 : saved.stage;
-      if (resumeStage < 0 || resumeStage > 3) resumeStage = 0;
+      // v=113 — Menu's Quiz / Continue CTA routes to the FIRST
+      // unfinished stage of the mainline chapter.  Order is:
+      //   1. saved.lastScreen (resume the exact screen the user
+      //      bounced out of, even if mid-stage)
+      //   2. otherwise the next un-passed trial stage of mainline
+      //      (s1 → s2 → s3 — the explicit per-section completion
+      //      records, NOT the legacy saved.stage which only ever
+      //      bumps up).
+      //   3. otherwise stage 0 reading.
       const mainline = saved.mainlineChapter || saved.chapter || 1;
       const mlChapter = _CHAPTER_PLAN[mainline - 1];
       const chapHasArticle = !!(mlChapter && mlChapter.article_id);
-      if (resumeStage === 0 && !chapHasArticle) resumeStage = 1;
-      // v=110 — if we recorded a specific gameplay screen last
-      // session (e.g. stage1-result, stage2), use IT for the CTA
-      // target.  Per user: "上一次退出在什么界面 再次进入还是
-      // 什么界面 不然我都做完连连看了 竟然还是从reading开始进入".
+      let resumeScreen = null;
       const REMEMBERABLE = /^stage[0-3](-result|-quiz)?$/;
-      let resumeScreen  = 'stage' + resumeStage;
       if (saved.lastScreen && REMEMBERABLE.test(saved.lastScreen)) {
         resumeScreen = saved.lastScreen;
+      } else {
+        // Walk: stage 1 / 2 / 3 in order, pick first not-completed.
+        const nextTrial = _nextUnfinishedTrialStage(mainline);
+        if (nextTrial) {
+          resumeScreen = 'stage' + nextTrial;
+        } else if (chapHasArticle) {
+          resumeScreen = 'stage0';
+        } else {
+          resumeScreen = 'stage1';
+        }
       }
+      let resumeStage = (saved.stage == null) ? 0 : saved.stage;
+      if (resumeStage < 0 || resumeStage > 3) resumeStage = 0;
       const stageLabels = {
         'stage0':         'Continue · Reading',
         'stage0-quiz':    'Continue · Reading Quiz',
@@ -2576,8 +2632,8 @@ const Screens = {
         'stage3':         'Continue · Stage 3',
         'stage3-result':  'Continue · Stage 3'
       };
-      const ctaLabel = resumeStage === 0 && mainline === 1 && (saved.stage == null || saved.stage === 0)
-        ? 'Tonight’s Reading' : (stageLabels[resumeScreen] || stageLabels['stage' + resumeStage]);
+      const fresh = mainline === 1 && (saved.stage == null || saved.stage === 0) && !saved.lastScreen;
+      const ctaLabel = fresh ? 'Tonight’s Reading' : (stageLabels[resumeScreen] || 'Continue');
       $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
         LanBGM.unlock();
         const fade = document.createElement('div');
@@ -2757,20 +2813,70 @@ const Screens = {
         (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
         showParchment(w);
       }));
-      // v=99 — wire the in-header "next page" link to advance to
-      // the quiz.  Arms (gold pulse) once every sentence is
-      // revealed.
+      // v=113 — reading end gives TWO choices once every sentence
+      // has been revealed (per user: "完成阅读后给两个选择 →
+      // Continue Reading 或 Begin Trial").  Layout: the existing
+      // "next page" link is the default fallthrough to stage 0
+      // quiz; an extra "begin trial" link appears alongside it
+      // once the reading is complete AND the section's stage 1
+      // hasn't been completed yet.  "continue reading" jumps to
+      // the next mainline chapter's stage 0.
       const _foot_key = $('.s0-next-link', el);
       function _armKeyIfDone() {
         const total = $$('.s0-para', el).length;
         const done  = $$('.s0-para.is-revealed', el).length;
-        if (done >= total && _foot_key) _foot_key.classList.add('is-armed');
+        if (done >= total && _foot_key) {
+          _foot_key.classList.add('is-armed');
+          _mountReadingEndChoice();
+        }
       }
       if (_foot_key) _foot_key.addEventListener('click', (ev) => {
         ev.stopPropagation();
         (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
         go('stage0-quiz');
       });
+      let _readingEndMounted = false;
+      function _mountReadingEndChoice() {
+        if (_readingEndMounted) return;
+        _readingEndMounted = true;
+        const host = $('.s0-text-frame', el);
+        if (!host) return;
+        const next = _nextUnfinishedTrialStage(saved.chapter || 1);
+        const chCount = (typeof _CHAPTER_PLAN !== 'undefined') ? _CHAPTER_PLAN.length : 1;
+        const hasNextChapter = (saved.chapter || 1) < chCount;
+        const trialLabel = next ? `begin stage ${next}` : 'all stages done';
+        const wrap = document.createElement('div');
+        wrap.className = 's0-end-choice';
+        wrap.innerHTML = `
+          ${hasNextChapter ? '<button class="s0-end-btn" data-act="continue">continue reading</button>' : ''}
+          ${next ? `<button class="s0-end-btn s0-end-btn--trial" data-act="trial">${trialLabel}</button>` : ''}
+        `;
+        host.appendChild(wrap);
+        wrap.addEventListener('click', (ev) => {
+          const b = ev.target.closest('[data-act]');
+          if (!b) return;
+          ev.stopPropagation();
+          (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
+          if (b.dataset.act === 'continue') {
+            // advance mainline by one chapter, fresh session,
+            // enter stage 0 of the new chapter.
+            const ml = (saved.mainlineChapter || saved.chapter || 1);
+            const newChap = Math.min(ml + 1, chCount);
+            saved.mainlineChapter = newChap;
+            saved.chapter = newChap;
+            saved.stage = 0;
+            saved.freeMode = false;
+            try { Store.save(); } catch {}
+            try { freshSession(); } catch {}
+            go('stage0');
+          } else if (b.dataset.act === 'trial') {
+            // Jump to the next unfinished trial stage for THIS section.
+            const s = _nextUnfinishedTrialStage(saved.chapter || 1);
+            if (s) go('stage' + s);
+            else   go('stage0-quiz');
+          }
+        });
+      }
       // v=94 — tap ANYWHERE on the page reveals the NEXT sentence in
       // order and speaks just that sentence.  Tapping an already-
       // revealed sentence replays its TTS.  Per user: "点击任意部分
@@ -3176,6 +3282,10 @@ const Screens = {
         // v=77 — passed stage 1 → unlock stage 2 (saved.stage = 2)
         // so a mid-chapter exit resumes on the right stage.
         if ((saved.stage || 1) < 2) { saved.stage = 2; Store.save(); }
+        // v=113 — record per-section completion (regardless of free-
+        // mode or mainline) so the catalog + reading-end choice see
+        // it.
+        _markStageDone(saved.chapter, 1);
         $('.match-actions', el).appendChild(nextDoor('Next Page', () => go(_nextStageId(1)), { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
@@ -3511,6 +3621,7 @@ const Screens = {
       if (right >= total && total > 0) {
         // v=77 — passed stage 2 → unlock stage 3 (saved.stage = 3).
         if ((saved.stage || 1) < 3) { saved.stage = 3; Store.save(); }
+        _markStageDone(saved.chapter, 2);
         $('.match-actions', el).appendChild(nextDoor('Next Page', () => go(_nextStageId(2)), { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
@@ -3714,6 +3825,7 @@ const Screens = {
       // counter did NOT advance above, so the same chapter content
       // returns when Continue Reading is tapped again).
       if (_dictsPerfect) {
+        _markStageDone(saved.chapter, 3);
         $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
       } else {
         $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
@@ -3886,30 +3998,57 @@ const Screens = {
         });
         part.rows.forEach(r => {
           const isCurrent = (r.idx + 1) === (saved.chapter || 1);
+          const chap = r.idx + 1;
+          // v=113 — three dots per row showing s1/s2/s3 completion.
+          // ●=done, ◌=in-progress, ·=not started, ─=no data.  Tap
+          // a row → next unfinished stage (no modal).  Per user:
+          // "Story Index 里的 Quiz 按钮 … 进入这个小节的状态页 主
+          // 按钮进入该小节下一个未完成 Stage".  Status pills are
+          // the inline status page until a full status panel ships.
+          const dot = (stage) => {
+            const s = _secStageStatus(chap, stage);
+            const cls = 'cat-dot cat-dot-' + s;
+            const glyph = s === 'completed' ? '●'
+                        : s === 'in-progress' ? '◌'
+                        : s === 'unavailable' ? '─'
+                        : '·';
+            return `<span class="${cls}" title="stage ${stage}: ${s}">${glyph}</span>`;
+          };
+          const nextS = _nextUnfinishedTrialStage(chap);
           const row = document.createElement('button');
           row.className = 'catalog-row'
                        + (r.mistakes >= 3 ? ' is-weak' : '')
-                       + (isCurrent ? ' is-current' : '');
+                       + (isCurrent ? ' is-current' : '')
+                       + (nextS == null ? ' is-section-done' : '');
           row.innerHTML = `
-            <span class="cat-num">${escapeHtml(r.ch.section || (r.idx + 1))}</span>
+            <span class="cat-num">${escapeHtml(r.ch.section || chap)}</span>
             <span class="cat-leader" aria-hidden="true"></span>
             <span class="cat-theme">${escapeHtml((r.ch.theme || '').replace(/^[\d.]+\s*/, ''))}</span>
+            <span class="cat-stages">${dot(1)}${dot(2)}${dot(3)}</span>
             ${r.mistakes > 0 ? `<span class="cat-mistakes">× ${r.mistakes}</span>` : ''}
           `;
           row.addEventListener('click', () => {
             SFX.tap();
+            const targetStage = _nextUnfinishedTrialStage(chap);
+            // Pick the entry: if a trial stage is unfinished, jump
+            // straight in.  Otherwise — section already fully passed
+            // — replay stage 0 reading.
+            const targetScreen = targetStage ? ('stage' + targetStage) : 'stage0';
             showModal({
               title: r.ch.theme,
-              body: `Open this chapter?  Free play doesn't advance your mainline (currently ch ${saved.mainlineChapter || 1}).`,
+              body: targetStage
+                ? `Stage ${targetStage} is next for this section.  Free play doesn't advance your mainline (currently ch ${saved.mainlineChapter || 1}).`
+                : `This section is fully passed — re-read or revisit it?`,
               actions: [
                 { label: 'cancel', variant: 'ghost', onClick: () => {} },
                 { label: 'play',   variant: '',     onClick: () => {
-                  saved.chapter  = r.idx + 1;
+                  saved.chapter  = chap;
                   saved.freeMode = true;
-                  saved.stage    = 0;
+                  // Don't reset saved.stage — it's only for the
+                  // mainline; free mode just opens the requested screen.
                   Store.save();
                   freshSession();
-                  go('stage0');
+                  go(targetScreen);
                 }}
               ]
             });
