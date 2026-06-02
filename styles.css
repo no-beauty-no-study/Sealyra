@@ -3120,6 +3120,7 @@ body { background: transparent !important; }
   position: relative;
   z-index: 1;
 }
+.card.card--option::before,
 .card--option::before,
 .card--option::after {
   content: '✦';
@@ -3201,6 +3202,22 @@ body { background: transparent !important; }
 /* (Old .picked-right .mc-frame gold-dot frame removed — the inner
    double-border now stays in the card's own palette since the body
    is wine-red rather than warm-gold.)                              */
+
+/* v=117 — picked stage-2 options swap their ✦ corner mark for a
+   ♥ heart (heart-red velvet stays).  Per user: 选择题已选全部是
+   桃心 红牌.  Applies to is-picking (during the tap), picked-wrong
+   (revealed wrong pick) and picked-right (the chosen card whether
+   it was right or not — both get the heart, the gold halo only on
+   reveal-right).                                                   */
+.card.card--option.is-picking::before,
+.card.card--option.is-picking::after,
+.card.card--option.picked-wrong::before,
+.card.card--option.picked-wrong::after,
+.card.card--option.picked-right::before,
+.card.card--option.picked-right::after {
+  content: '\2665' !important;
+  color: rgba(216, 132, 132, 0.92) !important;
+}
 
 /* picked-wrong — pink "I tapped this" body, NO halo (the halo
    lives on the .reveal-right correct card).  Earlier override
@@ -6415,7 +6432,88 @@ body { background: transparent !important; }
 }
 .card.card--match.tag-3::before,
 .card.card--match.tag-3::after {
-  content: '\2663';   /* ♣ — stays gold */
+  content: '\2665';   /* ♥ — was ♣ in v=27.3; user: 连连看则是换颜色的桃心 */
+}
+
+/* v=117 — every match tag now flies the ♥ heart, overriding the
+   per-tag suits earlier in this block.  Pair colour still lives in
+   the body tint + word colour.                                    */
+.card.card--match.tag-0::before, .card.card--match.tag-0::after,
+.card.card--match.tag-1::before, .card.card--match.tag-1::after,
+.card.card--match.tag-2::before, .card.card--match.tag-2::after,
+.card.card--match.tag-3::before, .card.card--match.tag-3::after,
+.card.card--match.tag-4::before, .card.card--match.tag-4::after,
+.card.card--match.tag-5::before, .card.card--match.tag-5::after,
+.card.card--match.tag-6::before, .card.card--match.tag-6::after,
+.card.card--match.tag-7::before, .card.card--match.tag-7::after {
+  content: '\2665' !important;
+}
+/* Per-tag heart colour so the corner suit also tells you which pair
+   the card belongs to.  Body tint is identical to the velvet stack
+   above (kept) — only the heart hue swaps.                         */
+.card.card--match.tag-0::before, .card.card--match.tag-0::after { color: rgba(232, 122, 96,  0.92) !important; }  /* persimmon  */
+.card.card--match.tag-1::before, .card.card--match.tag-1::after { color: rgba(132, 168, 232, 0.92) !important; }  /* indigo     */
+.card.card--match.tag-2::before, .card.card--match.tag-2::after { color: rgba(208, 132, 168, 0.92) !important; }  /* wine       */
+.card.card--match.tag-3::before, .card.card--match.tag-3::after { color: rgba(140, 196, 156, 0.92) !important; }  /* emerald    */
+.card.card--match.tag-4::before, .card.card--match.tag-4::after { color: rgba(232, 184, 96,  0.92) !important; }  /* amber      */
+.card.card--match.tag-5::before, .card.card--match.tag-5::after { color: rgba(112, 184, 184, 0.92) !important; }  /* teal       */
+.card.card--match.tag-6::before, .card.card--match.tag-6::after { color: rgba(228, 156, 196, 0.92) !important; }  /* rose       */
+.card.card--match.tag-7::before, .card.card--match.tag-7::after { color: rgba(184, 156, 224, 0.92) !important; }  /* lavender   */
+
+/* tags 4-7 — four new velvet bodies for the user's 8-pair board.
+   Shared fibre-grain + radial dust the other tags use, plus a
+   distinct linear-gradient tint per pair, plus a word colour that
+   matches its heart.                                              */
+.card.card--match.tag-4,
+.card.card--match.tag-5,
+.card.card--match.tag-6,
+.card.card--match.tag-7 {
+  border-color: rgba(190, 158, 100, 0.62) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(190, 158, 100, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
+    inset 0 0 16px rgba(0, 0, 0, 0.32),
+    0 1px 3px rgba(0, 0, 0, 0.50);
+}
+.card.card--match.tag-4 {
+  background:
+    radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
+    linear-gradient(160deg, rgba(42, 32, 14, 0.94) 0%, rgba(22, 16, 6, 0.97) 100%) !important;
+  color: rgba(232, 196, 124, 0.96) !important;
+}
+.card.card--match.tag-5 {
+  background:
+    radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
+    linear-gradient(160deg, rgba(14, 32, 32, 0.94) 0%, rgba(6, 18, 18, 0.97) 100%) !important;
+  color: rgba(148, 196, 196, 0.96) !important;
+}
+.card.card--match.tag-6 {
+  background:
+    radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
+    linear-gradient(160deg, rgba(40, 18, 28, 0.94) 0%, rgba(22, 8, 16, 0.97) 100%) !important;
+  color: rgba(232, 168, 200, 0.96) !important;
+}
+.card.card--match.tag-7 {
+  background:
+    radial-gradient(circle 0.6px at 14% 28%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 78% 18%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 42% 62%, rgba(232, 200, 130, 0.10), transparent 100%),
+    radial-gradient(circle 0.6px at 22% 82%, rgba(232, 200, 130, 0.08), transparent 100%),
+    radial-gradient(circle 0.6px at 88% 78%, rgba(232, 200, 130, 0.10), transparent 100%),
+    linear-gradient(160deg, rgba(26, 22, 44, 0.94) 0%, rgba(14, 10, 28, 0.97) 100%) !important;
+  color: rgba(196, 176, 232, 0.96) !important;
 }
 
 /* (the old `match-halo` breathing keyframes lived here.  killed —
