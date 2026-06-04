@@ -30,6 +30,20 @@ function shuffle(arr) {
   }
   return a;
 }
+// v=64 — seeded shuffle so each chapter draws the SAME content from
+// the global pools.  Without this, every "Continue Reading" tap on
+// the same chapter showed fresh words — the user kept saying
+// "我只通关了一次但你一直在累积不同单词".  LCG keeps it tiny.       */
+function seededShuffle(arr, seed) {
+  let s = (seed | 0) || 1;
+  const rnd = () => { s = (s * 1664525 + 1013904223) | 0; return ((s >>> 0) / 4294967296); };
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 function escapeHtml(s) {
   return (s == null ? '' : String(s))
     .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -37,14 +51,41 @@ function escapeHtml(s) {
 }
 function escapeAttr(s) { return escapeHtml(s); }
 
+// v=109 — voice picker retired.  User: "你不要使用你的语音 使用no
+// voice（我自己系统的声音）".  We let the platform pick its own
+// default voice (the user has a high-quality female installed).
+function _pickVoice() { return null; }
+if (window.speechSynthesis && typeof window.speechSynthesis.onvoiceschanged !== 'undefined') {
+  window.speechSynthesis.onvoiceschanged = () => {};
+}
+// v=105 — block speak() until voices have been enumerated.  iOS
+// returns an empty list synchronously and only populates after the
+// onvoiceschanged event; without this wait the first speak() on a
+// cold page silently drops because the synth has no voice.
+function _waitForVoices(timeoutMs = 1500) {
+  return new Promise(resolve => {
+    if (!window.speechSynthesis) return resolve();
+    const have = () => (window.speechSynthesis.getVoices() || []).length > 0;
+    if (have()) return resolve();
+    const t0 = Date.now();
+    const tick = () => {
+      if (have()) return resolve();
+      if (Date.now() - t0 > timeoutMs) return resolve();
+      setTimeout(tick, 90);
+    };
+    tick();
+  });
+}
+
 function speak(text, lang = 'en-US') {
   if (!window.speechSynthesis) return Promise.resolve();
   window.speechSynthesis.cancel();
   return new Promise(resolve => {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
-    u.rate = 0.92;
+    u.rate = 0.82;            // v=109 — slower per user "速度可以再慢点"
     u.pitch = 1.0;
+    // No voice override — uses the platform default (user's preferred system voice).
     u.onend   = () => resolve();
     u.onerror = () => resolve();
     window.speechSynthesis.speak(u);
@@ -96,44 +137,255 @@ const SFX = (() => {
     src.connect(filter); filter.connect(g); g.connect(c.destination);
     src.start(c.currentTime);
   }
+  // v=78 — band-pass noise helper for organic paper/cloth sounds.
+  // type: 'bandpass' with a fixed centre + Q; envelope shapes
+  // attack + release so the burst feels like a physical event
+  // (paper, ink, fabric) rather than a digital tap.
+  function bandNoise({ dur = 0.20, peak = 0.06, center = 1200, q = 1.2, attack = 0.01, release = 0.18 }) {
+    const c = ensure();
+    const bufferSize = Math.floor(c.sampleRate * dur);
+    const buf = c.createBuffer(1, bufferSize, c.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+    const src = c.createBufferSource();
+    src.buffer = buf;
+    const filter = c.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = center;
+    filter.Q.value = q;
+    const g = c.createGain();
+    const t0 = c.currentTime;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0001), t0 + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + attack + release);
+    src.connect(filter); filter.connect(g); g.connect(c.destination);
+    src.start(t0);
+  }
   return {
     bling:   () => {
-      // Ascending chime …
       tone([1175, 1568, 1976, 2349, 2794], 0.05, 0.32, 'triangle', 0.13);
-      // … with a shimmer chord layered ~80ms later …
       setTimeout(() => tone([2349, 2794, 3136], 0.04, 0.22, 'sine', 0.08), 80);
-      // … and a final tiny sparkle.
       setTimeout(() => tone([3520, 4186], 0.04, 0.14, 'sine', 0.05), 200);
     },
     tap:     () => tone([1050],                          0.0, 0.07, 'sine',     0.06),
-    pageTurn:() => { noise(0.18, 0.06, 2200); },
+    // v=78 — cardFlip: short "thwack" of card paper.  A quick mid-high
+    // noise burst (the snap of the card's edge) layered with a low
+    // thump (the card landing flat).  Replaces the bare SFX.tap that
+    // was being used for option card picks.
+    cardFlip: () => {
+      bandNoise({ dur: 0.10, peak: 0.10, center: 2400, q: 0.9, attack: 0.003, release: 0.09 });
+      setTimeout(() => bandNoise({ dur: 0.12, peak: 0.06, center: 420, q: 2.0, attack: 0.004, release: 0.11 }), 25);
+    },
+    // v=78 — pageTurn: rebuilt to read as a book page being turned.
+    // A soft mid-low rustle (paper) followed 60 ms later by a quieter
+    // high-mid whisper (the page settling).  Far gentler than the
+    // bare highpass noise the user described as "抽了我一巴掌".
+    pageTurn:() => {
+      bandNoise({ dur: 0.32, peak: 0.07, center: 800,  q: 1.0, attack: 0.012, release: 0.30 });
+      setTimeout(() => bandNoise({ dur: 0.22, peak: 0.045, center: 2200, q: 1.4, attack: 0.008, release: 0.20 }), 60);
+    },
+    // v=78 — inkScratch: soft pencil-on-paper scratching, used when
+    // a parchment row reveals.  Mid-frequency band noise with a
+    // very gentle envelope; quiet enough to layer under TTS.
+    inkScratch: () => {
+      bandNoise({ dur: 0.38, peak: 0.035, center: 1400, q: 0.7, attack: 0.020, release: 0.36 });
+    },
     pop:     () => tone([784, 1175, 1568],               0.06, 0.22, 'triangle', 0.12),
     right:   () => tone([880, 1175, 1568],               0.05, 0.22, 'sine',     0.16),
     wrong:   () => tone([311, 207],                      0.07, 0.20, 'square',   0.06),
-    finish:  () => tone([523, 659, 784, 988, 1175, 1318],0.08, 0.26, 'sine',     0.14)
+    finish:  () => tone([523, 659, 784, 988, 1175, 1318],0.08, 0.26, 'sine',     0.14),
+
+    // Result-modal chimes — pick one based on the score band.
+    scorePerfect: () => {
+      tone([1175, 1568, 1976, 2349, 2794, 3136], 0.05, 0.28, 'triangle', 0.14);
+      setTimeout(() => tone([2349, 2794, 3136, 3520], 0.04, 0.22, 'sine', 0.09), 90);
+      setTimeout(() => tone([3520, 4186], 0.04, 0.16, 'sine', 0.06), 220);
+    },
+    scoreGood: () => {
+      tone([784, 988, 1175, 1397], 0.06, 0.24, 'triangle', 0.13);
+      setTimeout(() => tone([1568, 1976], 0.05, 0.18, 'sine', 0.08), 100);
+    },
+    scoreOk: () => tone([784, 988], 0.10, 0.32, 'sine', 0.11),
+    scoreLow: () => tone([523, 622], 0.12, 0.36, 'sine', 0.09)
   };
 })();
 
 /* ------------------------------------------------------------
-   2. SESSION SET — 8 words per Tonight's Reading run
-   We need a word that exists in CARDS + GROUPS + DICT_QUESTIONS so
-   all three stages can use the same 8 heads.
-   ------------------------------------------------------------ */
-const GROUP_MAP = new Map(GROUPS.map(g => [g.head, g.partner]));
-const DICT_MAP  = new Map(DICT_QUESTIONS.map(d => [d.head, d]));
-const ALL_HEADS = Object.keys(CARDS).filter(h =>
-  GROUP_MAP.has(h) && DICT_MAP.has(h)
-).sort();
-const TOTAL_WORDS = Object.keys(CARDS).length;
+   2. SESSION BUILDER  (v=51 — new bundle schema)
 
-function buildSession(startIdx) {
-  const heads = ALL_HEADS.slice(startIdx, startIdx + 8);
-  if (heads.length < 8) return null;
-  return {
-    words: heads,
-    pairs: heads.slice(0, 4).map(h => ({ head: h, partner: GROUP_MAP.get(h) })),
-    dict:  heads.map(h => DICT_MAP.get(h))
+   Each stage now draws from its OWN dedicated pool, per the
+   data bundle's "11. 角色规则":
+     stage 1 → MATCH_GROUPS         (4 pairs = 8 cards)
+     stage 2 → SCENE_BLANK_QUESTIONS (4 reading sentences)
+     stage 3 → DICTATION_QUESTIONS   (4 dictation words)
+
+   The 8 match-game words DO NOT have to overlap with the stage-2
+   or stage-3 pools — the data is curated so dictation words are
+   "output" (writing-worthy) while reading words are "recognition".
+   buildSession() now picks independently from each pool, no
+   forced sharing of headwords.
+   ------------------------------------------------------------ */
+const _CARDS_ALIAS    = PARCHMENT_CARDS;     // shorthand
+const TOTAL_WORDS     = Object.keys(PARCHMENT_CARDS).length;
+// Quick lookup tables.
+const _JUMP_LINKS     = PARCHMENT_JUMP_LINKS;
+const _GROUPS_ARR     = MATCH_GROUPS;
+const _DICT_ARR       = DICTATION_QUESTIONS;
+const _SCENE_ARR      = SCENE_BLANK_QUESTIONS;
+// v=65 — themed chapters from VOCAB_ALL_QUESTIONS_CLASSIFIED_CHAPTERS.
+// 212 hand-built chapters; each carries match_group_ids,
+// reading_question_ids (string ids), and dictation_question_ids
+// (format "DICT_N" → DICTATION_QUESTIONS[N]).                       */
+const _CHAPTER_PLAN   = (typeof CHAPTER_PLAN !== 'undefined') ? CHAPTER_PLAN : [];
+const _SCENE_BY_ID = (() => {
+  const m = {};
+  _SCENE_ARR.forEach(q => { if (q.id) m[q.id] = q; });
+  return m;
+})();
+
+function _chapterFor(chapterN) {
+  if (!_CHAPTER_PLAN.length) return null;
+  // Chapters are 1-indexed for the user; clamp + wrap.
+  const idx = Math.max(0, (chapterN | 0) - 1) % _CHAPTER_PLAN.length;
+  return _CHAPTER_PLAN[idx];
+}
+
+// v=65 — chapter-driven pickers (4 pairs / scenes / dicts each).
+// If the chapter plan is missing or short, fall back to the random
+// seeded pickers below so the UI never crashes.
+function _pickMatchPairs(n = 4, seed = 0) {
+  const ch = _chapterFor(seed);
+  if (ch && ch.match_group_ids && ch.match_group_ids.length) {
+    const used = new Set();
+    const out  = [];
+    for (const gid of ch.match_group_ids) {
+      const g = _GROUPS_ARR[gid];
+      if (!g) continue;
+      if (used.has(g.head) || used.has(g.partner)) continue;
+      out.push({ head: g.head, partner: g.partner });
+      used.add(g.head); used.add(g.partner);
+      if (out.length === n) break;
+    }
+    if (out.length === n) return out;
+  }
+  // Fallback — seeded random.
+  const used = new Set();
+  const out  = [];
+  const pool = seed ? seededShuffle(_GROUPS_ARR, seed * 7 + 11) : shuffle(_GROUPS_ARR);
+  for (const g of pool) {
+    if (used.has(g.head) || used.has(g.partner)) continue;
+    out.push({ head: g.head, partner: g.partner });
+    used.add(g.head); used.add(g.partner);
+    if (out.length === n) break;
+  }
+  return out;
+}
+function _pickSceneQuestions(n = 4, seed = 0) {
+  const ch = _chapterFor(seed);
+  if (ch && ch.reading_question_ids && ch.reading_question_ids.length) {
+    const picks = ch.reading_question_ids.map(id => _SCENE_BY_ID[id]).filter(Boolean);
+    if (picks.length) {
+      // Chapter may carry fewer than n reading questions (some are short);
+      // pad with seeded-random extras so the user always gets n scenes.
+      if (picks.length < n) {
+        const extras = seededShuffle(_SCENE_ARR, seed * 13 + 5)
+          .filter(s => !picks.includes(s))
+          .slice(0, n - picks.length);
+        picks.push(...extras);
+      }
+      return picks.slice(0, n);
+    }
+  }
+  // Fallback — seeded random over the full pool.
+  return seededShuffle(_SCENE_ARR, seed * 13 + 5).slice(0, n);
+}
+function _pickDictQuestions(n = 4, seed = 0) {
+  // v=65 — chapter-driven.  Each chapter lists DICT_N tokens which
+  // are 0-based indices into DICTATION_QUESTIONS.  We use the head
+  // of each entry, then build the same single-blank example
+  // sentence (from PARCHMENT_CARDS.example) the user wanted in
+  // v=54.  This way the WORD comes from the curated chapter plan
+  // but the prompt is still a contextual sentence.                  */
+  const buildFromHead = (word) => {
+    const c = PARCHMENT_CARDS[word];
+    if (!c) return null;
+    const ex = c.example || '';
+    if (!ex || !new RegExp(`\\b${word}\\b`, 'i').test(ex)) {
+      // No usable example — fall back to a phrase-style prompt.
+      const dq = _DICT_ARR.find(d => d.head === word);
+      const prompt = dq && dq.prompt ? dq.prompt : word;
+      return {
+        head: word,
+        hint: word[0],
+        blank_sentence: prompt.replace(new RegExp(`\\b${word}\\b`, 'i'), '______') || '______',
+        full_sentence: prompt,
+        sentence_zh:   dq && dq.prompt_zh ? dq.prompt_zh : (c.zh || ''),
+        answer:        word,
+        role:          c.role || 'output',
+        topic:         c.topic || ''
+      };
+    }
+    return {
+      head: word,
+      hint: word[0],
+      blank_sentence: ex.replace(new RegExp(`\\b${word}\\b`, 'i'), '______'),
+      full_sentence: ex,
+      sentence_zh:   c.example_zh || '',
+      answer:        word,
+      role:          c.role || 'output',
+      topic:         c.topic || ''
+    };
   };
+  const ch = _chapterFor(seed);
+  if (ch && ch.dictation_question_ids && ch.dictation_question_ids.length) {
+    const heads = ch.dictation_question_ids
+      .map(tok => {
+        const m = /^DICT_(\d+)$/.exec(tok);
+        if (!m) return null;
+        const idx = parseInt(m[1], 10);
+        const d = _DICT_ARR[idx];
+        return d ? d.head : null;
+      })
+      .filter(Boolean);
+    const out = heads.map(buildFromHead).filter(Boolean);
+    if (out.length >= n) return out.slice(0, n);
+    if (out.length) {
+      // Pad with seeded random heads.
+      const extras = seededShuffle(Object.keys(PARCHMENT_CARDS).filter(w => {
+        const c = PARCHMENT_CARDS[w];
+        return c && c.canWrite && c.example && new RegExp(`\\b${w}\\b`, 'i').test(c.example);
+      }), seed * 17 + 23)
+        .filter(w => !out.some(o => o.head === w))
+        .slice(0, n - out.length)
+        .map(buildFromHead)
+        .filter(Boolean);
+      out.push(...extras);
+      return out.slice(0, n);
+    }
+  }
+  // Fallback — seeded random over the canWrite + has-example pool.
+  const pool = Object.keys(PARCHMENT_CARDS).filter(w => {
+    const c = PARCHMENT_CARDS[w];
+    return c && c.canWrite && c.example && new RegExp(`\\b${w}\\b`, 'i').test(c.example);
+  });
+  return seededShuffle(pool, seed * 17 + 23).slice(0, n).map(buildFromHead).filter(Boolean);
+}
+
+function buildSession(seed = 0) {
+  // v=64 — accept an optional seed so each chapter draws stable
+  // content from the global pools.  freshSession() passes
+  // saved.chapter so "Continue Reading" on chapter N always shows
+  // the same set of pairs / scenes / dicts.                          */
+  const pairs   = _pickMatchPairs(4, seed);
+  if (pairs.length < 4) return null;
+  const scenes  = _pickSceneQuestions(4, seed);
+  const dicts   = _pickDictQuestions(4, seed);
+  const words = Array.from(new Set([
+    ...pairs.flatMap(p => [p.head, p.partner]),
+    ...scenes.flatMap(s => s.answers || []),
+    ...dicts.map(d => d.head)
+  ]));
+  return { pairs, scenes, dicts, words };
 }
 
 /* ------------------------------------------------------------
@@ -143,17 +395,140 @@ const Store = {
   load() {
     try {
       return Object.assign(
-        { progress: 0, learned: {}, mistakes: {} },
+        // v=80 — added mainlineChapter (linear progression marker)
+        // + freeMode (true while user is playing a catalog jump).
+        { progress: 0, learned: {}, mistakes: {}, chapter: 1, stage: 0, mainlineChapter: 1, freeMode: false },
         JSON.parse(localStorage.getItem('hll-state') || '{}')
       );
-    } catch { return { progress: 0, learned: {}, mistakes: {} }; }
+    } catch { return { progress: 0, learned: {}, mistakes: {}, chapter: 1 }; }
   },
   save() { try { localStorage.setItem('hll-state', JSON.stringify(saved)); } catch {} }
 };
 const saved = Store.load();
+if (!saved.chapter || saved.chapter < 1) { saved.chapter = 1; Store.save(); }
+if (!saved.mainlineChapter || saved.mainlineChapter < 1) { saved.mainlineChapter = saved.chapter; Store.save(); }
+// v=80 — stage 0 added as the article reading + quiz layer.
+// saved.stage ∈ {0,1,2,3}; 0 = pre-game reading, 1-3 = match/read/dict.
+if (saved.stage == null || saved.stage < 0 || saved.stage > 3) { saved.stage = 0; Store.save(); }
+// v=63 — restart-game reset: chapter only.  Learned + mistakes are
+// lifetime stats; user resets the "where am I in the storybook"
+// counter, not their notebook.
+function resetChapterProgress() {
+  saved.chapter = 1;
+  saved.mainlineChapter = 1;
+  saved.freeMode = false;
+  saved.stage   = 0;
+  Store.save();
+}
 function recordMistake(word) {
   saved.mistakes[word] = (saved.mistakes[word] || 0) + 1;
   Store.save();
+}
+// v=114 — symmetric right counter.  errorScore(word) = mistakes -
+// rights.  A word that's been answered correctly more times than
+// wrong drops down the review list; a word that keeps getting
+// missed floats to the top.  Per user: "错的次数大于正确次数最多
+// 的就是最需要复习的词 … 错了之后再写对 这还算错 不算对".  The
+// wrong attempt isn't erased — we just give the right one credit
+// in a separate column.
+function recordRight(word) {
+  saved.rights = saved.rights || {};
+  saved.rights[word] = (saved.rights[word] || 0) + 1;
+  Store.save();
+}
+function _errorScore(word) {
+  const m = (saved.mistakes || {})[word] || 0;
+  const r = (saved.rights   || {})[word] || 0;
+  return m - r;
+}
+// v=116 — popup uses the EXISTING scoreBlock frame (the painted
+// score plaque from the matching result page).  Per user: "宝你
+// 的弹窗全错了 你忘了你连连看结算页面的那个score框了吗？直接
+// 移动就行了 之前的结算界面的框删了 保持连连看游戏和结算界面ui
+// 完全一致的布局 score框变成弹窗".  No new visual language — we
+// lift the score frame off its full-page wrapper and float it in
+// a transparent veil instead.
+function showStageResultPopup({ stage, pass, right, total, onAdvance, onRetry }) {
+  try {
+    if (pass) { SFX.bling && SFX.bling(); SFX.right && SFX.right(); }
+    else      { SFX.wrong && SFX.wrong(); }
+  } catch {}
+  const stageName = stage === 1 ? 'The Matching'
+                  : stage === 2 ? 'The Reading'
+                  : stage === 3 ? 'The Inscription'
+                                : 'Stage ' + stage;
+  const veil = document.createElement('div');
+  veil.className = 'stage-result-veil';
+  const chapterN = saved.chapter || 1;
+  veil.innerHTML = `
+    <div class="stage-result-card">
+      ${scoreBlock(chapterN, stageName, right, total, encouragement(total > 0 ? right / total : 0))}
+      <div class="match-actions stage-result-actions"></div>
+    </div>
+  `;
+  document.body.appendChild(veil);
+  requestAnimationFrame(() => veil.classList.add('is-open'));
+  const dismiss = (after) => {
+    veil.classList.add('is-leaving');
+    setTimeout(() => { veil.remove(); if (after) after(); }, 320);
+  };
+  const actions = veil.querySelector('.stage-result-actions');
+  if (pass) {
+    actions.appendChild(nextDoor('Next Page', () => dismiss(onAdvance), { confirm: false }));
+  } else {
+    actions.appendChild(nextDoor('Try Again', () => dismiss(onRetry)));
+  }
+}
+// v=114 — review walker.  Plays the pool in order, opening each
+// word's parchment.  Close the parchment → walker advances to the
+// next word.  No mainline state is touched; this is pure revision.
+let _reviewQueue = null;
+function startReview(pool) {
+  if (!pool || !pool.length) return;
+  _reviewQueue = pool.slice();
+  _reviewNext();
+}
+function _reviewNext() {
+  if (!_reviewQueue || _reviewQueue.length === 0) {
+    _reviewQueue = null;
+    return;
+  }
+  const w = _reviewQueue.shift();
+  if (typeof showParchment === 'function') {
+    showParchment(w);
+    // hook the parchment close so we chain onto the next word
+    setTimeout(() => {
+      const veil = document.querySelector('.parchment-veil');
+      if (!veil) { _reviewNext(); return; }
+      const onLeave = () => {
+        veil.removeEventListener('transitionend', onLeave, true);
+        // small delay so the previous veil's leave-out finishes
+        setTimeout(_reviewNext, 240);
+      };
+      // wrap closeParchment with our continuation
+      const origClose = window.closeParchment;
+      if (typeof origClose === 'function') {
+        let consumed = false;
+        const wrapped = function () {
+          if (!consumed) { consumed = true; origClose.apply(this, arguments); setTimeout(_reviewNext, 260); window.closeParchment = origClose; }
+          else origClose.apply(this, arguments);
+        };
+        window.closeParchment = wrapped;
+      }
+    }, 80);
+  } else {
+    _reviewQueue = null;
+  }
+}
+function _reviewPool(limit = 12) {
+  // Pool = every word with at least one mistake OR right recorded,
+  // sorted by errorScore descending (highest = most urgent).
+  const seen = new Set();
+  const arr = [];
+  Object.keys(saved.mistakes || {}).forEach(w => { if (!seen.has(w)) { seen.add(w); arr.push(w); } });
+  Object.keys(saved.rights   || {}).forEach(w => { if (!seen.has(w)) { seen.add(w); arr.push(w); } });
+  arr.sort((a, b) => _errorScore(b) - _errorScore(a));
+  return arr.slice(0, limit);
 }
 function markLearned(word) {
   saved.learned[word] = true;
@@ -172,7 +547,18 @@ const state = {
   dictIdx: 0
 };
 function freshSession() {
-  state.session = buildSession(saved.progress) || buildSession(0);
+  // v=64 — seed = current chapter so each chapter has stable
+  // content across reloads.
+  state.session = buildSession(saved.chapter || 1);
+  if (!state.session) {
+    state.session = { pairs: [], scenes: [], dicts: [], words: Object.keys(PARCHMENT_CARDS).slice(0, 8) };
+  }
+  // v=78 — question ORDER is randomised each play.  Same chapter
+  // still draws the same SET of scenes/dicts (seeded buildSession),
+  // but the order they appear in differs every time the user taps
+  // Continue Reading, so memorising "Q1=X, Q2=B" no longer works.
+  state.session.scenes = shuffle(state.session.scenes);
+  state.session.dicts  = shuffle(state.session.dicts);
   state.results = {};
   state.session.words.forEach(w => state.results[w] = { match: null, oracle: null, dict: null });
 }
@@ -182,20 +568,230 @@ function freshSession() {
    ------------------------------------------------------------ */
 const BG_BY_SCREEN = {
   cover: 'bg-cover',
+  stage0: 'bg-stage0', 'stage0-quiz': 'bg-stage0',
   stage1: 'bg-stage', stage2: 'bg-stage', stage3: 'bg-stage',
   'stage1-result': 'bg-result',
   'stage2-result': 'bg-result',
   'stage3-result': 'bg-result',
-  note: 'bg-note', index: 'bg-note', card: 'bg-note'
+  note: 'bg-note', 'note-bucket': 'bg-note', index: 'bg-note', card: 'bg-note',
+  'chapter-catalog': 'bg-note'
 };
+const SCROLLABLE_SCREENS = new Set(['index', 'note', 'note-bucket', 'stage3-result', 'chapter-catalog']);
 function go(screenId, opts = {}) {
+  // v=53 — black-curtain transition.  Two paces:
+  //   · MAJOR  (cover → stage / between stages / chapter end):
+  //     420 ms total — long black curtain with a centred ❦.
+  //   · FAST   (game → result of same stage, side panels):
+  //     220 ms total — quick black blink, no glyph.
+  if (opts.instant || state.screen === screenId) return _goImmediate(screenId, opts);
+  const fast = _isFastTransition(state.screen, screenId);
+  // v=62 — cover-side moves (cover ↔ note ↔ index ↔ card) use
+  // the soft "cover-veil" instead of the dramatic black curtain
+  // so the home pool of pages feels like one continuous space.
+  const coverSide = _isCoverSide(state.screen) && _isCoverSide(screenId);
+  let veil = document.querySelector('.scene-veil');
+  if (!veil) {
+    veil = document.createElement('div');
+    veil.className = 'scene-veil';
+    veil.innerHTML = `<div class="scene-veil-glyph">❦</div>`;
+    document.body.appendChild(veil);
+  }
+  veil.classList.toggle('is-fast', fast);
+  veil.classList.toggle('is-cover', coverSide);
+  // Hide the glyph on fast transitions.
+  const glyph = veil.querySelector('.scene-veil-glyph');
+  if (glyph) glyph.style.display = fast ? 'none' : '';
+  requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('is-in')));
+  const inDur  = fast ? 110 : 220;
+  const outDur = fast ? 110 : 240;
+  setTimeout(() => {
+    _goImmediate(screenId, opts);
+    veil.classList.remove('is-in');
+    veil.classList.add('is-out');
+    setTimeout(() => { veil.classList.remove('is-out'); }, outDur);
+  }, inDur);
+}
+function _isFastTransition(from, to) {
+  // game → its own result OR result → its own game count as fast
+  if (!from || !to) return false;
+  const pairs = [
+    ['stage1','stage1-result'], ['stage1-result','stage1'],
+    ['stage2','stage2-result'], ['stage2-result','stage2'],
+    ['stage3','stage3-result'], ['stage3-result','stage3'],
+  ];
+  return pairs.some(p => p[0] === from && p[1] === to);
+}
+// v=62 — cover-side screens (cover ↔ note ↔ index ↔ card) get
+// a SOFTER transition: no black curtain, just a quick page-veil
+// fade (the existing transitionTo idiom).  Stage navigations
+// keep the dramatic black curtain.
+function _isCoverSide(s) {
+  return s === 'cover' || s === 'note' || s === 'note-bucket' || s === 'index' || s === 'card' || s === 'chapter-catalog';
+}
+function _goImmediate(screenId, opts = {}) {
   state.screen = screenId;
+  // v=110 — remember the last gameplay screen so the cover's
+  // Continue CTA always lands the user exactly where they left
+  // off (not on stage 0 reading just because saved.stage is
+  // still the pre-quiz value).  Per user: "上一次退出在什么界面
+  // 再次进入还是什么界面 不然我都做完连连看了 竟然还是从reading
+  // 开始进入".  We only record meaningful gameplay screens.
+  const REMEMBERABLE = /^(stage[0-3](-result|-quiz)?)$/;
+  if (REMEMBERABLE.test(screenId)) {
+    saved.lastScreen = screenId;
+    try { Store.save(); } catch {}
+  }
   $$('.screen').forEach(s => s.classList.toggle('active', s.id === `screen-${screenId}`));
   window.scrollTo(0, 0);
-  // swap the fixed background layer to match this screen's atmosphere.
-  ['bg-cover','bg-stage','bg-result','bg-note'].forEach(c => document.body.classList.remove(c));
+  ['bg-cover','bg-stage','bg-stage0','bg-result','bg-note'].forEach(c => document.body.classList.remove(c));
   document.body.classList.add(BG_BY_SCREEN[screenId] || 'bg-cover');
+  document.body.classList.toggle('no-scroll', !SCROLLABLE_SCREENS.has(screenId));
   if (Screens[screenId] && Screens[screenId].onEnter) Screens[screenId].onEnter(opts);
+  _ensureBGM(screenId);
+}
+const BGM_POOL_BY_SCREEN = {
+  cover:           'cover',
+  note:            'cover',
+  'note-bucket':   'cover',
+  index:           'cover',
+  card:            'cover',
+  'chapter-catalog': 'cover',
+  stage0:          'stage0',
+  'stage0-quiz':   'stage0',
+  stage1:          'stage1_game',
+  'stage1-result': 'stage1_result',
+  stage2:          'stage2_game',
+  'stage2-result': 'stage2_result',
+  stage3:          'stage3_game',
+  'stage3-result': 'stage3_result',
+};
+// v=66 — BGM continuity by SCREEN GROUP, not by pool.  Earlier the
+// LanBGM same-pool guard meant cover + stage2 + note all kept the
+// SAME home-pool track running, so the user heard the same melody
+// across very different contexts.  Now we tag each screen with a
+// "bgm group"; same-group nav (cover↔note↔index) keeps the music
+// alive, but crossing into a new group (stage 2 reading, stage 3
+// dictation, etc.) FORCES a new track even when the pool is the
+// same — we call LanBGM.stop() before playing so the guard releases.
+const BGM_GROUP_BY_SCREEN = {
+  cover:           'home-side',
+  note:            'home-side',
+  'note-bucket':   'home-side',
+  index:           'home-side',
+  card:            'home-side',
+  'chapter-catalog': 'home-side',
+  stage0:          'stage0',
+  'stage0-quiz':   'stage0-quiz',
+  stage1:          'stage1',
+  'stage1-result': 'stage1-result',
+  stage2:          'stage2',
+  'stage2-result': 'stage2-result',
+  stage3:          'stage3',
+  'stage3-result': 'stage3-result',
+};
+let _lastBgmGroup = null;
+// v=81 — find the next playable stage for the current chapter,
+// skipping any whose data is empty.  If all game stages are empty,
+// loop back to cover with a soft completion.
+function _stageHasData(stageN, ch) {
+  if (!ch) return false;
+  if (stageN === 1) return (ch.match_group_ids || []).length > 0;
+  if (stageN === 2) return (ch.reading_question_ids || []).length > 0;
+  if (stageN === 3) return (ch.dictation_question_ids || []).length > 0;
+  return true;
+}
+// v=113 — per-section trial progress.  Tracks whether stage 1 / 2 /
+// 3 have been COMPLETED for each chapter (gate: same as the
+// stage-N-result "pass" gate, i.e. perfect score).  Used by:
+//   · cover Menu CTA              → next unfinished mainline stage
+//   · stage 0 reading-end choice  → "Continue Reading" vs "Begin Trial"
+//   · chapter catalog rows        → dot status + tap-to-next
+// Stored as saved.sectionProgress[chapterIdx] = { s1, s2, s3 }
+// (status strings: 'completed' or absent).
+function _ensureSecProgress(chapterIdx) {
+  saved.sectionProgress = saved.sectionProgress || {};
+  const k = String(chapterIdx);
+  saved.sectionProgress[k] = saved.sectionProgress[k] || {};
+  return saved.sectionProgress[k];
+}
+function _markStageDone(chapterIdx, stage) {
+  const p = _ensureSecProgress(chapterIdx);
+  if (p['s' + stage] !== 'completed') {
+    p['s' + stage] = 'completed';
+    try { Store.save(); } catch {}
+  }
+}
+function _isStageDone(chapterIdx, stage) {
+  const p = _ensureSecProgress(chapterIdx);
+  return p['s' + stage] === 'completed';
+}
+function _nextUnfinishedTrialStage(chapterIdx) {
+  const ch = _CHAPTER_PLAN[chapterIdx - 1];
+  if (!ch) return null;
+  for (const s of [1, 2, 3]) {
+    if (!_stageHasData(s, ch)) continue;
+    if (!_isStageDone(chapterIdx, s)) return s;
+  }
+  return null;          // all stages with data have been passed
+}
+function _secStageStatus(chapterIdx, stage) {
+  if (_isStageDone(chapterIdx, stage)) return 'completed';
+  const ch = _CHAPTER_PLAN[chapterIdx - 1];
+  if (!_stageHasData(stage, ch)) return 'unavailable';
+  // in-progress = the section's mainline marker has reached this stage
+  if ((saved.chapter || 0) === chapterIdx && (saved.stage || 0) >= stage) return 'in-progress';
+  return 'not-started';
+}
+function _nextStageId(currentStage) {
+  const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+  for (let s = currentStage + 1; s <= 3; s++) {
+    if (_stageHasData(s, ch)) return 'stage' + s;
+  }
+  return 'stage3-result';
+}
+function _stage0AdvanceFromQuiz() {
+  const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+  for (const s of [1, 2, 3]) {
+    if (_stageHasData(s, ch)) { go('stage' + s); return; }
+  }
+  go('stage3-result');
+}
+
+// v=88 — auto-fit the stage 0 / quiz content into the painted
+// book-page area.  We measure the scrollHeight of the content
+// host vs. its container's clientHeight and walk a --s0-fit-scale
+// custom property down from 1.0 until everything fits (or we hit
+// 0.6).  Pure shrink; no layout reflow loop.
+function _s0FitToPage(rootEl) {
+  if (!rootEl) return;
+  const frame = rootEl.querySelector('.s0-text-frame');
+  const inner = rootEl.querySelector('.s0-section, .s0q-stack');
+  if (!frame || !inner) return;
+  let scale = 1;
+  inner.style.setProperty('--s0-fit-scale', scale);
+  // bail if we already fit
+  if (inner.scrollHeight <= frame.clientHeight) return;
+  let guard = 0;
+  while (inner.scrollHeight > frame.clientHeight && scale > 0.6 && guard < 20) {
+    scale -= 0.05;
+    inner.style.setProperty('--s0-fit-scale', scale.toFixed(3));
+    guard++;
+  }
+}
+
+function _ensureBGM(screenId) {
+  const pool  = BGM_POOL_BY_SCREEN[screenId];
+  const group = BGM_GROUP_BY_SCREEN[screenId];
+  if (!pool) return;
+  if (group && group === _lastBgmGroup) return;     // same group → keep
+  _lastBgmGroup = group;
+  try {
+    // v=99 — pool name now matches the mp3 config in bgm.js exactly.
+    // Volume bumped slightly on result screens so the chime cuts
+    // through; reading + game pools stay quieter so VO is clear.
+    const isResult = /_result$/.test(pool);
+    LanBGM.playForPool(pool, { force: true, volume: isResult ? 0.44 : 0.40 });
+  } catch {}
 }
 
 /* ------------------------------------------------------------
@@ -216,38 +812,55 @@ function backToCover(label = '← close the book') {
   b.addEventListener('click', () => { SFX.tap(); LanBGM.stop(); go('cover'); });
   return b;
 }
+
+/* transitionTo — gentle "page veil" navigation for cover ↔ note / index
+   etc.  Drops a fixed gold-darkening veil in front of the page for ~280
+   ms, swaps the screen at the midpoint, then lifts the veil.  Visually
+   hides the bg-* PNG swap (each background is 2–3 MB and slow on phones)
+   and gives a small ceremony to every cross-screen move.  For the more
+   dramatic cover → game transition we keep the existing full fade-out. */
+function transitionTo(screenId, opts = {}) {
+  const dur  = opts.duration || 280;
+  const veil = document.createElement('div');
+  veil.className = 'page-veil';
+  document.body.appendChild(veil);
+  // double rAF so the browser sees the initial opacity:0 before we
+  // transition to opacity:1.
+  requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('show')));
+  setTimeout(() => {
+    go(screenId, opts);
+    requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.remove('show')));
+    setTimeout(() => veil.remove(), dur + 30);
+  }, dur);
+}
+
 function lilGhost(label, onClick) {
+  // Cover-side link: rendered with the unified tap-title look —
+  // ❦ flanking the text + a tight gold underline + soft breath.
+  // The old pink "lil-ghost" pill design is retired.
   const b = document.createElement('button');
-  b.className = 'lil-ghost';
-  b.innerHTML = `<span>${escapeHtml(label)}</span>`;
+  b.className = 'tap-title';
+  b.innerHTML = `
+    <span class="tt-glyph">❦</span>
+    <span class="tt-text">${escapeHtml(label)}</span>
+    <span class="tt-glyph">❦</span>
+  `;
   b.addEventListener('click', () => { SFX.tap(); onClick && onClick(); });
   return b;
 }
-// 🗝 key icon (gold-stroke SVG) — used to flank "Tonight's Reading" and
-// "next chapter / next stage" buttons.  Always opens the next door.
-function keyIconHtml() {
-  return `<svg class="ico-key" viewBox="0 0 28 80" aria-hidden="true">
-    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="14" cy="14" r="7"/>
-      <circle cx="14" cy="14" r="3" fill="currentColor" opacity=".55"/>
-      <path d="M14 21 L14 64"/>
-      <path d="M14 58 L20 58 M14 64 L18 64"/>
-      <path d="M14 70 L14 74"/>
-    </g>
-  </svg>`;
-}
+// 🗝 retired — the cover CTA no longer flanks itself with keys; the
+// unified tap-title design carries the visual cue instead.
 function mainCTA(label, onClick) {
   const a = document.createElement('button');
-  a.className = 'main-cta';
-  // Keys come back as <img> tags this time — iOS Safari renders the
-  // PNG alpha cleanly for img elements but tofu-tiled it when we
-  // tried the same png via a ::before background.
+  a.className = 'main-cta tap-title is-cta';
+  // No .cta-text class on the inner span — there are several legacy
+  // .main-cta .cta-text rules in the stylesheet that force italic
+  // EB-Garamond + their own colour.  The unified .tap-title look
+  // requires the span to stay plain .tt-text.
   a.innerHTML = `
-    <span class="cta-inner">
-      <img class="cta-key cta-key-l" src="assets/icon-key.png?v=25" alt="">
-      <span class="cta-text">${escapeHtml(label)}</span>
-      <img class="cta-key cta-key-r" src="assets/icon-key.png?v=25" alt="">
-    </span>
+    <span class="tt-glyph">❦</span>
+    <span class="tt-text">${escapeHtml(label)}</span>
+    <span class="tt-glyph">❦</span>
   `;
   a.addEventListener('click', () => {
     if (a.classList.contains('is-engaged')) return;
@@ -262,24 +875,27 @@ function mainCTA(label, onClick) {
 // Passing { confirm: true } wraps the click in the "are you ready" modal,
 // which is how every stage→stage transition should behave so the BGM swap
 // has a clean handoff moment.
+// v=41 — nextDoor wears the SAME tap-title.is-cta dress as the cover's
+// "Tonight's Reading" so each stage transition reads as "turning to
+// the next page of the storybook".  Label: "Next Page" between stages
+// of one chapter, "Next Chapter" between chapters (cover-bound).
 function nextDoor(label, onClick, { confirm = false } = {}) {
   const a = document.createElement('button');
-  a.className = 'next-door';
-  a.innerHTML = `<span class="nd-text">${escapeHtml(label)}</span>`;
+  a.className = 'next-door tap-title is-cta';
+  a.innerHTML = `
+    <span class="tt-glyph">❦</span>
+    <span class="tt-text">${escapeHtml(label)}</span>
+    <span class="tt-glyph">❦</span>
+  `;
   a.addEventListener('click', () => {
     if (a.classList.contains('is-engaged')) return;
-    LanBGM.unlock();                  // safe to repeat-call
-    a.classList.add('is-engaged');     // glow always — same beat as Tonight's Reading
+    LanBGM.unlock();
+    a.classList.add('is-engaged');
     SFX.tap();
     if (confirm) {
       confirmReady(label, () => { onClick && onClick(); });
-      // After the modal closes, allow another tap if the user picks "stay".
       setTimeout(() => a.classList.remove('is-engaged'), 900);
     } else {
-      // ALWAYS un-engage after the action runs.  If onClick navigates
-      // away the element is gone anyway; if onClick just popped a
-      // validation modal (e.g. "colour every card first") the user
-      // needs to be able to tap the button again afterwards.
       setTimeout(() => {
         onClick && onClick();
         a.classList.remove('is-engaged');
@@ -288,12 +904,20 @@ function nextDoor(label, onClick, { confirm = false } = {}) {
   });
   return a;
 }
-// Top-right "close the page" pill — the universal way home.  Visible on
-// every screen except the cover itself.  On in-game screens we pop the
-// leave-confirm modal first so the user doesn't kill their stage by accident.
+// Top-right "close the page" star — the universal way home.  Visible
+// on every screen except the cover itself.  On in-game screens we pop
+// the leave-confirm modal first so the user doesn't kill their stage
+// by accident.
+//
+// MOUNTING: position:fixed escapes the parent's layout box but NOT its
+// stacking context.  #app is z-index:1 + position:relative, which
+// traps any z-index inside it below #banner-top (z:200).  So this
+// function mounts the star directly to <body> and returns a sentinel
+// DocumentFragment — callers can still do `el.appendChild(closeCorner(...))`
+// without disturbing the body-mounted star.
 function closeCorner({ confirm = false, to = 'cover', label = 'close the page' } = {}) {
   const b = document.createElement('button');
-  b.className = 'close-corner corner-pin';
+  b.className = 'close-corner corner-pin is-corner-floater';
   b.setAttribute('aria-label', label);
   b.innerHTML = '<span class="cp-x"></span>';
   b.addEventListener('click', () => {
@@ -302,7 +926,12 @@ function closeCorner({ confirm = false, to = 'cover', label = 'close the page' }
     if (confirm) confirmLeave(exit);
     else exit();
   });
-  return b;
+  // Sweep any leftover star from the previous screen, then mount on body.
+  document.querySelectorAll('.is-corner-floater').forEach(n => n.remove());
+  document.body.appendChild(b);
+  // Sentinel: callers do `el.appendChild(closeCorner(...))`; returning
+  // an empty fragment makes that a no-op without breaking the pattern.
+  return document.createDocumentFragment();
 }
 // Top-left moon button — opens the side-drawer of "her words".
 // The drawer is an OVERLAY (not navigation), so no leave-confirm
@@ -310,11 +939,19 @@ function closeCorner({ confirm = false, to = 'cover', label = 'close the page' }
 function moonCorner() {
   const b = document.createElement('button');
   b.className = 'moon-corner corner-pin';
-  b.setAttribute('aria-label', 'open her words');
+  b.setAttribute('aria-label', 'back to cover');
   // Three-bar menu drawn in CSS via .mc-bar + two box-shadows — no
   // PNG, no unicode glyph that might tofu on iOS.
   b.innerHTML = '<span class="mc-bar"></span>';
-  b.addEventListener('click', () => { SFX.tap(); openSidebar(); });
+  b.addEventListener('click', () => {
+    SFX.tap();
+    // From a game stage, stop game music; from the cover side, the
+    // continuous home pool keeps playing thanks to LanBGM's
+    // same-pool short-circuit.
+    const inGame = /^stage\d/.test(state.screen || '');
+    if (inGame) LanBGM.stop();
+    transitionTo('cover');
+  });
   return b;
 }
 
@@ -324,71 +961,10 @@ function moonCorner() {
      - a live-filter search input
      - the "still waking" list (everything not yet learned)
    Tapping any word closes the drawer and jumps to that word's card.   */
-function _buildSidebar() {
-  let drawer = document.getElementById('drawer');
-  if (drawer) return drawer;
-  drawer = document.createElement('aside');
-  drawer.id = 'drawer';
-  drawer.className = 'drawer';
-  drawer.innerHTML = `
-    <div class="drawer-veil"></div>
-    <div class="drawer-panel">
-      <div class="drawer-head">
-        <div>
-          <div class="drawer-title"><em>her words</em></div>
-          <div class="drawer-count">…</div>
-        </div>
-        <button class="drawer-close" aria-label="close">×</button>
-      </div>
-      <div class="drawer-search-wrap">
-        <input class="drawer-search" type="text" placeholder="search words…" autocomplete="off" spellcheck="false" autocapitalize="off">
-      </div>
-      <div class="drawer-list-label">…</div>
-      <div class="drawer-list"></div>
-    </div>
-  `;
-  document.body.appendChild(drawer);
-  drawer.querySelector('.drawer-veil').addEventListener('click', closeSidebar);
-  drawer.querySelector('.drawer-close').addEventListener('click', closeSidebar);
-  drawer.querySelector('.drawer-search').addEventListener('input', refreshSidebarList);
-  return drawer;
-}
-function openSidebar() {
-  const drawer = _buildSidebar();
-  refreshSidebarList();
-  drawer.classList.add('open');
-}
-function closeSidebar() {
-  const d = document.getElementById('drawer');
-  if (d) d.classList.remove('open');
-}
-function refreshSidebarList() {
-  const drawer = document.getElementById('drawer');
-  if (!drawer) return;
-  const all = Object.keys(CARDS).sort();
-  const waking  = all.filter(w => !saved.learned[w]);
-  const learned = all.filter(w =>  saved.learned[w]);
-  const q = (drawer.querySelector('.drawer-search').value || '').toLowerCase().trim();
-  drawer.querySelector('.drawer-count').textContent =
-    `${learned.length} / ${all.length} awakened`;
-  drawer.querySelector('.drawer-list-label').textContent =
-    `still waking · ${waking.length}`;
-  const list = drawer.querySelector('.drawer-list');
-  list.innerHTML = '';
-  waking
-    .filter(w => !q || w.toLowerCase().includes(q))
-    .forEach(w => {
-      const a = document.createElement('button');
-      a.className = 'drawer-word';
-      a.textContent = w;
-      a.addEventListener('click', () => {
-        closeSidebar();
-        SFX.pageTurn();
-        go('card', { word: w, from: state.screen === 'card' ? (state._cardFrom || 'cover') : state.screen });
-      });
-      list.appendChild(a);
-    });
-}
+/* The sidebar drawer is gone — the user said it was ugly, the
+   counter inside was stale (50 vs the real 300+ words), and they
+   preferred deleting over rebuilding it.  The moon corner button
+   now does what the user wanted: back to cover.                  */
 // "Are you sure?" — close-the-book confirmation, shown when the user
 // tries to exit a stage mid-way.  Closing forfeits the current page.
 function confirmLeave(onLeave) {
@@ -430,17 +1006,1338 @@ function titleStrip() {
     </div>
   `;
 }
-function stageHeader(chapterN, name) {
+function stageHeader(stageN, name) {
+  // v=71: shows just "Chapter · N · <name>".  The "Stage N of 3"
+  // chip retired per user — it overflowed the painted band frame.
   return `
-    <div class="stage-head">
-      <div class="stage-chapter">chapter · ${chapterN}</div>
-      <div class="stage-name">${escapeHtml(name)}</div>
-      <div class="stage-rule"></div>
+    <div class="frame-chapter">
+      <div class="frame-chapter-text">
+        <span class="fc-num">Chapter · ${saved.chapter}</span>
+        <span class="fc-name">${escapeHtml(name)}</span>
+      </div>
     </div>
   `;
 }
+
+// scoreBlock — the user-designed "two-piece" combo for result pages:
+// chapter band on top, painted score frame underneath (same asset as
+// the storybook modal, used inline).  The frame already paints the
+// crescent moon + bow garland; CSS positions the score inside its
+// safe-zone.
+function scoreBlock(chapterN, name, value, total, message) {
+  return `
+    ${stageHeader(chapterN, name)}
+    <div class="score-frame">
+      <div class="score-frame-inner">
+        <div class="sf-label">Score</div>
+        <div class="sf-value">${value}<small> / ${total}</small></div>
+        <div class="sf-message">${escapeHtml(message || '')}</div>
+      </div>
+    </div>
+  `;
+}
+
+// renderWordTile — compact "wine-card" tile, used on stage 2 + 3
+// result pages instead of the bulky ex-card.  Visual language is
+// borrowed from the multiple-choice picked-red option card so the
+// chapters speak one tile vocabulary.  Tap → parchment.
+function renderWordTile(word, mark) {
+  const c = PARCHMENT_CARDS[word] || { h: word };
+  const tile = document.createElement('button');
+  // .card.card--option carries the cardstock + frame; .picked-right
+  // adds the wine palette + gold halo; .is-wrong dims it so the user
+  // can scan correct vs. missed at a glance.
+  const state = mark === true ? 'picked-right reveal-right'
+              : mark === false ? 'picked-wrong'
+              : '';
+  tile.className = `card card--option word-tile ${state}`.trim();
+  tile.innerHTML = `
+    <span class="mc-frame"></span>
+    <span class="mc-text">${escapeHtml(c.h)}</span>
+  `;
+  tile.addEventListener('click', () => {
+    SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+    showParchment(word);
+  });
+  return tile;
+}
+
+// v=57 — renderReviewCard: an EXPANDED study card for stage-3
+// result.  Shows headword + pos.zh + example sentence + family +
+// friend + kin in inline rows, no taps needed.  User scrolls down
+// the result page to review every word touched in the chapter.
+function renderReviewCard(word) {
+  const c = PARCHMENT_CARDS[word];
+  const card = document.createElement('div');
+  card.className = 'review-card';
+  if (!c) { card.textContent = word; return card; }
+  // Reuse the same in-line linkify so jumpable words are
+  // underlined inside the example sentence + collocations.
+  const selfLower = (c.h || '').toLowerCase();
+  const _revLookup = _buildLinkLookup();
+  const linkify = (text) => {
+    if (!text) return '';
+    return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+      const lw = w.toLowerCase();
+      if (lw === selfLower) return m;
+      const k = _revLookup(lw);
+      if (!k || k === selfLower) return m;
+      return `<a class="rev-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
+    });
+  };
+  const lineRow = (variant, phrase, zh) =>
+    `<div class="rev-line">
+       <span class="rev-line-word">${linkify(variant)}</span>
+       ${phrase ? `<span class="rev-line-phrase">${linkify(phrase)}</span>` : ''}
+       <span class="rev-line-zh">${escapeHtml(zh || '')}</span>
+     </div>`;
+
+  let html = `
+    <div class="rev-head">
+      <span class="rev-word">${escapeHtml(c.h)}</span>
+      <span class="rev-pos">${escapeHtml((c.pos || '').slice(0, 4))}.</span>
+      <span class="rev-zh">${escapeHtml(c.zh || '')}</span>
+    </div>`;
+  if (c.example) {
+    html += `<div class="rev-example">${linkify(c.example)}</div>`;
+    if (c.example_zh) html += `<div class="rev-example-zh">${escapeHtml(c.example_zh)}</div>`;
+  }
+  if (c.family && c.family.length) {
+    html += `<div class="rev-section-label">her family</div>`;
+    c.family.forEach(line => {
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      html += lineRow(w, phrase, phraseZh || posZh);
+    });
+  }
+  if (c.friends && c.friends.length) {
+    html += `<div class="rev-section-label">her friend</div>`;
+    c.friends.forEach(line => {
+      const [phrase, zh] = line.split('|').map(s => s ? s.trim() : '');
+      html += `<div class="rev-line">
+        <span class="rev-line-phrase">${linkify(phrase)}</span>
+        <span class="rev-line-zh">${escapeHtml(zh || '')}</span>
+      </div>`;
+    });
+  }
+  if (c.kin && c.kin.length) {
+    html += `<div class="rev-section-label">her kin</div>`;
+    c.kin.forEach(line => {
+      const [w, posZh, phrase, phraseZh] = line.split('|').map(s => s ? s.trim() : '');
+      html += lineRow(w, phrase, phraseZh || posZh);
+    });
+  }
+  // v=66 — semantic siblings (group): one compact line of words.
+  if (c.group && c.group.length) {
+    const words = c.group.map(line => (line || '').split('|')[0].trim()).filter(Boolean);
+    if (words.length) {
+      html += `<div class="rev-section-label">her group</div>`;
+      html += `<div class="rev-line rev-group-line">${
+        words.map(w => linkify(w)).join('<span class="rev-group-sep">·</span>')
+      }</div>`;
+    }
+  }
+  card.innerHTML = html;
+  card.querySelectorAll('.rev-jump').forEach(a => {
+    a.addEventListener('click', e => {
+      e.stopPropagation();
+      const target = a.getAttribute('data-jump');
+      if (PARCHMENT_CARDS[target]) {
+        SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+        showParchment(target);
+      }
+    });
+  });
+  return card;
+}
+
+// Encouragement copy keyed to the percentage — keeps the storybook
+// voice (lowercase italics, gentle).  Never punishing on low scores.
+function encouragement(pct) {
+  if (pct >= 0.99) return 'every page sang back ♡';
+  if (pct >= 0.75) return 'beautifully read';
+  if (pct >= 0.50) return 'not bad at all ~ ♡';
+  if (pct >= 0.25) return 'a softer page next time';
+  return 'her book waits patiently';
+}
+
+// Title plaque-only fragment.  The text lives inside an inner span
+// that we position absolutely so it lands in the dome's purple band
+// regardless of how tall the plaque rectangle is.
 function pageTitle(name) {
-  return `<div class="page-title">${escapeHtml(name)}</div>`;
+  const html = escapeHtml(name).replace(/\n/g, '<br>');
+  return `<div class="title-plaque"><span class="tp-text">${html}</span></div>`;
+}
+
+// v=92 — build a reverse word→head index over PARCHMENT_CARDS.
+//   1. Every card head H maps to itself.
+//   2. Every word listed in H's `family` or `kin` maps to H.
+//   3. Common stems (length ≥ 5) of all the above also map to H,
+//      so e.g. "compress" (stem of family["compression"]) can
+//      reach `compressive`.
+// Then linkFor(w) tries: direct → reverse map → strip prefix
+// (in/un/non/dis/re/over/under/pre/sub/inter) → re-lookup.  This
+// is what lets `fraction` reach `fragile`, `incomprehensible`
+// reach `comprehensible`, `cosmos` reach `cosmology`, etc.
+// Memoised — called once, cached on window.                     */
+let _LINK_REV = null;
+function _buildLinkLookup() {
+  if (_LINK_REV) return _LINK_REV._lookup;
+  const rev = Object.create(null);
+  const STEM_PRE = /^(in|un|non|dis|re|over|under|pre|sub|inter|im|ir|il)/;
+  const STEM_SUF = /(ically|ingly|ously|edness|tion|sion|ment|ness|ity|able|ible|less|ful|ize|ise|ify|ically|ical|ively|edly|ed|ing|er|est|ly|al|ic|ive|ous|s)$/;
+  function stem(w) {
+    w = (w || '').toLowerCase();
+    let s = w.replace(STEM_PRE, '');
+    if (s.length < 4) s = w;
+    s = s.replace(STEM_SUF, '');
+    return s.length >= 5 ? s : w;
+  }
+  function add(word, head) {
+    word = (word || '').toLowerCase().replace(/[^a-z'\-]/g, '');
+    if (!word) return;
+    if (!rev[word]) rev[word] = head;
+    const st = stem(word);
+    if (st !== word && st.length >= 5 && !rev[st]) rev[st] = head;
+  }
+  const headSet = new Set();
+  Object.entries(PARCHMENT_CARDS).forEach(([head, c]) => {
+    headSet.add(head);
+    add(head, head);
+    (c.family || []).forEach(f => add((f.split('|')[0] || '').trim(), head));
+    (c.kin    || []).forEach(k => add((k.split('|')[0] || '').trim(), head));
+  });
+  const PRE = /^(in|un|non|dis|re|over|under|pre|sub|inter|im|ir|il)/;
+  // v=93 — substring fallback: for words ≥ 7 chars where every other
+  // path fails, find the longest 5+ char substring that is itself a
+  // card head.  This is what makes `ecological → logic`, `geopolitical
+  // → politic`, `subterranean → terrain` etc work without forcing a
+  // new card to be authored.  Per user: "ecological 应该也可以挂进
+  // 单词表里 比如ecosystem或者logic… 任何词只要一部分和当前词库有
+  // 相似度直接挂进去就行".
+  function subMatch(w) {
+    if (w.length < 7) return null;
+    for (let len = Math.min(w.length - 1, 9); len >= 5; len--) {
+      for (let i = 0; i + len <= w.length; i++) {
+        const sub = w.slice(i, i + len);
+        if (headSet.has(sub)) return sub;
+      }
+    }
+    return null;
+  }
+  function lookup(w) {
+    w = (w || '').toLowerCase();
+    if (w.length < 3) return null;
+    if (rev[w]) return rev[w];
+    const s = stem(w);
+    if (s !== w && rev[s]) return rev[s];
+    const np = w.replace(PRE, '');
+    if (np !== w && np.length >= 4) {
+      if (rev[np]) return rev[np];
+      const ns = stem(np);
+      if (ns !== np && rev[ns]) return rev[ns];
+    }
+    const sub = subMatch(w);
+    if (sub) return sub;
+    return null;
+  }
+  _LINK_REV = { _lookup: lookup, _rev: rev, _heads: headSet };
+  return lookup;
+}
+
+// Visual writing-line at the bottom of the single-word parchment.
+// NOT an input — pure cue that says "copy this word once".
+function copyLine() {
+  return `
+    <div class="copy-line">
+      <span class="cl-label">copy this word softly</span>
+      <span class="cl-rule"></span>
+      <span class="cl-mark">✦</span>
+    </div>
+  `;
+}
+// Tap-handler for collection-page tiles: nudge the tile (~8° wobble) +
+// page-turn SFX, then OPEN the parchment popup (not full-screen page).
+function flipToCard(tile, word, from) {
+  if (tile.classList.contains('is-flipping')) return;
+  tile.classList.add('is-flipping');
+  SFX.pageTurn();
+  setTimeout(() => {
+    tile.classList.remove('is-flipping');
+    showParchment(word);
+  }, 340);
+}
+
+// Parchment popup — a scroll-shaped modal that floats over the
+// current page.  Text is strictly fenced inside .parchment-inner
+// (sized to the cream paper's safe zone via padding on .parchment-card),
+// so no glyph ever lands on a scroll roll or quill decoration.
+let _activeParchment = null;
+// ============================================================
+//   v=104 — when VocabRuntime is loaded, synthesise a card-shape
+//   from VocabRuntime.getBigCard(word) that matches what the
+//   legacy showParchment() expects.  Same scroll, same animations,
+//   same per-row reveal — just sourced from the new vocab system.
+//   focus_word stays on the clicked word, family / kin / group
+//   are inherited from its family_head per the runtime helpers.
+// ============================================================
+// ============================================================
+//   v=107 — resolveReadingWord(rawToken)
+//   Match order per the user's spec:
+//     1. raw lowercased + punctuation-stripped (exact)
+//     2. patch (552 reading-overlap supplement cards)
+//     3. word master
+//     4. lemma candidates (plural / past / -ing / -ly / -er / -est
+//        / -ies → y / -ied → y / -ically → ic / -ally → al)
+//     5. family-head map fallback
+//     6. proper / place small card
+//   Returns { raw, resolvedWord, source, matchType } or null.
+//   `source` is one of: 'patch' | 'word_master' | 'proper' so
+//   downstream code knows which table to pull display data from.
+// ============================================================
+function _lemmaCandidates(w) {
+  const out = new Set();
+  if (/ies$/.test(w))           out.add(w.replace(/ies$/, 'y'));
+  if (/ied$/.test(w))           out.add(w.replace(/ied$/, 'y'));
+  if (/ically$/.test(w))        out.add(w.replace(/ically$/, 'ic'));
+  if (/ally$/.test(w))          out.add(w.replace(/ally$/, 'al'));
+  if (/ly$/.test(w) && w.length > 4)  out.add(w.replace(/ly$/, ''));
+  if (/ing$/.test(w) && w.length > 4) { out.add(w.replace(/ing$/, '')); out.add(w.replace(/ing$/, 'e')); }
+  if (/ed$/.test(w)  && w.length > 3) { out.add(w.replace(/ed$/, ''));  out.add(w.replace(/ed$/, 'e')); }
+  if (/d$/.test(w)   && w.length > 4 && !/[aeiou]d$/.test(w.slice(-2))) out.add(w.replace(/d$/, ''));
+  if (/es$/.test(w)  && w.length > 4) { out.add(w.replace(/es$/, 'e')); out.add(w.replace(/es$/, '')); }
+  if (/s$/.test(w)   && w.length > 3) out.add(w.replace(/s$/, ''));
+  if (/est$/.test(w) && w.length > 4) out.add(w.replace(/est$/, ''));
+  if (/er$/.test(w)  && w.length > 4) out.add(w.replace(/er$/, ''));
+  return Array.from(out).filter(c => c && c.length >= 3);
+}
+function _patchCard(w) {
+  const P = window.VOCAB_READING_NETWORK_PATCH_V2_FULL;
+  if (!P || !P.cards) return null;
+  return P.cards[w] || null;
+}
+function resolveReadingWord(rawToken) {
+  const VR = window.VocabRuntime;
+  const raw = String(rawToken || '');
+  const clean = raw.toLowerCase().replace(/^['"`]+|['"`.,;:!?)]+$/g, '').replace(/'s$/, '');
+  if (clean.length < 3) return null;
+
+  // 0. V73 LITE tables — registry is the canonical source.  Focus
+  //    stays on the surface word per user (the head sits below as
+  //    its own section).  Lemma fallback only when the surface
+  //    isn't in the registry.
+  if (window.VOCAB_WORD_CONTENT_REGISTRY_LITE) {
+    if (_v73Card(clean)) {
+      return { raw, resolvedWord: clean, source: 'v73_registry', matchType: 'exact' };
+    }
+    const cands = _lemmaCandidates(clean);
+    for (const cand of cands) {
+      if (_v73Card(cand)) {
+        return { raw, resolvedWord: cand, source: 'v73_registry', matchType: 'lemma' };
+      }
+    }
+    const head = _v73HeadOf(clean);
+    if (head && head !== clean && _v73Card(head)) {
+      return { raw, resolvedWord: head, source: 'v73_registry', matchType: 'family_head' };
+    }
+    return null;     // V73 loaded: if it doesn't know the word, no link.
+  }
+
+  // 1. Exact in patch (the reading-overlap supplement wins; user
+  //    explicitly wants `properties / defies / drastically` etc.
+  //    to show their OWN supplement card, not jump to the lemma).
+  if (_patchCard(clean)) {
+    return { raw, resolvedWord: clean, source: 'patch', matchType: 'exact' };
+  }
+  // 2. Exact in word master
+  if (VR && VR.getWordCard(clean)) {
+    return { raw, resolvedWord: clean, source: 'word_master', matchType: 'exact' };
+  }
+  // 3. Lemma candidates — first hit wins
+  const cands = _lemmaCandidates(clean);
+  for (const cand of cands) {
+    if (_patchCard(cand)) {
+      return { raw, resolvedWord: cand, source: 'patch', matchType: 'lemma' };
+    }
+    if (VR && VR.getWordCard(cand)) {
+      return { raw, resolvedWord: cand, source: 'word_master', matchType: 'lemma' };
+    }
+  }
+  // 4. Family-head map
+  if (VR) {
+    const head = VR.getFamilyHead(clean);
+    if (head && head !== clean && VR.getWordCard(head)) {
+      return { raw, resolvedWord: head, source: 'word_master', matchType: 'family_head' };
+    }
+  }
+  // 5. Proper / place small card
+  if (VR && VR.getProperSmallCard && VR.getProperSmallCard(clean)) {
+    return { raw, resolvedWord: clean, source: 'proper', matchType: 'exact' };
+  }
+  return null;
+}
+
+// v=109 — VOCAB_POS_REGISTRY_FINAL lookup.  Returns "" if the word
+// has no pos entry (registry doesn't cover proper nouns / numbers).
+function posOf(word) {
+  const reg = window.VOCAB_POS_REGISTRY_FINAL;
+  if (!reg || !reg.word_pos) return '';
+  return reg.word_pos[(word || '').toLowerCase()] || '';
+}
+function _splitPosZh(blob) {
+  // patch + family/kin lines sometimes pack pos into zh:
+  //   "n. 联邦"   "v./n. 反对；物体"   "adj. 古代的".
+  // Pull the pos prefix off so the header / row pos column reads
+  // correctly without polluting the gloss.
+  const s = String(blob || '').trim();
+  const m = s.match(/^([a-zA-Z][a-zA-Z./]*?\.)\s+(.+)$/);
+  if (m) return { pos: m[1], zh: m[2] };
+  return { pos: '', zh: s };
+}
+function _patchToParchmentCard(w, p) {
+  // PATCH cards store phrases as a flat ["en1","zh1","en2","zh2",…]
+  // array and examples as a flat string array.  Normalize into the
+  // legacy c-shape the parchment renderer expects.
+  const friends = [];
+  for (let i = 0; i + 1 < (p.phrases || []).length; i += 2) {
+    const en = (p.phrases[i] || '').trim();
+    const zh = (p.phrases[i + 1] || '').trim();
+    if (en) friends.push(`${en} | ${zh}`);
+  }
+  const ex = (p.examples && p.examples[0]) || '';
+  const split = _splitPosZh(p.zh);
+  // Patch-only words usually share kin/family with the matched
+  // network word — fold those in by looking up the network parent
+  // through VocabRuntime when present.
+  const VR = window.VocabRuntime;
+  let extras = { family: [], kin: [], group: [] };
+  const parent = p.matched_network_word || p.family_head;
+  if (VR && parent) {
+    const head = VR.getBigCard(parent);
+    if (head) {
+      const synth = _bigToParchmentCard(head);
+      // Strip the patch word itself from the inherited rows so it
+      // doesn't show up under its own family list.
+      const drop = w.toLowerCase();
+      const not = arr => (arr || []).filter(L => ((L.split('|')[0] || '').trim().toLowerCase()) !== drop);
+      extras = { family: not(synth.family), kin: not(synth.kin), group: not(synth.group) };
+    }
+  }
+  return {
+    h: p.word || w,
+    pos: split.pos,
+    zh:  split.zh,
+    family: extras.family,
+    kin: extras.kin,
+    group: extras.group,
+    friends,
+    example:    /[A-Za-z]/.test(ex) ? ex : '',
+    example_zh: /[一-鿿]/.test(ex) ? ex : '',
+  };
+}
+// ============================================================
+//   v=112 — V73 ("NORMALIZED LITE") integration.  Single source
+//   of truth: VOCAB_WORD_CONTENT_REGISTRY_LITE.cards[word].  All
+//   relationship files (family / kin / group / bridge / external)
+//   store only word IDs — when we render a related word's row we
+//   look its content up in the registry.
+//
+//     WORD_CONTENT_REGISTRY_LITE.cards[w]
+//        → { word, pos, zh, phrases[], examples[] }
+//     READING_WORDS_LITE.words: [...]              reading corpus
+//                       .reading_to_learning_head[w]   (unreliable
+//                       for variant words — use word_to_family_head)
+//     FAMILY_SHARED_CLUSTERS_LITE.family_clusters[]
+//                  : [{ family_id, head, words: [...] }]
+//                  .word_to_family_head[w] → head          ← canonical
+//                  .word_to_family_cluster[w] → family_id
+//     KIN_HEAD_BRIDGE_LITE.head_to_kin_clusters[w] → [cluster_id…]
+//                  (despite the name, keyed by ANY word that owns
+//                  a kin cluster, not just family heads)
+//     KIN_CLEAN_LITE.kin_clusters[] : [{ cluster_id, words: [...] }]
+//     GROUP_CLEAN_LITE.groups[w]  → [ synonym_word_id, … ]
+//     EXTERNAL_WORDS_LITE.words: [...]  (external IDs whose
+//                  content still lives in the central registry)
+//
+//   Display sections (per user spec):
+//     head    — focus's family-head, only if head ≠ focus
+//     family  — siblings in the same family cluster (minus focus
+//               and minus head, since head got its own section)
+//     kin     — focus's OWN kin clusters (kin is per-word, not
+//               inherited from head; per user "kin独享")
+//     group   — focus's synonyms
+// ============================================================
+let _v73IdxBuilt = false;
+let _v73Registry, _v73R2H,
+    _v73ClustersById, _v73WordToHead, _v73WordToCid,
+    _v73KinById, _v73WordToKinIds,
+    _v73GroupByWord, _v73ReadingSet, _v73ExtSet;
+function _v73Build() {
+  if (_v73IdxBuilt) return;
+  _v73IdxBuilt = true;
+  _v73Registry  = (window.VOCAB_WORD_CONTENT_REGISTRY_LITE || {}).cards || {};
+  const reading = window.VOCAB_READING_WORDS_LITE || {};
+  _v73R2H       = reading.reading_to_learning_head || {};
+  _v73ReadingSet = new Set((reading.words || []).map(w => String(w).toLowerCase()));
+  const fam     = window.VOCAB_FAMILY_SHARED_CLUSTERS_LITE || {};
+  _v73WordToHead = fam.word_to_family_head || {};
+  _v73WordToCid  = fam.word_to_family_cluster || {};
+  _v73ClustersById = Object.create(null);
+  (fam.family_clusters || []).forEach(c => { if (c.family_id) _v73ClustersById[c.family_id] = c; });
+  const kinFile = window.VOCAB_KIN_CLEAN_LITE || {};
+  _v73KinById   = Object.create(null);
+  (kinFile.kin_clusters || []).forEach(c => { if (c.cluster_id) _v73KinById[String(c.cluster_id).toLowerCase()] = c; });
+  const bridge  = window.VOCAB_KIN_HEAD_BRIDGE_LITE || {};
+  _v73WordToKinIds = bridge.head_to_kin_clusters || {};
+  _v73GroupByWord  = (window.VOCAB_GROUP_CLEAN_LITE || {}).groups || {};
+  _v73ExtSet    = new Set(((window.VOCAB_EXTERNAL_WORDS_LITE || {}).words || []).map(w => String(w).toLowerCase()));
+}
+function _v73Card(w) {
+  _v73Build();
+  return _v73Registry[(w || '').toLowerCase()] || null;
+}
+function _v73HeadOf(w) {
+  _v73Build();
+  const lw = (w || '').toLowerCase();
+  // word_to_family_head is the canonical map (per the data).
+  const head = _v73WordToHead[lw];
+  if (head && head !== lw) return head;
+  return null;
+}
+function _v73FamilySiblings(w) {
+  _v73Build();
+  const lw = (w || '').toLowerCase();
+  const cid = _v73WordToCid[lw];
+  if (!cid) return { head: null, members: [] };
+  const cluster = _v73ClustersById[cid];
+  if (!cluster) return { head: null, members: [] };
+  const head = (cluster.head || '').toLowerCase();
+  const members = (cluster.words || [])
+    .map(x => String(x).toLowerCase())
+    .filter(x => x && x !== lw && x !== head);
+  return { head, members };
+}
+function _v73KinFor(w) {
+  _v73Build();
+  const ids = _v73WordToKinIds[(w || '').toLowerCase()] || [];
+  return ids.map(id => _v73KinById[String(id).toLowerCase()]).filter(Boolean);
+}
+function _v73GroupFor(w) {
+  _v73Build();
+  return _v73GroupByWord[(w || '').toLowerCase()] || [];
+}
+function _v73IsClickable(w) {
+  _v73Build();
+  if (!w) return false;
+  const lw = String(w).toLowerCase();
+  return !!_v73Registry[lw] || _v73ReadingSet.has(lw) || _v73ExtSet.has(lw);
+}
+// Pack a word into the legacy "word | pos zh | phrase | phrase_zh"
+// row string — content is fetched from the central registry.  If
+// the word isn't in the registry, emit a degraded row (the word
+// itself with empty other fields) so the parchment still renders
+// SOMETHING; the click handler will simply have nothing to open.
+function _v73PackWord(w) {
+  _v73Build();
+  const lw = String(w || '').toLowerCase();
+  const card = _v73Registry[lw];
+  if (!card) return _pipe([w, '', '', '']);
+  const phrase = (card.phrases && card.phrases[0]) || {};
+  const posZh = card.pos ? `${card.pos} ${card.zh || ''}`.trim() : (card.zh || '');
+  return _pipe([card.word || lw, posZh, phrase.phrase || '', phrase.phrase_zh || '']);
+}
+function _v73BuildCard(word) {
+  _v73Build();
+  const w = (word || '').toLowerCase();
+  const focus = _v73Card(w);
+  if (!focus) return null;
+
+  const friends = (focus.phrases || []).slice(0, 6).map(p =>
+    _pipe([p.phrase || '', p.phrase_zh || ''])
+  );
+  const ex = (focus.examples && focus.examples[0]) || null;
+  const exampleEn = ex ? (ex.example || '') : '';
+  const exampleZh = ex ? (ex.example_zh || '') : '';
+
+  const fam = _v73FamilySiblings(w);
+  // head section: emit only if the family head differs from the focus.
+  // head is part of the family but lifted into its own section so the
+  // user can study the prefix root separately.
+  let headSection = [];
+  if (fam.head && fam.head !== w) {
+    headSection.push(_v73PackWord(fam.head));
+  }
+  const family = fam.members.map(_v73PackWord);
+
+  // kin: focus's OWN kin clusters (kin is per-word, not via family head).
+  const used = new Set([w, fam.head, ...fam.members]);
+  const kin = [];
+  _v73KinFor(w).forEach(cl => {
+    (cl.words || []).forEach(kw => {
+      const lkw = String(kw).toLowerCase();
+      if (!lkw || used.has(lkw)) return;
+      used.add(lkw);
+      kin.push(_v73PackWord(lkw));
+    });
+  });
+
+  // group: focus's synonyms (just IDs in the LITE file).
+  const group = _v73GroupFor(w)
+    .map(g => String(g).toLowerCase())
+    .filter(g => !used.has(g))
+    .map(_v73PackWord);
+
+  return {
+    h: focus.word || w,
+    pos: focus.pos || '',
+    zh: focus.zh || '',
+    head: headSection,
+    family,
+    kin,
+    group,
+    friends,
+    example: exampleEn,
+    example_zh: exampleZh,
+  };
+}
+
+function _vocabRuntimeCard(word) {
+  // v=112 — V73 LITE table is the only path.  Returns null when
+  // the word isn't in the registry; showParchment then falls back
+  // to legacy PARCHMENT_CARDS for any legacy game-side openers.
+  if (window.VOCAB_WORD_CONTENT_REGISTRY_LITE) {
+    return _v73BuildCard(word);
+  }
+  return null;
+}
+function _pipe(parts) {
+  // join with " | " but keep empties so the splitter on the other
+  // side gets the right number of fields.
+  return parts.map(p => (p == null ? '' : String(p))).join(' | ');
+}
+function _memberToFamilyLine(m) {
+  // VocabRuntime returns kin-cluster external-word rows as
+  //   { word, zh, phrase_1, phrase_1_zh, phrase_2, phrase_2_zh }
+  // and internal-word rows as
+  //   { word, zh, phrases: [{phrase, phrase_zh}, …], examples: … }
+  // Coalesce both into the same { phrase, phrase_zh } shape.
+  let phrase = '', phraseZh = '';
+  if (m.phrases && m.phrases[0]) {
+    phrase   = m.phrases[0].phrase || m.phrases[0].en || '';
+    phraseZh = m.phrases[0].phrase_zh || m.phrases[0].zh || '';
+  } else if (m.phrase_1) {
+    phrase   = m.phrase_1;
+    phraseZh = m.phrase_1_zh || '';
+  }
+  // v=109 — every member row carries a pos pulled from the POS
+  // registry so the parchment renders "word  pos.  zh" with three
+  // distinct columns.  Falls back to whatever pos was packed into
+  // zh (legacy patch shape) when the registry has no entry.
+  const split = _splitPosZh(m.zh || '');
+  const pos = posOf(m.word) || split.pos;
+  const zhClean = pos ? split.zh : (m.zh || '');
+  const posZh = pos ? `${pos} ${zhClean}`.trim() : zhClean;
+  return _pipe([m.word, posZh, phrase, phraseZh]);
+}
+function _bigToParchmentCard(big) {
+  const friends = (big.phrases || []).slice(0, 6).map(p =>
+    _pipe([p.phrase || '', p.phrase_zh || ''])
+  );
+  // family — exclude the focus itself
+  const family = (big.family_members || [])
+    .filter(m => (m.word || '').toLowerCase() !== (big.focus_word || '').toLowerCase())
+    .map(_memberToFamilyLine);
+  // kin — flatten clusters' internal + external words; dedup by word.
+  const seenKin = new Set([(big.focus_word || '').toLowerCase()]);
+  const kin = [];
+  (big.kin_clusters || []).forEach(cl => {
+    [...(cl.internal_words || []), ...(cl.external_words || [])].forEach(m => {
+      const k = (m.word || '').toLowerCase();
+      if (!k || seenKin.has(k)) return;
+      seenKin.add(k);
+      kin.push(_memberToFamilyLine(m));
+    });
+  });
+  // group — VocabRuntime returns full objects
+  const group = (big.group || []).map(_memberToFamilyLine);
+  const ex = (big.examples && big.examples[0]) || {};
+  return {
+    h: big.word,
+    pos: '',                              // word-master cards do carry pos; pull below
+    zh: big.zh || '',
+    family,
+    kin,
+    group,
+    friends,
+    example:    ex.example || '',
+    example_zh: ex.example_zh || '',
+  };
+}
+function _smallToParchmentCard(small) {
+  // proper / place / culture small card — no family/kin
+  const friends = (small.phrases || []).slice(0, 6).map(p =>
+    _pipe([p.phrase || p.en || '', p.phrase_zh || p.zh || ''])
+  );
+  return {
+    h: small.word,
+    pos: '',
+    zh: small.zh || '',
+    family: [],
+    kin: [],
+    group: [],
+    friends,
+    example: '',
+    example_zh: '',
+  };
+}
+
+function showParchment(word) {
+  if (_activeParchment) closeParchment();
+  // v=104 — prefer the new VocabRuntime card.  Falls back to the
+  // legacy PARCHMENT_CARDS row when the runtime hasn't loaded yet
+  // (cold first visit) or doesn't recognise the word.
+  let c = _vocabRuntimeCard(word);
+  if (c) {
+    const raw = window.VocabRuntime && window.VocabRuntime.getWordCard(word);
+    if (raw && raw.pos) c.pos = raw.pos;
+  } else {
+    c = PARCHMENT_CARDS[word];
+  }
+  if (!c) return;
+
+  const inNote = !!(saved.notes && saved.notes[word]);
+  // v=85 — compute chapter dots BEFORE the innerHTML template uses them.
+  const _wcMapEarly = (typeof WORD_CHAPTERS !== 'undefined') ? WORD_CHAPTERS : {};
+  // v=98 — cap chapter dots at 6 in a single row.  Some words (e.g.
+  // "ion") appear in 87 chapters and the wall-of-dots was a visual
+  // assault.  Per user: "只能放一排哈… 最多放6个吧".
+  const _wcEarly = (_wcMapEarly[(c.h || '').toLowerCase()] || []).slice(0, 6);
+  const _dotsHtml = _wcEarly.length
+    ? `<div class="pc-chapter-dots">${_wcEarly.map(e => {
+        const labelChapter = (typeof CHAPTER_PLAN !== 'undefined' && CHAPTER_PLAN[e.idx - 1])
+          ? (CHAPTER_PLAN[e.idx - 1].section || String(e.idx))
+          : String(e.idx);
+        const title = `Chapter ${labelChapter} · ${(e.theme || '').replace(/^[\d.]+\s*/, '')}`;
+        return `<button class="pc-chapter-dot" data-jump-ch="${e.idx}" title="${escapeAttr(title)}" aria-label="${escapeAttr(title)}">
+          <span class="pc-chapter-dot-glyph">✦</span>
+        </button>`;
+      }).join('')}</div>`
+    : '';
+  const veil = document.createElement('div');
+  veil.className = 'parchment-veil';
+  veil.innerHTML = `
+    <div class="parchment-card">
+      <div class="pc-tap-hint pc-tap-hint--fixed">— tap the page —</div>
+      ${_dotsHtml}
+      <div class="parchment-inner">
+        <div class="pc-stack"></div>
+        <div class="pc-copy">
+          <span class="pc-copy-label">signed</span>
+          <input class="pc-copy-input" type="text"
+                 autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                 placeholder="${escapeAttr(c.h)}">
+          <span class="pc-copy-mark">✦</span>
+        </div>
+      </div>
+      <!-- v=56 — note button anchored to .parchment-card directly
+           so its bottom % maps to the painted star-in-circle's
+           position on the asset (not the inner padded box).      -->
+      <button class="pc-note-add ${inNote ? 'is-saved' : ''}" aria-label="add to her note" title="add to her note">
+        <svg class="pc-note-key" viewBox="0 0 32 14" width="40" height="18" aria-hidden="true">
+          <!-- skeleton key: bow (ring) on the left + shaft + two teeth -->
+          <circle cx="5" cy="7" r="3.8" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="5" cy="7" r="1.3" fill="currentColor"/>
+          <line x1="8.8" y1="7" x2="29" y2="7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="22" y1="7"  x2="22" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="26" y1="7"  x2="26" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="pc-note-key-fallback" aria-hidden="true">🗝</span>
+      </button>
+    </div>
+  `;
+  const stack = veil.querySelector('.pc-stack');
+
+  // Build the content as an array of HTML strings.  The headword
+  // shows immediately; every other item starts STAGED (hidden)
+  // and reveals one-by-one on tap.
+  const items = [];
+
+  // v=80 — header chapter chip(s): which chapter(s) does this word
+  // appear in?  Tapping a chip jumps to that chapter's reading
+  // article (stage 0).  Words in multiple chapters show all chips.
+  const _wcMap = (typeof WORD_CHAPTERS !== 'undefined') ? WORD_CHAPTERS : {};
+  const _wc = _wcMap[(c.h || '').toLowerCase()] || [];
+  // v=82 — chapter dots: small antique-gold circles (same family as
+  // the parchment key glyph) anchored to the painted scroll-roll at
+  // the top of the asset.  One circle per chapter; the circle wears
+  // the section number (e.g. "1.1") and the long theme is the
+  // tooltip.  Tap to jump.  Replaces the wider .pc-chapter-chip row
+  // per user: "搞几个圆圈 和你画的小钥匙同款".
+  // v=85 — chapter dots rendered OUTSIDE the items stack (see
+  // veil.innerHTML above).  Head row stays clean of them.
+  items.push({ kind: 'head', html: `
+    <div class="pc-head" data-sp="${escapeAttr(c.h)}">
+      <button class="pc-play" aria-label="play">♪</button>
+      <span class="pc-word">${escapeHtml(c.h)}</span>
+      <span class="pc-pos">${escapeHtml((c.pos || '').slice(0, 4))}.</span>
+      <span class="pc-zh">${escapeHtml(c.zh || '')}</span>
+    </div>` });
+
+  // v=52 — inline jump-link helper.  Wherever a word appears in the
+  // parchment text AND that word exists in PARCHMENT_CARDS, render
+  // it as an underlined tappable token.  Skip the headword itself
+  // (don't link a page to itself).  Underline = jumpable; plain
+  // text = not jumpable.  Replaces the v=51 bottom jump-link box.
+  const _selfWord = (c.h || '').toLowerCase();
+  const _VR = window.VocabRuntime;
+  const _pcLookup = _buildLinkLookup();
+  function pcLinkify(text) {
+    if (!text) return '';
+    // v=104 — when VocabRuntime is loaded, prefer the SURFACE form
+    // for data-jump so the next parchment focuses on the word the
+    // user actually tapped (not its parent head).  Falls back to
+    // the legacy reverse lookup when VocabRuntime is missing.
+    const escaped = escapeHtml(text);
+    return escaped.replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+      const lw = w.toLowerCase();
+      if (lw === _selfWord) return m;
+      if (_VR) {
+        // v=107 — same lemma chain as the stage 0 reading.  data-
+        // jump is the resolved form so the next scroll opens the
+        // right entry.
+        const r = resolveReadingWord(lw);
+        if (r && r.resolvedWord !== _selfWord) {
+          return `<a class="pc-jump" data-jump="${escapeAttr(r.resolvedWord)}">${m}</a>`;
+        }
+        return m;
+      }
+      const k = _pcLookup(lw);
+      if (!k || k === _selfWord) return m;
+      return `<a class="pc-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
+    });
+  }
+
+  // v=101 — group consecutive lines that share a leading word so a
+  // multi-phrase entry renders as ONE word header + N phrase rows
+  // (the user diagrammed this: "xxx \n xxxx bbbb \n xxxx cccc").
+  function groupByLeadingWord(lines) {
+    const out = [];
+    let last = null;
+    (lines || []).forEach(line => {
+      const [w, posZh, phraseBlob, phraseZhBlob] = (line || '').split('|').map(s => s ? s.trim() : '');
+      if (!w) return;
+      const phraseList   = (phraseBlob   || '').split(/\s*\/\s*/).filter(Boolean);
+      const phraseZhList = (phraseZhBlob || '').split(/\s*[；;\/]\s*/).filter(Boolean);
+      const phrases = phraseList.map((p, i) => ({ phrase: p, phraseZh: phraseZhList[i] || '' }));
+      if (last && last.w.toLowerCase() === w.toLowerCase()) {
+        last.phrases.push(...phrases);
+      } else {
+        last = { w, posZh, phrases };
+        out.push(last);
+      }
+    });
+    return out;
+  }
+
+  // v=111 — NEW her-head section (V63).  Surfaced ABOVE family so
+  // the user sees the prefix-stripped learning head of the word
+  // they tapped before any derivational variants.  Only emitted
+  // when the focus word's learning head differs from itself.
+  if (c.head && c.head.length) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her head</div>` });
+    groupByLeadingWord(c.head).forEach(g => {
+      items.push({ kind: 'fam', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
+      </div>` });
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh || '')}</span>
+        </div>` });
+      });
+    });
+  }
+
+  if (c.family && c.family.length) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her family</div>` });
+    groupByLeadingWord(c.family).forEach(g => {
+      items.push({ kind: 'fam', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
+      </div>` });
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'fam-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh || '')}</span>
+        </div>` });
+      });
+    });
+  }
+
+  if ((c.friends && c.friends.length) || c.example) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her friend</div>` });
+    (c.friends || []).forEach(line => {
+      const [phrase, zh] = line.split('|').map(s => s.trim());
+      items.push({ kind: 'colloc', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(phrase)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-phrase">${escapeHtml(phrase)}</span>
+        <span class="pc-line-zh">${escapeHtml(zh || '')}</span>
+      </div>` });
+    });
+    if (c.example) {
+      items.push({ kind: 'example', html: `<div class="pc-play-row pc-ex-row" data-sp="${escapeAttr(c.example)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-play-phrase pc-ex-en">${escapeHtml(c.example)}</span>
+      </div>
+      ${c.example_zh ? `<div class="pc-ex-zh">${escapeHtml(c.example_zh)}</div>` : ''}` });
+    }
+  }
+
+  // HER KIN — same row-by-row pattern.  Each kin entry has TWO
+  // phrases (joined by " / " in the JSON), each becoming its own
+  // tap-to-reveal row with audio.
+  if (c.kin && c.kin.length) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her kin</div>` });
+    groupByLeadingWord(c.kin).forEach(g => {
+      items.push({ kind: 'kin', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
+      </div>` });
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'kin-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh)}</span>
+        </div>` });
+      });
+    });
+  }
+
+  // v=75 — HER GROUP: semantic siblings.  Now ROW-BY-ROW like family
+  // /kin so the user can hear each group word pronounced when it
+  // reveals.  Each entry follows the same pipe layout; we read the
+  // word + its zh on row 1 and the phrase (if any) on row 2.
+  if (c.group && c.group.length) {
+    items.push({ kind: 'rule', html: `<hr class="pc-rule">` });
+    items.push({ kind: 'label', html: `<div class="pc-section-label">her group</div>` });
+    groupByLeadingWord(c.group).forEach(g => {
+      items.push({ kind: 'group', html: `<div class="pc-row pc-row--head pc-play-row" data-sp="${escapeAttr(g.w)}">
+        <button class="pc-play">♪</button>
+        <span class="pc-line-word">${pcLinkify(g.w)}</span>
+        <span class="pc-line-word-zh">${escapeHtml(g.posZh || '')}</span>
+      </div>` });
+      g.phrases.forEach(p => {
+        if (!p.phrase) return;
+        items.push({ kind: 'group-ph', html: `<div class="pc-row pc-row--phrase pc-play-row" data-sp="${escapeAttr(p.phrase)}">
+          <button class="pc-play">♪</button>
+          <span class="pc-line-phrase">${escapeHtml(p.phrase)}</span>
+          <span class="pc-line-zh">${escapeHtml(p.phraseZh)}</span>
+        </div>` });
+      });
+    });
+  }
+
+  // v=52 — bottom "↪ family pages / partner / kin pages" boxes
+  // RETIRED per user.  Jump links now live inline as underlined
+  // words inside the family / friend / kin / example rows above,
+  // saving vertical space and reading more like a handwritten note.
+
+  // Stage every item.  The headword reveals after the flip-in.
+  // Section labels + rules reveal automatically with the next
+  // content item so the user doesn't waste taps on dividers.
+  const nodes = items.map((it, i) => {
+    const node = document.createElement('div');
+    node.className = 'pc-item is-staged pc-kind-' + it.kind;
+    node.innerHTML = it.html;
+    stack.appendChild(node);
+    return node;
+  });
+
+  // Reveal the headword immediately and auto-play it after the
+  // page-flip-in animation lands (≈ 0.55 s).
+  setTimeout(() => {
+    nodes[0].classList.remove('is-staged');
+    nodes[0].classList.add('is-revealed');
+    speak(c.h);
+  }, 600);
+
+  // Tap-to-advance.  Any tap on the parchment-card (except the close
+  // button) reveals the next chunk.  A "chunk" is a content row PLUS
+  // any rule + section-label that sits immediately before it, so the
+  // user doesn't have to tap empty dividers separately.
+  let revealIdx = 1;
+  // v=107 — reveal SECTION-by-SECTION, not row-by-row.  One tap
+  // unfurls every item up to (but not including) the NEXT section
+  // label (which starts with the dotted-rule above its title).
+  // Every speaking row in the revealed batch is queued for
+  // sequential TTS — the user reads the whole section, then hears
+  // each line in order.  Per user: "现在的羊皮纸由于内容提升 不能
+  // 一句一句的显现了 看得很累 改成一个区一个区的显示+音频播放".
+  const SPEAKING_KINDS = new Set([
+    'fam', 'fam-ph', 'kin', 'kin-ph', 'colloc', 'example',
+    'group', 'group-ph', 'neighbor'
+  ]);
+  let _sectionPlayToken = 0;          // monotonically increasing so a
+                                       // new tap cancels any in-flight
+                                       // playback queue from the prior
+                                       // section.
+  function _playSequence(rows) {
+    const myToken = ++_sectionPlayToken;
+    let i = 0;
+    const next = () => {
+      if (myToken !== _sectionPlayToken) return;
+      if (i >= rows.length) {
+        veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+        return;
+      }
+      const { node, sp } = rows[i++];
+      veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+      const playRow = node.querySelector('.pc-play-row') || node;
+      if (playRow) playRow.classList.add('is-playing');
+      // v=109 — slower beat between spoken lines so the user has
+      // time to follow each phrase.  Was 80 ms.
+      if (!sp) return setTimeout(next, 380);
+      speak(sp).then(() => setTimeout(next, 380));
+    };
+    next();
+  }
+  function advanceReveal() {
+    if (revealIdx >= nodes.length) return false;
+    const startIdx = revealIdx;
+    const queued = [];
+    const toStagger = [];                // nodes that will fade in
+    // Walk until we hit the start of the NEXT section.
+    while (revealIdx < nodes.length) {
+      const it = items[revealIdx];
+      if (it.kind === 'rule' && revealIdx > startIdx && queued.length > 0) break;
+      // v=109 — stagger.  Mark for staged-in, the loop below adds
+      // is-revealed with a small per-row delay so the user sees
+      // them appear top-down rather than all at once.
+      toStagger.push(nodes[revealIdx]);
+      if (SPEAKING_KINDS.has(it.kind)) {
+        const node = nodes[revealIdx];
+        const sp = node.getAttribute('data-sp') ||
+                   node.querySelector('[data-sp]')?.getAttribute('data-sp');
+        queued.push({ node, sp });
+      }
+      revealIdx++;
+    }
+    // v=109 — slow visual stagger: 130 ms between each row's reveal.
+    // Per user: "显示文字的速度可以再慢点".
+    toStagger.forEach((n, k) => {
+      setTimeout(() => {
+        n.classList.remove('is-staged');
+        n.classList.add('is-revealed');
+        if (k === toStagger.length - 1) {
+          requestAnimationFrame(() => n.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+        }
+      }, k * 130);
+    });
+    (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
+    veil.querySelector('.pc-tap-hint')?.classList.add('is-gone');
+    // Start the TTS queue right after the stagger finishes so a row
+    // is fully painted before its line is spoken.
+    if (queued.length) {
+      setTimeout(() => _playSequence(queued), Math.max(180, toStagger.length * 130 + 60));
+    }
+    return revealIdx < nodes.length;
+  }
+  // v=72 — tap routing on parchment:
+  //   · ANY tap on the .parchment-inner advances the reveal
+  //     (this is where the actual readable content lives)
+  //   · taps on .pc-close / .pc-play / .pc-note-add stay scoped
+  //   · taps on the CARD's transparent padding (= visible scroll
+  //     edge / blank margin) CLOSE the parchment, because that's
+  //     the natural "fold this page" gesture the user expects
+  //   · taps on the veil (outside the card entirely) also close
+  veil.querySelector('.parchment-card').addEventListener('click', e => {
+    if (e.target.closest('.pc-close, .pc-play, .pc-note-add')) return;
+    if (e.target.closest('.parchment-inner')) {
+      advanceReveal();
+    } else {
+      // tap landed in the card's transparent padding band — close
+      closeParchment();
+    }
+  });
+
+  // Individual ♪ buttons still re-play their own audio without
+  // advancing the reveal sequence.
+  function wirePlay(row) {
+    const sp = row.getAttribute('data-sp');
+    if (!sp) return;
+    const btn = row.querySelector('.pc-play');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      veil.querySelectorAll('.is-playing').forEach(n => n.classList.remove('is-playing'));
+      row.classList.add('is-playing');
+      SFX.tap();
+      speak(sp);
+    });
+  }
+  veil.querySelectorAll('.pc-play-row[data-sp], .pc-head[data-sp]').forEach(wirePlay);
+  // v=80 — chapter chips jump to that chapter's reading article.
+  // Closes the parchment first, then sets saved.chapter (for the
+  // session only — NOT advancing the mainline), reseeds the session
+  // for that chapter, and lands on stage 0.
+  veil.querySelectorAll('.pc-chapter-dot, .pc-chapter-chip').forEach(chip => {
+    chip.addEventListener('click', e => {
+      e.stopPropagation();
+      const target = +chip.getAttribute('data-jump-ch');
+      if (!target) return;
+      // v=84 — flash the ring before navigating so the user sees
+      // it light up first.
+      chip.classList.add('is-flashing');
+      (SFX.pageTurn ? SFX.pageTurn() : SFX.tap());
+      setTimeout(() => {
+        closeParchment();
+        // v=84 — record where we came from + which word so the
+        // stage-0 back button can return to this parchment.
+        saved.chapter      = target;
+        saved.freeMode     = true;
+        saved.stage        = 0;
+        saved.s0Origin     = 'parchment';
+        saved.s0OriginWord = word;
+        Store.save();
+        freshSession();
+        go('stage0');
+      }, 320);
+    });
+  });
+
+  // v=52 — Inline jump-link.  Any underlined word inside the
+  // parchment content (.pc-jump) closes this page and opens the
+  // target's parchment in its place.  Replaces the old chip-link
+  // box at the parchment bottom.
+  veil.querySelectorAll('.pc-jump').forEach(a => {
+    a.addEventListener('click', e => {
+      e.stopPropagation();
+      const target = a.getAttribute('data-jump');
+      if (!target) return;
+      // v=104 — accept either a VocabRuntime word or a legacy
+      // PARCHMENT_CARDS head.
+      // v=107 — accept patch words, VR words, or legacy heads.
+      const knownByPatch = !!_patchCard(target);
+      const knownByVR = window.VocabRuntime &&
+        (window.VocabRuntime.isClickableWord(target) || window.VocabRuntime.getSmallCard(target));
+      if (!knownByPatch && !knownByVR && !PARCHMENT_CARDS[target]) return;
+      SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+      closeParchment();
+      setTimeout(() => showParchment(target), 280);
+    });
+  });
+  // Also leave the legacy chip handler in case any future code path
+  // re-emits .pc-neighbor-link buttons.
+  veil.querySelectorAll('.pc-neighbor-link').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const partner = btn.getAttribute('data-partner');
+      if (!partner) return;
+      SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+      closeParchment();
+      setTimeout(() => showParchment(partner), 280);
+    });
+  });
+
+  // v=75 — .pc-close button removed; close happens via tap on the
+  // veil/padding (handled above).  The querySelector guard keeps
+  // legacy code paths safe.
+  const _legacyClose = veil.querySelector('.pc-close');
+  if (_legacyClose) _legacyClose.addEventListener('click', e => {
+    e.stopPropagation();
+    closeParchment();
+  });
+  // v=78 — parchment copy field doubles as a self-dictation box.
+  // Compare what the user types (lowercase) against the headword;
+  // when it matches, glow the input gold + play a small sparkle so
+  // the muscle-memory practice gets a tactile reward.  User: "写对
+  // 了之后字体发光一下".
+  const copyInput = veil.querySelector('.pc-copy-input');
+  if (copyInput) {
+    const target = (c.h || '').toLowerCase();
+    let _matched = false;
+    copyInput.addEventListener('input', () => {
+      const v = (copyInput.value || '').trim().toLowerCase();
+      if (v === target && !_matched) {
+        _matched = true;
+        copyInput.classList.add('is-correct');
+        try { SFX.scoreOk && SFX.scoreOk(); } catch {}
+      } else if (v !== target && _matched) {
+        _matched = false;
+        copyInput.classList.remove('is-correct');
+      }
+    });
+  }
+  // v=55 — add-to-note button.  Toggle this word in saved.notes.
+  // Visual flips between "empty" and "is-saved" so the user knows
+  // they bookmarked it.  Doesn't close the parchment.
+  const noteBtn = veil.querySelector('.pc-note-add');
+  if (noteBtn) {
+    noteBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!saved.notes) saved.notes = {};
+      const w = c.h;
+      if (saved.notes[w]) {
+        delete saved.notes[w];
+        noteBtn.classList.remove('is-saved');
+      } else {
+        saved.notes[w] = Date.now();
+        noteBtn.classList.add('is-saved');
+      }
+      Store.save();
+      SFX.tap();
+    });
+  }
+  // v=55 — close on ANY click outside the .parchment-card.
+  // Earlier `e.target === veil` check missed taps on the padding
+  // ring inside the veil (anything that bubbled from a descendant
+  // that isn't the card itself).  Now we close as long as the
+  // tap didn't land inside the card.
+  veil.addEventListener('click', e => {
+    if (e.target.closest('.parchment-card')) return;
+    closeParchment();
+  });
+  document.addEventListener('keydown', _onParchEsc);
+
+  document.body.appendChild(veil);
+  _activeParchment = veil;
+}
+function closeParchment() {
+  if (!_activeParchment) return;
+  const v = _activeParchment;
+  v.classList.add('is-leaving');
+  document.removeEventListener('keydown', _onParchEsc);
+  setTimeout(() => v.remove(), 260);
+  _activeParchment = null;
+}
+function _onParchEsc(e) { if (e.key === 'Escape') closeParchment(); }
+
+// v=70 — index now groups words by THEMED CHAPTER instead of
+// first letter (user: "按照首字母分的没有规律 我们是按照主题分的").
+// Each word is filed under the FIRST chapter that introduces it;
+// orphans (cards never used by any chapter) get an "unsorted" bin
+// at the bottom.  Search still filters across every row.          */
+function _resolveChapterWords(ch) {
+  const set = new Set();
+  (ch.match_group_ids || []).forEach(gid => {
+    const g = MATCH_GROUPS[gid];
+    if (!g) return;
+    if (g.head)    set.add(g.head);
+    if (g.partner) set.add(g.partner);
+  });
+  (ch.reading_question_ids || []).forEach(rid => {
+    const q = _SCENE_BY_ID[rid];
+    if (q && q.answers) q.answers.forEach(w => set.add(w));
+  });
+  (ch.dictation_question_ids || []).forEach(tok => {
+    const m = /^DICT_(\d+)$/.exec(tok);
+    if (!m) return;
+    const d = _DICT_ARR[+m[1]];
+    if (d && d.head) set.add(d.head);
+  });
+  return Array.from(set);
+}
+let _wordChapterCache = null;
+function _wordToChapterMap() {
+  if (_wordChapterCache) return _wordChapterCache;
+  _wordChapterCache = new Map();
+  _CHAPTER_PLAN.forEach((ch, idx) => {
+    _resolveChapterWords(ch).forEach(w => {
+      if (!_wordChapterCache.has(w)) {
+        _wordChapterCache.set(w, { idx, theme: ch.theme });
+      }
+    });
+  });
+  return _wordChapterCache;
+}
+
+function renderIndexLikePage(el, { title, words, backTo = 'cover', fromKey = 'index' }) {
+  // Group by FIRST LETTER (A–Z) — the index is "the index", a
+  // straight A-to-Z dictionary lookup.  Chapter-based browsing
+  // lives on the SEPARATE chapter-catalog screen (cover-side).
+  const groups = {};
+  words.forEach(h => {
+    const k = h[0].toUpperCase();
+    (groups[k] = groups[k] || []).push(h);
+  });
+  const letters = Object.keys(groups).sort();
+  const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const alphaHtml = ALL_LETTERS.map(L => {
+    const has = groups[L] && groups[L].length;
+    return `<a data-letter="${L}"${has ? '' : ' class="ab-disabled"'}>${L}</a>`;
+  }).join('');
+  el.innerHTML = `
+    <div class="nav-shield"></div>
+    <div class="nav-card">
+      ${pageTitle(title)}
+      <div class="alpha-bar">${alphaHtml}</div>
+      <input class="index-search" type="text" placeholder="SEARCH WORDS…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    </div>
+    <div class="word-list" id="word-list-${fromKey}">
+      ${words.length ? '' : `<div class="note-empty">no words yet · the page is still pristine</div>`}
+    </div>
+  `;
+  el.appendChild(closeCorner({ to: backTo }));
+
+  $$('.alpha-bar a', el).forEach(a => {
+    a.addEventListener('click', () => {
+      const L = a.getAttribute('data-letter');
+      const target = $(`#letter-${L}-${fromKey}`, el);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  const body = $(`#word-list-${fromKey}`, el);
+  letters.forEach(L => {
+    body.insertAdjacentHTML('beforeend',
+      `<div class="alpha-section-title" id="letter-${L}-${fromKey}">${L}</div>`);
+    groups[L].forEach(h => {
+      const c = PARCHMENT_CARDS[h];
+      if (!c) return;
+      const row = document.createElement('div');
+      row.className = 'word-row';
+      row.dataset.word = c.h.toLowerCase();
+      row.dataset.zh = (c.zh || '').toLowerCase();
+      row.innerHTML = `
+        <span class="wr-word">${escapeHtml(c.h)}</span>
+        <span class="wr-pos">${escapeHtml(c.pos || '')}</span>
+        <span class="wr-leader" aria-hidden="true"></span>
+        <span class="wr-zh">${escapeHtml(c.zh || '')}</span>
+      `;
+      row.addEventListener('click', () => flipToCard(row, h, fromKey));
+      body.appendChild(row);
+    });
+  });
+
+  $('.index-search', el).addEventListener('input', e => {
+    const q = (e.target.value || '').toLowerCase().trim();
+    $$('.word-row', el).forEach(row => {
+      const hit = !q ||
+        row.dataset.word.includes(q) ||
+        row.dataset.zh.includes(q);
+      row.style.display = hit ? '' : 'none';
+    });
+    $$('.alpha-section-title', el).forEach(h => {
+      let n = h.nextElementSibling, alive = false;
+      while (n && !n.classList.contains('alpha-section-title')) {
+        if (n.style.display !== 'none') { alive = true; break; }
+        n = n.nextElementSibling;
+      }
+      h.style.display = alive ? '' : 'none';
+    });
+  });
 }
 
 function sprinkleStars(container, count = 18) {
@@ -476,7 +2373,7 @@ function sprinkleStars(container, count = 18) {
    learning beat.  The per-segment ♪ buttons replay without touching
    the reveal state.                                                   */
 function renderExCard(headWord, mark = null, { rewrite = false, withControls = true } = {}) {
-  const c = CARDS[headWord];
+  const c = PARCHMENT_CARDS[headWord];
   if (!c) {
     const x = document.createElement('div');
     x.className = 'ex-card';
@@ -547,11 +2444,11 @@ function renderExCard(headWord, mark = null, { rewrite = false, withControls = t
 
   /* HER FRIEND — section label always visible, every collocation row
      is queued individually so each tap reveals + speaks ONE colloc.  */
-  if (c.colloc && c.colloc.length) {
+  if (c.friends && c.friends.length) {
     const fr = document.createElement('div');
     fr.className = 'ex-section ex-friend';
     fr.innerHTML = `<div class="ex-label">her friend</div>`;
-    c.colloc.forEach(line => {
+    c.friends.forEach(line => {
       const [phrase, zh] = line.split('|').map(s => s.trim());
       const row = document.createElement('div');
       row.className = 'colloc-row is-veiled';
@@ -585,16 +2482,20 @@ function renderExCard(headWord, mark = null, { rewrite = false, withControls = t
     queue.push({ el: ex, audio: c.example });
   }
 
-  /* HER NEIGHBOR — always visible. */
-  if (c.partner) {
+  /* HER NEIGHBOR — first synonym from PARCHMENT_JUMP_LINKS (v=51).
+     ex-card is the legacy stand-alone study card; we only show
+     the first synonym so the card stays compact.                 */
+  const _jumpsForEx = PARCHMENT_JUMP_LINKS[headWord] || {};
+  const _firstPartner = (_jumpsForEx.synonym_links || []).find(w => PARCHMENT_CARDS[w]);
+  if (_firstPartner) {
     const nb = document.createElement('div');
     nb.className = 'ex-section ex-neighbor';
     nb.innerHTML = `<span class="ex-label">her neighbor</span>
-                    <button class="ex-neighbor-link">${escapeHtml(c.partner)}</button>`;
+                    <button class="ex-neighbor-link">${escapeHtml(_firstPartner)}</button>`;
     nb.querySelector('.ex-neighbor-link').addEventListener('click', e => {
       e.stopPropagation();
       SFX.pageTurn();
-      go('card', { word: c.partner, from: state.screen === 'card' ? (state._cardFrom || 'cover') : state.screen });
+      go('card', { word: _firstPartner, from: state.screen === 'card' ? (state._cardFrom || 'cover') : state.screen });
     });
     box.appendChild(nb);
   }
@@ -676,11 +2577,15 @@ function renderExCard(headWord, mark = null, { rewrite = false, withControls = t
    9. ORACLE QUESTION BUILDER — Chinese options
    ------------------------------------------------------------ */
 function buildOracleQuestion(word) {
-  const c = CARDS[word];
+  const c = PARCHMENT_CARDS[word];
   const sentence = c.example || c.h;
   // Cloze: keep the first letter, blank the rest.  "abrupt" → "a______"
   const first  = c.h[0];
-  const blanks = '_'.repeat(Math.max(5, c.h.length - 1));
+  // Use non-breaking spaces, not literal underscores — the CSS
+  // border-bottom on .q-blank draws the single clean line.  The
+  // old version emitted "a______" which clashed with the
+  // border-bottom and read as two stacked underlines.
+  const blanks = ' '.repeat(Math.max(5, c.h.length - 1));
   const blanked = `${first}${blanks}`;
   const sentenceHL = sentence.replace(
     new RegExp(`\\b${c.h}\\b`, 'i'),
@@ -688,7 +2593,7 @@ function buildOracleQuestion(word) {
   );
   // 3 distractors that ALSO start with the same letter — the lesson
   // is "tell apart the words that share the first letter".
-  const sameLetter = Object.keys(CARDS).filter(k =>
+  const sameLetter = Object.keys(PARCHMENT_CARDS).filter(k =>
     k !== word && k[0].toLowerCase() === first.toLowerCase()
   );
   const wrongs = [];
@@ -698,7 +2603,7 @@ function buildOracleQuestion(word) {
   }
   // Fall back to random heads if there aren't 3 same-letter siblings.
   if (wrongs.length < 3) {
-    const fallback = Object.keys(CARDS).filter(k => k !== word && !wrongs.includes(k));
+    const fallback = Object.keys(PARCHMENT_CARDS).filter(k => k !== word && !wrongs.includes(k));
     while (wrongs.length < 3 && fallback.length) {
       const cand = rand(fallback);
       if (!wrongs.includes(cand)) wrongs.push(cand);
@@ -714,26 +2619,35 @@ function buildOracleQuestion(word) {
 function showModal({ title, body = '', score = null, actions = [], variant = '' }) {
   const veil = $('#modal');
   const cls = 'modal-card' + (variant ? ` is-${variant}` : '');
-  // Real sparkle PNGs live in the corners — iOS renders <img> alpha
-  // natively, unlike CSS gradient pseudo-elements which kept tofu-ing
-  // into white pluses.
+  // v=37 modal — uses the painted PNG frame (modal-frame.png).  The
+  // moon ornament + pink bow + gold floral borders are all baked
+  // into the asset, so the markup is just the text content +
+  // actions; the CSS sizes the container to the frame's aspect.
   veil.innerHTML = `
     <div class="${cls}">
-      <img class="m-spark m-spark-tl" src="assets/icon-spark-s.png?v=25" alt="">
-      <img class="m-spark m-spark-tr" src="assets/icon-spark-s.png?v=25" alt="">
-      <img class="m-spark m-spark-bl" src="assets/icon-spark-s.png?v=25" alt="">
-      <img class="m-spark m-spark-br" src="assets/icon-spark-s.png?v=25" alt="">
-      <div class="modal-title">${escapeHtml(title)}</div>
-      ${body  ? `<div class="modal-body">${escapeHtml(body)}</div>` : ''}
-      ${score ? `<div class="modal-score">${score.value}<small> / ${score.total}</small></div>` : ''}
-      <div class="modal-actions"></div>
+      <div class="modal-inner">
+        <div class="modal-title">${escapeHtml(title)}</div>
+        ${body  ? `<div class="modal-body">${escapeHtml(body)}</div>` : ''}
+        ${score ? `<div class="modal-score">${score.value}<small> / ${score.total}</small></div>` : ''}
+        <div class="modal-actions"></div>
+      </div>
     </div>
   `;
   const ar = $('.modal-actions', veil);
   actions.forEach(a => {
     ar.appendChild(btn(a.label, () => { hideModal(); a.onClick && a.onClick(); }, { variant: a.variant || '' }));
   });
-  SFX.pop();
+  // Score-aware entrance chime — perfect / good / so-so / low.  Falls
+  // back to the old "pop" if no score is supplied (leave-confirm modals).
+  if (score && typeof score.value === 'number' && typeof score.total === 'number') {
+    const pct = score.value / Math.max(1, score.total);
+    if      (pct >= 0.99) SFX.scorePerfect();
+    else if (pct >= 0.75) SFX.scoreGood();
+    else if (pct >= 0.40) SFX.scoreOk();
+    else                  SFX.scoreLow();
+  } else {
+    SFX.pop();
+  }
   veil.classList.add('show');
 }
 function hideModal() { $('#modal').classList.remove('show'); }
@@ -752,15 +2666,20 @@ const Screens = {
   cover: {
     onEnter() {
       const el = $('#screen-cover');
-      const learnedCount = Object.keys(saved.learned).length;
       el.innerHTML = '';
 
+      // v=63 — chapter counter persists across sessions.  The CTA
+      // is always "Continue Reading" — it picks up at whatever
+      // chapter the user last left unfinished.  A first-time player
+      // sees Chapter · 1.  Under the title we show a small italic
+      // "Restart Game" link (replacing the old "X of N awakened"
+      // counter), which resets the chapter counter back to 1.
       const stage = document.createElement('div');
       stage.className = 'cover-stage';
       stage.innerHTML = `
         <div class="cover-mid">
           <div id="cover-cta-slot"></div>
-          <div class="home-stats">${learnedCount} of ${TOTAL_WORDS} awakened</div>
+          <div class="cover-restart" id="cover-restart-slot"></div>
         </div>
         <div class="cover-bottom">
           <div class="lil-row" id="cover-links"></div>
@@ -768,25 +2687,141 @@ const Screens = {
       `;
       el.appendChild(stage);
 
-      el.appendChild(moonCorner());
-
-      // Tonight's Reading — unlocks audio on the way into stage 1.
-      $('#cover-cta-slot', el).appendChild(mainCTA(`Tonight's Reading`, () => {
+      // Continue Reading — picks up at the LAST unfinished stage
+      // within the current chapter.  saved.stage tracks the highest
+      // stage the user has reached (1, 2, or 3); on cover entry we
+      // resume at that stage so a passed stage 1 + stage 2 lands
+      // the user directly on the dictation.  User: "Tonight Reading
+      // 不是继续游戏吗 — 应该从默写继续开始".
+      // v=80 — Continue Reading always lands on the MAINLINE chapter
+      // (linear progression).  Catalog jumps set saved.freeMode and
+      // saved.chapter to whatever was tapped, but mainlineChapter
+      // tracks the true linear position.  Hitting Continue Reading
+      // syncs saved.chapter back to mainlineChapter and clears
+      // freeMode.
+      // v=113 — Menu's Quiz / Continue CTA routes to the FIRST
+      // unfinished stage of the mainline chapter.  Order is:
+      //   1. saved.lastScreen (resume the exact screen the user
+      //      bounced out of, even if mid-stage)
+      //   2. otherwise the next un-passed trial stage of mainline
+      //      (s1 → s2 → s3 — the explicit per-section completion
+      //      records, NOT the legacy saved.stage which only ever
+      //      bumps up).
+      //   3. otherwise stage 0 reading.
+      const mainline = saved.mainlineChapter || saved.chapter || 1;
+      const mlChapter = _CHAPTER_PLAN[mainline - 1];
+      const chapHasArticle = !!(mlChapter && mlChapter.article_id);
+      let resumeScreen = null;
+      const REMEMBERABLE = /^stage[0-3](-result|-quiz)?$/;
+      if (saved.lastScreen && REMEMBERABLE.test(saved.lastScreen)) {
+        resumeScreen = saved.lastScreen;
+      } else {
+        // Walk: stage 1 / 2 / 3 in order, pick first not-completed.
+        const nextTrial = _nextUnfinishedTrialStage(mainline);
+        if (nextTrial) {
+          resumeScreen = 'stage' + nextTrial;
+        } else if (chapHasArticle) {
+          resumeScreen = 'stage0';
+        } else {
+          resumeScreen = 'stage1';
+        }
+      }
+      let resumeStage = (saved.stage == null) ? 0 : saved.stage;
+      if (resumeStage < 0 || resumeStage > 3) resumeStage = 0;
+      const stageLabels = {
+        'stage0':         'Continue · Reading',
+        'stage0-quiz':    'Continue · Reading Quiz',
+        'stage1':         'Continue · Stage 1',
+        'stage1-result':  'Continue · Stage 1',
+        'stage2':         'Continue · Stage 2',
+        'stage2-result':  'Continue · Stage 2',
+        'stage3':         'Continue · Stage 3',
+        'stage3-result':  'Continue · Stage 3'
+      };
+      const fresh = mainline === 1 && (saved.stage == null || saved.stage === 0) && !saved.lastScreen;
+      const ctaLabel = fresh ? 'Tonight’s Reading' : (stageLabels[resumeScreen] || 'Continue');
+      // v=114 — Menu CTA opens a small dialog with two choices:
+      //   · Continue → existing resume routing
+      //   · Review   → random replay of words sorted by errorScore
+      // Per user: "manu的quiz点击后是弹窗 进入继续还是review随机
+      // 复习已累计的单词 从错的次数最多的开始随机".
+      function _continueFlow() {
         LanBGM.unlock();
         const fade = document.createElement('div');
         fade.className = 'fade-out';
         document.body.appendChild(fade);
         requestAnimationFrame(() => fade.classList.add('show'));
-        setTimeout(() => { LanBGM.stop(); }, 800);
         setTimeout(() => {
+          saved.freeMode = false;
+          saved.chapter = saved.mainlineChapter || saved.chapter || 1;
+          if (!saved.mainlineChapter) saved.mainlineChapter = saved.chapter;
+          Store.save();
           freshSession();
-          go('stage1');
+          go(resumeScreen);
           setTimeout(() => fade.remove(), 700);
           fade.classList.remove('show');
         }, 1000);
+      }
+      $('#cover-cta-slot', el).appendChild(mainCTA(ctaLabel, () => {
+        LanBGM.unlock();
+        const pool = _reviewPool();
+        const reviewBody = pool.length
+          ? `Pick up where you left off, or take a random review pass through ${pool.length} word${pool.length === 1 ? '' : 's'} (most-errored first).`
+          : 'You have no review words yet — accumulate a few before reviewing.';
+        showModal({
+          title: ctaLabel,
+          body: reviewBody,
+          actions: [
+            { label: 'review', variant: 'ghost', onClick: () => {
+              if (pool.length === 0) return;
+              startReview(pool);
+            }},
+            { label: 'continue', variant: '', onClick: _continueFlow }
+          ]
+        });
       }));
-      $('#cover-links', el).appendChild(lilGhost('her note',  () => { LanBGM.unlock(); LanBGM.playHomeRandom({ volume: 0.42 }); go('note'); }));
-      $('#cover-links', el).appendChild(lilGhost('the index', () => { LanBGM.unlock(); LanBGM.playHomeRandom({ volume: 0.42 }); go('index'); }));
+
+      // v=63 — small italic "Restart Game · Chapter N" link.  Tap →
+      // confirm modal → reset chapter counter to 1.  Sits where
+      // the lifetime "X of N awakened" line used to.
+      const restart = document.createElement('button');
+      restart.className = 'cover-restart-btn';
+      restart.innerHTML = `<span class="cr-glyph">❦</span><span class="cr-text">Restart Game</span><span class="cr-chapter">Chapter · ${saved.chapter}</span>`;
+      restart.addEventListener('click', () => {
+        SFX.tap();
+        showModal({
+          title: 'Restart from Chapter One?',
+          body: `Your notebook of learned words will stay. Only the chapter mark resets.`,
+          actions: [
+            { label: 'keep reading', variant: 'ghost', onClick: () => {} },
+            { label: 'restart',       variant: '',     onClick: () => {
+              resetChapterProgress();
+              go('cover');
+            }}
+          ]
+        });
+      });
+      $('#cover-restart-slot', el).appendChild(restart);
+
+      // v=71 — "Chapter Catalog" link under the Restart Game pill.
+      // Opens the themed-chapter list so the user can jump into a
+      // weak chapter (or any chapter) without going through the
+      // sequential "Continue Reading" path.
+      const catalog = document.createElement('button');
+      catalog.className = 'cover-restart-btn cover-catalog-btn';
+      catalog.innerHTML = `<span class="cr-glyph">❦</span><span class="cr-text">Index</span><span class="cr-chapter">${_CHAPTER_PLAN.length} chapters</span>`;
+      catalog.addEventListener('click', () => {
+        SFX.tap();
+        go('chapter-catalog');
+      });
+      $('#cover-restart-slot', el).appendChild(catalog);
+
+      // v=70 — route through go() so the cover-side soft veil
+      // (the gentler purple wash) actually fires, instead of the
+      // legacy transitionTo() which dropped its own dark page-veil
+      // and bypassed the cover-side detection in go().
+      $('#cover-links', el).appendChild(lilGhost('Her Note',  () => go('note')));
+      $('#cover-links', el).appendChild(lilGhost('The Glossary', () => go('index')));
     }
   },
 
@@ -798,9 +2833,371 @@ const Screens = {
      If the user dyes a left card while the current tag already has
      a left card, the previous left is cleared — same with right.
      This rule is what the user asked for: 左+右 only.            */
+
+  /* ---------- STAGE 0 — pre-game reading section (v=81) ----------
+     v=81 — restructured: each "chapter" is now ONE small section
+     (1.1, 1.2, etc).  Stage 0 shows that ONE section's body +
+     title; the 3 questions tied to that section feed the quiz.
+     Big parts (10 of them) just group small chapters for catalog
+     navigation.                                                      */
+  stage0: {
+    onEnter() {
+      const el = $('#screen-stage0');
+      const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+      if (!ch) { go('stage1'); return; }
+      const article = (typeof STAGE0_PARTS !== 'undefined')
+                    && STAGE0_PARTS[ch.article_id - 1];
+      const section = article && article.sections[ch.section_idx];
+      if (!section) { go('stage1'); return; }
+      // v=92 — generous word→card lookup.  Direct head match first,
+      // then a reverse map built from every card's family/kin words
+      // (so `fraction` reaches `fragile`, `compression` reaches
+      // `compressive`, etc.), then a prefix-strip pass (in-/un-/non-/
+      // dis-/re-) for things like `incomprehensible → comprehensible`.
+      // v=104 — reading linkify: when the new VocabRuntime is loaded,
+      // any word it recognises (whether as a word-master entry or as
+      // a proper / place / culture small card) becomes clickable, and
+      // the data-jump payload is the SURFACE form itself — the card
+      // opens with that exact word as the focus, family/kin then
+      // inherit from its family_head.  Falls back to the legacy
+      // PARCHMENT_CARDS lookup if VocabRuntime hasn't loaded.
+      const linkFor = (window._buildLinkLookup || _buildLinkLookup)();
+      function linkify(text) {
+        if (!text) return '';
+        const VR = window.VocabRuntime;
+        return escapeHtml(text).replace(/\b([A-Za-z][A-Za-z'\-]{2,})\b/g, (m, w) => {
+          if (VR) {
+            // v=107 — resolveReadingWord handles lemma fallback
+            // (properties → property, defies → defy, erupted →
+            // erupt, drastically → drastic, etc.) and the patch
+            // override.  The data-jump payload is the RESOLVED
+            // word, so clicking opens the right card directly.
+            const r = resolveReadingWord(w);
+            if (r) return `<a class="s0-jump" data-jump="${escapeAttr(r.resolvedWord)}">${m}</a>`;
+            return m;
+          }
+          const k = linkFor(w);
+          if (k) return `<a class="s0-jump" data-jump="${escapeAttr(k)}">${m}</a>`;
+          return m;
+        });
+      }
+      // v=92 — sentence-by-sentence ink-bleed reveal.  Each sentence
+      // starts invisible; tapping it inks it in AND auto-plays its
+      // TTS.  Tapping an already-revealed sentence replays.  Per user:
+      // "需要一句话一句话的点开 自动播放语音… 不然很容易注意力失效".
+      const paras = (section.body || '')
+        .split(/(?<=[.!?])\s+(?=[A-Z])/)
+        .filter(s => s.trim().length > 0);
+      const paraHtml = paras.map((p, i) => `
+        <div class="s0-para" data-sp="${escapeAttr(p)}" data-idx="${i}">${linkify(p)}</div>
+      `).join('');
+      const fromParchment = saved.s0Origin === 'parchment' && saved.s0OriginWord;
+      // v=105 — "next page" link moved back to the bottom of the
+      // page (user changed their mind: "next page还是放在下面吧").
+      // Folio stays as a small Pinyon Script digit in the
+      // bottom-right floral corner.
+      const _pageNum = ((saved.chapter || 1) - 1) * 2 + 1;
+      el.innerHTML = `
+        <div class="s0-page">
+          <div class="s0-text-frame">
+            <header class="s0-header">
+              <div class="s0-chip">${escapeHtml(article.title)}</div>
+              <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+            </header>
+            <section class="s0-section">${paraHtml}</section>
+            <button class="s0-next-link" aria-label="turn page to quiz">next page</button>
+          </div>
+          <span class="s0-folio">${_pageNum}</span>
+        </div>
+      `;
+      if (fromParchment) {
+        const back = document.createElement('button');
+        back.className = 's0-corner-back';
+        back.setAttribute('aria-label', 'return to parchment');
+        back.innerHTML = `<span class="s0-corner-dot"></span>`;
+        back.addEventListener('click', () => {
+          (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
+          const w = saved.s0OriginWord;
+          saved.s0Origin = null;
+          saved.s0OriginWord = null;
+          Store.save();
+          go('cover', { instant: true });
+          setTimeout(() => { if (PARCHMENT_CARDS[w]) showParchment(w); }, 80);
+        });
+        el.appendChild(back);
+      } else {
+        el.appendChild(closeCorner({ to: 'cover' }));
+      }
+      // v=104 — Word-jump links open the parchment scroll for the
+      // SURFACE word (not the parent head).  showParchment will
+      // synthesise the card from VocabRuntime if loaded; otherwise
+      // it tries legacy PARCHMENT_CARDS.
+      $$('.s0-jump', el).forEach(a => a.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const w = a.getAttribute('data-jump');
+        (SFX.inkScratch ? SFX.inkScratch : SFX.tap)();
+        showParchment(w);
+      }));
+      // v=113 — reading end gives TWO choices once every sentence
+      // has been revealed (per user: "完成阅读后给两个选择 →
+      // Continue Reading 或 Begin Trial").  Layout: the existing
+      // "next page" link is the default fallthrough to stage 0
+      // quiz; an extra "begin trial" link appears alongside it
+      // once the reading is complete AND the section's stage 1
+      // hasn't been completed yet.  "continue reading" jumps to
+      // the next mainline chapter's stage 0.
+      const _foot_key = $('.s0-next-link', el);
+      function _armKeyIfDone() {
+        const total = $$('.s0-para', el).length;
+        const done  = $$('.s0-para.is-revealed', el).length;
+        if (done >= total && _foot_key) {
+          _foot_key.classList.add('is-armed');
+          _mountReadingEndChoice();
+        }
+      }
+      if (_foot_key) _foot_key.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
+        go('stage0-quiz');
+      });
+      let _readingEndMounted = false;
+      function _mountReadingEndChoice() {
+        if (_readingEndMounted) return;
+        _readingEndMounted = true;
+        const host = $('.s0-text-frame', el);
+        if (!host) return;
+        const next = _nextUnfinishedTrialStage(saved.chapter || 1);
+        const chCount = (typeof _CHAPTER_PLAN !== 'undefined') ? _CHAPTER_PLAN.length : 1;
+        const hasNextChapter = (saved.chapter || 1) < chCount;
+        const trialLabel = next ? `begin stage ${next}` : 'all stages done';
+        const wrap = document.createElement('div');
+        wrap.className = 's0-end-choice';
+        wrap.innerHTML = `
+          ${hasNextChapter ? '<button class="s0-end-btn" data-act="continue">continue reading</button>' : ''}
+          ${next ? `<button class="s0-end-btn s0-end-btn--trial" data-act="trial">${trialLabel}</button>` : ''}
+        `;
+        host.appendChild(wrap);
+        wrap.addEventListener('click', (ev) => {
+          const b = ev.target.closest('[data-act]');
+          if (!b) return;
+          ev.stopPropagation();
+          (SFX.pageTurn ? SFX.pageTurn : SFX.tap)();
+          if (b.dataset.act === 'continue') {
+            // advance mainline by one chapter, fresh session,
+            // enter stage 0 of the new chapter.
+            const ml = (saved.mainlineChapter || saved.chapter || 1);
+            const newChap = Math.min(ml + 1, chCount);
+            saved.mainlineChapter = newChap;
+            saved.chapter = newChap;
+            saved.stage = 0;
+            saved.freeMode = false;
+            try { Store.save(); } catch {}
+            try { freshSession(); } catch {}
+            go('stage0');
+          } else if (b.dataset.act === 'trial') {
+            // Jump to the next unfinished trial stage for THIS section.
+            const s = _nextUnfinishedTrialStage(saved.chapter || 1);
+            if (s) go('stage' + s);
+            else   go('stage0-quiz');
+          }
+        });
+      }
+      // v=94 — tap ANYWHERE on the page reveals the NEXT sentence in
+      // order and speaks just that sentence.  Tapping an already-
+      // revealed sentence replays its TTS.  Per user: "点击任意部分
+      // 就显现一段… 不然顺序乱了".
+      function _revealNext() {
+        const next = el.querySelector('.s0-para:not(.is-revealed)');
+        if (!next) return null;
+        next.classList.add('is-revealed');
+        speak(next.getAttribute('data-sp'));
+        _armKeyIfDone();
+        return next;
+      }
+      $('.s0-page', el).addEventListener('click', (ev) => {
+        if (ev.target.closest('.s0-jump')) return;
+        if (ev.target.closest('.s0-next-key')) return;
+        if (ev.target.closest('.s0-corner-back')) return;
+        const onPara = ev.target.closest('.s0-para');
+        if (onPara && onPara.classList.contains('is-revealed')) {
+          speak(onPara.getAttribute('data-sp'));   // replay this line
+          return;
+        }
+        _revealNext();
+      });
+      // v=105 — auto-reveal + speak: first the chapter title, then
+      // the first sentence.  Per user: "阅读的每章第一句话（包括
+      // chapter 1:….）都没有声音".
+      requestAnimationFrame(() => _s0FitToPage(el));
+      const _titleLine = `${article.title}. ${section.id}. ${section.title}.`;
+      _waitForVoices().then(() => {
+        speak(_titleLine);
+        setTimeout(() => {
+          const firstPara = el.querySelector('.s0-para[data-idx="0"]');
+          if (firstPara) {
+            firstPara.classList.add('is-revealed');
+            speak(firstPara.getAttribute('data-sp'));
+            _armKeyIfDone();
+          }
+        }, Math.max(900, _titleLine.length * 55));
+      });
+    }
+  },
+
+  /* ---------- STAGE 0 QUIZ — 3 noun-recall questions (v=81) ----------
+     Uses THE CURRENT SECTION'S 3 questions only.  Distractor pool
+     also drawn from this section's other noun answers — keeps the
+     scope tight to what the user just read.                         */
+  'stage0-quiz': {
+    onEnter() {
+      const el = $('#screen-stage0-quiz');
+      const ch = _CHAPTER_PLAN[(saved.chapter || 1) - 1];
+      if (!ch) { _stage0AdvanceFromQuiz(); return; }
+      const article = (typeof STAGE0_PARTS !== 'undefined')
+                    && STAGE0_PARTS[ch.article_id - 1];
+      const section = article && article.sections[ch.section_idx];
+      if (!section || !section.questions || section.questions.length === 0) {
+        _stage0AdvanceFromQuiz(); return;
+      }
+      const allQs = section.questions
+        .filter(q => q.q && q.a)
+        .map(q => ({ q: q.q, a: q.a, secId: section.id, secTitle: section.title }));
+      if (allQs.length === 0) { _stage0AdvanceFromQuiz(); return; }
+      // distractor pool: all noun answers across this article.
+      const distractorPool = new Set();
+      article.sections.forEach(s => s.questions.forEach(q => {
+        if (q.a) distractorPool.add(q.a);
+      }));
+      const nounPool = Array.from(distractorPool);
+      const picks = shuffle(allQs).slice(0, 3);
+
+      // v=87 — ALL THREE questions on ONE scrolling page.  User:
+      // "问题是在一整页的 不是分三页".  Each question block has
+      // its own options grid + feedback line.  A small vertical
+      // key glyph at the bottom-right of the text frame routes to
+      // stage 1 when at least one answer is locked in (or any
+      // time — we don't force completion).
+      // v=88 — quiz pedagogy rewritten per user: NO answer reveal,
+      // NO truth label.  Picking the right one stays neutral
+      // (subtle gold border, no halo).  Picking wrong: only the
+      // wrong card dims; after a short beat the page auto-routes
+      // BACK to stage 0 so the user re-reads the article.  Only
+      // when ALL THREE are right does the bottom key arm + lead
+      // to stage 1.  User: "错了就显示错了 (即不发光) 然后自动
+      // 跳转回 stage0 ... 全做对了自动跳转到 stage1".
+      const qBlocks = picks.map((q, i) => `
+        <div class="s0q-block" data-qi="${i}">
+          <div class="s0q-question">${escapeHtml(q.q)}</div>
+          <div class="s0q-options"></div>
+        </div>
+      `).join('');
+      // v=99 — quiz furniture: in-header "next page" link (hidden
+      // until all 3 are correct), bottom-right decorative folio
+      // digit.
+      const _qpage = ((saved.chapter || 1) - 1) * 2 + 2;
+      el.innerHTML = `
+        <div class="s0-page s0q-page-frame">
+          <div class="s0-text-frame">
+            <header class="s0-header">
+              <div class="s0-chip">${escapeHtml(article.title)}</div>
+              <h1 class="s0-title">${escapeHtml(section.id)} · ${escapeHtml(section.title)}</h1>
+            </header>
+            <div class="s0q-stack">${qBlocks}</div>
+            <button class="s0-next-link is-hidden" aria-label="begin stage 1">next page</button>
+          </div>
+          <span class="s0-folio">${_qpage}</span>
+        </div>
+      `;
+      el.appendChild(closeCorner({ to: 'cover' }));
+
+      const answered = new Array(picks.length).fill(null);   // null | 'right' | 'wrong'
+      let _failed = false;
+      let _completed = false;
+      // v=106 — all 3 correct → auto-celebrate + auto-advance.
+      // Per user: "回答完三题之后应该自动弹窗+音效 恭喜用户 然后
+      // 自动跳转到下一关 我现在卡住了 没法跳转".  No more "tap the
+      // next-page link" gate — the link only exists as a
+      // mid-stage escape hatch in case the celebration overlay's
+      // auto-advance ever stalls.
+      const LETTERS = ['A', 'B', 'C', 'D'];
+      $$('.s0q-block', el).forEach((block, qi) => {
+        block.classList.add('is-active');
+        const q = picks[qi];
+        const distractors = shuffle(nounPool.filter(w => w.toLowerCase() !== q.a.toLowerCase())).slice(0, 3);
+        const options = shuffle([q.a, ...distractors]);
+        const optsHost = $('.s0q-options', block);
+        options.forEach((opt, oi) => {
+          const b = document.createElement('button');
+          b.className = 'qa-row';
+          b.innerHTML = `<span class="qa-letter">${LETTERS[oi]}.</span><span class="qa-text">${escapeHtml(opt)}</span>`;
+          b.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            if (answered[qi] !== null || _failed || _completed) return;
+            (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
+            const isRight = opt.toLowerCase() === q.a.toLowerCase();
+            speak(opt);
+            if (isRight) {
+              answered[qi] = 'right';
+              b.classList.add('is-right');
+              SFX.right();
+              if (answered.every(v => v === 'right')) {
+                _completed = true;
+                _celebrateAndAdvance(el);
+              }
+            } else {
+              answered[qi] = 'wrong';
+              b.classList.add('is-wrong');
+              SFX.wrong();
+              _failed = true;
+              setTimeout(() => { go('stage0'); }, 1100);
+            }
+          });
+          optsHost.appendChild(b);
+        });
+      });
+
+      function _celebrateAndAdvance(rootEl) {
+        try { SFX.bling && SFX.bling(); } catch {}
+        try { SFX.right && SFX.right(); } catch {}
+        const veil = document.createElement('div');
+        veil.className = 's0q-celebrate-veil';
+        veil.innerHTML = `
+          <div class="s0q-celebrate">
+            <div class="s0q-celebrate-glyph">✦</div>
+            <div class="s0q-celebrate-title">well done</div>
+            <div class="s0q-celebrate-sub">turning the page…</div>
+          </div>
+        `;
+        document.body.appendChild(veil);
+        requestAnimationFrame(() => veil.classList.add('is-open'));
+        if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
+        setTimeout(() => {
+          veil.classList.add('is-leaving');
+          setTimeout(() => veil.remove(), 320);
+        }, 1300);
+        setTimeout(() => {
+          _stage0AdvanceFromQuiz();
+        }, 1500);
+      }
+
+      function armKey() {
+        const link = $('.s0-next-link', el);
+        if (!link || link.classList.contains('is-armed')) return;
+        link.classList.remove('is-hidden');
+        link.classList.add('is-armed');
+        link.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          (SFX.pageTurn ? SFX.pageTurn() : SFX.tap)();
+          if ((saved.stage || 0) < 1) { saved.stage = 1; Store.save(); }
+          _stage0AdvanceFromQuiz();
+        }, { once: true });
+      }
+      // Auto-fit so 3 question blocks stay inside the painted page.
+      requestAnimationFrame(() => _s0FitToPage(el));
+    }
+  },
   stage1: {
     onEnter() {
-      LanBGM.playGameRandom({ volume: 0.40 });
       const el = $('#screen-stage1');
       const s = state.session;
       const pairs = s.pairs;
@@ -814,22 +3211,33 @@ const Screens = {
         shuffled.push(rightCol[r]);
       }
       const tagOf = new Array(shuffled.length).fill(null);
-      let currentTag = 0;
+      // (No "currentTag" — each click picks its tag fresh from the
+      // actual board state so undo + re-pick can't strand orphans.)
 
+      // Layout order:
+      //   chapter title  →  confirm CTA (reachable, glowing)
+      //                  →  hint line   →  4×2 grid
+      // Putting the confirm button up top means thumb can reach it
+      // on a mobile browser without scrolling past the URL bar.
       el.innerHTML = `
-        ${stageHeader(1, 'the matching')}
+        ${stageHeader(1, 'The Matching')}
+        <div class="match-actions"></div>
         <div class="q-progress">tap one on the left, one on the right · four pairs</div>
         <div class="match-grid"></div>
-        <div class="match-actions"></div>
       `;
 
-      el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
+      // top-left moon is the "back to cover" affordance; the right
+      // X was removed at the user's request — it crowded the right
+      // column visually and felt redundant.
+      el.appendChild(closeCorner({ to: 'cover' }));
 
       const grid = $('.match-grid', el);
       shuffled.forEach((c, idx) => {
         const card = document.createElement('div');
         card.className = 'card card--match' + (c.side === 'L' ? ' is-left' : ' is-right');
-        card.textContent = c.text;
+        // mc-frame is the inner gold rule (playing-card double border);
+        // mc-text holds the word so z-index keeps it above the frame.
+        card.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(c.text)}</span>`;
         card.addEventListener('click', () => paint(idx));
         grid.appendChild(card);
       });
@@ -843,34 +3251,90 @@ const Screens = {
           if (tagOf[i] !== null) node.classList.add('tag-' + tagOf[i]);
         });
       }
+      // Paint every card EXCEPT the one being flipped — useful when
+      // the click also cleared orphan cards on the other side, since
+      // we want their visual state to update INSTANTLY (not wait the
+      // 160 ms until the flip midpoint).  Without this, the orphan
+      // looks like it's still selected for 160 ms after every click. */
+      function repaintExcept(skipIdx) {
+        $$('.card--match', grid).forEach((node, i) => {
+          if (i === skipIdx) return;
+          for (let k = 0; k < 4; k++) node.classList.remove('tag-' + k);
+          if (tagOf[i] !== null) node.classList.add('tag-' + tagOf[i]);
+        });
+      }
+      function paintSingle(node, i) {
+        for (let k = 0; k < 4; k++) node.classList.remove('tag-' + k);
+        if (tagOf[i] !== null) node.classList.add('tag-' + tagOf[i]);
+      }
 
       function paint(idx) {
         const side = shuffled[idx].side;
+        const node = grid.children[idx];
+        // Ignore taps during the ~320ms flip animation so a quick
+        // double-tap doesn't queue two state changes.
+        if (node && node.classList.contains('is-flipping')) return;
 
         // tapping an already-tagged card clears it
         if (tagOf[idx] !== null) {
           tagOf[idx] = null;
-          repaint();
-          SFX.tap();
+          // orphan on the other side now has no partner — but we don't
+          // auto-clear it here.  user might want to repair.  the next
+          // same-side click will sweep orphans away (see below).
+          flipReveal(node, () => paintSingle(node, idx));
+          (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
           return;
         }
 
-        // the current pair already has a card on this same side?
-        // clear it — only one left + one right may share a colour.
-        const sameSideIdx = tagOf.findIndex((t, i) => t === currentTag && shuffled[i].side === side);
-        if (sameSideIdx >= 0) tagOf[sameSideIdx] = null;
+        // Before we tag anything new, clear any ORPHAN selection on this
+        // same side — a card tagged with a colour whose partner on the
+        // other side hasn't been chosen yet.  This enforces the rule
+        // "each side may hold at most one in-progress selection."  Cards
+        // that are already paired (their tag exists on the other side)
+        // are left alone.
+        for (let i = 0; i < tagOf.length; i++) {
+          if (i === idx || tagOf[i] === null) continue;
+          if (shuffled[i].side !== side) continue;
+          const hasPartner = tagOf.some((v, j) =>
+            j !== i && v === tagOf[i] && shuffled[j].side !== side);
+          if (!hasPartner) tagOf[i] = null;
+        }
 
-        // tag this card and bump the current colour when the pair is full
-        tagOf[idx] = currentTag;
-        if (tagOf.filter(t => t === currentTag).length >= 2) {
-          // pick the next colour that still has room
-          for (let inc = 1; inc <= 4; inc++) {
-            const cand = (currentTag + inc) % 4;
-            if (tagOf.filter(t => t === cand).length < 2) { currentTag = cand; break; }
+        // Pick the colour for THIS click:
+        //  · if a lonely card on the other side is waiting for a partner,
+        //    finish that pair (use its tag)
+        //  · otherwise start a new pair with the lowest unused colour.
+        let assignTag = null;
+        for (let t = 0; t < 4; t++) {
+          const sameSide  = tagOf.filter((v, i) => v === t && shuffled[i].side === side).length;
+          const otherSide = tagOf.filter((v, i) => v === t && shuffled[i].side !== side).length;
+          if (sameSide === 0 && otherSide === 1) { assignTag = t; break; }
+        }
+        if (assignTag === null) {
+          for (let t = 0; t < 4; t++) {
+            if (tagOf.filter(v => v === t).length === 0) { assignTag = t; break; }
           }
         }
-        repaint();
+        if (assignTag === null) return;   // all 4 colours fully booked
+
+        tagOf[idx] = assignTag;
+        // Repaint OTHER cards instantly (so orphan cleanup is visible
+        // immediately), then flip the clicked card and update its own
+        // class at the flip midpoint.
+        repaintExcept(idx);
+        flipReveal(node, () => paintSingle(node, idx));
         SFX.tap();
+      }
+
+      // Run a 320ms Y-axis card flip on `node`.  The DOM update
+      // (adds/removes .tag-N classes) fires at the 50% midpoint —
+      // exactly when rotateY is at 90° and the card is edge-on,
+      // invisible — so the new face emerges as the card rotates back.
+      function flipReveal(node, updateNow) {
+        if (!node) { updateNow(); return; }
+        node.classList.add('is-flipping');
+        setTimeout(updateNow, 160);
+        setTimeout(() => node.classList.remove('is-flipping'), 320);
       }
 
       function submit() {
@@ -892,19 +3356,33 @@ const Screens = {
         // Persist the L-side outcome for the chapter summary / mistakes.
         shuffled.forEach((c, i) => {
           if (c.side !== 'L') return;
-          if (cardResult[i]) state.results[c.text].match = true;
+          if (cardResult[i]) { state.results[c.text].match = true; recordRight(c.text); }
           else { state.results[c.text].match = false; recordMistake(c.text); }
         });
         // Persist the full 8-tile result for the dedicated result page —
         // we want to replay each card in the same colour the user dyed
         // it, with a ✓ / ✗ on whether its pair was correct.
         state.session.matchResult = shuffled.map((c, i) => ({
-          text: c.text, pairId: c.pairId, tag: tagOf[i], correct: cardResult[i]
+          text: c.text, pairId: c.pairId, tag: tagOf[i], correct: cardResult[i], side: c.side
         }));
-        showModal({
-          title: 'pages flipped',
-          score: { value: correct, total: 4 },
-          actions: [{ label: 'see results', onClick: () => go('stage1-result') }]
+        // v=115 — fast-paced result popup, no fixed result page.
+        const pass = correct >= 4;
+        if (pass) {
+          state.session.pairs.forEach(p => recordRight(p.head));
+          if ((saved.stage || 1) < 2) { saved.stage = 2; Store.save(); }
+          _markStageDone(saved.chapter, 1);
+        }
+        showStageResultPopup({
+          stage: 1, pass, right: correct, total: 4,
+          onAdvance: () => go(_nextStageId(0) || 'cover'),
+          onRetry:   () => {
+            // soft reset of stage 1 state
+            state.session.matchResult = null;
+            state.session.pairs.forEach(p => {
+              if (state.results[p.head]) state.results[p.head].match = null;
+            });
+            go('stage1');
+          }
         });
       }
     }
@@ -918,129 +3396,361 @@ const Screens = {
      becomes a doorway to that word's study card on tap.               */
   'stage1-result': {
     onEnter() {
-      LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage1-result');
       const result = state.session.matchResult || [];
       const correctPairs = new Set(result.filter(r => r.correct).map(r => r.pairId)).size;
 
+      // v=39 result-page layout per user sketch — chapter band as a
+      // small sash on top, then the painted score frame (same asset
+      // as the modal so the storybook keeps speaking one voice),
+      // then the doorway button, then the grid.  scoreBlock() builds
+      // the reusable chapter+frame combo so the three result pages
+      // (and any future "two-piece" pages) share one component.
       el.innerHTML = `
-        ${stageHeader(1, 'the matching')}
-        <div class="score-block">
-          <div class="score-label">your hand</div>
-          <div class="score-value">${correctPairs}<small> / 4</small></div>
-        </div>
-        <div class="stage-actions"></div>
-        <div class="match-result-grid"></div>
+        ${scoreBlock(1, 'The Matching', correctPairs, 4, encouragement(correctPairs / 4))}
+        <div class="match-actions"></div>
         <div class="match-result-hint">— touch any word to read its page —</div>
+        <div class="match-result-grid"></div>
       `;
 
-      el.prepend(moonCorner());
-      el.appendChild(closeCorner());
-
-      // Next-stage button sits right below the score so it's a single
-      // glance from "how did I do?" to "let me move on".
-      $('.stage-actions', el).appendChild(nextDoor('the reading', () => go('stage2'), { confirm: true }));
+      el.appendChild(closeCorner({ to: 'cover' }));
+      // v=64 — only PERFECT (4/4 pairs) lets the user move on to
+      // stage 2.  Otherwise show "Try Again" which redraws stage 1
+      // with a fresh shuffle of the same chapter's pairs.
+      if (correctPairs >= 4) {
+        // v=77 — passed stage 1 → unlock stage 2 (saved.stage = 2)
+        // so a mid-chapter exit resumes on the right stage.
+        if ((saved.stage || 1) < 2) { saved.stage = 2; Store.save(); }
+        // v=113 — record per-section completion (regardless of free-
+        // mode or mainline) so the catalog + reading-end choice see
+        // it.
+        _markStageDone(saved.chapter, 1);
+        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go(_nextStageId(1)), { confirm: true }));
+      } else {
+        $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
+          // Reset match results, keep session intact (same pairs).
+          state.session.matchResult = null;
+          state.session.pairs.forEach(p => {
+            if (state.results[p.head])    state.results[p.head].match    = null;
+            if (state.results[p.partner]) state.results[p.partner].match = null;
+          });
+          go('stage1');
+        }));
+      }
 
       const grid = $('.match-result-grid', el);
       result.forEach(r => {
         const tile = document.createElement('button');
-        tile.className = `card card--match tag-${r.tag} ${r.correct ? 'is-correct' : 'is-wrong'}`;
+        const sideClass = r.side === 'L' ? 'is-left' : 'is-right';
+        const state = r.correct ? 'is-correct' : 'is-wrong';
+        const flourish = r.correct ? '<span class="pair-mark">❦</span>' : '';
+        // v=77 — colour BOTH body and text by pair-N (the TRUE pair
+        // id), so each correctly-belonging pair shares ONE colour
+        // across left + right.  User: "用左边一列的字体颜色来让右
+        // 列的正确对应卡牌整成相应的颜色".  Wrong pairs get a
+        // visible ✗ mark in the corner instead of relying on colour
+        // mismatch to read "wrong" (which was confusing when blue
+        // body had orange text).                                  */
+        tile.className = `card card--match ${sideClass} tag-${r.pairId} pair-${r.pairId} ${state}`;
+        const wrongMark = r.correct ? '' : '<span class="pair-mark pair-mark-wrong">✗</span>';
         tile.innerHTML = `
-          <span class="tile-mark">${r.correct ? '✓' : '✗'}</span>
-          <span class="tile-text">${escapeHtml(r.text)}</span>
+          <span class="mc-frame"></span>
+          <span class="mc-text">${escapeHtml(r.text)}</span>
+          ${flourish}
+          ${wrongMark}
         `;
-        tile.addEventListener('click', () => {
-          SFX.pageTurn();
-          go('card', { word: r.text, from: 'stage1-result' });
-        });
+        tile.addEventListener('click', () => flipToCard(tile, r.text, 'stage1-result'));
         grid.appendChild(tile);
       });
     }
   },
 
   /* ---------- STAGE 2 — the reading ---------- */
+  /* ---------- STAGE 2 — multi-blank scene reading (v=52)
+     Each question is a long contextual sentence with N blanks.
+     Slots are BOXES, not underlines (so they're easier to tap to
+     re-edit).  One slot is "active" at any time (glowing gold);
+     tapping an option fills the active slot and auto-advances the
+     active marker.  Tapping a previous slot makes it active again
+     so the user can change their answer.  Once every slot is
+     filled, the next blank-area tap grades + reveals.            */
   stage2: {
     onEnter() {
-      LanBGM.playHomeRandom({ volume: 0.38 });
       const el = $('#screen-stage2');
-      state.oracleQs  = state.session.words.map(w => buildOracleQuestion(w));
-      state.oracleIdx = 0;
+      state.sceneIdx        = 0;
+      state.sceneFills      = [];          // user's pick per blank
+      state.sceneActive     = -1;          // -1 = no blank selected yet
+      state.scenePerBlank   = null;        // [[4],[4],...] candidates per blank
+      state.sceneGraded     = false;
       el.innerHTML = `
-        ${stageHeader(2, 'the reading')}
+        ${stageHeader(2, 'The Reading')}
         <div class="oracle-stage" id="oracle-stage"></div>
       `;
-
-      el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
+      el.appendChild(closeCorner({ to: 'cover' }));
       drawQ();
 
-      function drawQ() {
-        const stage = $('#oracle-stage', el);
-        const q = state.oracleQs[state.oracleIdx];
-        stage.innerHTML = `
-          <div class="q-progress">${String(state.oracleIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="q-sentence">${q.sentenceHL}</div>
-          <div class="oracle-options"></div>
-        `;
-        const opts = $('.oracle-options', stage);
-        q.options.forEach((opt, oi) => {
-          const b = document.createElement('button');
-          b.className = 'card card--option';
-          b.textContent = opt;
-          b.addEventListener('click', () => pick(oi, b));
-          opts.appendChild(b);
+      function currentQ() { return state.session.scenes[state.sceneIdx]; }
+
+      // v=65 — Per-blank option group.  For each answer pick 3 same-
+      // first-letter distractors from PARCHMENT_CARDS.  Only the
+      // ACTIVE blank's 4 candidates are visible at a time; clicking
+      // another blank swaps the option strip.                       */
+      function buildOptionsFor(q) {
+        // v=78 — distractors are RANDOM across all PARCHMENT_CARDS
+        // (NOT same-first-letter).  User: "我知道这个单词的意思
+        // 一下就知道该选哪个 完全没有学习意义".  Same first letter
+        // collapsed the puzzle to "pick the longer one I recognise"
+        // — random distractors restore the lexical-comprehension
+        // test.  Pool is fully randomised each call too.
+        const answers = (q.answers || []).slice();
+        const taken = new Set(answers);
+        const fullPool = Object.keys(PARCHMENT_CARDS).filter(w => w && !taken.has(w));
+        return answers.map(ans => {
+          // Each blank gets 3 fresh distractors from the global pool.
+          const distractors = [];
+          const local = shuffle(fullPool);
+          for (const w of local) {
+            if (taken.has(w)) continue;
+            distractors.push(w);
+            taken.add(w);
+            if (distractors.length === 3) break;
+          }
+          while (distractors.length < 3 && (q.options || []).length) {
+            const cand = q.options.find(o => !taken.has(o) && o !== ans);
+            if (!cand) break;
+            taken.add(cand);
+            distractors.push(cand);
+          }
+          return shuffle([ans, ...distractors]);
         });
       }
 
-      function pick(oi, button) {
-        const q = state.oracleQs[state.oracleIdx];
-        const all = $$('.card--option');
-        all.forEach(b => b.disabled = true);
+      function drawQ() {
+        const stage = $('#oracle-stage', el);
+        const q = currentQ();
+        const total = state.session.scenes.length;
+        state.scenePerBlank    = buildOptionsFor(q);
+        state.sceneFills       = new Array(q.blank_count || q.answers.length).fill(null);
+        // v=65 — start with the first blank active so the user sees
+        // the 4-card option strip immediately; tapping another
+        // blank swaps the strip.
+        state.sceneActive      = 0;
+        state.sceneGraded      = false;
+        stage.innerHTML = `
+          <div class="q-progress">${String(state.sceneIdx + 1).padStart(2, '0')} · ${String(total).padStart(2, '0')}</div>
+          <div class="q-card">
+            <span class="q-corner q-corner-tl">✦</span>
+            <span class="q-corner q-corner-tr">✦</span>
+            <span class="q-corner q-corner-bl">✦</span>
+            <span class="q-corner q-corner-br">✦</span>
+            <div class="q-zh" id="q-zh-host">${escapeHtml(q.sentence_zh || '')}</div>
+            <div class="q-sentence q-sentence-blanks" id="q-sentence-host">${renderBlankSentence(q)}</div>
+            <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
+          </div>
+          <div class="q-hint" id="q-hint">— pick the word that fits this blank —</div>
+          <div class="oracle-options" id="oracle-options"></div>
+        `;
+        wireSlots();
+        renderOptionsForActive();
+      }
 
-        // tiny "thinking" beat — the deep-pink inner glow on the chosen
-        // option before the verdict.  Without this beat the click feels
-        // too brusque.
-        button.classList.add('is-picking');
-
-        setTimeout(() => {
-          button.classList.remove('is-picking');
-          if (oi === q.correctIdx) {
-            button.classList.add('picked-right');
-            state.results[q.word].oracle = true;
-            SFX.right();
-          } else {
-            button.classList.add('picked-wrong');
-            all[q.correctIdx].classList.add('reveal-right');
-            state.results[q.word].oracle = false;
-            recordMistake(q.word);
-            SFX.wrong();
+      function renderBlankSentence(q) {
+        let slotIdx = 0;
+        return escapeHtml(q.blank_sentence).replace(/_{3,}/g, () => {
+          const i = slotIdx++;
+          const filled  = state.sceneFills[i];
+          const active  = (i === state.sceneActive);
+          const ans     = (currentQ().answers || [])[i];
+          let cls = 'q-slot' + (filled ? ' is-filled' : '') + (active ? ' is-active' : '');
+          if (state.sceneGraded) {
+            const right = (filled || '').toLowerCase() === (ans || '').toLowerCase();
+            cls += right ? ' is-right' : ' is-wrong';
           }
-          // Speak the full example sentence so the user hears the word
-          // in context.  Then arm a one-shot tap-anywhere listener: the
-          // user controls when to move on.
-          speak(q.sentencePlain);
-          armAdvance();
-        }, 280);
+          const inner = filled ? escapeHtml(filled) : '<span class="q-slot-tail">&nbsp;</span>';
+          return `<span class="${cls}" data-slot="${i}">${inner}</span>`;
+        });
+      }
 
-        function armAdvance() {
-          // a hint that the page is waiting for them
-          let hint = $('.q-tap-hint', stage);
-          if (!hint) {
-            hint = document.createElement('div');
-            hint.className = 'q-tap-hint';
-            hint.textContent = '— tap anywhere to turn the page —';
-            stage.appendChild(hint);
-          }
-          const advance = (ev) => {
-            // ignore taps on the moon / close pills
-            if (ev && ev.target && ev.target.closest('.moon-corner, .close-corner')) return;
-            document.removeEventListener('click', advance, true);
-            state.oracleIdx++;
-            if (state.oracleIdx >= state.oracleQs.length) go('stage2-result');
-            else drawQ();
-          };
-          // brief delay so the same click that picked doesn't immediately advance
-          setTimeout(() => document.addEventListener('click', advance, true), 480);
+      // v=79 — event delegation on the sentence host.  ONE click
+      // listener on the parent instead of N listeners per slot
+      // re-bound on every render — eliminates the re-bind cost +
+      // the layout thrash that caused stage 2 to stutter on click.
+      function wireSlots() {
+        const host = $('#q-sentence-host', el);
+        if (!host || host._sealyraSlotsWired) return;
+        host._sealyraSlotsWired = true;
+        host.addEventListener('click', (ev) => {
+          const slot = ev.target.closest('.q-slot');
+          if (!slot || !host.contains(slot)) return;
+          ev.stopPropagation();
+          const i = +slot.getAttribute('data-slot');
+          SFX.tap();
+          state.sceneActive = i;
+          host.innerHTML = renderBlankSentence(currentQ());
+          renderOptionsForActive();
+        });
+      }
+
+      // v=79 — event-delegated option clicks.  Wire ONCE on the host,
+      // then renderOptionsForActive just rebuilds child DOM without
+      // having to re-add listeners per render.  Heavy-gradient cards
+      // (8 fibre dots + sheen + base) were re-binding 4 click
+      // listeners on every blank switch — the cause of the stage-2
+      // stutter the user kept feeling.
+      function ensureOptionsHostWired() {
+        const host = $('#oracle-options', el);
+        if (!host || host._sealyraOptsWired) return;
+        host._sealyraOptsWired = true;
+        host.addEventListener('click', (ev) => {
+          const btn = ev.target.closest('.card--option');
+          if (!btn || !host.contains(btn)) return;
+          onOptionClick(ev, btn.dataset.word, btn);
+        });
+      }
+      function renderOptionsForActive() {
+        const host = $('#oracle-options', el);
+        const hint = $('#q-hint', el);
+        host.innerHTML = '';
+        ensureOptionsHostWired();
+        if (state.sceneActive < 0 || !state.scenePerBlank) {
+          if (hint) hint.textContent = state.sceneGraded
+            ? '— tap a blank to review its choices · tap the bow when done —'
+            : '— tap a blank to see its choices —';
+          return;
         }
+        if (hint) hint.textContent = state.sceneGraded
+          ? '— tap any card to read its page —'
+          : '— pick the word that fits this blank —';
+        const q = currentQ();
+        const answers = q.answers || [];
+        const group = state.scenePerBlank[state.sceneActive] || [];
+        const userPickHere = state.sceneFills[state.sceneActive];
+        // Build with DocumentFragment so the browser layouts ONCE
+        // (instead of 4 times on appendChild).
+        const frag = document.createDocumentFragment();
+        group.forEach(word => {
+          let cls = 'card card--option';
+          if (state.sceneGraded) {
+            const isCorrectForThis = answers[state.sceneActive] === word;
+            const isUserPickHere   = userPickHere === word;
+            if (isCorrectForThis) cls += ' reveal-right';
+            else if (isUserPickHere) cls += ' picked-wrong';
+            cls += ' is-readable';
+          } else if (userPickHere === word) {
+            cls += ' is-current-pick';
+          }
+          const b = document.createElement('button');
+          b.className = cls;
+          b.innerHTML = `<span class="mc-frame"></span><span class="mc-text">${escapeHtml(word)}</span>`;
+          b.dataset.word = word;
+          frag.appendChild(b);
+        });
+        host.appendChild(frag);
+      }
+
+      function onOptionClick(ev, word, btn) {
+        ev.stopPropagation();
+        if (state.sceneGraded) {
+          if (!PARCHMENT_CARDS[word]) return;
+          SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+          showParchment(word);
+          return;
+        }
+        if (state.sceneActive < 0) return;
+        const i = state.sceneActive;
+        btn.classList.add('is-flipping');
+        (SFX.cardFlip ? SFX.cardFlip : SFX.tap)();
+        setTimeout(() => {
+          state.sceneFills[i] = word;
+          // Advance active marker to next empty slot, or stay.
+          let next = state.sceneFills.indexOf(null);
+          if (next < 0) next = -1;   // all filled → no active blank
+          state.sceneActive = next;
+          $('#q-sentence-host').innerHTML = renderBlankSentence(currentQ());
+          wireSlots();
+          renderOptionsForActive();
+          if (!state.sceneFills.includes(null)) {
+            setTimeout(grade, 320);
+          }
+        }, 160);
+      }
+
+      function grade() {
+        state.sceneGraded = true;
+        const q = currentQ();
+        let allRight = true;
+        q.answers.forEach((ans, i) => {
+          if ((state.sceneFills[i] || '').toLowerCase() === ans.toLowerCase()) {
+            if (PARCHMENT_CARDS[ans]) state.results[ans] = state.results[ans] || { match:null, oracle:null, dict:null };
+            if (state.results[ans]) state.results[ans].oracle = true;
+            recordRight(ans);                        // v=115
+          } else {
+            if (!state.results[ans]) state.results[ans] = { match:null, oracle:null, dict:null };
+            state.results[ans].oracle = false;
+            recordMistake(ans);
+            allRight = false;
+          }
+        });
+        if (allRight) SFX.right(); else SFX.wrong();
+        try { speak(q.full_sentence); } catch {}
+        // Repaint: q-card keeps user's picks (no auto-fill).  Add
+        // .is-graded so CSS reveals the zh hint above the top rule.
+        state.sceneActive = -1;
+        const card = $('.q-card', el);
+        if (card) card.classList.add('is-graded');
+        $('#q-sentence-host').innerHTML = renderBlankSentence(q);
+        wireSlots();
+        renderOptionsForActive();
+        armBowAdvance();
+      }
+
+      let _advanced = false;
+      function armBowAdvance() {
+        // v=72 — bind on the q-card itself (with target check).  The
+        // bare bow <img> sometimes wasn't catching taps reliably.
+        // _advanced guard prevents double-fire if both the bow and
+        // the card-level listener trigger.
+        const bow = $('.q-bow.q-bow-inside', el);
+        if (bow) bow.classList.add('is-tappable');
+        const card = $('.q-card', el);
+        if (card) {
+          card.addEventListener('click', (ev) => {
+            if (!state.sceneGraded) return;
+            if (ev.target.closest('.q-slot, .card--option')) return;
+            advance(ev);
+          });
+        }
+      }
+
+      function advance(ev) {
+        if (_advanced) return;
+        _advanced = true;
+        if (ev) ev.stopPropagation();
+        SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+        state.sceneIdx++;
+        _advanced = false;
+        if (state.sceneIdx >= state.session.scenes.length) {
+          // v=115 — popup result, no full-screen page.
+          const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
+          const total = sceneAnswers.length;
+          const right = sceneAnswers.filter(a => state.results[a] && state.results[a].oracle).length;
+          const pass = right === total && total > 0;
+          if (pass) {
+            if ((saved.stage || 1) < 3) { saved.stage = 3; Store.save(); }
+            _markStageDone(saved.chapter, 2);
+          }
+          showStageResultPopup({
+            stage: 2, pass, right, total,
+            onAdvance: () => go(pass ? (_nextStageId(2) || 'cover') : 'cover'),
+            onRetry:   () => {
+              state.session.scenes.forEach(s => (s.answers || []).forEach(w => {
+                if (state.results[w]) state.results[w].oracle = null;
+              }));
+              state.sceneIdx = 0;
+              go('stage2');
+            }
+          });
+        } else drawQ();
       }
     }
   },
@@ -1048,108 +3758,184 @@ const Screens = {
   /* ---------- STAGE 2 RESULT ---------- */
   'stage2-result': {
     onEnter() {
-      LanBGM.playResultRandom({ volume: 0.42 });
       const el = $('#screen-stage2-result');
-      const right = state.session.words.filter(w => state.results[w].oracle).length;
+      // v=52 — replaced word-tile grid with EXAMPLE SENTENCES.  Each
+      // scene's full_sentence + Chinese gloss is shown; jumpable
+      // words inside the sentence are underlined → tap to open
+      // that word's parchment.  Per user: "结算页面修改成例句，
+      // 也就是可以被跳转至单词的例句".
+      const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
+      const total = sceneAnswers.length || 1;
+      const right = sceneAnswers.filter(w => state.results[w] && state.results[w].oracle).length;
       el.innerHTML = `
-        ${stageHeader(2, 'the reading')}
-        <div class="score-block">
-          <div class="score-label">her reading</div>
-          <div class="score-value">${right}<small> / 8</small></div>
-        </div>
-        <div class="stage-actions"></div>
-        <div class="result-grid"></div>
+        ${scoreBlock(2, 'The Reading', right, total, encouragement(right / total))}
+        <div class="match-actions"></div>
+        <div class="match-result-hint">— touch any underlined word to read its page —</div>
+        <div class="scene-result-list"></div>
       `;
 
-      el.prepend(moonCorner());
-      el.appendChild(closeCorner());
-      $('.stage-actions', el).appendChild(nextDoor('the writing hand', () => go('stage3'), { confirm: true }));
-      const grid = $('.result-grid', el);
-      state.session.words.forEach(w => grid.appendChild(renderExCard(w, state.results[w].oracle, { rewrite: true, withControls: false })));
+      el.appendChild(closeCorner({ to: 'cover' }));
+      // v=64 — same gate as stage 1: only PERFECT lets the user
+      // advance.  Otherwise show "Try Again" which replays stage 2
+      // with the same scene questions.
+      if (right >= total && total > 0) {
+        // v=77 — passed stage 2 → unlock stage 3 (saved.stage = 3).
+        if ((saved.stage || 1) < 3) { saved.stage = 3; Store.save(); }
+        _markStageDone(saved.chapter, 2);
+        $('.match-actions', el).appendChild(nextDoor('Next Page', () => go(_nextStageId(2)), { confirm: true }));
+      } else {
+        $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
+          state.session.scenes.forEach(s => (s.answers || []).forEach(w => {
+            if (state.results[w]) state.results[w].oracle = null;
+          }));
+          go('stage2');
+        }));
+      }
+      const list = $('.scene-result-list', el);
+      state.session.scenes.forEach(s => {
+        const row = document.createElement('div');
+        row.className = 'scene-result-row';
+        let en = escapeHtml(s.full_sentence);
+        (s.clickable_words || []).forEach(w => {
+          if (!PARCHMENT_CARDS[w]) return;
+          en = en.replace(new RegExp(`\\b${w}\\b`, 'gi'),
+            `<a class="scene-jump" data-word="${escapeAttr(w)}">${w}</a>`);
+        });
+        row.innerHTML = `
+          <div class="scene-result-en">${en}</div>
+          <div class="scene-result-zh">${escapeHtml(s.sentence_zh)}</div>
+        `;
+        row.querySelectorAll('.scene-jump').forEach(a => {
+          a.addEventListener('click', e => {
+            e.stopPropagation();
+            const w = a.getAttribute('data-word');
+            if (PARCHMENT_CARDS[w]) {
+              SFX.pageTurn ? SFX.pageTurn() : SFX.tap();
+              showParchment(w);
+            }
+          });
+        });
+        list.appendChild(row);
+      });
     }
   },
 
   /* ---------- STAGE 3 — the inscription ---------- */
   stage3: {
     onEnter() {
-      LanBGM.playGameRandom({ volume: 0.40 });
       const el = $('#screen-stage3');
       state.dictIdx = 0;
       el.innerHTML = `
-        ${stageHeader(3, 'the inscription')}
+        ${stageHeader(3, 'The Inscription')}
         <div class="dict-stage" id="dict-stage"></div>
       `;
 
-      el.prepend(moonCorner()); el.appendChild(closeCorner({ confirm: true }));
+      // top-left moon is the "back to cover" affordance; the right
+      // X was removed at the user's request — it crowded the right
+      // column visually and felt redundant.
+      el.appendChild(closeCorner({ to: 'cover' }));
       drawQ();
 
       function drawQ() {
         const stage = $('#dict-stage', el);
-        const q = state.session.dict[state.dictIdx];
-        // "(p)_______ goods" — keep the answer's first letter visible inside
-        // parens, blank the rest, leave the surrounding phrase intact.
-        const first = q.answer[0];
-        const rest  = '_'.repeat(Math.max(5, q.answer.length - 1));
-        const masked = q.prompt.replace(new RegExp(q.answer, 'i'), `(${first})${rest}`);
+        const q = state.session.dicts[state.dictIdx];
+        // v=54 — dict prompt is now a full SENTENCE with a single
+        // ______ blank where the headword sat.  We render the blank
+        // as a slot span (first letter + ruled tail) inside the
+        // sentence, just like stage 2's multi-blank slots but with
+        // only one.                                                 */
+        const slot = `<span class="dict-blank"><span class="dict-blank-first">${escapeHtml(q.answer[0])}</span><span class="dict-blank-tail"></span></span>`;
+        const masked = q.blank_sentence.replace(/_{3,}/, slot);
         stage.innerHTML = `
-          <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · 08</div>
-          <div class="dict-prompt">${escapeHtml(masked)}</div>
-          <div class="dict-prompt-zh">${escapeHtml(q.prompt_zh)}</div>
-          <div class="dict-input-row">
-            <input class="dict-input" id="dict-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${escapeAttr(q.hint)}…">
-            <img class="dict-quill" src="assets/icon-quill.png?v=25" alt="">
+          <div class="q-progress">${String(state.dictIdx + 1).padStart(2, '0')} · ${String(state.session.dicts.length).padStart(2, '0')}</div>
+          <div class="q-card">
+            <span class="q-corner q-corner-tl">✦</span>
+            <span class="q-corner q-corner-tr">✦</span>
+            <span class="q-corner q-corner-bl">✦</span>
+            <span class="q-corner q-corner-br">✦</span>
+            <div class="dict-zh-hint">${escapeHtml(q.sentence_zh)}</div>
+            <div class="dict-prompt">${masked}</div>
+            <img class="q-bow q-bow-inside" src="assets/icon-bow.png?v=31" alt="" aria-hidden="true">
+          </div>
+          <div class="dict-answer">
+            <input class="dict-slot" id="dict-input"
+                   autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                   placeholder="trace the inscription\u2026">
+            <button class="dict-quill" id="dict-quill" aria-label="sign your answer">
+              <img src="assets/icon-quill.png?v=25" alt="">
+            </button>
           </div>
           <div class="dict-feedback" id="dict-feedback"></div>
-          <div class="dict-actions" id="dict-actions"></div>
         `;
         const input = $('#dict-input', stage);
-        const actions = $('#dict-actions', stage);
-        actions.appendChild(btn('write', () => check()));
-        input.focus();
+        $('#dict-quill', stage).addEventListener('click', () => check());
         input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+        setTimeout(() => input.focus(), 50);
       }
 
       function advance() {
         state.dictIdx++;
-        if (state.dictIdx >= state.session.dict.length) go('stage3-result');
-        else $('#dict-stage').querySelector ? drawQ() : drawQ();
+        if (state.dictIdx >= state.session.dicts.length) {
+          // v=115 — popup result, no fixed result page.
+          const dicts = state.session.dicts || [];
+          const total = dicts.length;
+          const right = dicts.filter(d => state.results[d.head] && state.results[d.head].dict).length;
+          const pass = right === total && total > 0;
+          if (pass) _markStageDone(saved.chapter, 3);
+          showStageResultPopup({
+            stage: 3, pass, right, total,
+            onAdvance: () => go('cover'),       // chapter complete → cover
+            onRetry:   () => {
+              state.session.dicts.forEach(d => {
+                if (state.results[d.head]) state.results[d.head].dict = null;
+              });
+              state.dictIdx = 0;
+              go('stage3');
+            }
+          });
+        } else drawQ();
       }
 
       function check() {
         const stage = $('#dict-stage', el);
-        const q = state.session.dict[state.dictIdx];
+        const q = state.session.dicts[state.dictIdx];
         const input = $('#dict-input', stage);
         const feedback = $('#dict-feedback', stage);
         const guess = (input.value || '').trim().toLowerCase();
         if (!guess) return;
         if (guess === q.answer.toLowerCase()) {
+          // right on the first try → flash visible feedback, then advance.
           state.results[q.head].dict = true;
+          recordRight(q.head);                       // v=115
           input.disabled = true;
-          feedback.textContent = q.prompt;
-          feedback.className = 'dict-feedback is-correct';
-          $('#dict-actions', stage).innerHTML = '';
+          input.classList.add('is-right');
+          feedback.innerHTML = '<em>✦ inscribed</em>';
+          feedback.className = 'dict-feedback is-right';
           SFX.right();
-          speak(q.prompt).then(() => setTimeout(advance, 700));
+          speak(q.answer).then(() => setTimeout(advance, 700));
         } else {
+          // wrong — reveal the answer in the blank, clear input,
+          // ask user to copy it.  Score still counts as wrong.
           state.results[q.head].dict = false;
           recordMistake(q.head);
-          // wipe the wrong attempt, keep the SAME input field, ask for a
-          // re-inscription.  on correct match we auto-advance.
+          SFX.wrong();
           input.value = '';
           input.classList.add('is-wrong');
-          feedback.innerHTML = `correct · <em>${escapeHtml(q.answer)}</em> · write it once more`;
+          // Replace the blank inside the prompt with the real letters
+          const reveal = `<span class="dict-blank is-revealed">${escapeHtml(q.answer)}</span>`;
+          const revealed = q.blank_sentence.replace(/_{3,}/, reveal);
+          stage.querySelector('.dict-prompt').innerHTML = revealed;
+          feedback.innerHTML = '<em>write it once more</em>';
           feedback.className = 'dict-feedback is-wrong';
-          $('#dict-actions', stage).innerHTML = '';
-          SFX.wrong();
-          const rew = input;
-          rew.focus();
-          rew.addEventListener('input', () => {
-            if (rew.value.trim().toLowerCase() === q.answer.toLowerCase()) {
-              rew.disabled = true;
-              feedback.textContent = q.prompt;
-              feedback.className = 'dict-feedback is-correct';
+          input.focus();
+          input.addEventListener('input', () => {
+            input.classList.remove('is-wrong');
+            if (input.value.trim().toLowerCase() === q.answer.toLowerCase()) {
+              input.disabled = true;
+              input.classList.add('is-right');
+              feedback.textContent = '';
               SFX.right();
-              speak(q.prompt).then(() => setTimeout(advance, 700));
+              speak(q.answer).then(() => setTimeout(advance, 350));
             }
           });
         }
@@ -1157,191 +3943,320 @@ const Screens = {
     }
   },
 
+
   /* ---------- STAGE 3 RESULT  +  SUMMARY (end of session) ---------- */
   'stage3-result': {
     onEnter() {
-      LanBGM.playResultRandom({ volume: 0.42 });
       SFX.finish();
-      // bump progress + mark learned
+      // v=64 — bump chapter ONLY when stage 3 was passed perfectly
+      // (every dict right on the first try).  Otherwise the user
+      // re-plays this chapter.  Words are still marked learned —
+      // exposure counts even if the user needed a hint.
       state.session.words.forEach(w => { markLearned(w); });
-      saved.progress = Math.min(saved.progress + 8, ALL_HEADS.length);
+      saved.progress = Math.min(saved.progress + state.session.words.length, TOTAL_WORDS);
+      const _dictsPerfect = state.session.dicts
+        .every(d => state.results[d.head] && state.results[d.head].dict === true);
+      if (_dictsPerfect) {
+        // v=80 — only the MAINLINE chapter advances saved.chapter +
+        // saved.mainlineChapter.  Free-mode (catalog) plays don't
+        // touch the linear progression.
+        const isMainline = !saved.freeMode &&
+          (saved.chapter === (saved.mainlineChapter || saved.chapter));
+        if (isMainline) {
+          saved.chapter = (saved.chapter || 1) + 1;
+          saved.mainlineChapter = saved.chapter;
+          saved.stage = 0;   // new chapter starts at stage 0
+        }
+        // In free-mode the chapter stays put; user goes back to
+        // cover and Continue Reading will land them on mainline.
+      }
       Store.save();
 
       const el = $('#screen-stage3-result');
-      const right = state.session.words.filter(w => state.results[w].dict).length;
-      const totalCorrect = state.session.words.reduce((acc, w) => {
-        const r = state.results[w];
-        return acc + (r.match ? 1 : 0) + (r.oracle ? 1 : 0) + (r.dict ? 1 : 0);
-      }, 0);
+      // v=51 — total = match-correct (4 pairs) + scene-correct (per
+      // blank) + dict-correct (per dict question).  Denominator is
+      // the sum of available slots across the three stages.
+      const pairsTotal  = state.session.pairs.length;
+      const sceneAnswers = state.session.scenes.flatMap(s => s.answers || []);
+      const sceneTotal   = sceneAnswers.length;
+      const dictsTotal   = state.session.dicts.length;
+      const grandTotal   = pairsTotal + sceneTotal + dictsTotal;
+      // correctness per slot
+      const matchRight = state.session.pairs
+        .filter(p => state.results[p.head] && state.results[p.head].match).length;
+      const sceneRight = sceneAnswers
+        .filter(w => state.results[w] && state.results[w].oracle).length;
+      const dictRight  = state.session.dicts
+        .filter(d => state.results[d.head] && state.results[d.head].dict).length;
+      const totalCorrect = matchRight + sceneRight + dictRight;
       el.innerHTML = `
-        ${stageHeader(3, 'the inscription')}
-        <div class="score-block">
-          <div class="score-label">tonight's chapter</div>
-          <div class="score-value">${totalCorrect}<small> / 24</small></div>
-        </div>
-        <div class="stage-actions"></div>
-        <div class="summary-list" id="summary"></div>
-        <div class="result-grid"></div>
+        ${scoreBlock(3, 'The Inscription', totalCorrect, grandTotal, encouragement(totalCorrect / grandTotal))}
+        <div class="match-actions"></div>
+        <div class="match-result-hint">— three pages, all her words · scroll down to review —</div>
+        <div class="review-stack"></div>
       `;
 
-      el.prepend(moonCorner());
-      el.appendChild(closeCorner());
+      el.appendChild(closeCorner({ to: 'cover' }));
 
-      $('.stage-actions', el).appendChild(nextDoor('the next chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
+      // v=64 — gate: only PERFECT stage-3 lets the user close the
+      // chapter.  Otherwise "Try Again" replays stage 3 (chapter
+      // counter did NOT advance above, so the same chapter content
+      // returns when Continue Reading is tapped again).
+      if (_dictsPerfect) {
+        _markStageDone(saved.chapter, 3);
+        $('.match-actions', el).appendChild(nextDoor('Next Chapter', () => { LanBGM.stop(); go('cover'); }, { confirm: true }));
+      } else {
+        $('.match-actions', el).appendChild(nextDoor('Try Again', () => {
+          state.session.dicts.forEach(d => {
+            if (state.results[d.head]) state.results[d.head].dict = null;
+          });
+          go('stage3');
+        }));
+      }
 
-      const tickHtml = v =>
-        v === null ? `<div class="tick">—</div>`
-                   : `<div class="tick ${v ? 'ok' : 'bad'}">${v ? '✓' : '✗'}</div>`;
-      const sum = $('#summary', el);
-      state.session.words.forEach(w => {
-        const r = state.results[w];
-        const row = document.createElement('div');
-        row.className = 'summary-row';
-        row.innerHTML = `<div class="sum-word">${escapeHtml(w)}</div>${tickHtml(r.match)}${tickHtml(r.oracle)}${tickHtml(r.dict)}`;
-        sum.appendChild(row);
-      });
-      const grid = $('.result-grid', el);
-      state.session.words.forEach(w => grid.appendChild(renderExCard(w, state.results[w].dict, { withControls: false })));
+      // v=57 — EXPANDED review cards per user: stage-3 result is
+      // the END-OF-CHAPTER review.  Show every unique word touched
+      // across all three stages, each with its full parchment-style
+      // content inlined (no tap needed — just scroll).
+      const stack = $('.review-stack', el);
+      const wordsSeen = Array.from(new Set(state.session.words.filter(w => PARCHMENT_CARDS[w])));
+      wordsSeen.forEach(w => stack.appendChild(renderReviewCard(w)));
     }
   },
 
-  /* ---------- NOTE (cover-side, NOT in game flow) ---------- */
+  /* ---------- NOTE hub (cover-side, NOT in game flow) ----------
+     v=66 — simplified per user.  One bucket only: words mistaken
+     THREE or more times ("haunting words" / "重点关注错题").  Each
+     word renders as the same expanded review card the stage-3
+     result uses, so users browse the full study UI inline.  No
+     soft-slip bucket, no separate detail page.                   */
   note: {
     onEnter() {
       const el = $('#screen-note');
-      const m = saved.mistakes;
-      const entries = Object.entries(m);
-      const buckets = {
-        once:   entries.filter(([w, c]) => c === 1).map(([w]) => w),
-        twice:  entries.filter(([w, c]) => c === 2).map(([w]) => w),
-        thrice: entries.filter(([w, c]) => c === 3).map(([w]) => w),
-        haunt:  entries.filter(([w, c]) => c >= 4).map(([w]) => w)
-      };
+      const m = saved.mistakes || {};
+      // Haunting = mistaken 3+ times, AND has a parchment card.
+      const haunting = Object.entries(m)
+        .filter(([w, c]) => c >= 3 && PARCHMENT_CARDS[w])
+        .sort((a, b) => b[1] - a[1])                  // most-mistaken first
+        .map(([w]) => w);
+      // Saved keys (her note bookmarks).
+      const bookmarked = Object.keys(saved.notes || {})
+        .filter(w => PARCHMENT_CARDS[w])
+        .sort();
+
       el.innerHTML = `
-        ${pageTitle('her little note')}
-        <div class="page-subtitle">pages she returns to</div>
-        <div class="note-stats">
-          <div class="note-stat"><div class="lbl">a single slip</div><div class="val">${buckets.once.length}</div></div>
-          <div class="note-stat"><div class="lbl">twice astray</div><div class="val">${buckets.twice.length}</div></div>
-          <div class="note-stat"><div class="lbl">thrice undone</div><div class="val">${buckets.thrice.length}</div></div>
-          <div class="note-stat warn"><div class="lbl">haunting words</div><div class="val">${buckets.haunt.length}</div></div>
+        <div class="note-page">
+          ${pageTitle('Her Little Note')}
+          <div class="note-sub">— words that haunted her thrice or more —</div>
+          <div class="note-haunt-stack"></div>
+          ${bookmarked.length ? `
+            <div class="note-sub note-sub--keys">— and the ones she keyed away —</div>
+            <div class="note-keys-stack"></div>
+          ` : ''}
+          ${(!haunting.length && !bookmarked.length) ? `
+            <div class="note-empty">her notebook is still untouched.</div>
+          ` : ''}
         </div>
-        <div id="note-body"></div>
       `;
-      el.prepend(moonCorner());
       el.appendChild(closeCorner());
 
-
-      const body = $('#note-body', el);
-      const show = (label, words) => {
-        if (!words.length) return;
-        body.insertAdjacentHTML('beforeend', `<div class="section-label">— ${label} —</div>`);
-        const wrap = document.createElement('div');
-        wrap.className = 'result-grid';
-        words.forEach(w => { if (CARDS[w]) wrap.appendChild(renderExCard(w, true, { withControls: false })); });
-        body.appendChild(wrap);
-      };
-      if (!entries.length) {
-        body.insertAdjacentHTML('beforeend', '<div class="note-empty">no slips yet · the page is still pristine</div>');
-      } else {
-        show('haunting words', buckets.haunt);
-        show('thrice undone',  buckets.thrice);
-        show('twice astray',   buckets.twice);
-        show('a single slip',  buckets.once);
-      }
+      const hStack = $('.note-haunt-stack', el);
+      haunting.forEach(w => {
+        const card = renderReviewCard(w);
+        const badge = document.createElement('span');
+        badge.className = 'note-mistake-badge';
+        badge.textContent = `× ${m[w]}`;
+        card.prepend(badge);
+        hStack.appendChild(card);
+      });
+      const kStack = $('.note-keys-stack', el);
+      if (kStack) bookmarked.forEach(w => kStack.appendChild(renderReviewCard(w)));
     }
   },
 
-  /* ---------- INDEX (cover-side, A-Z) ---------- */
+  /* ---------- NOTE BUCKET — index-style filtered list -----------
+     v=26.2 — user simplification: bucket page now reuses the same
+     panel/search/A-Z/list UI as the index, just with the bucket's
+     filtered word set.  One layout instead of a separate grid. */
+  'note-bucket': {
+    onEnter({ bucket } = {}) {
+      const m = saved.mistakes;
+      const words = Object.entries(m)
+        .filter(([_, c]) => bucket === 'haunt' ? c >= 3 : (c >= 1 && c <= 2))
+        .map(([w]) => w)
+        .filter(w => PARCHMENT_CARDS[w])
+        .sort();
+      const title = bucket === 'haunt' ? 'Haunting Words' : 'Soft Slips';
+      renderIndexLikePage($('#screen-note-bucket'),
+        { title, words, backTo: 'note', fromKey: 'note-bucket' });
+    }
+  },
+
+  /* ---------- INDEX (cover-side, A-Z) ----------
+     v=26.2 — same panel UI as note-bucket via renderIndexLikePage. */
   index: {
     onEnter() {
-      const el = $('#screen-index');
-      const heads = Object.keys(CARDS).sort();
-      // group by first letter
-      const groups = {};
-      heads.forEach(h => {
-        const k = h[0].toUpperCase();
-        (groups[k] = groups[k] || []).push(h);
+      const heads = Object.keys(PARCHMENT_CARDS).sort();
+      renderIndexLikePage($('#screen-index'),
+        { title: 'The Glossary', words: heads, backTo: 'cover', fromKey: 'index' });
+    }
+  },
+
+  /* ---------- CHAPTER CATALOG (cover-side) ----------
+     v=71 — every themed chapter listed with mistake-count badges
+     pulled from saved.mistakes, so the user can spot weak chapters
+     and jump straight into one for re-play.  Tapping a row sets
+     saved.chapter, freshens the session, and routes into stage 1.  */
+  'chapter-catalog': {
+    onEnter() {
+      // v=81 — catalog reorganised into PART → SECTION hierarchy.
+      // 10 collapsible big parts (e.g. "01 The Universe"); each
+      // expands to show its small chapters (1.1, 1.2, …).  Mistake
+      // counts surface on the small-chapter rows.
+      const el = $('#screen-chapter-catalog');
+      const m = saved.mistakes || {};
+      const partsMap = new Map();
+      _CHAPTER_PLAN.forEach((ch, idx) => {
+        const key = ch.part || 0;
+        if (!partsMap.has(key)) partsMap.set(key, { id: key, theme: ch.partTheme || '', rows: [] });
+        // Mistake sum for this section's words.
+        const article = (typeof STAGE0_PARTS !== 'undefined') && STAGE0_PARTS[ch.article_id - 1];
+        const section = article && article.sections[ch.section_idx];
+        let mistakes = 0;
+        if (section) {
+          const text = section.body + ' ' + section.questions.map(q => q.q + ' ' + q.a).join(' ');
+          (text.toLowerCase().match(/\b[a-z][a-z'\-]{1,}\b/g) || []).forEach(w => {
+            if (m[w]) mistakes += m[w];
+          });
+        }
+        partsMap.get(key).rows.push({ idx, ch, mistakes });
       });
-      const letters = Object.keys(groups).sort();
+      const partsArr = Array.from(partsMap.values()).sort((a, b) => a.id - b.id);
+      const totalChapters = _CHAPTER_PLAN.length;
       el.innerHTML = `
-        <div class="screen-stickyhead">
-          <div class="page-title">the index</div>
-          <input class="index-search" type="text" placeholder="search words…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
-          <div class="alpha-bar">${letters.map(L => `<a data-letter="${L}">${L}</a>`).join('')}</div>
+        <div class="catalog-page">
+          ${pageTitle('Index')}
+          <div class="catalog-sub">— ${totalChapters} chapters across ${partsArr.length} parts · mainline: ${saved.mainlineChapter || 1} —</div>
+          <div class="catalog-parts" id="cat-parts"></div>
         </div>
-        <div id="index-body"></div>
       `;
-      el.prepend(moonCorner());
-      el.appendChild(closeCorner());
-
-      $$('.alpha-bar a', el).forEach(a => {
-        a.addEventListener('click', () => {
-          const L = a.getAttribute('data-letter');
-          const target = $(`#letter-${L}`, el);
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.appendChild(closeCorner({ to: 'cover' }));
+      const partsHost = $('#cat-parts', el);
+      // Auto-expand the part the user's current chapter belongs to.
+      const currentPart = (_CHAPTER_PLAN[(saved.chapter || 1) - 1] || {}).part;
+      partsArr.forEach(part => {
+        const partWrap = document.createElement('div');
+        partWrap.className = 'catalog-part';
+        const isOpen = part.id === currentPart;
+        if (isOpen) partWrap.classList.add('is-open');
+        const partMistakes = part.rows.reduce((s, r) => s + r.mistakes, 0);
+        // v=91 — catalog row mirrors a printed book's table of
+        // contents: "chapter1 ········· The Universe".  No bold,
+        // no "12 chapters" suffix (the small rows below convey
+        // count by their visible presence).  Mistake count, if any,
+        // floats to the very right.
+        const partLabel = `chapter ${part.id}`;
+        const partName  = (part.theme || '').replace(/^chapter\s*\d+\s*[:：]\s*/i, '');
+        partWrap.innerHTML = `
+          <button class="catalog-part-head">
+            <span class="cat-part-toggle">${isOpen ? '▾' : '▸'}</span>
+            <span class="cat-part-label">${escapeHtml(partLabel)}</span>
+            <span class="cat-part-leader" aria-hidden="true"></span>
+            <span class="cat-part-theme">${escapeHtml(partName)}</span>
+            ${partMistakes > 0 ? `<span class="cat-part-mistakes">× ${partMistakes}</span>` : ''}
+          </button>
+          <div class="catalog-part-body"></div>
+        `;
+        const head = $('.catalog-part-head', partWrap);
+        const body = $('.catalog-part-body', partWrap);
+        head.addEventListener('click', () => {
+          partWrap.classList.toggle('is-open');
+          $('.cat-part-toggle', partWrap).textContent =
+            partWrap.classList.contains('is-open') ? '▾' : '▸';
         });
-      });
-
-      const body = $('#index-body', el);
-      letters.forEach(L => {
-        body.insertAdjacentHTML('beforeend', `<div class="alpha-section-title" id="letter-${L}">${L}</div>`);
-        groups[L].forEach(h => {
-          const c = CARDS[h];
-          const row = document.createElement('div');
-          row.className = 'word-row';
-          row.dataset.word = c.h.toLowerCase();
-          row.dataset.zh = (c.zh || '').toLowerCase();
+        part.rows.forEach(r => {
+          const isCurrent = (r.idx + 1) === (saved.chapter || 1);
+          const chap = r.idx + 1;
+          // v=113 — three dots per row showing s1/s2/s3 completion.
+          // ●=done, ◌=in-progress, ·=not started, ─=no data.  Tap
+          // a row → next unfinished stage (no modal).  Per user:
+          // "Story Index 里的 Quiz 按钮 … 进入这个小节的状态页 主
+          // 按钮进入该小节下一个未完成 Stage".  Status pills are
+          // the inline status page until a full status panel ships.
+          const dot = (stage) => {
+            const s = _secStageStatus(chap, stage);
+            const cls = 'cat-dot cat-dot-' + s;
+            const glyph = s === 'completed' ? '●'
+                        : s === 'in-progress' ? '◌'
+                        : s === 'unavailable' ? '─'
+                        : '·';
+            return `<span class="${cls}" title="stage ${stage}: ${s}">${glyph}</span>`;
+          };
+          const nextS = _nextUnfinishedTrialStage(chap);
+          const row = document.createElement('button');
+          row.className = 'catalog-row'
+                       + (r.mistakes >= 3 ? ' is-weak' : '')
+                       + (isCurrent ? ' is-current' : '')
+                       + (nextS == null ? ' is-section-done' : '');
           row.innerHTML = `
-            <span class="wr-word">${escapeHtml(c.h)}</span>
-            <span class="wr-pos">${escapeHtml(c.pos || '')}</span>
-            <span class="wr-zh">${escapeHtml(c.zh || '')}</span>
+            <span class="cat-num">${escapeHtml(r.ch.section || chap)}</span>
+            <span class="cat-leader" aria-hidden="true"></span>
+            <span class="cat-theme">${escapeHtml((r.ch.theme || '').replace(/^[\d.]+\s*/, ''))}</span>
+            <span class="cat-stages">${dot(1)}${dot(2)}${dot(3)}</span>
+            ${r.mistakes > 0 ? `<span class="cat-mistakes">× ${r.mistakes}</span>` : ''}
           `;
           row.addEventListener('click', () => {
-            SFX.pageTurn();
-            go('card', { word: h, from: 'index' });
+            SFX.tap();
+            const targetStage = _nextUnfinishedTrialStage(chap);
+            // Pick the entry: if a trial stage is unfinished, jump
+            // straight in.  Otherwise — section already fully passed
+            // — replay stage 0 reading.
+            const targetScreen = targetStage ? ('stage' + targetStage) : 'stage0';
+            showModal({
+              title: r.ch.theme,
+              body: targetStage
+                ? `Stage ${targetStage} is next for this section.  Free play doesn't advance your mainline (currently ch ${saved.mainlineChapter || 1}).`
+                : `This section is fully passed — re-read or revisit it?`,
+              actions: [
+                { label: 'cancel', variant: 'ghost', onClick: () => {} },
+                { label: 'play',   variant: '',     onClick: () => {
+                  saved.chapter  = chap;
+                  saved.freeMode = true;
+                  // Don't reset saved.stage — it's only for the
+                  // mainline; free mode just opens the requested screen.
+                  Store.save();
+                  freshSession();
+                  go(targetScreen);
+                }}
+              ]
+            });
           });
           body.appendChild(row);
         });
-      });
-
-      // Live filter — matches both the head and its chinese gloss.
-      $('.index-search', el).addEventListener('input', e => {
-        const q = (e.target.value || '').toLowerCase().trim();
-        $$('.word-row', el).forEach(row => {
-          const hit = !q ||
-            row.dataset.word.includes(q) ||
-            row.dataset.zh.includes(q);
-          row.style.display = hit ? '' : 'none';
-        });
-        // hide section labels whose section now has no visible rows
-        $$('.alpha-section-title', el).forEach(h => {
-          let n = h.nextElementSibling, alive = false;
-          while (n && !n.classList.contains('alpha-section-title')) {
-            if (n.style.display !== 'none') { alive = true; break; }
-            n = n.nextElementSibling;
-          }
-          h.style.display = alive ? '' : 'none';
-        });
+        partsHost.appendChild(partWrap);
       });
     }
   },
 
-  /* ---------- CARD detail (opened from sidebar, index, tiles) ---------- */
+  /* ---------- CARD detail — the single-page parchment ----------
+     v=26 — full-screen study page, .ex-card gets the .is-parchment
+     skin (cream E993B660 scroll background, dark-sepia text) plus
+     a copy-line at the bottom.  Reveal mechanic (tap-to-show next
+     audio phrase) stays exactly as before. */
   card: {
     onEnter(opts) {
       const el = $('#screen-card');
       const word = opts.word;
-      // default to 'cover' when no caller passed an explicit from —
-      // never to 'index', which created the dead-end where pressing
-      // close on the card jumped to the word list instead of home.
       const from = opts.from || 'cover';
       state._cardFrom = from;
-      el.innerHTML = `<div class="result-grid" id="card-host"></div>`;
-
-      el.prepend(moonCorner());
+      el.innerHTML = `<div class="card-host"></div>`;
       el.appendChild(closeCorner({ to: from }));
-      $('#card-host', el).appendChild(renderExCard(word, null, { withControls: true }));
+      const card = renderExCard(word, null, { withControls: true });
+      card.classList.add('is-parchment', 'is-entering');
+      card.insertAdjacentHTML('beforeend', copyLine());
+      $('.card-host', el).appendChild(card);
+      // strip the entrance class once the fade+scale animation finishes
+      setTimeout(() => card.classList.remove('is-entering'), 620);
     }
   }
 };
@@ -1350,5 +4265,79 @@ const Screens = {
    12. BOOTSTRAP
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-  go('cover');
+  // v=55 — TAP-TO-BEGIN intro screen.  Mobile browsers (and most
+  // desktop policies) require a user gesture before audio can
+  // play.  We show a fullscreen black veil with a centred italic
+  // "tap to open the book" line; the first tap anywhere unlocks
+  // BGM, plays the home pool, removes the veil, and renders the
+  // cover.
+  _goImmediate('cover');                       // pre-render behind the veil
+  const intro = document.createElement('div');
+  intro.className = 'intro-veil';
+  intro.innerHTML = `
+    <div class="intro-glyph">❦</div>
+    <div class="intro-text">tap to open the book</div>
+    <div class="intro-sub">tap anywhere</div>
+  `;
+  document.body.appendChild(intro);
+  // v=64 — the tap that DISMISSES the intro veil must not also fire
+  // the cover's Continue Reading button.  On touch devices, touchend
+  // turns into a synthetic click ~300 ms later, by which time the
+  // veil has already gone pointer-events: none and the click lands
+  // on whatever sits behind it (the CTA).  Two fixes:
+  //   1. preventDefault on touchend suppresses the synthetic click.
+  //   2. A short "swallow" window after the dismiss eats any stray
+  //      click that still slips through (Safari is generous).      */
+  let _introConsumed = false;
+  let _swallowUntil = 0;
+  const swallowFollowUp = (e) => {
+    if (Date.now() < _swallowUntil) {
+      e.stopPropagation();
+      e.preventDefault();
+    } else {
+      document.removeEventListener('click', swallowFollowUp, true);
+    }
+  };
+  const onFirstTap = (e) => {
+    if (_introConsumed) return;
+    _introConsumed = true;
+    _swallowUntil = Date.now() + 450;
+    if (e && e.preventDefault)  e.preventDefault();
+    if (e && e.stopPropagation) e.stopPropagation();
+    intro.classList.add('is-out');
+    setTimeout(() => intro.remove(), 520);
+    // v=71 — unlock + play DIRECTLY here.  We used to route through
+    // _ensureBGM behind a gate, but the gate left BGM silent.  Now:
+    //   1. Synchronously unlock the AudioContext (must be inside
+    //      the gesture handler for iOS to honour it).
+    //   2. Reset _lastBgmGroup so the next _ensureBGM call (any
+    //      screen change) is treated as a group change.
+    //   3. Kick the first track explicitly so BGM is audible from
+    //      the very first cover render.
+    // v=74 — initial cover render schedules notes against a still-
+    // suspended AudioContext.  By the time the user finally taps,
+    // 3–5 schedule ticks have accumulated step++ + queued oscillators
+    // at t≈0.05, which all fire AT ONCE on resume (a chord blast).
+    // Fix: synchronously unlock → STOP (clears stale timer + step)
+    // → play fresh.  Track now restarts from melody[0].
+    try { LanBGM.unlock(); } catch {}
+    try { LanBGM.stop();   } catch {}
+    _lastBgmGroup = null;
+    try { LanBGM.playHomeRandom({ force: true, volume: 0.42 }); } catch {}
+    _lastBgmGroup = BGM_GROUP_BY_SCREEN[state.screen || 'cover'] || 'home-side';
+  };
+  intro.addEventListener('touchend', onFirstTap, { passive: false });
+  intro.addEventListener('click',    onFirstTap);
+  document.addEventListener('click', swallowFollowUp, true);
 });
+
+// v=89 — minimal debug exposure so an external screenshot harness
+// (or DevTools) can drive the app:  window.go(screen) /
+// window.saved / window.state.  No behaviour change for users.
+try {
+  Object.assign(window, {
+    go, saved, state, showParchment, resolveReadingWord, posOf,
+    showStageResultPopup,
+    PARCHMENT_CARDS, CHAPTER_PLAN, STAGE0_PARTS, WORD_CHAPTERS
+  });
+} catch {}
