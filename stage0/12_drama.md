@@ -309,3 +309,279 @@ D received a personal apology from Hitler.
 **A3:** B
 
 ---
+
+# Lexical Supplements
+
+The entries below are short prose paragraphs that weave additional discipline-list vocabulary into the existing chapters. Each is labelled with the target chapter and a thematic anchor that should make the natural insertion point clear. No questions or Group A / Group B lists are attached, since these are sentence-level appendices designed to land a cluster of related words inside an existing context. The target vocabulary covered by each paragraph is listed beneath it.
+
+---
+
+## Lex → Ch1 (Cosmos and measurement)
+*Anchor: any passage on planetary motion, telescopes, or the scale of the universe.*
+
+Modern astronomers track the planet's motion from observatories perched on remote mountain ridges, calibrating their instruments to detect even the faintest oscillation in the spectrum of a distant star at wavelengths the unaided eye cannot perceive. An eclipse darkens the daylight when one celestial body slides in front of another, and the kinetic energy released when bodies collide at planetary scale is calculated through the mathematics of kinetics. Cosmologists hypothesise hypothetical particles whose existence the largest detectors are still trying to verify, and the computation of every trajectory through the vacuum of space turns the gravitational field into a vector pointing in a single resolvable direction. Inside the nucleus of every atom the same physical laws operate as in the most distant scenario the telescopes can resolve.
+
+**Vocab covered:** observatory, calibration, oscillation, spectrum, wavelength, eclipse, kinetic, kinetics, hypothesise, hypothetical, computation, vector, nucleus, scenario, acceleration
+
+---
+
+## Lex → Ch2 (Earth history and the fossil record)
+*Anchor: any passage on geological time, fossils, or archaeological recovery.*
+
+Geological sedimentation lays down stratified layers that, across millions of years, accomplish the fossilization of bones and shells. The periodic evaporation of inland seas leaves behind crusts of salt that record the planet's chronic salinization and the slow desertification of formerly fertile regions. Archaeology then reads this stratigraphy in reverse, with excavation teams charting ancient sites by latitude and longitude and recovering inscriptions and artefacts whose chronology rewrites the prevailing narrative of early civilisation. The methodology of dating is calibrated through multiple independent techniques to mutually confirm the age of each find.
+
+**Vocab covered:** sedimentation, fossilization, evaporation, chronic, salinization, desertification, archaeology, excavation, longitude, inscription, artifact, chronology, narrative, civilization, methodology
+
+---
+
+## Lex → Ch3 (Africa: anthropology and colonial aftermath)
+*Anchor: any passage on colonial history, postcolonial movements, or African cultures.*
+
+Modern anthropology distinguishes the unhurried processes of acculturation and assimilation, by which two peoples gradually absorb each other's customs, from the coercive imposition of colonization that marginalizes one population beneath another. Ethnography records the rituals of a people from inside their own categories, deliberately resisting the ethnocentrism that views every distant custom as either exotic or deficient. The hierarchical structures of communal village life, the unwritten taboos around mourning and marriage, and the slow indigenization of imported religion across the continent all yield to such patient documentation. Ideology and persuasion, mobilised against the alienation, hostility, and oppression bequeathed by the colonial era, have powered every postcolonial movement to reclaim self-rule. Even after independence, the marginalization of women under persistent patriarchy and the norm of intergroup suspicion have remained urgent fronts of advocacy.
+
+**Vocab covered:** anthropology, acculturation, assimilation, custom, colonization, marginalize, ethnography, ethnocentrism, hierarchical, communal, taboo, indigenization, ideology, persuasion, alienation, hostility, oppression, marginalization, norm, patriarchy, intergroup, advocacy
+
+---
+
+## Lex → Ch4 (Polar regions, ecology and the senses)
+*Anchor: any passage on Arctic biology, hibernating mammals, or polar observation.*
+
+The Arctic biosphere supports a tightly woven ecosystemic web in which bears and seals occupy alternating winter strategies of hibernation and active foraging. The thick fur of any Arctic mammal is itself an ecosystem in miniature, hosting parasite populations whose long symbiosis with the host has become almost imperceptible. Conservationists working in the polar regions deploy heightened sensory instruments alongside the unaided eye, because the subtle, intermittent shifts in ice thickness and animal behaviour cannot be reliably picked up by ordinary observation alone. Afforestation projects further south have only an indirect effect on these ecosystems, but the ongoing deforestation of subarctic forests does feed back into the long-term climate budget.
+
+**Vocab covered:** biosphere, ecosystemic, hibernation, parasite, symbiosis, conservationist, sensory, intermittent, afforestation, deforestation
+
+---
+
+## Lex → Ch5 (Australia and the Pacific, land use)
+*Anchor: any passage on Australian agriculture, the rabbit plague, or land degradation.*
+
+Across Australian rangelands, decades of overgrazing have driven creeping salinization upward into the topsoil, leaving the land arid and unproductive; the colonial pivot toward monoculture cropping accelerated the same loss of sustainability. Aboriginal communities had traditionally moved across the landscape in a measured nomadism that allowed each region to recover before the next dry season returned, whereas the sedentary practices of settler agriculture demanded year-round herbicide application and intensive irrigation. The aquaculture industry along the coast is now scrutinised for its detrimental contamination of inshore waters, and the contemporary conservation movement has begun to recover the older sustainable rotations, though it cannot easily reverse the salinity profile of soils already exhausted by a century of intensive cultivation.
+
+**Vocab covered:** overgrazing, salinization, arid, monoculture, sustainability, nomadism, sedentary, herbicide, aquaculture, detrimental, contamination, sustainable, salinity
+
+---
+
+## Lex → Ch6 (Indian and Atlantic, ocean science)
+*Anchor: any passage on ocean currents, the Gulf Stream, or coastal climate.*
+
+Oceanography reads the planet through the rhythms of moving water. The great thermohaline circulation rolls vast undercurrents through the deep, knitting the planet's heat budget together across hemispheres, while drifting plankton and zooplankton at the surface convert sunlight into the foundation of every marine food chain. Coastal cities suffering chronic drought have begun to deploy desalination plants to wring fresh water out of the ocean's salinity, and sedimentation at the great river mouths is monitored continuously because shifts in delivery rate quietly remap the contours of every estuary. Meteorological instruments calibrated to the barometer detect the air pressure that drives every cyclone forming above the warm sea.
+
+**Vocab covered:** oceanography, thermohaline, undercurrent, plankton, zooplankton, desalination, salinity, sedimentation, meteorological, barometer, cyclone
+
+---
+
+## Lex → Ch7 (South America, biodiversity)
+*Anchor: any passage on Amazon biodiversity, pollinators, or species variation.*
+
+The continent's astonishing biodiversity, refined through millions of years of unhurried diversification, persists today in pockets of forest whose ecosystemic complexity researchers are still cataloguing. Each isolated valley produces species whose feathers and flowers are improbably ornamental, and whose interdependence with pollinators and seed-carriers has been refined through reciprocal selection across deep time. The proliferation of insects feeds an entire vertical food web, and the paradoxical efficiency of the canopy in capturing every available wavelength of sunlight is one of the system's quintessential features.
+
+**Vocab covered:** biodiversity, diversification, diversity, ecosystemic, ornamental, reciprocal, proliferate, paradoxical, wavelength, quintessential
+
+---
+
+## Lex → Ch8 (Asia: classical thought and the social order)
+*Anchor: any passage on Confucianism, Daoism, Buddhism, or the imperial examination.*
+
+East Asian societies have historically organised themselves around a hierarchical collectivism in which the kindred group revere shared ancestors and conform their actions to the communal good. Custom and ritualistic observance structure each year, and the unspoken taboo against breaking ranks is reinforced by a public ideology of harmony. Classical Confucian and Daoist thought asked rigorous epistemological and ontological questions about what can be known and what truly exists, and Chinese Buddhist scholars later imported a formal sceptical method whose etymology runs back to the Greek syllogism. The persistent skepticism toward unverified claims sits comfortably alongside the older ritualistic practice. Modern East Asian education places heavy weight on literacy, memorisation, and standardisation, and a compulsory examination system continues to filter cohorts into prospective careers.
+
+**Vocab covered:** hierarchical, collectivism, kindred, revere, communal, custom, ritualistic, taboo, ideology, conformity, epistemology, ontology, sceptical, etymology, syllogism, skepticism, literacy, memorization, standardization, compulsory, prospective
+
+---
+
+## Lex → Ch9 (Europe: Enlightenment political thought)
+*Anchor: any passage on Voltaire, Rousseau, Bentham, or the rights of man.*
+
+The Enlightenment generated the body of liberal political thought we now call liberalism, whose proponents argued for individual rights and the systematic secularization of state authority. Each new proposal was scrutinised against historical evidence, and its proponents were obliged to elucidate the justification behind their schemes rather than relying on inherited dogma. Conversely, conservative thinkers presumed that the propensity of human institutions to drift slowly was itself a virtue, and they sought to rationalize the existing order rather than overthrow it. The ramifications of this debate echoed across every subsequent political manifesto, and Bentham's utilitarian doctrine, which measured ethical decisions by the aggregate welfare they produced, became the quantitative pole against which Romantic critics defined themselves.
+
+**Vocab covered:** liberalism, secularization, proponent, scrutinize, elucidate, justification, conversely, presume, propensity, virtue, rationalize, ramification, manifesto, utilitarian, quantitative
+
+---
+
+## Lex → Ch9 (Europe: philosophy of method)
+*Anchor: any passage on Descartes, Bacon, Hegel, or the structure of scientific inquiry.*
+
+The discipline of epistemology asks what counts as genuine knowledge, ontology asks what kinds of thing actually exist, and the methodology of any inquiry sets the terminology by which evidence is admitted or excluded. A finding that strikes most readers as paradoxical may, on patient analysis, turn out to be the inevitable derivative of a single rigorous prerequisite, and the prospective scholar with sufficient proficiency in the technical vocabulary will recognise it at once. The judicious investigator tolerates ambiguity rather than rushing toward false coherence, and the wholistic view of any subject preserves nuances the narrower disciplinary glance would lose. A tautology is true by virtue of its own form, while a contradictory pair cannot both be true at once.
+
+**Vocab covered:** epistemology, ontology, methodology, terminology, paradoxical, derivative, prerequisite, prospective, proficiency, judicious, ambiguity, coherence, wholistic, tautology, contradictory
+
+---
+
+## Lex → Ch10 (North America: urbanisation and city planning)
+*Anchor: any passage on the High Line, Barcelona superblock, Singapore housing, or Detroit revival.*
+
+The arrival of urbanization across North America pulled rural populations into the metropolitan core, where gentrification has repeatedly displaced longer-established residents from once-affordable neighbourhoods. Renovation and revitalization initiatives have nonetheless begun to balance the loss, returning pedestrianization to busy streets and easing the residential strain in declining districts. Municipal zoning bylaws constrain the proximity of incompatible uses, and federal advocacy groups continue to scrutinise the affordability of urban housing. The cityscape that results is more pedestrian-friendly than any twentieth-century plan envisaged.
+
+**Vocab covered:** urbanization, metropolitan, gentrification, renovation, revitalization, pedestrianization, residential, zoning, proximity, advocacy, affordability, cityscape
+
+---
+
+## Lex → Ch10 (North America: economy and business)
+*Anchor: any passage on MBA, Wall Street, supply chains, or Apple under Tim Cook.*
+
+American business pursued aggressive entrepreneurship and innovation-driven productivity, mobilising capital through stock markets whose liquidity and pricing models required constant recalibration. Manufacturing chains stretched across continents under the disciplines of logistics and benchmarking, and the fiscal and taxation policies of each administration determined whether the privatization or the decentralization of public services would dominate the cycle. Mergers, valuations, and changes of ownership reshape the corporate landscape, while compliance with federal regulation closes the doors against negligent breaches. The standardization of accounting rules, the optimization of supply-chain logistics, and the synergy between subsidiaries are all monitored against quarterly turnover. Each consumer brand sustains itself through demographic segmentation and careful positioning against competing options.
+
+**Vocab covered:** entrepreneurship, innovation-driven, productivity, liquidity, manufacturing, logistics, benchmarking, fiscal, taxation, privatization, decentralization, merger, valuation, ownership, compliance, breach, standardization, optimization, synergy, turnover, demographics, segmentation, positioning, competitive
+
+---
+
+## Lex → Ch10 (North America: digital infrastructure)
+*Anchor: any passage on the iPhone, Google, ChatGPT, or Silicon Valley.*
+
+American technology firms drove the digitization of every consumer transaction, optimised retail systems through automated checkout, deployed encryption to protect sensitive data, and pursued telecommunications infrastructure whose connectivity and interoperability now bind every household into a single global interface. Branding strategies depend on demographic segmentation, and turnover in the start-up sector is calibrated against the latency of consumer attention. Biometric authentication, virtualization of computing resources, and routine encryption have made cloud computing economically inevitable, while nanotechnology research, once speculative, has begun to deliver tangible engineered surfaces.
+
+**Vocab covered:** digitization, digitized, automated, retail, encryption, telecommunication, connectivity, interoperability, interface, branding, latency, biometric, virtualization, nanotechnology, tangible
+
+---
+
+## Lex → Ch10 (North America: industrial labour and transport)
+*Anchor: any passage on Ford's assembly line, the railroads, or twentieth-century manufacturing.*
+
+American industrialization grew on the back of manufacturing labor that was incrementally automated across the twentieth century. The transportation network spread cost-effective freight movement across the continent, while standardised maintenance routines kept the new assembly lines from stagnating. Bureaucratic enforcement of safety legislation, the introduction of mandatory inspections, and incremental liability reform together reshaped the working day. The cumulative globalization of supply chains has since integrated regional economies into a single market, with logistics coordination reducing the margin between input and finished good.
+
+**Vocab covered:** industrialization, manufacturing, labor, incremental, automated, transportation, cost-effective, maintenance, stagnant, bureaucratic, enforcement, mandatory, liability, globalization, integration, margin, logistics
+
+---
+
+## Lex → Ch10 (North America: media, culture, and counterculture)
+*Anchor: any passage on Hollywood, Broadway, the civil rights movement, or American protest culture.*
+
+The sensationalism of cable news cycles has long privileged immediate drama over patient analysis, and the counterculture of the late twentieth century pushed back against the standardising effect of mass television. Status anxiety, status hierarchies, and the symbolic display of consumption together shape every advertising decision, and the stereotype that any new minority is supposed to occupy quietly resists every campaign to dismantle it. American literacy nonetheless climbed steadily on the back of compulsory schooling, and the literary canon read in every public-school classroom has produced waves of renowned essayists who write under both real names and pseudonyms.
+
+**Vocab covered:** sensationalism, counterculture, status, symbolic, stereotype, literacy, compulsory, literary, renowned, pseudonym
+
+---
+
+## Lex → Ch11 (Neuroscience and cognition)
+*Anchor: append after section 11.9 (Phineas Gage / amygdala / hippocampus).*
+
+Twentieth-century behaviorism reduced learning to stimulus-response associations measurable in a pigeon's pecking, treating cognition itself as an unverifiable black box. Later constructivism rebuilt the field by treating the learner as actively assembling internal models. The contemporary electroencephalogram tracks attentional and inhibitory networks in real time, while functional imaging traces neurogenesis in the adult hippocampus and the lateralization of language between the cerebral hemispheres. Sensory and perceptual processes turn out to be neither purely intrinsic nor purely extrinsic but the integration of both, and metacognition, the patient monitoring of one's own thought, is now an active research field. Behavioral conditioning, once the only respectable handle on the mind, has been complemented rather than replaced by these neural methods.
+
+**Vocab covered:** behaviorism, stimulus-response, cognition, constructivism, electroencephalogram, attentional, inhibitory, neurogenesis, lateralization, sensory, perceptual, intrinsic, extrinsic, metacognition, behavioral, conditioning, neural, stimulus
+
+---
+
+## Lex → Ch11 (Personality, motivation, social cognition)
+*Anchor: append after section 11.16 (child cognitive development).*
+
+Personality research has long distinguished the extrovert who draws energy from social stimulation from the introvert who recovers in solitude, while subconscious patterns of conformity, formed in childhood, partly determine each adult's stereotyping of strangers. Motivation may be intrinsic, springing from genuine interest, or extrinsic, driven by reward; the intergroup distinction between an in-group and an out-group emerges remarkably early. The propensity to procrastinate falls predictably as intrinsic motivation rises, and the patient cultivation of empathy quietly enlarges the ethical horizon of the developing child. A subjective report of one's own state can be checked against quantitative behavioural measures, but the two seldom agree perfectly.
+
+**Vocab covered:** extrovert, introvert, subconscious, conformity, stereotype, motivation, intergroup, propensity, procrastinate, empathy, subjective, quantitative
+
+---
+
+## Lex → Ch11 (Materials science)
+*Anchor: append after section 11.24 (nylon, transistor, graphene).*
+
+Materials engineers select alloys by their ductility under tension, the viscosity of their molten phase, the lubrication required to machine them without overheating, and the conductivity of the finished part. Plasticity allows a material to absorb deformation without breaking, while a brittle ceramic shatters at a single impact. A modern manufacturing line prototypes a new composite through additive techniques and then submits it to standardised durability and compressive testing under controlled load. Permeability through a porous insulator can be measured directly, and the resonant frequencies of any rigid component are tested before it is allowed into a critical assembly. Independent reproduction of any published result through fabrication in another laboratory remains the standard verification.
+
+**Vocab covered:** ductility, viscosity, lubrication, conductivity, plasticity, ceramic, shatter, prototype, prototyping, composite, additive, durability, compressive, machining, permeability, insulator, resonant, reproduction, fabrication, verification
+
+---
+
+## Lex → Ch11 (Sustainable energy and meteorology)
+*Anchor: append after section 11.26 (wind, solar, geothermal, tidal energy).*
+
+The transition to renewable energy depends on the generator running on wind or solar input, the hydroelectric reservoir storing the surplus, and reforestation projects that gradually augment the planet's standing biomass. National policies that fail to incentivise sustainability cannot halt the chronic loss of forest cover. Meteorological instruments calibrate the barometer to detect the air pressure that drives every cyclone, and weather satellites map the troposphere and stratosphere through which storm systems and meteor showers transit. Humidity and evaporation rates close to the surface are critical inputs to every forecast model, and the integration of biospheric carbon dynamics into climate scenarios has revised expectations for the coming century.
+
+**Vocab covered:** renewable, generator, hydroelectric, reforestation, augment, incentive, sustainability, meteorological, barometer, cyclone, troposphere, stratosphere, meteor, humidity
+
+---
+
+## Lex → Ch11 (Statistics and quantitative methods)
+*Anchor: append after section 11.21 (Gallup and regression analysis).*
+
+Quantitative researchers compute the mean, the variance, and the ratio of every observed variable, then test the deviation of new measurements against the expected distribution. Normalization rescales raw data into a common range, and the resulting probability distribution permits inference about populations the researcher has never directly polled. Generalization always carries the risk that the original sample failed to be sufficiently homogeneous, and the patient analyst scrutinises any apparent fluctuation that strays beyond the expected approximation. A finding judged statistically significant must still be evaluated for practical importance before policy is built on it.
+
+**Vocab covered:** quantitative, mean, ratio, deviation, normalization, probability, inference, generalization, homogeneous, scrutinise, fluctuation, approximation
+
+---
+
+## Lex → Ch11 (Medicine, pathology, and public health)
+*Anchor: append after section 11.14 (Jenner, mRNA vaccines).*
+
+Modern medicine distinguishes acute pathology that strikes suddenly from chronic conditions that linger across years. Malnutrition is the persistent shortage of essential nutrients in the diet, and vaccination programmes combined with antibiotic therapy have driven down the global burden of infection. Pathology laboratories process tissue samples and digestion-related tests at industrial scale, while public health rehabilitates millions of patients each year through coordinated outpatient care. Susceptibility to common pathogens is partly genetic and partly dietary, and the verification of every new treatment now passes through stringent regulatory review.
+
+**Vocab covered:** pathology, chronic, malnutrition, nutrient, dietary, vaccination, infection, tissue, digestion, rehabilitate, susceptible, verification, stringent
+
+---
+
+## Lex → Ch11 (Memory, learning, and metacognition)
+*Anchor: append after section 11.6 (Ebbinghaus and the forgetting curve).*
+
+Memorization reinforced by spaced retrieval rather than rereading is a far more reliable route to long-term retention, and the intrinsic motivation to learn outlasts the extrinsic incentive of a grade. Procrastination is the predictable derivative of low intrinsic interest. Metacognition, the patient monitoring of one's own thought, is itself a learnable habit, and the empirical literature confirms that a brief distraction during practice can deepen rather than weaken retention, provided the learner returns promptly to the task. The retrieval cue, not the original encoding, often determines whether a memory will be accessible at all. Comprehension of the material itself is the prerequisite for any productive review session.
+
+**Vocab covered:** memorization, retention, intrinsic, extrinsic, motivation, incentive, procrastinate, derivative, metacognition, distraction, retrieval, comprehension, prerequisite
+
+---
+
+## Lex → Ch11 (Linguistics, phonology, and translation)
+*Anchor: append after section 11.15 (Saussure and Chomsky).*
+
+Modern linguists distinguish phonology, which catalogues the sound system of each language, from morphology, which dissects the internal architecture of every word, and from the broader study of accent, articulation, and conversational fluency. The transcription of speech into a standardised alphabet allows even unwritten languages to be studied and preserved, while the etymology of any particular word tracks its semantic drift across the generations. Verbal proficiency in a foreign tongue depends as much on patient exposure as on explicit memorization of grammar rules.
+
+**Vocab covered:** phonology, morphology, accent, articulation, fluency, transcription, etymology, verbal, proficiency
+
+---
+
+## Lex → Ch11 (Epistemic posture for academic prose)
+*Anchor: append after any methodological passage in Ch11.*
+
+Academic writing tolerates a degree of ambiguity that conversational prose would not, since the genuine analogy or analogous case often resists tidy definition. A judicious researcher weighs the contradictory evidence on each side of a question without rationalizing it into a single neat narrative. The propensity to assume that one's own conclusion is intrinsic to the data, rather than imposed onto it, is the most subtle hazard of the entire discipline. The empirical scenario most experimenters hypothesize turns out to be only one of several feasible explanations, and the feasibility of a competing hypothesis often determines how the result is interpreted. The genuine prevalence of a phenomenon is established only after the same finding has been replicated across multiple labs, and a tangible exemplification is preferred over the merely hypothetical, though neither is dispensable in a mature research programme.
+
+**Vocab covered:** ambiguity, analogy, analogous, judicious, contradictory, rationalize, propensity, intrinsic, subtle, scenario, hypothesize, feasible, feasibility, prevalent, tangible, hypothetical
+
+---
+
+## Lex → Ch11 (Resilience, virtue, and the long arc of learning)
+*Anchor: append anywhere a passage discusses the disposition of a long-term learner.*
+
+Resilient learners persist through repeated failure, and the resilience of any community to economic or epidemiological shocks depends partly on its diversification of livelihoods. The resonant note in a teacher's example often outlasts the textbook's bare statement, and the yearning to understand a single hard problem can sustain years of patient solitary study. A grandiose self-image and a zealous attachment to one's own opinions are well-known obstacles to disciplined inquiry, but a measured zeal for the subject is the engine that carries a student to her natural zenith. The reception of any new finding by the wider community depends on whether the methodology has been described in terms the reviewers can scrutinize, and the viability of an entire research programme is gauged by how often it furnishes punctual and verifiable predictions.
+
+**Vocab covered:** resilient, resilience, diversification, resonant, yearning, solitary, grandiose, zealous, zeal, zenith, reception, viability, punctual
+
+---
+
+## Lex → Ch5 or Ch11 (Agriculture and food systems)
+*Anchor: any passage on farming, soil management, or food supply.*
+
+Modern agriculture deploys fertilizer to enrich the soil, herbicide to suppress competing weeds, and preservative agents to extend shelf life. Successful pollination ensures the fertilization of every flowering crop, and the proliferation of pests is countered through carefully calibrated incineration of the most affected fields or biological controls. Aquaculture along the coast supplements protein needs that traditional fisheries can no longer meet. The calorie budget of a working population is a function of yield, transportation efficiency, and dietary preference.
+
+**Vocab covered:** fertilizer, herbicide, preservative, fertilization, proliferate, incineration, aquaculture, calorie, dietary
+
+---
+
+## Lex → Ch3 or Ch7 (Heritage and renown)
+*Anchor: any passage discussing the curation of cultural memory.*
+
+Each community curates its heritage through monuments, oral history, and the renowned literary works of its earliest writers, while the pseudonym chosen by a controversial author is sometimes preserved alongside the original name in the historical record. The civilization that has lasted longest is usually the one most willing to renovate its institutions without dismantling the underlying virtue of its founding charter.
+
+**Vocab covered:** heritage, renowned, literary, pseudonym, civilization, renovate, virtue
+
+---
+
+## Lex → Ch11 (Logic and notation)
+*Anchor: append after any passage on mathematics or formal reasoning.*
+
+Logical notation expresses relations between propositions with a precision ordinary prose cannot match. The logarithm and the exponent are inverse operations that compress and expand multiplicative growth onto a manageable scale, and any quantitative argument is improved by clear notational discipline. A finding judged redundant in one framework may become indispensable in another, and the analogous structure between two unrelated systems frequently turns out to be the deepest invitation to a new theorem.
+
+**Vocab covered:** notation, logarithm, redundant, analogous
+
+---
+
+## Lex → Ch11 (Adaptive systems and saturation)
+*Anchor: append after any passage on ecology, economics, or population dynamics.*
+
+An adaptive system reorganises itself in response to a shifting environment. Once the carrying capacity of any habitat is reached, further inputs only produce saturation, and additional resources cannot translate into new growth without prior structural change. A solvent in the chemical sense is a liquid that absorbs a dissolved substance without chemical change; a solvent firm in the financial sense holds sufficient assets to meet its obligations. Both senses share the underlying intuition of capacity to absorb something else without collapsing.
+
+**Vocab covered:** adaptive, saturation, solvent
+
+---
+
+## Lex → Ch10 (Status, ownership, and breach)
+*Anchor: append after any passage on American law or corporate regulation.*
+
+The status of an asset on a corporate balance sheet, the ownership claims competing parties may assert over it, and the breach of contract that follows when those claims diverge are all matters routinely adjudicated by American courts. Bureaucratic enforcement of disclosure rules limits opportunistic concealment, and stringent compliance reviews discipline the behaviour of executives whose tenure depends on quarterly results. Liability insurance permits firms to absorb the cost of occasional litigation without becoming insolvent.
+
+**Vocab covered:** status, ownership, breach, bureaucratic, enforcement, stringent, compliance, liability
+
+---
