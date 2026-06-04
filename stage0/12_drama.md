@@ -1,41 +1,11 @@
-# Stage 0, Chapter 12: Drama
+# Stage 0, Chapter 12: Supplements
 
-This chapter trades the abstract subjects of earlier chapters for human beings caught in defining moments. A sculptor wrestles a half-cast bronze back from disaster while burning with fever. A farmer stoops for years across mud and leeches to find a rare plant that will feed a continent. A chemist looks through his microscope and lifts the underlying truth of fermentation. A sprinter outruns a dictator's propaganda. A naturalist asks whether the human face speaks the same language everywhere. And a young woman steps onto a yacht, into a storm, and into an answer she had not been looking for.
-
----
-
-## 12.1  Cellini Casts the Perseus
-
-A hot-tempered Florentine goldsmith and sculptor named Benvenuto Cellini received from his Duke the commission to cast a bronze statue of Perseus brandishing the severed head of Medusa. The casting of bronze is the most perilous gamble any craftsman ever submits to in his life. The metal must reach exactly the right temperature, neither a degree above nor a degree below. Too cool and it congeals on the way through the channels and clogs them solid. Too hot and it burns straight through the clay mould and floods the foundry. Just as the furnace was roaring at full blaze, Cellini collapsed into bed with a violent fever. His workmen burst into the bedroom in panic, reporting that the bronze had begun to clot inside the furnace and the whole statue was on the brink of ruin. He leapt out of bed and stormed into the workshop. The bronze had indeed grown too sluggish to flow. Half delirious, he ordered every pewter plate and pewter bowl in the household, and even the wooden furniture, hurled into the furnace to revive the temperature, then heaped log after log onto the fire until the flames almost lifted the roof off the workshop. The molten bronze at last surrendered and began to flow again. He pried open the casting plug, and the golden-red liquid hissed and roared into every cavity of the mould. When the clay was at last broken away, Perseus stood inside it perfectly formed, not so much as a toe missing. The statue still stands in the same Florentine piazza for which Cellini forged it.
-
-**Group A:** hot-tempered, sculptor, receive, commission, cast, brandish, severed, perilous, gamble, submit, exactly, congeal, clog, solid, burn through, mould, flood, foundry, roar, blaze, collapse, violent, fever, burst, panic, clot, brink, ruin, leap, storm, sluggish, flow, delirious, hurl, revive, heap, log, flame, lift, molten, surrender, pry, plug, hiss, cavity, perfectly, missing, forge
-
-**Group B:** goldsmith, sculptor, Duke, commission, bronze, statue, fever, workshop, furnace, clay mould, pewter plate, log, flame, molten metal, plug, cavity, piazza
-
-**Q1:** The casting of bronze is described as the most perilous gamble in any craftsman's life because the metal
-A is too expensive to recover if the casting fails.
-B must reach exactly the right temperature: too cool and it congeals and clogs the channels, too hot and it burns straight through the clay mould.
-C reacts violently with the moisture in the workshop air.
-D must be poured by the craftsman himself with no assistant present.
-**A1:** B
-
-**Q2:** When his workmen burst in to report that the bronze had begun to clot inside the furnace, Cellini
-A surrendered to his fever and accepted the loss.
-B leapt out of bed, stormed into the workshop, and ordered every pewter plate and bowl in the household, and even the furniture, hurled into the furnace to revive the temperature.
-C sent for the Duke's own foundry workers to take over.
-D delayed the casting until his fever had broken.
-**A2:** B
-
-**Q3:** When the clay mould was at last broken away from the cooled statue, Perseus
-A had warped at the knee where the metal had cooled unevenly.
-B stood inside the mould perfectly formed, not so much as a toe missing.
-C was found to be missing the entire left arm.
-D had to be recast from scratch the following year.
-**A3:** B
+This file is not a standalone chapter. It collects supplementary sections that thematically attach to specific sections elsewhere in stage 0. Each entry is keyed by the target section it belongs to, with a `b` (or further `c`, `d`) suffix indicating its position in the running sequence. The original sections in other chapters remain entirely unmodified, preserving any translation alignment already done against them. Entries below are ordered by the chapter and section they attach to.
 
 ---
 
-## 12.2  Yuan Longping and the Hybrid Rice
+## 8.7b  Yuan Longping and the Hybrid Rice
+*Supplements section 8.7 (Rice and Silk). Inserts between 8.7 and 8.8.*
 
 In order to feed the great hungry population of his country, Yuan Longping resolved on a project nearly every contemporary biologist had dismissed as impossible: to comb the rice paddies of southern China for a single naturally male-sterile plant, and then to use it to breed a hybrid rice whose yield would double anything traditional cultivation could deliver. The decision committed him to searching for the rarest needle in the most repetitive haystack the planet had ever produced, since the plants of any established rice variety look almost identical to one another. For years he wore a straw hat and waded into the sweltering paddies and stooped over the ankle-deep water, plant by plant, parting each flower and peering at the anthers, sweat dripping from his chin into the mud, leeches latching onto his calves, the sun burning the back of his neck a permanent red. He at last spotted, in one particular field, a handful of plants whose anthers had withered into shrivelled empty husks, and almost wept with joy at the sight. From there he chased the seed itself across the seasons, hauling it down to the tropical south of China each winter so that the rice could squeeze in additional generations every year, crossing and back-crossing, sifting and purifying, dragging the yield per field steadily upward until it had broken every traditional ceiling. A single man, bent over the mud for a working lifetime, had quietly raised the rice bowl of the world's most populous nation.
 
@@ -66,100 +36,8 @@ D irrigated his paddies with warmed water during the cold months.
 
 ---
 
-## 12.3  Pasteur and the Living Yeast
-
-The wine and beer brewers of nineteenth-century France were tormented by a mystery. Their carefully prepared barrels would inexplicably turn sour or rancid, ruining entire vintages and bankrupting honest men. In desperation they appealed to the chemist Louis Pasteur. Pasteur drew a single drop from a soured cask, placed it under the lens of his microscope, and saw, alongside the round familiar cells of the yeast, dense colonies of a different and unwelcome microbe crowding the field of view. From this single drop he lifted the underlying truth of fermentation. Fermentation is not a passive chemical drift but the labour of living invisible organisms which feed greedily on the sugars dissolved in the liquid, multiply, and exhale either alcohol or acid in their turn. Yeast converts sugar into alcohol, which is precisely what allows dough to swell beneath the cloth and grape juice to mature into wine. The intruding bacteria, by contrast, convert the alcohol into vinegar, which is what spoils a fine cask in a single bad week. Pasteur devised a simple technique of warming the liquid just enough to kill the contaminating microbes without destroying the flavour, a method now called pasteurisation in his honour, and every carton of milk on every modern shelf has relied on it ever since. He then reasoned, almost casually, that since invisible microbes could spoil wine, perhaps invisible microbes could also breed disease inside the human body. The intuition rewrote the whole of modern medicine.
-
-**Group A:** brewer, torment, mystery, carefully, prepare, barrel, inexplicable, sour, rancid, ruin, vintage, bankrupt, honest, desperation, appeal, chemist, draw, drop, cask, place, lens, microscope, alongside, round, familiar, dense, colony, different, unwelcome, microbe, crowd, lift, underlying, truth, passive, drift, labour, living, invisible, organism, feed, greedily, dissolve, multiply, exhale, alcohol, acid, convert, swell, beneath, cloth, mature, intrude, contrast, vinegar, spoil, devise, simple, warm, contaminate, destroy, flavour, honour, carton, shelf, rely, reason, casually, breed, disease, intuition, rewrite
-
-**Group B:** brewer, barrel, vintage, chemist, microscope, yeast cell, microbe, fermentation, sugar, alcohol, vinegar, pasteurisation, contamination, milk, disease
-
-**Q1:** The wine and beer brewers of nineteenth-century France appealed to Louis Pasteur in desperation because their carefully prepared barrels
-A had been seized as taxable property by the new government.
-B would inexplicably turn sour or rancid, ruining entire vintages and bankrupting honest men.
-C were attracting swarms of fruit flies that ate the corks.
-D produced beverages too dark in colour for the export market.
-**A1:** B
-
-**Q2:** Looking at a drop of soured wine under his microscope, Pasteur lifted the underlying truth that fermentation is
-A a slow passive chemical drift unrelated to anything alive.
-B the labour of living invisible organisms which feed on the sugars and exhale either alcohol or acid.
-C the result of trapped sunlight reacting with grape pigment.
-D entirely caused by impurities in the cask wood.
-**A2:** B
-
-**Q3:** From the spoiling of wine by invisible microbes Pasteur reasoned, almost casually, that
-A invisible microbes might also breed disease inside the human body, an intuition that rewrote the whole of modern medicine.
-B wine merchants ought to refrigerate every cask year-round.
-C only certain regions of France should be permitted to brew alcohol.
-D the entire species of yeast ought to be eradicated.
-**A3:** A
-
----
-
-## 12.4  Jesse Owens at Berlin
-
-The Berlin Olympics, staged on the eve of the Second World War, had been meticulously engineered by Hitler into a propaganda showcase for the supremacy of the Aryan race, and the dictator intended to prove to the watching world that white Europeans stood biologically above every other people on the planet. Instead an American Black sprinter named Jesse Owens stepped onto the track in front of him and walked off with a clean sweep of four gold medals. The starter's pistol cracked. Owens lunged out of the starting blocks, his legs hammered the track like pistons, his arms tore through the air, and within the few violent seconds of a hundred-metre dash his muscles burst into anaerobic effort, lactic acid piled up rapidly inside the tissue, and he was nevertheless still pulling away from the rest of the field as he crossed the line. Up in the stands Hitler's face hardened into something grey and rigid. He refused to rise to acknowledge the victor and left the stadium early. Owens, with four gold medals around his neck, had publicly shattered the Nazi racial myth in front of a global audience. The bitter irony arrived on his return to the United States, where the segregation laws of the day forbade him to enter white restaurants or white hotels, and he was reduced for a time to making a living by racing on foot against racehorses for the amusement of paying crowds. He had won the highest stage in the world, and could not win the prejudice of his own country.
-
-**Group A:** stage, eve, meticulous, engineer, propaganda, showcase, supremacy, dictator, intend, prove, watch, biologically, sprinter, step, track, walk off, clean sweep, pistol, crack, lunge, hammer, piston, tear, violent, dash, burst, anaerobic, effort, lactic acid, pile up, tissue, nevertheless, pull away, field, cross, line, harden, grey, rigid, refuse, rise, acknowledge, victor, leave, stadium, publicly, shatter, racial, myth, global, audience, bitter, irony, return, segregation, forbid, restaurant, hotel, reduce, racehorse, amusement, paying, prejudice
-
-**Group B:** Olympics, Aryan, sprinter, track, gold medal, pistol, starting blocks, piston, lactic acid, finishing line, stadium, segregation, hotel, racehorse, prejudice
-
-**Q1:** The Berlin Olympics had been meticulously engineered by Hitler as
-A a goodwill gesture toward Britain and France.
-B a propaganda showcase for the supremacy of the Aryan race.
-C a fundraising event for the German rearmament programme.
-D an experimental test bed for new sporting equipment.
-**A1:** B
-
-**Q2:** Within the few violent seconds of a hundred-metre dash Jesse Owens's muscles
-A glided smoothly through their normal aerobic mode.
-B burst into anaerobic effort, with lactic acid piling up rapidly inside the tissue, yet he was still pulling away from the rest of the field as he crossed the line.
-C cramped early and he barely finished the race.
-D produced no measurable lactic acid at all owing to his unusual physiology.
-**A2:** B
-
-**Q3:** On Owens's return to the United States after sweeping the Berlin medals he
-A was greeted as a national hero by every state.
-B was forbidden by segregation laws to enter white restaurants or white hotels, and was reduced for a time to making a living by racing on foot against racehorses for the amusement of paying crowds.
-C retired immediately from athletics and entered government service.
-D received a personal apology from Hitler.
-**A3:** B
-
----
-
-## 12.5  Darwin and the Universal Face
-
-Having finished On the Origin of Species, Darwin fixed his eye on a subtler question. Were the human expressions of joy, anger, sorrow, and fear learned in childhood, or innately wired into the species at birth? He observed his own newborn baby through every passing day, recording how the infant frowned and how it first broke into a smile. He posted questionnaires to missionaries scattered across the remotest outposts of the world, asking whether the distant tribes among whom they lived contorted their faces in exactly the same way when angry, frightened, or grieving. He collected photographs of psychiatric patients and of stage actors and traced the precise pull of every facial muscle. From this immense patient correspondence he reached a conclusion well ahead of his century: the basic emotional expressions of human beings are evolved instincts shared by the entire species, and the ancestry of the frown, the glare, and the bared teeth can be traced backward through the lineage to other animals. A century later psychologists carrying photographs walked into an utterly isolated tribe in Papua New Guinea whose people had never seen television or foreigners. The tribe nevertheless identified the happiness, anger, and fear on the American faces in the photographs at once, and their own expressions, recorded on film in turn, were understood without hesitation by a New York audience. Darwin had been right. Our faces speak a language every member of the species inherits at birth.
-
-**Group A:** finish, fix, subtle, expression, joy, anger, sorrow, fear, learn, innate, wire, observe, newborn, infant, passing, record, frown, break, smile, post, questionnaire, missionary, scatter, remote, outpost, distant, tribe, contort, frighten, grieve, collect, photograph, psychiatric, patient, stage, actor, trace, precise, pull, facial, muscle, immense, patient, correspondence, reach, conclusion, ahead, century, evolved, instinct, share, species, ancestry, glare, bare, teeth, lineage, isolate, identify, hesitation, audience, inherit
-
-**Group B:** expression, infant, frown, smile, missionary, tribe, psychiatric patient, actor, facial muscle, instinct, glare, bared teeth, lineage
-
-**Q1:** After completing On the Origin of Species Darwin fixed his eye on a subtler question, namely
-A whether plants could feel pain.
-B whether the human expressions of joy, anger, sorrow, and fear were learned in childhood or innately wired into the species at birth.
-C whether dogs dreamed at night.
-D whether speech had evolved before laughter.
-**A1:** B
-
-**Q2:** To investigate whether facial expressions were universal Darwin
-A interviewed only fellow English gentlemen at his club.
-B posted questionnaires to missionaries scattered across the remotest outposts of the world, asking whether distant tribes contorted their faces in the same way when angry, frightened, or grieving.
-C travelled in person to Papua New Guinea.
-D consulted exclusively the photographs of psychiatric patients.
-**A2:** B
-
-**Q3:** A century later psychologists carrying photographs walked into an utterly isolated Papua New Guinean tribe and discovered that
-A the tribe could only identify the expression for fear.
-B the tribe identified the happiness, anger, and fear on the American faces at once, and their own expressions were understood without hesitation by a New York audience.
-C the tribe insisted that Western expressions had no meaning at all.
-D Darwin had been wrong, since each culture had its own facial code.
-**A3:** B
-
----
-
-## 12.6  The Seminar
+## 8.22b  The Seminar
+*Supplements section 8.22 (sealyra). Inserts immediately after 8.22.*
 
 The room fell silent as Sealyra clicked to her first slide. Her throat had gone dry. She cleared it once, twice, and began.
 
@@ -206,7 +84,8 @@ D he was suffering a headache that had nothing to do with her presentation.
 
 ---
 
-## 12.7  The Yacht
+## 8.22c  The Yacht
+*Supplements section 8.22 (sealyra). Inserts immediately after 8.22b.*
 
 He had invited the entire cohort to his birthday party on the yacht. Sealyra almost did not come. When she stepped aboard, Shiro's gaze swept over her once, cold and dismissive, and he turned away without a word, leaving her standing alone at the rail as the others laughed somewhere behind him.
 
@@ -251,7 +130,8 @@ D the yacht crew lowering the lifeboat.
 
 ---
 
-## 12.8  After
+## 8.22d  After
+*Supplements section 8.22 (sealyra). Inserts immediately after 8.22c.*
 
 By the time the others dragged the lifeboat around, she had already hauled him onto the deck and forced the water from his lungs. Now he lay motionless under the awning, out of the rain at last, his chest rising in shallow, uneven breaths. Unconscious. But alive.
 
@@ -298,6 +178,134 @@ A immediately resumed her resuscitation efforts.
 B went rigid, and when his eyes opened and settled on her she blurted, snatching her hand back, "There was something on your face."
 C burst into nervous laughter.
 D fainted on the spot.
+**A3:** B
+
+---
+
+## 9.14b  Cellini Casts the Perseus
+*Supplements section 9.14 (The Three Masters). Inserts between 9.14 and 9.15.*
+
+A hot-tempered Florentine goldsmith and sculptor named Benvenuto Cellini received from his Duke the commission to cast a bronze statue of Perseus brandishing the severed head of Medusa. The casting of bronze is the most perilous gamble any craftsman ever submits to in his life. The metal must reach exactly the right temperature, neither a degree above nor a degree below. Too cool and it congeals on the way through the channels and clogs them solid. Too hot and it burns straight through the clay mould and floods the foundry. Just as the furnace was roaring at full blaze, Cellini collapsed into bed with a violent fever. His workmen burst into the bedroom in panic, reporting that the bronze had begun to clot inside the furnace and the whole statue was on the brink of ruin. He leapt out of bed and stormed into the workshop. The bronze had indeed grown too sluggish to flow. Half delirious, he ordered every pewter plate and pewter bowl in the household, and even the wooden furniture, hurled into the furnace to revive the temperature, then heaped log after log onto the fire until the flames almost lifted the roof off the workshop. The molten bronze at last surrendered and began to flow again. He pried open the casting plug, and the golden-red liquid hissed and roared into every cavity of the mould. When the clay was at last broken away, Perseus stood inside it perfectly formed, not so much as a toe missing. The statue still stands in the same Florentine piazza for which Cellini forged it.
+
+**Group A:** hot-tempered, sculptor, receive, commission, cast, brandish, severed, perilous, gamble, submit, exactly, congeal, clog, solid, burn through, mould, flood, foundry, roar, blaze, collapse, violent, fever, burst, panic, clot, brink, ruin, leap, storm, sluggish, flow, delirious, hurl, revive, heap, log, flame, lift, molten, surrender, pry, plug, hiss, cavity, perfectly, missing, forge
+
+**Group B:** goldsmith, sculptor, Duke, commission, bronze, statue, fever, workshop, furnace, clay mould, pewter plate, log, flame, molten metal, plug, cavity, piazza
+
+**Q1:** The casting of bronze is described as the most perilous gamble in any craftsman's life because the metal
+A is too expensive to recover if the casting fails.
+B must reach exactly the right temperature: too cool and it congeals and clogs the channels, too hot and it burns straight through the clay mould.
+C reacts violently with the moisture in the workshop air.
+D must be poured by the craftsman himself with no assistant present.
+**A1:** B
+
+**Q2:** When his workmen burst in to report that the bronze had begun to clot inside the furnace, Cellini
+A surrendered to his fever and accepted the loss.
+B leapt out of bed, stormed into the workshop, and ordered every pewter plate and bowl in the household, and even the furniture, hurled into the furnace to revive the temperature.
+C sent for the Duke's own foundry workers to take over.
+D delayed the casting until his fever had broken.
+**A2:** B
+
+**Q3:** When the clay mould was at last broken away from the cooled statue, Perseus
+A had warped at the knee where the metal had cooled unevenly.
+B stood inside the mould perfectly formed, not so much as a toe missing.
+C was found to be missing the entire left arm.
+D had to be recast from scratch the following year.
+**A3:** B
+
+---
+
+## 9.33b  Darwin and the Universal Face
+*Supplements section 9.33 (The Fossils and the Origin). Inserts between 9.33 and 9.34.*
+
+Having finished On the Origin of Species, Darwin fixed his eye on a subtler question. Were the human expressions of joy, anger, sorrow, and fear learned in childhood, or innately wired into the species at birth? He observed his own newborn baby through every passing day, recording how the infant frowned and how it first broke into a smile. He posted questionnaires to missionaries scattered across the remotest outposts of the world, asking whether the distant tribes among whom they lived contorted their faces in exactly the same way when angry, frightened, or grieving. He collected photographs of psychiatric patients and of stage actors and traced the precise pull of every facial muscle. From this immense patient correspondence he reached a conclusion well ahead of his century: the basic emotional expressions of human beings are evolved instincts shared by the entire species, and the ancestry of the frown, the glare, and the bared teeth can be traced backward through the lineage to other animals. A century later psychologists carrying photographs walked into an utterly isolated tribe in Papua New Guinea whose people had never seen television or foreigners. The tribe nevertheless identified the happiness, anger, and fear on the American faces in the photographs at once, and their own expressions, recorded on film in turn, were understood without hesitation by a New York audience. Darwin had been right. Our faces speak a language every member of the species inherits at birth.
+
+**Group A:** finish, fix, subtle, expression, joy, anger, sorrow, fear, learn, innate, wire, observe, newborn, infant, passing, record, frown, break, smile, post, questionnaire, missionary, scatter, remote, outpost, distant, tribe, contort, frighten, grieve, collect, photograph, psychiatric, patient, stage, actor, trace, precise, pull, facial, muscle, immense, patient, correspondence, reach, conclusion, ahead, century, evolved, instinct, share, species, ancestry, glare, bare, teeth, lineage, isolate, identify, hesitation, audience, inherit
+
+**Group B:** expression, infant, frown, smile, missionary, tribe, psychiatric patient, actor, facial muscle, instinct, glare, bared teeth, lineage
+
+**Q1:** After completing On the Origin of Species Darwin fixed his eye on a subtler question, namely
+A whether plants could feel pain.
+B whether the human expressions of joy, anger, sorrow, and fear were learned in childhood or innately wired into the species at birth.
+C whether dogs dreamed at night.
+D whether speech had evolved before laughter.
+**A1:** B
+
+**Q2:** To investigate whether facial expressions were universal Darwin
+A interviewed only fellow English gentlemen at his club.
+B posted questionnaires to missionaries scattered across the remotest outposts of the world, asking whether distant tribes contorted their faces in the same way when angry, frightened, or grieving.
+C travelled in person to Papua New Guinea.
+D consulted exclusively the photographs of psychiatric patients.
+**A2:** B
+
+**Q3:** A century later psychologists carrying photographs walked into an utterly isolated Papua New Guinean tribe and discovered that
+A the tribe could only identify the expression for fear.
+B the tribe identified the happiness, anger, and fear on the American faces at once, and their own expressions were understood without hesitation by a New York audience.
+C the tribe insisted that Western expressions had no meaning at all.
+D Darwin had been wrong, since each culture had its own facial code.
+**A3:** B
+
+---
+
+## 9.40b  Pasteur and the Living Yeast
+*Supplements section 9.40 (The Germs and the Pasteurised Milk). Inserts between 9.40 and 9.41.*
+
+The wine and beer brewers of nineteenth-century France were tormented by a mystery. Their carefully prepared barrels would inexplicably turn sour or rancid, ruining entire vintages and bankrupting honest men. In desperation they appealed to the chemist Louis Pasteur. Pasteur drew a single drop from a soured cask, placed it under the lens of his microscope, and saw, alongside the round familiar cells of the yeast, dense colonies of a different and unwelcome microbe crowding the field of view. From this single drop he lifted the underlying truth of fermentation. Fermentation is not a passive chemical drift but the labour of living invisible organisms which feed greedily on the sugars dissolved in the liquid, multiply, and exhale either alcohol or acid in their turn. Yeast converts sugar into alcohol, which is precisely what allows dough to swell beneath the cloth and grape juice to mature into wine. The intruding bacteria, by contrast, convert the alcohol into vinegar, which is what spoils a fine cask in a single bad week. Pasteur devised a simple technique of warming the liquid just enough to kill the contaminating microbes without destroying the flavour, a method now called pasteurisation in his honour, and every carton of milk on every modern shelf has relied on it ever since. He then reasoned, almost casually, that since invisible microbes could spoil wine, perhaps invisible microbes could also breed disease inside the human body. The intuition rewrote the whole of modern medicine.
+
+**Group A:** brewer, torment, mystery, carefully, prepare, barrel, inexplicable, sour, rancid, ruin, vintage, bankrupt, honest, desperation, appeal, chemist, draw, drop, cask, place, lens, microscope, alongside, round, familiar, dense, colony, different, unwelcome, microbe, crowd, lift, underlying, truth, passive, drift, labour, living, invisible, organism, feed, greedily, dissolve, multiply, exhale, alcohol, acid, convert, swell, beneath, cloth, mature, intrude, contrast, vinegar, spoil, devise, simple, warm, contaminate, destroy, flavour, honour, carton, shelf, rely, reason, casually, breed, disease, intuition, rewrite
+
+**Group B:** brewer, barrel, vintage, chemist, microscope, yeast cell, microbe, fermentation, sugar, alcohol, vinegar, pasteurisation, contamination, milk, disease
+
+**Q1:** The wine and beer brewers of nineteenth-century France appealed to Louis Pasteur in desperation because their carefully prepared barrels
+A had been seized as taxable property by the new government.
+B would inexplicably turn sour or rancid, ruining entire vintages and bankrupting honest men.
+C were attracting swarms of fruit flies that ate the corks.
+D produced beverages too dark in colour for the export market.
+**A1:** B
+
+**Q2:** Looking at a drop of soured wine under his microscope, Pasteur lifted the underlying truth that fermentation is
+A a slow passive chemical drift unrelated to anything alive.
+B the labour of living invisible organisms which feed on the sugars and exhale either alcohol or acid.
+C the result of trapped sunlight reacting with grape pigment.
+D entirely caused by impurities in the cask wood.
+**A2:** B
+
+**Q3:** From the spoiling of wine by invisible microbes Pasteur reasoned, almost casually, that
+A invisible microbes might also breed disease inside the human body, an intuition that rewrote the whole of modern medicine.
+B wine merchants ought to refrigerate every cask year-round.
+C only certain regions of France should be permitted to brew alcohol.
+D the entire species of yeast ought to be eradicated.
+**A3:** A
+
+---
+
+## 10.16b  Jesse Owens at Berlin
+*Supplements section 10.16 (The Crash and the War). Inserts between 10.16 and 10.17.*
+
+The Berlin Olympics, staged on the eve of the Second World War, had been meticulously engineered by Hitler into a propaganda showcase for the supremacy of the Aryan race, and the dictator intended to prove to the watching world that white Europeans stood biologically above every other people on the planet. Instead an American Black sprinter named Jesse Owens stepped onto the track in front of him and walked off with a clean sweep of four gold medals. The starter's pistol cracked. Owens lunged out of the starting blocks, his legs hammered the track like pistons, his arms tore through the air, and within the few violent seconds of a hundred-metre dash his muscles burst into anaerobic effort, lactic acid piled up rapidly inside the tissue, and he was nevertheless still pulling away from the rest of the field as he crossed the line. Up in the stands Hitler's face hardened into something grey and rigid. He refused to rise to acknowledge the victor and left the stadium early. Owens, with four gold medals around his neck, had publicly shattered the Nazi racial myth in front of a global audience. The bitter irony arrived on his return to the United States, where the segregation laws of the day forbade him to enter white restaurants or white hotels, and he was reduced for a time to making a living by racing on foot against racehorses for the amusement of paying crowds. He had won the highest stage in the world, and could not win the prejudice of his own country.
+
+**Group A:** stage, eve, meticulous, engineer, propaganda, showcase, supremacy, dictator, intend, prove, watch, biologically, sprinter, step, track, walk off, clean sweep, pistol, crack, lunge, hammer, piston, tear, violent, dash, burst, anaerobic, effort, lactic acid, pile up, tissue, nevertheless, pull away, field, cross, line, harden, grey, rigid, refuse, rise, acknowledge, victor, leave, stadium, publicly, shatter, racial, myth, global, audience, bitter, irony, return, segregation, forbid, restaurant, hotel, reduce, racehorse, amusement, paying, prejudice
+
+**Group B:** Olympics, Aryan, sprinter, track, gold medal, pistol, starting blocks, piston, lactic acid, finishing line, stadium, segregation, hotel, racehorse, prejudice
+
+**Q1:** The Berlin Olympics had been meticulously engineered by Hitler as
+A a goodwill gesture toward Britain and France.
+B a propaganda showcase for the supremacy of the Aryan race.
+C a fundraising event for the German rearmament programme.
+D an experimental test bed for new sporting equipment.
+**A1:** B
+
+**Q2:** Within the few violent seconds of a hundred-metre dash Jesse Owens's muscles
+A glided smoothly through their normal aerobic mode.
+B burst into anaerobic effort, with lactic acid piling up rapidly inside the tissue, yet he was still pulling away from the rest of the field as he crossed the line.
+C cramped early and he barely finished the race.
+D produced no measurable lactic acid at all owing to his unusual physiology.
+**A2:** B
+
+**Q3:** On Owens's return to the United States after sweeping the Berlin medals he
+A was greeted as a national hero by every state.
+B was forbidden by segregation laws to enter white restaurants or white hotels, and was reduced for a time to making a living by racing on foot against racehorses for the amusement of paying crowds.
+C retired immediately from athletics and entered government service.
+D received a personal apology from Hitler.
 **A3:** B
 
 ---
