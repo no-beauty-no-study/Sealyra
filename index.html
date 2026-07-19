@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="theme-color" content="#0E0B1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,15 +13,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 
-<!-- Preload every background illustration in parallel so the
-     screen-swap doesn't pause on a fresh download.                -->
-<link rel="preload" as="image" href="assets/bg-cover.png?v=25">
-<link rel="preload" as="image" href="assets/bg-stage.png?v=25">
-<link rel="preload" as="image" href="assets/bg-result.png?v=25">
-<link rel="preload" as="image" href="assets/bg-note.png?v=25">
-<link rel="preload" as="image" href="assets/banner.png?v=25">
+<!-- Preload only what the cover (first paint) needs.  Other background
+     illustrations are fetched lazily when their screen is entered, so
+     the home screen no longer pulls every illustration up front.       -->
+<link rel="preload" as="image" href="assets/bg-cover.png?v=26" fetchpriority="high">
+<link rel="preload" as="image" href="assets/banner.png?v=26" fetchpriority="high">
+<link rel="prefetch" as="image" href="assets/bg-stage.png?v=26">
+<link rel="prefetch" as="image" href="assets/bg-result.png?v=26">
+<link rel="prefetch" as="image" href="assets/bg-note.png?v=26">
 
-<link rel="stylesheet" href="styles.css?v=25">
+<link rel="stylesheet" href="styles.css?v=26">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 
 <!-- Fixed banner at the very top of every screen. -->
 <header id="banner-top">
-  <img src="assets/banner.png?v=25" alt="Her Little Lexicon">
+  <img src="assets/banner.png?v=26" alt="Her Little Lexicon" fetchpriority="high" decoding="async">
 </header>
 
 <!-- ===== App shell. Each <section> is one screen. =====
@@ -65,11 +65,13 @@
 <!-- Modal layer -->
 <div id="modal" class="modal-veil"></div>
 
-<!-- Data + BGM + App  ----- loaded in order.  Query-string cache-buster
-     forces the CDN edge to fetch the latest after every push.        -->
-<script src="data.js?v=25"></script>
-<script src="bgm.js?v=25"></script>
-<script src="app.js?v=25"></script>
+<!-- Data + BGM + App  ----- loaded in order.  `defer` lets the browser
+     parse the HTML and start fetching all three scripts in parallel,
+     then run them in document order after the DOM is ready (app.js
+     boots from DOMContentLoaded, so deferring is safe).               -->
+<script defer src="data.js?v=26"></script>
+<script defer src="bgm.js?v=26"></script>
+<script defer src="app.js?v=26"></script>
 
 </body>
 </html>
